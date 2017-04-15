@@ -1,0 +1,22 @@
+{
+  "name": "composer-boilerplate",
+  "version": "1.0.0",
+  "description": "Get started quickly with a Fabric Composer project",
+  "main": "docker-compose.yml",
+  "scripts": {
+    "test": "true"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.ibm.com/CICBlockchain/composer-boilerplate"
+  },
+  "keywords": [
+    "fabric",
+    "composer",
+    "boilerplate",
+    "blockchain",
+    "hyperledger"
+  ],
+  "author": "IBM Client Innovation Center Benelux",
+  "license": "UNLICENSED"
+}
