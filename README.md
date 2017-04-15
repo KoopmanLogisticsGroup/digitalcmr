@@ -1,20 +1,30 @@
-Get the latest baseimage  
+# Composer boilerplate
+Get started quickly with a Fabric Composer project. Currently it only consists of a business network definition and a 
+quick way of deploying it on a V1 network. We'll add functionality like the REST server, playground and generators soon. 
+
+## Prerequisites
+- Docker and docker-compose (https://www.docker.com/)  
+
+## Getting started  
+1. Get the latest baseimage
 ```console
 docker pull hyperledger/fabric-baseimage:x86_64-0.3.0 && docker tag hyperledger/fabric-baseimage:x86_64-0.3.0 hyperledger/fabric-baseimage:latest
 ```
+2. Run the blockchain and deploy the business network: `docker-compose up`.  
+  
+Note: see `config/start.sh` if you want to know how it starts.
 
+## Running the application
 Start blockchain and deploy network  
-`docker-compose up`
 
 Create composer container in different tab (after deployment succeeded)
 ```console
-docker build --tag composerboilerplate_setup_1 .
 docker run -it \
     -v $(pwd)/bna:/bna \
     --link peer0:peer0.hlf1_default \
     --link ca0:ca0.hlf1_default \
     --env-file=.env \
-    --network composerboilerplate_default composerboilerplate_setup_1 bash
+    --network composerboilerplate_default composerboilerplate_setup bash
 ```
 Tip: execute this so you don't have to add network, user and pass to every following command:  
 ```console
