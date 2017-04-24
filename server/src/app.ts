@@ -21,7 +21,7 @@ class App {
     // Dependency injection
     useContainer(Container);
     Container.set(LoggerFactory, new LoggerFactory());
-    Container.set(ApiFactory, new ApiFactory('http://composer:3000/api'));
+    Container.set(ApiFactory, new ApiFactory(process.env.COMPOSER_URL));
 
     // initialize routing
     useExpressServer(app, {

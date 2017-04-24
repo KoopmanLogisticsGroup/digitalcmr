@@ -1,4 +1,4 @@
-version: '2'
+version: '2.1'
 services:
   peer:
     image: hyperledger/fabric-peer:x86_64-1.0.0-alpha
@@ -43,8 +43,8 @@ services:
     ports:
       - 7050:7050
     volumes:
-        - ./config/hlfv1/:/etc/hyperledger/configtx
-        - ./config/hlfv1/crypto-config/ordererOrganizations/ordererOrg1/orderers/ordererOrg1orderer1/:/etc/hyperledger/msp/orderer
+        - ./blockchain/config/hlfv1/:/etc/hyperledger/configtx
+        - ./blockchain/config/hlfv1/crypto-config/ordererOrganizations/ordererOrg1/orderers/ordererOrg1orderer1/:/etc/hyperledger/msp/orderer
   #        - ./blockchain/config/hlfv1/tls/orderer:/etc/hyperledger/tls/orderer
   #        - ./blockchain/config/hlfv1/tls/peers:/etc/hyperledger/tls/peers
 

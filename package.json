@@ -4,7 +4,7 @@
   "description": "Get started quickly with a Fabric Composer project",
   "main": "docker-compose.yml",
   "scripts": {
-    "test": "true"
+    "test": "cd server && npm test"
   },
   "repository": {
     "type": "git",
@@ -18,5 +18,8 @@
     "hyperledger"
   ],
   "author": "IBM Client Innovation Center Benelux",
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@cicbenelux/typescript-standards": "^2.1.0"
+  }
 }
