@@ -1,0 +1,31 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "module": "commonjs",
+        "declaration": false,
+        "removeComments": true,
+        "sourceMap": true,
+        "noLib": false,
+        "outDir": "dist",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true
+    },
+    "exclude": [
+        "node_modules",
+        "typings/**/*.d.ts",
+        "src/sdk/**"
+    ],
+    "filesGlob": [
+        "src/**/*.ts",
+        "src/*.ts"
+    ],
+    "files": [
+        "src/api/v1/LandTitleController.ts",
+        "src/app.ts",
+        "src/middleware/ErrorHandlerMiddleware.ts",
+        "src/sdk/api.ts",
+        "src/utils/ApiFactory.ts",
+        "src/utils/LoggerFactory.ts",
+        "src/utils/LoggerSettings.ts"
+    ]
+}

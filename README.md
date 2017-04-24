@@ -6,9 +6,11 @@ quick way of deploying it on a V1 network. We'll add functionality like the REST
 - Docker and docker-compose (https://www.docker.com/)  
 
 ## Getting started  
-1. Get the latest baseimage
+1. Get the latest baseimage and other images
 ```console
 docker pull hyperledger/fabric-baseimage:x86_64-0.3.0 && docker tag hyperledger/fabric-baseimage:x86_64-0.3.0 hyperledger/fabric-baseimage:latest
+docker pull hyperledger/fabric-ccenv:x86_64-1.0.0-alpha
+docker pull hyperledger/fabric-couchdb:x86_64-1.0.0-alpha
 ```
 2. Run the blockchain and deploy the business network: `docker-compose up`.  
   
@@ -50,4 +52,12 @@ To manually update the network (note the backslash to not use the alias we set e
 ```console
 \composer archive create -t dir -n .
 composer network deploy -a composer-boilerplate\@0.0.1.bna
+```
+
+Generate TypeScript  
+```console
+docker run --rm -v $(pwd)/server/src:/local --net=host swaggerapi/swagger-codegen-cli generate \
+    -i http://localhost:3000/explorer/swagger.json \
+    -l typescript-node \
+    -o /local/sdk -DsupportsES6=true
 ```

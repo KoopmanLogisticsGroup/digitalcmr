@@ -1,5 +1,4 @@
 version: '2'
-
 services:
   ca0:
     image: hyperledger/fabric-ca:x86_64-1.0.0-alpha
@@ -14,60 +13,26 @@ services:
 
   orderer0:
     container_name: orderer0
-    image: hyperledger/fabric-orderer:x86_64-1.0.0-alpha
-    environment:
-#      - GRPC_TRACE=all
-#      - GRPC_VERBOSITY=debug
-#      - ORDERER_GENERAL_LOGLEVEL=debug
-      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
-      - ORDERER_GENERAL_GENESISMETHOD=file
-      - ORDERER_GENERAL_GENESISFILE=/etc/hyperledger/configtx/twoorgs.orderer.block
-      - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
-      - ORDERER_GENERAL_LOCALMSPDIR=/etc/hyperledger/msp/orderer
-      - ORDERER_GENERAL_TLS_ENABLED=false
-      - ORDERER_GENERAL_TLS_PRIVATEKEY=/etc/hyperledger/tls/orderer/key.pem
-      - ORDERER_GENERAL_TLS_CERTIFICATE=/etc/hyperledger/tls/orderer/cert.pem
-      - ORDERER_GENERAL_TLS_ROOTCAS=[/etc/hyperledger/tls/orderer/ca-cert.pem, /etc/hyperledger/tls/peers/peer0/ca-cert.pem, /etc/hyperledger/tls/peers/peer2/ca-cert.pem]
-    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/orderer
-    command: orderer
-    ports:
-      - 7050:7050
-    volumes:
-        - ./config/hlfv1/:/etc/hyperledger/configtx
-        - ./config/hlfv1/crypto-config/ordererOrganizations/ordererOrg1/orderers/ordererOrg1orderer1/:/etc/hyperledger/msp/orderer
-#        - ./config/hlfv1/tls/orderer:/etc/hyperledger/tls/orderer
-#        - ./config/hlfv1/tls/peers:/etc/hyperledger/tls/peers
+    extends:
+      file: compose-defaults.yml
+      service: orderer
 
   peer0:
     container_name: peer0
-    image: hyperledger/fabric-peer:x86_64-1.0.0-alpha
+    extends:
+      file: compose-defaults.yml
+      service: peer
     environment:
-      - CORE_CHAINCODE_EXECUTETIMEOUT=90000
-#      - CORE_LOGGING_LEVEL=DEBUG
-      - CORE_NEXT=true
-      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+  #      - CORE_LOGGING_LEVEL=DEBUG
       - CORE_PEER_ID=peer0
-      - CORE_PEER_ENDORSER_ENABLED=true
-      - CORE_PEER_LOCALMSPID=Org1MSP
-      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/peer/
       - CORE_PEER_GOSSIP_ORGLEADER=true
       - CORE_PEER_ADDRESS=peer0:7051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0:7051
-      - CORE_PEER_TLS_ENABLED=false
-      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/tls/key.pem
-      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/tls/cert.pem
-      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/tls/ca-cert.pem
-      # the following setting starts chaincode containers on the same
-      # bridge network as the peers
-      # https://docs.docker.com/compose/networking/
-      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=composerboilerplate_default
-    working_dir: /opt/gopath/src/github.com/hyperledger/fabric
     command: peer node start --peer-defaultchain=false
     ports:
       - 7051:7051
       - 7053:7053
     volumes:
-        - /var/run/:/host/var/run/
         - ./config/hlfv1/crypto-config/peerOrganizations/peerOrg1/peers/peerOrg1Peer1/:/etc/hyperledger/msp/peer
 #        - ./tls/peers/peer0:/etc/hyperledger/tls
     depends_on:
@@ -75,41 +40,29 @@ services:
 
   peer1:
     container_name: peer1
-    image: hyperledger/fabric-peer:x86_64-1.0.0-alpha
+    extends:
+      file: compose-defaults.yml
+      service: peer
     environment:
-      - CORE_CHAINCODE_EXECUTETIMEOUT=90000
-      - CORE_NEXT=true
-      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       - CORE_PEER_ID=peer1
-      - CORE_PEER_ENDORSER_ENABLED=true
-      - CORE_PEER_LOCALMSPID=Org1MSP
-      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/peer/
       - CORE_PEER_GOSSIP_ORGLEADER=false
       - CORE_PEER_ADDRESS=peer1:7051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1:7051
-      - CORE_PEER_TLS_ENABLED=false
-      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/tls/key.pem
-      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/tls/cert.pem
-      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/tls/ca-cert.pem
-      # the following setting starts chaincode containers on the same
-      # bridge network as the peers
-      # https://docs.docker.com/compose/networking/
-      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=composerboilerplate_default
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
-    command: peer node start --peer-defaultchain=false
     ports:
       - 7056:7051
       - 7058:7053
     volumes:
-        - /var/run/:/host/var/run/
         - ./config/hlfv1/crypto-config/peerOrganizations/peerOrg1/peers/peerOrg1Peer2/:/etc/hyperledger/msp/peer
 #        - ./config/hlfv1/tls/peers/peer1:/etc/hyperledger/tls
     depends_on:
       - orderer0
       - peer0
 
-  setup:
+  composer:
     build: .
+    ports:
+      - 3000:3000
     volumes:
       - ./bna:/bna
     depends_on:
@@ -118,6 +71,20 @@ services:
       - peer1
       - ca0
     env_file: .env
+
+  server:
+    build: server
+    ports:
+      - "8080:8080"
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./server/src:/usr/src/app/src
+      - ./server/tsconfig.json:/usr/src/app/tsconfig.json # TS filenames get added automatically to this file on build
+      - ./server/package.json:/usr/src/app/package.json
+    links:
+      - composer
+    command: bash -c "grunt"
 
 # TODO (currently only works on 0.6)
 #  playground:
