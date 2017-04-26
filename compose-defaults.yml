@@ -43,8 +43,8 @@ services:
     ports:
       - 7050:7050
     volumes:
-        - ./blockchain/config/hlfv1/:/etc/hyperledger/configtx
-        - ./blockchain/config/hlfv1/crypto-config/ordererOrganizations/ordererOrg1/orderers/ordererOrg1orderer1/:/etc/hyperledger/msp/orderer
-  #        - ./blockchain/config/hlfv1/tls/orderer:/etc/hyperledger/tls/orderer
-  #        - ./blockchain/config/hlfv1/tls/peers:/etc/hyperledger/tls/peers
+        - ./composer/hlfv1/:/etc/hyperledger/configtx
+        - ./composer/hlfv1/crypto-config/ordererOrganizations/ordererOrg1/orderers/ordererOrg1orderer1/:/etc/hyperledger/msp/orderer
+  #        - ./composer/config/hlfv1/tls/orderer:/etc/hyperledger/tls/orderer
+  #        - ./composer/config/hlfv1/tls/peers:/etc/hyperledger/tls/peers
 

@@ -18,8 +18,5 @@
     "hyperledger"
   ],
   "author": "IBM Client Innovation Center Benelux",
-  "license": "UNLICENSED",
-  "devDependencies": {
-    "@cicbenelux/typescript-standards": "^2.1.0"
-  }
+  "license": "UNLICENSED"
 }

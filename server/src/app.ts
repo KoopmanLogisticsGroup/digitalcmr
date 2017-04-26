@@ -6,10 +6,10 @@ import * as morgan from 'morgan';
 import * as express from 'express';
 import * as winston from 'winston';
 import * as cors from 'cors';
+import {LoggerFactory, ApiFactory} from './utils';
 
-import {ErrorHandlerMiddleware} from './middleware/ErrorHandlerMiddleware'; // TODO how to make global?
-import {LoggerFactory} from './utils/LoggerFactory';
-import {ApiFactory} from './utils/ApiFactory';
+// Global middleware needs to be imported to be registered automatically
+import {ErrorHandlerMiddleware, ComposerInterceptor} from './middleware';
 
 class App {
   private logger: winston.LoggerInstance = new LoggerFactory().create();

@@ -22,9 +22,12 @@
     "files": [
         "src/api/v1/LandTitleController.ts",
         "src/app.ts",
+        "src/middleware/ComposerInterceptor.ts",
         "src/middleware/ErrorHandlerMiddleware.ts",
+        "src/middleware/index.ts",
         "src/sdk/api.ts",
         "src/utils/ApiFactory.ts",
+        "src/utils/index.ts",
         "src/utils/LoggerFactory.ts",
         "src/utils/LoggerSettings.ts"
     ]

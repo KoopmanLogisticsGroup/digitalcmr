@@ -1,10 +1,11 @@
-import {Get, JsonController, Post, UseAfter, UseInterceptor} from 'routing-controllers';
+import {Body, Get, JsonController, Post, UseAfter, UseInterceptor} from 'routing-controllers';
 import {Container} from 'typedi';
 import {Net_biz_digitalPropertyNetwork_LandTitleApi, NetBizDigitalPropertyNetworkLandTitle} from '../../sdk/api';
-import {ApiFactory} from '../../utils/ApiFactory';
-import {ErrorHandlerMiddleware} from '../../middleware/ErrorHandlerMiddleware';
+import {ApiFactory} from '../../utils';
+import {ErrorHandlerMiddleware, ComposerInterceptor} from '../../middleware'; // TODO global
 
 @JsonController('/landtitles')
+@UseInterceptor(ComposerInterceptor)
 @UseAfter(ErrorHandlerMiddleware)
 export class LandTitleController {
   private api: Net_biz_digitalPropertyNetwork_LandTitleApi;
@@ -15,21 +16,12 @@ export class LandTitleController {
   }
 
   @Get('/')
-  @UseInterceptor((request: any, response: any, content: any): any => { // TODO move to own file
-    return content.body;
-  })
   public async getAll(): Promise<any> {
     return this.api.netBizDigitalPropertyNetworkLandTitleFind();
   }
 
   @Post('/')
-  public async create(): Promise<any> {
-    let title = new NetBizDigitalPropertyNetworkLandTitle();
-    title.forSale = true;
-    title.information = 'info';
-    title.owner = 'me';
-    title.titleId = 'test';
-
-    return this.api.netBizDigitalPropertyNetworkLandTitleCreate(title);
+  public async create(@Body() landTitle: NetBizDigitalPropertyNetworkLandTitle): Promise<any> {
+    return this.api.netBizDigitalPropertyNetworkLandTitleCreate(landTitle);
   }
 }

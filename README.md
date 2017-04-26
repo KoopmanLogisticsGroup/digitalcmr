@@ -14,9 +14,10 @@ npm login --registry=https://npm-registry.whitewater.ibm.com --scope=@cicbenelux
 ```
 2. Open the url you get when you do `npm i -g @cicbenelux/asdf`
 
-2. Execute the following command to expose your token as an environment variable:  
+3. Execute the following commands to expose your token as an environment variable (always):  
 ```console
 echo "\nexport NPM_TOKEN=$(grep '//npm-registry.whitewater.ibm.com/:_authToken=' ~/.npmrc | cut -c47-)" >> ~/.profile
+source ~/.profile
 ```
 
 ## Getting started  
@@ -28,7 +29,7 @@ docker pull hyperledger/fabric-couchdb:x86_64-1.0.0-alpha
 ```
 2. Run the blockchain and deploy the business network: `docker-compose up`.  
   
-Note: see `config/start.sh` if you want to know how it starts.
+Note: see `composer/docker-entrypoint.sh` if you want to know how it starts.
 
 ## Running the application
 Start blockchain and server, deploy business network  
@@ -40,7 +41,7 @@ docker-compose up --force-recreate
 Create composer container in different tab (after deployment succeeded)
 ```console
 docker run -it \
-    -v $(pwd)/bna:/bna \
+    -v $(pwd)/composer/bna:/bna \
     --link peer0:peer0.hlf1_default \
     --link ca0:ca0.hlf1_default \
     --env-file=.env \

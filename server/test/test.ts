@@ -1,7 +1,7 @@
 import 'mocha';
 import 'reflect-metadata';
 import * as chai from 'chai';
-import {ApiFactory} from '../src/utils/ApiFactory';
+import {ApiFactory} from '../src/utils';
 import {Net_biz_digitalPropertyNetwork_LandTitleApi} from '../src/sdk/api';
 chai.should();
 

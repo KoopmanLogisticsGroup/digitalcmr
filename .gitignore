@@ -1,4 +1,4 @@
-bna/*.bna
+composer/bna/*.bna
 config/credentials
 
 ### Node template

@@ -8,7 +8,7 @@ services:
       - "7054:7054"
     command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/peerOrg1-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/d8a5b3cac1b821f6e4b487ceaf1fd239cdcfc310894150908b90f05e9179556a_sk -b admin:adminpw' -d
     volumes:
-      - ./blockchain/config/hlfv1/crypto-config/peerOrganizations/peerOrg1/ca/:/etc/hyperledger/fabric-ca-server-config
+      - ./composer/hlfv1/crypto-config/peerOrganizations/peerOrg1/ca/:/etc/hyperledger/fabric-ca-server-config
     container_name: ca_peerOrg1
 
   orderer0:
@@ -33,7 +33,7 @@ services:
       - 7051:7051
       - 7053:7053
     volumes:
-        - ./blockchain/config/hlfv1/crypto-config/peerOrganizations/peerOrg1/peers/peerOrg1Peer1/:/etc/hyperledger/msp/peer
+        - ./composer/hlfv1/crypto-config/peerOrganizations/peerOrg1/peers/peerOrg1Peer1/:/etc/hyperledger/msp/peer
 #        - ./tls/peers/peer0:/etc/hyperledger/tls
     depends_on:
       - orderer0
@@ -53,24 +53,24 @@ services:
       - 7056:7051
       - 7058:7053
     volumes:
-        - ./blockchain/config/hlfv1/crypto-config/peerOrganizations/peerOrg1/peers/peerOrg1Peer2/:/etc/hyperledger/msp/peer
-#        - ./config/hlfv1/tls/peers/peer1:/etc/hyperledger/tls
+        - ./composer/hlfv1/crypto-config/peerOrganizations/peerOrg1/peers/peerOrg1Peer2/:/etc/hyperledger/msp/peer
+#        - ./composer/hlfv1/tls/peers/peer1:/etc/hyperledger/tls
     depends_on:
       - orderer0
       - peer0
 
   composer:
-    build: blockchain
+    build: composer
     ports:
       - 3000:3000
     volumes:
-      - ./blockchain/bna:/bna
+      - ./composer/bna:/bna
     depends_on:
       - orderer0
       - peer0
       - peer1
       - ca0
-    env_file: ./blockchain/.env
+    env_file: ./composer/.env
 
   server:
     build:
@@ -81,39 +81,9 @@ services:
       - "8080:8080"
     env_file: ./server/.env
     volumes:
-      - $HOME/.npmrc:/root/.npmrc
       - ./server/src:/usr/src/app/src
       - ./server/tsconfig.json:/usr/src/app/tsconfig.json # TS filenames get added automatically to this file on build
       - ./server/package.json:/usr/src/app/package.json
     links:
       - composer
     command: bash -c "grunt"
-
-# TODO (currently only works on 0.6)
-#  playground:
-#    image: fabriccomposer/composer-playground
-#    ports:
-#      - '8080:8080'
-#    links:
-#      - vp0
-#      - membersrvc
-#    environment:
-#      COMPOSER_CONFIG: >
-#        {
-#          "connectionProfiles": {
-#            "hlfabric": {
-#              "type": "hlf",
-#              "keyValStore": "/home/composer/.composer-credentials",
-#              "membershipServicesURL": "grpc://membersrvc:7054",
-#              "peerURL": "grpc://vp0:7051",
-#              "eventHubURL": "grpc://vp0:7053",
-#              "deployWaitTime": 300,
-#              "invokeWaitTime": 30
-#            }
-#          },
-#          "credentials": {
-#            "hlfabric": {
-#              "admin": "Xurw3yU9zI0l"
-#            }
-#          }
-#        }
