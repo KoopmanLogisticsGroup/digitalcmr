@@ -1,6 +1,13 @@
+import {LoggerOptions} from 'winston';
+import {Options} from 'morgan';
 export interface Settings {
-    env?: string;
+    apiPath?: string;
     composer?: {
         url: string,
     };
+    env?: string;
+    host?: string;
+    morgan?: Options;
+    port?: number;
+    winston?: LoggerOptions;
 }

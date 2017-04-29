@@ -1,56 +1,51 @@
 import 'reflect-metadata';
-import {useExpressServer, useContainer} from 'routing-controllers';
+import {useExpressServer, useContainer, RoutingControllersOptions} from 'routing-controllers';
 import {Container} from 'typedi';
-import {Request, Response} from 'express';
-import * as morgan from 'morgan';
 import * as express from 'express';
-import * as winston from 'winston';
 import * as cors from 'cors';
-import {LoggerFactory, ApiFactory} from './utils';
-
-// Global middleware needs to be imported to be registered automatically
-import {ErrorHandlerMiddleware, ComposerInterceptor} from './middleware';
-import {Config} from './config/index';
+import {LoggerInstance} from 'winston';
+import {ApiFactory, LoggerFactory} from './utils';
+import {Config} from './config';
+import * as debug from 'debug';
+import {IDebugger} from 'debug';
 
 class App {
-  private logger: winston.LoggerInstance = new LoggerFactory().create();
+  private loggerFactory: LoggerFactory = new LoggerFactory(Config.settings.winston, Config.settings.morgan);
+  private logger: LoggerInstance = this.loggerFactory.create('App');
+  private debug: IDebugger = debug('app:main');
 
   public async run(): Promise<void> {
+    this.debug('express app');
     const app = express();
     app.use(cors());
+    app.use(this.loggerFactory.requestLogger);
 
-    // Dependency injection
+    this.debug('dependency injection');
     useContainer(Container);
-    Container.set(LoggerFactory, new LoggerFactory());
     Container.set(ApiFactory, new ApiFactory(Config.settings.composer.url));
+    Container.set(LoggerFactory, this.loggerFactory);
 
-    // initialize routing
-    useExpressServer(app, {
+    const apiPath = Config.settings.apiPath;
+    const routingControllersOptions: RoutingControllersOptions = {
       defaultErrorHandler : false,
-      routePrefix: '/api/v1',
-      controllers: [__dirname + '/api/v1/*.js']
+      routePrefix: apiPath,
+      controllers: [`${__dirname}${apiPath}/*.js`]
+    };
+
+    this.debug('routing: %o', routingControllersOptions);
+    useExpressServer(app, routingControllersOptions);
+
+    this.debug('listen');
+    app.listen(Config.settings.port, Config.settings.host);
+    this.logger.info(`Visit API at ${Config.settings.host}:${Config.settings.port}${apiPath}`);
+
+    process.on('unhandledRejection', (error: Error, promise: Promise<any>) => {
+      this.logger.error('Unhandled rejection', error.stack);
     });
-
-    // Log requests
-    app.use(morgan('dev', <morgan.Options> {
-      stream: {
-        skip:  (request: Request, response: Response) => response.statusCode < 400,
-        write: (message: string): void => {
-          this.logger.debug(message);
-        }
-      }
-    }));
-
-    // Start server
-    const port = (process.env.VCAP_PORT || process.env.PORT || 8080);
-    const host = (process.env.VCAP_HOST || process.env.HOST || 'localhost');
-    app.listen(port);
-    this.logger.info(`[App] Express server listening at http://${host}:${port}`);
   }
 }
 
-process.on('unhandledRejection', (error: Error, promise: Promise<any>) => {
-  this.logger.error('Unhandled rejection', error.stack);
+new App().run().catch((error: Error) => {
+  console.error('[!!!]', error.stack);
+  process.exit(1);
 });
-
-new App().run();

@@ -75,8 +75,5 @@ composer network deploy -a $COMPOSER_NETWORK\@$COMPOSER_VERSION.bna
 
 Generate TypeScript for the server  
 ```console
-docker run --rm -v $(pwd)/server/src:/local --net=host swaggerapi/swagger-codegen-cli generate \
-    -i http://localhost:3000/explorer/swagger.json \
-    -l typescript-node \
-    -o /local/sdk -DsupportsES6=true
+npm run generateSDK
 ```

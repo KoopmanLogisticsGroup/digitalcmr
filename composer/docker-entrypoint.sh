@@ -10,8 +10,8 @@ cd /bna
 composer archive create -t dir -n .
 
 # (TODO: can we make this variable to account for different processor speeds?)
-#echo "Waiting for 60 seconds to allow the peers to get to know eachother"
-#sleep 60
+echo "Waiting for 60 seconds to allow the peers to get to know eachother"
+sleep 60
 
 # We can consider building in a check to see if it exists and if so, upgrade instead of deploy.
 composer network deploy \
@@ -23,6 +23,7 @@ composer-rest-server \
     -p defaultProfile \
     -n "${COMPOSER_NETWORK}" \
     -i "${COMPOSER_USER}" \
-    -s "${COMPOSER_PASSWORD}"
+    -s "${COMPOSER_PASSWORD}" \
+    -N "required"
 
 exec "$@"

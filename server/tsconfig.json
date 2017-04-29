@@ -22,13 +22,18 @@
     "files": [
         "src/api/v1/LandTitleController.ts",
         "src/app.ts",
+        "src/config/default.config.ts",
+        "src/config/development.config.ts",
+        "src/config/index.ts",
+        "src/config/production.config.ts",
+        "src/config/settings.interface.ts",
         "src/middleware/ComposerInterceptor.ts",
         "src/middleware/ErrorHandlerMiddleware.ts",
         "src/middleware/index.ts",
         "src/sdk/api.ts",
         "src/utils/ApiFactory.ts",
         "src/utils/index.ts",
-        "src/utils/LoggerFactory.ts",
-        "src/utils/LoggerSettings.ts"
+        "src/utils/logger/index.ts",
+        "src/utils/logger/LoggerFactory.ts"
     ]
 }

@@ -12,7 +12,6 @@
 
 import request = require('request');
 import http = require('http');
-import Promise = require('bluebird');
 
 let defaultBasePath = 'https://localhost/api';
 
@@ -46,7 +45,7 @@ export class IssueIdentityResponse {
 /**
 * An asset named LandTitle
 */
-export class NetBizDigitalPropertyNetworkLandTitle {
+export class LandTitle {
     /**
     * The class identifier for this type
     */
@@ -66,7 +65,7 @@ export class NetBizDigitalPropertyNetworkLandTitle {
 /**
 * A participant named Person
 */
-export class NetBizDigitalPropertyNetworkPerson {
+export class Person {
     /**
     * The class identifier for this type
     */
@@ -80,9 +79,17 @@ export class NetBizDigitalPropertyNetworkPerson {
 }
 
 /**
+* The response to the ping method
+*/
+export class PingResponse {
+    'participant': string;
+    'version': string;
+}
+
+/**
 * A transaction named RegisterPropertyForSale
 */
-export class NetBizDigitalPropertyNetworkRegisterPropertyForSale {
+export class RegisterPropertyForSale {
     /**
     * The class identifier for this type
     */
@@ -103,9 +110,16 @@ export class NetBizDigitalPropertyNetworkRegisterPropertyForSale {
 }
 
 /**
+* The request to the revokeIdentity method
+*/
+export class RevokeIdentityRequest {
+    'userID': string;
+}
+
+/**
 * An asset named SalesAgreement
 */
-export class NetBizDigitalPropertyNetworkSalesAgreement {
+export class SalesAgreement {
     /**
     * The class identifier for this type
     */
@@ -126,21 +140,6 @@ export class NetBizDigitalPropertyNetworkSalesAgreement {
     * The identifier of an instance of title
     */
     'title': string;
-}
-
-/**
-* The response to the ping method
-*/
-export class PingResponse {
-    'participant': string;
-    'version': string;
-}
-
-/**
-* The request to the revokeIdentity method
-*/
-export class RevokeIdentityRequest {
-    'userID': string;
 }
 
 
@@ -194,10 +193,10 @@ export class VoidAuth implements Authentication {
     }
 }
 
-export enum Net_biz_digitalPropertyNetwork_LandTitleApiApiKeys {
+export enum LandTitleApiApiKeys {
 }
 
-export class Net_biz_digitalPropertyNetwork_LandTitleApi {
+export class LandTitleApi {
     protected _basePath = defaultBasePath;
     protected defaultHeaders : any = {};
     protected _useQuerystring : boolean = false;
@@ -231,16 +230,16 @@ export class Net_biz_digitalPropertyNetwork_LandTitleApi {
         return this._basePath;
     }
 
-    public setApiKey(key: Net_biz_digitalPropertyNetwork_LandTitleApiApiKeys, value: string) {
-        this.authentications[Net_biz_digitalPropertyNetwork_LandTitleApiApiKeys[key]].apiKey = value;
+    public setApiKey(key: LandTitleApiApiKeys, value: string) {
+        this.authentications[LandTitleApiApiKeys[key]].apiKey = value;
     }
     /**
      * Create a new instance of the model and persist it into the data source.
      * 
      * @param data Model instance data
      */
-    public netBizDigitalPropertyNetworkLandTitleCreate (data?: NetBizDigitalPropertyNetworkLandTitle) : Promise<{ response: http.ClientResponse; body: NetBizDigitalPropertyNetworkLandTitle;  }> {
-        const localVarPath = this.basePath + '/net.biz.digitalPropertyNetwork.LandTitle';
+    public landTitleCreate (data?: LandTitle) : Promise<{ response: http.IncomingMessage; body: LandTitle;  }> {
+        const localVarPath = this.basePath + '/LandTitle';
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let formParams: any = {};
@@ -259,6 +258,7 @@ export class Net_biz_digitalPropertyNetwork_LandTitleApi {
         };
 
         this.authentications.default.applyToRequest(requestOptions);
+
         if (Object.keys(formParams).length) {
             if (useFormData) {
                 (<any>requestOptions).formData = formParams;
@@ -266,9 +266,8 @@ export class Net_biz_digitalPropertyNetwork_LandTitleApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: NetBizDigitalPropertyNetworkLandTitle;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: LandTitle;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
-                console.log(error);
                 if (error) {
                     reject(error);
                 } else {
@@ -286,8 +285,8 @@ export class Net_biz_digitalPropertyNetwork_LandTitleApi {
      * 
      * @param id Model id
      */
-    public netBizDigitalPropertyNetworkLandTitleDeleteById (id: string) : Promise<{ response: http.ClientResponse; body: any;  }> {
-        const localVarPath = this.basePath + '/net.biz.digitalPropertyNetwork.LandTitle/{id}'
+    public landTitleDeleteById (id: string) : Promise<{ response: http.IncomingMessage; body: any;  }> {
+        const localVarPath = this.basePath + '/LandTitle/{id}'
             .replace('{' + 'id' + '}', String(id));
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -296,7 +295,7 @@ export class Net_biz_digitalPropertyNetwork_LandTitleApi {
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling netBizDigitalPropertyNetworkLandTitleDeleteById.');
+            throw new Error('Required parameter id was null or undefined when calling landTitleDeleteById.');
         }
 
         let useFormData = false;
@@ -319,7 +318,7 @@ export class Net_biz_digitalPropertyNetwork_LandTitleApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: any;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -338,8 +337,8 @@ export class Net_biz_digitalPropertyNetwork_LandTitleApi {
      * 
      * @param id Model id
      */
-    public netBizDigitalPropertyNetworkLandTitleExists (id: string) : Promise<{ response: http.ClientResponse; body: InlineResponse200;  }> {
-        const localVarPath = this.basePath + '/net.biz.digitalPropertyNetwork.LandTitle/{id}'
+    public landTitleExists (id: string) : Promise<{ response: http.IncomingMessage; body: InlineResponse200;  }> {
+        const localVarPath = this.basePath + '/LandTitle/{id}'
             .replace('{' + 'id' + '}', String(id));
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -348,7 +347,7 @@ export class Net_biz_digitalPropertyNetwork_LandTitleApi {
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling netBizDigitalPropertyNetworkLandTitleExists.');
+            throw new Error('Required parameter id was null or undefined when calling landTitleExists.');
         }
 
         let useFormData = false;
@@ -371,7 +370,7 @@ export class Net_biz_digitalPropertyNetwork_LandTitleApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: InlineResponse200;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: InlineResponse200;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -390,8 +389,8 @@ export class Net_biz_digitalPropertyNetwork_LandTitleApi {
      * 
      * @param filter Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string ({\&quot;something\&quot;:\&quot;value\&quot;})
      */
-    public netBizDigitalPropertyNetworkLandTitleFind (filter?: string) : Promise<{ response: http.ClientResponse; body: Array<NetBizDigitalPropertyNetworkLandTitle>;  }> {
-        const localVarPath = this.basePath + '/net.biz.digitalPropertyNetwork.LandTitle';
+    public landTitleFind (filter?: string) : Promise<{ response: http.IncomingMessage; body: Array<LandTitle>;  }> {
+        const localVarPath = this.basePath + '/LandTitle';
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let formParams: any = {};
@@ -421,7 +420,7 @@ export class Net_biz_digitalPropertyNetwork_LandTitleApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: Array<NetBizDigitalPropertyNetworkLandTitle>;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: Array<LandTitle>;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -441,8 +440,8 @@ export class Net_biz_digitalPropertyNetwork_LandTitleApi {
      * @param id Model id
      * @param filter Filter defining fields and include - must be a JSON-encoded string ({\&quot;something\&quot;:\&quot;value\&quot;})
      */
-    public netBizDigitalPropertyNetworkLandTitleFindById (id: string, filter?: string) : Promise<{ response: http.ClientResponse; body: NetBizDigitalPropertyNetworkLandTitle;  }> {
-        const localVarPath = this.basePath + '/net.biz.digitalPropertyNetwork.LandTitle/{id}'
+    public landTitleFindById (id: string, filter?: string) : Promise<{ response: http.IncomingMessage; body: LandTitle;  }> {
+        const localVarPath = this.basePath + '/LandTitle/{id}'
             .replace('{' + 'id' + '}', String(id));
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -451,7 +450,7 @@ export class Net_biz_digitalPropertyNetwork_LandTitleApi {
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling netBizDigitalPropertyNetworkLandTitleFindById.');
+            throw new Error('Required parameter id was null or undefined when calling landTitleFindById.');
         }
 
         if (filter !== undefined) {
@@ -478,7 +477,7 @@ export class Net_biz_digitalPropertyNetwork_LandTitleApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: NetBizDigitalPropertyNetworkLandTitle;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: LandTitle;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -498,8 +497,8 @@ export class Net_biz_digitalPropertyNetwork_LandTitleApi {
      * @param id Model id
      * @param data Model instance data
      */
-    public netBizDigitalPropertyNetworkLandTitleReplaceById (id: string, data?: NetBizDigitalPropertyNetworkLandTitle) : Promise<{ response: http.ClientResponse; body: NetBizDigitalPropertyNetworkLandTitle;  }> {
-        const localVarPath = this.basePath + '/net.biz.digitalPropertyNetwork.LandTitle/{id}'
+    public landTitleReplaceById (id: string, data?: LandTitle) : Promise<{ response: http.IncomingMessage; body: LandTitle;  }> {
+        const localVarPath = this.basePath + '/LandTitle/{id}'
             .replace('{' + 'id' + '}', String(id));
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -508,7 +507,7 @@ export class Net_biz_digitalPropertyNetwork_LandTitleApi {
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling netBizDigitalPropertyNetworkLandTitleReplaceById.');
+            throw new Error('Required parameter id was null or undefined when calling landTitleReplaceById.');
         }
 
         let useFormData = false;
@@ -532,7 +531,7 @@ export class Net_biz_digitalPropertyNetwork_LandTitleApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: NetBizDigitalPropertyNetworkLandTitle;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: LandTitle;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -547,10 +546,10 @@ export class Net_biz_digitalPropertyNetwork_LandTitleApi {
         });
     }
 }
-export enum Net_biz_digitalPropertyNetwork_PersonApiApiKeys {
+export enum PersonApiApiKeys {
 }
 
-export class Net_biz_digitalPropertyNetwork_PersonApi {
+export class PersonApi {
     protected _basePath = defaultBasePath;
     protected defaultHeaders : any = {};
     protected _useQuerystring : boolean = false;
@@ -584,16 +583,16 @@ export class Net_biz_digitalPropertyNetwork_PersonApi {
         return this._basePath;
     }
 
-    public setApiKey(key: Net_biz_digitalPropertyNetwork_PersonApiApiKeys, value: string) {
-        this.authentications[Net_biz_digitalPropertyNetwork_PersonApiApiKeys[key]].apiKey = value;
+    public setApiKey(key: PersonApiApiKeys, value: string) {
+        this.authentications[PersonApiApiKeys[key]].apiKey = value;
     }
     /**
      * Create a new instance of the model and persist it into the data source.
      * 
      * @param data Model instance data
      */
-    public netBizDigitalPropertyNetworkPersonCreate (data?: NetBizDigitalPropertyNetworkPerson) : Promise<{ response: http.ClientResponse; body: NetBizDigitalPropertyNetworkPerson;  }> {
-        const localVarPath = this.basePath + '/net.biz.digitalPropertyNetwork.Person';
+    public personCreate (data?: Person) : Promise<{ response: http.IncomingMessage; body: Person;  }> {
+        const localVarPath = this.basePath + '/Person';
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let formParams: any = {};
@@ -620,7 +619,7 @@ export class Net_biz_digitalPropertyNetwork_PersonApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: NetBizDigitalPropertyNetworkPerson;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: Person;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -639,8 +638,8 @@ export class Net_biz_digitalPropertyNetwork_PersonApi {
      * 
      * @param id Model id
      */
-    public netBizDigitalPropertyNetworkPersonDeleteById (id: string) : Promise<{ response: http.ClientResponse; body: any;  }> {
-        const localVarPath = this.basePath + '/net.biz.digitalPropertyNetwork.Person/{id}'
+    public personDeleteById (id: string) : Promise<{ response: http.IncomingMessage; body: any;  }> {
+        const localVarPath = this.basePath + '/Person/{id}'
             .replace('{' + 'id' + '}', String(id));
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -649,7 +648,7 @@ export class Net_biz_digitalPropertyNetwork_PersonApi {
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling netBizDigitalPropertyNetworkPersonDeleteById.');
+            throw new Error('Required parameter id was null or undefined when calling personDeleteById.');
         }
 
         let useFormData = false;
@@ -672,7 +671,7 @@ export class Net_biz_digitalPropertyNetwork_PersonApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: any;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -691,8 +690,8 @@ export class Net_biz_digitalPropertyNetwork_PersonApi {
      * 
      * @param id Model id
      */
-    public netBizDigitalPropertyNetworkPersonExists (id: string) : Promise<{ response: http.ClientResponse; body: InlineResponse200;  }> {
-        const localVarPath = this.basePath + '/net.biz.digitalPropertyNetwork.Person/{id}'
+    public personExists (id: string) : Promise<{ response: http.IncomingMessage; body: InlineResponse200;  }> {
+        const localVarPath = this.basePath + '/Person/{id}'
             .replace('{' + 'id' + '}', String(id));
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -701,7 +700,7 @@ export class Net_biz_digitalPropertyNetwork_PersonApi {
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling netBizDigitalPropertyNetworkPersonExists.');
+            throw new Error('Required parameter id was null or undefined when calling personExists.');
         }
 
         let useFormData = false;
@@ -724,7 +723,7 @@ export class Net_biz_digitalPropertyNetwork_PersonApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: InlineResponse200;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: InlineResponse200;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -743,8 +742,8 @@ export class Net_biz_digitalPropertyNetwork_PersonApi {
      * 
      * @param filter Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string ({\&quot;something\&quot;:\&quot;value\&quot;})
      */
-    public netBizDigitalPropertyNetworkPersonFind (filter?: string) : Promise<{ response: http.ClientResponse; body: Array<NetBizDigitalPropertyNetworkPerson>;  }> {
-        const localVarPath = this.basePath + '/net.biz.digitalPropertyNetwork.Person';
+    public personFind (filter?: string) : Promise<{ response: http.IncomingMessage; body: Array<Person>;  }> {
+        const localVarPath = this.basePath + '/Person';
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let formParams: any = {};
@@ -774,7 +773,7 @@ export class Net_biz_digitalPropertyNetwork_PersonApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: Array<NetBizDigitalPropertyNetworkPerson>;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: Array<Person>;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -794,8 +793,8 @@ export class Net_biz_digitalPropertyNetwork_PersonApi {
      * @param id Model id
      * @param filter Filter defining fields and include - must be a JSON-encoded string ({\&quot;something\&quot;:\&quot;value\&quot;})
      */
-    public netBizDigitalPropertyNetworkPersonFindById (id: string, filter?: string) : Promise<{ response: http.ClientResponse; body: NetBizDigitalPropertyNetworkPerson;  }> {
-        const localVarPath = this.basePath + '/net.biz.digitalPropertyNetwork.Person/{id}'
+    public personFindById (id: string, filter?: string) : Promise<{ response: http.IncomingMessage; body: Person;  }> {
+        const localVarPath = this.basePath + '/Person/{id}'
             .replace('{' + 'id' + '}', String(id));
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -804,7 +803,7 @@ export class Net_biz_digitalPropertyNetwork_PersonApi {
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling netBizDigitalPropertyNetworkPersonFindById.');
+            throw new Error('Required parameter id was null or undefined when calling personFindById.');
         }
 
         if (filter !== undefined) {
@@ -831,7 +830,7 @@ export class Net_biz_digitalPropertyNetwork_PersonApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: NetBizDigitalPropertyNetworkPerson;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: Person;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -851,8 +850,8 @@ export class Net_biz_digitalPropertyNetwork_PersonApi {
      * @param id Model id
      * @param data Model instance data
      */
-    public netBizDigitalPropertyNetworkPersonReplaceById (id: string, data?: NetBizDigitalPropertyNetworkPerson) : Promise<{ response: http.ClientResponse; body: NetBizDigitalPropertyNetworkPerson;  }> {
-        const localVarPath = this.basePath + '/net.biz.digitalPropertyNetwork.Person/{id}'
+    public personReplaceById (id: string, data?: Person) : Promise<{ response: http.IncomingMessage; body: Person;  }> {
+        const localVarPath = this.basePath + '/Person/{id}'
             .replace('{' + 'id' + '}', String(id));
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -861,7 +860,7 @@ export class Net_biz_digitalPropertyNetwork_PersonApi {
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling netBizDigitalPropertyNetworkPersonReplaceById.');
+            throw new Error('Required parameter id was null or undefined when calling personReplaceById.');
         }
 
         let useFormData = false;
@@ -885,7 +884,7 @@ export class Net_biz_digitalPropertyNetwork_PersonApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: NetBizDigitalPropertyNetworkPerson;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: Person;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -900,10 +899,10 @@ export class Net_biz_digitalPropertyNetwork_PersonApi {
         });
     }
 }
-export enum Net_biz_digitalPropertyNetwork_RegisterPropertyForSaleApiApiKeys {
+export enum RegisterPropertyForSaleApiApiKeys {
 }
 
-export class Net_biz_digitalPropertyNetwork_RegisterPropertyForSaleApi {
+export class RegisterPropertyForSaleApi {
     protected _basePath = defaultBasePath;
     protected defaultHeaders : any = {};
     protected _useQuerystring : boolean = false;
@@ -937,16 +936,16 @@ export class Net_biz_digitalPropertyNetwork_RegisterPropertyForSaleApi {
         return this._basePath;
     }
 
-    public setApiKey(key: Net_biz_digitalPropertyNetwork_RegisterPropertyForSaleApiApiKeys, value: string) {
-        this.authentications[Net_biz_digitalPropertyNetwork_RegisterPropertyForSaleApiApiKeys[key]].apiKey = value;
+    public setApiKey(key: RegisterPropertyForSaleApiApiKeys, value: string) {
+        this.authentications[RegisterPropertyForSaleApiApiKeys[key]].apiKey = value;
     }
     /**
      * Create a new instance of the model and persist it into the data source.
      * 
      * @param data Model instance data
      */
-    public netBizDigitalPropertyNetworkRegisterPropertyForSaleCreate (data?: NetBizDigitalPropertyNetworkRegisterPropertyForSale) : Promise<{ response: http.ClientResponse; body: NetBizDigitalPropertyNetworkRegisterPropertyForSale;  }> {
-        const localVarPath = this.basePath + '/net.biz.digitalPropertyNetwork.RegisterPropertyForSale';
+    public registerPropertyForSaleCreate (data?: RegisterPropertyForSale) : Promise<{ response: http.IncomingMessage; body: RegisterPropertyForSale;  }> {
+        const localVarPath = this.basePath + '/RegisterPropertyForSale';
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let formParams: any = {};
@@ -973,7 +972,7 @@ export class Net_biz_digitalPropertyNetwork_RegisterPropertyForSaleApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: NetBizDigitalPropertyNetworkRegisterPropertyForSale;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: RegisterPropertyForSale;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -988,10 +987,10 @@ export class Net_biz_digitalPropertyNetwork_RegisterPropertyForSaleApi {
         });
     }
 }
-export enum Net_biz_digitalPropertyNetwork_SalesAgreementApiApiKeys {
+export enum SalesAgreementApiApiKeys {
 }
 
-export class Net_biz_digitalPropertyNetwork_SalesAgreementApi {
+export class SalesAgreementApi {
     protected _basePath = defaultBasePath;
     protected defaultHeaders : any = {};
     protected _useQuerystring : boolean = false;
@@ -1025,16 +1024,16 @@ export class Net_biz_digitalPropertyNetwork_SalesAgreementApi {
         return this._basePath;
     }
 
-    public setApiKey(key: Net_biz_digitalPropertyNetwork_SalesAgreementApiApiKeys, value: string) {
-        this.authentications[Net_biz_digitalPropertyNetwork_SalesAgreementApiApiKeys[key]].apiKey = value;
+    public setApiKey(key: SalesAgreementApiApiKeys, value: string) {
+        this.authentications[SalesAgreementApiApiKeys[key]].apiKey = value;
     }
     /**
      * Create a new instance of the model and persist it into the data source.
      * 
      * @param data Model instance data
      */
-    public netBizDigitalPropertyNetworkSalesAgreementCreate (data?: NetBizDigitalPropertyNetworkSalesAgreement) : Promise<{ response: http.ClientResponse; body: NetBizDigitalPropertyNetworkSalesAgreement;  }> {
-        const localVarPath = this.basePath + '/net.biz.digitalPropertyNetwork.SalesAgreement';
+    public salesAgreementCreate (data?: SalesAgreement) : Promise<{ response: http.IncomingMessage; body: SalesAgreement;  }> {
+        const localVarPath = this.basePath + '/SalesAgreement';
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let formParams: any = {};
@@ -1061,7 +1060,7 @@ export class Net_biz_digitalPropertyNetwork_SalesAgreementApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: NetBizDigitalPropertyNetworkSalesAgreement;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: SalesAgreement;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -1080,8 +1079,8 @@ export class Net_biz_digitalPropertyNetwork_SalesAgreementApi {
      * 
      * @param id Model id
      */
-    public netBizDigitalPropertyNetworkSalesAgreementDeleteById (id: string) : Promise<{ response: http.ClientResponse; body: any;  }> {
-        const localVarPath = this.basePath + '/net.biz.digitalPropertyNetwork.SalesAgreement/{id}'
+    public salesAgreementDeleteById (id: string) : Promise<{ response: http.IncomingMessage; body: any;  }> {
+        const localVarPath = this.basePath + '/SalesAgreement/{id}'
             .replace('{' + 'id' + '}', String(id));
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -1090,7 +1089,7 @@ export class Net_biz_digitalPropertyNetwork_SalesAgreementApi {
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling netBizDigitalPropertyNetworkSalesAgreementDeleteById.');
+            throw new Error('Required parameter id was null or undefined when calling salesAgreementDeleteById.');
         }
 
         let useFormData = false;
@@ -1113,7 +1112,7 @@ export class Net_biz_digitalPropertyNetwork_SalesAgreementApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: any;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -1132,8 +1131,8 @@ export class Net_biz_digitalPropertyNetwork_SalesAgreementApi {
      * 
      * @param id Model id
      */
-    public netBizDigitalPropertyNetworkSalesAgreementExists (id: string) : Promise<{ response: http.ClientResponse; body: InlineResponse200;  }> {
-        const localVarPath = this.basePath + '/net.biz.digitalPropertyNetwork.SalesAgreement/{id}'
+    public salesAgreementExists (id: string) : Promise<{ response: http.IncomingMessage; body: InlineResponse200;  }> {
+        const localVarPath = this.basePath + '/SalesAgreement/{id}'
             .replace('{' + 'id' + '}', String(id));
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -1142,7 +1141,7 @@ export class Net_biz_digitalPropertyNetwork_SalesAgreementApi {
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling netBizDigitalPropertyNetworkSalesAgreementExists.');
+            throw new Error('Required parameter id was null or undefined when calling salesAgreementExists.');
         }
 
         let useFormData = false;
@@ -1165,7 +1164,7 @@ export class Net_biz_digitalPropertyNetwork_SalesAgreementApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: InlineResponse200;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: InlineResponse200;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -1184,8 +1183,8 @@ export class Net_biz_digitalPropertyNetwork_SalesAgreementApi {
      * 
      * @param filter Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string ({\&quot;something\&quot;:\&quot;value\&quot;})
      */
-    public netBizDigitalPropertyNetworkSalesAgreementFind (filter?: string) : Promise<{ response: http.ClientResponse; body: Array<NetBizDigitalPropertyNetworkSalesAgreement>;  }> {
-        const localVarPath = this.basePath + '/net.biz.digitalPropertyNetwork.SalesAgreement';
+    public salesAgreementFind (filter?: string) : Promise<{ response: http.IncomingMessage; body: Array<SalesAgreement>;  }> {
+        const localVarPath = this.basePath + '/SalesAgreement';
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let formParams: any = {};
@@ -1215,7 +1214,7 @@ export class Net_biz_digitalPropertyNetwork_SalesAgreementApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: Array<NetBizDigitalPropertyNetworkSalesAgreement>;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: Array<SalesAgreement>;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -1235,8 +1234,8 @@ export class Net_biz_digitalPropertyNetwork_SalesAgreementApi {
      * @param id Model id
      * @param filter Filter defining fields and include - must be a JSON-encoded string ({\&quot;something\&quot;:\&quot;value\&quot;})
      */
-    public netBizDigitalPropertyNetworkSalesAgreementFindById (id: string, filter?: string) : Promise<{ response: http.ClientResponse; body: NetBizDigitalPropertyNetworkSalesAgreement;  }> {
-        const localVarPath = this.basePath + '/net.biz.digitalPropertyNetwork.SalesAgreement/{id}'
+    public salesAgreementFindById (id: string, filter?: string) : Promise<{ response: http.IncomingMessage; body: SalesAgreement;  }> {
+        const localVarPath = this.basePath + '/SalesAgreement/{id}'
             .replace('{' + 'id' + '}', String(id));
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -1245,7 +1244,7 @@ export class Net_biz_digitalPropertyNetwork_SalesAgreementApi {
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling netBizDigitalPropertyNetworkSalesAgreementFindById.');
+            throw new Error('Required parameter id was null or undefined when calling salesAgreementFindById.');
         }
 
         if (filter !== undefined) {
@@ -1272,7 +1271,7 @@ export class Net_biz_digitalPropertyNetwork_SalesAgreementApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: NetBizDigitalPropertyNetworkSalesAgreement;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: SalesAgreement;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -1292,8 +1291,8 @@ export class Net_biz_digitalPropertyNetwork_SalesAgreementApi {
      * @param id Model id
      * @param data Model instance data
      */
-    public netBizDigitalPropertyNetworkSalesAgreementReplaceById (id: string, data?: NetBizDigitalPropertyNetworkSalesAgreement) : Promise<{ response: http.ClientResponse; body: NetBizDigitalPropertyNetworkSalesAgreement;  }> {
-        const localVarPath = this.basePath + '/net.biz.digitalPropertyNetwork.SalesAgreement/{id}'
+    public salesAgreementReplaceById (id: string, data?: SalesAgreement) : Promise<{ response: http.IncomingMessage; body: SalesAgreement;  }> {
+        const localVarPath = this.basePath + '/SalesAgreement/{id}'
             .replace('{' + 'id' + '}', String(id));
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -1302,7 +1301,7 @@ export class Net_biz_digitalPropertyNetwork_SalesAgreementApi {
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling netBizDigitalPropertyNetworkSalesAgreementReplaceById.');
+            throw new Error('Required parameter id was null or undefined when calling salesAgreementReplaceById.');
         }
 
         let useFormData = false;
@@ -1326,7 +1325,7 @@ export class Net_biz_digitalPropertyNetwork_SalesAgreementApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: NetBizDigitalPropertyNetworkSalesAgreement;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: SalesAgreement;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -1386,7 +1385,7 @@ export class SystemApi {
      * 
      * @param data 
      */
-    public systemIssueIdentity (data: IssueIdentityRequest) : Promise<{ response: http.ClientResponse; body: IssueIdentityResponse;  }> {
+    public systemIssueIdentity (data: IssueIdentityRequest) : Promise<{ response: http.IncomingMessage; body: IssueIdentityResponse;  }> {
         const localVarPath = this.basePath + '/system/issueIdentity';
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -1419,7 +1418,7 @@ export class SystemApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: IssueIdentityResponse;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: IssueIdentityResponse;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -1437,7 +1436,7 @@ export class SystemApi {
      * Test the connection to the business network
      * 
      */
-    public systemPing () : Promise<{ response: http.ClientResponse; body: PingResponse;  }> {
+    public systemPing () : Promise<{ response: http.IncomingMessage; body: PingResponse;  }> {
         const localVarPath = this.basePath + '/system/ping';
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -1464,7 +1463,7 @@ export class SystemApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body: PingResponse;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: PingResponse;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
@@ -1483,7 +1482,7 @@ export class SystemApi {
      * 
      * @param data 
      */
-    public systemRevokeIdentity (data: RevokeIdentityRequest) : Promise<{ response: http.ClientResponse; body?: any;  }> {
+    public systemRevokeIdentity (data: RevokeIdentityRequest) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
         const localVarPath = this.basePath + '/system/revokeIdentity';
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -1516,7 +1515,7 @@ export class SystemApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.ClientResponse; body?: any;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
