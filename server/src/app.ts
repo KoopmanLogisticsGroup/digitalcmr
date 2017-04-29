@@ -10,6 +10,7 @@ import {LoggerFactory, ApiFactory} from './utils';
 
 // Global middleware needs to be imported to be registered automatically
 import {ErrorHandlerMiddleware, ComposerInterceptor} from './middleware';
+import {Config} from './config/index';
 
 class App {
   private logger: winston.LoggerInstance = new LoggerFactory().create();
@@ -21,7 +22,7 @@ class App {
     // Dependency injection
     useContainer(Container);
     Container.set(LoggerFactory, new LoggerFactory());
-    Container.set(ApiFactory, new ApiFactory(process.env.COMPOSER_URL));
+    Container.set(ApiFactory, new ApiFactory(Config.settings.composer.url));
 
     // initialize routing
     useExpressServer(app, {
