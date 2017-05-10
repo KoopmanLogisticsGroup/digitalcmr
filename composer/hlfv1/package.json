@@ -10,7 +10,7 @@
     "fs-extra": "2.1.2",
     "homedir": "^0.6.0",
     "fabric-ca-client": "1.0.0-alpha.0",
-    "fabric-client": "1.0.0-alpha"
+    "fabric-client": "latest"
   },
   "author": "",
   "license": "ISC"
