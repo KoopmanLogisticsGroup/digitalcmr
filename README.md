@@ -15,9 +15,10 @@ npm login --registry=https://npm-registry.whitewater.ibm.com --scope=@cicbenelux
 2. Open the url you get when you do `npm i -g @cicbenelux/asdf`
 
 3. Execute the following commands to expose your token as an environment variable (always):  
+**NOTE**: replace bash_profile with zsh_profile or something else if you run a different shell.  
 ```console
-echo "\nexport NPM_TOKEN=$(grep '//npm-registry.whitewater.ibm.com/:_authToken=' ~/.npmrc | cut -c47-)" >> ~/.profile
-source ~/.profile
+echo "\nexport NPM_TOKEN=$(grep '//npm-registry.whitewater.ibm.com/:_authToken=' ~/.npmrc | cut -c47-)" >> ~/.bash_profile
+source ~/.bash_profile
 ```
 
 ## Getting started  
