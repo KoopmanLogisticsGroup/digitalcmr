@@ -1,4 +1,5 @@
-# Composer boilerplate
+# Composer boilerplate  
+[![Build Status](https://travis.ibm.com/CICBlockchain/composer-boilerplate.svg?token=YkWWPxQZ9L5fZzx9KKEr&branch=master)](https://travis.ibm.com/CICBlockchain/composer-boilerplate)
 Get started quickly with a Fabric Composer project. Currently it consists of a business network definition and a 
 quick way of deploying it on a V1 network. We'll add functionality like the REST server, playground and generators soon. 
 
@@ -15,9 +16,9 @@ npm login --registry=https://npm-registry.whitewater.ibm.com --scope=@cicbenelux
 2. Open the url you get when you do `npm i -g @cicbenelux/asdf`
 
 3. Execute the following commands to expose your token as an environment variable (always):  
-**NOTE**: replace bash_profile with zsh_profile or something else if you run a different shell.  
+**NOTE**: replace .bashrc with .zshrc or something else if you run a different shell.  
 ```bash
-echo "\nexport NPM_TOKEN=$(grep '//npm-registry.whitewater.ibm.com/:_authToken=' ~/.npmrc | cut -c47-)" >> ~/.bash_profile
+echo "\nexport NPM_TOKEN=$(grep '//npm-registry.whitewater.ibm.com/:_authToken=' ~/.npmrc | cut -c47-)" >> ~/.bashrc
 source ~/.bash_profile
 ```
 
