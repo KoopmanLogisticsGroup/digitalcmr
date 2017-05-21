@@ -6,7 +6,7 @@ import {SampleAssetApi} from '../src/sdk/api';
 chai.should();
 
 describe('The API factory', () => {
-   it('creates a land title API', (done) => {
+   it('creates an API', (done) => {
       const factory = new ApiFactory('http://example.com');
       const api = factory.get(SampleAssetApi);
       api.sampleAssetFind.should.be.an.instanceof(Function);

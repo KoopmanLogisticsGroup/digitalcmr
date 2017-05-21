@@ -8,7 +8,7 @@ echo "HLF V1 Runtime ready to go."
 # Deploy network
 cd /bna
 rm -r dist/*.bna
-composer archive create -t dir -n . -a "dist/${COMPOSER_NETWORK}@${COMPOSER_NETWORK_VERSION}.bna"
+composer archive create -t dir -n . -a "dist/${COMPOSER_NETWORK}.bna"
 
 # (TODO: can we make this variable to account for different processor speeds?)
 echo "Waiting for 60 seconds to allow the peers to get to know eachother"
@@ -16,7 +16,7 @@ sleep 60
 
 # We can consider building in a check to see if it exists and if so, upgrade instead of deploy.
 composer network deploy \
-    -a "dist/${COMPOSER_NETWORK}@${COMPOSER_NETWORK_VERSION}.bna" \
+    -a "dist/${COMPOSER_NETWORK}.bna" \
     -i "${COMPOSER_USER}" \
     -s "${COMPOSER_PASSWORD}"
 

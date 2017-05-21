@@ -11,6 +11,9 @@ RUN npm install -g composer-cli composer-rest-server --loglevel error
 
 COPY hlfv1/package.json /hlfv1/package.json
 RUN cd /hlfv1 && npm install --loglevel error
+
+COPY bna/package.json /bna/package.json
+RUN cd /bna && npm install --loglevel error
 RUN npm cache clean
 
 COPY hlfv1 /hlfv1
