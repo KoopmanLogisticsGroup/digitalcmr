@@ -2,6 +2,7 @@ import * as supertest from 'supertest';
 import 'mocha';
 import * as chai from 'chai';
 import * as http from 'http';
+import {SampleAsset} from '../../src/sdk/api';
 
 const server = supertest.agent('http://localhost:8080');
 chai.should();
@@ -14,17 +15,16 @@ const ok = (res) => {
 };
 
 describe('the running server', () => {
-    describe('creating a landtitle', () => {
+    describe('creating a sampleasset', () => {
         before((done) => {
-            let title: any = {};
-            title.forSale = true;
-            title.information = 'info';
-            title.owner = 'me';
-            title.titleId = new Date().getTime().toString();
+            let sampleAsset: any = {}; // Any so we don't have to set $class
+            sampleAsset.assetId = new Date().getTime().toString();
+            sampleAsset.owner = 'myOwner';
+            sampleAsset.value = '1000';
 
             server
-                .post('/api/v1/landtitles')
-                .send(title)
+                .post('/api/v1/sampleassets')
+                .send(sampleAsset)
                 .expect(ok)
                 .expect('Content-Type', /json/)
                 .end((err: Error, res) => {
@@ -32,19 +32,19 @@ describe('the running server', () => {
                         console.log(err.stack);
                         return done(err);
                     }
-                    res.body.$class.should.equal('net.biz.digitalPropertyNetwork.LandTitle', 'No landTitle returned');
-                    res.body.titleId.should.equal(title.titleId);
+                    res.body.$class.should.equal('org.acme.sample.SampleAsset', 'No sampleAsset returned');
+                    res.body.assetId.should.equal(sampleAsset.assetId);
                     done(err);
                 });
         });
 
-        it('gets all landtitles', (done) => {
+        it('gets all sampleassets', (done) => {
             server
-                .get('/api/v1/landtitles')
+                .get('/api/v1/sampleassets')
                 .expect(ok)
                 .expect('Content-Type', /json/)
                 .end((err, res) => {
-                    res.body.length.should.be.greaterThan(0, 'No landtitles found');
+                    res.body.length.should.be.greaterThan(0, 'No sampleassets found');
                     done(err);
                 });
         });

@@ -1,27 +1,27 @@
 import {Body, Get, JsonController, Post, UseAfter, UseInterceptor} from 'routing-controllers';
 import {Container} from 'typedi';
 import {ApiFactory} from '../../utils';
-import {LandTitleApi, LandTitle} from '../../sdk/api';
+import {SampleAsset, SampleAssetApi} from '../../sdk/api';
 import {ErrorHandlerMiddleware, ComposerInterceptor} from '../../middleware';
 
-@JsonController('/landtitles')
+@JsonController('/sampleassets')
 @UseInterceptor(ComposerInterceptor)
 @UseAfter(ErrorHandlerMiddleware)
 export class LandTitleController {
-  private api: LandTitleApi;
+  private api: SampleAssetApi;
 
   public constructor() {
     const apiFactory = Container.get(ApiFactory);
-    this.api = apiFactory.get(LandTitleApi);
+    this.api = apiFactory.get(SampleAssetApi);
   }
 
   @Get('/')
   public async getAll(): Promise<any> {
-    return this.api.landTitleFind();
+    return this.api.sampleAssetFind();
   }
 
   @Post('/')
-  public async create(@Body() landTitle: LandTitle): Promise<any> {
-    return this.api.landTitleCreate(landTitle);
+  public async create(@Body() sampleAsset: SampleAsset): Promise<any> {
+    return this.api.sampleAssetCreate(sampleAsset);
   }
 }

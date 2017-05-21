@@ -16,17 +16,19 @@ npm login --registry=https://npm-registry.whitewater.ibm.com --scope=@cicbenelux
 
 3. Execute the following commands to expose your token as an environment variable (always):  
 **NOTE**: replace bash_profile with zsh_profile or something else if you run a different shell.  
-```console
+```bash
 echo "\nexport NPM_TOKEN=$(grep '//npm-registry.whitewater.ibm.com/:_authToken=' ~/.npmrc | cut -c47-)" >> ~/.bash_profile
 source ~/.bash_profile
 ```
 
 ## Getting started  
 1. Get the latest baseimage and other images
-```console
+```bash
 docker pull hyperledger/fabric-baseimage:x86_64-0.3.0 && docker tag hyperledger/fabric-baseimage:x86_64-0.3.0 hyperledger/fabric-baseimage:latest
 docker pull hyperledger/fabric-ccenv:x86_64-1.0.0-alpha
 docker pull hyperledger/fabric-couchdb:x86_64-1.0.0-alpha
+docker pull hyperledger/fabric-peer:x86_64-1.0.0-alpha
+docker pull hyperledger/fabric-orderer:x86_64-1.0.0-alpha
 ```
 2. Run the blockchain and deploy the business network: `docker-compose up`.  
   
