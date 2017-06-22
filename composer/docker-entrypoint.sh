@@ -6,11 +6,8 @@ rm -r dist/*.bna || true
 
 ls /admin-crypto || (echo "Admin keys not found."; exit 1)
 
-# This creates the network file. See bna/package.json
-npm install --unsafe-perm
-
-# Not needed anymore.
-# composer archive create -t dir -n . -a "dist/${COMPOSER_NETWORK}.bna"
+# Create archive
+composer archive create --sourceType dir --sourceName . -a "./dist/${COMPOSER_NETWORK}.bna"
 
 WAITTIME=${COMPOSER_WAIT_TIME:-60}
 echo "Waiting for $WAITTIME seconds to allow the peers to get to know eachother"
@@ -29,6 +26,7 @@ composer network deploy \
     -i "${COMPOSER_USER}" \
     -s notused
 
+# Start server
 composer-rest-server \
     -p defaultProfile \
     -n "${COMPOSER_NETWORK}" \
