@@ -26,11 +26,7 @@ source ~/.bash_profile
 ## Getting started  
 1. Get the baseimage and other images
 ```bash
-docker pull hyperledger/fabric-baseimage:x86_64-0.3.0 && docker tag hyperledger/fabric-baseimage:x86_64-0.3.0 hyperledger/fabric-baseimage:latest
-docker pull hyperledger/fabric-ccenv:x86_64-1.0.0-alpha
-docker pull hyperledger/fabric-couchdb:x86_64-1.0.0-alpha
-docker pull hyperledger/fabric-peer:x86_64-1.0.0-alpha
-docker pull hyperledger/fabric-orderer:x86_64-1.0.0-alpha
+./composer/hlfv1/downloadFabric.sh
 ```
 2. Run the blockchain and deploy the business network: `docker-compose up`.  
   
@@ -39,29 +35,30 @@ Note: see `composer/docker-entrypoint.sh` if you want to know how it starts.
 ## Running the application
 Start blockchain and server, deploy business network  
 ```bash
+docker rm -f `docker ps -aq`
 docker-compose up --force-recreate
 ```
 
 ## Generate TypeScript for the server  
-When you run the following command
+When you run the following command the models and API's are generated automatically.
 ```bash
 npm run generateSDK
 ```
 
 
 ## Using the composer cli
-Create composer container in different tab (after deployment succeeded)
+Get into the composer container.
 ```bash
-docker run -it \
-    -v $(pwd)/composer/bna:/bna \
-    --link peer0:peer0.hlf1_default \
-    --link ca0:ca0.hlf1_default \
-    --env-file=.env \
-    --network composerboilerplate_default composerboilerplate_composer bash
+docker exec -it composerboilerplate_composer_1 bash
 ```
 Tip: execute this so you don't have to add network, user and pass to every following command:  
 ```bash
 alias composer="composer -n \"\$COMPOSER_NETWORK\" -i \$COMPOSER_USER -s \$COMPOSER_PASSWORD"
+```
+
+Test
+```bash
+composer network list
 ```
 
 Add participant  
@@ -79,8 +76,14 @@ Submit transaction
 composer transaction submit -d '{"$class": "net.biz.digitalPropertyNetwork.RegisterPropertyForSale","seller":"personId:42", "title": "titleId:0892"}'
 ```
 
+Test
+http://localhost:3000/explorer/#!/SampleAsset/SampleAsset_create  
+http://localhost:8080/api/v1/sampleassets  
+
 To manually update the network (note the backslash to not use the alias we set earlier):
 ```bash
 \composer archive create -t dir -n .
 composer network deploy -a $COMPOSER_NETWORK\@$COMPOSER_VERSION.bna
 ```
+
+Test it out 

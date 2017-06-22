@@ -7,7 +7,7 @@ import {ErrorHandlerMiddleware, ComposerInterceptor} from '../../middleware';
 @JsonController('/sampleassets')
 @UseInterceptor(ComposerInterceptor)
 @UseAfter(ErrorHandlerMiddleware)
-export class LandTitleController {
+export class SampleAssetController {
   private api: SampleAssetApi;
 
   public constructor() {

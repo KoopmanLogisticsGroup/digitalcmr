@@ -1,22 +1,22 @@
 {
     "type": "hlfv1",
     "orderers": [
-        "grpc://orderer0:7050"
+        {
+            "url": "grpc://orderer.example.com:7050"
+        }
     ],
-    "ca": "http://ca0:7054",
+    "ca": {
+        "url": "http://ca.example.com:7054",
+        "name": "ca.example.com"
+    },
     "peers": [
         {
-            "requestURL": "grpc://peer0:7051",
-            "eventURL": "grpc://peer0:7053"
-        },
-        {
-            "requestURL": "grpc://peer1:7051",
-            "eventURL": "grpc://peer1:7053"
+            "requestURL": "grpc://peer0.org1.example.com:7051",
+            "eventURL": "grpc://peer0.org1.example.com:7053"
         }
     ],
     "keyValStore": "/root/.hfc-key-store",
     "channel": "mychannel",
     "mspID": "Org1MSP",
-    "deployWaitTime": "300",
-    "invokeWaitTime": "100"
+    "timeout": "300"
 }
