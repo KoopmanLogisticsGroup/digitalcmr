@@ -23,18 +23,11 @@ composer identity import \
     -c /admin-crypto/signcerts/Admin@org1.example.com-cert.pem \
     -k /admin-crypto/keystore/9022d671ceedbb24af3ea69b5a8136cc64203df6b9920e26f48123fcfcb1d2e9_sk
 
-# Instantiate
-if [ composer network ping -n ${COMPOSER_NETWORK} -i "${COMPOSER_USER}" -s notused ]; then
-    composer network update \
-    -a "dist/${COMPOSER_NETWORK}.bna" \
-    -i "${COMPOSER_USER}" \
-    -s "notused"
-else
-    composer network deploy \
+# Deploy
+composer network deploy \
     -a "dist/${COMPOSER_NETWORK}.bna" \
     -i "${COMPOSER_USER}" \
     -s notused
-fi
 
 composer-rest-server \
     -p defaultProfile \
