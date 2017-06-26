@@ -1,75 +1,55 @@
-version: '2.1'
+version: '2.0'
 services:
-  ca0:
-    image: hyperledger/fabric-ca:x86_64-1.0.0-alpha
-    environment:
-      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
-    ports:
-      - 7054:7054
-    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/peerOrg1-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/d8a5b3cac1b821f6e4b487ceaf1fd239cdcfc310894150908b90f05e9179556a_sk -b admin:adminpw' -d
-    volumes:
-      - ./composer/hlfv1/crypto-config/peerOrganizations/peerOrg1/ca/:/etc/hyperledger/fabric-ca-server-config
-    container_name: ca_peerOrg1
-
-  orderer0:
-    container_name: orderer0
+  ca.example.com:
     extends:
-      file: compose-defaults.yml
-      service: orderer
-
-  peer0:
-    container_name: peer0
+      file: composer/hlfv1/composer/docker-compose.yml
+      service: ca.example.com
+  orderer.example.com:
     extends:
-      file: compose-defaults.yml
-      service: peer
-    environment:
-  #      - CORE_LOGGING_LEVEL=DEBUG
-      - CORE_PEER_ID=peer0
-      - CORE_PEER_GOSSIP_ORGLEADER=true
-      - CORE_PEER_ADDRESS=peer0:7051
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0:7051
-    command: peer node start --peer-defaultchain=false
-    ports:
-      - 7051:7051
-      - 7053:7053
-    volumes:
-        - ./composer/hlfv1/crypto-config/peerOrganizations/peerOrg1/peers/peerOrg1Peer1/:/etc/hyperledger/msp/peer
-#        - ./tls/peers/peer0:/etc/hyperledger/tls
+      file: composer/hlfv1/composer/docker-compose.yml
+      service: orderer.example.com
+  peer0.org1.example.com:
+    extends:
+      file: composer/hlfv1/composer/docker-compose.yml
+      service: peer0.org1.example.com
     depends_on:
-      - orderer0
-
-  peer1:
-    container_name: peer1
-    extends:
-      file: compose-defaults.yml
-      service: peer
+      - orderer.example.com
     environment:
-      - CORE_PEER_ID=peer1
-      - CORE_PEER_GOSSIP_ORGLEADER=false
-      - CORE_PEER_ADDRESS=peer1:7051
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1:7051
-    working_dir: /opt/gopath/src/github.com/hyperledger/fabric
-    ports:
-      - 7056:7051
-      - 7058:7053
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=composerboilerplate_default
+
+  util:
+    image: docker
     volumes:
-        - ./composer/hlfv1/crypto-config/peerOrganizations/peerOrg1/peers/peerOrg1Peer2/:/etc/hyperledger/msp/peer
-#        - ./composer/hlfv1/tls/peers/peer1:/etc/hyperledger/tls
+      - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
-      - orderer0
-      - peer0
+      - peer0.org1.example.com
+    command: >
+      sh -c " \
+        set -e; \
+        sleep 10; \
+        docker exec -e \"CORE_PEER_LOCALMSPID=Org1MSP\" -e \"CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@org1.example.com\" peer0.org1.example.com peer channel create -o orderer.example.com:7050 -c mychannel -f /etc/hyperledger/configtx/mychannel.tx; \
+        docker exec -e \"CORE_PEER_LOCALMSPID=Org1MSP\" -e \"CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@org1.example.com\" peer0.org1.example.com peer channel join -b mychannel.block && \
+        echo 'Created channels! Exiting.'"
+
+  couchdb:
+    extends:
+      file: composer/hlfv1/composer/docker-compose.yml
+      service: couchdb
 
   composer:
     build: composer
     ports:
       - 3000:3000
+    environment:
+      - COMPOSER_WAIT_TIME=0
     volumes:
       - ./composer/bna:/bna
+      - ./composer/hlfv1/composer/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com:/admin-crypto
+      - ./composer/connection.json:/root/.composer-connection-profiles/defaultProfile/connection.json
     depends_on:
-      - orderer0
-      - peer0
-      - peer1
-      - ca0
+      - orderer.example.com
+      - peer0.org1.example.com
+      - couchdb
     env_file: ./composer/.env
 
   server:
@@ -86,6 +66,6 @@ services:
       - ./server/src:/usr/src/app/src
       - ./server/tsconfig.json:/usr/src/app/tsconfig.json # TS filenames get added automatically to this file on build
       - ./server/package.json:/usr/src/app/package.json
-    links:
-      - composer
+#    links:
+#      - composer
     command: bash -c "grunt"

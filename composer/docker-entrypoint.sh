@@ -1,25 +1,32 @@
 #!/bin/bash -e
-# startup hlf v1 and define the channel 'mychannel'
-cd /hlfv1
-SYSTEST=hlfv1 node create-channel.js
-SYSTEST=hlfv1 node join-channel.js
-echo "HLF V1 Runtime ready to go."
-
 # Deploy network
 cd /bna
-rm -r dist/*.bna
-composer archive create -t dir -n . -a "dist/${COMPOSER_NETWORK}.bna"
+mkdir dist || true
+rm -r dist/*.bna || true
 
-# (TODO: can we make this variable to account for different processor speeds?)
-echo "Waiting for 60 seconds to allow the peers to get to know eachother"
-sleep 60
+ls /admin-crypto || (echo "Admin keys not found."; exit 1)
 
-# We can consider building in a check to see if it exists and if so, upgrade instead of deploy.
+# Create archive
+composer archive create --sourceType dir --sourceName . -a "./dist/${COMPOSER_NETWORK}.bna"
+
+WAITTIME=${COMPOSER_WAIT_TIME:-60}
+echo "Waiting for $WAITTIME seconds to allow the peers to get to know eachother"
+sleep $WAITTIME
+
+# Get credentials of admin. Note: make sure that the material is loaded as a volume and that the priv key is correct.
+composer identity import \
+    -p defaultProfile \
+    -u "$COMPOSER_USER" \
+    -c /admin-crypto/signcerts/Admin@org1.example.com-cert.pem \
+    -k /admin-crypto/keystore/9022d671ceedbb24af3ea69b5a8136cc64203df6b9920e26f48123fcfcb1d2e9_sk
+
+# Deploy
 composer network deploy \
     -a "dist/${COMPOSER_NETWORK}.bna" \
     -i "${COMPOSER_USER}" \
-    -s "${COMPOSER_PASSWORD}"
+    -s notused
 
+# Start server
 composer-rest-server \
     -p defaultProfile \
     -n "${COMPOSER_NETWORK}" \
