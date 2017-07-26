@@ -5,7 +5,7 @@ rule EverybodyCanReadEverything {
     description: "Allow all participants read access to all resources"
     participant: "org.acme.sample.SampleParticipant"
     operation: READ
-    resource: "org.acme.sample"
+    resource: "org.acme.**"
     action: ALLOW
 }
 
@@ -13,7 +13,7 @@ rule EverybodyCanSubmitTransactions {
     description: "Allow all participants to submit transactions"
     participant: "org.acme.sample.SampleParticipant"
     operation: CREATE
-    resource: "org.acme.sample.SampleTransaction"
+    resource: "org.acme.**"
     action: ALLOW
 }
 
@@ -21,7 +21,7 @@ rule OwnerHasFullAccessToTheirAssets {
     description: "Allow all participants full access to their assets"
     participant(p): "org.acme.sample.SampleParticipant"
     operation: ALL
-    resource(r): "org.acme.sample.SampleAsset"
+    resource(r): "org.acme.**"
     condition: (r.owner.getIdentifier() === p.getIdentifier())
     action: ALLOW
 }
