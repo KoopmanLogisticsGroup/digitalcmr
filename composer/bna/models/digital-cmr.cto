@@ -1,0 +1,93 @@
+/**
+ * Digital CMR business network definition.
+ */
+namespace org.digitalcmr
+
+/**
+ * Assets
+ */
+asset TransportOrder identified by transportOrderID {
+  o String transportOrderID
+  --> LeasePlan owner
+  --> Compound source
+  --> CarDealer destination
+  o String addressA
+  o String addressB
+}
+
+asset ECMR identified by ECMR_ID {
+  o String ECMR_ID
+  --> TransportOrder originTransportOrder
+  o String STATUS
+  o ItemLine[] items
+}
+
+asset Vehicle identified by vinNumber {
+  o String vinNumber
+  o String producer
+  o String type
+  o String model
+  o Integer weight
+  o String tagNumber
+}
+
+/**
+ * Participants
+ */
+
+participant LeasePlan identified by LeasePlanID {
+  o String LeasePlanID
+  o String Name
+  o Address address
+}
+
+participant Compound identified by CompoundID {
+  o String CompoundID
+  o String Name
+  o Address address
+}
+
+participant Transporter identified by TransporterID {
+  o String TransporterID
+  o String firstName
+  o String lastName
+}
+
+participant CarDealer identified by CarDealerID {
+  o String CarDealerID
+  o String Name
+  o Address address
+}
+
+/**
+ * Concepts
+ */
+concept ItemLine {
+  o String[] remarks
+  --> Vehicle vehicle
+}
+
+concept Address {
+  o String zipCode
+  o String City
+  o String street
+  o String number
+  o String Country
+}
+
+/**
+ * Transactions
+ */
+transaction signECMR {
+  --> ECMR ecmr
+  --> Participant participant
+}
+
+/**
+ * Events
+ */
+event SampleEvent {
+  --> ECMR ecmr
+  o String oldValue
+  o String newValue
+}
