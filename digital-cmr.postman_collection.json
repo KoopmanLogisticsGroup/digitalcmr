@@ -1,0 +1,186 @@
+{
+	"variables": [],
+	"info": {
+		"name": "digital-cmr",
+		"_postman_id": "1ada88a2-1ab1-2c72-1a78-c1b39ac1b139",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET Lease Plan Participant",
+			"request": {
+				"url": "localhost:3000/api/LeasePlan/leaseplan1",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "CREATE Lease Plan Participant",
+			"request": {
+				"url": "localhost:3000/api/LeasePlan",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"$class\": \"org.digitalcmr.LeasePlan\",\n\t\"LeasePlanID\": \"leaseplan1\",\n\t\"Name\": \"Leasing Company\",\n\t\"address\": {\n\t\t\"zipCode\": \"9712HX\",\n\t\t\"City\": \"Groningen\",\n\t\t\"street\": \"koopstraat\",\n\t\t\"number\": 147,\n\t\t\"Country\": \"Netherlands\"\n\t}\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "CREATE Vehicle",
+			"request": {
+				"url": "http://localhost:3000/api/Vehicle",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"$class\": \"org.digitalcmr.Vehicle\",\n\t\"vinNumber\": \"123456789X\",\n\t\"producer\": \"Audi\",\n\t\"type\": \"Car\",\n\t\"model\": \"A4\",\n\t\"weight\": 1500,\n\t\"tagNumber\": \"12345F\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "GET Vehicle",
+			"request": {
+				"url": "localhost:3000/api/Vehicle/123456789X",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "CREATE Compound Participant",
+			"request": {
+				"url": "localhost:3000/api/Compound",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"$class\": \"org.digitalcmr.Compound\",\n\t\"CompoundID\": \"compund1\",\n\t\"Name\": \"Koopman Compund\",\n\t\"address\": {\n\t\t\"zipCode\": \"9734HX\",\n\t\t\"City\": \"Amsterdam\",\n\t\t\"street\": \"compundstraat\",\n\t\t\"number\": 127,\n\t\t\"Country\": \"Netherlands\"\n\t}\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "GET Compound",
+			"request": {
+				"url": "localhost:3000/api/Compound/compound1",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "CREATE Transporter",
+			"request": {
+				"url": "localhost:3000/api/Transporter",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"$class\": \"org.digitalcmr.Transporter\",\n\t\"TransporterID\": \"harry\",\n\t\"firstName\": \"Harry\",\n\t\"lastName\": \"Koop\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "GET Transporter",
+			"request": {
+				"url": "localhost:3000/api/Transporter/harry",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "CREATE Car Dealer",
+			"request": {
+				"url": "localhost:3000/api/CarDealer",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"$class\": \"org.digitalcmr.CarDealer\",\n\t\"CarDealerID\": \"cardealer1\",\n\t\"Name\": \"Auto das Auto bv\",\n\t\"address\": {\n\t\t\"zipCode\": \"9634HX\",\n\t\t\"City\": \"Utrecht\",\n\t\t\"street\": \"dealingstraat\",\n\t\t\"number\": 117,\n\t\t\"Country\": \"Netherlands\"\n\t}\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "GET Car Dealer",
+			"request": {
+				"url": "localhost:3000/api/CarDealer/cardealer1",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "CREATE ECMR",
+			"request": {
+				"url": "localhost:3000/api/Transporter",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"$class\": \"org.digitalcmr.Transporter\",\n\t\"TransporterID\": \"harry\",\n\t\"firstName\": \"Harry\",\n\t\"lastName\": \"Koop\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
