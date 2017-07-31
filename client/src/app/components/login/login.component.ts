@@ -9,9 +9,10 @@ import {AuthenticationService} from '../../services/authentication.service';
   styleUrls:   ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  public title = 'app works';
   public username = '';
   public password = '';
+  public loading  = false;
+  public error    = false;
 
   public constructor(private _router: Router,
                      private _authenticationService: AuthenticationService) {
@@ -26,8 +27,15 @@ export class LoginComponent implements OnInit {
     this._authenticationService.login(username, password)
       .subscribe(result => {
         if (result) {
+          this.error = false;
           this._router.navigate(['./things']);
+        } else {
+          this.error = true;
         }
       });
+  }
+
+  public cleanError(): void {
+    this.error = false;
   }
 }

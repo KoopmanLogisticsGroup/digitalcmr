@@ -1,9 +1,33 @@
-<div>
-  <h1>LOGIN</h1>
-  <div>
-    <input type="text" placeholder="Username" autofocus [(ngModel)]="username">
-    <input type="password" placeholder="Password" [(ngModel)]="password">
+<div class="blue-bar">
+</div>
+
+<div class="ui grid">
+  <div class="five wide column centered login-box">
+    <img class="logo" src="../assets/img/logo_min.png">
+    <div class="label">
+      Username
+    </div>
+    <div class="ui left icon input width-scale">
+      <input type="text" placeholder="Username" [(ngModel)]="username">
+      <i class="user icon"></i>
+    </div>
+    <div class="label">
+      Password
+    </div>
+    <div class="ui left icon input width-scale">
+      <input type="password" placeholder="Password" [(ngModel)]="password" (keypress)="cleanError()">
+      <i class="lock icon"></i>
+    </div>
     <br>
-    <button (click)="login(username, password)">Submit</button>
+    <button class="ui button login-label" (click)="login(username, password)">Login</button>
+    <div *ngIf="loading" class="ui active inverted dimmer">
+      <div class="ui text loader">Loading</div>
+    </div>
+    <div *ngIf="error" class="ui negative message">
+      <div class="header">
+        Oops! Something went wrong
+      </div>
+      <p>Username or password are not valid</p>
+    </div>
   </div>
 </div>
