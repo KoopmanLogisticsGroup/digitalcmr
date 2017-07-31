@@ -32,6 +32,7 @@ composer-rest-server \
     -n "${COMPOSER_NETWORK}" \
     -i "${COMPOSER_USER}" \
     -s "${COMPOSER_PASSWORD}" \
+    -S "${COMPOSER_SECURITY}" \
     -N "required"
 
 exec "$@"
