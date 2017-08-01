@@ -9,7 +9,7 @@ describe('The API factory', () => {
    it('creates an API', (done) => {
       const factory = new ApiFactory('http://example.com');
       const api = factory.get(LegalOwnerOrgApi);
-      api.legalOwnerOrgFind().should.be.an.instanceof(Function);
+      api.legalOwnerOrgFind();
       api.basePath.should.equal('http://example.com', 'BasePath not propagated to api.');
       done();
     });
