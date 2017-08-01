@@ -20,5 +20,9 @@
     "hyperledger"
   ],
   "author": "IBM Client Innovation Center Benelux",
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "dependencies": {
+    "passport": "^0.3.2",
+    "passport-github": "^1.1.0"
+  }
 }
