@@ -25,7 +25,7 @@ chai.should();
 chai.use(require('chai-as-promised'));
 
 const bfs_fs = BrowserFS.BFSRequire('fs');
-const NS = 'org.digitalcmr'
+const NS = 'org.digitalcmr';
 
 describe('digitalcmr', () => {
     // This is the business network connection the tests will use.
@@ -87,9 +87,9 @@ describe('digitalcmr', () => {
                 const factory = businessNetworkConnection.getBusinessNetwork().getFactory();
 
                 // Create the participants.
-                const LeasePlan = factory.newResource(NS, 'legalOwner', 'leaseplan1@email.com');
+                const LeasePlan = factory.newResource(NS, 'legalOwnerOrg', 'LeasePlan@email.com');
                 LeasePlan.name = 'LeasePlan';
-                return businessNetworkConnection.getParticipantRegistry('org.digitalcmr.legalOwner')
+                return businessNetworkConnection.getParticipantRegistry('org.digitalcmr.legalOwnerOrg')
                     .then((participantRegistry) => {
                         participantRegistry.add(LeasePlan);
                     })
@@ -101,10 +101,10 @@ describe('digitalcmr', () => {
             .then(() => {
 
                 // Create the assets.
-                const Vehicle1 = factory.newResource('org.digitalcmr', 'Vehicle', '1');
-                Vehicle1.owner = factory.newRelationship('org.digitalcmr', 'legalOwner', 'LeasePlan@email.com');
+                const Vehicle1 = factory.newResource(NS, 'Vehicle', '1');
+                Vehicle1.owner = factory.newRelationship(NS, 'legalOwner', 'LeasePlan@email.com');
                 Vehicle1.frameNumber = '32HSN2321341HS';
-                return businessNetworkConnection.getAssetRegistry('org.digitalcmr')
+                return businessNetworkConnection.getAssetRegistry(NS)
                     .then((assetRegistry) => {
                         assetRegistry.add(Vehicle1);
                     });
@@ -112,7 +112,7 @@ describe('digitalcmr', () => {
             .then(() => {
 
                 // Issue the identities.
-                return businessNetworkConnection.issueIdentity('org.digitalcmr.legalOwner#leaseplan1@email.com', 'LeasePlan')
+                return businessNetworkConnection.issueIdentity('org.digitalcmr.legalOwnerOrg#LeasePlan@email.com', 'LeasePlan')
                     .then((identity) => {
                         LeasePlanIdentity = identity;
                     })
@@ -144,7 +144,7 @@ describe('digitalcmr', () => {
             .then(() => {
 
                 // Get the assets.
-                return businessNetworkConnection.getAssetRegistry('org.digitalcmr.legalOwner')
+                return businessNetworkConnection.getAssetRegistry('org.digitalcmr.legalOwnerOrg')
                     .then((assetRegistry) => {
                         return assetRegistry.getAll();
 
@@ -156,7 +156,7 @@ describe('digitalcmr', () => {
                 // Validate the assets.
                 assets.should.have.lengthOf(2);
                 const asset1 = assets[0];
-                asset1.owner.getFullyQualifiedIdentifier().should.equal('org.digitalcmr.legalOwner#LeasePlan@email.com');
+                asset1.owner.getFullyQualifiedIdentifier().should.equal('org.digitalcmr.legalOwnerOrg#LeasePlan@email.com');
                 // asset1.value.should.equal('10');
             });
 
@@ -169,12 +169,12 @@ describe('digitalcmr', () => {
             .then(() => {
 
                 // Create the asset.
-                const eCMR = factory.newResource('org.digitalcmr', 'Ecmr', '3');
-                eCMR.owner = factory.newRelationship('org.digitalcmr', 'legalOwner', 'LeasePlan@email.com');
+                const eCMR = factory.newResource(NS, 'ECMR', '3');
+                eCMR.owner = factory.newRelationship(NS, 'legalOwnerOrg', 'LeasePlan@email.com');
                 // eCMR.value = '30';
 
                 // Add the asset, then get the asset.
-                return businessNetworkConnection.getAssetRegistry('org.digitalcmr.Ecmr')
+                return businessNetworkConnection.getAssetRegistry('org.digitalcmr.ECMR')
                     .then((assetRegistry) => {
                         return assetRegistry.add(eCMR)
                             .then(() => {
@@ -186,7 +186,7 @@ describe('digitalcmr', () => {
             .then((eCMR) => {
 
                 // Validate the asset.
-                eCMR.owner.getFullyQualifiedIdentifier().should.equal('org.digitalcmr.legalOwner#LeasePlan@email.com');
+                eCMR.owner.getFullyQualifiedIdentifier().should.equal('org.digitalcmr.legalOwnerOrg#LeasePlan@email.com');
                 // eCMR.value.should.equal('30');
 
             });
@@ -200,8 +200,8 @@ describe('digitalcmr', () => {
             .then(() => {
 
                 // Create the asset.
-                const Vehicle1 = factory.newResource('org.digitalcmr', 'Vehicle', '1');
-                Vehicle1.owner = factory.newRelationship('org.digitalcmr', 'legalOwner', 'LeasePlan@email.com');
+                const Vehicle1 = factory.newResource(NS, 'Vehicle', '1');
+                Vehicle1.owner = factory.newRelationship(NS, 'legalOwnerOrg', 'LeasePlan@email.com');
 
                 // Update the asset, then get the asset.
                 return businessNetworkConnection.getAssetRegistry('org.digitalcmr.Vehicle')
@@ -216,7 +216,7 @@ describe('digitalcmr', () => {
             .then((Vehicle1) => {
 
                 // Validate the asset.
-                Vehicle1.owner.getFullyQualifiedIdentifier().should.equal('org.digitalcmr.legalOwner#LeasePlan@email.com');
+                Vehicle1.owner.getFullyQualifiedIdentifier().should.equal('org.digitalcmr.legalOwnerOrg#LeasePlan@email.com');
                 // Vehicle1.value.should.equal('50');
 
             });
