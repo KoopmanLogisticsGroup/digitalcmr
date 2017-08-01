@@ -25,9 +25,9 @@ chai.should();
 chai.use(require('chai-as-promised'));
 
 const bfs_fs = BrowserFS.BFSRequire('fs');
+const NS = 'org.digitalcmr'
 
-describe('Sample', () => {
-
+describe('digitalcmr', () => {
     // This is the business network connection the tests will use.
     let businessNetworkConnection;
 
@@ -35,10 +35,10 @@ describe('Sample', () => {
     let factory;
 
     // These are the identities for Alice and Bob.
-    let aliceIdentity;
-    let bobIdentity;
+    let leaseplan1Identity;
+    let leaseplan2Identity;
 
-    // These are a list of receieved events.
+    // These are a list of received events.
     let events;
 
     // This is called before each test is executed.
@@ -73,58 +73,55 @@ describe('Sample', () => {
 
             })
             .then(() => {
-
                 // Create and establish a business network connection
                 businessNetworkConnection = new BusinessNetworkConnection({ fs: bfs_fs });
                 events = [];
                 businessNetworkConnection.on('event', (event) => {
                     events.push(event);
                 });
-                return businessNetworkConnection.connect('defaultProfile', 'basic-sample-network', 'admin', 'adminpw');
+                return businessNetworkConnection.connect('defaultProfile', 'digitalcmr-network', 'admin', 'adminpw');
 
             })
             .then(() => {
 
                 // Get the factory for the business network.
-                factory = businessNetworkConnection.getBusinessNetwork().getFactory();
+                const factory = businessNetworkConnection.getBusinessNetwork().getFactory();
 
                 // Create the participants.
-                const alice = factory.newResource('org.acme.sample', 'SampleParticipant', 'alice@email.com');
-                alice.firstName = 'Alice';
-                alice.lastName = 'A';
-                const bob = factory.newResource('org.acme.sample', 'SampleParticipant', 'bob@email.com');
-                bob.firstName = 'Bob';
-                bob.lastName = 'B';
-                return businessNetworkConnection.getParticipantRegistry('org.acme.sample.SampleParticipant')
+                const Leaseplan1 = factory.newResource(NS, 'LeasePlan', 'leaseplan1@email.com');
+                Leaseplan1.name = 'leaseplan1';
+                const Leaseplan2 = factory.newResource(NS, 'LeasePlan', 'leaseplan2@email.com');
+                Leaseplan2.name = 'leaseplan2';
+                return businessNetworkConnection.getParticipantRegistry('org.digitalcmr.LeasePlan')
                     .then((participantRegistry) => {
-                        participantRegistry.addAll([alice, bob]);
+                        participantRegistry.add(Leaseplan1, Leaseplan2);
+                    })
+                    .catch((error) => {
+                        console.log("participant add error")
                     });
 
             })
             .then(() => {
 
                 // Create the assets.
-                const asset1 = factory.newResource('org.acme.sample', 'SampleAsset', '1');
-                asset1.owner = factory.newRelationship('org.acme.sample', 'SampleParticipant', 'alice@email.com');
-                asset1.value = '10';
-                const asset2 = factory.newResource('org.acme.sample', 'SampleAsset', '2');
-                asset2.owner = factory.newRelationship('org.acme.sample', 'SampleParticipant', 'bob@email.com');
-                asset2.value = '20';
-                return businessNetworkConnection.getAssetRegistry('org.acme.sample.SampleAsset')
+                const Vehicle = factory.newResource('org.digitalcmr', 'Vehicle', '1');
+                Vehicle.owner = factory.newRelationship('org.digitalcmr', 'LeasePlan', 'leaseplan1@email.com');
+                Vehicle.vinNumber = '32HSN2321341HS';
+                return businessNetworkConnection.getAssetRegistry('org.digitalcmr')
                     .then((assetRegistry) => {
-                        assetRegistry.addAll([asset1, asset2]);
+                        assetRegistry.add(Vehicle);
                     });
             })
             .then(() => {
 
                 // Issue the identities.
-                return businessNetworkConnection.issueIdentity('org.acme.sample.SampleParticipant#alice@email.com', 'alice1')
+                return businessNetworkConnection.issueIdentity('org.digitalcmr.LeasePlan#leaseplan1@email.com', 'leaseplan1')
                     .then((identity) => {
-                        aliceIdentity = identity;
-                        return businessNetworkConnection.issueIdentity('org.acme.sample.SampleParticipant#bob@email.com', 'bob1');
+                        leaseplan1Identity = identity;
+                        return businessNetworkConnection.issueIdentity('org.digitalcmr.LeasePlan#leaseplan2@email.com', 'leaseplan2');
                     })
                     .then((identity) => {
-                        bobIdentity = identity;
+                        leaseplan2Identity = identity;
                     });
 
             });
@@ -148,14 +145,14 @@ describe('Sample', () => {
             });
     }
 
-    it('Alice can read all of the assets', () => {
+    it('Leaseplan1 can read all of the assets', () => {
 
-        // Use the identity for Alice.
-        return useIdentity(aliceIdentity)
+        // Use the identity for Leaseplan1.
+        return useIdentity(leaseplan1Identity)
             .then(() => {
 
                 // Get the assets.
-                return businessNetworkConnection.getAssetRegistry('org.acme.sample.SampleAsset')
+                return businessNetworkConnection.getAssetRegistry('org.digitalcmr.LeasePlan')
                     .then((assetRegistry) => {
                         return assetRegistry.getAll();
 
@@ -167,24 +164,24 @@ describe('Sample', () => {
                 // Validate the assets.
                 assets.should.have.lengthOf(2);
                 const asset1 = assets[0];
-                asset1.owner.getFullyQualifiedIdentifier().should.equal('org.acme.sample.SampleParticipant#alice@email.com');
+                asset1.owner.getFullyQualifiedIdentifier().should.equal('org.digitalcmr.LeasePlan#leaseplan1@email.com');
                 asset1.value.should.equal('10');
                 const asset2 = assets[1];
-                asset2.owner.getFullyQualifiedIdentifier().should.equal('org.acme.sample.SampleParticipant#bob@email.com');
+                asset2.owner.getFullyQualifiedIdentifier().should.equal('org.digitalcmr.LeasePlan#leaseplan2@email.com');
                 asset2.value.should.equal('20');
 
             });
 
     });
 
-    it('Bob can read all of the assets', () => {
+    it('Leaseplan2 can read all of the assets', () => {
 
         // Use the identity for Bob.
-        return useIdentity(bobIdentity)
+        return useIdentity(leaseplan2Identity)
             .then(() => {
 
                 // Get the assets.
-                return businessNetworkConnection.getAssetRegistry('org.acme.sample.SampleAsset')
+                return businessNetworkConnection.getAssetRegistry('org.digitalcmr.LeasePlan')
                     .then((assetRegistry) => {
                         return assetRegistry.getAll();
 
@@ -196,126 +193,51 @@ describe('Sample', () => {
                 // Validate the assets.
                 assets.should.have.lengthOf(2);
                 const asset1 = assets[0];
-                asset1.owner.getFullyQualifiedIdentifier().should.equal('org.acme.sample.SampleParticipant#alice@email.com');
+                asset1.owner.getFullyQualifiedIdentifier().should.equal('org.digitalcmr.LeasePlan#leaseplan1@email.com');
                 asset1.value.should.equal('10');
                 const asset2 = assets[1];
-                asset2.owner.getFullyQualifiedIdentifier().should.equal('org.acme.sample.SampleParticipant#bob@email.com');
+                asset2.owner.getFullyQualifiedIdentifier().should.equal('org.digitalcmr.LeasePlan#leaseplan2@email.com');
                 asset2.value.should.equal('20');
 
             });
 
     });
 
-    it('Alice can add assets that she owns', () => {
+    it('Leaseplan1 can add an eCMR', () => {
 
         // Use the identity for Alice.
-        return useIdentity(aliceIdentity)
+        return useIdentity(leaseplan1Identity)
             .then(() => {
 
                 // Create the asset.
-                const asset3 = factory.newResource('org.acme.sample', 'SampleAsset', '3');
-                asset3.owner = factory.newRelationship('org.acme.sample', 'SampleParticipant', 'alice@email.com');
-                asset3.value = '30';
+                const eCMR = factory.newResource('org.digitalcmr', 'Ecmr', '3');
+                eCMR.owner = factory.newRelationship('org.digitalcmr', 'LeasePlan', 'leaseplan1@email.com');
+                // eCMR.value = '30';
 
                 // Add the asset, then get the asset.
-                return businessNetworkConnection.getAssetRegistry('org.acme.sample.SampleAsset')
+                return businessNetworkConnection.getAssetRegistry('org.digitalcmr.Ecmr')
                     .then((assetRegistry) => {
-                        return assetRegistry.add(asset3)
+                        return assetRegistry.add(eCMR)
                             .then(() => {
                                 return assetRegistry.get('3');
                             });
                     });
 
             })
-            .then((asset3) => {
+            .then((eCMR) => {
 
                 // Validate the asset.
-                asset3.owner.getFullyQualifiedIdentifier().should.equal('org.acme.sample.SampleParticipant#alice@email.com');
-                asset3.value.should.equal('30');
+                eCMR.owner.getFullyQualifiedIdentifier().should.equal('org.digitalcmr.LeasePlan#leaseplan1@email.com');
+                // eCMR.value.should.equal('30');
 
             });
 
     });
 
-    it('Alice cannot add assets that Bob owns', () => {
+    it('Leaseplan1 can update her assets', () => {
 
         // Use the identity for Alice.
-        return useIdentity(aliceIdentity)
-            .then(() => {
-
-                // Create the asset.
-                const asset3 = factory.newResource('org.acme.sample', 'SampleAsset', '3');
-                asset3.owner = factory.newRelationship('org.acme.sample', 'SampleParticipant', 'bob@email.com');
-                asset3.value = '30';
-
-                // Add the asset, then get the asset.
-                return businessNetworkConnection.getAssetRegistry('org.acme.sample.SampleAsset')
-                    .then((assetRegistry) => {
-                        return assetRegistry.add(asset3);
-                    });
-
-            })
-            .should.be.rejectedWith(/does not have .* access to resource/);
-
-    });
-
-    it('Bob can add assets that he owns', () => {
-
-        // Use the identity for Bob.
-        return useIdentity(bobIdentity)
-            .then(() => {
-
-                // Create the asset.
-                const asset4 = factory.newResource('org.acme.sample', 'SampleAsset', '4');
-                asset4.owner = factory.newRelationship('org.acme.sample', 'SampleParticipant', 'bob@email.com');
-                asset4.value = '40';
-
-                // Add the asset, then get the asset.
-                return businessNetworkConnection.getAssetRegistry('org.acme.sample.SampleAsset')
-                    .then((assetRegistry) => {
-                        return assetRegistry.add(asset4)
-                            .then(() => {
-                                return assetRegistry.get('4');
-                            });
-                    });
-
-            })
-            .then((asset4) => {
-
-                // Validate the asset.
-                asset4.owner.getFullyQualifiedIdentifier().should.equal('org.acme.sample.SampleParticipant#bob@email.com');
-                asset4.value.should.equal('40');
-
-            });
-
-    });
-
-    it('Bob cannot add assets that Alice owns', () => {
-
-        // Use the identity for Bob.
-        return useIdentity(bobIdentity)
-            .then(() => {
-
-                // Create the asset.
-                const asset4 = factory.newResource('org.acme.sample', 'SampleAsset', '4');
-                asset4.owner = factory.newRelationship('org.acme.sample', 'SampleParticipant', 'alice@email.com');
-                asset4.value = '40';
-
-                // Add the asset, then get the asset.
-                return businessNetworkConnection.getAssetRegistry('org.acme.sample.SampleAsset')
-                    .then((assetRegistry) => {
-                        return assetRegistry.add(asset4);
-                    });
-
-            })
-            .should.be.rejectedWith(/does not have .* access to resource/);
-
-    });
-
-    it('Alice can update her assets', () => {
-
-        // Use the identity for Alice.
-        return useIdentity(aliceIdentity)
+        return useIdentity(leaseplan1Identity)
             .then(() => {
 
                 // Create the asset.

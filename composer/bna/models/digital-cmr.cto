@@ -110,7 +110,7 @@ concept Loading {
   o String date
 }
 
-concept good {
+concept Good {
   o Remark carrierLoadingRemark
   o Remark compoundRemark
   o Remark recipientRemark
@@ -141,9 +141,7 @@ event Signature {
   --> Ecmr ecmr
   o Integer latitude
   o Integer longitude
-  o ECert certificate
   o String IP
-  o Integer timestamp
 }
 
 /**
