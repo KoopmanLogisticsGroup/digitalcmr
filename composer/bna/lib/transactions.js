@@ -14,10 +14,10 @@
 
 /**
  * Sample transaction processor function.
- * @param {org.acme.sample.SampleTransaction} tx The sample transaction instance.
+ * @param {org.digitalcmr.signEcmr} tx The sample transaction instance.
  * @transaction
  */
-function sampleTransaction(tx) {
+function eCmrTransaction(tx) {
 
     // Save the old value of the asset.
     var oldValue = tx.asset.value;
@@ -26,7 +26,7 @@ function sampleTransaction(tx) {
     tx.asset.value = tx.newValue;
 
     // Get the asset registry for the asset.
-    return getAssetRegistry('org.acme.sample.SampleAsset')
+    return getAssetRegistry('org.digitalcmr.Ecmr')
         .then(function (assetRegistry) {
 
             // Update the asset in the asset registry.
@@ -36,7 +36,7 @@ function sampleTransaction(tx) {
         .then(function () {
 
             // Emit an event for the modified asset.
-            var event = getFactory().newEvent('org.acme.sample', 'SampleEvent');
+            var event = getFactory().newEvent('org.digitalcmr', 'SampleEvent');
             event.asset = tx.asset;
             event.oldValue = oldValue;
             event.newValue = tx.newValue;
