@@ -1,93 +1,151 @@
 /**
  * Digital CMR business network definition.
  */
+
 namespace org.digitalcmr
 
 /**
- * Assets
+ * Assets eCMR and Vehicle
  */
-asset TransportOrder identified by transportOrderID {
-  o String transportOrderID
-  --> LeasePlan owner
+
+asset Ecmr identified by eCmrId {
+  o String eCmrId
+  o String legalOwnerRef
+  o String carrierRef
+  o String recipientRef
+  o String compoundRef
+  o Integer issueDate
+  --> LegalOwner owner
   --> Compound source
-  --> CarDealer destination
-  o String addressA
-  o String addressB
-}
-
-asset ECMR identified by ECMR_ID {
-  o String ECMR_ID
-  --> TransportOrder originTransportOrder
-  o String STATUS
+  --> Recipient destination
+  o String carrierComments
+  o String status
   o ItemLine[] items
+  o Address compoundAddress
+  o Address recipientAddress
+  o Loading loadingAddress
+  o Delivery deliveryAddress
+  o String documents
+  o Good goods
+  o String legalOwnerInstructions
+  o String paymentInstructions
+  o String payOnDelivery
+  o Signature compoundSignature
+  o Signature carrierLoadingSignature
+  o Signature recipientSignature
+  o Signature carrierDeliverySignature
 }
 
-asset Vehicle identified by vinNumber {
-  o String vinNumber
-  o String producer
-  o String type
-  o String model
-  o Integer weight
-  o String tagNumber
+asset Vehicle identified by frameNumber {
+  o String frameNumber
+  o String description
+  o String manufacturer
+  --> LegalOwner owner
 }
 
 /**
  * Participants
  */
 
-participant LeasePlan identified by LeasePlanID {
-  o String LeasePlanID
-  o String Name
+participant LegalOwner identified by legalOwnerId {
+  o String legalOwnerId
+  o User users
   o Address address
 }
 
-participant Compound identified by CompoundID {
-  o String CompoundID
-  o String Name
+participant Compound identified by compoundId {
+  o String compoundId
+  o User users
   o Address address
 }
 
-participant Transporter identified by TransporterID {
-  o String TransporterID
-  o String firstName
+participant Carrier identified by carrierId {
+  o String carrierId
+  o User users
   o String lastName
 }
 
-participant CarDealer identified by CarDealerID {
-  o String CarDealerID
-  o String Name
+participant Recipient identified by recipientId {
+  o String recipientId
+  o User users
   o Address address
 }
 
 /**
  * Concepts
  */
+
+concept User {
+  o String username
+  o String salt
+  o String hash
+  o String firstName
+  o String lastName
+  o String role
+}
+
 concept ItemLine {
   o String[] remarks
   --> Vehicle vehicle
 }
 
 concept Address {
-  o String zipCode
-  o String City
+  o String name
   o String street
-  o String number
-  o String Country
+  o String houseNumber
+  o String city
+  o String zipCode
+  o String country
+  o Integer latitude
+  o Integer longitude
+}
+
+concept Delivery {
+  o Address address
+  o Integer date
+}
+
+concept Loading {
+  o Address address
+  o String date
+}
+
+concept good {
+  o Remark carrierLoadingRemark
+  o Remark compoundRemark
+  o Remark recipientRemark
+  o Remark carrierDeliveryRemark
+  o String licensePlate
+  o Integer weight
+}
+
+concept Remark {
+  o String comments
+  o Boolean isDamaged
 }
 
 /**
  * Transactions
  */
-transaction signECMR {
-  --> ECMR ecmr
+
+transaction signEcmr {
+  --> Ecmr ecmr
   --> Participant participant
 }
 
 /**
  * Events
  */
-event SampleEvent {
-  --> ECMR ecmr
-  o String oldValue
-  o String newValue
+
+event Signature {
+  --> Ecmr ecmr
+  o Integer latitude
+  o Integer longitude
+  o ECert certificate
+  o String IP
+  o Integer timestamp
 }
+
+/**
+ * Enum are all uppercase
+ */

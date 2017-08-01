@@ -1,27 +1,92 @@
 /**
- * Sample access control list.
+ * Digital CMR permission list
  */
-rule EverybodyCanReadEverything {
-    description: "Allow all participants read access to all resources"
-    participant: "org.acme.sample.SampleParticipant"
+
+ /**
+  * Leaseplan permission list
+  */
+
+rule LegalOwnerCanReadECMR {
+    description: "Allow LeasePlan to Read and Create an eCMR"
+    participant: "org.digitalcmr.LegalOwner"
     operation: READ
-    resource: "org.acme.**"
+    resource: "org.digitalcmr.Ecmr"
     action: ALLOW
 }
 
-rule EverybodyCanSubmitTransactions {
-    description: "Allow all participants to submit transactions"
-    participant: "org.acme.sample.SampleParticipant"
+rule LegalOwnerCanCreateECMR {
+    description: "Allow LeasePlan to Create an eCMR"
+    participant: "org.digitalcmr.LegalOwner"
     operation: CREATE
-    resource: "org.acme.**"
+    resource: "org.digitalcmr.Ecmr"
     action: ALLOW
 }
 
-rule OwnerHasFullAccessToTheirAssets {
-    description: "Allow all participants full access to their assets"
-    participant(p): "org.acme.sample.SampleParticipant"
-    operation: ALL
-    resource(r): "org.acme.**"
-    condition: (r.owner.getIdentifier() === p.getIdentifier())
+/**
+ * Digital CMR permission list
+ */
+
+
+
+ /**
+  * LegalOwner permission list
+  */
+
+rule LegalOwnerCanReadAllCMR {
+    description: "Allow LeasePlan to read all CMRs"
+    participant: "org.digitalcmr.LegalOwner"
+    operation: READ
+    resource: "org.digitalcmr.Ecmr"
     action: ALLOW
 }
+
+/**
+  * Compound permission list
+  */
+
+
+
+rule CompoundCanCreateCMR {
+    description: "Allow compound to create CMR"
+    participant: "org.digitalcmr.Compound"
+    operation: CREATE
+    resource: "org.digitalcmr.Ecmr"
+    action: ALLOW
+}
+
+rule CompoundCanReadOwnCMR {
+    description: "Allow compound to read own CMR"
+    participant(r): "org.digitalcmr.Compound"
+    operation: READ
+    resource(c): "org.digitalcmr.Ecmr"
+    condition: (c.owner == r)
+    action: ALLOW
+}
+
+/**
+   * Carrier permission list
+   */
+
+ rule CarrierCanSignCMR {
+     description: "Allow Carrier to sign CMR"
+     participant(r): "org.digitalcmr.Carrier"
+     operation: UPDATE
+     resource(c): "org.digitalcmr.Ecmr"
+     condition: (c.owner == r)
+     action: ALLOW
+ }
+
+ /**
+   * Recipient permission list
+   */
+
+ rule RecipientCanSignCMR {
+     description: "Allow Car Dealer to sign CMR"
+     participant(r): "org.digitalcmr.Recipient"
+     operation: UPDATE
+     resource(c): "org.digitalcmr.Ecmr"
+     condition: (c.owner == r)
+     action: ALLOW
+ }
+
+
