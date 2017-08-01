@@ -20,7 +20,6 @@
         "src/*.ts"
     ],
     "files": [
-        "src/api/v1/LeasePlanController.ts",
         "src/api/v1/SampleAssetController.ts",
         "src/app.ts",
         "src/config/default.config.ts",

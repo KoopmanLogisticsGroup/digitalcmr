@@ -6,60 +6,33 @@
   * Leaseplan permission list
   */
 
-rule LegalOwnerCanReadECMR {
-    description: "Allow LeasePlan to Read and Create an eCMR"
-    participant: "org.digitalcmr.LegalOwner"
-    operation: READ
-    resource: "org.digitalcmr.Ecmr"
-    action: ALLOW
-}
+  rule LegalOwnerAdminCanCreateECMR {
+      description: "Allow Legal Owner Admin to Create an eCMR"
+      participant: "org.digitalcmr.LegalOwnerAdmin"
+      operation: CREATE
+      resource: "org.digitalcmr.ECMR"
+      action: ALLOW
+  }
 
-rule LegalOwnerCanCreateECMR {
-    description: "Allow LeasePlan to Create an eCMR"
-    participant: "org.digitalcmr.LegalOwner"
-    operation: CREATE
-    resource: "org.digitalcmr.Ecmr"
+rule LegalOwnerAdminCanReadECMR {
+    description: "Allow Legal Owner Admin to Read all eCMR where his org is the owner"
+    participant(p): "org.digitalcmr.LegalOwnerAdmin"
+    operation: READ
+    resource(ecmr): "org.digitalcmr.ECMR"
+    condition: (ecmr.owner.getIdentifier() === p.org.getIdentifier())
     action: ALLOW
 }
 
 /**
- * Digital CMR permission list
+ * Compound permission list
  */
 
-
-
- /**
-  * LegalOwner permission list
-  */
-
-rule LegalOwnerCanReadAllCMR {
-    description: "Allow LeasePlan to read all CMRs"
-    participant: "org.digitalcmr.LegalOwner"
+rule CompoundAdminCanReadECMR {
+    description: "Allow Compound Admin to Read all eCMR where his org is a source"
+    participant(p): "org.digitalcmr.CompoundAdmin"
     operation: READ
-    resource: "org.digitalcmr.Ecmr"
-    action: ALLOW
-}
-
-/**
-  * Compound permission list
-  */
-
-
-
-rule CompoundCanCreateCMR {
-    description: "Allow compound to create CMR"
-    participant: "org.digitalcmr.Compound"
-    operation: CREATE
-    resource: "org.digitalcmr.Ecmr"
-    action: ALLOW
-}
-
-rule CompoundCanReadOwnCMR {
-    description: "Allow compound to read own CMR"
-    participant(r): "org.digitalcmr.Compound"
-    operation: READ
-    resource(c): "org.digitalcmr.Ecmr"
-    condition: (c.owner == r)
+    resource(ecmr): "org.digitalcmr.ECMR"
+    condition: (ecmr.source.getIdentifier() === p.org.getIdentifier())
     action: ALLOW
 }
 
@@ -67,26 +40,45 @@ rule CompoundCanReadOwnCMR {
    * Carrier permission list
    */
 
- rule CarrierCanSignCMR {
-     description: "Allow Carrier to sign CMR"
-     participant(r): "org.digitalcmr.Carrier"
-     operation: UPDATE
-     resource(c): "org.digitalcmr.Ecmr"
-     condition: (c.owner == r)
+ rule CarrierAdminCanReadECMR {
+     description: "Allow Carrier Admin to Read all eCMR where his org is a carrier"
+     participant(p): "org.digitalcmr.CarrierAdmin"
+     operation: READ
+     resource(ecmr): "org.digitalcmr.ECMR"
+     condition: (ecmr.carrier.getIdentifier() === p.org.getIdentifier())
      action: ALLOW
  }
 
- /**
+ rule CarrierTransporterCanReadHisECMR {
+      description: "Allow Carrier Admin to Read all his eCMR (where he is a transporter)"
+      participant(p): "org.digitalcmr.CarrierMember"
+      operation: READ
+      resource(ecmr): "org.digitalcmr.ECMR"
+      condition: (ecmr.carrier.getIdentifier() === p.org.getIdentifier() && ecmr.transporter.getIdentifier() === p.getIdentifier())
+      action: ALLOW
+  }
+
+
+/**
    * Recipient permission list
    */
 
- rule RecipientCanSignCMR {
-     description: "Allow Car Dealer to sign CMR"
-     participant(r): "org.digitalcmr.Recipient"
-     operation: UPDATE
-     resource(c): "org.digitalcmr.Ecmr"
-     condition: (c.owner == r)
+ rule RecipientAdminCanReadECMR {
+     description: "Allow Recipient Admin to Read all eCMR where his org is a recipient"
+     participant(p): "org.digitalcmr.RecipientAdmin"
+     operation: READ
+     resource(ecmr): "org.digitalcmr.ECMR"
+     condition: (ecmr.recipientOrg.getIdentifier() === p.org.getIdentifier())
      action: ALLOW
  }
+
+ rule RecipientMemberCanReadHisECMR {
+      description: "Allow Recipient to Read his own eCMR (where he is a recipient)"
+      participant(p): "org.digitalcmr.RecipientMember"
+      operation: READ
+      resource(ecmr): "org.digitalcmr.ECMR"
+      condition: (ecmr.recipientOrg.getIdentifier() === p.org.getIdentifier() && ecmr.recipient.getIdentifier() === p.getIdentifier())
+      action: ALLOW
+  }
 
 
