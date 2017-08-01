@@ -1,4 +1,16 @@
 /**
+ * System ACL
+ */
+
+ rule SystemACL {
+   description:  "System ACL to permit all access"
+   participant: "org.hyperledger.composer.system.Participant"
+   operation: ALL
+   resource: "org.hyperledger.composer.system.**"
+   action: ALLOW
+ }
+
+/**
  * Digital CMR permission list
  */
 
@@ -6,13 +18,13 @@
   * Leaseplan permission list
   */
 
-  rule LegalOwnerAdminCanCreateECMR {
+ rule LegalOwnerAdminCanCreateECMR {
       description: "Allow Legal Owner Admin to Create an eCMR"
       participant: "org.digitalcmr.LegalOwnerAdmin"
       operation: CREATE
       resource: "org.digitalcmr.ECMR"
       action: ALLOW
-  }
+ }
 
 rule LegalOwnerAdminCanReadECMR {
     description: "Allow Legal Owner Admin to Read all eCMR where his org is the owner"
