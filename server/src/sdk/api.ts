@@ -239,62 +239,24 @@ export class BindIdentityRequest {
 }
 
 /**
-* A participant named Carrier
+* A participant named CarrierAdmin
 */
-export class Carrier {
+export class CarrierAdmin {
     /**
     * The class identifier for this type
     */
     '$Class': string;
     /**
+    * The identifier of an instance of org
+    */
+    'org': string;
+    /**
     * The instance identifier for this type
     */
-    'carrierId': string;
-    'users': User;
+    'userID': string;
+    'userName': string;
+    'firstName': string;
     'lastName': string;
-
-    static discriminator = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "$Class",
-            "baseName": "$class",
-            "type": "string"
-        },
-        {
-            "name": "carrierId",
-            "baseName": "carrierId",
-            "type": "string"
-        },
-        {
-            "name": "users",
-            "baseName": "users",
-            "type": "User"
-        },
-        {
-            "name": "lastName",
-            "baseName": "lastName",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return Carrier.attributeTypeMap;
-    }
-}
-
-/**
-* A participant named Compound
-*/
-export class Compound {
-    /**
-    * The class identifier for this type
-    */
-    '$Class': string;
-    /**
-    * The instance identifier for this type
-    */
-    'compoundId': string;
-    'users': User;
     'address': Address;
 
     static discriminator = undefined;
@@ -306,14 +268,29 @@ export class Compound {
             "type": "string"
         },
         {
-            "name": "compoundId",
-            "baseName": "compoundId",
+            "name": "org",
+            "baseName": "org",
             "type": "string"
         },
         {
-            "name": "users",
-            "baseName": "users",
-            "type": "User"
+            "name": "userID",
+            "baseName": "userID",
+            "type": "string"
+        },
+        {
+            "name": "userName",
+            "baseName": "userName",
+            "type": "string"
+        },
+        {
+            "name": "firstName",
+            "baseName": "firstName",
+            "type": "string"
+        },
+        {
+            "name": "lastName",
+            "baseName": "lastName",
+            "type": "string"
         },
         {
             "name": "address",
@@ -322,7 +299,225 @@ export class Compound {
         }    ];
 
     static getAttributeTypeMap() {
-        return Compound.attributeTypeMap;
+        return CarrierAdmin.attributeTypeMap;
+    }
+}
+
+/**
+* A participant named CarrierMember
+*/
+export class CarrierMember {
+    /**
+    * The class identifier for this type
+    */
+    '$Class': string;
+    /**
+    * The identifier of an instance of org
+    */
+    'org': string;
+    /**
+    * The instance identifier for this type
+    */
+    'userID': string;
+    'userName': string;
+    'firstName': string;
+    'lastName': string;
+    'address': Address;
+
+    static discriminator = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "$Class",
+            "baseName": "$class",
+            "type": "string"
+        },
+        {
+            "name": "org",
+            "baseName": "org",
+            "type": "string"
+        },
+        {
+            "name": "userID",
+            "baseName": "userID",
+            "type": "string"
+        },
+        {
+            "name": "userName",
+            "baseName": "userName",
+            "type": "string"
+        },
+        {
+            "name": "firstName",
+            "baseName": "firstName",
+            "type": "string"
+        },
+        {
+            "name": "lastName",
+            "baseName": "lastName",
+            "type": "string"
+        },
+        {
+            "name": "address",
+            "baseName": "address",
+            "type": "Address"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return CarrierMember.attributeTypeMap;
+    }
+}
+
+/**
+* An asset named CarrierOrg
+*/
+export class CarrierOrg {
+    /**
+    * The class identifier for this type
+    */
+    '$Class': string;
+    /**
+    * The instance identifier for this type
+    */
+    'entityID': string;
+    'name': string;
+    'address': Address;
+
+    static discriminator = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "$Class",
+            "baseName": "$class",
+            "type": "string"
+        },
+        {
+            "name": "entityID",
+            "baseName": "entityID",
+            "type": "string"
+        },
+        {
+            "name": "name",
+            "baseName": "name",
+            "type": "string"
+        },
+        {
+            "name": "address",
+            "baseName": "address",
+            "type": "Address"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return CarrierOrg.attributeTypeMap;
+    }
+}
+
+/**
+* A participant named CompoundAdmin
+*/
+export class CompoundAdmin {
+    /**
+    * The class identifier for this type
+    */
+    '$Class': string;
+    /**
+    * The identifier of an instance of org
+    */
+    'org': string;
+    /**
+    * The instance identifier for this type
+    */
+    'userID': string;
+    'userName': string;
+    'firstName': string;
+    'lastName': string;
+    'address': Address;
+
+    static discriminator = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "$Class",
+            "baseName": "$class",
+            "type": "string"
+        },
+        {
+            "name": "org",
+            "baseName": "org",
+            "type": "string"
+        },
+        {
+            "name": "userID",
+            "baseName": "userID",
+            "type": "string"
+        },
+        {
+            "name": "userName",
+            "baseName": "userName",
+            "type": "string"
+        },
+        {
+            "name": "firstName",
+            "baseName": "firstName",
+            "type": "string"
+        },
+        {
+            "name": "lastName",
+            "baseName": "lastName",
+            "type": "string"
+        },
+        {
+            "name": "address",
+            "baseName": "address",
+            "type": "Address"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return CompoundAdmin.attributeTypeMap;
+    }
+}
+
+/**
+* An asset named CompoundOrg
+*/
+export class CompoundOrg {
+    /**
+    * The class identifier for this type
+    */
+    '$Class': string;
+    /**
+    * The instance identifier for this type
+    */
+    'entityID': string;
+    'name': string;
+    'address': Address;
+
+    static discriminator = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "$Class",
+            "baseName": "$class",
+            "type": "string"
+        },
+        {
+            "name": "entityID",
+            "baseName": "entityID",
+            "type": "string"
+        },
+        {
+            "name": "name",
+            "baseName": "name",
+            "type": "string"
+        },
+        {
+            "name": "address",
+            "baseName": "address",
+            "type": "Address"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return CompoundOrg.attributeTypeMap;
     }
 }
 
@@ -335,7 +530,7 @@ export class Delivery {
     */
     '$Class': string;
     'address': Address;
-    'date': number;
+    'date': string;
     'id': string;
 
     static discriminator = undefined;
@@ -354,7 +549,7 @@ export class Delivery {
         {
             "name": "date",
             "baseName": "date",
-            "type": "number"
+            "type": "string"
         },
         {
             "name": "id",
@@ -368,9 +563,9 @@ export class Delivery {
 }
 
 /**
-* An asset named Ecmr
+* An asset named ECMR
 */
-export class Ecmr {
+export class ECMR {
     /**
     * The class identifier for this type
     */
@@ -378,12 +573,10 @@ export class Ecmr {
     /**
     * The instance identifier for this type
     */
-    'eCmrId': string;
-    'legalOwnerRef': string;
-    'carrierRef': string;
-    'recipientRef': string;
-    'compoundRef': string;
-    'issueDate': number;
+    'ecmrID': string;
+    'status': string;
+    'loadingAddress': Loading;
+    'deliveryAddress': Delivery;
     /**
     * The identifier of an instance of owner
     */
@@ -393,17 +586,25 @@ export class Ecmr {
     */
     'source': string;
     /**
-    * The identifier of an instance of destination
+    * The identifier of an instance of transporter
     */
-    'destination': string;
+    'transporter': string;
+    /**
+    * The identifier of an instance of carrier
+    */
+    'carrier': string;
+    /**
+    * The identifier of an instance of recipientOrg
+    */
+    'recipientOrg': string;
+    /**
+    * The identifier of an instance of recipient
+    */
+    'recipient': string;
+    'issueDate': number;
     'carrierComments': string;
-    'status': string;
-    'compoundAddress': Address;
-    'recipientAddress': Address;
-    'loadingAddress': Loading;
-    'deliveryAddress': Delivery;
     'documents': string;
-    'goods': Good;
+    'goods': Array<Good>;
     'legalOwnerInstructions': string;
     'paymentInstructions': string;
     'payOnDelivery': string;
@@ -417,69 +618,14 @@ export class Ecmr {
             "type": "string"
         },
         {
-            "name": "eCmrId",
-            "baseName": "eCmrId",
-            "type": "string"
-        },
-        {
-            "name": "legalOwnerRef",
-            "baseName": "legalOwnerRef",
-            "type": "string"
-        },
-        {
-            "name": "carrierRef",
-            "baseName": "carrierRef",
-            "type": "string"
-        },
-        {
-            "name": "recipientRef",
-            "baseName": "recipientRef",
-            "type": "string"
-        },
-        {
-            "name": "compoundRef",
-            "baseName": "compoundRef",
-            "type": "string"
-        },
-        {
-            "name": "issueDate",
-            "baseName": "issueDate",
-            "type": "number"
-        },
-        {
-            "name": "owner",
-            "baseName": "owner",
-            "type": "string"
-        },
-        {
-            "name": "source",
-            "baseName": "source",
-            "type": "string"
-        },
-        {
-            "name": "destination",
-            "baseName": "destination",
-            "type": "string"
-        },
-        {
-            "name": "carrierComments",
-            "baseName": "carrierComments",
+            "name": "ecmrID",
+            "baseName": "ecmrID",
             "type": "string"
         },
         {
             "name": "status",
             "baseName": "status",
             "type": "string"
-        },
-        {
-            "name": "compoundAddress",
-            "baseName": "compoundAddress",
-            "type": "Address"
-        },
-        {
-            "name": "recipientAddress",
-            "baseName": "recipientAddress",
-            "type": "Address"
         },
         {
             "name": "loadingAddress",
@@ -492,6 +638,46 @@ export class Ecmr {
             "type": "Delivery"
         },
         {
+            "name": "owner",
+            "baseName": "owner",
+            "type": "string"
+        },
+        {
+            "name": "source",
+            "baseName": "source",
+            "type": "string"
+        },
+        {
+            "name": "transporter",
+            "baseName": "transporter",
+            "type": "string"
+        },
+        {
+            "name": "carrier",
+            "baseName": "carrier",
+            "type": "string"
+        },
+        {
+            "name": "recipientOrg",
+            "baseName": "recipientOrg",
+            "type": "string"
+        },
+        {
+            "name": "recipient",
+            "baseName": "recipient",
+            "type": "string"
+        },
+        {
+            "name": "issueDate",
+            "baseName": "issueDate",
+            "type": "number"
+        },
+        {
+            "name": "carrierComments",
+            "baseName": "carrierComments",
+            "type": "string"
+        },
+        {
             "name": "documents",
             "baseName": "documents",
             "type": "string"
@@ -499,7 +685,7 @@ export class Ecmr {
         {
             "name": "goods",
             "baseName": "goods",
-            "type": "Good"
+            "type": "Array<Good>"
         },
         {
             "name": "legalOwnerInstructions",
@@ -518,7 +704,7 @@ export class Ecmr {
         }    ];
 
     static getAttributeTypeMap() {
-        return Ecmr.attributeTypeMap;
+        return ECMR.attributeTypeMap;
     }
 }
 
@@ -663,18 +849,24 @@ export class IssueIdentityResponse {
 }
 
 /**
-* A participant named LegalOwner
+* A participant named LegalOwnerAdmin
 */
-export class LegalOwner {
+export class LegalOwnerAdmin {
     /**
     * The class identifier for this type
     */
     '$Class': string;
     /**
+    * The identifier of an instance of org
+    */
+    'org': string;
+    /**
     * The instance identifier for this type
     */
-    'legalOwnerId': string;
-    'users': User;
+    'userID': string;
+    'userName': string;
+    'firstName': string;
+    'lastName': string;
     'address': Address;
 
     static discriminator = undefined;
@@ -686,14 +878,29 @@ export class LegalOwner {
             "type": "string"
         },
         {
-            "name": "legalOwnerId",
-            "baseName": "legalOwnerId",
+            "name": "org",
+            "baseName": "org",
             "type": "string"
         },
         {
-            "name": "users",
-            "baseName": "users",
-            "type": "User"
+            "name": "userID",
+            "baseName": "userID",
+            "type": "string"
+        },
+        {
+            "name": "userName",
+            "baseName": "userName",
+            "type": "string"
+        },
+        {
+            "name": "firstName",
+            "baseName": "firstName",
+            "type": "string"
+        },
+        {
+            "name": "lastName",
+            "baseName": "lastName",
+            "type": "string"
         },
         {
             "name": "address",
@@ -702,7 +909,51 @@ export class LegalOwner {
         }    ];
 
     static getAttributeTypeMap() {
-        return LegalOwner.attributeTypeMap;
+        return LegalOwnerAdmin.attributeTypeMap;
+    }
+}
+
+/**
+* An asset named LegalOwnerOrg
+*/
+export class LegalOwnerOrg {
+    /**
+    * The class identifier for this type
+    */
+    '$Class': string;
+    /**
+    * The instance identifier for this type
+    */
+    'entityID': string;
+    'name': string;
+    'address': Address;
+
+    static discriminator = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "$Class",
+            "baseName": "$class",
+            "type": "string"
+        },
+        {
+            "name": "entityID",
+            "baseName": "entityID",
+            "type": "string"
+        },
+        {
+            "name": "name",
+            "baseName": "name",
+            "type": "string"
+        },
+        {
+            "name": "address",
+            "baseName": "address",
+            "type": "Address"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return LegalOwnerOrg.attributeTypeMap;
     }
 }
 
@@ -774,18 +1025,24 @@ export class PingResponse {
 }
 
 /**
-* A participant named Recipient
+* A participant named RecipientAdmin
 */
-export class Recipient {
+export class RecipientAdmin {
     /**
     * The class identifier for this type
     */
     '$Class': string;
     /**
+    * The identifier of an instance of org
+    */
+    'org': string;
+    /**
     * The instance identifier for this type
     */
-    'recipientId': string;
-    'users': User;
+    'userID': string;
+    'userName': string;
+    'firstName': string;
+    'lastName': string;
     'address': Address;
 
     static discriminator = undefined;
@@ -797,14 +1054,29 @@ export class Recipient {
             "type": "string"
         },
         {
-            "name": "recipientId",
-            "baseName": "recipientId",
+            "name": "org",
+            "baseName": "org",
             "type": "string"
         },
         {
-            "name": "users",
-            "baseName": "users",
-            "type": "User"
+            "name": "userID",
+            "baseName": "userID",
+            "type": "string"
+        },
+        {
+            "name": "userName",
+            "baseName": "userName",
+            "type": "string"
+        },
+        {
+            "name": "firstName",
+            "baseName": "firstName",
+            "type": "string"
+        },
+        {
+            "name": "lastName",
+            "baseName": "lastName",
+            "type": "string"
         },
         {
             "name": "address",
@@ -813,7 +1085,116 @@ export class Recipient {
         }    ];
 
     static getAttributeTypeMap() {
-        return Recipient.attributeTypeMap;
+        return RecipientAdmin.attributeTypeMap;
+    }
+}
+
+/**
+* A participant named RecipientMember
+*/
+export class RecipientMember {
+    /**
+    * The class identifier for this type
+    */
+    '$Class': string;
+    /**
+    * The identifier of an instance of org
+    */
+    'org': string;
+    /**
+    * The instance identifier for this type
+    */
+    'userID': string;
+    'userName': string;
+    'firstName': string;
+    'lastName': string;
+    'address': Address;
+
+    static discriminator = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "$Class",
+            "baseName": "$class",
+            "type": "string"
+        },
+        {
+            "name": "org",
+            "baseName": "org",
+            "type": "string"
+        },
+        {
+            "name": "userID",
+            "baseName": "userID",
+            "type": "string"
+        },
+        {
+            "name": "userName",
+            "baseName": "userName",
+            "type": "string"
+        },
+        {
+            "name": "firstName",
+            "baseName": "firstName",
+            "type": "string"
+        },
+        {
+            "name": "lastName",
+            "baseName": "lastName",
+            "type": "string"
+        },
+        {
+            "name": "address",
+            "baseName": "address",
+            "type": "Address"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return RecipientMember.attributeTypeMap;
+    }
+}
+
+/**
+* An asset named RecipientOrg
+*/
+export class RecipientOrg {
+    /**
+    * The class identifier for this type
+    */
+    '$Class': string;
+    /**
+    * The instance identifier for this type
+    */
+    'entityID': string;
+    'name': string;
+    'address': Address;
+
+    static discriminator = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "$Class",
+            "baseName": "$class",
+            "type": "string"
+        },
+        {
+            "name": "entityID",
+            "baseName": "entityID",
+            "type": "string"
+        },
+        {
+            "name": "name",
+            "baseName": "name",
+            "type": "string"
+        },
+        {
+            "name": "address",
+            "baseName": "address",
+            "type": "Address"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return RecipientOrg.attributeTypeMap;
     }
 }
 
@@ -859,9 +1240,9 @@ export class Remark {
 }
 
 /**
-* A transaction named signEcmr
+* A transaction named signECMR
 */
-export class SignEcmr {
+export class SignECMR {
     /**
     * The class identifier for this type
     */
@@ -910,72 +1291,7 @@ export class SignEcmr {
         }    ];
 
     static getAttributeTypeMap() {
-        return SignEcmr.attributeTypeMap;
-    }
-}
-
-/**
-* A concept named User
-*/
-export class User {
-    /**
-    * The class identifier for this type
-    */
-    '$Class': string;
-    'username': string;
-    'salt': string;
-    'hash': string;
-    'firstName': string;
-    'lastName': string;
-    'role': string;
-    'id': string;
-
-    static discriminator = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "$Class",
-            "baseName": "$class",
-            "type": "string"
-        },
-        {
-            "name": "username",
-            "baseName": "username",
-            "type": "string"
-        },
-        {
-            "name": "salt",
-            "baseName": "salt",
-            "type": "string"
-        },
-        {
-            "name": "hash",
-            "baseName": "hash",
-            "type": "string"
-        },
-        {
-            "name": "firstName",
-            "baseName": "firstName",
-            "type": "string"
-        },
-        {
-            "name": "lastName",
-            "baseName": "lastName",
-            "type": "string"
-        },
-        {
-            "name": "role",
-            "baseName": "role",
-            "type": "string"
-        },
-        {
-            "name": "id",
-            "baseName": "id",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return User.attributeTypeMap;
+        return SignECMR.attributeTypeMap;
     }
 }
 
@@ -993,10 +1309,6 @@ export class Vehicle {
     'frameNumber': string;
     'description': string;
     'manufacturer': string;
-    /**
-    * The identifier of an instance of owner
-    */
-    'owner': string;
 
     static discriminator = undefined;
 
@@ -1020,11 +1332,6 @@ export class Vehicle {
             "name": "manufacturer",
             "baseName": "manufacturer",
             "type": "string"
-        },
-        {
-            "name": "owner",
-            "baseName": "owner",
-            "type": "string"
         }    ];
 
     static getAttributeTypeMap() {
@@ -1039,21 +1346,26 @@ let enumsMap = {
 let typeMap = {
     "Address": Address,
     "BindIdentityRequest": BindIdentityRequest,
-    "Carrier": Carrier,
-    "Compound": Compound,
+    "CarrierAdmin": CarrierAdmin,
+    "CarrierMember": CarrierMember,
+    "CarrierOrg": CarrierOrg,
+    "CompoundAdmin": CompoundAdmin,
+    "CompoundOrg": CompoundOrg,
     "Delivery": Delivery,
-    "Ecmr": Ecmr,
+    "ECMR": ECMR,
     "Good": Good,
     "InlineResponse200": InlineResponse200,
     "IssueIdentityRequest": IssueIdentityRequest,
     "IssueIdentityResponse": IssueIdentityResponse,
-    "LegalOwner": LegalOwner,
+    "LegalOwnerAdmin": LegalOwnerAdmin,
+    "LegalOwnerOrg": LegalOwnerOrg,
     "Loading": Loading,
     "PingResponse": PingResponse,
-    "Recipient": Recipient,
+    "RecipientAdmin": RecipientAdmin,
+    "RecipientMember": RecipientMember,
+    "RecipientOrg": RecipientOrg,
     "Remark": Remark,
-    "SignEcmr": SignEcmr,
-    "User": User,
+    "SignECMR": SignECMR,
     "Vehicle": Vehicle,
 }
 
@@ -1107,10 +1419,10 @@ export class VoidAuth implements Authentication {
     }
 }
 
-export enum CarrierApiApiKeys {
+export enum CarrierAdminApiApiKeys {
 }
 
-export class CarrierApi {
+export class CarrierAdminApi {
     protected _basePath = defaultBasePath;
     protected defaultHeaders : any = {};
     protected _useQuerystring : boolean = false;
@@ -1148,16 +1460,16 @@ export class CarrierApi {
 	this.authentications.default = auth;
     }
 
-    public setApiKey(key: CarrierApiApiKeys, value: string) {
-        this.authentications[CarrierApiApiKeys[key]].apiKey = value;
+    public setApiKey(key: CarrierAdminApiApiKeys, value: string) {
+        this.authentications[CarrierAdminApiApiKeys[key]].apiKey = value;
     }
     /**
      * 
      * @summary Create a new instance of the model and persist it into the data source.
      * @param data Model instance data
      */
-    public carrierCreate (data?: Carrier) : Promise<{ response: http.IncomingMessage; body: Carrier;  }> {
-        const localVarPath = this.basePath + '/Carrier';
+    public carrierAdminCreate (data?: CarrierAdmin) : Promise<{ response: http.IncomingMessage; body: CarrierAdmin;  }> {
+        const localVarPath = this.basePath + '/CarrierAdmin';
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let formParams: any = {};
@@ -1173,7 +1485,7 @@ export class CarrierApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(data, "Carrier")
+            body: ObjectSerializer.serialize(data, "CarrierAdmin")
         };
 
         this.authentications.default.applyToRequest(requestOptions);
@@ -1185,12 +1497,12 @@ export class CarrierApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.IncomingMessage; body: Carrier;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: CarrierAdmin;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
-                    body = ObjectSerializer.deserialize(body, "Carrier");
+                    body = ObjectSerializer.deserialize(body, "CarrierAdmin");
                     if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
@@ -1205,8 +1517,8 @@ export class CarrierApi {
      * @summary Delete a model instance by {{id}} from the data source.
      * @param id Model id
      */
-    public carrierDeleteById (id: string) : Promise<{ response: http.IncomingMessage; body: any;  }> {
-        const localVarPath = this.basePath + '/Carrier/{id}'
+    public carrierAdminDeleteById (id: string) : Promise<{ response: http.IncomingMessage; body: any;  }> {
+        const localVarPath = this.basePath + '/CarrierAdmin/{id}'
             .replace('{' + 'id' + '}', String(id));
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -1215,7 +1527,7 @@ export class CarrierApi {
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling carrierDeleteById.');
+            throw new Error('Required parameter id was null or undefined when calling carrierAdminDeleteById.');
         }
 
 
@@ -1259,8 +1571,8 @@ export class CarrierApi {
      * @summary Check whether a model instance exists in the data source.
      * @param id Model id
      */
-    public carrierExists (id: string) : Promise<{ response: http.IncomingMessage; body: InlineResponse200;  }> {
-        const localVarPath = this.basePath + '/Carrier/{id}'
+    public carrierAdminExists (id: string) : Promise<{ response: http.IncomingMessage; body: InlineResponse200;  }> {
+        const localVarPath = this.basePath + '/CarrierAdmin/{id}'
             .replace('{' + 'id' + '}', String(id));
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -1269,7 +1581,7 @@ export class CarrierApi {
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling carrierExists.');
+            throw new Error('Required parameter id was null or undefined when calling carrierAdminExists.');
         }
 
 
@@ -1313,8 +1625,8 @@ export class CarrierApi {
      * @summary Find all instances of the model matched by filter from the data source.
      * @param filter Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string ({\&quot;something\&quot;:\&quot;value\&quot;})
      */
-    public carrierFind (filter?: string) : Promise<{ response: http.IncomingMessage; body: Array<Carrier>;  }> {
-        const localVarPath = this.basePath + '/Carrier';
+    public carrierAdminFind (filter?: string) : Promise<{ response: http.IncomingMessage; body: Array<CarrierAdmin>;  }> {
+        const localVarPath = this.basePath + '/CarrierAdmin';
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let formParams: any = {};
@@ -1345,12 +1657,12 @@ export class CarrierApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.IncomingMessage; body: Array<Carrier>;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: Array<CarrierAdmin>;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
-                    body = ObjectSerializer.deserialize(body, "Array<Carrier>");
+                    body = ObjectSerializer.deserialize(body, "Array<CarrierAdmin>");
                     if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
@@ -1366,8 +1678,8 @@ export class CarrierApi {
      * @param id Model id
      * @param filter Filter defining fields and include - must be a JSON-encoded string ({\&quot;something\&quot;:\&quot;value\&quot;})
      */
-    public carrierFindById (id: string, filter?: string) : Promise<{ response: http.IncomingMessage; body: Carrier;  }> {
-        const localVarPath = this.basePath + '/Carrier/{id}'
+    public carrierAdminFindById (id: string, filter?: string) : Promise<{ response: http.IncomingMessage; body: CarrierAdmin;  }> {
+        const localVarPath = this.basePath + '/CarrierAdmin/{id}'
             .replace('{' + 'id' + '}', String(id));
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -1376,7 +1688,7 @@ export class CarrierApi {
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling carrierFindById.');
+            throw new Error('Required parameter id was null or undefined when calling carrierAdminFindById.');
         }
 
         if (filter !== undefined) {
@@ -1404,12 +1716,12 @@ export class CarrierApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.IncomingMessage; body: Carrier;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: CarrierAdmin;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
-                    body = ObjectSerializer.deserialize(body, "Carrier");
+                    body = ObjectSerializer.deserialize(body, "CarrierAdmin");
                     if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
@@ -1425,8 +1737,8 @@ export class CarrierApi {
      * @param id Model id
      * @param data Model instance data
      */
-    public carrierReplaceById (id: string, data?: Carrier) : Promise<{ response: http.IncomingMessage; body: Carrier;  }> {
-        const localVarPath = this.basePath + '/Carrier/{id}'
+    public carrierAdminReplaceById (id: string, data?: CarrierAdmin) : Promise<{ response: http.IncomingMessage; body: CarrierAdmin;  }> {
+        const localVarPath = this.basePath + '/CarrierAdmin/{id}'
             .replace('{' + 'id' + '}', String(id));
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -1435,7 +1747,7 @@ export class CarrierApi {
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling carrierReplaceById.');
+            throw new Error('Required parameter id was null or undefined when calling carrierAdminReplaceById.');
         }
 
 
@@ -1448,7 +1760,7 @@ export class CarrierApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(data, "Carrier")
+            body: ObjectSerializer.serialize(data, "CarrierAdmin")
         };
 
         this.authentications.default.applyToRequest(requestOptions);
@@ -1460,12 +1772,12 @@ export class CarrierApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.IncomingMessage; body: Carrier;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: CarrierAdmin;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
-                    body = ObjectSerializer.deserialize(body, "Carrier");
+                    body = ObjectSerializer.deserialize(body, "CarrierAdmin");
                     if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
@@ -1476,10 +1788,10 @@ export class CarrierApi {
         });
     }
 }
-export enum CompoundApiApiKeys {
+export enum CarrierMemberApiApiKeys {
 }
 
-export class CompoundApi {
+export class CarrierMemberApi {
     protected _basePath = defaultBasePath;
     protected defaultHeaders : any = {};
     protected _useQuerystring : boolean = false;
@@ -1517,16 +1829,16 @@ export class CompoundApi {
 	this.authentications.default = auth;
     }
 
-    public setApiKey(key: CompoundApiApiKeys, value: string) {
-        this.authentications[CompoundApiApiKeys[key]].apiKey = value;
+    public setApiKey(key: CarrierMemberApiApiKeys, value: string) {
+        this.authentications[CarrierMemberApiApiKeys[key]].apiKey = value;
     }
     /**
      * 
      * @summary Create a new instance of the model and persist it into the data source.
      * @param data Model instance data
      */
-    public compoundCreate (data?: Compound) : Promise<{ response: http.IncomingMessage; body: Compound;  }> {
-        const localVarPath = this.basePath + '/Compound';
+    public carrierMemberCreate (data?: CarrierMember) : Promise<{ response: http.IncomingMessage; body: CarrierMember;  }> {
+        const localVarPath = this.basePath + '/CarrierMember';
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let formParams: any = {};
@@ -1542,7 +1854,7 @@ export class CompoundApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(data, "Compound")
+            body: ObjectSerializer.serialize(data, "CarrierMember")
         };
 
         this.authentications.default.applyToRequest(requestOptions);
@@ -1554,12 +1866,12 @@ export class CompoundApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.IncomingMessage; body: Compound;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: CarrierMember;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
-                    body = ObjectSerializer.deserialize(body, "Compound");
+                    body = ObjectSerializer.deserialize(body, "CarrierMember");
                     if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
@@ -1574,8 +1886,8 @@ export class CompoundApi {
      * @summary Delete a model instance by {{id}} from the data source.
      * @param id Model id
      */
-    public compoundDeleteById (id: string) : Promise<{ response: http.IncomingMessage; body: any;  }> {
-        const localVarPath = this.basePath + '/Compound/{id}'
+    public carrierMemberDeleteById (id: string) : Promise<{ response: http.IncomingMessage; body: any;  }> {
+        const localVarPath = this.basePath + '/CarrierMember/{id}'
             .replace('{' + 'id' + '}', String(id));
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -1584,7 +1896,7 @@ export class CompoundApi {
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling compoundDeleteById.');
+            throw new Error('Required parameter id was null or undefined when calling carrierMemberDeleteById.');
         }
 
 
@@ -1628,8 +1940,8 @@ export class CompoundApi {
      * @summary Check whether a model instance exists in the data source.
      * @param id Model id
      */
-    public compoundExists (id: string) : Promise<{ response: http.IncomingMessage; body: InlineResponse200;  }> {
-        const localVarPath = this.basePath + '/Compound/{id}'
+    public carrierMemberExists (id: string) : Promise<{ response: http.IncomingMessage; body: InlineResponse200;  }> {
+        const localVarPath = this.basePath + '/CarrierMember/{id}'
             .replace('{' + 'id' + '}', String(id));
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -1638,7 +1950,7 @@ export class CompoundApi {
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling compoundExists.');
+            throw new Error('Required parameter id was null or undefined when calling carrierMemberExists.');
         }
 
 
@@ -1682,8 +1994,8 @@ export class CompoundApi {
      * @summary Find all instances of the model matched by filter from the data source.
      * @param filter Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string ({\&quot;something\&quot;:\&quot;value\&quot;})
      */
-    public compoundFind (filter?: string) : Promise<{ response: http.IncomingMessage; body: Array<Compound>;  }> {
-        const localVarPath = this.basePath + '/Compound';
+    public carrierMemberFind (filter?: string) : Promise<{ response: http.IncomingMessage; body: Array<CarrierMember>;  }> {
+        const localVarPath = this.basePath + '/CarrierMember';
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let formParams: any = {};
@@ -1714,12 +2026,12 @@ export class CompoundApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.IncomingMessage; body: Array<Compound>;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: Array<CarrierMember>;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
-                    body = ObjectSerializer.deserialize(body, "Array<Compound>");
+                    body = ObjectSerializer.deserialize(body, "Array<CarrierMember>");
                     if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
@@ -1735,8 +2047,8 @@ export class CompoundApi {
      * @param id Model id
      * @param filter Filter defining fields and include - must be a JSON-encoded string ({\&quot;something\&quot;:\&quot;value\&quot;})
      */
-    public compoundFindById (id: string, filter?: string) : Promise<{ response: http.IncomingMessage; body: Compound;  }> {
-        const localVarPath = this.basePath + '/Compound/{id}'
+    public carrierMemberFindById (id: string, filter?: string) : Promise<{ response: http.IncomingMessage; body: CarrierMember;  }> {
+        const localVarPath = this.basePath + '/CarrierMember/{id}'
             .replace('{' + 'id' + '}', String(id));
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -1745,7 +2057,7 @@ export class CompoundApi {
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling compoundFindById.');
+            throw new Error('Required parameter id was null or undefined when calling carrierMemberFindById.');
         }
 
         if (filter !== undefined) {
@@ -1773,12 +2085,12 @@ export class CompoundApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.IncomingMessage; body: Compound;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: CarrierMember;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
-                    body = ObjectSerializer.deserialize(body, "Compound");
+                    body = ObjectSerializer.deserialize(body, "CarrierMember");
                     if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
@@ -1794,8 +2106,8 @@ export class CompoundApi {
      * @param id Model id
      * @param data Model instance data
      */
-    public compoundReplaceById (id: string, data?: Compound) : Promise<{ response: http.IncomingMessage; body: Compound;  }> {
-        const localVarPath = this.basePath + '/Compound/{id}'
+    public carrierMemberReplaceById (id: string, data?: CarrierMember) : Promise<{ response: http.IncomingMessage; body: CarrierMember;  }> {
+        const localVarPath = this.basePath + '/CarrierMember/{id}'
             .replace('{' + 'id' + '}', String(id));
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -1804,7 +2116,7 @@ export class CompoundApi {
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling compoundReplaceById.');
+            throw new Error('Required parameter id was null or undefined when calling carrierMemberReplaceById.');
         }
 
 
@@ -1817,7 +2129,7 @@ export class CompoundApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(data, "Compound")
+            body: ObjectSerializer.serialize(data, "CarrierMember")
         };
 
         this.authentications.default.applyToRequest(requestOptions);
@@ -1829,12 +2141,12 @@ export class CompoundApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.IncomingMessage; body: Compound;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: CarrierMember;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
-                    body = ObjectSerializer.deserialize(body, "Compound");
+                    body = ObjectSerializer.deserialize(body, "CarrierMember");
                     if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
@@ -1845,10 +2157,10 @@ export class CompoundApi {
         });
     }
 }
-export enum EcmrApiApiKeys {
+export enum CarrierOrgApiApiKeys {
 }
 
-export class EcmrApi {
+export class CarrierOrgApi {
     protected _basePath = defaultBasePath;
     protected defaultHeaders : any = {};
     protected _useQuerystring : boolean = false;
@@ -1886,16 +2198,16 @@ export class EcmrApi {
 	this.authentications.default = auth;
     }
 
-    public setApiKey(key: EcmrApiApiKeys, value: string) {
-        this.authentications[EcmrApiApiKeys[key]].apiKey = value;
+    public setApiKey(key: CarrierOrgApiApiKeys, value: string) {
+        this.authentications[CarrierOrgApiApiKeys[key]].apiKey = value;
     }
     /**
      * 
      * @summary Create a new instance of the model and persist it into the data source.
      * @param data Model instance data
      */
-    public ecmrCreate (data?: Ecmr) : Promise<{ response: http.IncomingMessage; body: Ecmr;  }> {
-        const localVarPath = this.basePath + '/Ecmr';
+    public carrierOrgCreate (data?: CarrierOrg) : Promise<{ response: http.IncomingMessage; body: CarrierOrg;  }> {
+        const localVarPath = this.basePath + '/CarrierOrg';
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let formParams: any = {};
@@ -1911,7 +2223,7 @@ export class EcmrApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(data, "Ecmr")
+            body: ObjectSerializer.serialize(data, "CarrierOrg")
         };
 
         this.authentications.default.applyToRequest(requestOptions);
@@ -1923,12 +2235,12 @@ export class EcmrApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.IncomingMessage; body: Ecmr;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: CarrierOrg;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
-                    body = ObjectSerializer.deserialize(body, "Ecmr");
+                    body = ObjectSerializer.deserialize(body, "CarrierOrg");
                     if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
@@ -1943,8 +2255,8 @@ export class EcmrApi {
      * @summary Delete a model instance by {{id}} from the data source.
      * @param id Model id
      */
-    public ecmrDeleteById (id: string) : Promise<{ response: http.IncomingMessage; body: any;  }> {
-        const localVarPath = this.basePath + '/Ecmr/{id}'
+    public carrierOrgDeleteById (id: string) : Promise<{ response: http.IncomingMessage; body: any;  }> {
+        const localVarPath = this.basePath + '/CarrierOrg/{id}'
             .replace('{' + 'id' + '}', String(id));
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -1953,7 +2265,7 @@ export class EcmrApi {
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling ecmrDeleteById.');
+            throw new Error('Required parameter id was null or undefined when calling carrierOrgDeleteById.');
         }
 
 
@@ -1997,8 +2309,8 @@ export class EcmrApi {
      * @summary Check whether a model instance exists in the data source.
      * @param id Model id
      */
-    public ecmrExists (id: string) : Promise<{ response: http.IncomingMessage; body: InlineResponse200;  }> {
-        const localVarPath = this.basePath + '/Ecmr/{id}'
+    public carrierOrgExists (id: string) : Promise<{ response: http.IncomingMessage; body: InlineResponse200;  }> {
+        const localVarPath = this.basePath + '/CarrierOrg/{id}'
             .replace('{' + 'id' + '}', String(id));
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -2007,7 +2319,7 @@ export class EcmrApi {
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling ecmrExists.');
+            throw new Error('Required parameter id was null or undefined when calling carrierOrgExists.');
         }
 
 
@@ -2051,8 +2363,8 @@ export class EcmrApi {
      * @summary Find all instances of the model matched by filter from the data source.
      * @param filter Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string ({\&quot;something\&quot;:\&quot;value\&quot;})
      */
-    public ecmrFind (filter?: string) : Promise<{ response: http.IncomingMessage; body: Array<Ecmr>;  }> {
-        const localVarPath = this.basePath + '/Ecmr';
+    public carrierOrgFind (filter?: string) : Promise<{ response: http.IncomingMessage; body: Array<CarrierOrg>;  }> {
+        const localVarPath = this.basePath + '/CarrierOrg';
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let formParams: any = {};
@@ -2083,12 +2395,12 @@ export class EcmrApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.IncomingMessage; body: Array<Ecmr>;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: Array<CarrierOrg>;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
-                    body = ObjectSerializer.deserialize(body, "Array<Ecmr>");
+                    body = ObjectSerializer.deserialize(body, "Array<CarrierOrg>");
                     if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
@@ -2104,8 +2416,8 @@ export class EcmrApi {
      * @param id Model id
      * @param filter Filter defining fields and include - must be a JSON-encoded string ({\&quot;something\&quot;:\&quot;value\&quot;})
      */
-    public ecmrFindById (id: string, filter?: string) : Promise<{ response: http.IncomingMessage; body: Ecmr;  }> {
-        const localVarPath = this.basePath + '/Ecmr/{id}'
+    public carrierOrgFindById (id: string, filter?: string) : Promise<{ response: http.IncomingMessage; body: CarrierOrg;  }> {
+        const localVarPath = this.basePath + '/CarrierOrg/{id}'
             .replace('{' + 'id' + '}', String(id));
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -2114,7 +2426,7 @@ export class EcmrApi {
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling ecmrFindById.');
+            throw new Error('Required parameter id was null or undefined when calling carrierOrgFindById.');
         }
 
         if (filter !== undefined) {
@@ -2142,12 +2454,12 @@ export class EcmrApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.IncomingMessage; body: Ecmr;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: CarrierOrg;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
-                    body = ObjectSerializer.deserialize(body, "Ecmr");
+                    body = ObjectSerializer.deserialize(body, "CarrierOrg");
                     if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
@@ -2163,8 +2475,8 @@ export class EcmrApi {
      * @param id Model id
      * @param data Model instance data
      */
-    public ecmrReplaceById (id: string, data?: Ecmr) : Promise<{ response: http.IncomingMessage; body: Ecmr;  }> {
-        const localVarPath = this.basePath + '/Ecmr/{id}'
+    public carrierOrgReplaceById (id: string, data?: CarrierOrg) : Promise<{ response: http.IncomingMessage; body: CarrierOrg;  }> {
+        const localVarPath = this.basePath + '/CarrierOrg/{id}'
             .replace('{' + 'id' + '}', String(id));
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -2173,7 +2485,7 @@ export class EcmrApi {
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling ecmrReplaceById.');
+            throw new Error('Required parameter id was null or undefined when calling carrierOrgReplaceById.');
         }
 
 
@@ -2186,7 +2498,7 @@ export class EcmrApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(data, "Ecmr")
+            body: ObjectSerializer.serialize(data, "CarrierOrg")
         };
 
         this.authentications.default.applyToRequest(requestOptions);
@@ -2198,12 +2510,12 @@ export class EcmrApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.IncomingMessage; body: Ecmr;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: CarrierOrg;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
-                    body = ObjectSerializer.deserialize(body, "Ecmr");
+                    body = ObjectSerializer.deserialize(body, "CarrierOrg");
                     if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
@@ -2214,10 +2526,10 @@ export class EcmrApi {
         });
     }
 }
-export enum LegalOwnerApiApiKeys {
+export enum CompoundAdminApiApiKeys {
 }
 
-export class LegalOwnerApi {
+export class CompoundAdminApi {
     protected _basePath = defaultBasePath;
     protected defaultHeaders : any = {};
     protected _useQuerystring : boolean = false;
@@ -2255,16 +2567,16 @@ export class LegalOwnerApi {
 	this.authentications.default = auth;
     }
 
-    public setApiKey(key: LegalOwnerApiApiKeys, value: string) {
-        this.authentications[LegalOwnerApiApiKeys[key]].apiKey = value;
+    public setApiKey(key: CompoundAdminApiApiKeys, value: string) {
+        this.authentications[CompoundAdminApiApiKeys[key]].apiKey = value;
     }
     /**
      * 
      * @summary Create a new instance of the model and persist it into the data source.
      * @param data Model instance data
      */
-    public legalOwnerCreate (data?: LegalOwner) : Promise<{ response: http.IncomingMessage; body: LegalOwner;  }> {
-        const localVarPath = this.basePath + '/LegalOwner';
+    public compoundAdminCreate (data?: CompoundAdmin) : Promise<{ response: http.IncomingMessage; body: CompoundAdmin;  }> {
+        const localVarPath = this.basePath + '/CompoundAdmin';
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let formParams: any = {};
@@ -2280,7 +2592,7 @@ export class LegalOwnerApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(data, "LegalOwner")
+            body: ObjectSerializer.serialize(data, "CompoundAdmin")
         };
 
         this.authentications.default.applyToRequest(requestOptions);
@@ -2292,12 +2604,12 @@ export class LegalOwnerApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.IncomingMessage; body: LegalOwner;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: CompoundAdmin;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
-                    body = ObjectSerializer.deserialize(body, "LegalOwner");
+                    body = ObjectSerializer.deserialize(body, "CompoundAdmin");
                     if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
@@ -2312,8 +2624,8 @@ export class LegalOwnerApi {
      * @summary Delete a model instance by {{id}} from the data source.
      * @param id Model id
      */
-    public legalOwnerDeleteById (id: string) : Promise<{ response: http.IncomingMessage; body: any;  }> {
-        const localVarPath = this.basePath + '/LegalOwner/{id}'
+    public compoundAdminDeleteById (id: string) : Promise<{ response: http.IncomingMessage; body: any;  }> {
+        const localVarPath = this.basePath + '/CompoundAdmin/{id}'
             .replace('{' + 'id' + '}', String(id));
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -2322,7 +2634,7 @@ export class LegalOwnerApi {
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling legalOwnerDeleteById.');
+            throw new Error('Required parameter id was null or undefined when calling compoundAdminDeleteById.');
         }
 
 
@@ -2366,8 +2678,8 @@ export class LegalOwnerApi {
      * @summary Check whether a model instance exists in the data source.
      * @param id Model id
      */
-    public legalOwnerExists (id: string) : Promise<{ response: http.IncomingMessage; body: InlineResponse200;  }> {
-        const localVarPath = this.basePath + '/LegalOwner/{id}'
+    public compoundAdminExists (id: string) : Promise<{ response: http.IncomingMessage; body: InlineResponse200;  }> {
+        const localVarPath = this.basePath + '/CompoundAdmin/{id}'
             .replace('{' + 'id' + '}', String(id));
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -2376,7 +2688,7 @@ export class LegalOwnerApi {
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling legalOwnerExists.');
+            throw new Error('Required parameter id was null or undefined when calling compoundAdminExists.');
         }
 
 
@@ -2420,8 +2732,8 @@ export class LegalOwnerApi {
      * @summary Find all instances of the model matched by filter from the data source.
      * @param filter Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string ({\&quot;something\&quot;:\&quot;value\&quot;})
      */
-    public legalOwnerFind (filter?: string) : Promise<{ response: http.IncomingMessage; body: Array<LegalOwner>;  }> {
-        const localVarPath = this.basePath + '/LegalOwner';
+    public compoundAdminFind (filter?: string) : Promise<{ response: http.IncomingMessage; body: Array<CompoundAdmin>;  }> {
+        const localVarPath = this.basePath + '/CompoundAdmin';
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let formParams: any = {};
@@ -2452,12 +2764,12 @@ export class LegalOwnerApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.IncomingMessage; body: Array<LegalOwner>;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: Array<CompoundAdmin>;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
-                    body = ObjectSerializer.deserialize(body, "Array<LegalOwner>");
+                    body = ObjectSerializer.deserialize(body, "Array<CompoundAdmin>");
                     if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
@@ -2473,8 +2785,8 @@ export class LegalOwnerApi {
      * @param id Model id
      * @param filter Filter defining fields and include - must be a JSON-encoded string ({\&quot;something\&quot;:\&quot;value\&quot;})
      */
-    public legalOwnerFindById (id: string, filter?: string) : Promise<{ response: http.IncomingMessage; body: LegalOwner;  }> {
-        const localVarPath = this.basePath + '/LegalOwner/{id}'
+    public compoundAdminFindById (id: string, filter?: string) : Promise<{ response: http.IncomingMessage; body: CompoundAdmin;  }> {
+        const localVarPath = this.basePath + '/CompoundAdmin/{id}'
             .replace('{' + 'id' + '}', String(id));
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -2483,7 +2795,7 @@ export class LegalOwnerApi {
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling legalOwnerFindById.');
+            throw new Error('Required parameter id was null or undefined when calling compoundAdminFindById.');
         }
 
         if (filter !== undefined) {
@@ -2511,12 +2823,12 @@ export class LegalOwnerApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.IncomingMessage; body: LegalOwner;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: CompoundAdmin;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
-                    body = ObjectSerializer.deserialize(body, "LegalOwner");
+                    body = ObjectSerializer.deserialize(body, "CompoundAdmin");
                     if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
@@ -2532,8 +2844,8 @@ export class LegalOwnerApi {
      * @param id Model id
      * @param data Model instance data
      */
-    public legalOwnerReplaceById (id: string, data?: LegalOwner) : Promise<{ response: http.IncomingMessage; body: LegalOwner;  }> {
-        const localVarPath = this.basePath + '/LegalOwner/{id}'
+    public compoundAdminReplaceById (id: string, data?: CompoundAdmin) : Promise<{ response: http.IncomingMessage; body: CompoundAdmin;  }> {
+        const localVarPath = this.basePath + '/CompoundAdmin/{id}'
             .replace('{' + 'id' + '}', String(id));
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -2542,7 +2854,7 @@ export class LegalOwnerApi {
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling legalOwnerReplaceById.');
+            throw new Error('Required parameter id was null or undefined when calling compoundAdminReplaceById.');
         }
 
 
@@ -2555,7 +2867,7 @@ export class LegalOwnerApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(data, "LegalOwner")
+            body: ObjectSerializer.serialize(data, "CompoundAdmin")
         };
 
         this.authentications.default.applyToRequest(requestOptions);
@@ -2567,12 +2879,12 @@ export class LegalOwnerApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.IncomingMessage; body: LegalOwner;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: CompoundAdmin;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
-                    body = ObjectSerializer.deserialize(body, "LegalOwner");
+                    body = ObjectSerializer.deserialize(body, "CompoundAdmin");
                     if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
@@ -2583,10 +2895,10 @@ export class LegalOwnerApi {
         });
     }
 }
-export enum RecipientApiApiKeys {
+export enum CompoundOrgApiApiKeys {
 }
 
-export class RecipientApi {
+export class CompoundOrgApi {
     protected _basePath = defaultBasePath;
     protected defaultHeaders : any = {};
     protected _useQuerystring : boolean = false;
@@ -2624,16 +2936,16 @@ export class RecipientApi {
 	this.authentications.default = auth;
     }
 
-    public setApiKey(key: RecipientApiApiKeys, value: string) {
-        this.authentications[RecipientApiApiKeys[key]].apiKey = value;
+    public setApiKey(key: CompoundOrgApiApiKeys, value: string) {
+        this.authentications[CompoundOrgApiApiKeys[key]].apiKey = value;
     }
     /**
      * 
      * @summary Create a new instance of the model and persist it into the data source.
      * @param data Model instance data
      */
-    public recipientCreate (data?: Recipient) : Promise<{ response: http.IncomingMessage; body: Recipient;  }> {
-        const localVarPath = this.basePath + '/Recipient';
+    public compoundOrgCreate (data?: CompoundOrg) : Promise<{ response: http.IncomingMessage; body: CompoundOrg;  }> {
+        const localVarPath = this.basePath + '/CompoundOrg';
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let formParams: any = {};
@@ -2649,7 +2961,7 @@ export class RecipientApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(data, "Recipient")
+            body: ObjectSerializer.serialize(data, "CompoundOrg")
         };
 
         this.authentications.default.applyToRequest(requestOptions);
@@ -2661,12 +2973,12 @@ export class RecipientApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.IncomingMessage; body: Recipient;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: CompoundOrg;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
-                    body = ObjectSerializer.deserialize(body, "Recipient");
+                    body = ObjectSerializer.deserialize(body, "CompoundOrg");
                     if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
@@ -2681,8 +2993,8 @@ export class RecipientApi {
      * @summary Delete a model instance by {{id}} from the data source.
      * @param id Model id
      */
-    public recipientDeleteById (id: string) : Promise<{ response: http.IncomingMessage; body: any;  }> {
-        const localVarPath = this.basePath + '/Recipient/{id}'
+    public compoundOrgDeleteById (id: string) : Promise<{ response: http.IncomingMessage; body: any;  }> {
+        const localVarPath = this.basePath + '/CompoundOrg/{id}'
             .replace('{' + 'id' + '}', String(id));
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -2691,7 +3003,7 @@ export class RecipientApi {
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling recipientDeleteById.');
+            throw new Error('Required parameter id was null or undefined when calling compoundOrgDeleteById.');
         }
 
 
@@ -2735,8 +3047,8 @@ export class RecipientApi {
      * @summary Check whether a model instance exists in the data source.
      * @param id Model id
      */
-    public recipientExists (id: string) : Promise<{ response: http.IncomingMessage; body: InlineResponse200;  }> {
-        const localVarPath = this.basePath + '/Recipient/{id}'
+    public compoundOrgExists (id: string) : Promise<{ response: http.IncomingMessage; body: InlineResponse200;  }> {
+        const localVarPath = this.basePath + '/CompoundOrg/{id}'
             .replace('{' + 'id' + '}', String(id));
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -2745,7 +3057,7 @@ export class RecipientApi {
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling recipientExists.');
+            throw new Error('Required parameter id was null or undefined when calling compoundOrgExists.');
         }
 
 
@@ -2789,8 +3101,8 @@ export class RecipientApi {
      * @summary Find all instances of the model matched by filter from the data source.
      * @param filter Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string ({\&quot;something\&quot;:\&quot;value\&quot;})
      */
-    public recipientFind (filter?: string) : Promise<{ response: http.IncomingMessage; body: Array<Recipient>;  }> {
-        const localVarPath = this.basePath + '/Recipient';
+    public compoundOrgFind (filter?: string) : Promise<{ response: http.IncomingMessage; body: Array<CompoundOrg>;  }> {
+        const localVarPath = this.basePath + '/CompoundOrg';
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let formParams: any = {};
@@ -2821,12 +3133,12 @@ export class RecipientApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.IncomingMessage; body: Array<Recipient>;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: Array<CompoundOrg>;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
-                    body = ObjectSerializer.deserialize(body, "Array<Recipient>");
+                    body = ObjectSerializer.deserialize(body, "Array<CompoundOrg>");
                     if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
@@ -2842,8 +3154,8 @@ export class RecipientApi {
      * @param id Model id
      * @param filter Filter defining fields and include - must be a JSON-encoded string ({\&quot;something\&quot;:\&quot;value\&quot;})
      */
-    public recipientFindById (id: string, filter?: string) : Promise<{ response: http.IncomingMessage; body: Recipient;  }> {
-        const localVarPath = this.basePath + '/Recipient/{id}'
+    public compoundOrgFindById (id: string, filter?: string) : Promise<{ response: http.IncomingMessage; body: CompoundOrg;  }> {
+        const localVarPath = this.basePath + '/CompoundOrg/{id}'
             .replace('{' + 'id' + '}', String(id));
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -2852,7 +3164,7 @@ export class RecipientApi {
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling recipientFindById.');
+            throw new Error('Required parameter id was null or undefined when calling compoundOrgFindById.');
         }
 
         if (filter !== undefined) {
@@ -2880,12 +3192,12 @@ export class RecipientApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.IncomingMessage; body: Recipient;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: CompoundOrg;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
-                    body = ObjectSerializer.deserialize(body, "Recipient");
+                    body = ObjectSerializer.deserialize(body, "CompoundOrg");
                     if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
@@ -2901,8 +3213,8 @@ export class RecipientApi {
      * @param id Model id
      * @param data Model instance data
      */
-    public recipientReplaceById (id: string, data?: Recipient) : Promise<{ response: http.IncomingMessage; body: Recipient;  }> {
-        const localVarPath = this.basePath + '/Recipient/{id}'
+    public compoundOrgReplaceById (id: string, data?: CompoundOrg) : Promise<{ response: http.IncomingMessage; body: CompoundOrg;  }> {
+        const localVarPath = this.basePath + '/CompoundOrg/{id}'
             .replace('{' + 'id' + '}', String(id));
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -2911,7 +3223,7 @@ export class RecipientApi {
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling recipientReplaceById.');
+            throw new Error('Required parameter id was null or undefined when calling compoundOrgReplaceById.');
         }
 
 
@@ -2924,7 +3236,7 @@ export class RecipientApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(data, "Recipient")
+            body: ObjectSerializer.serialize(data, "CompoundOrg")
         };
 
         this.authentications.default.applyToRequest(requestOptions);
@@ -2936,12 +3248,12 @@ export class RecipientApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.IncomingMessage; body: Recipient;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: CompoundOrg;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
-                    body = ObjectSerializer.deserialize(body, "Recipient");
+                    body = ObjectSerializer.deserialize(body, "CompoundOrg");
                     if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
@@ -2952,10 +3264,10 @@ export class RecipientApi {
         });
     }
 }
-export enum SignEcmrApiApiKeys {
+export enum ECMRApiApiKeys {
 }
 
-export class SignEcmrApi {
+export class ECMRApi {
     protected _basePath = defaultBasePath;
     protected defaultHeaders : any = {};
     protected _useQuerystring : boolean = false;
@@ -2993,16 +3305,16 @@ export class SignEcmrApi {
 	this.authentications.default = auth;
     }
 
-    public setApiKey(key: SignEcmrApiApiKeys, value: string) {
-        this.authentications[SignEcmrApiApiKeys[key]].apiKey = value;
+    public setApiKey(key: ECMRApiApiKeys, value: string) {
+        this.authentications[ECMRApiApiKeys[key]].apiKey = value;
     }
     /**
      * 
      * @summary Create a new instance of the model and persist it into the data source.
      * @param data Model instance data
      */
-    public signEcmrCreate (data?: SignEcmr) : Promise<{ response: http.IncomingMessage; body: SignEcmr;  }> {
-        const localVarPath = this.basePath + '/signEcmr';
+    public eCMRCreate (data?: ECMR) : Promise<{ response: http.IncomingMessage; body: ECMR;  }> {
+        const localVarPath = this.basePath + '/ECMR';
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let formParams: any = {};
@@ -3018,7 +3330,7 @@ export class SignEcmrApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(data, "SignEcmr")
+            body: ObjectSerializer.serialize(data, "ECMR")
         };
 
         this.authentications.default.applyToRequest(requestOptions);
@@ -3030,12 +3342,2226 @@ export class SignEcmrApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.IncomingMessage; body: SignEcmr;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: ECMR;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
-                    body = ObjectSerializer.deserialize(body, "SignEcmr");
+                    body = ObjectSerializer.deserialize(body, "ECMR");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Delete a model instance by {{id}} from the data source.
+     * @param id Model id
+     */
+    public eCMRDeleteById (id: string) : Promise<{ response: http.IncomingMessage; body: any;  }> {
+        const localVarPath = this.basePath + '/ECMR/{id}'
+            .replace('{' + 'id' + '}', String(id));
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling eCMRDeleteById.');
+        }
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'DELETE',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: any;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "any");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Check whether a model instance exists in the data source.
+     * @param id Model id
+     */
+    public eCMRExists (id: string) : Promise<{ response: http.IncomingMessage; body: InlineResponse200;  }> {
+        const localVarPath = this.basePath + '/ECMR/{id}'
+            .replace('{' + 'id' + '}', String(id));
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling eCMRExists.');
+        }
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'HEAD',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: InlineResponse200;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "InlineResponse200");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Find all instances of the model matched by filter from the data source.
+     * @param filter Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string ({\&quot;something\&quot;:\&quot;value\&quot;})
+     */
+    public eCMRFind (filter?: string) : Promise<{ response: http.IncomingMessage; body: Array<ECMR>;  }> {
+        const localVarPath = this.basePath + '/ECMR';
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+        if (filter !== undefined) {
+            queryParameters['filter'] = ObjectSerializer.serialize(filter, "string");
+        }
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'GET',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: Array<ECMR>;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "Array<ECMR>");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Find a model instance by {{id}} from the data source.
+     * @param id Model id
+     * @param filter Filter defining fields and include - must be a JSON-encoded string ({\&quot;something\&quot;:\&quot;value\&quot;})
+     */
+    public eCMRFindById (id: string, filter?: string) : Promise<{ response: http.IncomingMessage; body: ECMR;  }> {
+        const localVarPath = this.basePath + '/ECMR/{id}'
+            .replace('{' + 'id' + '}', String(id));
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling eCMRFindById.');
+        }
+
+        if (filter !== undefined) {
+            queryParameters['filter'] = ObjectSerializer.serialize(filter, "string");
+        }
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'GET',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: ECMR;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "ECMR");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Replace attributes for a model instance and persist it into the data source.
+     * @param id Model id
+     * @param data Model instance data
+     */
+    public eCMRReplaceById (id: string, data?: ECMR) : Promise<{ response: http.IncomingMessage; body: ECMR;  }> {
+        const localVarPath = this.basePath + '/ECMR/{id}'
+            .replace('{' + 'id' + '}', String(id));
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling eCMRReplaceById.');
+        }
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'PUT',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+            body: ObjectSerializer.serialize(data, "ECMR")
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: ECMR;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "ECMR");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+}
+export enum LegalOwnerAdminApiApiKeys {
+}
+
+export class LegalOwnerAdminApi {
+    protected _basePath = defaultBasePath;
+    protected defaultHeaders : any = {};
+    protected _useQuerystring : boolean = false;
+
+    protected authentications = {
+        'default': <Authentication>new VoidAuth(),
+    }
+
+    constructor(basePath?: string);
+    constructor(basePathOrUsername: string, password?: string, basePath?: string) {
+        if (password) {
+            if (basePath) {
+                this.basePath = basePath;
+            }
+        } else {
+            if (basePathOrUsername) {
+                this.basePath = basePathOrUsername
+            }
+        }
+    }
+
+    set useQuerystring(value: boolean) {
+        this._useQuerystring = value;
+    }
+
+    set basePath(basePath: string) {
+        this._basePath = basePath;
+    }
+
+    get basePath() {
+        return this._basePath;
+    }
+
+    public setDefaultAuthentication(auth: Authentication) {
+	this.authentications.default = auth;
+    }
+
+    public setApiKey(key: LegalOwnerAdminApiApiKeys, value: string) {
+        this.authentications[LegalOwnerAdminApiApiKeys[key]].apiKey = value;
+    }
+    /**
+     * 
+     * @summary Create a new instance of the model and persist it into the data source.
+     * @param data Model instance data
+     */
+    public legalOwnerAdminCreate (data?: LegalOwnerAdmin) : Promise<{ response: http.IncomingMessage; body: LegalOwnerAdmin;  }> {
+        const localVarPath = this.basePath + '/LegalOwnerAdmin';
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'POST',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+            body: ObjectSerializer.serialize(data, "LegalOwnerAdmin")
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: LegalOwnerAdmin;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "LegalOwnerAdmin");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Delete a model instance by {{id}} from the data source.
+     * @param id Model id
+     */
+    public legalOwnerAdminDeleteById (id: string) : Promise<{ response: http.IncomingMessage; body: any;  }> {
+        const localVarPath = this.basePath + '/LegalOwnerAdmin/{id}'
+            .replace('{' + 'id' + '}', String(id));
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling legalOwnerAdminDeleteById.');
+        }
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'DELETE',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: any;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "any");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Check whether a model instance exists in the data source.
+     * @param id Model id
+     */
+    public legalOwnerAdminExists (id: string) : Promise<{ response: http.IncomingMessage; body: InlineResponse200;  }> {
+        const localVarPath = this.basePath + '/LegalOwnerAdmin/{id}'
+            .replace('{' + 'id' + '}', String(id));
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling legalOwnerAdminExists.');
+        }
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'HEAD',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: InlineResponse200;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "InlineResponse200");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Find all instances of the model matched by filter from the data source.
+     * @param filter Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string ({\&quot;something\&quot;:\&quot;value\&quot;})
+     */
+    public legalOwnerAdminFind (filter?: string) : Promise<{ response: http.IncomingMessage; body: Array<LegalOwnerAdmin>;  }> {
+        const localVarPath = this.basePath + '/LegalOwnerAdmin';
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+        if (filter !== undefined) {
+            queryParameters['filter'] = ObjectSerializer.serialize(filter, "string");
+        }
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'GET',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: Array<LegalOwnerAdmin>;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "Array<LegalOwnerAdmin>");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Find a model instance by {{id}} from the data source.
+     * @param id Model id
+     * @param filter Filter defining fields and include - must be a JSON-encoded string ({\&quot;something\&quot;:\&quot;value\&quot;})
+     */
+    public legalOwnerAdminFindById (id: string, filter?: string) : Promise<{ response: http.IncomingMessage; body: LegalOwnerAdmin;  }> {
+        const localVarPath = this.basePath + '/LegalOwnerAdmin/{id}'
+            .replace('{' + 'id' + '}', String(id));
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling legalOwnerAdminFindById.');
+        }
+
+        if (filter !== undefined) {
+            queryParameters['filter'] = ObjectSerializer.serialize(filter, "string");
+        }
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'GET',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: LegalOwnerAdmin;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "LegalOwnerAdmin");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Replace attributes for a model instance and persist it into the data source.
+     * @param id Model id
+     * @param data Model instance data
+     */
+    public legalOwnerAdminReplaceById (id: string, data?: LegalOwnerAdmin) : Promise<{ response: http.IncomingMessage; body: LegalOwnerAdmin;  }> {
+        const localVarPath = this.basePath + '/LegalOwnerAdmin/{id}'
+            .replace('{' + 'id' + '}', String(id));
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling legalOwnerAdminReplaceById.');
+        }
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'PUT',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+            body: ObjectSerializer.serialize(data, "LegalOwnerAdmin")
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: LegalOwnerAdmin;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "LegalOwnerAdmin");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+}
+export enum LegalOwnerOrgApiApiKeys {
+}
+
+export class LegalOwnerOrgApi {
+    protected _basePath = defaultBasePath;
+    protected defaultHeaders : any = {};
+    protected _useQuerystring : boolean = false;
+
+    protected authentications = {
+        'default': <Authentication>new VoidAuth(),
+    }
+
+    constructor(basePath?: string);
+    constructor(basePathOrUsername: string, password?: string, basePath?: string) {
+        if (password) {
+            if (basePath) {
+                this.basePath = basePath;
+            }
+        } else {
+            if (basePathOrUsername) {
+                this.basePath = basePathOrUsername
+            }
+        }
+    }
+
+    set useQuerystring(value: boolean) {
+        this._useQuerystring = value;
+    }
+
+    set basePath(basePath: string) {
+        this._basePath = basePath;
+    }
+
+    get basePath() {
+        return this._basePath;
+    }
+
+    public setDefaultAuthentication(auth: Authentication) {
+	this.authentications.default = auth;
+    }
+
+    public setApiKey(key: LegalOwnerOrgApiApiKeys, value: string) {
+        this.authentications[LegalOwnerOrgApiApiKeys[key]].apiKey = value;
+    }
+    /**
+     * 
+     * @summary Create a new instance of the model and persist it into the data source.
+     * @param data Model instance data
+     */
+    public legalOwnerOrgCreate (data?: LegalOwnerOrg) : Promise<{ response: http.IncomingMessage; body: LegalOwnerOrg;  }> {
+        const localVarPath = this.basePath + '/LegalOwnerOrg';
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'POST',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+            body: ObjectSerializer.serialize(data, "LegalOwnerOrg")
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: LegalOwnerOrg;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "LegalOwnerOrg");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Delete a model instance by {{id}} from the data source.
+     * @param id Model id
+     */
+    public legalOwnerOrgDeleteById (id: string) : Promise<{ response: http.IncomingMessage; body: any;  }> {
+        const localVarPath = this.basePath + '/LegalOwnerOrg/{id}'
+            .replace('{' + 'id' + '}', String(id));
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling legalOwnerOrgDeleteById.');
+        }
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'DELETE',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: any;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "any");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Check whether a model instance exists in the data source.
+     * @param id Model id
+     */
+    public legalOwnerOrgExists (id: string) : Promise<{ response: http.IncomingMessage; body: InlineResponse200;  }> {
+        const localVarPath = this.basePath + '/LegalOwnerOrg/{id}'
+            .replace('{' + 'id' + '}', String(id));
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling legalOwnerOrgExists.');
+        }
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'HEAD',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: InlineResponse200;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "InlineResponse200");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Find all instances of the model matched by filter from the data source.
+     * @param filter Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string ({\&quot;something\&quot;:\&quot;value\&quot;})
+     */
+    public legalOwnerOrgFind (filter?: string) : Promise<{ response: http.IncomingMessage; body: Array<LegalOwnerOrg>;  }> {
+        const localVarPath = this.basePath + '/LegalOwnerOrg';
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+        if (filter !== undefined) {
+            queryParameters['filter'] = ObjectSerializer.serialize(filter, "string");
+        }
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'GET',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: Array<LegalOwnerOrg>;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "Array<LegalOwnerOrg>");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Find a model instance by {{id}} from the data source.
+     * @param id Model id
+     * @param filter Filter defining fields and include - must be a JSON-encoded string ({\&quot;something\&quot;:\&quot;value\&quot;})
+     */
+    public legalOwnerOrgFindById (id: string, filter?: string) : Promise<{ response: http.IncomingMessage; body: LegalOwnerOrg;  }> {
+        const localVarPath = this.basePath + '/LegalOwnerOrg/{id}'
+            .replace('{' + 'id' + '}', String(id));
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling legalOwnerOrgFindById.');
+        }
+
+        if (filter !== undefined) {
+            queryParameters['filter'] = ObjectSerializer.serialize(filter, "string");
+        }
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'GET',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: LegalOwnerOrg;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "LegalOwnerOrg");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Replace attributes for a model instance and persist it into the data source.
+     * @param id Model id
+     * @param data Model instance data
+     */
+    public legalOwnerOrgReplaceById (id: string, data?: LegalOwnerOrg) : Promise<{ response: http.IncomingMessage; body: LegalOwnerOrg;  }> {
+        const localVarPath = this.basePath + '/LegalOwnerOrg/{id}'
+            .replace('{' + 'id' + '}', String(id));
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling legalOwnerOrgReplaceById.');
+        }
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'PUT',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+            body: ObjectSerializer.serialize(data, "LegalOwnerOrg")
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: LegalOwnerOrg;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "LegalOwnerOrg");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+}
+export enum RecipientAdminApiApiKeys {
+}
+
+export class RecipientAdminApi {
+    protected _basePath = defaultBasePath;
+    protected defaultHeaders : any = {};
+    protected _useQuerystring : boolean = false;
+
+    protected authentications = {
+        'default': <Authentication>new VoidAuth(),
+    }
+
+    constructor(basePath?: string);
+    constructor(basePathOrUsername: string, password?: string, basePath?: string) {
+        if (password) {
+            if (basePath) {
+                this.basePath = basePath;
+            }
+        } else {
+            if (basePathOrUsername) {
+                this.basePath = basePathOrUsername
+            }
+        }
+    }
+
+    set useQuerystring(value: boolean) {
+        this._useQuerystring = value;
+    }
+
+    set basePath(basePath: string) {
+        this._basePath = basePath;
+    }
+
+    get basePath() {
+        return this._basePath;
+    }
+
+    public setDefaultAuthentication(auth: Authentication) {
+	this.authentications.default = auth;
+    }
+
+    public setApiKey(key: RecipientAdminApiApiKeys, value: string) {
+        this.authentications[RecipientAdminApiApiKeys[key]].apiKey = value;
+    }
+    /**
+     * 
+     * @summary Create a new instance of the model and persist it into the data source.
+     * @param data Model instance data
+     */
+    public recipientAdminCreate (data?: RecipientAdmin) : Promise<{ response: http.IncomingMessage; body: RecipientAdmin;  }> {
+        const localVarPath = this.basePath + '/RecipientAdmin';
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'POST',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+            body: ObjectSerializer.serialize(data, "RecipientAdmin")
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: RecipientAdmin;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "RecipientAdmin");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Delete a model instance by {{id}} from the data source.
+     * @param id Model id
+     */
+    public recipientAdminDeleteById (id: string) : Promise<{ response: http.IncomingMessage; body: any;  }> {
+        const localVarPath = this.basePath + '/RecipientAdmin/{id}'
+            .replace('{' + 'id' + '}', String(id));
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling recipientAdminDeleteById.');
+        }
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'DELETE',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: any;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "any");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Check whether a model instance exists in the data source.
+     * @param id Model id
+     */
+    public recipientAdminExists (id: string) : Promise<{ response: http.IncomingMessage; body: InlineResponse200;  }> {
+        const localVarPath = this.basePath + '/RecipientAdmin/{id}'
+            .replace('{' + 'id' + '}', String(id));
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling recipientAdminExists.');
+        }
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'HEAD',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: InlineResponse200;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "InlineResponse200");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Find all instances of the model matched by filter from the data source.
+     * @param filter Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string ({\&quot;something\&quot;:\&quot;value\&quot;})
+     */
+    public recipientAdminFind (filter?: string) : Promise<{ response: http.IncomingMessage; body: Array<RecipientAdmin>;  }> {
+        const localVarPath = this.basePath + '/RecipientAdmin';
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+        if (filter !== undefined) {
+            queryParameters['filter'] = ObjectSerializer.serialize(filter, "string");
+        }
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'GET',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: Array<RecipientAdmin>;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "Array<RecipientAdmin>");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Find a model instance by {{id}} from the data source.
+     * @param id Model id
+     * @param filter Filter defining fields and include - must be a JSON-encoded string ({\&quot;something\&quot;:\&quot;value\&quot;})
+     */
+    public recipientAdminFindById (id: string, filter?: string) : Promise<{ response: http.IncomingMessage; body: RecipientAdmin;  }> {
+        const localVarPath = this.basePath + '/RecipientAdmin/{id}'
+            .replace('{' + 'id' + '}', String(id));
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling recipientAdminFindById.');
+        }
+
+        if (filter !== undefined) {
+            queryParameters['filter'] = ObjectSerializer.serialize(filter, "string");
+        }
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'GET',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: RecipientAdmin;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "RecipientAdmin");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Replace attributes for a model instance and persist it into the data source.
+     * @param id Model id
+     * @param data Model instance data
+     */
+    public recipientAdminReplaceById (id: string, data?: RecipientAdmin) : Promise<{ response: http.IncomingMessage; body: RecipientAdmin;  }> {
+        const localVarPath = this.basePath + '/RecipientAdmin/{id}'
+            .replace('{' + 'id' + '}', String(id));
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling recipientAdminReplaceById.');
+        }
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'PUT',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+            body: ObjectSerializer.serialize(data, "RecipientAdmin")
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: RecipientAdmin;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "RecipientAdmin");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+}
+export enum RecipientMemberApiApiKeys {
+}
+
+export class RecipientMemberApi {
+    protected _basePath = defaultBasePath;
+    protected defaultHeaders : any = {};
+    protected _useQuerystring : boolean = false;
+
+    protected authentications = {
+        'default': <Authentication>new VoidAuth(),
+    }
+
+    constructor(basePath?: string);
+    constructor(basePathOrUsername: string, password?: string, basePath?: string) {
+        if (password) {
+            if (basePath) {
+                this.basePath = basePath;
+            }
+        } else {
+            if (basePathOrUsername) {
+                this.basePath = basePathOrUsername
+            }
+        }
+    }
+
+    set useQuerystring(value: boolean) {
+        this._useQuerystring = value;
+    }
+
+    set basePath(basePath: string) {
+        this._basePath = basePath;
+    }
+
+    get basePath() {
+        return this._basePath;
+    }
+
+    public setDefaultAuthentication(auth: Authentication) {
+	this.authentications.default = auth;
+    }
+
+    public setApiKey(key: RecipientMemberApiApiKeys, value: string) {
+        this.authentications[RecipientMemberApiApiKeys[key]].apiKey = value;
+    }
+    /**
+     * 
+     * @summary Create a new instance of the model and persist it into the data source.
+     * @param data Model instance data
+     */
+    public recipientMemberCreate (data?: RecipientMember) : Promise<{ response: http.IncomingMessage; body: RecipientMember;  }> {
+        const localVarPath = this.basePath + '/RecipientMember';
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'POST',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+            body: ObjectSerializer.serialize(data, "RecipientMember")
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: RecipientMember;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "RecipientMember");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Delete a model instance by {{id}} from the data source.
+     * @param id Model id
+     */
+    public recipientMemberDeleteById (id: string) : Promise<{ response: http.IncomingMessage; body: any;  }> {
+        const localVarPath = this.basePath + '/RecipientMember/{id}'
+            .replace('{' + 'id' + '}', String(id));
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling recipientMemberDeleteById.');
+        }
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'DELETE',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: any;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "any");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Check whether a model instance exists in the data source.
+     * @param id Model id
+     */
+    public recipientMemberExists (id: string) : Promise<{ response: http.IncomingMessage; body: InlineResponse200;  }> {
+        const localVarPath = this.basePath + '/RecipientMember/{id}'
+            .replace('{' + 'id' + '}', String(id));
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling recipientMemberExists.');
+        }
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'HEAD',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: InlineResponse200;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "InlineResponse200");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Find all instances of the model matched by filter from the data source.
+     * @param filter Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string ({\&quot;something\&quot;:\&quot;value\&quot;})
+     */
+    public recipientMemberFind (filter?: string) : Promise<{ response: http.IncomingMessage; body: Array<RecipientMember>;  }> {
+        const localVarPath = this.basePath + '/RecipientMember';
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+        if (filter !== undefined) {
+            queryParameters['filter'] = ObjectSerializer.serialize(filter, "string");
+        }
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'GET',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: Array<RecipientMember>;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "Array<RecipientMember>");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Find a model instance by {{id}} from the data source.
+     * @param id Model id
+     * @param filter Filter defining fields and include - must be a JSON-encoded string ({\&quot;something\&quot;:\&quot;value\&quot;})
+     */
+    public recipientMemberFindById (id: string, filter?: string) : Promise<{ response: http.IncomingMessage; body: RecipientMember;  }> {
+        const localVarPath = this.basePath + '/RecipientMember/{id}'
+            .replace('{' + 'id' + '}', String(id));
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling recipientMemberFindById.');
+        }
+
+        if (filter !== undefined) {
+            queryParameters['filter'] = ObjectSerializer.serialize(filter, "string");
+        }
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'GET',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: RecipientMember;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "RecipientMember");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Replace attributes for a model instance and persist it into the data source.
+     * @param id Model id
+     * @param data Model instance data
+     */
+    public recipientMemberReplaceById (id: string, data?: RecipientMember) : Promise<{ response: http.IncomingMessage; body: RecipientMember;  }> {
+        const localVarPath = this.basePath + '/RecipientMember/{id}'
+            .replace('{' + 'id' + '}', String(id));
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling recipientMemberReplaceById.');
+        }
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'PUT',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+            body: ObjectSerializer.serialize(data, "RecipientMember")
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: RecipientMember;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "RecipientMember");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+}
+export enum RecipientOrgApiApiKeys {
+}
+
+export class RecipientOrgApi {
+    protected _basePath = defaultBasePath;
+    protected defaultHeaders : any = {};
+    protected _useQuerystring : boolean = false;
+
+    protected authentications = {
+        'default': <Authentication>new VoidAuth(),
+    }
+
+    constructor(basePath?: string);
+    constructor(basePathOrUsername: string, password?: string, basePath?: string) {
+        if (password) {
+            if (basePath) {
+                this.basePath = basePath;
+            }
+        } else {
+            if (basePathOrUsername) {
+                this.basePath = basePathOrUsername
+            }
+        }
+    }
+
+    set useQuerystring(value: boolean) {
+        this._useQuerystring = value;
+    }
+
+    set basePath(basePath: string) {
+        this._basePath = basePath;
+    }
+
+    get basePath() {
+        return this._basePath;
+    }
+
+    public setDefaultAuthentication(auth: Authentication) {
+	this.authentications.default = auth;
+    }
+
+    public setApiKey(key: RecipientOrgApiApiKeys, value: string) {
+        this.authentications[RecipientOrgApiApiKeys[key]].apiKey = value;
+    }
+    /**
+     * 
+     * @summary Create a new instance of the model and persist it into the data source.
+     * @param data Model instance data
+     */
+    public recipientOrgCreate (data?: RecipientOrg) : Promise<{ response: http.IncomingMessage; body: RecipientOrg;  }> {
+        const localVarPath = this.basePath + '/RecipientOrg';
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'POST',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+            body: ObjectSerializer.serialize(data, "RecipientOrg")
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: RecipientOrg;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "RecipientOrg");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Delete a model instance by {{id}} from the data source.
+     * @param id Model id
+     */
+    public recipientOrgDeleteById (id: string) : Promise<{ response: http.IncomingMessage; body: any;  }> {
+        const localVarPath = this.basePath + '/RecipientOrg/{id}'
+            .replace('{' + 'id' + '}', String(id));
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling recipientOrgDeleteById.');
+        }
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'DELETE',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: any;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "any");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Check whether a model instance exists in the data source.
+     * @param id Model id
+     */
+    public recipientOrgExists (id: string) : Promise<{ response: http.IncomingMessage; body: InlineResponse200;  }> {
+        const localVarPath = this.basePath + '/RecipientOrg/{id}'
+            .replace('{' + 'id' + '}', String(id));
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling recipientOrgExists.');
+        }
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'HEAD',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: InlineResponse200;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "InlineResponse200");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Find all instances of the model matched by filter from the data source.
+     * @param filter Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string ({\&quot;something\&quot;:\&quot;value\&quot;})
+     */
+    public recipientOrgFind (filter?: string) : Promise<{ response: http.IncomingMessage; body: Array<RecipientOrg>;  }> {
+        const localVarPath = this.basePath + '/RecipientOrg';
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+        if (filter !== undefined) {
+            queryParameters['filter'] = ObjectSerializer.serialize(filter, "string");
+        }
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'GET',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: Array<RecipientOrg>;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "Array<RecipientOrg>");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Find a model instance by {{id}} from the data source.
+     * @param id Model id
+     * @param filter Filter defining fields and include - must be a JSON-encoded string ({\&quot;something\&quot;:\&quot;value\&quot;})
+     */
+    public recipientOrgFindById (id: string, filter?: string) : Promise<{ response: http.IncomingMessage; body: RecipientOrg;  }> {
+        const localVarPath = this.basePath + '/RecipientOrg/{id}'
+            .replace('{' + 'id' + '}', String(id));
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling recipientOrgFindById.');
+        }
+
+        if (filter !== undefined) {
+            queryParameters['filter'] = ObjectSerializer.serialize(filter, "string");
+        }
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'GET',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: RecipientOrg;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "RecipientOrg");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Replace attributes for a model instance and persist it into the data source.
+     * @param id Model id
+     * @param data Model instance data
+     */
+    public recipientOrgReplaceById (id: string, data?: RecipientOrg) : Promise<{ response: http.IncomingMessage; body: RecipientOrg;  }> {
+        const localVarPath = this.basePath + '/RecipientOrg/{id}'
+            .replace('{' + 'id' + '}', String(id));
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling recipientOrgReplaceById.');
+        }
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'PUT',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+            body: ObjectSerializer.serialize(data, "RecipientOrg")
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: RecipientOrg;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "RecipientOrg");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+}
+export enum SignECMRApiApiKeys {
+}
+
+export class SignECMRApi {
+    protected _basePath = defaultBasePath;
+    protected defaultHeaders : any = {};
+    protected _useQuerystring : boolean = false;
+
+    protected authentications = {
+        'default': <Authentication>new VoidAuth(),
+    }
+
+    constructor(basePath?: string);
+    constructor(basePathOrUsername: string, password?: string, basePath?: string) {
+        if (password) {
+            if (basePath) {
+                this.basePath = basePath;
+            }
+        } else {
+            if (basePathOrUsername) {
+                this.basePath = basePathOrUsername
+            }
+        }
+    }
+
+    set useQuerystring(value: boolean) {
+        this._useQuerystring = value;
+    }
+
+    set basePath(basePath: string) {
+        this._basePath = basePath;
+    }
+
+    get basePath() {
+        return this._basePath;
+    }
+
+    public setDefaultAuthentication(auth: Authentication) {
+	this.authentications.default = auth;
+    }
+
+    public setApiKey(key: SignECMRApiApiKeys, value: string) {
+        this.authentications[SignECMRApiApiKeys[key]].apiKey = value;
+    }
+    /**
+     * 
+     * @summary Create a new instance of the model and persist it into the data source.
+     * @param data Model instance data
+     */
+    public signECMRCreate (data?: SignECMR) : Promise<{ response: http.IncomingMessage; body: SignECMR;  }> {
+        const localVarPath = this.basePath + '/signECMR';
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'POST',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+            body: ObjectSerializer.serialize(data, "SignECMR")
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: SignECMR;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "SignECMR");
                     if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {

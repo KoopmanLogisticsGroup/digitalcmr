@@ -3,13 +3,15 @@ import {Routes, RouterModule} from '@angular/router';
 import {AuthGuard} from './guards/index';
 import {LoginComponent} from './components/login/login.component';
 import {ThingsComponent} from './components/things/things.component';
+import {OverviewComponent} from './components/overview/overview.component';
 
 const appRoutes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'things', component: ThingsComponent, canActivate: [AuthGuard]},
+  {path: 'overview', component: OverviewComponent},
 
   // otherwise redirect to login
-  {path: '**', redirectTo: 'login'}
+  {path: '**', redirectTo: 'things'}
 ];
 
 export const appRoutingProviders: any[] = [];
