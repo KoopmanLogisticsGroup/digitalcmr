@@ -20,7 +20,6 @@ asset Ecmr identified by eCmrId {
   --> Recipient destination
   o String carrierComments
   o String status
-  o ItemLine[] items
   o Address compoundAddress
   o Address recipientAddress
   o Loading loadingAddress
@@ -30,10 +29,6 @@ asset Ecmr identified by eCmrId {
   o String legalOwnerInstructions
   o String paymentInstructions
   o String payOnDelivery
-  o Signature compoundSignature
-  o Signature carrierLoadingSignature
-  o Signature recipientSignature
-  o Signature carrierDeliverySignature
 }
 
 asset Vehicle identified by frameNumber {
@@ -84,11 +79,6 @@ concept User {
   o String role
 }
 
-concept ItemLine {
-  o String[] remarks
-  --> Vehicle vehicle
-}
-
 concept Address {
   o String name
   o String street
@@ -137,12 +127,7 @@ transaction signEcmr {
  * Events
  */
 
-event Signature {
-  --> Ecmr ecmr
-  o Integer latitude
-  o Integer longitude
-  o String IP
-}
+
 
 /**
  * Enum are all uppercase

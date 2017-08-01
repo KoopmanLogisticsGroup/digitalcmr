@@ -143,11 +143,14 @@ export class Address {
     * The class identifier for this type
     */
     '$Class': string;
-    'zipCode': string;
-    'city': string;
+    'name': string;
     'street': string;
-    'number': string;
+    'houseNumber': string;
+    'city': string;
+    'zipCode': string;
     'country': string;
+    'latitude': number;
+    'longitude': number;
     'id': string;
 
     static discriminator = undefined;
@@ -159,13 +162,8 @@ export class Address {
             "type": "string"
         },
         {
-            "name": "zipCode",
-            "baseName": "zipCode",
-            "type": "string"
-        },
-        {
-            "name": "city",
-            "baseName": "city",
+            "name": "name",
+            "baseName": "name",
             "type": "string"
         },
         {
@@ -174,14 +172,34 @@ export class Address {
             "type": "string"
         },
         {
-            "name": "number",
-            "baseName": "number",
+            "name": "houseNumber",
+            "baseName": "houseNumber",
+            "type": "string"
+        },
+        {
+            "name": "city",
+            "baseName": "city",
+            "type": "string"
+        },
+        {
+            "name": "zipCode",
+            "baseName": "zipCode",
             "type": "string"
         },
         {
             "name": "country",
             "baseName": "country",
             "type": "string"
+        },
+        {
+            "name": "latitude",
+            "baseName": "latitude",
+            "type": "number"
+        },
+        {
+            "name": "longitude",
+            "baseName": "longitude",
+            "type": "number"
         },
         {
             "name": "id",
@@ -221,50 +239,6 @@ export class BindIdentityRequest {
 }
 
 /**
-* A participant named CarDealer
-*/
-export class CarDealer {
-    /**
-    * The class identifier for this type
-    */
-    '$Class': string;
-    /**
-    * The instance identifier for this type
-    */
-    'carDealerId': string;
-    'name': string;
-    'address': Address;
-
-    static discriminator = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "$Class",
-            "baseName": "$class",
-            "type": "string"
-        },
-        {
-            "name": "carDealerId",
-            "baseName": "carDealerId",
-            "type": "string"
-        },
-        {
-            "name": "name",
-            "baseName": "name",
-            "type": "string"
-        },
-        {
-            "name": "address",
-            "baseName": "address",
-            "type": "Address"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return CarDealer.attributeTypeMap;
-    }
-}
-
-/**
 * A participant named Carrier
 */
 export class Carrier {
@@ -276,7 +250,7 @@ export class Carrier {
     * The instance identifier for this type
     */
     'carrierId': string;
-    'firstName': string;
+    'users': User;
     'lastName': string;
 
     static discriminator = undefined;
@@ -293,9 +267,9 @@ export class Carrier {
             "type": "string"
         },
         {
-            "name": "firstName",
-            "baseName": "firstName",
-            "type": "string"
+            "name": "users",
+            "baseName": "users",
+            "type": "User"
         },
         {
             "name": "lastName",
@@ -320,7 +294,7 @@ export class Compound {
     * The instance identifier for this type
     */
     'compoundId': string;
-    'name': string;
+    'users': User;
     'address': Address;
 
     static discriminator = undefined;
@@ -337,9 +311,9 @@ export class Compound {
             "type": "string"
         },
         {
-            "name": "name",
-            "baseName": "name",
-            "type": "string"
+            "name": "users",
+            "baseName": "users",
+            "type": "User"
         },
         {
             "name": "address",
@@ -405,6 +379,11 @@ export class Ecmr {
     * The instance identifier for this type
     */
     'eCmrId': string;
+    'legalOwnerRef': string;
+    'carrierRef': string;
+    'recipientRef': string;
+    'compoundRef': string;
+    'issueDate': number;
     /**
     * The identifier of an instance of owner
     */
@@ -417,19 +396,17 @@ export class Ecmr {
     * The identifier of an instance of destination
     */
     'destination': string;
-    'status': string;
-    'items': Array<ItemLine>;
-    'senderAddress': Address;
-    'consigneeAddress': Address;
-    'transportCode': string;
     'carrierComments': string;
+    'status': string;
+    'compoundAddress': Address;
+    'recipientAddress': Address;
     'loadingAddress': Loading;
     'deliveryAddress': Delivery;
     'documents': string;
-    'goods': string;
-    'senderInstructions': string;
+    'goods': Good;
+    'legalOwnerInstructions': string;
     'paymentInstructions': string;
-    'remboursment': string;
+    'payOnDelivery': string;
 
     static discriminator = undefined;
 
@@ -443,6 +420,31 @@ export class Ecmr {
             "name": "eCmrId",
             "baseName": "eCmrId",
             "type": "string"
+        },
+        {
+            "name": "legalOwnerRef",
+            "baseName": "legalOwnerRef",
+            "type": "string"
+        },
+        {
+            "name": "carrierRef",
+            "baseName": "carrierRef",
+            "type": "string"
+        },
+        {
+            "name": "recipientRef",
+            "baseName": "recipientRef",
+            "type": "string"
+        },
+        {
+            "name": "compoundRef",
+            "baseName": "compoundRef",
+            "type": "string"
+        },
+        {
+            "name": "issueDate",
+            "baseName": "issueDate",
+            "type": "number"
         },
         {
             "name": "owner",
@@ -460,34 +462,24 @@ export class Ecmr {
             "type": "string"
         },
         {
+            "name": "carrierComments",
+            "baseName": "carrierComments",
+            "type": "string"
+        },
+        {
             "name": "status",
             "baseName": "status",
             "type": "string"
         },
         {
-            "name": "items",
-            "baseName": "items",
-            "type": "Array<ItemLine>"
-        },
-        {
-            "name": "senderAddress",
-            "baseName": "senderAddress",
+            "name": "compoundAddress",
+            "baseName": "compoundAddress",
             "type": "Address"
         },
         {
-            "name": "consigneeAddress",
-            "baseName": "consigneeAddress",
+            "name": "recipientAddress",
+            "baseName": "recipientAddress",
             "type": "Address"
-        },
-        {
-            "name": "transportCode",
-            "baseName": "transportCode",
-            "type": "string"
-        },
-        {
-            "name": "carrierComments",
-            "baseName": "carrierComments",
-            "type": "string"
         },
         {
             "name": "loadingAddress",
@@ -507,11 +499,11 @@ export class Ecmr {
         {
             "name": "goods",
             "baseName": "goods",
-            "type": "string"
+            "type": "Good"
         },
         {
-            "name": "senderInstructions",
-            "baseName": "senderInstructions",
+            "name": "legalOwnerInstructions",
+            "baseName": "legalOwnerInstructions",
             "type": "string"
         },
         {
@@ -520,13 +512,78 @@ export class Ecmr {
             "type": "string"
         },
         {
-            "name": "remboursment",
-            "baseName": "remboursment",
+            "name": "payOnDelivery",
+            "baseName": "payOnDelivery",
             "type": "string"
         }    ];
 
     static getAttributeTypeMap() {
         return Ecmr.attributeTypeMap;
+    }
+}
+
+/**
+* A concept named Good
+*/
+export class Good {
+    /**
+    * The class identifier for this type
+    */
+    '$Class': string;
+    'carrierLoadingRemark': Remark;
+    'compoundRemark': Remark;
+    'recipientRemark': Remark;
+    'carrierDeliveryRemark': Remark;
+    'licensePlate': string;
+    'weight': number;
+    'id': string;
+
+    static discriminator = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "$Class",
+            "baseName": "$class",
+            "type": "string"
+        },
+        {
+            "name": "carrierLoadingRemark",
+            "baseName": "carrierLoadingRemark",
+            "type": "Remark"
+        },
+        {
+            "name": "compoundRemark",
+            "baseName": "compoundRemark",
+            "type": "Remark"
+        },
+        {
+            "name": "recipientRemark",
+            "baseName": "recipientRemark",
+            "type": "Remark"
+        },
+        {
+            "name": "carrierDeliveryRemark",
+            "baseName": "carrierDeliveryRemark",
+            "type": "Remark"
+        },
+        {
+            "name": "licensePlate",
+            "baseName": "licensePlate",
+            "type": "string"
+        },
+        {
+            "name": "weight",
+            "baseName": "weight",
+            "type": "number"
+        },
+        {
+            "name": "id",
+            "baseName": "id",
+            "type": "string"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return Good.attributeTypeMap;
     }
 }
 
@@ -606,53 +663,9 @@ export class IssueIdentityResponse {
 }
 
 /**
-* A concept named ItemLine
+* A participant named LegalOwner
 */
-export class ItemLine {
-    /**
-    * The class identifier for this type
-    */
-    '$Class': string;
-    'remarks': Array<string>;
-    /**
-    * The identifier of an instance of vehicle
-    */
-    'vehicle': string;
-    'id': string;
-
-    static discriminator = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "$Class",
-            "baseName": "$class",
-            "type": "string"
-        },
-        {
-            "name": "remarks",
-            "baseName": "remarks",
-            "type": "Array<string>"
-        },
-        {
-            "name": "vehicle",
-            "baseName": "vehicle",
-            "type": "string"
-        },
-        {
-            "name": "id",
-            "baseName": "id",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return ItemLine.attributeTypeMap;
-    }
-}
-
-/**
-* A participant named LeasePlan
-*/
-export class LeasePlan {
+export class LegalOwner {
     /**
     * The class identifier for this type
     */
@@ -660,8 +673,8 @@ export class LeasePlan {
     /**
     * The instance identifier for this type
     */
-    'leasePlanId': string;
-    'name': string;
+    'legalOwnerId': string;
+    'users': User;
     'address': Address;
 
     static discriminator = undefined;
@@ -673,14 +686,14 @@ export class LeasePlan {
             "type": "string"
         },
         {
-            "name": "leasePlanId",
-            "baseName": "leasePlanId",
+            "name": "legalOwnerId",
+            "baseName": "legalOwnerId",
             "type": "string"
         },
         {
-            "name": "name",
-            "baseName": "name",
-            "type": "string"
+            "name": "users",
+            "baseName": "users",
+            "type": "User"
         },
         {
             "name": "address",
@@ -689,7 +702,7 @@ export class LeasePlan {
         }    ];
 
     static getAttributeTypeMap() {
-        return LeasePlan.attributeTypeMap;
+        return LegalOwner.attributeTypeMap;
     }
 }
 
@@ -757,6 +770,91 @@ export class PingResponse {
 
     static getAttributeTypeMap() {
         return PingResponse.attributeTypeMap;
+    }
+}
+
+/**
+* A participant named Recipient
+*/
+export class Recipient {
+    /**
+    * The class identifier for this type
+    */
+    '$Class': string;
+    /**
+    * The instance identifier for this type
+    */
+    'recipientId': string;
+    'users': User;
+    'address': Address;
+
+    static discriminator = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "$Class",
+            "baseName": "$class",
+            "type": "string"
+        },
+        {
+            "name": "recipientId",
+            "baseName": "recipientId",
+            "type": "string"
+        },
+        {
+            "name": "users",
+            "baseName": "users",
+            "type": "User"
+        },
+        {
+            "name": "address",
+            "baseName": "address",
+            "type": "Address"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return Recipient.attributeTypeMap;
+    }
+}
+
+/**
+* A concept named Remark
+*/
+export class Remark {
+    /**
+    * The class identifier for this type
+    */
+    '$Class': string;
+    'comments': string;
+    'isDamaged': boolean;
+    'id': string;
+
+    static discriminator = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "$Class",
+            "baseName": "$class",
+            "type": "string"
+        },
+        {
+            "name": "comments",
+            "baseName": "comments",
+            "type": "string"
+        },
+        {
+            "name": "isDamaged",
+            "baseName": "isDamaged",
+            "type": "boolean"
+        },
+        {
+            "name": "id",
+            "baseName": "id",
+            "type": "string"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return Remark.attributeTypeMap;
     }
 }
 
@@ -961,6 +1059,71 @@ export class SignEcmr {
 }
 
 /**
+* A concept named User
+*/
+export class User {
+    /**
+    * The class identifier for this type
+    */
+    '$Class': string;
+    'username': string;
+    'salt': string;
+    'hash': string;
+    'firstName': string;
+    'lastName': string;
+    'role': string;
+    'id': string;
+
+    static discriminator = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "$Class",
+            "baseName": "$class",
+            "type": "string"
+        },
+        {
+            "name": "username",
+            "baseName": "username",
+            "type": "string"
+        },
+        {
+            "name": "salt",
+            "baseName": "salt",
+            "type": "string"
+        },
+        {
+            "name": "hash",
+            "baseName": "hash",
+            "type": "string"
+        },
+        {
+            "name": "firstName",
+            "baseName": "firstName",
+            "type": "string"
+        },
+        {
+            "name": "lastName",
+            "baseName": "lastName",
+            "type": "string"
+        },
+        {
+            "name": "role",
+            "baseName": "role",
+            "type": "string"
+        },
+        {
+            "name": "id",
+            "baseName": "id",
+            "type": "string"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return User.attributeTypeMap;
+    }
+}
+
+/**
 * An asset named Vehicle
 */
 export class Vehicle {
@@ -971,13 +1134,9 @@ export class Vehicle {
     /**
     * The instance identifier for this type
     */
-    'vinNumber': string;
     'frameNumber': string;
-    'producer': string;
-    'type': string;
-    'model': string;
-    'weight': number;
-    'tagNumber': string;
+    'description': string;
+    'manufacturer': string;
     /**
     * The identifier of an instance of owner
     */
@@ -992,38 +1151,18 @@ export class Vehicle {
             "type": "string"
         },
         {
-            "name": "vinNumber",
-            "baseName": "vinNumber",
-            "type": "string"
-        },
-        {
             "name": "frameNumber",
             "baseName": "frameNumber",
             "type": "string"
         },
         {
-            "name": "producer",
-            "baseName": "producer",
+            "name": "description",
+            "baseName": "description",
             "type": "string"
         },
         {
-            "name": "type",
-            "baseName": "type",
-            "type": "string"
-        },
-        {
-            "name": "model",
-            "baseName": "model",
-            "type": "string"
-        },
-        {
-            "name": "weight",
-            "baseName": "weight",
-            "type": "number"
-        },
-        {
-            "name": "tagNumber",
-            "baseName": "tagNumber",
+            "name": "manufacturer",
+            "baseName": "manufacturer",
             "type": "string"
         },
         {
@@ -1044,22 +1183,24 @@ let enumsMap = {
 let typeMap = {
     "Address": Address,
     "BindIdentityRequest": BindIdentityRequest,
-    "CarDealer": CarDealer,
     "Carrier": Carrier,
     "Compound": Compound,
     "Delivery": Delivery,
     "Ecmr": Ecmr,
+    "Good": Good,
     "InlineResponse200": InlineResponse200,
     "IssueIdentityRequest": IssueIdentityRequest,
     "IssueIdentityResponse": IssueIdentityResponse,
-    "ItemLine": ItemLine,
-    "LeasePlan": LeasePlan,
+    "LegalOwner": LegalOwner,
     "Loading": Loading,
     "PingResponse": PingResponse,
+    "Recipient": Recipient,
+    "Remark": Remark,
     "SampleAsset": SampleAsset,
     "SampleParticipant": SampleParticipant,
     "SampleTransaction": SampleTransaction,
     "SignEcmr": SignEcmr,
+    "User": User,
     "Vehicle": Vehicle,
 }
 
@@ -1113,375 +1254,6 @@ export class VoidAuth implements Authentication {
     }
 }
 
-export enum CarDealerApiApiKeys {
-}
-
-export class CarDealerApi {
-    protected _basePath = defaultBasePath;
-    protected defaultHeaders : any = {};
-    protected _useQuerystring : boolean = false;
-
-    protected authentications = {
-        'default': <Authentication>new VoidAuth(),
-    }
-
-    constructor(basePath?: string);
-    constructor(basePathOrUsername: string, password?: string, basePath?: string) {
-        if (password) {
-            if (basePath) {
-                this.basePath = basePath;
-            }
-        } else {
-            if (basePathOrUsername) {
-                this.basePath = basePathOrUsername
-            }
-        }
-    }
-
-    set useQuerystring(value: boolean) {
-        this._useQuerystring = value;
-    }
-
-    set basePath(basePath: string) {
-        this._basePath = basePath;
-    }
-
-    get basePath() {
-        return this._basePath;
-    }
-
-    public setDefaultAuthentication(auth: Authentication) {
-	this.authentications.default = auth;
-    }
-
-    public setApiKey(key: CarDealerApiApiKeys, value: string) {
-        this.authentications[CarDealerApiApiKeys[key]].apiKey = value;
-    }
-    /**
-     * 
-     * @summary Create a new instance of the model and persist it into the data source.
-     * @param data Model instance data
-     */
-    public carDealerCreate (data?: CarDealer) : Promise<{ response: http.IncomingMessage; body: CarDealer;  }> {
-        const localVarPath = this.basePath + '/CarDealer';
-        let queryParameters: any = {};
-        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
-        let formParams: any = {};
-
-
-
-        let useFormData = false;
-
-        let requestOptions: request.Options = {
-            method: 'POST',
-            qs: queryParameters,
-            headers: headerParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-            body: ObjectSerializer.serialize(data, "CarDealer")
-        };
-
-        this.authentications.default.applyToRequest(requestOptions);
-
-        if (Object.keys(formParams).length) {
-            if (useFormData) {
-                (<any>requestOptions).formData = formParams;
-            } else {
-                requestOptions.form = formParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: CarDealer;  }>((resolve, reject) => {
-            request(requestOptions, (error, response, body) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    body = ObjectSerializer.deserialize(body, "CarDealer");
-                    if (response.statusCode >= 200 && response.statusCode <= 299) {
-                        resolve({ response: response, body: body });
-                    } else {
-                        reject({ response: response, body: body });
-                    }
-                }
-            });
-        });
-    }
-    /**
-     * 
-     * @summary Delete a model instance by {{id}} from the data source.
-     * @param id Model id
-     */
-    public carDealerDeleteById (id: string) : Promise<{ response: http.IncomingMessage; body: any;  }> {
-        const localVarPath = this.basePath + '/CarDealer/{id}'
-            .replace('{' + 'id' + '}', String(id));
-        let queryParameters: any = {};
-        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
-        let formParams: any = {};
-
-
-        // verify required parameter 'id' is not null or undefined
-        if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling carDealerDeleteById.');
-        }
-
-
-        let useFormData = false;
-
-        let requestOptions: request.Options = {
-            method: 'DELETE',
-            qs: queryParameters,
-            headers: headerParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-        };
-
-        this.authentications.default.applyToRequest(requestOptions);
-
-        if (Object.keys(formParams).length) {
-            if (useFormData) {
-                (<any>requestOptions).formData = formParams;
-            } else {
-                requestOptions.form = formParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: any;  }>((resolve, reject) => {
-            request(requestOptions, (error, response, body) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    body = ObjectSerializer.deserialize(body, "any");
-                    if (response.statusCode >= 200 && response.statusCode <= 299) {
-                        resolve({ response: response, body: body });
-                    } else {
-                        reject({ response: response, body: body });
-                    }
-                }
-            });
-        });
-    }
-    /**
-     * 
-     * @summary Check whether a model instance exists in the data source.
-     * @param id Model id
-     */
-    public carDealerExists (id: string) : Promise<{ response: http.IncomingMessage; body: InlineResponse200;  }> {
-        const localVarPath = this.basePath + '/CarDealer/{id}'
-            .replace('{' + 'id' + '}', String(id));
-        let queryParameters: any = {};
-        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
-        let formParams: any = {};
-
-
-        // verify required parameter 'id' is not null or undefined
-        if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling carDealerExists.');
-        }
-
-
-        let useFormData = false;
-
-        let requestOptions: request.Options = {
-            method: 'HEAD',
-            qs: queryParameters,
-            headers: headerParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-        };
-
-        this.authentications.default.applyToRequest(requestOptions);
-
-        if (Object.keys(formParams).length) {
-            if (useFormData) {
-                (<any>requestOptions).formData = formParams;
-            } else {
-                requestOptions.form = formParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: InlineResponse200;  }>((resolve, reject) => {
-            request(requestOptions, (error, response, body) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    body = ObjectSerializer.deserialize(body, "InlineResponse200");
-                    if (response.statusCode >= 200 && response.statusCode <= 299) {
-                        resolve({ response: response, body: body });
-                    } else {
-                        reject({ response: response, body: body });
-                    }
-                }
-            });
-        });
-    }
-    /**
-     * 
-     * @summary Find all instances of the model matched by filter from the data source.
-     * @param filter Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string ({\&quot;something\&quot;:\&quot;value\&quot;})
-     */
-    public carDealerFind (filter?: string) : Promise<{ response: http.IncomingMessage; body: Array<CarDealer>;  }> {
-        const localVarPath = this.basePath + '/CarDealer';
-        let queryParameters: any = {};
-        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
-        let formParams: any = {};
-
-
-        if (filter !== undefined) {
-            queryParameters['filter'] = ObjectSerializer.serialize(filter, "string");
-        }
-
-
-        let useFormData = false;
-
-        let requestOptions: request.Options = {
-            method: 'GET',
-            qs: queryParameters,
-            headers: headerParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-        };
-
-        this.authentications.default.applyToRequest(requestOptions);
-
-        if (Object.keys(formParams).length) {
-            if (useFormData) {
-                (<any>requestOptions).formData = formParams;
-            } else {
-                requestOptions.form = formParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: Array<CarDealer>;  }>((resolve, reject) => {
-            request(requestOptions, (error, response, body) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    body = ObjectSerializer.deserialize(body, "Array<CarDealer>");
-                    if (response.statusCode >= 200 && response.statusCode <= 299) {
-                        resolve({ response: response, body: body });
-                    } else {
-                        reject({ response: response, body: body });
-                    }
-                }
-            });
-        });
-    }
-    /**
-     * 
-     * @summary Find a model instance by {{id}} from the data source.
-     * @param id Model id
-     * @param filter Filter defining fields and include - must be a JSON-encoded string ({\&quot;something\&quot;:\&quot;value\&quot;})
-     */
-    public carDealerFindById (id: string, filter?: string) : Promise<{ response: http.IncomingMessage; body: CarDealer;  }> {
-        const localVarPath = this.basePath + '/CarDealer/{id}'
-            .replace('{' + 'id' + '}', String(id));
-        let queryParameters: any = {};
-        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
-        let formParams: any = {};
-
-
-        // verify required parameter 'id' is not null or undefined
-        if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling carDealerFindById.');
-        }
-
-        if (filter !== undefined) {
-            queryParameters['filter'] = ObjectSerializer.serialize(filter, "string");
-        }
-
-
-        let useFormData = false;
-
-        let requestOptions: request.Options = {
-            method: 'GET',
-            qs: queryParameters,
-            headers: headerParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-        };
-
-        this.authentications.default.applyToRequest(requestOptions);
-
-        if (Object.keys(formParams).length) {
-            if (useFormData) {
-                (<any>requestOptions).formData = formParams;
-            } else {
-                requestOptions.form = formParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: CarDealer;  }>((resolve, reject) => {
-            request(requestOptions, (error, response, body) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    body = ObjectSerializer.deserialize(body, "CarDealer");
-                    if (response.statusCode >= 200 && response.statusCode <= 299) {
-                        resolve({ response: response, body: body });
-                    } else {
-                        reject({ response: response, body: body });
-                    }
-                }
-            });
-        });
-    }
-    /**
-     * 
-     * @summary Replace attributes for a model instance and persist it into the data source.
-     * @param id Model id
-     * @param data Model instance data
-     */
-    public carDealerReplaceById (id: string, data?: CarDealer) : Promise<{ response: http.IncomingMessage; body: CarDealer;  }> {
-        const localVarPath = this.basePath + '/CarDealer/{id}'
-            .replace('{' + 'id' + '}', String(id));
-        let queryParameters: any = {};
-        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
-        let formParams: any = {};
-
-
-        // verify required parameter 'id' is not null or undefined
-        if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling carDealerReplaceById.');
-        }
-
-
-        let useFormData = false;
-
-        let requestOptions: request.Options = {
-            method: 'PUT',
-            qs: queryParameters,
-            headers: headerParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-            body: ObjectSerializer.serialize(data, "CarDealer")
-        };
-
-        this.authentications.default.applyToRequest(requestOptions);
-
-        if (Object.keys(formParams).length) {
-            if (useFormData) {
-                (<any>requestOptions).formData = formParams;
-            } else {
-                requestOptions.form = formParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: CarDealer;  }>((resolve, reject) => {
-            request(requestOptions, (error, response, body) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    body = ObjectSerializer.deserialize(body, "CarDealer");
-                    if (response.statusCode >= 200 && response.statusCode <= 299) {
-                        resolve({ response: response, body: body });
-                    } else {
-                        reject({ response: response, body: body });
-                    }
-                }
-            });
-        });
-    }
-}
 export enum CarrierApiApiKeys {
 }
 
@@ -2589,10 +2361,10 @@ export class EcmrApi {
         });
     }
 }
-export enum LeasePlanApiApiKeys {
+export enum LegalOwnerApiApiKeys {
 }
 
-export class LeasePlanApi {
+export class LegalOwnerApi {
     protected _basePath = defaultBasePath;
     protected defaultHeaders : any = {};
     protected _useQuerystring : boolean = false;
@@ -2630,16 +2402,16 @@ export class LeasePlanApi {
 	this.authentications.default = auth;
     }
 
-    public setApiKey(key: LeasePlanApiApiKeys, value: string) {
-        this.authentications[LeasePlanApiApiKeys[key]].apiKey = value;
+    public setApiKey(key: LegalOwnerApiApiKeys, value: string) {
+        this.authentications[LegalOwnerApiApiKeys[key]].apiKey = value;
     }
     /**
      * 
      * @summary Create a new instance of the model and persist it into the data source.
      * @param data Model instance data
      */
-    public leasePlanCreate (data?: LeasePlan) : Promise<{ response: http.IncomingMessage; body: LeasePlan;  }> {
-        const localVarPath = this.basePath + '/LeasePlan';
+    public legalOwnerCreate (data?: LegalOwner) : Promise<{ response: http.IncomingMessage; body: LegalOwner;  }> {
+        const localVarPath = this.basePath + '/LegalOwner';
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let formParams: any = {};
@@ -2655,7 +2427,7 @@ export class LeasePlanApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(data, "LeasePlan")
+            body: ObjectSerializer.serialize(data, "LegalOwner")
         };
 
         this.authentications.default.applyToRequest(requestOptions);
@@ -2667,12 +2439,12 @@ export class LeasePlanApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.IncomingMessage; body: LeasePlan;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: LegalOwner;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
-                    body = ObjectSerializer.deserialize(body, "LeasePlan");
+                    body = ObjectSerializer.deserialize(body, "LegalOwner");
                     if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
@@ -2687,8 +2459,8 @@ export class LeasePlanApi {
      * @summary Delete a model instance by {{id}} from the data source.
      * @param id Model id
      */
-    public leasePlanDeleteById (id: string) : Promise<{ response: http.IncomingMessage; body: any;  }> {
-        const localVarPath = this.basePath + '/LeasePlan/{id}'
+    public legalOwnerDeleteById (id: string) : Promise<{ response: http.IncomingMessage; body: any;  }> {
+        const localVarPath = this.basePath + '/LegalOwner/{id}'
             .replace('{' + 'id' + '}', String(id));
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -2697,7 +2469,7 @@ export class LeasePlanApi {
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling leasePlanDeleteById.');
+            throw new Error('Required parameter id was null or undefined when calling legalOwnerDeleteById.');
         }
 
 
@@ -2741,8 +2513,8 @@ export class LeasePlanApi {
      * @summary Check whether a model instance exists in the data source.
      * @param id Model id
      */
-    public leasePlanExists (id: string) : Promise<{ response: http.IncomingMessage; body: InlineResponse200;  }> {
-        const localVarPath = this.basePath + '/LeasePlan/{id}'
+    public legalOwnerExists (id: string) : Promise<{ response: http.IncomingMessage; body: InlineResponse200;  }> {
+        const localVarPath = this.basePath + '/LegalOwner/{id}'
             .replace('{' + 'id' + '}', String(id));
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -2751,7 +2523,7 @@ export class LeasePlanApi {
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling leasePlanExists.');
+            throw new Error('Required parameter id was null or undefined when calling legalOwnerExists.');
         }
 
 
@@ -2795,8 +2567,8 @@ export class LeasePlanApi {
      * @summary Find all instances of the model matched by filter from the data source.
      * @param filter Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string ({\&quot;something\&quot;:\&quot;value\&quot;})
      */
-    public leasePlanFind (filter?: string) : Promise<{ response: http.IncomingMessage; body: Array<LeasePlan>;  }> {
-        const localVarPath = this.basePath + '/LeasePlan';
+    public legalOwnerFind (filter?: string) : Promise<{ response: http.IncomingMessage; body: Array<LegalOwner>;  }> {
+        const localVarPath = this.basePath + '/LegalOwner';
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
         let formParams: any = {};
@@ -2827,12 +2599,12 @@ export class LeasePlanApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.IncomingMessage; body: Array<LeasePlan>;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: Array<LegalOwner>;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
-                    body = ObjectSerializer.deserialize(body, "Array<LeasePlan>");
+                    body = ObjectSerializer.deserialize(body, "Array<LegalOwner>");
                     if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
@@ -2848,8 +2620,8 @@ export class LeasePlanApi {
      * @param id Model id
      * @param filter Filter defining fields and include - must be a JSON-encoded string ({\&quot;something\&quot;:\&quot;value\&quot;})
      */
-    public leasePlanFindById (id: string, filter?: string) : Promise<{ response: http.IncomingMessage; body: LeasePlan;  }> {
-        const localVarPath = this.basePath + '/LeasePlan/{id}'
+    public legalOwnerFindById (id: string, filter?: string) : Promise<{ response: http.IncomingMessage; body: LegalOwner;  }> {
+        const localVarPath = this.basePath + '/LegalOwner/{id}'
             .replace('{' + 'id' + '}', String(id));
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -2858,7 +2630,7 @@ export class LeasePlanApi {
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling leasePlanFindById.');
+            throw new Error('Required parameter id was null or undefined when calling legalOwnerFindById.');
         }
 
         if (filter !== undefined) {
@@ -2886,12 +2658,12 @@ export class LeasePlanApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.IncomingMessage; body: LeasePlan;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: LegalOwner;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
-                    body = ObjectSerializer.deserialize(body, "LeasePlan");
+                    body = ObjectSerializer.deserialize(body, "LegalOwner");
                     if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
@@ -2907,8 +2679,8 @@ export class LeasePlanApi {
      * @param id Model id
      * @param data Model instance data
      */
-    public leasePlanReplaceById (id: string, data?: LeasePlan) : Promise<{ response: http.IncomingMessage; body: LeasePlan;  }> {
-        const localVarPath = this.basePath + '/LeasePlan/{id}'
+    public legalOwnerReplaceById (id: string, data?: LegalOwner) : Promise<{ response: http.IncomingMessage; body: LegalOwner;  }> {
+        const localVarPath = this.basePath + '/LegalOwner/{id}'
             .replace('{' + 'id' + '}', String(id));
         let queryParameters: any = {};
         let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
@@ -2917,7 +2689,7 @@ export class LeasePlanApi {
 
         // verify required parameter 'id' is not null or undefined
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling leasePlanReplaceById.');
+            throw new Error('Required parameter id was null or undefined when calling legalOwnerReplaceById.');
         }
 
 
@@ -2930,7 +2702,7 @@ export class LeasePlanApi {
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
-            body: ObjectSerializer.serialize(data, "LeasePlan")
+            body: ObjectSerializer.serialize(data, "LegalOwner")
         };
 
         this.authentications.default.applyToRequest(requestOptions);
@@ -2942,12 +2714,381 @@ export class LeasePlanApi {
                 requestOptions.form = formParams;
             }
         }
-        return new Promise<{ response: http.IncomingMessage; body: LeasePlan;  }>((resolve, reject) => {
+        return new Promise<{ response: http.IncomingMessage; body: LegalOwner;  }>((resolve, reject) => {
             request(requestOptions, (error, response, body) => {
                 if (error) {
                     reject(error);
                 } else {
-                    body = ObjectSerializer.deserialize(body, "LeasePlan");
+                    body = ObjectSerializer.deserialize(body, "LegalOwner");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+}
+export enum RecipientApiApiKeys {
+}
+
+export class RecipientApi {
+    protected _basePath = defaultBasePath;
+    protected defaultHeaders : any = {};
+    protected _useQuerystring : boolean = false;
+
+    protected authentications = {
+        'default': <Authentication>new VoidAuth(),
+    }
+
+    constructor(basePath?: string);
+    constructor(basePathOrUsername: string, password?: string, basePath?: string) {
+        if (password) {
+            if (basePath) {
+                this.basePath = basePath;
+            }
+        } else {
+            if (basePathOrUsername) {
+                this.basePath = basePathOrUsername
+            }
+        }
+    }
+
+    set useQuerystring(value: boolean) {
+        this._useQuerystring = value;
+    }
+
+    set basePath(basePath: string) {
+        this._basePath = basePath;
+    }
+
+    get basePath() {
+        return this._basePath;
+    }
+
+    public setDefaultAuthentication(auth: Authentication) {
+	this.authentications.default = auth;
+    }
+
+    public setApiKey(key: RecipientApiApiKeys, value: string) {
+        this.authentications[RecipientApiApiKeys[key]].apiKey = value;
+    }
+    /**
+     * 
+     * @summary Create a new instance of the model and persist it into the data source.
+     * @param data Model instance data
+     */
+    public recipientCreate (data?: Recipient) : Promise<{ response: http.IncomingMessage; body: Recipient;  }> {
+        const localVarPath = this.basePath + '/Recipient';
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'POST',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+            body: ObjectSerializer.serialize(data, "Recipient")
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: Recipient;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "Recipient");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Delete a model instance by {{id}} from the data source.
+     * @param id Model id
+     */
+    public recipientDeleteById (id: string) : Promise<{ response: http.IncomingMessage; body: any;  }> {
+        const localVarPath = this.basePath + '/Recipient/{id}'
+            .replace('{' + 'id' + '}', String(id));
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling recipientDeleteById.');
+        }
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'DELETE',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: any;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "any");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Check whether a model instance exists in the data source.
+     * @param id Model id
+     */
+    public recipientExists (id: string) : Promise<{ response: http.IncomingMessage; body: InlineResponse200;  }> {
+        const localVarPath = this.basePath + '/Recipient/{id}'
+            .replace('{' + 'id' + '}', String(id));
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling recipientExists.');
+        }
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'HEAD',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: InlineResponse200;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "InlineResponse200");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Find all instances of the model matched by filter from the data source.
+     * @param filter Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string ({\&quot;something\&quot;:\&quot;value\&quot;})
+     */
+    public recipientFind (filter?: string) : Promise<{ response: http.IncomingMessage; body: Array<Recipient>;  }> {
+        const localVarPath = this.basePath + '/Recipient';
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+        if (filter !== undefined) {
+            queryParameters['filter'] = ObjectSerializer.serialize(filter, "string");
+        }
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'GET',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: Array<Recipient>;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "Array<Recipient>");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Find a model instance by {{id}} from the data source.
+     * @param id Model id
+     * @param filter Filter defining fields and include - must be a JSON-encoded string ({\&quot;something\&quot;:\&quot;value\&quot;})
+     */
+    public recipientFindById (id: string, filter?: string) : Promise<{ response: http.IncomingMessage; body: Recipient;  }> {
+        const localVarPath = this.basePath + '/Recipient/{id}'
+            .replace('{' + 'id' + '}', String(id));
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling recipientFindById.');
+        }
+
+        if (filter !== undefined) {
+            queryParameters['filter'] = ObjectSerializer.serialize(filter, "string");
+        }
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'GET',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: Recipient;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "Recipient");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+    /**
+     * 
+     * @summary Replace attributes for a model instance and persist it into the data source.
+     * @param id Model id
+     * @param data Model instance data
+     */
+    public recipientReplaceById (id: string, data?: Recipient) : Promise<{ response: http.IncomingMessage; body: Recipient;  }> {
+        const localVarPath = this.basePath + '/Recipient/{id}'
+            .replace('{' + 'id' + '}', String(id));
+        let queryParameters: any = {};
+        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
+        let formParams: any = {};
+
+
+        // verify required parameter 'id' is not null or undefined
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling recipientReplaceById.');
+        }
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'PUT',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+            body: ObjectSerializer.serialize(data, "Recipient")
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: Recipient;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "Recipient");
                     if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
