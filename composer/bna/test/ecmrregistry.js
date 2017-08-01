@@ -35,8 +35,7 @@ describe('digitalcmr', () => {
     let factory;
 
     // These are the identities for Alice and Bob.
-    let leaseplan1Identity;
-    let leaseplan2Identity;
+    let LeasePlanIdentity;
 
     // These are a list of received events.
     let events;
@@ -88,13 +87,11 @@ describe('digitalcmr', () => {
                 const factory = businessNetworkConnection.getBusinessNetwork().getFactory();
 
                 // Create the participants.
-                const Leaseplan1 = factory.newResource(NS, 'LeasePlan', 'leaseplan1@email.com');
-                Leaseplan1.name = 'leaseplan1';
-                const Leaseplan2 = factory.newResource(NS, 'LeasePlan', 'leaseplan2@email.com');
-                Leaseplan2.name = 'leaseplan2';
-                return businessNetworkConnection.getParticipantRegistry('org.digitalcmr.LeasePlan')
+                const LeasePlan = factory.newResource(NS, 'legalOwner', 'leaseplan1@email.com');
+                LeasePlan.name = 'LeasePlan';
+                return businessNetworkConnection.getParticipantRegistry('org.digitalcmr.legalOwner')
                     .then((participantRegistry) => {
-                        participantRegistry.add(Leaseplan1, Leaseplan2);
+                        participantRegistry.add(LeasePlan);
                     })
                     .catch((error) => {
                         console.log("participant add error")
@@ -104,26 +101,21 @@ describe('digitalcmr', () => {
             .then(() => {
 
                 // Create the assets.
-                const Vehicle = factory.newResource('org.digitalcmr', 'Vehicle', '1');
-                Vehicle.owner = factory.newRelationship('org.digitalcmr', 'LeasePlan', 'leaseplan1@email.com');
-                Vehicle.vinNumber = '32HSN2321341HS';
+                const Vehicle1 = factory.newResource('org.digitalcmr', 'Vehicle', '1');
+                Vehicle1.owner = factory.newRelationship('org.digitalcmr', 'legalOwner', 'LeasePlan@email.com');
+                Vehicle1.frameNumber = '32HSN2321341HS';
                 return businessNetworkConnection.getAssetRegistry('org.digitalcmr')
                     .then((assetRegistry) => {
-                        assetRegistry.add(Vehicle);
+                        assetRegistry.add(Vehicle1);
                     });
             })
             .then(() => {
 
                 // Issue the identities.
-                return businessNetworkConnection.issueIdentity('org.digitalcmr.LeasePlan#leaseplan1@email.com', 'leaseplan1')
+                return businessNetworkConnection.issueIdentity('org.digitalcmr.legalOwner#leaseplan1@email.com', 'LeasePlan')
                     .then((identity) => {
-                        leaseplan1Identity = identity;
-                        return businessNetworkConnection.issueIdentity('org.digitalcmr.LeasePlan#leaseplan2@email.com', 'leaseplan2');
+                        LeasePlanIdentity = identity;
                     })
-                    .then((identity) => {
-                        leaseplan2Identity = identity;
-                    });
-
             });
 
     });
@@ -145,14 +137,14 @@ describe('digitalcmr', () => {
             });
     }
 
-    it('Leaseplan1 can read all of the assets', () => {
+    it('LeasePlan can read all of the assets', () => {
 
-        // Use the identity for Leaseplan1.
-        return useIdentity(leaseplan1Identity)
+        // Use the identity for LeasePlan.
+        return useIdentity(LeasePlanIdentity)
             .then(() => {
 
                 // Get the assets.
-                return businessNetworkConnection.getAssetRegistry('org.digitalcmr.LeasePlan')
+                return businessNetworkConnection.getAssetRegistry('org.digitalcmr.legalOwner')
                     .then((assetRegistry) => {
                         return assetRegistry.getAll();
 
@@ -164,54 +156,21 @@ describe('digitalcmr', () => {
                 // Validate the assets.
                 assets.should.have.lengthOf(2);
                 const asset1 = assets[0];
-                asset1.owner.getFullyQualifiedIdentifier().should.equal('org.digitalcmr.LeasePlan#leaseplan1@email.com');
-                asset1.value.should.equal('10');
-                const asset2 = assets[1];
-                asset2.owner.getFullyQualifiedIdentifier().should.equal('org.digitalcmr.LeasePlan#leaseplan2@email.com');
-                asset2.value.should.equal('20');
-
+                asset1.owner.getFullyQualifiedIdentifier().should.equal('org.digitalcmr.legalOwner#LeasePlan@email.com');
+                // asset1.value.should.equal('10');
             });
 
     });
 
-    it('Leaseplan2 can read all of the assets', () => {
-
-        // Use the identity for Bob.
-        return useIdentity(leaseplan2Identity)
-            .then(() => {
-
-                // Get the assets.
-                return businessNetworkConnection.getAssetRegistry('org.digitalcmr.LeasePlan')
-                    .then((assetRegistry) => {
-                        return assetRegistry.getAll();
-
-                    });
-
-            })
-            .then((assets) => {
-
-                // Validate the assets.
-                assets.should.have.lengthOf(2);
-                const asset1 = assets[0];
-                asset1.owner.getFullyQualifiedIdentifier().should.equal('org.digitalcmr.LeasePlan#leaseplan1@email.com');
-                asset1.value.should.equal('10');
-                const asset2 = assets[1];
-                asset2.owner.getFullyQualifiedIdentifier().should.equal('org.digitalcmr.LeasePlan#leaseplan2@email.com');
-                asset2.value.should.equal('20');
-
-            });
-
-    });
-
-    it('Leaseplan1 can add an eCMR', () => {
+    it('LeasePlan can add an eCMR', () => {
 
         // Use the identity for Alice.
-        return useIdentity(leaseplan1Identity)
+        return useIdentity(LeasePlanIdentity)
             .then(() => {
 
                 // Create the asset.
                 const eCMR = factory.newResource('org.digitalcmr', 'Ecmr', '3');
-                eCMR.owner = factory.newRelationship('org.digitalcmr', 'LeasePlan', 'leaseplan1@email.com');
+                eCMR.owner = factory.newRelationship('org.digitalcmr', 'legalOwner', 'LeasePlan@email.com');
                 // eCMR.value = '30';
 
                 // Add the asset, then get the asset.
@@ -227,127 +186,51 @@ describe('digitalcmr', () => {
             .then((eCMR) => {
 
                 // Validate the asset.
-                eCMR.owner.getFullyQualifiedIdentifier().should.equal('org.digitalcmr.LeasePlan#leaseplan1@email.com');
+                eCMR.owner.getFullyQualifiedIdentifier().should.equal('org.digitalcmr.legalOwner#LeasePlan@email.com');
                 // eCMR.value.should.equal('30');
 
             });
 
     });
 
-    it('Leaseplan1 can update her assets', () => {
+    it('LeasePlan can update her assets', () => {
 
         // Use the identity for Alice.
         return useIdentity(leaseplan1Identity)
             .then(() => {
 
                 // Create the asset.
-                const asset1 = factory.newResource('org.acme.sample', 'SampleAsset', '1');
-                asset1.owner = factory.newRelationship('org.acme.sample', 'SampleParticipant', 'alice@email.com');
-                asset1.value = '50';
+                const Vehicle1 = factory.newResource('org.digitalcmr', 'Vehicle', '1');
+                Vehicle1.owner = factory.newRelationship('org.digitalcmr', 'legalOwner', 'LeasePlan@email.com');
 
                 // Update the asset, then get the asset.
-                return businessNetworkConnection.getAssetRegistry('org.acme.sample.SampleAsset')
+                return businessNetworkConnection.getAssetRegistry('org.digitalcmr.Vehicle')
                     .then((assetRegistry) => {
-                        return assetRegistry.update(asset1)
+                        return assetRegistry.update(Vehicle1)
                             .then(() => {
                                 return assetRegistry.get('1');
                             });
                     });
 
             })
-            .then((asset1) => {
+            .then((Vehicle1) => {
 
                 // Validate the asset.
-                asset1.owner.getFullyQualifiedIdentifier().should.equal('org.acme.sample.SampleParticipant#alice@email.com');
-                asset1.value.should.equal('50');
+                Vehicle1.owner.getFullyQualifiedIdentifier().should.equal('org.digitalcmr.legalOwner#LeasePlan@email.com');
+                // Vehicle1.value.should.equal('50');
 
             });
 
     });
 
-    it('Alice cannot update Bob\'s assets', () => {
+    it('LeasePlan can remove its assets', () => {
 
         // Use the identity for Alice.
-        return useIdentity(aliceIdentity)
-            .then(() => {
-
-                // Create the asset.
-                const asset2 = factory.newResource('org.acme.sample', 'SampleAsset', '2');
-                asset2.owner = factory.newRelationship('org.acme.sample', 'SampleParticipant', 'bob@email.com');
-                asset2.value = '50';
-
-                // Update the asset, then get the asset.
-                return businessNetworkConnection.getAssetRegistry('org.acme.sample.SampleAsset')
-                    .then((assetRegistry) => {
-                        return assetRegistry.update(asset2);
-                    });
-
-            })
-            .should.be.rejectedWith(/does not have .* access to resource/);
-
-    });
-
-    it('Bob can update his assets', () => {
-
-        // Use the identity for Bob.
-        return useIdentity(bobIdentity)
-            .then(() => {
-
-                // Create the asset.
-                const asset2 = factory.newResource('org.acme.sample', 'SampleAsset', '2');
-                asset2.owner = factory.newRelationship('org.acme.sample', 'SampleParticipant', 'bob@email.com');
-                asset2.value = '60';
-
-                // Update the asset, then get the asset.
-                return businessNetworkConnection.getAssetRegistry('org.acme.sample.SampleAsset')
-                    .then((assetRegistry) => {
-                        return assetRegistry.update(asset2)
-                            .then(() => {
-                                return assetRegistry.get('2');
-                            });
-                    });
-
-            })
-            .then((asset2) => {
-
-                // Validate the asset.
-                asset2.owner.getFullyQualifiedIdentifier().should.equal('org.acme.sample.SampleParticipant#bob@email.com');
-                asset2.value.should.equal('60');
-
-            });
-
-    });
-
-    it('Bob cannot update Alice\'s assets', () => {
-
-        // Use the identity for Bob.
-        return useIdentity(bobIdentity)
-            .then(() => {
-
-                // Create the asset.
-                const asset1 = factory.newResource('org.acme.sample', 'SampleAsset', '1');
-                asset1.owner = factory.newRelationship('org.acme.sample', 'SampleParticipant', 'alice@email.com');
-                asset1.value = '60';
-
-                // Update the asset, then get the asset.
-                return businessNetworkConnection.getAssetRegistry('org.acme.sample.SampleAsset')
-                    .then((assetRegistry) => {
-                        return assetRegistry.update(asset1);
-                    });
-
-            })
-            .should.be.rejectedWith(/does not have .* access to resource/);
-
-    });
-
-    it('Alice can remove her assets', () => {
-
-        // Use the identity for Alice.
-        return useIdentity(aliceIdentity)
+        return useIdentity(LeasePlanIdentity)
             .then(() => {
 
                 // Remove the asset, then test the asset exists.
-                return businessNetworkConnection.getAssetRegistry('org.acme.sample.SampleAsset')
+                return businessNetworkConnection.getAssetRegistry('org.digitalcmr.Vehicle')
                     .then((assetRegistry) => {
                         return assetRegistry.remove('1')
                             .then(() => {
@@ -360,174 +243,45 @@ describe('digitalcmr', () => {
 
     });
 
-    it('Alice cannot remove Bob\'s assets', () => {
-
-        // Use the identity for Alice.
-        return useIdentity(aliceIdentity)
-            .then(() => {
-
-                // Remove the asset, then test the asset exists.
-                return businessNetworkConnection.getAssetRegistry('org.acme.sample.SampleAsset')
-                    .then((assetRegistry) => {
-                        return assetRegistry.remove('2');
-                    });
-
-            })
-            .should.be.rejectedWith(/does not have .* access to resource/);
-
-    });
-
-    it('Bob can remove his assets', () => {
-
-        // Use the identity for Bob.
-        return useIdentity(bobIdentity)
-            .then(() => {
-
-                // Remove the asset, then test the asset exists.
-                return businessNetworkConnection.getAssetRegistry('org.acme.sample.SampleAsset')
-                    .then((assetRegistry) => {
-                        return assetRegistry.remove('2')
-                            .then(() => {
-                                return assetRegistry.exists('2');
-                            });
-                    });
-
-            })
-            .should.eventually.be.false;
-
-    });
-
-    it('Bob cannot remove Alice\'s assets', () => {
-
-        // Use the identity for Bob.
-        return useIdentity(bobIdentity)
-            .then(() => {
-
-                // Remove the asset, then test the asset exists.
-                return businessNetworkConnection.getAssetRegistry('org.acme.sample.SampleAsset')
-                    .then((assetRegistry) => {
-                        return assetRegistry.remove('1');
-                    });
-
-            })
-            .should.be.rejectedWith(/does not have .* access to resource/);
-
-    });
-
-    it('Alice can submit a transaction for her assets', () => {
-
-        // Use the identity for Alice.
-        return useIdentity(aliceIdentity)
-            .then(() => {
-
-                // Submit the transaction.
-                const transaction = factory.newTransaction('org.acme.sample', 'SampleTransaction');
-                transaction.asset = factory.newRelationship('org.acme.sample', 'SampleAsset', '1');
-                transaction.newValue = '50';
-                return businessNetworkConnection.submitTransaction(transaction);
-
-            })
-            .then(() => {
-
-                // Get the asset.
-                return businessNetworkConnection.getAssetRegistry('org.acme.sample.SampleAsset')
-                    .then((assetRegistry) => {
-                        return assetRegistry.get('1');
-                    });
-
-            })
-            .then((asset1) => {
-
-                // Validate the asset.
-                asset1.owner.getFullyQualifiedIdentifier().should.equal('org.acme.sample.SampleParticipant#alice@email.com');
-                asset1.value.should.equal('50');
-
-                // Validate the events.
-                events.should.have.lengthOf(1);
-                const event = events[0];
-                event.eventId.should.be.a('string');
-                event.timestamp.should.be.an.instanceOf(Date);
-                event.asset.getFullyQualifiedIdentifier().should.equal('org.acme.sample.SampleAsset#1');
-                event.oldValue.should.equal('10');
-                event.newValue.should.equal('50');
-
-            });
-
-    });
-
-    it('Alice cannot submit a transaction for Bob\'s assets', () => {
-
-        // Use the identity for Alice.
-        return useIdentity(aliceIdentity)
-            .then(() => {
-
-                // Submit the transaction.
-                const transaction = factory.newTransaction('org.acme.sample', 'SampleTransaction');
-                transaction.asset = factory.newRelationship('org.acme.sample', 'SampleAsset', '2');
-                transaction.newValue = '50';
-                return businessNetworkConnection.submitTransaction(transaction);
-
-            })
-            .should.be.rejectedWith(/does not have .* access to resource/);
-
-    });
-
-    it('Bob can submit a transaction for his assets', () => {
-
-        // Use the identity for Bob.
-        return useIdentity(bobIdentity)
-            .then(() => {
-
-                // Submit the transaction.
-                const transaction = factory.newTransaction('org.acme.sample', 'SampleTransaction');
-                transaction.asset = factory.newRelationship('org.acme.sample', 'SampleAsset', '2');
-                transaction.newValue = '60';
-                return businessNetworkConnection.submitTransaction(transaction);
-
-            })
-            .then(() => {
-
-                // Get the asset.
-                return businessNetworkConnection.getAssetRegistry('org.acme.sample.SampleAsset')
-                    .then((assetRegistry) => {
-                        return assetRegistry.get('2');
-                    });
-
-            })
-            .then((asset2) => {
-
-                // Validate the asset.
-                asset2.owner.getFullyQualifiedIdentifier().should.equal('org.acme.sample.SampleParticipant#bob@email.com');
-                asset2.value.should.equal('60');
-
-                // Validate the events.
-                events.should.have.lengthOf(1);
-                const event = events[0];
-                event.eventId.should.be.a('string');
-                event.timestamp.should.be.an.instanceOf(Date);
-                event.asset.getFullyQualifiedIdentifier().should.equal('org.acme.sample.SampleAsset#2');
-                event.oldValue.should.equal('20');
-                event.newValue.should.equal('60');
-
-            });
-
-    });
-
-    it('Bob cannot submit a transaction for Alice\'s assets', () => {
-
-        // Use the identity for Bob.
-        return useIdentity(bobIdentity)
-            .then(() => {
-
-                // Submit the transaction.
-                const transaction = factory.newTransaction('org.acme.sample', 'SampleTransaction');
-                transaction.asset = factory.newRelationship('org.acme.sample', 'SampleAsset', '1');
-                transaction.newValue = '60';
-                return businessNetworkConnection.submitTransaction(transaction);
-
-            })
-            .should.be.rejectedWith(/does not have .* access to resource/);
-
-    });
+    // it('LeasePlan can submit a transaction for its assets', () => {
+    //
+    //     // Use the identity for Alice.
+    //     return useIdentity(LeasePlanIdentity)
+    //         .then(() => {
+    //
+    //             // Submit the transaction.
+    //             const transaction = factory.newTransaction('org.digitalcmr', 'signEcmr');
+    //             transaction.asset = factory.newRelationship('org.digitalcmr', 'Vehicle', '1');
+    //             // transaction.newValue = '50';
+    //             return businessNetworkConnection.submitTransaction(transaction);
+    //
+    //         })
+    //         .then(() => {
+    //
+    //             // Get the asset.
+    //             return businessNetworkConnection.getAssetRegistry('org.digitalcmr.Vehicle')
+    //                 .then((assetRegistry) => {
+    //                     return assetRegistry.get('1');
+    //                 });
+    //
+    //         })
+    //         .then((Vehicle1) => {
+    //
+    //             // Validate the asset.
+    //             Vehicle1.owner.getFullyQualifiedIdentifier().should.equal('org.digitalcmr.legalOwner#LeasePlan@email.com');
+    //             // Vehicle1.value.should.equal('50');
+    //
+    //             // Validate the events.
+    //             events.should.have.lengthOf(1);
+    //             const event = events[0];
+    //             event.eventId.should.be.a('string');
+    //             event.timestamp.should.be.an.instanceOf(Date);
+    //             event.asset.getFullyQualifiedIdentifier().should.equal('org.digitalcmr.Vehicle#1');
+    //             event.oldValue.should.equal('10');
+    //             event.newValue.should.equal('50');
+    //
+    //         });
+    //
+    // });
 
 });

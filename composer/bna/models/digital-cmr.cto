@@ -8,76 +8,89 @@ namespace org.digitalcmr
  * Assets eCMR and Vehicle
  */
 
-asset Ecmr identified by eCmrId {
-  o String eCmrId
-  o String legalOwnerRef
-  o String carrierRef
-  o String recipientRef
-  o String compoundRef
-  o Integer issueDate
-  --> LegalOwner owner
-  --> Compound source
-  --> Recipient destination
-  o String carrierComments
+asset ECMR identified by ecmrID {
+  o String ecmrID
   o String status
-  o Address compoundAddress
-  o Address recipientAddress
   o Loading loadingAddress
   o Delivery deliveryAddress
+  --> LegalOwnerOrg owner
+  --> CompoundOrg source
+  --> CarrierMember transporter optional
+  --> CarrierOrg carrier
+  --> RecipientOrg recipientOrg
+  --> RecipientMember recipient optional
+  o Integer issueDate
+  o String carrierComments
   o String documents
-  o Good goods
+  o Good[] goods
   o String legalOwnerInstructions
   o String paymentInstructions
   o String payOnDelivery
+}
+
+abstract asset Entity identified by entityID {
+  o String entityID
+  o String name
+  o Address address
+}
+
+asset LegalOwnerOrg extends Entity {
+}
+
+asset CompoundOrg extends Entity {
+}
+
+asset CarrierOrg extends Entity {
+}
+
+asset RecipientOrg extends Entity {
 }
 
 asset Vehicle identified by frameNumber {
   o String frameNumber
   o String description
   o String manufacturer
-  --> LegalOwner owner
 }
 
 /**
  * Participants
  */
 
-participant LegalOwner identified by legalOwnerId {
-  o String legalOwnerId
-  o User users
-  o Address address
-}
-
-participant Compound identified by compoundId {
-  o String compoundId
-  o User users
-  o Address address
-}
-
-participant Carrier identified by carrierId {
-  o String carrierId
-  o User users
+abstract participant User identified by userID {
+  o String userID
+  o String userName
+  o String firstName
   o String lastName
+  o Address address
 }
 
-participant Recipient identified by recipientId {
-  o String recipientId
-  o User users
-  o Address address
+participant LegalOwnerAdmin extends User {
+   --> LegalOwnerOrg org
+}
+
+participant CompoundAdmin extends User {
+   --> CompoundOrg org
+}
+
+participant CarrierAdmin extends User {
+   --> CarrierOrg org
+}
+
+participant CarrierMember extends User {
+   --> CarrierOrg org
+}
+
+participant RecipientAdmin extends User {
+   --> RecipientOrg org
+}
+
+participant RecipientMember extends User {
+   --> RecipientOrg org
 }
 
 /**
  * Concepts
  */
-
-concept User {
-  o String username
-  o String salt
-  o String hash
-  o String firstName
-  o String lastName
-  o String role
-}
 
 concept Address {
   o String name
@@ -92,7 +105,7 @@ concept Address {
 
 concept Delivery {
   o Address address
-  o Integer date
+  o String date
 }
 
 concept Loading {
@@ -118,8 +131,8 @@ concept Remark {
  * Transactions
  */
 
-transaction signEcmr {
-  --> Ecmr ecmr
+transaction signECMR {
+  --> ECMR ecmr
   --> Participant participant
 }
 
