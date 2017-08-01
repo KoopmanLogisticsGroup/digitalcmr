@@ -14,7 +14,7 @@
 
 /**
  * Sample transaction processor function.
- * @param {org.digitalcmr.signEcmr} tx The sample transaction instance.
+ * @param {org.digitalcmr.signECMR} tx The sample transaction instance.
  * @transaction
  */
 function eCmrTransaction(tx) {
@@ -26,7 +26,7 @@ function eCmrTransaction(tx) {
     tx.asset.value = tx.newValue;
 
     // Get the asset registry for the asset.
-    return getAssetRegistry('org.digitalcmr.Ecmr')
+    return getAssetRegistry('org.digitalcmr.ECMR')
         .then(function (assetRegistry) {
 
             // Update the asset in the asset registry.
