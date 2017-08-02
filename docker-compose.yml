@@ -1,9 +1,9 @@
 version: '2.0'
 services:
-  ca.example.com:
+  ca.org1.example.com:
     extends:
       file: composer/hlfv1/composer/docker-compose.yml
-      service: ca.example.com
+      service: ca.org1.example.com
   orderer.example.com:
     extends:
       file: composer/hlfv1/composer/docker-compose.yml
@@ -15,7 +15,7 @@ services:
     depends_on:
       - orderer.example.com
     environment:
-      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=composerboilerplate_default
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=digitalcmr_default
 
   util:
     image: docker
@@ -27,8 +27,8 @@ services:
       sh -c " \
         set -e; \
         sleep 10; \
-        docker exec -e \"CORE_PEER_LOCALMSPID=Org1MSP\" -e \"CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@org1.example.com\" peer0.org1.example.com peer channel create -o orderer.example.com:7050 -c mychannel -f /etc/hyperledger/configtx/mychannel.tx; \
-        docker exec -e \"CORE_PEER_LOCALMSPID=Org1MSP\" -e \"CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@org1.example.com\" peer0.org1.example.com peer channel join -b mychannel.block && \
+        docker exec -e \"CORE_PEER_LOCALMSPID=Org1MSP\" -e \"CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@org1.example.com/msp\" peer0.org1.example.com peer channel create -o orderer.example.com:7050 -c composerchannel -f /etc/hyperledger/configtx/composer-channel.tx; \
+        docker exec -e \"CORE_PEER_LOCALMSPID=Org1MSP\" -e \"CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@org1.example.com/msp\" peer0.org1.example.com peer channel join -b composerchannel.block && \
         echo 'Created channels! Exiting.'"
 
   couchdb:
@@ -69,3 +69,14 @@ services:
 #    links:
 #      - composer
     command: bash -c "grunt"
+
+  client:
+      build: client
+      ports:
+          - "4200:4200"
+          - "49153:49153"
+      volumes:
+          - ./client/src:/usr/src/app/src
+          - ./client/.angular-cli.json:/usr/src/app/.angular-cli.json
+          - ./client/tslint.json:/usr/src/app/tslint.json
+      command: bash -c "ng lint && ng serve --host 0.0.0.0"

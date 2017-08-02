@@ -1,0 +1,147 @@
+/**
+ * Digital CMR business network definition.
+ */
+
+namespace org.digitalcmr
+
+/**
+ * Assets eCMR and Vehicle
+ */
+
+asset ECMR identified by ecmrID {
+  o String ecmrID
+  o String status
+  o Loading loadingAddress
+  o Delivery deliveryAddress
+  --> LegalOwnerOrg owner
+  --> CompoundOrg source
+  --> CarrierMember transporter optional
+  --> CarrierOrg carrier
+  --> RecipientOrg recipientOrg
+  --> RecipientMember recipient optional
+  o Integer issueDate
+  o String carrierComments
+  o String documents
+  o Good[] goods
+  o String legalOwnerInstructions
+  o String paymentInstructions
+  o String payOnDelivery
+}
+
+abstract asset Entity identified by entityID {
+  o String entityID
+  o String name
+  o Address address
+}
+
+asset LegalOwnerOrg extends Entity {
+}
+
+asset CompoundOrg extends Entity {
+}
+
+asset CarrierOrg extends Entity {
+}
+
+asset RecipientOrg extends Entity {
+}
+
+asset Vehicle identified by frameNumber {
+  o String frameNumber
+  o String description
+  o String manufacturer
+}
+
+/**
+ * Participants
+ */
+
+abstract participant User identified by userID {
+  o String userID
+  o String userName
+  o String firstName
+  o String lastName
+  o Address address
+}
+
+participant LegalOwnerAdmin extends User {
+   --> LegalOwnerOrg org
+}
+
+participant CompoundAdmin extends User {
+   --> CompoundOrg org
+}
+
+participant CarrierAdmin extends User {
+   --> CarrierOrg org
+}
+
+participant CarrierMember extends User {
+   --> CarrierOrg org
+}
+
+participant RecipientAdmin extends User {
+   --> RecipientOrg org
+}
+
+participant RecipientMember extends User {
+   --> RecipientOrg org
+}
+
+/**
+ * Concepts
+ */
+
+concept Address {
+  o String name
+  o String street
+  o String houseNumber
+  o String city
+  o String zipCode
+  o String country
+  o Integer latitude
+  o Integer longitude
+}
+
+concept Delivery {
+  o Address address
+  o String date
+}
+
+concept Loading {
+  o Address address
+  o String date
+}
+
+concept Good {
+  o Remark carrierLoadingRemark
+  o Remark compoundRemark
+  o Remark recipientRemark
+  o Remark carrierDeliveryRemark
+  o String licensePlate
+  o Integer weight
+}
+
+concept Remark {
+  o String comments
+  o Boolean isDamaged
+}
+
+/**
+ * Transactions
+ */
+
+transaction signECMR {
+  --> ECMR ecmr
+  --> Participant participant
+}
+
+/**
+ * Events
+ */
+
+
+
+/**
+ * Enum are all uppercase
+ */

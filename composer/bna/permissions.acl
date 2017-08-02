@@ -1,27 +1,96 @@
 /**
- * Sample access control list.
+ * System ACL
  */
-rule EverybodyCanReadEverything {
-    description: "Allow all participants read access to all resources"
-    participant: "org.acme.sample.SampleParticipant"
+
+ rule SystemACL {
+   description:  "System ACL to permit all access"
+   participant: "org.hyperledger.composer.system.Participant"
+   operation: ALL
+   resource: "org.hyperledger.composer.system.**"
+   action: ALLOW
+ }
+
+/**
+ * Digital CMR permission list
+ */
+
+ /**
+  * Leaseplan permission list
+  */
+
+ rule LegalOwnerAdminCanCreateECMR {
+      description: "Allow Legal Owner Admin to Create an eCMR"
+      participant: "org.digitalcmr.LegalOwnerAdmin"
+      operation: CREATE
+      resource: "org.digitalcmr.ECMR"
+      action: ALLOW
+ }
+
+rule LegalOwnerAdminCanReadECMR {
+    description: "Allow Legal Owner Admin to Read all eCMR where his org is the owner"
+    participant(p): "org.digitalcmr.LegalOwnerAdmin"
     operation: READ
-    resource: "org.acme.sample"
+    resource(ecmr): "org.digitalcmr.ECMR"
+    condition: (ecmr.owner.getIdentifier() === p.org.getIdentifier())
     action: ALLOW
 }
 
-rule EverybodyCanSubmitTransactions {
-    description: "Allow all participants to submit transactions"
-    participant: "org.acme.sample.SampleParticipant"
-    operation: CREATE
-    resource: "org.acme.sample.SampleTransaction"
+/**
+ * Compound permission list
+ */
+
+rule CompoundAdminCanReadECMR {
+    description: "Allow Compound Admin to Read all eCMR where his org is a source"
+    participant(p): "org.digitalcmr.CompoundAdmin"
+    operation: READ
+    resource(ecmr): "org.digitalcmr.ECMR"
+    condition: (ecmr.source.getIdentifier() === p.org.getIdentifier())
     action: ALLOW
 }
 
-rule OwnerHasFullAccessToTheirAssets {
-    description: "Allow all participants full access to their assets"
-    participant(p): "org.acme.sample.SampleParticipant"
-    operation: ALL
-    resource(r): "org.acme.sample.SampleAsset"
-    condition: (r.owner.getIdentifier() === p.getIdentifier())
-    action: ALLOW
-}
+/**
+   * Carrier permission list
+   */
+
+ rule CarrierAdminCanReadECMR {
+     description: "Allow Carrier Admin to Read all eCMR where his org is a carrier"
+     participant(p): "org.digitalcmr.CarrierAdmin"
+     operation: READ
+     resource(ecmr): "org.digitalcmr.ECMR"
+     condition: (ecmr.carrier.getIdentifier() === p.org.getIdentifier())
+     action: ALLOW
+ }
+
+ rule CarrierTransporterCanReadHisECMR {
+      description: "Allow Carrier Admin to Read all his eCMR (where he is a transporter)"
+      participant(p): "org.digitalcmr.CarrierMember"
+      operation: READ
+      resource(ecmr): "org.digitalcmr.ECMR"
+      condition: (ecmr.carrier.getIdentifier() === p.org.getIdentifier() && ecmr.transporter.getIdentifier() === p.getIdentifier())
+      action: ALLOW
+  }
+
+
+/**
+   * Recipient permission list
+   */
+
+ rule RecipientAdminCanReadECMR {
+     description: "Allow Recipient Admin to Read all eCMR where his org is a recipient"
+     participant(p): "org.digitalcmr.RecipientAdmin"
+     operation: READ
+     resource(ecmr): "org.digitalcmr.ECMR"
+     condition: (ecmr.recipientOrg.getIdentifier() === p.org.getIdentifier())
+     action: ALLOW
+ }
+
+ rule RecipientMemberCanReadHisECMR {
+      description: "Allow Recipient to Read his own eCMR (where he is a recipient)"
+      participant(p): "org.digitalcmr.RecipientMember"
+      operation: READ
+      resource(ecmr): "org.digitalcmr.ECMR"
+      condition: (ecmr.recipientOrg.getIdentifier() === p.org.getIdentifier() && ecmr.recipient.getIdentifier() === p.getIdentifier())
+      action: ALLOW
+  }
+
+

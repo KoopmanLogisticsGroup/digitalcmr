@@ -9,6 +9,8 @@ import {Config} from './config';
 import * as debug from 'debug';
 import {IDebugger} from 'debug';
 
+// test push
+
 class App {
   private loggerFactory: LoggerFactory = new LoggerFactory(Config.settings.winston, Config.settings.morgan);
   private logger: LoggerInstance = this.loggerFactory.create('App');

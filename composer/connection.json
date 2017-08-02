@@ -6,8 +6,8 @@
         }
     ],
     "ca": {
-        "url": "http://ca.example.com:7054",
-        "name": "ca.example.com"
+      "url": "http://ca.org1.example.com:7054",
+      "name": "ca.org1.example.com"
     },
     "peers": [
         {
@@ -16,7 +16,7 @@
         }
     ],
     "keyValStore": "/root/.hfc-key-store",
-    "channel": "mychannel",
+  "channel": "composerchannel",
     "mspID": "Org1MSP",
     "timeout": "300"
 }
