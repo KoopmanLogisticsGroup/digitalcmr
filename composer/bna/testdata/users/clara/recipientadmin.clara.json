@@ -1,20 +1,20 @@
 {
-  "$class": "org.digitalcmr.RecipientMember",
-  "org": "resource:org.digitalcmr.RecipientMember#cardealer",
-  "userID": "rob@cardealer.org",
-  "userName": "rob",
-  "firstName": "Rob",
-  "lastName": "Carman",
+  "$class": "org.digitalcmr.RecipientAdmin",
+  "org": "resource:org.digitalcmr.RecipientOrg#cardealer",
+  "userID": "clara@cardealer.org",
+  "userName": "clara",
+  "firstName": "Clara",
+  "lastName": "Petacci",
   "address": {
     "$class": "org.digitalcmr.Address",
-    "name": "Rob Carman",
-    "street": "autostraat",
-    "houseNumber": "12",
-    "city": "Rotterdam",
-    "zipCode": "9442KO",
+    "name": "Clara Petacci",
+    "street": "singenstraat",
+    "houseNumber": "3",
+    "city": "Eindhoven",
+    "zipCode": "94132OK",
     "country": "Netherlands",
-    "latitude": 51.4443,
-    "longitude": 60.3323,
+    "latitude": 51.84443,
+    "longitude": 60.43323,
     "id": "id"
   }
 }
