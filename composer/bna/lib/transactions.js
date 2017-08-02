@@ -14,34 +14,36 @@
 
 /**
  * Sample transaction processor function.
- * @param {org.digitalcmr.signECMR} tx The sample transaction instance.
+ * @param {org.digitalcmr.createCMR} eCMR The sample transaction instance.
  * @transaction
  */
-function eCmrTransaction(tx) {
+function createCMR(eCMR) {
 
-    // Save the old value of the asset.
-    var oldValue = tx.asset.value;
+    console.log(eCMR);
 
-    // Update the asset with the new value.
-    tx.asset.value = tx.newValue;
-
-    // Get the asset registry for the asset.
-    return getAssetRegistry('org.digitalcmr.ECMR')
-        .then(function (assetRegistry) {
-
-            // Update the asset in the asset registry.
-            return assetRegistry.update(tx.asset);
-
-        })
-        .then(function () {
-
-            // Emit an event for the modified asset.
-            var event = getFactory().newEvent('org.digitalcmr', 'SampleEvent');
-            event.asset = tx.asset;
-            event.oldValue = oldValue;
-            event.newValue = tx.newValue;
-            emit(event);
-
-        });
+    // // Save the old value of the asset.
+    // var oldValue = tx.asset.value;
+    //
+    // // Update the asset with the new value.
+    // tx.asset.value = tx.newValue;
+    //
+    // // Get the asset registry for the asset.
+    // return getAssetRegistry('org.digitalcmr.ECMR')
+    //     .then(function (assetRegistry) {
+    //
+    //         // Update the asset in the asset registry.
+    //         return assetRegistry.update(tx.asset);
+    //
+    //     })
+    //     .then(function () {
+    //
+    //         // Emit an event for the modified asset.
+    //         var event = getFactory().newEvent('org.digitalcmr', 'SampleEvent');
+    //         event.asset = tx.asset;
+    //         event.oldValue = oldValue;
+    //         event.newValue = tx.newValue;
+    //         emit(event);
+    //
+    //     });
 
 }

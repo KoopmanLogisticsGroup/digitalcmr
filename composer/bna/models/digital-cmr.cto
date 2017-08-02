@@ -132,9 +132,8 @@ concept Remark {
  * Transactions
  */
 
-transaction signECMR {
-  --> ECMR ecmr
-  --> Participant participant
+transaction createCMR {
+  o ECMR ecmr
 }
 
 /**
