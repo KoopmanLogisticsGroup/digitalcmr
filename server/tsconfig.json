@@ -20,6 +20,7 @@
         "src/*.ts"
     ],
     "files": [
+        "src/api/v1/LegalOwnerOrgController.ts",
         "src/app.ts",
         "src/config/default.config.ts",
         "src/config/development.config.ts",
