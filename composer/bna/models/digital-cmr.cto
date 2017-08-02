@@ -10,7 +10,7 @@ namespace org.digitalcmr
 
 asset ECMR identified by ecmrID {
   o String ecmrID
-  o String status
+  o ECMR_STATUS status
   o Loading loadingAddress
   o Delivery deliveryAddress
   --> LegalOwnerOrg owner
@@ -114,12 +114,13 @@ concept Loading {
 }
 
 concept Good {
-  o Remark carrierLoadingRemark
-  o Remark compoundRemark
-  o Remark recipientRemark
-  o Remark carrierDeliveryRemark
-  o String licensePlate
-  o Integer weight
+  --> Vehicle vehicle
+  o Remark carrierLoadingRemark optional
+  o Remark compoundRemark optional
+  o Remark recipientRemark optional
+  o Remark carrierDeliveryRemark optional
+  o String licensePlate optional
+  o Integer weight optional
 }
 
 concept Remark {
@@ -143,5 +144,10 @@ transaction signECMR {
 
 
 /**
- * Enum are all uppercase
+ * Enums
  */
+enum ECMR_STATUS {
+    o OPEN
+    o ON_TRACK
+    o CLOSED
+}
