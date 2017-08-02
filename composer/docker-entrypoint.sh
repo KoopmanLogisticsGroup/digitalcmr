@@ -16,23 +16,26 @@ sleep $WAITTIME
 # Get credentials of admin. Note: make sure that the material is loaded as a volume and that the priv key is correct.
 composer identity import \
     -p defaultProfile \
-    -u "${COMPOSER_USER}" \
+    -u "${COMPOSER_PEER_ADMIN}" \
     -c /admin-crypto/msp/signcerts/Admin@org1.example.com-cert.pem \
     -k /admin-crypto/msp/keystore/114aab0e76bf0c78308f89efc4b8c9423e31568da0c340ca187a9b17aa9a4457_sk
-
 
 # Deploy
 composer network deploy \
     -a "dist/${COMPOSER_NETWORK}.bna" \
-    -i "${COMPOSER_USER}" \
+    -i "${COMPOSER_PEER_ADMIN}" \
     -s "${COMPOSER_PASSWORD}" \
     -p defaultProfile
+
+#add testdata
+echo 'Invoking testdata script'
+source testdata/add-testdata.sh
 
 ## Start server
 composer-rest-server \
     -p defaultProfile \
     -n "${COMPOSER_NETWORK}" \
-    -i "${COMPOSER_USER}" \
+    -i "${COMPOSER_PEER_ADMIN}" \
     -s "${COMPOSER_PASSWORD}" \
     -S "${COMPOSER_SECURITY}" \
     -N "required"

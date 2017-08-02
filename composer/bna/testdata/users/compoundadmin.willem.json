@@ -1,0 +1,20 @@
+{
+  "$class": "org.digitalcmr.CompoundAdmin",
+  "org": "resource:org.digitalcmr.CompoundOrg#amsterdamcompound",
+  "userID": "willem@compoundcompany.org",
+  "userName": "willem",
+  "firstName": "willem",
+  "lastName": "compy",
+  "address": {
+    "$class": "org.digitalcmr.Address",
+    "name": "willem compy",
+    "street": "compenstraat",
+    "houseNumber": "18",
+    "city": "Amsterdam",
+    "zipCode": "9867UG",
+    "country": "Netherlands",
+    "latitude": 52.2443,
+    "longitude": 65.2323,
+    "id": "id"
+  }
+}

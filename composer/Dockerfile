@@ -7,7 +7,7 @@ WORKDIR /bna
 EXPOSE 3000
 ENTRYPOINT docker-entrypoint.sh
 
-RUN npm install -g composer-cli@0.10.0 composer-rest-server@0.10.0 --loglevel error
+RUN npm install -g composer-cli@0.10.0 composer-rest-server@0.10.0 passport-github --loglevel error
 
 COPY bna/package.json /bna/package.json
 RUN cd /bna && npm install --loglevel error
