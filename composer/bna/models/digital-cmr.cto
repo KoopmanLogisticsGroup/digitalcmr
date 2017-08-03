@@ -132,7 +132,7 @@ concept Remark {
  * Transactions
  */
 
-transaction createCMR {
+transaction CreateCMR {
   o ECMR ecmr
 }
 
