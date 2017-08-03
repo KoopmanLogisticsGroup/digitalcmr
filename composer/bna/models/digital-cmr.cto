@@ -136,6 +136,26 @@ transaction CreateCMR {
   o ECMR ecmr
 }
 
+transaction CreateLegalOwnerOrg {
+  o LegalOwnerOrg legalOwnerOrg
+}
+
+transaction CreateCompoundOrg {
+  o CompoundOrg compoundOrg
+}
+
+transaction CreateCarrierOrg {
+  o CarrierOrg carrierOrg
+}
+
+transaction CreateRecipientOrg {
+  o RecipientOrg recipientOrg
+}
+
+transaction CreateVehicles {
+  o Vehicle[] vehicles
+}
+
 /**
  * Events
  */

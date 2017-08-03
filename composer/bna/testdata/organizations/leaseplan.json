@@ -1,17 +1,20 @@
 {
-  "$class": "org.digitalcmr.LegalOwnerOrg",
-  "entityID": "leaseplan",
-  "name": "Lease Plan",
-  "address": {
-    "$class": "org.digitalcmr.Address",
+  "$class": "org.digitalcmr.CreateLegalOwnerOrg",
+  "legalOwnerOrg": {
+    "$class": "org.digitalcmr.LegalOwnerOrg",
+    "entityID": "leaseplan",
     "name": "Lease Plan",
-    "street": "leesenstraat",
-    "houseNumber": "12",
-    "city": "Groningen",
-    "zipCode": "9876ZH",
-    "country": "Netherlands",
-    "latitude": 43.1927,
-    "longitude": 23.3249,
-    "id": "string"
+    "address": {
+      "$class": "org.digitalcmr.Address",
+      "name": "Lease Plan",
+      "street": "leesenstraat",
+      "houseNumber": "12",
+      "city": "Groningen",
+      "zipCode": "9876ZH",
+      "country": "Netherlands",
+      "latitude": 43.1927,
+      "longitude": 23.3249,
+      "id": "string"
+    }
   }
 }

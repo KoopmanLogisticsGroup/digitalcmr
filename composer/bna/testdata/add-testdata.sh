@@ -92,4 +92,50 @@ composer identity issue \
     -a "$( cat testdata/users/clara/recipientadmin.clara.identity)" \
     &
 
-#composer transaction submit -p defaultProfile -n "${COMPOSER_NETWORK}" -i "${COMPOSER_USER}" -s "${COMPOSER_PASSWORD}" -d "$( cat testdata/transactions/ecmr-01.json)"
+echo 'Creating first LegalOwnerOrg'
+composer transaction submit \
+    -p defaultProfile \
+    -n "${COMPOSER_NETWORK}" \
+    -i "${COMPOSER_USER}" \
+    -s "${COMPOSER_PASSWORD}" \
+    -d "$( cat testdata/organizations/leaseplan.json)"
+
+echo 'Creating first CompoundOrg'
+composer transaction submit \
+    -p defaultProfile \
+    -n "${COMPOSER_NETWORK}" \
+    -i "${COMPOSER_USER}" \
+    -s "${COMPOSER_PASSWORD}" \
+    -d "$( cat testdata/organizations/amsterdamcompound.json)"
+
+echo 'Creating first CarrierOrg'
+composer transaction submit \
+    -p defaultProfile \
+    -n "${COMPOSER_NETWORK}" \
+    -i "${COMPOSER_USER}" \
+    -s "${COMPOSER_PASSWORD}" \
+    -d "$( cat testdata/organizations/koopman.json)"
+
+echo 'Creating first RecipientOrg'
+composer transaction submit \
+    -p defaultProfile \
+    -n "${COMPOSER_NETWORK}" \
+    -i "${COMPOSER_USER}" \
+    -s "${COMPOSER_PASSWORD}" \
+    -d "$( cat testdata/organizations/cardealer.json)"
+
+echo 'Creating first vehicles'
+composer transaction submit \
+    -p defaultProfile \
+    -n "${COMPOSER_NETWORK}" \
+    -i "${COMPOSER_USER}" \
+    -s "${COMPOSER_PASSWORD}" \
+    -d "$( cat testdata/vehicles/vehicles.json)"
+
+echo 'Creating first ECMR'
+composer transaction submit \
+    -p defaultProfile \
+    -n "${COMPOSER_NETWORK}" \
+    -i "${COMPOSER_USER}" \
+    -s "${COMPOSER_PASSWORD}" \
+    -d "$( cat testdata/ecmr/ecmr-01.json)"
