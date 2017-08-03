@@ -1,7 +1,7 @@
 {
   "$class": "org.digitalcmr.createCMR",
   "transactionId": "TRANSACTION_237841764",
-  "eCMR": {
+  "ecmr": {
     "$class": "org.digitalcmr.ECMR",
     "ecmrID": "A123456789X",
     "status": "OPEN",
