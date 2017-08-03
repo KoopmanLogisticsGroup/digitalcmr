@@ -15,6 +15,10 @@ import {ThingService} from './services/thing.service';
 import {AuthenticationService} from './services/authentication.service';
 import {HeaderComponent} from './components/header/header.component';
 import {OverviewComponent} from './components/overview/overview.component';
+import { EcmrsComponent } from './components/overview/ecmrs/ecmrs.component';
+import { EcmrDetailComponent } from './components/ecmr-detail/ecmr-detail.component';
+import { GeneralInfoComponent } from './components/ecmr-detail/general-info/general-info.component';
+import { GoodsComponent } from './components/ecmr-detail/goods/goods.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +26,11 @@ import {OverviewComponent} from './components/overview/overview.component';
     LoginComponent,
     ThingsComponent,
     HeaderComponent,
-    OverviewComponent
+    OverviewComponent,
+    EcmrsComponent,
+    EcmrDetailComponent,
+    GeneralInfoComponent,
+    GoodsComponent
   ],
   imports: [
     BrowserModule,
