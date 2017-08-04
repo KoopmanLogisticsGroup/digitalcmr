@@ -11,7 +11,6 @@ const appRoutes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'things', component: ThingsComponent, canActivate: [AuthGuard]},
   {path: 'overview', component: OverviewComponent},
-  {path: 'ecmrs', component: EcmrsComponent},
   {path: 'ecmr-detail', component: EcmrDetailComponent},
 
   // otherwise redirect to login
