@@ -60,7 +60,36 @@ export class EcmrService {
     'goods':                  [
       {
         '$class':       'org.digitalcmr.Good',
-        'vehicle':      'resource:org.digitalcmr.Vehicle#183726339N',
+        'vehicle':      {
+          '$class': 'org.digitalcmr.Vehicle',
+          'frameNumber': '183726339N',
+          'description': 'Audi A1 sportback',
+          'manufacturer': 'Audi',
+        },
+        'licensePlate': 'AV198RX',
+        'weight':       1500,
+        'id':           'string'
+      },
+      {
+        '$class':       'org.digitalcmr.Good',
+        'vehicle':      {
+          '$class': 'org.digitalcmr.Vehicle',
+          'frameNumber': '183726339N',
+          'description': 'Audi A2 sportback',
+          'manufacturer': 'Audi',
+        },
+        'licensePlate': 'AV198RX',
+        'weight':       1500,
+        'id':           'string'
+      },
+      {
+        '$class':       'org.digitalcmr.Good',
+        'vehicle':      {
+          '$class': 'org.digitalcmr.Vehicle',
+          'frameNumber': '183726339N',
+          'description': 'Audi A3 sportback',
+          'manufacturer': 'Audi',
+        },
         'licensePlate': 'AV198RX',
         'weight':       1500,
         'id':           'string'
