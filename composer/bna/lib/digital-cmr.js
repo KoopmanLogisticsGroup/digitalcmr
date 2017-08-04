@@ -169,14 +169,18 @@ function CreateVehicles(tx) {
             var factory = getFactory();
             var vehicleArr = [];
             for (var i = 0 ; i < tx.vehicles.length ; i++) {
-                var obj = factory.newResource('org.digitalcmr', 'Vehicle', tx.vehicles[i].entityID);
+                var inputObj = tx.vehicles[i];
+                var obj = factory.newResource('org.digitalcmr', 'Vehicle', inputObj.frameNumber);
                 Object.keys(tx.vehicles[i]).forEach(function(key,index) {
-                    obj[key] = tx.vehicles[i][key];
+                    obj[key] = inputObj[key];
                 });
                 vehicleArr.push(obj);
             }
-            console.log(JSON.stringify(vehicleArr));
-            return assetRegistry.addAll(vehicleArr);
+            return assetRegistry.addAll(vehicleArr).catch(function (error) {
+                console.log('An error occurred while addAll the Vehicle assets');
+                console.log(error);
+                return error;
+            });
         }).catch(function (error) {
             console.log('An error occurred while saving the Vehicle assets');
             console.log(error);
