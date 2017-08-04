@@ -1,21 +1,14 @@
 <div class="ui small menu">
   <img class="logo" src="/../assets/img/Koopman.jpg">
   <!--<div class="ui primary button">Sign Up</div>-->
-  <a class="item" (click)="setOverview()" [ngClass]="{'active' : currentView === 'overview' ? true : false}"
-     routerLinkActive="active" [routerLinkActiveOptions]="{exact:false}" routerLink="/overview/">
-    Overview
-  </a>
   <div class="right menu">
     <div class="item no-border">
       Welcome {{getUser()}}
     </div>
-    <div class="ui dropdown item no-border">
+    <div class="ui item no-border avatarBorder">
       <img *ngIf="getUser()==='Harry'" class="avatar" src="/../assets/img/Harry.jpg">
-      <div class="menu">
-        <a class="item logout"  routerLink="/">Logout</a>
-      </div>
     </div>
-    <i class="sign out icon" id="signout"></i>
+    <a routerLink="/login" id="signout"><i class="sign out icon large"></i></a>
   </div>
 </div>
 
