@@ -1,14 +1,7 @@
-h1	{
-  text-align: center;
-}
+@import url("/styles.scss");
 
-table	{
-  margin: auto;
-}
+.table-title {
 
-td	{
-  width: 100px;
-  height: 100px;
 }
 
 .vertical	{
@@ -19,4 +12,15 @@ td	{
 .horizontal	{
   border-top: 1px solid black;
   border-bottom: 1px solid black;
+}
+
+.table-header {
+  font-size: 1vw;
+  line-height: 1.2vw;
+}
+
+.table-button {
+  font-size: 0.5vw;
+  width: 1vw;
+  height: 1vw;
 }

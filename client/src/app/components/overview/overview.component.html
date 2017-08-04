@@ -1,145 +1,67 @@
-<br>
-<div class="ui internally grid">
-  <div class="row">
-    <div class="one wide column">
-      <img>
+<div class="ui container">
+    <div class="ui sixteen column grid">
+        <div class="row">
+            <div class="twelve wide column">
+                <div class="table-title">
+                    ECMR Overview
+                </div>
+            </div>
+        </div>
+        <!--<i class="close icon"></i>-->
+        <div class="row">
+            <div class="sixteen wide column">
+                <div class="ui top attached tabular menu">
+                    <a class="item" data-tab="first" (click)="setCurrentView('open')"
+                       [ngClass]="{'active' : currentView === 'open' ? true : false}">Open</a>
+                    <a class="item" data-tab="second" (click)="setCurrentView('progress')"
+                       [ngClass]="{'active' : currentView === 'progress' ? true : false}">IN PROGRESS</a>
+                    <a class="item" data-tab="third" (click)="setCurrentView('completed')"
+                       [ngClass]="{'active' : currentView === 'completed' ? true : false}">COMPLETED</a>
+                </div>
+                <div class="ui bottom attached active tab segment" data-tab="first">
+                    <table class="ui celled table">
+                        <thead class="table-header">
+                        <tr>
+                            <th></th>
+                            <th>Date</th>
+                            <th>Embarkment</th>
+                            <th>Destination</th>
+                            <th>Number of vehicles</th>
+                            <th>Carrier</th>
+                            <th>Recipient</th>
+                            <th>Remark</th>
+                            <th>Damage Remark</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let ecmr of ecmrFilteredList">
+                            <td>
+                                <div class="ui checkbox">
+                                    <input type="checkbox" name="example">
+                                    <label></label>
+                                </div>
+                            </td>
+                            <td>13-07-2018</td>
+                            <td>{{ecmr.status}}</td>
+                            <td>22</td>
+                            <td>Male</td>
+                            <td>None</td>
+                            <td>Male</td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <button class="ui blue button table-button">OPEN CMR</button>
+                            </td>
+                            <td><a routerLink="/ecmrs">
+                                <button class="mini ui button table-button">View More</button>
+                            </a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="thirteen wide column">
-      <h2>ECMR Overview</h2>
-      <br>
-      <div class="ui top attached tabular menu">
-        <a class="active item" data-tab="first">OPEN</a>
-        <a class="item" data-tab="second">IN PROGRESS</a>
-        <a class="item" data-tab="third">COMPLETED</a>
-      </div>
-      <div class="ui bottom attached active tab segment" data-tab="first">
-        <table class="ui nine column table">
-          <thead>
-          <tr>
-            <th></th>
-            <th>Date</th>
-            <th>Embarkment</th>
-            <th>Destination</th>
-            <th>Number of vehicles</th>
-            <th>Carrier</th>
-            <th>Recipient</th>
-            <th>Remark</th>
-            <th>Damage Remark</th>
-            <th>Status</th>
-            <th></th>
-          </tr></thead>
-          <tbody>
-          <tr>
-            <td><div class="ui checkbox">
-              <input type="checkbox" name="example">
-              <label></label>
-            </div></td>
-            <td>13-07-2018</td>
-            <td>Approved</td>
-            <td>22</td>
-            <td>Male</td>
-            <td>None</td>
-            <td>Male</td>
-            <td></td>
-            <td></td>
-            <td><button class="ui blue button">OPEN CMR</button></td>
-            <td><a routerLink="/ecmrs"> <button class="mini ui button">View More</button></a></td>
-          </tr>
-          <tr>
-            <td><div class="ui checkbox">
-              <input type="checkbox" name="example">
-              <label></label>
-            </div></td>
-            <td>John</td>
-            <td>Approved</td>
-            <td>22</td>
-            <td>Male</td>
-            <td>None</td>
-            <td>Male</td>
-            <td></td>
-            <td></td>
-            <td><button class="ui blue button">OPEN CMR</button></td>
-            <td><a routerLink="/ecmrs"> <button class="mini ui button">View More</button></a></td>
-          </tr>
-          <tr>
-            <td><div class="ui checkbox">
-              <input type="checkbox" name="example">
-              <label></label>
-            </div></td>
-            <td>John</td>
-            <td>Approved</td>
-            <td>22</td>
-            <td>Male</td>
-            <td>None</td>
-            <td>Male</td>
-            <td></td>
-            <td></td>
-            <td><button class="ui blue button">OPEN CMR</button></td>
-            <td><a routerLink="/ecmrs"> <button class="mini ui button">View More</button></a></td>
-          </tr>
-          </tbody>
-          <tfoot>
-          <tr><th>Open eCMR's</th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-          </tr></tfoot>
-        </table>
-      </div>
-      <div class="ui bottom attached tab segment" data-tab="second">
-        <table class="ui five column table">
-          <thead>
-          <tr><th>Name</th>
-            <th>Status</th>
-            <th>Age</th>
-            <th>Gender</th>
-            <th>Notes</th>
-          </tr></thead>
-          <tbody>
-          <tr>
-            <td>John</td>
-            <td>Approved</td>
-            <td>22</td>
-            <td>Male</td>
-            <td>None</td>
-          </tr>
-          <tr>
-            <td>Jamie</td>
-            <td>Approved</td>
-            <td>32</td>
-            <td>Male</td>
-            <td>Requires call</td>
-          </tr>
-          <tr>
-            <td>Jill</td>
-            <td>Denied</td>
-            <td>22</td>
-            <td>Female</td>
-            <td>None</td>
-          </tr>
-          </tbody>
-          <tfoot>
-          <tr><th>3 People</th>
-            <th>2 Approved</th>
-            <th></th>
-            <th></th>
-            <th></th>
-          </tr></tfoot>
-        </table>
-      </div>
-      <div class="ui bottom attached tab segment" data-tab="third">
-        Completed
-      </div>
-    </div>
-    <div class="one wide column">
-      <img>
-    </div>
-  </div>
 </div>

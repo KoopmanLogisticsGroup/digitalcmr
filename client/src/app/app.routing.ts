@@ -5,7 +5,7 @@ import {LoginComponent} from './components/login/login.component';
 import {ThingsComponent} from './components/things/things.component';
 import {OverviewComponent} from './components/overview/overview.component';
 import {EcmrsComponent} from './components/overview/ecmrs/ecmrs.component';
-import {EcmrDetailComponent} from "./components/ecmr-detail/ecmr-detail.component"
+import {EcmrDetailComponent} from './components/ecmr-detail/ecmr-detail.component';
 
 const appRoutes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -15,7 +15,7 @@ const appRoutes: Routes = [
   {path: 'ecmr-detail', component: EcmrDetailComponent},
 
   // otherwise redirect to login
-  {path: '**', redirectTo: 'things'}
+  {path: '**', redirectTo: 'login'}
 ];
 
 export const appRoutingProviders: any[] = [];

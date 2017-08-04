@@ -13,12 +13,13 @@ import {ThingsComponent} from './components/things/things.component';
 
 import {ThingService} from './services/thing.service';
 import {AuthenticationService} from './services/authentication.service';
+import {EcmrService} from './services/ecmr.service';
 import {HeaderComponent} from './components/header/header.component';
 import {OverviewComponent} from './components/overview/overview.component';
-import { EcmrsComponent } from './components/overview/ecmrs/ecmrs.component';
-import { EcmrDetailComponent } from './components/ecmr-detail/ecmr-detail.component';
-import { GeneralInfoComponent } from './components/ecmr-detail/general-info/general-info.component';
-import { GoodsComponent } from './components/ecmr-detail/goods/goods.component';
+import {EcmrsComponent} from './components/overview/ecmrs/ecmrs.component';
+import {EcmrDetailComponent} from './components/ecmr-detail/ecmr-detail.component';
+import {GeneralInfoComponent} from './components/ecmr-detail/general-info/general-info.component';
+import {GoodsComponent} from './components/ecmr-detail/goods/goods.component';
 
 @NgModule({
   declarations: [
@@ -32,20 +33,21 @@ import { GoodsComponent } from './components/ecmr-detail/goods/goods.component';
     GeneralInfoComponent,
     GoodsComponent
   ],
-  imports: [
+  imports:      [
     BrowserModule,
     FormsModule,
     HttpModule,
     routing
   ],
-  providers: [
+  providers:    [
     appRoutingProviders,
     Configuration,
     AuthenticationService,
     AuthGuard,
-    ThingService
+    ThingService,
+    EcmrService
   ],
-  bootstrap: [AppComponent]
+  bootstrap:    [AppComponent]
 })
 export class AppModule {
 }
