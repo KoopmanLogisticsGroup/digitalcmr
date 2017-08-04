@@ -25,8 +25,4 @@ export class HeaderComponent implements OnInit {
     this.currentView = 'overview';
   }
 
-  public setDetails(): void {
-    this.currentView = 'details';
-  }
-
 }

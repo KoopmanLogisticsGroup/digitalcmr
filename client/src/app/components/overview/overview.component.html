@@ -43,20 +43,16 @@
                                     <label></label>
                                 </div>
                             </td>
-                            <td>13-07-2018</td>
-                            <td>{{ecmr.status}}</td>
-                            <td>22</td>
-                            <td>Male</td>
+                            <td>{{ecmr.loadingAddress.date}}</td>
+                            <td>{{ecmr.loadingAddress.address.city}}</td>
+                            <td>{{ecmr.deliveryAddress.address.city}}</td>
+                            <td>2 vehicles</td>
                             <td>None</td>
-                            <td>Male</td>
+                            <td>{{ecmr.deliveryAddress.address.name}}</td>
                             <td></td>
-                            <td></td>
-                            <td>
-                                <button class="ui blue button table-button">OPEN CMR</button>
-                            </td>
-                            <td><a routerLink="/ecmrs">
-                                <button class="mini ui button table-button">View More</button>
-                            </a></td>
+                            <td>{{ecmr.carrierComments}}</td>
+                            <td>{{ecmr.status}}</td>
+                            <td><a routerLink="/ecmrs">View More</a></td>
                         </tr>
                         </tbody>
                     </table>

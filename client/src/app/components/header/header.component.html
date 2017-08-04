@@ -5,21 +5,17 @@
      routerLinkActive="active" [routerLinkActiveOptions]="{exact:false}" routerLink="/overview/">
     Overview
   </a>
-  <a class="item" (click)="setDetails()" [ngClass]="{'active' : currentView === 'details' ? true : false}"
-     routerLinkActive="active" [routerLinkActiveOptions]="{exact:false}" routerLink="/details">
-    Details
-  </a>
   <div class="right menu">
     <div class="item no-border">
-      Welcome, {{getUser()}}!
+      Welcome {{getUser()}}
     </div>
-    <div class="ui dropdown item no-border" id="hiddenmenu">
+    <div class="ui dropdown item no-border">
       <img *ngIf="getUser()==='Harry'" class="avatar" src="/../assets/img/Harry.jpg">
-      <i class="dropdown icon"></i>
       <div class="menu">
         <a class="item logout"  routerLink="/">Logout</a>
       </div>
     </div>
+    <i class="sign out icon" id="signout"></i>
   </div>
 </div>
 
