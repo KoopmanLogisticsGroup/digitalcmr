@@ -20,7 +20,6 @@ import {EcmrsComponent} from './components/overview/ecmrs/ecmrs.component';
 import {EcmrDetailComponent} from './components/ecmr-detail/ecmr-detail.component';
 import {GeneralInfoComponent} from './components/ecmr-detail/general-info/general-info.component';
 import {GoodsComponent} from './components/ecmr-detail/goods/goods.component';
-import {VehicleService} from 'app/services/vehicle.service';
 
 @NgModule({
   declarations: [
