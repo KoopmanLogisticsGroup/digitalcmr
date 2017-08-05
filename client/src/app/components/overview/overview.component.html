@@ -3,25 +3,25 @@
         <div class="row">
             <div class="twelve wide column">
                 <div class="table-title">
-                    ECMR Overview
+                    E-CMR Overview
                 </div>
             </div>
         </div>
         <!--<i class="close icon"></i>-->
         <div class="row">
             <div class="sixteen wide column">
-                <div class="ui top attached tabular menu">
+                <div class="ui pointing secondary menu">
                     <a class="item" data-tab="first" (click)="setCurrentView('open')"
-                       [ngClass]="{'active' : currentView === 'open' ? true : false}">Open</a>
+                       [ngClass]="{'active' : currentView === 'open' ? true : false}">OPEN</a>
                     <a class="item" data-tab="second" (click)="setCurrentView('progress')"
                        [ngClass]="{'active' : currentView === 'progress' ? true : false}">IN PROGRESS</a>
                     <a class="item" data-tab="third" (click)="setCurrentView('completed')"
                        [ngClass]="{'active' : currentView === 'completed' ? true : false}">COMPLETED</a>
                 </div>
-                <div class="ui bottom attached active tab segment" data-tab="first">
-                    <table class="ui celled table">
+                <div class="ui active tab" data-tab="first">
+                    <table class="ui table">
                         <thead class="table-header">
-                        <tr>
+                        <tr class="rowStyle">
                             <th></th>
                             <th>Date</th>
                             <th>Embarkment</th>
@@ -36,10 +36,10 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr *ngFor="let ecmr of ecmrFilteredList">
+                        <tr *ngFor="let ecmr of ecmrFilteredList" >
                             <td>
-                                <div class="ui checkbox">
-                                    <input type="checkbox" name="example">
+                                <div class="ui checkbox" id="checkboxes">
+                                    <input type="checkbox" >
                                     <label></label>
                                 </div>
                             </td>
@@ -49,10 +49,28 @@
                             <td>{{ecmr.goods.length}}<i class="book icon"></i></td>
                             <td></td>
                             <td>{{ecmr.deliveryAddress.address.name}}</td>
-                            <td><i class="book icon"></i></td>
+                            <td class="alignCenter"><i class="book icon"></i></td>
                             <td>{{ecmr.carrierComments}}</td>
                             <td>{{ecmr.status}}</td>
-                            <td><a routerLink="/ecmr-detail">View More</a></td>
+                            <td><a routerLink="/ecmr-detail" class="borderView">View More</a></td>
+                        </tr>
+                        <tr *ngFor="let ecmr of ecmrFilteredList" >
+                          <td>
+                            <div class="ui checkbox">
+                              <input type="checkbox">
+                              <label></label>
+                            </div>
+                          </td>
+                          <td>{{ecmr.loadingAddress.date}}</td>
+                          <td>{{ecmr.loadingAddress.address.city}}</td>
+                          <td>{{ecmr.deliveryAddress.address.city}}</td>
+                          <td>{{ecmr.goods.length}}<i class="book icon"></i></td>
+                          <td></td>
+                          <td>{{ecmr.deliveryAddress.address.name}}</td>
+                          <td class="alignCenter"><i class="book icon"></i></td>
+                          <td>{{ecmr.carrierComments}}</td>
+                          <td>{{ecmr.status}}</td>
+                          <td><a routerLink="/ecmr-detail" class="borderView">View More</a></td>
                         </tr>
                         </tbody>
                     </table>
