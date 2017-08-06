@@ -19,63 +19,107 @@
                        [ngClass]="{'active' : currentView === 'completed' ? true : false}">COMPLETED</a>
                 </div>
                 <div class="ui active tab" data-tab="first">
-                    <table class="ui table">
-                        <thead class="table-header">
-                        <tr class="rowStyle">
-                            <th></th>
-                            <th>Date</th>
-                            <th>Embarkment</th>
-                            <th>Destination</th>
-                            <th>Number of vehicles</th>
-                            <th>Carrier</th>
-                            <th>Recipient</th>
-                            <th>Remark</th>
-                            <th>Damage Remark</th>
-                            <th>Status</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr *ngFor="let ecmr of ecmrFilteredList" >
-                            <td>
-                                <div class="ui checkbox" id="checkboxes">
-                                    <input type="checkbox" >
-                                    <label></label>
-                                </div>
-                            </td>
-                            <td>{{ecmr.loadingAddress.date}}</td>
-                            <td>{{ecmr.loadingAddress.address.city}}</td>
-                            <td>{{ecmr.deliveryAddress.address.city}}</td>
-                            <td>{{ecmr.goods.length}}<i class="book icon"></i></td>
-                            <td></td>
-                            <td>{{ecmr.deliveryAddress.address.name}}</td>
-                            <td class="alignCenter"><i class="book icon"></i></td>
-                            <td>{{ecmr.carrierComments}}</td>
-                            <td>{{ecmr.status}}</td>
-                            <td><a routerLink="/ecmr-detail" class="borderView">View More</a></td>
-                        </tr>
-                        <tr *ngFor="let ecmr of ecmrFilteredList" >
-                          <td>
-                            <div class="ui checkbox">
-                              <input type="checkbox">
-                              <label></label>
-                            </div>
-                          </td>
-                          <td>{{ecmr.loadingAddress.date}}</td>
-                          <td>{{ecmr.loadingAddress.address.city}}</td>
-                          <td>{{ecmr.deliveryAddress.address.city}}</td>
-                          <td>{{ecmr.goods.length}}<i class="book icon"></i></td>
-                          <td></td>
-                          <td>{{ecmr.deliveryAddress.address.name}}</td>
-                          <td class="alignCenter"><i class="book icon"></i></td>
-                          <td>{{ecmr.carrierComments}}</td>
-                          <td>{{ecmr.status}}</td>
-                          <td><a routerLink="/ecmr-detail" class="borderView">View More</a></td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <!--<table class="ui table spacing-table">-->
+                        <!--<thead class="table-header">-->
+                        <!--<tr class="rowStyle">-->
+                            <!--<th></th>-->
+                            <!--<th>Date</th>-->
+                            <!--<th>Embarkment</th>-->
+                            <!--<th>Destination</th>-->
+                            <!--<th>Number of vehicles</th>-->
+                            <!--<th>Carrier</th>-->
+                            <!--<th>Recipient</th>-->
+                            <!--<th>Remark</th>-->
+                            <!--<th>Damage Remark</th>-->
+                            <!--<th>Status</th>-->
+                            <!--<th></th>-->
+                        <!--</tr>-->
+                        <!--</thead>-->
+                        <!--<tbody>-->
+                        <!--<tr *ngFor="let ecmr of ecmrFilteredList" >-->
+                            <!--<td><div class="ui checkbox" id="checkboxes"><input type="checkbox"><label></label></div></td>-->
+                            <!--<td>{{ecmr.loadingAddress.date}}</td>-->
+                            <!--<td>{{ecmr.loadingAddress.address.city}}</td>-->
+                            <!--<td>{{ecmr.deliveryAddress.address.city}}</td>-->
+                            <!--<td>{{ecmr.goods.length}}<i class="book icon"></i></td>-->
+                            <!--<td></td>-->
+                            <!--<td>{{ecmr.deliveryAddress.address.name}}</td>-->
+                            <!--<td class="alignCenter"><i class="book icon"></i></td>-->
+                            <!--<td>{{ecmr.carrierComments}}</td>-->
+                            <!--<td>{{ecmr.status}}</td>-->
+                            <!--<td><a routerLink="/ecmr-detail" class="borderView">View More</a></td>-->
+                        <!--</tr>-->
+                        <!--<tr *ngFor="let ecmr of ecmrFilteredList" >-->
+                          <!--<td>-->
+                            <!--<div class="ui checkbox">-->
+                              <!--<input type="checkbox">-->
+                              <!--<label></label>-->
+                            <!--</div>-->
+                          <!--</td>-->
+                          <!--<td>{{ecmr.loadingAddress.date}}</td>-->
+                          <!--<td>{{ecmr.loadingAddress.address.city}}</td>-->
+                          <!--<td>{{ecmr.deliveryAddress.address.city}}</td>-->
+                          <!--<td>{{ecmr.goods.length}}<i class="book icon"></i></td>-->
+                          <!--<td></td>-->
+                          <!--<td>{{ecmr.deliveryAddress.address.name}}</td>-->
+                          <!--<td class="alignCenter"><i class="book icon"></i></td>-->
+                          <!--<td>{{ecmr.carrierComments}}</td>-->
+                          <!--<td>{{ecmr.status}}</td>-->
+                          <!--<td><a routerLink="/ecmr-detail" class="borderView">View More</a></td>-->
+                        <!--</tr>-->
+                        <!--</tbody>-->
+                    <!--</table>-->
+                  <table class="spacing-table">
+                    <thead class="table-header">
+                    <th></th>
+                    <th>Date</th>
+                    <th>Embarkment</th>
+                    <th>Destination</th>
+                    <th>Number of vehicles</th>
+                    <th>Carrier</th>
+                    <th>Recipient</th>
+                    <th>Remark</th>
+                    <th>Damage Remark</th>
+                    <th>Status</th>
+                    <th></th>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let ecmr of ecmrFilteredList">
+                      <td>
+                        <div class="ui checkbox" id="checkboxes"><input type="checkbox"><label></label></div>
+                      </td>
+                      <td>{{ecmr.loadingAddress.date}}</td>
+                      <td>{{ecmr.loadingAddress.address.city}}</td>
+                      <td>{{ecmr.deliveryAddress.address.city}}</td>
+                      <td>{{ecmr.goods.length}}<i class="book icon"></i></td>
+                      <td></td>
+                      <td>{{ecmr.deliveryAddress.address.name}}</td>
+                      <td class="alignCenter"><i class="book icon"></i></td>
+                      <td>{{ecmr.carrierComments}}</td>
+                      <td>{{ecmr.status}}</td>
+                      <td><a routerLink="/ecmr-detail" class="borderView">View More</a></td>
+                    </tr>
+                    <tr *ngFor="let ecmr of ecmrFilteredList">
+                      <td>
+                        <div class="ui checkbox" id="checkboxes"><input type="checkbox"><label></label></div>
+                      </td>
+                      <td>{{ecmr.loadingAddress.date}}</td>
+                      <td>{{ecmr.loadingAddress.address.city}}</td>
+                      <td>{{ecmr.deliveryAddress.address.city}}</td>
+                      <td>{{ecmr.goods.length}}<i class="book icon"></i></td>
+                      <td></td>
+                      <td>{{ecmr.deliveryAddress.address.name}}</td>
+                      <td class="alignCenter"><i class="book icon"></i></td>
+                      <td>{{ecmr.carrierComments}}</td>
+                      <td>{{ecmr.status}}</td>
+                      <td><a routerLink="/ecmr-detail" class="borderView">View More</a></td>
+                    </tr>
+                    </tbody>
+                  </table>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+

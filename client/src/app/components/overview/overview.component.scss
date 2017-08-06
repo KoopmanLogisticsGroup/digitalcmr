@@ -1,44 +1,99 @@
 @import url("/styles.scss");
 
-.table-title{
+//.table-title{
+//  color: #32649e;
+//  font-size: 2.0vw;
+//}
+//
+//.table-header {
+//  font-size: 1vw;
+//  line-height: 1.3vw;
+//}
+//
+//tr.rowStyle>th{
+//  height: 5vw;
+//  border: 1vw;
+//  color: #32649e;
+//}
+//
+//th, td{
+//  height: 5vw;
+//}
+//
+//th{
+//  text-align: left;
+//}
+//
+//td{
+//  padding: 10px 0;
+//}
+//
+//table{
+//  border-collapse: separate;
+//  border-spacing: 10px 0;
+//}
+//
+//.alignCenter{
+//  text-align: center;
+//}
+//
+//.borderView{
+//  border: 1px solid #32649e;
+//  border-radius: 25% 25% 25% 25%;
+//  padding: 10px;
+//}
+
+.spacing-table {
+  font-size: 15px;
+  border-collapse: separate;
+  table-layout: fixed;
+  //width: 25%;
+  border-spacing: 0 5px; /* this is the ultimate fix */
+}
+.spacing-table th {
+  text-align: left;
+  padding: 5px 15px;
+}
+.spacing-table td {
+  border-width: 3px 0;
+  width: 50%;
+  color: black;
+  padding: 5px 15px;
+}
+
+.spacing-table tr{
+  box-shadow: 1px 1px 5px #888888;
+  border-top-left-radius: 0.2em;
+  border-top-right-radius: 0.2em;
+  border-bottom-left-radius: 0.2em;
+  border-bottom-right-radius: 0.2em;
+  background-color: #FFFFFF;
+}
+
+.spacing-table td:first-child {
+  border-left-width: 3px;
+  border-radius: 5px 0 0 5px;
+}
+.spacing-table td:last-child {
+  border-right-width: 3px;
+  border-radius: 0 5px 5px 0;
+}
+.spacing-table thead {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+  height: 5vw;
+  border: 1vw;
   color: #32649e;
-  font-size: 2.0vw;
+}
+.spacing-table tbody {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+  height: 130px;
 }
 
 .table-header {
   font-size: 1vw;
   line-height: 1.3vw;
-}
-
-tr.rowStyle>th{
-  height: 5vw;
-  border: 1vw;
-  color: #32649e;
-}
-
-th, td{
-  height: 5vw;
-}
-
-th{
-  text-align: left;
-}
-
-td{
-  padding: 10px 0;
-}
-
-table{
-  border-collapse: separate;
-  border-spacing: 10px 0;
-}
-
-.alignCenter{
-  text-align: center;
-}
-
-.borderView{
-  border: 1px solid #32649e;
-  border-radius: 25% 25% 25% 25%;
-  padding: 10px;
 }
