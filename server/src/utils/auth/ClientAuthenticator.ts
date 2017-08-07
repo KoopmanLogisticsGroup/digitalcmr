@@ -1,0 +1,47 @@
+import {LoggerInstance} from 'winston';
+import {UserAuthenticator} from './UserAuthenticator';
+import {AuthController} from '../../api/v1/AuthController';
+import {DataService} from '../../datasource/DataService';
+
+export class ClientAuthenticator {
+  public constructor(private logger: LoggerInstance,
+                     private username: string,
+                     private password: string,
+                     private dataService: DataService,
+                     private authController: AuthController) {
+  }
+
+  public async authenticate(): Promise<AuthenticationResponse> {
+    this.logger.debug('Login attempt with username: ', this.username);
+
+    let user: any;
+    try {
+      let result = await this.dataService.getDocuments([this.username]);
+      user       = result[0].users;
+      if (!new UserAuthenticator().validPassword(user, this.password)) {
+        return <AuthenticationResponse>{
+          success: false,
+          message: 'Authentication failed. User or password is incorrect.'
+        };
+      }
+
+      return <AuthenticationResponse>{
+        success: true,
+        token:   new UserAuthenticator().generateToken(user),
+        user:    user
+      };
+    } catch (error) {
+      return <AuthenticationResponse>{
+        success: false,
+        message: 'Authentication failed. User or password is incorrect.'
+      };
+    }
+  }
+}
+
+export interface AuthenticationResponse {
+  success: boolean;
+  message?: string;
+  token?: string;
+  user?: any;
+}

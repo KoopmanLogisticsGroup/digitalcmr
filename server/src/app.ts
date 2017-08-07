@@ -8,6 +8,8 @@ import {ApiFactory, LoggerFactory} from './utils';
 import {Config} from './config';
 import * as debug from 'debug';
 import {IDebugger} from 'debug';
+import {DataService} from './datasource/DataService';
+import {TestData} from './testdata/testData';
 
 // test push
 
@@ -26,6 +28,10 @@ class App {
     useContainer(Container);
     Container.set(ApiFactory, new ApiFactory(Config.settings.composer.url));
     Container.set(LoggerFactory, this.loggerFactory);
+    Container.set(DataService, await this.initDataSource());
+    setTimeout(() => {
+      this.addTestData();
+    }, 5000);
 
     const apiPath = Config.settings.apiPath;
     const routingControllersOptions: RoutingControllersOptions = {
@@ -44,6 +50,19 @@ class App {
     process.on('unhandledRejection', (error: Error, promise: Promise<any>) => {
       this.logger.error('Unhandled rejection', error.stack);
     });
+  }
+
+  private async initDataSource(): Promise<DataService> {
+    const dataService: DataService = new DataService();
+    this.logger.debug('[App]', 'Data service initialized');
+    return dataService;
+  }
+
+  private async addTestData(): Promise<any> {
+    return new TestData(Container.get(DataService), this.logger).addTestData()
+      .catch((err: Error) => {
+        throw new Error(err.message);
+      });
   }
 }
 

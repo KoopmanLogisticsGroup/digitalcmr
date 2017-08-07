@@ -6,6 +6,7 @@
   "scripts": {
     "start": "docker-compose up --force-recreate",
     "test": "cd server && npm test",
+    "composer-test": "docker-compose -f composer-test.yml up",
     "generateSDK": "docker run --rm -v $(pwd)/server/src:/local --net=host swaggerapi/swagger-codegen-cli generate -i http://localhost:3000/explorer/swagger.json -l typescript-node -o /local/sdk -DsupportsES6=true"
   },
   "repository": {

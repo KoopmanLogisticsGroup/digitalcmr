@@ -1,5 +1,6 @@
 import {Settings} from './settings.interface';
 import * as winston from 'winston';
+import * as path from 'path';
 
 export class DefaultConfig {
     public static get settings(): Settings {
@@ -20,7 +21,9 @@ export class DefaultConfig {
                     })
                 ],
                 exitOnError: false
-            }
+            },
+          secret:    'sUp4hS3cr37kE9c0D3',
+          serverDir: path.join(process.cwd(), 'dist')
         };
     }
 }
