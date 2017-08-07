@@ -1,0 +1,12 @@
+query getAllEcmr {
+  description: "Select all ECMRs (user has permission to)"
+  statement:
+      SELECT org.digitalcmr.ECMR
+}
+
+query selectEcmrByOwner {
+  description: "Select all ECMRs based on their owner organization"
+  statement:
+      SELECT org.digitalcmr.ECMR
+          WHERE (LegalOwnerOrg == _$owner)
+}

@@ -49,7 +49,7 @@ rule LegalOwnerAdminCanReadECMR {
     participant(p): "org.digitalcmr.LegalOwnerAdmin"
     operation: READ
     resource(ecmr): "org.digitalcmr.ECMR"
-    condition: (ecmr.owner.getIdentifier() === p.org.getIdentifier())
+    condition: (ecmr.owner === p.org.getIdentifier())
     action: ALLOW
 }
 
