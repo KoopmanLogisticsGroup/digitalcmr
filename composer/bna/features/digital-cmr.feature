@@ -12,6 +12,23 @@
 # limitations under the License.
 #
 
+  Feature: DigitalCmr
+
+    Background:
+        Given I have deployed the business network definition ..
+        And I have added the following participants of type org.digitalcmr.LegalOwnerAdmin
+            | userID   | userName | firstName | lastName  | org |
+            | lapo@leaseplan.org | lapo     | lapo        |kelkann        |resource:org.digitalcmr.LegalOwnerOrg#leaseplan |
+        And I have issued the participant org.digitalcmr.LegalOwnerAdmin#lapo@leaseplan.org with the identity lapo
+        And I have added the following assets of type org.digitalcmr.LegalOwnerOrg
+            | entityID | name           |
+            | leaseplan       | Lease Plan |
+    Scenario: Lapo can create an ECMR
+        When I use the identity lapo
+        And I submit the following transaction of type org.digitalcmr.CreateCMR
+            | ecmr |
+            | Resource({})  |
+
 #Feature: Sample
 #
 #    Background:
