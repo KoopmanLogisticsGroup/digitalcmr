@@ -7,11 +7,10 @@ import {OverviewComponent} from './components/overview/overview.component';
 
 const appRoutes: Routes = [
   {path: 'login', component: LoginComponent},
-  {path: 'things', component: ThingsComponent, canActivate: [AuthGuard]},
-  {path: 'overview', component: OverviewComponent},
+  {path: 'overview', component: OverviewComponent, canActivate: [AuthGuard]},
 
   // otherwise redirect to login
-  {path: '**', redirectTo: 'things'}
+  {path: '**', redirectTo: 'overview'}
 ];
 
 export const appRoutingProviders: any[] = [];

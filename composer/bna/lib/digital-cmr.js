@@ -170,7 +170,7 @@ function CreateVehicles(tx) {
             var vehicleArr = [];
             for (var i = 0 ; i < tx.vehicles.length ; i++) {
                 var inputObj = tx.vehicles[i];
-                var obj = factory.newResource('org.digitalcmr', 'Vehicle', inputObj.frameNumber);
+                var obj = factory.newResource('org.digitalcmr', 'Vehicle', inputObj.vin);
                 Object.keys(tx.vehicles[i]).forEach(function(key,index) {
                     obj[key] = inputObj[key];
                 });
