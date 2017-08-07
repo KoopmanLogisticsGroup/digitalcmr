@@ -10,4 +10,6 @@ export interface Settings {
     morgan?: Options;
     port?: number;
     winston?: LoggerOptions;
+  secret?: string;
+  serverDir?: string;
 }

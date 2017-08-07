@@ -80,3 +80,9 @@ services:
           - ./client/.angular-cli.json:/usr/src/app/.angular-cli.json
           - ./client/tslint.json:/usr/src/app/tslint.json
       command: bash -c "ng lint && ng serve --host 0.0.0.0"
+
+  couchdb-private:
+    container_name: couchdb-private
+    image: couchdb
+    ports:
+      - "5985:5984"

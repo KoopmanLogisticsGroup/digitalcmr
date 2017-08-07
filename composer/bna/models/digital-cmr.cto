@@ -11,6 +11,7 @@ namespace org.digitalcmr
 asset ECMR identified by ecmrID {
   o String ecmrID
   o ECMR_STATUS status
+  o Creation creation
   o Loading loading
   o Delivery delivery
   --> LegalOwnerOrg owner
@@ -20,13 +21,13 @@ asset ECMR identified by ecmrID {
   --> RecipientOrg recipientOrg
   --> RecipientMember recipient optional
   o Integer issueDate
-  --> User issuedBy
+  --> Entity issuedBy
   o String carrierComments
-  o String documents
   o Good[] goods
   o String legalOwnerInstructions
   o String paymentInstructions
   o String payOnDelivery
+  o String[] documents optional
 }
 
 abstract asset Entity identified by entityID {
@@ -47,9 +48,11 @@ asset CarrierOrg extends Entity {
 asset RecipientOrg extends Entity {
 }
 
-asset Vehicle identified by frameNumber {
+asset Vehicle identified by vin {
   o String vin
   o String manufacturer
+  o String model
+  o String type
   --> ECMR[] ECMRs
   o Integer odoMeterReading
   o String plateNumber
@@ -112,6 +115,11 @@ concept Delivery {
 }
 
 concept Loading {
+  o Address address
+  o String date
+}
+
+concept Creation {
   o Address address
   o String date
 }

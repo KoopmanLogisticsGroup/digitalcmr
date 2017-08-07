@@ -94,7 +94,7 @@ describe('digitalcmr', () => {
                         participantRegistry.add(LeasePlan);
                     })
                     .catch((error) => {
-                        console.log("participant add error")
+                        console.log('participant add error');
                     });
 
             })
@@ -102,8 +102,8 @@ describe('digitalcmr', () => {
 
                 // Create the assets.
                 const Vehicle1 = factory.newResource(NS, 'Vehicle', '1');
-                Vehicle1.owner = factory.newRelationship(NS, 'legalOwner', 'LeasePlan@email.com');
-                Vehicle1.frameNumber = '32HSN2321341HS';
+                Vehicle1.manufacturer = 'manufacturer';
+                Vehicle1.vin = '32HSN2321341HS';
                 return businessNetworkConnection.getAssetRegistry(NS)
                     .then((assetRegistry) => {
                         assetRegistry.add(Vehicle1);
@@ -116,6 +116,7 @@ describe('digitalcmr', () => {
                     .then((identity) => {
                         LeasePlanIdentity = identity;
                     })
+                    ;
             });
 
     });
@@ -196,12 +197,12 @@ describe('digitalcmr', () => {
     it('LeasePlan can update her assets', () => {
 
         // Use the identity for Alice.
-        return useIdentity(leaseplan1Identity)
+        return useIdentity('alice')
             .then(() => {
 
                 // Create the asset.
                 const Vehicle1 = factory.newResource(NS, 'Vehicle', '1');
-                Vehicle1.owner = factory.newRelationship(NS, 'legalOwnerOrg', 'LeasePlan@email.com');
+                Vehicle1.manufacturer = factory.newRelationship(NS, 'legalOwnerOrg', 'LeasePlan@email.com');
 
                 // Update the asset, then get the asset.
                 return businessNetworkConnection.getAssetRegistry('org.digitalcmr.Vehicle')
