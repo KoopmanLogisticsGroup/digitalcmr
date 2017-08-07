@@ -1,0 +1,65 @@
+{
+  "$class": "org.digitalcmr.CreateVehicles",
+  "vehicles": [
+    {
+      "$class": "org.digitalcmr.Vehicle",
+      "frameNumber": "183726339N",
+      "description": "Audi A1 sportback",
+      "manufacturer": "Audi"
+    },
+    {
+      "$class": "org.digitalcmr.Vehicle",
+      "frameNumber": "283726339N",
+      "description": "Audi A2 sportback",
+      "manufacturer": "Audi"
+    },
+    {
+      "$class": "org.digitalcmr.Vehicle",
+      "frameNumber": "383726339N",
+      "description": "Audi A3 sportback",
+      "manufacturer": "Audi"
+    },
+    {
+      "$class": "org.digitalcmr.Vehicle",
+      "frameNumber": "483726339N",
+      "description": "Audi A4 sportback",
+      "manufacturer": "Audi"
+    },
+    {
+      "$class": "org.digitalcmr.Vehicle",
+      "frameNumber": "583726339N",
+      "description": "Audi A5 sportback",
+      "manufacturer": "Audi"
+    },
+    {
+      "$class": "org.digitalcmr.Vehicle",
+      "frameNumber": "683726339N",
+      "description": "Audi A6 sportback",
+      "manufacturer": "Audi"
+    },
+    {
+      "$class": "org.digitalcmr.Vehicle",
+      "frameNumber": "783726339N",
+      "description": "Audi A7 sportback",
+      "manufacturer": "Audi"
+    },
+    {
+      "$class": "org.digitalcmr.Vehicle",
+      "frameNumber": "883726339N",
+      "description": "Audi A8 sportback",
+      "manufacturer": "Audi"
+    },
+    {
+      "$class": "org.digitalcmr.Vehicle",
+      "frameNumber": "983726339N",
+      "description": "Audi A9 sportback",
+      "manufacturer": "Audi"
+    },
+    {
+      "$class": "org.digitalcmr.Vehicle",
+      "frameNumber": "103726339N",
+      "description": "Audi A10 sportback",
+      "manufacturer": "Audi"
+    }
+  ]
+}

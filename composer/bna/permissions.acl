@@ -17,13 +17,31 @@
  /**
   * Leaseplan permission list
   */
+  rule LegalOwnerAdminCanCreateECMR {
+        description: "Allow Legal Owner Admin to Create an eCMR"
+        participant: "org.digitalcmr.LegalOwnerAdmin"
+        operation: CREATE
+        resource: "org.digitalcmr.ECMR"
+        action: ALLOW
+   }
 
- rule LegalOwnerAdminCanCreateECMR {
-      description: "Allow Legal Owner Admin to Create an eCMR"
+ rule LegalOwnerAdminCanCreateECMRCreateTransaction {
+      description: "Allow Legal Owner Admin to Create an eCMR create transaction"
       participant: "org.digitalcmr.LegalOwnerAdmin"
       operation: CREATE
-      resource: "org.digitalcmr.ECMR"
+      resource: "org.digitalcmr.CreateCMR"
       action: ALLOW
+ }
+
+
+ rule LegalOwnerAdminCanSubmitCreateECMR {
+     description: "Allow Legal Owner Admin to Submit a  Create eCMR transaction for his organization"
+     participant(m): "org.digitalcmr.LegalOwnerAdmin"
+     operation: CREATE
+     resource(v): "org.digitalcmr.ECMR"
+     transaction(tx): "org.digitalcmr.CreateCMR"
+     condition: (tx.ecmr.owner == m.org)
+     action: ALLOW
  }
 
 rule LegalOwnerAdminCanReadECMR {
