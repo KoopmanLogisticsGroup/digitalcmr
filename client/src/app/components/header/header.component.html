@@ -1,12 +1,13 @@
 <div class="ui fixed menu designMenu">
   <img class="logo" src="/../assets/img/Koopman.jpg">
-    <div class="right menu">
-      <div class="item no-border rightMenu">
-        <div *ngIf="getUser() != null"> <span class="welcomeMsg">Welcome {{getUser()}}</span><div class="spaceDivider"></div><img src="../../../assets/icons/placeholder-willem.svg" />
-          <div class="spaceDivider"></div><div (click)="logout()" class="logoutIcon"><a routerLink="/login" id="signout"><img src="../../../assets/icons/iconlogout.svg" /></a></div>
-        </div>
+  <div class="right menu">
+    <div *ngIf="getUser() != null" class="userDisplay"><span class="welcomeMsg">Welcome {{getUser()}}</span>
+      <img src="../../../assets/icons/placeholder-willem.svg" class="userImage"/>
+      <div (click)="logout()" class="logoutIcon"><a routerLink="/login"><img
+        src="../../../assets/icons/iconlogout.svg"/></a>
       </div>
     </div>
+  </div>
 </div>
 
 
