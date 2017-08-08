@@ -2,7 +2,6 @@ query getAllEcmrs {
   description: "Select all ECMRs (user has permission to)"
   statement:
       SELECT org.digitalcmr.ECMR
-        ORDER BY [issueDate DESC]
 }
 
 query getEcmrsByStatus {
@@ -10,7 +9,6 @@ query getEcmrsByStatus {
   statement:
       SELECT org.digitalcmr.ECMR
           WHERE (status == _$status)
-            ORDER BY [issueDate DESC]
 }
 
 query getEcmrsByIssueTimeRange {
@@ -18,7 +16,6 @@ query getEcmrsByIssueTimeRange {
   statement:
       SELECT org.digitalcmr.ECMR
           WHERE (issueDate >= _$min_age AND issueDate <= _$max_age)
-            ORDER BY [issueDate DESC]
 }
 
 query getEcmrsByOwner {
@@ -26,7 +23,6 @@ query getEcmrsByOwner {
   statement:
       SELECT org.digitalcmr.ECMR
           WHERE (owner == _$owner)
-            ORDER BY [issueDate DESC]
 }
 
 query getEcmrsByCompound {
@@ -34,7 +30,6 @@ query getEcmrsByCompound {
   statement:
       SELECT org.digitalcmr.ECMR
           WHERE (source == _$compound)
-            ORDER BY [issueDate DESC]
 }
 
 query getEcmrsByCarrier {
@@ -42,7 +37,6 @@ query getEcmrsByCarrier {
   statement:
       SELECT org.digitalcmr.ECMR
           WHERE (carrier == _$carrier)
-            ORDER BY [issueDate DESC]
 }
 
 query getEcmrsByCarrierMember {
@@ -50,7 +44,6 @@ query getEcmrsByCarrierMember {
   statement:
       SELECT org.digitalcmr.ECMR
         WHERE (transporter == _$transporter)
-            ORDER BY [issueDate DESC]
 }
 
 query getEcmrsByRecipientOrg {
@@ -58,7 +51,6 @@ query getEcmrsByRecipientOrg {
   statement:
       SELECT org.digitalcmr.ECMR
           WHERE (recipientOrg == _$recipientOrg)
-            ORDER BY [issueDate DESC]
 }
 
 query getEcmrsByRecipientMember {
@@ -66,6 +58,5 @@ query getEcmrsByRecipientMember {
   statement:
       SELECT org.digitalcmr.ECMR
           WHERE (recipient == _$recipient)
-            ORDER BY [issueDate DESC]
 }
 
