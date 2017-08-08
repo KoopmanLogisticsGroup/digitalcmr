@@ -9,14 +9,14 @@
     <br>
     <div class="ui left icon input width-scale">
       <input type="text" placeholder="Username" [(ngModel)]="username">
-      <img class="icon-username" src="../../../assets/icons/icon-username.svg"/>
+      <img class="icon-username" src="../../../assets/icons/IconUsername.svg"/>
     </div>
     <br>
     <br>
     <br>
     <div class="ui left icon input width-scale">
       <input type="password" placeholder="Password" [(ngModel)]="password" (keypress)="cleanError()">
-      <img class="icon-username" src="../../../assets/icons/icon-password.svg"/>
+      <img class="icon-password" src="../../../assets/icons/icon-password.svg"/>
     </div>
     <br>
     <button class="circular ui button login-label" (click)="login(username, password)">Login</button>
