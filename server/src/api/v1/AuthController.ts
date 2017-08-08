@@ -28,8 +28,7 @@ export class AuthController {
       this.logger,
       loginParams.username,
       loginParams.password,
-      this.dataService,
-      this
+      this.dataService
     );
 
     try {

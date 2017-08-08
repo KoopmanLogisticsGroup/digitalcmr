@@ -14,11 +14,11 @@
 
 /**
  * Create ecmr transaction processor function.
- * @param {org.digitalcmr.CreateCMR} tx  - The create ecmr transaction
+ * @param {org.digitalcmr.CreateECMR} tx  - The create ecmr transaction
  * @return {Promise} Asset registry Promise
  * @transaction
  */
-function CreateCMR(tx) {
+function CreateECMR(tx) {
 
     console.log('Invoking function processor create CMR');
     console.log(tx);

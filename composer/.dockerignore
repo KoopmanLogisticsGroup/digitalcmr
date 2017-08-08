@@ -1,2 +1,6 @@
 *.bna
-hlfv1/node_modules
+bna/node_modules/
+logs/
+out/
+*.log
+hlfv1/

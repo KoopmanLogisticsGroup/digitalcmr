@@ -4,6 +4,16 @@
       "userID": "willem",
       "username": "willem",
       "password": "passw0rd"
+    },
+    {
+      "userID": "lapo",
+      "username": "lapo",
+      "password": "passw0rd"
+    },
+    {
+      "userID": "harry",
+      "username": "harry",
+      "password": "passw0rd"
     }
   ]
 }
