@@ -522,6 +522,311 @@ export class CompoundOrg {
 }
 
 /**
+ * A transaction named CreateCMR
+*/
+export class CreateCMR {
+    /**
+    * The class identifier for this type
+    */
+    '$Class': string;
+    'ecmr': ECMR;
+    /**
+    * The instance identifier for this type
+    */
+    'transactionId': string;
+    'timestamp': Date;
+
+    static discriminator = undefined;
+
+    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
+        {
+            "name": "$Class",
+            "baseName": "$class",
+            "type": "string"
+        },
+        {
+            "name": "ecmr",
+            "baseName": "ecmr",
+            "type": "ECMR"
+        },
+        {
+            "name": "transactionId",
+            "baseName": "transactionId",
+            "type": "string"
+        },
+        {
+            "name": "timestamp",
+            "baseName": "timestamp",
+            "type": "Date"
+        }    ];
+
+    static getAttributeTypeMap() {
+        return CreateCMR.attributeTypeMap;
+    }
+}
+
+/**
+ * A transaction named CreateCarrierOrg
+ */
+export class CreateCarrierOrg {
+  /**
+   * The class identifier for this type
+   */
+  '$Class': string;
+  'carrierOrg': CarrierOrg;
+  /**
+   * The instance identifier for this type
+   */
+  'transactionId': string;
+  'timestamp': Date;
+
+  static discriminator = undefined;
+
+  static attributeTypeMap: Array<{ name: string, baseName: string, type: string }> = [
+    {
+      "name":     "$Class",
+      "baseName": "$class",
+      "type":     "string"
+    },
+    {
+      "name":     "carrierOrg",
+      "baseName": "carrierOrg",
+      "type":     "CarrierOrg"
+    },
+    {
+      "name":     "transactionId",
+      "baseName": "transactionId",
+      "type":     "string"
+    },
+    {
+      "name":     "timestamp",
+      "baseName": "timestamp",
+      "type":     "Date"
+    }];
+
+  static getAttributeTypeMap() {
+    return CreateCarrierOrg.attributeTypeMap;
+  }
+}
+
+/**
+ * A transaction named CreateCompoundOrg
+ */
+export class CreateCompoundOrg {
+  /**
+   * The class identifier for this type
+   */
+  '$Class': string;
+  'compoundOrg': CompoundOrg;
+  /**
+   * The instance identifier for this type
+   */
+  'transactionId': string;
+  'timestamp': Date;
+
+  static discriminator = undefined;
+
+  static attributeTypeMap: Array<{ name: string, baseName: string, type: string }> = [
+    {
+      "name":     "$Class",
+      "baseName": "$class",
+      "type":     "string"
+    },
+    {
+      "name":     "compoundOrg",
+      "baseName": "compoundOrg",
+      "type":     "CompoundOrg"
+    },
+    {
+      "name":     "transactionId",
+      "baseName": "transactionId",
+      "type":     "string"
+    },
+    {
+      "name":     "timestamp",
+      "baseName": "timestamp",
+      "type":     "Date"
+    }];
+
+  static getAttributeTypeMap() {
+    return CreateCompoundOrg.attributeTypeMap;
+  }
+}
+
+/**
+ * A transaction named CreateLegalOwnerOrg
+ */
+export class CreateLegalOwnerOrg {
+  /**
+   * The class identifier for this type
+   */
+  '$Class': string;
+  'legalOwnerOrg': LegalOwnerOrg;
+  /**
+   * The instance identifier for this type
+   */
+  'transactionId': string;
+  'timestamp': Date;
+
+  static discriminator = undefined;
+
+  static attributeTypeMap: Array<{ name: string, baseName: string, type: string }> = [
+    {
+      "name":     "$Class",
+      "baseName": "$class",
+      "type":     "string"
+    },
+    {
+      "name":     "legalOwnerOrg",
+      "baseName": "legalOwnerOrg",
+      "type":     "LegalOwnerOrg"
+    },
+    {
+      "name":     "transactionId",
+      "baseName": "transactionId",
+      "type":     "string"
+    },
+    {
+      "name":     "timestamp",
+      "baseName": "timestamp",
+      "type":     "Date"
+    }];
+
+  static getAttributeTypeMap() {
+    return CreateLegalOwnerOrg.attributeTypeMap;
+  }
+}
+
+/**
+ * A transaction named CreateRecipientOrg
+ */
+export class CreateRecipientOrg {
+  /**
+   * The class identifier for this type
+   */
+  '$Class': string;
+  'recipientOrg': RecipientOrg;
+  /**
+   * The instance identifier for this type
+   */
+  'transactionId': string;
+  'timestamp': Date;
+
+  static discriminator = undefined;
+
+  static attributeTypeMap: Array<{ name: string, baseName: string, type: string }> = [
+    {
+      "name":     "$Class",
+      "baseName": "$class",
+      "type":     "string"
+    },
+    {
+      "name":     "recipientOrg",
+      "baseName": "recipientOrg",
+      "type":     "RecipientOrg"
+    },
+    {
+      "name":     "transactionId",
+      "baseName": "transactionId",
+      "type":     "string"
+    },
+    {
+      "name":     "timestamp",
+      "baseName": "timestamp",
+      "type":     "Date"
+    }];
+
+  static getAttributeTypeMap() {
+    return CreateRecipientOrg.attributeTypeMap;
+  }
+}
+
+/**
+ * A transaction named CreateVehicles
+ */
+export class CreateVehicles {
+  /**
+   * The class identifier for this type
+   */
+  '$Class': string;
+  'vehicles': Array<Vehicle>;
+  /**
+   * The instance identifier for this type
+   */
+  'transactionId': string;
+  'timestamp': Date;
+
+  static discriminator = undefined;
+
+  static attributeTypeMap: Array<{ name: string, baseName: string, type: string }> = [
+    {
+      "name":     "$Class",
+      "baseName": "$class",
+      "type":     "string"
+    },
+    {
+      "name":     "vehicles",
+      "baseName": "vehicles",
+      "type":     "Array<Vehicle>"
+    },
+    {
+      "name":     "transactionId",
+      "baseName": "transactionId",
+      "type":     "string"
+    },
+    {
+      "name":     "timestamp",
+      "baseName": "timestamp",
+      "type":     "Date"
+    }];
+
+  static getAttributeTypeMap() {
+    return CreateVehicles.attributeTypeMap;
+  }
+}
+
+/**
+ * A concept named Creation
+ */
+export class Creation {
+  /**
+   * The class identifier for this type
+   */
+  '$Class': string;
+  'address': Address;
+  'date': string;
+  'id': string;
+
+  static discriminator = undefined;
+
+  static attributeTypeMap: Array<{ name: string, baseName: string, type: string }> = [
+    {
+      "name":     "$Class",
+      "baseName": "$class",
+      "type":     "string"
+    },
+    {
+      "name":     "address",
+      "baseName": "address",
+      "type":     "Address"
+    },
+    {
+      "name":     "date",
+      "baseName": "date",
+      "type":     "string"
+    },
+    {
+      "name":     "id",
+      "baseName": "id",
+      "type":     "string"
+    }];
+
+  static getAttributeTypeMap() {
+    return Creation.attributeTypeMap;
+  }
+}
+
+/**
 * A concept named Delivery
 */
 export class Delivery {
@@ -574,9 +879,10 @@ export class ECMR {
     * The instance identifier for this type
     */
     'ecmrID': string;
-    'status': string;
-    'loadingAddress': Loading;
-    'deliveryAddress': Delivery;
+    'status': ECMR.StatusEnum;
+    'creation': Creation;
+    'loading': Loading;
+    'delivery': Delivery;
     /**
     * The identifier of an instance of owner
     */
@@ -602,12 +908,16 @@ export class ECMR {
     */
     'recipient': string;
     'issueDate': number;
+  /**
+   * The identifier of an instance of issuedBy
+   */
+    'issuedBy': string;
     'carrierComments': string;
-    'documents': string;
     'goods': Array<Good>;
     'legalOwnerInstructions': string;
     'paymentInstructions': string;
     'payOnDelivery': string;
+    'documents': Array<string>;
 
     static discriminator = undefined;
 
@@ -625,17 +935,22 @@ export class ECMR {
         {
             "name": "status",
             "baseName": "status",
-            "type": "string"
+            "type": "ECMR.StatusEnum"
         },
         {
-            "name": "loadingAddress",
-            "baseName": "loadingAddress",
+          "name":     "creation",
+          "baseName": "creation",
+          "type":     "Creation"
+        },
+      {
+        "name":     "loading",
+        "baseName": "loading",
             "type": "Loading"
         },
         {
-            "name": "deliveryAddress",
-            "baseName": "deliveryAddress",
-            "type": "Delivery"
+          "name":     "delivery",
+          "baseName": "delivery",
+          "type":     "Delivery"
         },
         {
             "name": "owner",
@@ -673,15 +988,15 @@ export class ECMR {
             "type": "number"
         },
         {
-            "name": "carrierComments",
-            "baseName": "carrierComments",
-            "type": "string"
+          "name":     "issuedBy",
+          "baseName": "issuedBy",
+          "type":     "string"
         },
-        {
-            "name": "documents",
-            "baseName": "documents",
-            "type": "string"
-        },
+      {
+        "name":     "carrierComments",
+        "baseName": "carrierComments",
+        "type":     "string"
+      },
         {
             "name": "goods",
             "baseName": "goods",
@@ -701,13 +1016,25 @@ export class ECMR {
             "name": "payOnDelivery",
             "baseName": "payOnDelivery",
             "type": "string"
-        }    ];
+        },
+      {
+        "name":     "documents",
+        "baseName": "documents",
+        "type":     "Array<string>"
+      }];
 
     static getAttributeTypeMap() {
         return ECMR.attributeTypeMap;
     }
 }
 
+export namespace ECMR {
+    export enum StatusEnum {
+        OPEN = <any> 'OPEN',
+        ONTRACK = <any> 'ON_TRACK',
+        CLOSED = <any> 'CLOSED'
+    }
+}
 /**
 * A concept named Good
 */
@@ -716,11 +1043,12 @@ export class Good {
     * The class identifier for this type
     */
     '$Class': string;
+    'vehicle': Vehicle;
     'carrierLoadingRemark': Remark;
     'compoundRemark': Remark;
     'recipientRemark': Remark;
     'carrierDeliveryRemark': Remark;
-    'licensePlate': string;
+    'description': string;
     'weight': number;
     'id': string;
 
@@ -731,6 +1059,11 @@ export class Good {
             "name": "$Class",
             "baseName": "$class",
             "type": "string"
+        },
+        {
+          "name":       "vehicle",
+            "baseName": "vehicle",
+          "type":       "Vehicle"
         },
         {
             "name": "carrierLoadingRemark",
@@ -753,9 +1086,9 @@ export class Good {
             "type": "Remark"
         },
         {
-            "name": "licensePlate",
-            "baseName": "licensePlate",
-            "type": "string"
+          "name":     "description",
+          "baseName": "description",
+          "type":     "string"
         },
         {
             "name": "weight",
@@ -1240,62 +1573,6 @@ export class Remark {
 }
 
 /**
-* A transaction named signECMR
-*/
-export class SignECMR {
-    /**
-    * The class identifier for this type
-    */
-    '$Class': string;
-    /**
-    * The identifier of an instance of ecmr
-    */
-    'ecmr': string;
-    /**
-    * The identifier of an instance of participant
-    */
-    'participant': string;
-    /**
-    * The instance identifier for this type
-    */
-    'transactionId': string;
-    'timestamp': Date;
-
-    static discriminator = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "$Class",
-            "baseName": "$class",
-            "type": "string"
-        },
-        {
-            "name": "ecmr",
-            "baseName": "ecmr",
-            "type": "string"
-        },
-        {
-            "name": "participant",
-            "baseName": "participant",
-            "type": "string"
-        },
-        {
-            "name": "transactionId",
-            "baseName": "transactionId",
-            "type": "string"
-        },
-        {
-            "name": "timestamp",
-            "baseName": "timestamp",
-            "type": "Date"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return SignECMR.attributeTypeMap;
-    }
-}
-
-/**
 * An asset named Vehicle
 */
 export class Vehicle {
@@ -1306,9 +1583,16 @@ export class Vehicle {
     /**
     * The instance identifier for this type
     */
-    'frameNumber': string;
-    'description': string;
+    'vin': string;
     'manufacturer': string;
+    'model': string;
+    'type': string;
+  /**
+   * The identifier of an instance of ECMRs
+   */
+    'eCMRs': Array<string>;
+    'odoMeterReading': number;
+    'plateNumber': string;
 
     static discriminator = undefined;
 
@@ -1319,20 +1603,40 @@ export class Vehicle {
             "type": "string"
         },
         {
-            "name": "frameNumber",
-            "baseName": "frameNumber",
-            "type": "string"
-        },
-        {
-            "name": "description",
-            "baseName": "description",
-            "type": "string"
+          "name":     "vin",
+          "baseName": "vin",
+          "type":     "string"
         },
         {
             "name": "manufacturer",
             "baseName": "manufacturer",
             "type": "string"
-        }    ];
+        },
+      {
+        "name":     "model",
+        "baseName": "model",
+        "type":     "string"
+      },
+      {
+        "name":     "type",
+        "baseName": "type",
+        "type":     "string"
+      },
+      {
+        "name":     "eCMRs",
+        "baseName": "ECMRs",
+        "type":     "Array<string>"
+      },
+      {
+        "name":     "odoMeterReading",
+        "baseName": "odoMeterReading",
+        "type":     "number"
+      },
+      {
+        "name":     "plateNumber",
+        "baseName": "plateNumber",
+        "type":     "string"
+      }];
 
     static getAttributeTypeMap() {
         return Vehicle.attributeTypeMap;
@@ -1341,32 +1645,39 @@ export class Vehicle {
 
 
 let enumsMap = {
+    "ECMR.StatusEnum": ECMR.StatusEnum,
 }
 
 let typeMap = {
-    "Address": Address,
-    "BindIdentityRequest": BindIdentityRequest,
-    "CarrierAdmin": CarrierAdmin,
-    "CarrierMember": CarrierMember,
-    "CarrierOrg": CarrierOrg,
-    "CompoundAdmin": CompoundAdmin,
-    "CompoundOrg": CompoundOrg,
-    "Delivery": Delivery,
-    "ECMR": ECMR,
-    "Good": Good,
-    "InlineResponse200": InlineResponse200,
-    "IssueIdentityRequest": IssueIdentityRequest,
+  "Address":                 Address,
+  "BindIdentityRequest":     BindIdentityRequest,
+  "CarrierAdmin":            CarrierAdmin,
+  "CarrierMember":           CarrierMember,
+  "CarrierOrg":              CarrierOrg,
+  "CompoundAdmin":           CompoundAdmin,
+  "CompoundOrg":             CompoundOrg,
+  "CreateCMR":               CreateCMR,
+  "CreateCarrierOrg":        CreateCarrierOrg,
+  "CreateCompoundOrg":       CreateCompoundOrg,
+  "CreateLegalOwnerOrg":     CreateLegalOwnerOrg,
+  "CreateRecipientOrg":      CreateRecipientOrg,
+  "CreateVehicles":          CreateVehicles,
+  "Creation":                Creation,
+  "Delivery":                Delivery,
+  "ECMR":                    ECMR,
+  "Good":                    Good,
+  "InlineResponse200":       InlineResponse200,
+  "IssueIdentityRequest":    IssueIdentityRequest,
     "IssueIdentityResponse": IssueIdentityResponse,
-    "LegalOwnerAdmin": LegalOwnerAdmin,
-    "LegalOwnerOrg": LegalOwnerOrg,
-    "Loading": Loading,
-    "PingResponse": PingResponse,
-    "RecipientAdmin": RecipientAdmin,
-    "RecipientMember": RecipientMember,
-    "RecipientOrg": RecipientOrg,
-    "Remark": Remark,
-    "SignECMR": SignECMR,
-    "Vehicle": Vehicle,
+  "LegalOwnerAdmin":         LegalOwnerAdmin,
+  "LegalOwnerOrg":           LegalOwnerOrg,
+  "Loading":                 Loading,
+  "PingResponse":            PingResponse,
+  "RecipientAdmin":          RecipientAdmin,
+  "RecipientMember":         RecipientMember,
+  "RecipientOrg":            RecipientOrg,
+  "Remark":                  Remark,
+  "Vehicle":                 Vehicle,
 }
 
 export interface Authentication {
@@ -3263,6 +3574,575 @@ export class CompoundOrgApi {
             });
         });
     }
+}
+export enum CreateCMRApiApiKeys {
+}
+
+export class CreateCMRApi {
+    protected _basePath = defaultBasePath;
+    protected defaultHeaders : any = {};
+    protected _useQuerystring : boolean = false;
+
+    protected authentications = {
+        'default': <Authentication>new VoidAuth(),
+    }
+
+    constructor(basePath?: string);
+    constructor(basePathOrUsername: string, password?: string, basePath?: string) {
+        if (password) {
+            if (basePath) {
+                this.basePath = basePath;
+            }
+        } else {
+            if (basePathOrUsername) {
+                this.basePath = basePathOrUsername
+            }
+        }
+    }
+
+    set useQuerystring(value: boolean) {
+        this._useQuerystring = value;
+    }
+
+    set basePath(basePath: string) {
+        this._basePath = basePath;
+    }
+
+    get basePath() {
+        return this._basePath;
+    }
+
+    public setDefaultAuthentication(auth: Authentication) {
+	this.authentications.default = auth;
+    }
+
+    public setApiKey(key: CreateCMRApiApiKeys, value: string) {
+        this.authentications[CreateCMRApiApiKeys[key]].apiKey = value;
+    }
+    /**
+     * 
+     * @summary Create a new instance of the model and persist it into the data source.
+     * @param data Model instance data
+     */
+    public createCMRCreate (data?: CreateCMR) : Promise<{ response: http.IncomingMessage; body: CreateCMR;  }> {
+      const localVarPath         = this.basePath + '/CreateCMR';
+        let queryParameters: any = {};
+      let headerParams: any      = (<any>Object).assign({}, this.defaultHeaders);
+      let formParams: any        = {};
+
+
+
+        let useFormData = false;
+
+        let requestOptions: request.Options = {
+            method: 'POST',
+            qs: queryParameters,
+            headers: headerParams,
+            uri: localVarPath,
+            useQuerystring: this._useQuerystring,
+            json: true,
+            body: ObjectSerializer.serialize(data, "CreateCMR")
+        };
+
+        this.authentications.default.applyToRequest(requestOptions);
+
+        if (Object.keys(formParams).length) {
+            if (useFormData) {
+                (<any>requestOptions).formData = formParams;
+            } else {
+                requestOptions.form = formParams;
+            }
+        }
+        return new Promise<{ response: http.IncomingMessage; body: CreateCMR;  }>((resolve, reject) => {
+            request(requestOptions, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    body = ObjectSerializer.deserialize(body, "CreateCMR");
+                    if (response.statusCode >= 200 && response.statusCode <= 299) {
+                        resolve({ response: response, body: body });
+                    } else {
+                        reject({ response: response, body: body });
+                    }
+                }
+            });
+        });
+    }
+}
+
+export enum CreateCarrierOrgApiApiKeys {
+}
+
+export class CreateCarrierOrgApi {
+  protected _basePath                = defaultBasePath;
+  protected defaultHeaders: any      = {};
+  protected _useQuerystring: boolean = false;
+
+  protected authentications = {
+    'default': <Authentication>new VoidAuth(),
+  }
+
+  constructor(basePath?: string);
+  constructor(basePathOrUsername: string, password?: string, basePath?: string) {
+    if (password) {
+      if (basePath) {
+        this.basePath = basePath;
+      }
+    } else {
+      if (basePathOrUsername) {
+        this.basePath = basePathOrUsername
+      }
+    }
+  }
+
+  set useQuerystring(value: boolean) {
+    this._useQuerystring = value;
+  }
+
+  set basePath(basePath: string) {
+    this._basePath = basePath;
+  }
+
+  get basePath() {
+    return this._basePath;
+  }
+
+  public setDefaultAuthentication(auth: Authentication) {
+    this.authentications.default = auth;
+  }
+
+  public setApiKey(key: CreateCarrierOrgApiApiKeys, value: string) {
+    this.authentications[CreateCarrierOrgApiApiKeys[key]].apiKey = value;
+  }
+
+  /**
+   *
+   * @summary Create a new instance of the model and persist it into the data source.
+   * @param data Model instance data
+   */
+  public createCarrierOrgCreate(data?: CreateCarrierOrg): Promise<{ response: http.IncomingMessage; body: CreateCarrierOrg; }> {
+    const localVarPath       = this.basePath + '/CreateCarrierOrg';
+    let queryParameters: any = {};
+    let headerParams: any    = (<any>Object).assign({}, this.defaultHeaders);
+    let formParams: any      = {};
+
+
+    let useFormData = false;
+
+    let requestOptions: request.Options = {
+      method:         'POST',
+      qs:             queryParameters,
+      headers:        headerParams,
+      uri:            localVarPath,
+      useQuerystring: this._useQuerystring,
+      json:           true,
+      body:           ObjectSerializer.serialize(data, "CreateCarrierOrg")
+    };
+
+    this.authentications.default.applyToRequest(requestOptions);
+
+    if (Object.keys(formParams).length) {
+      if (useFormData) {
+        (<any>requestOptions).formData = formParams;
+      } else {
+        requestOptions.form = formParams;
+      }
+    }
+    return new Promise<{ response: http.IncomingMessage; body: CreateCarrierOrg; }>((resolve, reject) => {
+      request(requestOptions, (error, response, body) => {
+        if (error) {
+          reject(error);
+        } else {
+          body = ObjectSerializer.deserialize(body, "CreateCarrierOrg");
+          if (response.statusCode >= 200 && response.statusCode <= 299) {
+            resolve({response: response, body: body});
+          } else {
+            reject({response: response, body: body});
+          }
+        }
+      });
+    });
+  }
+}
+
+export enum CreateCompoundOrgApiApiKeys {
+}
+
+export class CreateCompoundOrgApi {
+  protected _basePath                = defaultBasePath;
+  protected defaultHeaders: any      = {};
+  protected _useQuerystring: boolean = false;
+
+  protected authentications = {
+    'default': <Authentication>new VoidAuth(),
+  }
+
+  constructor(basePath?: string);
+  constructor(basePathOrUsername: string, password?: string, basePath?: string) {
+    if (password) {
+      if (basePath) {
+        this.basePath = basePath;
+      }
+    } else {
+      if (basePathOrUsername) {
+        this.basePath = basePathOrUsername
+      }
+    }
+  }
+
+  set useQuerystring(value: boolean) {
+    this._useQuerystring = value;
+  }
+
+  set basePath(basePath: string) {
+    this._basePath = basePath;
+  }
+
+  get basePath() {
+    return this._basePath;
+  }
+
+  public setDefaultAuthentication(auth: Authentication) {
+    this.authentications.default = auth;
+  }
+
+  public setApiKey(key: CreateCompoundOrgApiApiKeys, value: string) {
+    this.authentications[CreateCompoundOrgApiApiKeys[key]].apiKey = value;
+  }
+
+  /**
+   *
+   * @summary Create a new instance of the model and persist it into the data source.
+   * @param data Model instance data
+   */
+  public createCompoundOrgCreate(data?: CreateCompoundOrg): Promise<{ response: http.IncomingMessage; body: CreateCompoundOrg; }> {
+    const localVarPath       = this.basePath + '/CreateCompoundOrg';
+    let queryParameters: any = {};
+    let headerParams: any    = (<any>Object).assign({}, this.defaultHeaders);
+    let formParams: any      = {};
+
+
+    let useFormData = false;
+
+    let requestOptions: request.Options = {
+      method:         'POST',
+      qs:             queryParameters,
+      headers:        headerParams,
+      uri:            localVarPath,
+      useQuerystring: this._useQuerystring,
+      json:           true,
+      body:           ObjectSerializer.serialize(data, "CreateCompoundOrg")
+    };
+
+    this.authentications.default.applyToRequest(requestOptions);
+
+    if (Object.keys(formParams).length) {
+      if (useFormData) {
+        (<any>requestOptions).formData = formParams;
+      } else {
+        requestOptions.form = formParams;
+      }
+    }
+    return new Promise<{ response: http.IncomingMessage; body: CreateCompoundOrg; }>((resolve, reject) => {
+      request(requestOptions, (error, response, body) => {
+        if (error) {
+          reject(error);
+        } else {
+          body = ObjectSerializer.deserialize(body, "CreateCompoundOrg");
+          if (response.statusCode >= 200 && response.statusCode <= 299) {
+            resolve({response: response, body: body});
+          } else {
+            reject({response: response, body: body});
+          }
+        }
+      });
+    });
+  }
+}
+
+export enum CreateLegalOwnerOrgApiApiKeys {
+}
+
+export class CreateLegalOwnerOrgApi {
+  protected _basePath                = defaultBasePath;
+  protected defaultHeaders: any      = {};
+  protected _useQuerystring: boolean = false;
+
+  protected authentications = {
+    'default': <Authentication>new VoidAuth(),
+  }
+
+  constructor(basePath?: string);
+  constructor(basePathOrUsername: string, password?: string, basePath?: string) {
+    if (password) {
+      if (basePath) {
+        this.basePath = basePath;
+      }
+    } else {
+      if (basePathOrUsername) {
+        this.basePath = basePathOrUsername
+      }
+    }
+  }
+
+  set useQuerystring(value: boolean) {
+    this._useQuerystring = value;
+  }
+
+  set basePath(basePath: string) {
+    this._basePath = basePath;
+  }
+
+  get basePath() {
+    return this._basePath;
+  }
+
+  public setDefaultAuthentication(auth: Authentication) {
+    this.authentications.default = auth;
+  }
+
+  public setApiKey(key: CreateLegalOwnerOrgApiApiKeys, value: string) {
+    this.authentications[CreateLegalOwnerOrgApiApiKeys[key]].apiKey = value;
+  }
+
+  /**
+   *
+   * @summary Create a new instance of the model and persist it into the data source.
+   * @param data Model instance data
+   */
+  public createLegalOwnerOrgCreate(data?: CreateLegalOwnerOrg): Promise<{ response: http.IncomingMessage; body: CreateLegalOwnerOrg; }> {
+    const localVarPath       = this.basePath + '/CreateLegalOwnerOrg';
+    let queryParameters: any = {};
+    let headerParams: any    = (<any>Object).assign({}, this.defaultHeaders);
+    let formParams: any      = {};
+
+
+    let useFormData = false;
+
+    let requestOptions: request.Options = {
+      method:         'POST',
+      qs:             queryParameters,
+      headers:        headerParams,
+      uri:            localVarPath,
+      useQuerystring: this._useQuerystring,
+      json:           true,
+      body:           ObjectSerializer.serialize(data, "CreateLegalOwnerOrg")
+    };
+
+    this.authentications.default.applyToRequest(requestOptions);
+
+    if (Object.keys(formParams).length) {
+      if (useFormData) {
+        (<any>requestOptions).formData = formParams;
+      } else {
+        requestOptions.form = formParams;
+      }
+    }
+    return new Promise<{ response: http.IncomingMessage; body: CreateLegalOwnerOrg; }>((resolve, reject) => {
+      request(requestOptions, (error, response, body) => {
+        if (error) {
+          reject(error);
+        } else {
+          body = ObjectSerializer.deserialize(body, "CreateLegalOwnerOrg");
+          if (response.statusCode >= 200 && response.statusCode <= 299) {
+            resolve({response: response, body: body});
+          } else {
+            reject({response: response, body: body});
+          }
+        }
+      });
+    });
+  }
+}
+
+export enum CreateRecipientOrgApiApiKeys {
+}
+
+export class CreateRecipientOrgApi {
+  protected _basePath                = defaultBasePath;
+  protected defaultHeaders: any      = {};
+  protected _useQuerystring: boolean = false;
+
+  protected authentications = {
+    'default': <Authentication>new VoidAuth(),
+  }
+
+  constructor(basePath?: string);
+  constructor(basePathOrUsername: string, password?: string, basePath?: string) {
+    if (password) {
+      if (basePath) {
+        this.basePath = basePath;
+      }
+    } else {
+      if (basePathOrUsername) {
+        this.basePath = basePathOrUsername
+      }
+    }
+  }
+
+  set useQuerystring(value: boolean) {
+    this._useQuerystring = value;
+  }
+
+  set basePath(basePath: string) {
+    this._basePath = basePath;
+  }
+
+  get basePath() {
+    return this._basePath;
+  }
+
+  public setDefaultAuthentication(auth: Authentication) {
+    this.authentications.default = auth;
+  }
+
+  public setApiKey(key: CreateRecipientOrgApiApiKeys, value: string) {
+    this.authentications[CreateRecipientOrgApiApiKeys[key]].apiKey = value;
+  }
+
+  /**
+   *
+   * @summary Create a new instance of the model and persist it into the data source.
+   * @param data Model instance data
+   */
+  public createRecipientOrgCreate(data?: CreateRecipientOrg): Promise<{ response: http.IncomingMessage; body: CreateRecipientOrg; }> {
+    const localVarPath       = this.basePath + '/CreateRecipientOrg';
+    let queryParameters: any = {};
+    let headerParams: any    = (<any>Object).assign({}, this.defaultHeaders);
+    let formParams: any      = {};
+
+
+    let useFormData = false;
+
+    let requestOptions: request.Options = {
+      method:         'POST',
+      qs:             queryParameters,
+      headers:        headerParams,
+      uri:            localVarPath,
+      useQuerystring: this._useQuerystring,
+      json:           true,
+      body:           ObjectSerializer.serialize(data, "CreateRecipientOrg")
+    };
+
+    this.authentications.default.applyToRequest(requestOptions);
+
+    if (Object.keys(formParams).length) {
+      if (useFormData) {
+        (<any>requestOptions).formData = formParams;
+      } else {
+        requestOptions.form = formParams;
+      }
+    }
+    return new Promise<{ response: http.IncomingMessage; body: CreateRecipientOrg; }>((resolve, reject) => {
+      request(requestOptions, (error, response, body) => {
+        if (error) {
+          reject(error);
+        } else {
+          body = ObjectSerializer.deserialize(body, "CreateRecipientOrg");
+          if (response.statusCode >= 200 && response.statusCode <= 299) {
+            resolve({response: response, body: body});
+          } else {
+            reject({response: response, body: body});
+          }
+        }
+      });
+    });
+  }
+}
+
+export enum CreateVehiclesApiApiKeys {
+}
+
+export class CreateVehiclesApi {
+  protected _basePath                = defaultBasePath;
+  protected defaultHeaders: any      = {};
+  protected _useQuerystring: boolean = false;
+
+  protected authentications = {
+    'default': <Authentication>new VoidAuth(),
+  }
+
+  constructor(basePath?: string);
+  constructor(basePathOrUsername: string, password?: string, basePath?: string) {
+    if (password) {
+      if (basePath) {
+        this.basePath = basePath;
+      }
+    } else {
+      if (basePathOrUsername) {
+        this.basePath = basePathOrUsername
+      }
+    }
+  }
+
+  set useQuerystring(value: boolean) {
+    this._useQuerystring = value;
+  }
+
+  set basePath(basePath: string) {
+    this._basePath = basePath;
+  }
+
+  get basePath() {
+    return this._basePath;
+  }
+
+  public setDefaultAuthentication(auth: Authentication) {
+    this.authentications.default = auth;
+  }
+
+  public setApiKey(key: CreateVehiclesApiApiKeys, value: string) {
+    this.authentications[CreateVehiclesApiApiKeys[key]].apiKey = value;
+  }
+
+  /**
+   *
+   * @summary Create a new instance of the model and persist it into the data source.
+   * @param data Model instance data
+   */
+  public createVehiclesCreate(data?: CreateVehicles): Promise<{ response: http.IncomingMessage; body: CreateVehicles; }> {
+    const localVarPath       = this.basePath + '/CreateVehicles';
+    let queryParameters: any = {};
+    let headerParams: any    = (<any>Object).assign({}, this.defaultHeaders);
+    let formParams: any      = {};
+
+
+    let useFormData = false;
+
+    let requestOptions: request.Options = {
+      method:         'POST',
+      qs:             queryParameters,
+      headers:        headerParams,
+      uri:            localVarPath,
+      useQuerystring: this._useQuerystring,
+      json:           true,
+      body:           ObjectSerializer.serialize(data, "CreateVehicles")
+    };
+
+    this.authentications.default.applyToRequest(requestOptions);
+
+    if (Object.keys(formParams).length) {
+      if (useFormData) {
+        (<any>requestOptions).formData = formParams;
+      } else {
+        requestOptions.form = formParams;
+      }
+    }
+    return new Promise<{ response: http.IncomingMessage; body: CreateVehicles; }>((resolve, reject) => {
+      request(requestOptions, (error, response, body) => {
+        if (error) {
+          reject(error);
+        } else {
+          body = ObjectSerializer.deserialize(body, "CreateVehicles");
+          if (response.statusCode >= 200 && response.statusCode <= 299) {
+            resolve({response: response, body: body});
+          } else {
+            reject({response: response, body: body});
+          }
+        }
+      });
+    });
+  }
 }
 export enum ECMRApiApiKeys {
 }
@@ -5468,100 +6348,6 @@ export class RecipientOrgApi {
                     reject(error);
                 } else {
                     body = ObjectSerializer.deserialize(body, "RecipientOrg");
-                    if (response.statusCode >= 200 && response.statusCode <= 299) {
-                        resolve({ response: response, body: body });
-                    } else {
-                        reject({ response: response, body: body });
-                    }
-                }
-            });
-        });
-    }
-}
-export enum SignECMRApiApiKeys {
-}
-
-export class SignECMRApi {
-    protected _basePath = defaultBasePath;
-    protected defaultHeaders : any = {};
-    protected _useQuerystring : boolean = false;
-
-    protected authentications = {
-        'default': <Authentication>new VoidAuth(),
-    }
-
-    constructor(basePath?: string);
-    constructor(basePathOrUsername: string, password?: string, basePath?: string) {
-        if (password) {
-            if (basePath) {
-                this.basePath = basePath;
-            }
-        } else {
-            if (basePathOrUsername) {
-                this.basePath = basePathOrUsername
-            }
-        }
-    }
-
-    set useQuerystring(value: boolean) {
-        this._useQuerystring = value;
-    }
-
-    set basePath(basePath: string) {
-        this._basePath = basePath;
-    }
-
-    get basePath() {
-        return this._basePath;
-    }
-
-    public setDefaultAuthentication(auth: Authentication) {
-	this.authentications.default = auth;
-    }
-
-    public setApiKey(key: SignECMRApiApiKeys, value: string) {
-        this.authentications[SignECMRApiApiKeys[key]].apiKey = value;
-    }
-    /**
-     * 
-     * @summary Create a new instance of the model and persist it into the data source.
-     * @param data Model instance data
-     */
-    public signECMRCreate (data?: SignECMR) : Promise<{ response: http.IncomingMessage; body: SignECMR;  }> {
-        const localVarPath = this.basePath + '/signECMR';
-        let queryParameters: any = {};
-        let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
-        let formParams: any = {};
-
-
-
-        let useFormData = false;
-
-        let requestOptions: request.Options = {
-            method: 'POST',
-            qs: queryParameters,
-            headers: headerParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-            body: ObjectSerializer.serialize(data, "SignECMR")
-        };
-
-        this.authentications.default.applyToRequest(requestOptions);
-
-        if (Object.keys(formParams).length) {
-            if (useFormData) {
-                (<any>requestOptions).formData = formParams;
-            } else {
-                requestOptions.form = formParams;
-            }
-        }
-        return new Promise<{ response: http.IncomingMessage; body: SignECMR;  }>((resolve, reject) => {
-            request(requestOptions, (error, response, body) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    body = ObjectSerializer.deserialize(body, "SignECMR");
                     if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {

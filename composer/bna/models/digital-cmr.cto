@@ -10,9 +10,10 @@ namespace org.digitalcmr
 
 asset ECMR identified by ecmrID {
   o String ecmrID
-  o String status
-  o Loading loadingAddress
-  o Delivery deliveryAddress
+  o ECMR_STATUS status
+  o Creation creation
+  o Loading loading
+  o Delivery delivery
   --> LegalOwnerOrg owner
   --> CompoundOrg source
   --> CarrierMember transporter optional
@@ -20,12 +21,13 @@ asset ECMR identified by ecmrID {
   --> RecipientOrg recipientOrg
   --> RecipientMember recipient optional
   o Integer issueDate
+  --> Entity issuedBy
   o String carrierComments
-  o String documents
   o Good[] goods
   o String legalOwnerInstructions
   o String paymentInstructions
   o String payOnDelivery
+  o String[] documents optional
 }
 
 abstract asset Entity identified by entityID {
@@ -46,10 +48,14 @@ asset CarrierOrg extends Entity {
 asset RecipientOrg extends Entity {
 }
 
-asset Vehicle identified by frameNumber {
-  o String frameNumber
-  o String description
+asset Vehicle identified by vin {
+  o String vin
   o String manufacturer
+  o String model
+  o String type
+  --> ECMR[] ECMRs
+  o Integer odoMeterReading
+  o String plateNumber
 }
 
 /**
@@ -105,7 +111,7 @@ concept Address {
 
 concept Delivery {
   o Address address
-  o String date
+  o String date optional
 }
 
 concept Loading {
@@ -113,13 +119,19 @@ concept Loading {
   o String date
 }
 
+concept Creation {
+  o Address address
+  o String date
+}
+
 concept Good {
-  o Remark carrierLoadingRemark
-  o Remark compoundRemark
-  o Remark recipientRemark
-  o Remark carrierDeliveryRemark
-  o String licensePlate
-  o Integer weight
+  o Vehicle vehicle
+  o Remark carrierLoadingRemark optional
+  o Remark compoundRemark optional
+  o Remark recipientRemark optional
+  o Remark carrierDeliveryRemark optional
+  o String description optional
+  o Integer weight optional
 }
 
 concept Remark {
@@ -131,9 +143,28 @@ concept Remark {
  * Transactions
  */
 
-transaction signECMR {
-  --> ECMR ecmr
-  --> Participant participant
+transaction CreateCMR {
+  o ECMR ecmr
+}
+
+transaction CreateLegalOwnerOrg {
+  o LegalOwnerOrg legalOwnerOrg
+}
+
+transaction CreateCompoundOrg {
+  o CompoundOrg compoundOrg
+}
+
+transaction CreateCarrierOrg {
+  o CarrierOrg carrierOrg
+}
+
+transaction CreateRecipientOrg {
+  o RecipientOrg recipientOrg
+}
+
+transaction CreateVehicles {
+  o Vehicle[] vehicles
 }
 
 /**
@@ -143,5 +174,10 @@ transaction signECMR {
 
 
 /**
- * Enum are all uppercase
+ * Enums
  */
+enum ECMR_STATUS {
+    o OPEN
+    o ON_TRACK
+    o CLOSED
+}

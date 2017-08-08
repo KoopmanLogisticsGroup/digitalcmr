@@ -1,0 +1,105 @@
+{
+  "$class": "org.digitalcmr.CreateVehicles",
+  "vehicles": [
+    {
+      "$class": "org.digitalcmr.Vehicle",
+      "vin": "183726339N",
+      "manufacturer": "Audi",
+      "model": "A1",
+      "type": "sportback",
+      "ECMRs": [],
+      "odoMeterReading": 0,
+      "plateNumber": "AV198RX"
+    },
+    {
+      "$class": "org.digitalcmr.Vehicle",
+      "vin": "283726339N",
+      "manufacturer": "Audi",
+      "model": "A2",
+      "type": "sportback",
+      "ECMRs": [],
+      "odoMeterReading": 2132,
+      "plateNumber": "BV198RX"
+    },
+    {
+      "$class": "org.digitalcmr.Vehicle",
+      "vin": "383726339N",
+      "manufacturer": "Audi",
+      "model": "A3",
+      "type": "sportback",
+      "ECMRs": [],
+      "odoMeterReading": 1231,
+      "plateNumber": "CV198RX"
+    },
+    {
+      "$class": "org.digitalcmr.Vehicle",
+      "vin": "483726339N",
+      "manufacturer": "Audi",
+      "model": "A4",
+      "type": "sportback",
+      "ECMRs": [],
+      "odoMeterReading": 0,
+      "plateNumber": "DV198RX"
+    },
+    {
+      "$class": "org.digitalcmr.Vehicle",
+      "vin": "583726339N",
+      "manufacturer": "Audi",
+      "model": "A5",
+      "type": "sportback",
+      "ECMRs": [],
+      "odoMeterReading": 12043,
+      "plateNumber": "EV198RX"
+    },
+    {
+      "$class": "org.digitalcmr.Vehicle",
+      "vin": "683726339N",
+      "manufacturer": "Audi",
+      "model": "A6",
+      "type": "sportback",
+      "ECMRs": [],
+      "odoMeterReading": 578,
+      "plateNumber": "FV198RX"
+    },
+    {
+      "$class": "org.digitalcmr.Vehicle",
+      "vin": "783726339N",
+      "manufacturer": "Audi",
+      "model": "A7",
+      "type": "sportback",
+      "ECMRs": [],
+      "odoMeterReading": 0,
+      "plateNumber": "GV198RX"
+    },
+    {
+      "$class": "org.digitalcmr.Vehicle",
+      "vin": "883726339N",
+      "manufacturer": "Audi",
+      "model": "A8",
+      "type": "sportback",
+      "ECMRs": [],
+      "odoMeterReading": 0,
+      "plateNumber": "HV198RX"
+    },
+    {
+      "$class": "org.digitalcmr.Vehicle",
+      "vin": "983726339N",
+      "manufacturer": "Audi",
+      "model": "A9",
+      "type": "sportback",
+      "ECMRs": [],
+      "odoMeterReading": 12319,
+      "plateNumber": "IV198RX"
+    },
+    {
+      "$class": "org.digitalcmr.Vehicle",
+      "vin": "103726339N",
+      "manufacturer": "Audi",
+      "model": "A10",
+      "type": "sportback",
+      "ECMRs": [],
+      "odoMeterReading": 20000,
+      "plateNumber": "JV198RX"
+    }
+  ]
+}
