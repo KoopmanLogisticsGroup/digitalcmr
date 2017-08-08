@@ -1,12 +1,62 @@
-query getAllEcmr {
+query getAllEcmrs {
   description: "Select all ECMRs (user has permission to)"
   statement:
       SELECT org.digitalcmr.ECMR
 }
 
-query selectEcmrByOwner {
+query getEcmrsByStatus {
+  description: "Select all ECMRs based on their status"
+  statement:
+      SELECT org.digitalcmr.ECMR
+          WHERE (status == _$status)
+}
+
+query getEcmrsByIssueTimeRange {
+  description: "Select all ECMRs with issue date on a specific time interval"
+  statement:
+      SELECT org.digitalcmr.ECMR
+          WHERE (issueDate >= _$min_age AND issueDate <= _$max_age)
+}
+
+query getEcmrsByOwner {
   description: "Select all ECMRs based on their owner organization"
   statement:
       SELECT org.digitalcmr.ECMR
-          WHERE (LegalOwnerOrg == _$owner)
+          WHERE (owner == _$owner)
 }
+
+query getEcmrsByCompound {
+  description: "Select all ECMRs based on their source compound"
+  statement:
+      SELECT org.digitalcmr.ECMR
+          WHERE (source == _$compound)
+}
+
+query getEcmrsByCarrier {
+  description: "Select all ECMRs based on their carrier"
+  statement:
+      SELECT org.digitalcmr.ECMR
+          WHERE (carrier == _$carrier)
+}
+
+query getEcmrsByCarrierMember {
+  description: "Select all ECMRs assigne to a specific transporter user"
+  statement:
+      SELECT org.digitalcmr.ECMR
+        WHERE (transporter == _$transporter)
+}
+
+query getEcmrsByRecipientOrg {
+  description: "Select all ECMRs based on their recipient organization"
+  statement:
+      SELECT org.digitalcmr.ECMR
+          WHERE (recipientOrg == _$recipientOrg)
+}
+
+query getEcmrsByRecipientMember {
+  description: "Select all ECMRs based on their recipient member"
+  statement:
+      SELECT org.digitalcmr.ECMR
+          WHERE (recipient == _$recipient)
+}
+

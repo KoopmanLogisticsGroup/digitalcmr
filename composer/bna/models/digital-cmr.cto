@@ -111,17 +111,17 @@ concept Address {
 
 concept Delivery {
   o Address address
-  o String date optional
+  o Integer date optional
 }
 
 concept Loading {
   o Address address
-  o String date
+  o Integer date
 }
 
 concept Creation {
   o Address address
-  o String date
+  o Integer date
 }
 
 concept Good {
