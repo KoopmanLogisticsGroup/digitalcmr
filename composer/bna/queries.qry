@@ -1,12 +1,71 @@
-query getAllEcmr {
+query getAllEcmrs {
   description: "Select all ECMRs (user has permission to)"
   statement:
       SELECT org.digitalcmr.ECMR
+        ORDER BY [issueDate DESC]
 }
 
-query selectEcmrByOwner {
+query getEcmrsByStatus {
+  description: "Select all ECMRs based on their status"
+  statement:
+      SELECT org.digitalcmr.ECMR
+          WHERE (status == _$status)
+            ORDER BY [issueDate DESC]
+}
+
+query getEcmrsByIssueTimeRange {
+  description: "Select all ECMRs with issue date on a specific time interval"
+  statement:
+      SELECT org.digitalcmr.ECMR
+          WHERE (issueDate >= _$min_age AND issueDate <= _$max_age)
+            ORDER BY [issueDate DESC]
+}
+
+query getEcmrsByOwner {
   description: "Select all ECMRs based on their owner organization"
   statement:
       SELECT org.digitalcmr.ECMR
-          WHERE (LegalOwnerOrg == _$owner)
+          WHERE (owner == _$owner)
+            ORDER BY [issueDate DESC]
 }
+
+query getEcmrsByCompound {
+  description: "Select all ECMRs based on their source compound"
+  statement:
+      SELECT org.digitalcmr.ECMR
+          WHERE (source == _$compound)
+            ORDER BY [issueDate DESC]
+}
+
+query getEcmrsByCarrier {
+  description: "Select all ECMRs based on their carrier"
+  statement:
+      SELECT org.digitalcmr.ECMR
+          WHERE (carrier == _$carrier)
+            ORDER BY [issueDate DESC]
+}
+
+query getEcmrsByCarrierMember {
+  description: "Select all ECMRs assigne to a specific transporter user"
+  statement:
+      SELECT org.digitalcmr.ECMR
+        WHERE (transporter == _$transporter)
+            ORDER BY [issueDate DESC]
+}
+
+query getEcmrsByRecipientOrg {
+  description: "Select all ECMRs based on their recipient organization"
+  statement:
+      SELECT org.digitalcmr.ECMR
+          WHERE (recipientOrg == _$recipientOrg)
+            ORDER BY [issueDate DESC]
+}
+
+query getEcmrsByRecipientMember {
+  description: "Select all ECMRs based on their recipient member"
+  statement:
+      SELECT org.digitalcmr.ECMR
+          WHERE (recipient == _$recipient)
+            ORDER BY [issueDate DESC]
+}
+
