@@ -49,7 +49,7 @@ rule LegalOwnerAdminCanReadECMR {
     participant(p): "org.digitalcmr.LegalOwnerAdmin"
     operation: READ
     resource(ecmr): "org.digitalcmr.ECMR"
-    condition: (ecmr.owner === p.org.getIdentifier())
+    condition: (ecmr.owner === p.org)
     action: ALLOW
 }
 
@@ -62,7 +62,7 @@ rule CompoundAdminCanReadECMR {
     participant(p): "org.digitalcmr.CompoundAdmin"
     operation: READ
     resource(ecmr): "org.digitalcmr.ECMR"
-    condition: (ecmr.source.getIdentifier() === p.org.getIdentifier())
+    condition: (ecmr.source === p.org)
     action: ALLOW
 }
 
@@ -75,7 +75,7 @@ rule CompoundAdminCanReadECMR {
      participant(p): "org.digitalcmr.CarrierAdmin"
      operation: READ
      resource(ecmr): "org.digitalcmr.ECMR"
-     condition: (ecmr.carrier.getIdentifier() === p.org.getIdentifier())
+     condition: (ecmr.carrier === p.org)
      action: ALLOW
  }
 
@@ -84,7 +84,7 @@ rule CompoundAdminCanReadECMR {
       participant(p): "org.digitalcmr.CarrierMember"
       operation: READ
       resource(ecmr): "org.digitalcmr.ECMR"
-      condition: (ecmr.carrier.getIdentifier() === p.org.getIdentifier() && ecmr.transporter.getIdentifier() === p.getIdentifier())
+      condition: (ecmr.carrier === p.org && ecmr.transporter === p.getIdentifier())
       action: ALLOW
   }
 
@@ -98,7 +98,7 @@ rule CompoundAdminCanReadECMR {
      participant(p): "org.digitalcmr.RecipientAdmin"
      operation: READ
      resource(ecmr): "org.digitalcmr.ECMR"
-     condition: (ecmr.recipientOrg.getIdentifier() === p.org.getIdentifier())
+     condition: (ecmr.recipientOrg === p.org)
      action: ALLOW
  }
 
@@ -107,7 +107,7 @@ rule CompoundAdminCanReadECMR {
       participant(p): "org.digitalcmr.RecipientMember"
       operation: READ
       resource(ecmr): "org.digitalcmr.ECMR"
-      condition: (ecmr.recipientOrg.getIdentifier() === p.org.getIdentifier() && ecmr.recipient.getIdentifier() === p.getIdentifier())
+      condition: (ecmr.recipientOrg === p.org && ecmr.recipient === p.getIdentifier())
       action: ALLOW
   }
 
