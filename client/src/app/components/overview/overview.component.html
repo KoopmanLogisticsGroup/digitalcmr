@@ -1,58 +1,64 @@
 <div class="ui container">
-    <div class="ui sixteen column grid content-top-margin">
-        <div class="row">
-            <div class="twelve wide column">
-                <div class="table-title">
-                    E-CMR Overview
-                </div>
-            </div>
+  <div class="ui sixteen column grid content-top-margin">
+    <div class="row">
+      <div class="twelve wide column">
+        <div class="table-title">
+          E-CMR Overview
         </div>
-        <!--<i class="close icon"></i>-->
-        <div class="row">
-            <div class="sixteen wide column">
-                <div class="ui pointing secondary menu">
-                    <a class="item" data-tab="first" (click)="setCurrentView('OPEN')"
-                       [ngClass]="{'active' : currentView === 'OPEN' ? true : false}">OPEN</a>
-                    <a class="item" data-tab="second" (click)="setCurrentView('ON_TRACK')"
-                       [ngClass]="{'active' : currentView === 'ON_TRACK' ? true : false}">IN PROGRESS</a>
-                    <a class="item" data-tab="third" (click)="setCurrentView('CLOSED')"
-                       [ngClass]="{'active' : currentView === 'CLOSED' ? true : false}">COMPLETED</a>
-                </div>
-                <div class="ui active tab" data-tab="first">
-                  <table class="spacing-table">
-                    <thead class="table-header">
-                    <th>Date</th>
-                    <th>Embarkment</th>
-                    <th>Destination</th>
-                    <th>Number of vehicles</th>
-                    <th>Carrier</th>
-                    <th>Recipient</th>
-                    <th>Remark</th>
-                    <th>Damage Remark</th>
-                    <th>Status</th>
-                    <th></th>
-                    </thead>
-                    <tbody>
-                    <tr *ngFor="let ecmr of ecmrsFiltered" class="table-row">
-                      <td>{{ecmr.creation.date}}</td>
-                      <td>{{ecmr.loading.address.city}}</td>
-                      <td>{{ecmr.delivery.address.city}}</td>
-                      <td>{{ecmr.goods.length}} car(s)</td>
-                      <td class="single line">{{ecmr.delivery.address.name}}</td>
-                      <td>{{ecmr.recipient.split('#')[1].split('@')[0]}}</td>
-                      <td class="alignCenter"><img src="../../../assets/icons/icon-comment.svg"/></td>
-                      <td> <img src="../../../assets/icons/exlamation.svg" />
-                        <!--{{ecmr.carrierComments}}-->
-                      </td>
-                      <td><span class="statusStyle">{{ecmr.status}}</span></td>
-                      <td><a routerLink="/ecmr-detail" class="viewMore">View More</a></td>
-                    </tr>
-                    </tbody>
-                  </table>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
+    <!--<i class="close icon"></i>-->
+    <div class="row">
+      <div class="sixteen wide column">
+        <div class="ui pointing secondary menu">
+          <a class="item" data-tab="first" (click)="setCurrentView('OPEN')"
+             [ngClass]="{'active' : currentView === 'OPEN' ? true : false}">OPEN</a>
+          <a class="item" data-tab="second" (click)="setCurrentView('ON_TRACK')"
+             [ngClass]="{'active' : currentView === 'ON_TRACK' ? true : false}">IN PROGRESS</a>
+          <a class="item" data-tab="third" (click)="setCurrentView('CLOSED')"
+             [ngClass]="{'active' : currentView === 'CLOSED' ? true : false}">COMPLETED</a>
+        </div>
+        <div class="ui active tab" data-tab="first">
+          <table class="spacing-table">
+            <thead class="table-header">
+            <th>Date</th>
+            <th>Embarkment</th>
+            <th>Destination</th>
+            <th>Number of vehicles</th>
+            <th>Carrier</th>
+            <th>Recipient</th>
+            <th>Remark</th>
+            <th>Damage Remark</th>
+            <th>Status</th>
+            <th></th>
+            </thead>
+            <tbody>
+            <tr *ngFor="let ecmr of ecmrsFiltered" class="table-row">
+              <td>{{ecmr.creation.date}}</td>
+              <td>{{ecmr.loading.address.city}}</td>
+              <td>{{ecmr.delivery.address.city}}</td>
+              <td>{{ecmr.goods.length}} car(s)</td>
+              <td class="single line">{{ecmr.delivery.address.name}}</td>
+              <td>{{ecmr.recipient.split('#')[1].split('@')[0]}}</td>
+              <td class="alignCenter"><img src="../../../assets/icons/icon-comment.svg"/></td>
+              <td><img src="../../../assets/icons/exlamation.svg"/>
+                <!--{{ecmr.carrierComments}}-->
+              </td>
+              <td><span class=""
+
+                        [ngClass]="{'open-status' : ecmr.status === 'OPEN' ? true : false,
+                        'transit-status' : ecmr.status === 'ON_TRACK' ? true : false,
+                        'completed-status': ecmr.status === 'CLOSED' ? true : false}">
+                        {{ecmr.status}}
+                      </span></td>
+              <td><a routerLink="/ecmr-detail" class="viewMore">View More</a></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 
