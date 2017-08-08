@@ -2,36 +2,35 @@ import {Component, OnInit} from '@angular/core';
 import {EcmrService} from '../../services/ecmr.service';
 
 @Component({
-  selector:    'app-overview',
+  selector: 'app-overview',
   templateUrl: './overview.component.html',
-  styleUrls:   ['./overview.component.scss']
+  styleUrls: ['./overview.component.scss']
 })
 export class OverviewComponent implements OnInit {
 
-  public ecmrList: any[];
-  public ecmrFilteredList: any[];
-  public currentView = 'open';
+  public currentView = 'OPEN';
+
+  private ecmrs: any;
+  private ecmrsFiltered: any;
 
   public constructor(private ecmrService: EcmrService) {
     ;
   }
 
   public ngOnInit() {
-    this.ecmrList = this.ecmrService.getEcmrByUser();
-    this.filterEcmrList(this.currentView);
-    // this.ecmrService.getEcmrByUser().subscribe((ecmrs: any[]) => {
-    //   this.ecmrList = ecmrs
-    // });
+    this.ecmrService.getAllEcmrs('').subscribe(ecmrs => {
+      console.log(ecmrs);
+      this.ecmrs = ecmrs instanceof Array ? ecmrs : new Array(ecmrs);
+      this.ecmrsFiltered = this.ecmrs.filter(ecmr => ecmr.status.toUpperCase() === 'OPEN');
+    });
+
   }
 
   public setCurrentView(view: string) {
     this.currentView = view;
-    this.filterEcmrList(view);
+
+    this.ecmrsFiltered = this.ecmrs.filter(ecmr => ecmr.status.toUpperCase() === view.toUpperCase());
   }
 
-  private filterEcmrList(view: string): void {
-    this.currentView = view;
-    this.ecmrFilteredList = this.ecmrList.filter(x => x.status.toLowerCase() === view.toLocaleLowerCase());
-  }
 
 }

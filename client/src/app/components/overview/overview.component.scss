@@ -1,9 +1,6 @@
 @import url("/styles.scss");
 
-//.table-title{
-//  color: #32649e;
-//  font-size: 2.0vw;
-//}
+
 //
 //.table-header {
 //  font-size: 1vw;
@@ -68,6 +65,7 @@
   border-bottom-left-radius: 0.2em;
   border-bottom-right-radius: 0.2em;
   background-color: #FFFFFF;
+  height: 80px;
 }
 
 .spacing-table td:first-child {
@@ -95,5 +93,15 @@
 
 .table-header {
   font-size: 1vw;
-  line-height: 1.3vw;
+  line-height: 1.8vw;
+}
+
+.table-title{
+  color: #32649e;
+  font-size: 1.6vw;
+}
+
+.table-row {
+  font-size: 1vw;
+  line-height: 1.5vw;
 }

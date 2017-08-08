@@ -1,51 +1,49 @@
 .designMenu {
   position: relative;
-  padding-top: 2em;
-}
-
-.avatar {
-  border: hidden;
-  border-radius: 50%;
+  height: 90px;
 }
 
 .logo {
   position: absolute;
-  width: 100px;
-  height: 21px;
-  top: 35%;
-  left: 15%;
+  width: 10%;
+  top: 50%;
+  left: 12%;
+  transform: translateY(-50%);
 }
 
 .item {
   padding: 0%;
   height: 78%;
-  border: hidden;
+  display: inline-block;
 }
 
 .no-border:before {
   width: 0px !important;
 }
 
-#signout {
-  position: absolute;
-  top: 30%;
-  right: 10%;
+.rightMenu {
+  right: 35%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 300px;
 }
 
-@media (max-width: 640px) {
-  #displaySize {
-    display: none;
-  }
-}
-
-.welcomeMsg {
-  position: absolute;
-  right: 100%;
-  top: -25%;
+.welcomeMsg{
+  font-size: 1.1vw;
 }
 
 .spaceDivider {
-  width: 10px;
+  width: 1.0vw;
   height: auto;
   display: inline-block;
+}
+
+.logoutIcon{
+  display: inline-block;
+  padding-left: 20px;
+  border-left: 3px solid #32649e;
+}
+
+a{
+  color: #212121;
 }

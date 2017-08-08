@@ -9,9 +9,8 @@ import {EcmrDetailComponent} from './components/ecmr-detail/ecmr-detail.componen
 
 const appRoutes: Routes = [
   {path: 'login', component: LoginComponent},
-  {path: 'things', component: ThingsComponent, canActivate: [AuthGuard]},
-  {path: 'overview', component: OverviewComponent},
-  {path: 'ecmr-detail', component: EcmrDetailComponent},
+  {path: 'overview', component: OverviewComponent, canActivate: [AuthGuard]},
+  {path: 'ecmr-detail', component: EcmrDetailComponent, canActivate: [AuthGuard]},
 
   // otherwise redirect to login
   {path: '**', redirectTo: 'login'}
