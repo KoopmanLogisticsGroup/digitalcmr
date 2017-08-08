@@ -15,7 +15,7 @@
             "eventURL": "grpc://peer0.org1.example.com:7053"
         }
     ],
-    "keyValStore": "/root/.hfc-key-store",
+  "keyValStore": "/root/.composer-credentials",
     "channel": "composerchannel",
     "mspID": "Org1MSP",
     "timeout": "300"

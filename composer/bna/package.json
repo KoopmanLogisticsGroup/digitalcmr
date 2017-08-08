@@ -1,9 +1,9 @@
 {
-  "name": "basic-sample-network",
+  "name": "digital-cmr-network",
   "version": "0.0.10",
   "description": "The Hello World of Hyperledger Composer samples",
   "scripts": {
-    "prepublish": "mkdirp ./dist && composer archive create --sourceType dir --sourceName . -a ./dist/basic-sample-network.bna",
+    "prepublish": "mkdirp ./dist && composer archive create --sourceType dir --sourceName . -a ./dist/digital-cmr-network.bna",
     "pretest": "npm run lint",
     "lint": "eslint .",
     "postlint": "npm run licchk",

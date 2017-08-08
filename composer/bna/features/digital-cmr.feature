@@ -25,7 +25,7 @@
             | leaseplan       | Lease Plan |
     Scenario: Lapo can create an ECMR
         When I use the identity lapo
-        And I submit the following transaction of type org.digitalcmr.CreateCMR
+      And I submit the following transaction of type org.digitalcmr.CreateECMR
             | ecmr |
             | Resource({})  |
 

@@ -1,5 +1,5 @@
 {
-  "$class": "org.digitalcmr.CreateCMR",
+  "$class": "org.digitalcmr.CreateECMR",
   "ecmr": {
     "$class": "org.digitalcmr.ECMR",
     "ecmrID": "A123456789X",
