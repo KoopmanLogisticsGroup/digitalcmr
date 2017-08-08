@@ -167,6 +167,10 @@ transaction CreateVehicles {
   o Vehicle[] vehicles
 }
 
+transaction CreateCMRs {
+  o ECMR[] ecmrs
+}
+
 /**
  * Events
  */

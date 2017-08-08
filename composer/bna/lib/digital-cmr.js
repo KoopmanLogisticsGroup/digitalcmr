@@ -41,6 +41,42 @@ function CreateCMR(tx) {
 }
 
 /**
+ * Create ECMRs transaction processor function.
+ * @param {org.digitalcmr.CreateCMRs} tx  - Create ecmrs transaction
+ * @return {Promise} Asset registry Promise
+ * @transaction
+ */
+function CreateCMRs(tx) {
+
+    console.log('Invoking function processor to create CMRs');
+    console.log(tx);
+
+    // Get the asset registry for the asset.
+    return getAssetRegistry('org.digitalcmr.ECMR')
+        .then(function (assetRegistry) {
+            var factory = getFactory();
+            var ecmrArr = [];
+            for (var i = 0 ; i < tx.ecmrs.length ; i++) {
+                var inputObj = tx.ecmrs[i];
+                var obj = factory.newResource('org.digitalcmr', 'ECMR', inputObj.ecmrID);
+                Object.keys(tx.ecmrs[i]).forEach(function(key,index) {
+                    obj[key] = inputObj[key];
+                });
+                ecmrArr.push(obj);
+            }
+            return assetRegistry.addAll(ecmrArr).catch(function (error) {
+                console.log('An error occurred while addAll ecmr assets');
+                console.log(error);
+                return error;
+            });
+        }).catch(function (error) {
+            console.log('An error occurred while saving the ecmr assets');
+            console.log(error);
+            return error;
+        });
+}
+
+/**
  * Create Legal Owner org transaction processor function.
  * @param {org.digitalcmr.CreateLegalOwnerOrg} tx  - The CreateLegalOwnerOrg transaction
  * @return {Promise} Asset registry Promise

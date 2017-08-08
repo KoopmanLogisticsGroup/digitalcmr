@@ -21,14 +21,14 @@ export class HeaderComponent implements OnInit {
 
   public getUser() {
     if (this._authenticationService.isAuthenticated()) {
-      let user = JSON.parse(localStorage.getItem('currentUser')).user.userID;
+      const user = JSON.parse(localStorage.getItem('currentUser')).user.userID;
       return user;
     }
     return null;
 }
 
   public logout() {
-    this._authenticationService.logout()
+    this._authenticationService.logout();
     }
 
   public setOverview(): void {

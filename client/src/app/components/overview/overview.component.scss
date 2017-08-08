@@ -1,56 +1,17 @@
 @import url("/styles.scss");
 
-
-//
-//.table-header {
-//  font-size: 1vw;
-//  line-height: 1.3vw;
-//}
-//
-//tr.rowStyle>th{
-//  height: 5vw;
-//  border: 1vw;
-//  color: #32649e;
-//}
-//
-//th, td{
-//  height: 5vw;
-//}
-//
-//th{
-//  text-align: left;
-//}
-//
-//td{
-//  padding: 10px 0;
-//}
-//
-//table{
-//  border-collapse: separate;
-//  border-spacing: 10px 0;
-//}
-//
-//.alignCenter{
-//  text-align: center;
-//}
-//
-//.borderView{
-//  border: 1px solid #32649e;
-//  border-radius: 25% 25% 25% 25%;
-//  padding: 10px;
-//}
-
 .spacing-table {
   font-size: 15px;
   border-collapse: separate;
   table-layout: fixed;
-  //width: 25%;
   border-spacing: 0 5px; /* this is the ultimate fix */
 }
+
 .spacing-table th {
   text-align: left;
   padding: 5px 15px;
 }
+
 .spacing-table td {
   border-width: 3px 0;
   width: 50%;
@@ -58,7 +19,7 @@
   padding: 5px 15px;
 }
 
-.spacing-table tr{
+.spacing-table tr {
   box-shadow: 1px 1px 5px #e3e3e3;
   border-top-left-radius: 0.2em;
   border-top-right-radius: 0.2em;
@@ -72,10 +33,12 @@
   border-left-width: 3px;
   border-radius: 5px 0 0 5px;
 }
+
 .spacing-table td:last-child {
   border-right-width: 3px;
   border-radius: 0 5px 5px 0;
 }
+
 .spacing-table thead {
   display: table;
   table-layout: fixed;
@@ -84,6 +47,7 @@
   border: 1vw;
   color: #32649e;
 }
+
 .spacing-table tbody {
   display: table;
   table-layout: fixed;
@@ -96,7 +60,7 @@
   line-height: 1.8vw;
 }
 
-.table-title{
+.table-title {
   color: #32649e;
   font-size: 1.6vw;
 }
@@ -104,4 +68,20 @@
 .table-row {
   font-size: 1vw;
   line-height: 1.5vw;
+}
+
+.statusStyle {
+  width: 200px;
+  height: 60px;
+  border-radius: 4px;
+  background-color: rgba(41, 135, 205, 0.2);
+  padding: 5px;
+}
+
+.viewMore{
+  width: 117px;
+  height: 36px;
+  border-radius: 50px;
+  border: solid 1px #3a3670;
+  padding: 5px;
 }

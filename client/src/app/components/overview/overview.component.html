@@ -13,10 +13,10 @@
                 <div class="ui pointing secondary menu">
                     <a class="item" data-tab="first" (click)="setCurrentView('OPEN')"
                        [ngClass]="{'active' : currentView === 'OPEN' ? true : false}">OPEN</a>
-                    <a class="item" data-tab="second" (click)="setCurrentView('PROGRESS')"
-                       [ngClass]="{'active' : currentView === 'PROGRESS' ? true : false}">IN PROGRESS</a>
-                    <a class="item" data-tab="third" (click)="setCurrentView('COMPLETED')"
-                       [ngClass]="{'active' : currentView === 'COMPLETED' ? true : false}">COMPLETED</a>
+                    <a class="item" data-tab="second" (click)="setCurrentView('ON_TRACK')"
+                       [ngClass]="{'active' : currentView === 'ON_TRACK' ? true : false}">IN PROGRESS</a>
+                    <a class="item" data-tab="third" (click)="setCurrentView('CLOSED')"
+                       [ngClass]="{'active' : currentView === 'CLOSED' ? true : false}">COMPLETED</a>
                 </div>
                 <div class="ui active tab" data-tab="first">
                   <table class="spacing-table">
@@ -46,24 +46,24 @@
                       <td>{{ecmr.recipient.split('#')[1].split('@')[0]}}</td>
                       <td class="alignCenter"><i class="book icon"></i></td>
                       <td>{{ecmr.carrierComments}}</td>
-                      <td>{{ecmr.status}}</td>
-                      <td><a routerLink="/ecmr-detail" class="borderView">View More</a></td>
+                      <td><span class="statusStyle">{{ecmr.status}}</span></td>
+                      <td><a routerLink="/ecmr-detail" class="viewMore">View More</a></td>
                     </tr>
-                    <tr *ngFor="let ecmr of ecmrsFiltered" class="table-row">
-                      <td>
-                        <div class="ui checkbox" id="checkboxes"><input type="checkbox"><label></label></div>
-                      </td>
-                      <td>{{ecmr.creation.date}}</td>
-                      <td>{{ecmr.loading.address.city}}</td>
-                      <td>{{ecmr.delivery.address.city}}</td>
-                      <td>{{ecmr.goods.length}}<i class="book icon"></i></td>
-                      <td>{{ecmr.delivery.address.name}}</td>
-                      <td>{{ecmr.recipient.split('#')[1].split('@')[0]}}</td>
-                      <td class="alignCenter"><i class="book icon"></i></td>
-                      <td>{{ecmr.carrierComments}}</td>
-                      <td>{{ecmr.status}}</td>
-                      <td><a routerLink="/ecmr-detail" class="borderView">View More</a></td>
-                    </tr>
+                    <!--<tr *ngFor="let ecmr of ecmrsFiltered" class="table-row">-->
+                      <!--<td>-->
+                        <!--<div class="ui checkbox"><input type="checkbox"><label></label></div>-->
+                      <!--</td>-->
+                      <!--<td>{{ecmr.creation.date}}</td>-->
+                      <!--<td>{{ecmr.loading.address.city}}</td>-->
+                      <!--<td>{{ecmr.delivery.address.city}}</td>-->
+                      <!--<td>{{ecmr.goods.length}}<i class="book icon"></i></td>-->
+                      <!--<td>{{ecmr.delivery.address.name}}</td>-->
+                      <!--<td>{{ecmr.recipient.split('#')[1].split('@')[0]}}</td>-->
+                      <!--<td class="alignCenter"><i class="book icon"></i></td>-->
+                      <!--<td>{{ecmr.carrierComments}}</td>-->
+                      <!--<td>{{ecmr.status}}</td>-->
+                      <!--<td><a routerLink="/ecmr-detail" class="borderView">View More</a></td>-->
+                    <!--</tr>-->
                     </tbody>
                   </table>
                 </div>

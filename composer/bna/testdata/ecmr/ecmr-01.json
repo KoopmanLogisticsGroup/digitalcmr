@@ -2,40 +2,40 @@
   "$class": "org.digitalcmr.CreateCMR",
   "ecmr": {
     "$class": "org.digitalcmr.ECMR",
-    "ecmrID": "A123456789X",
+    "ecmrID": "U727316312A",
     "status": "OPEN",
     "creation": {
       "$class": "org.digitalcmr.Creation",
       "address": {
         "$class": "org.digitalcmr.Address",
-        "name": "Amsterdam Compound",
-        "street": "compenstraat",
+        "name": "Haarlem Compound",
+        "street": "Haarlemmer",
         "houseNumber": "21",
-        "city": "Assen",
-        "zipCode": "9976ZH",
+        "city": "Haarlem",
+        "zipCode": "3241PP",
         "country": "Netherlands",
-        "latitude": 43.1927,
-        "longitude": 23.3249,
+        "latitude": 11.1927,
+        "longitude": 22.3249,
         "id": "string"
       },
-      "date": "08/09/2017",
+      "date": "16/09/2017",
       "id": "id"
     },
     "loading": {
       "$class": "org.digitalcmr.Loading",
       "address": {
         "$class": "org.digitalcmr.Address",
-        "name": "Amsterdam Compound",
-        "street": "compenstraat",
+        "name": "Haarlem Compound",
+        "street": "Haarlemmer",
         "houseNumber": "21",
-        "city": "Assen",
-        "zipCode": "9976ZH",
+        "city": "Haarlem",
+        "zipCode": "3241PP",
         "country": "Netherlands",
         "latitude": 43.1927,
         "longitude": 23.3249,
         "id": "string"
       },
-      "date": "08/09/2017",
+      "date": "16/09/2017",
       "id": "id"
     },
     "delivery": {
