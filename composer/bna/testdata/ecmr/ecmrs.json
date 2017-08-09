@@ -19,7 +19,7 @@
           "longitude": 23.3249,
           "id": "string"
         },
-        "date": 98797324668,
+        "date": 9122017,
         "id": "id"
       },
       "loading": {
@@ -64,7 +64,7 @@
       "recipient": "participant:org.digitalcmr.RecipientMember#rob@cardealer.org",
       "issueDate": 0,
       "issuedBy": "resource:org.digitalcmr.CarrierOrg#koopman",
-      "carrierComments": "No comments",
+      "carrierComments": "",
       "documents": [
         "doc1"
       ],
@@ -108,7 +108,7 @@
           "longitude": 23.3249,
           "id": "string"
         },
-        "date": 9187236498126,
+        "date": 121217,
         "id": "id"
       },
       "loading": {
@@ -172,6 +172,22 @@
           },
           "description": "vehicle",
           "weight": 1500,
+          "id": "string"
+        },
+        {
+          "$class": "org.digitalcmr.Good",
+          "vehicle": {
+            "$class": "org.digitalcmr.Vehicle",
+            "vin": "736182CHD28172",
+            "manufacturer": "Mercedes",
+            "model": "SLK",
+            "type": "Station",
+            "ECMRs": [],
+            "odoMeterReading": 0,
+            "plateNumber": "I827YE"
+          },
+          "description": "vehicle",
+          "weight": 1800,
           "id": "string"
         }
       ],

@@ -37,21 +37,21 @@
               <td>{{ecmr.creation.date}}</td>
               <td>{{ecmr.loading.address.city}}</td>
               <td>{{ecmr.delivery.address.city}}</td>
-              <td>{{ecmr.goods.length}} car(s)</td>
-              <td class="single line">{{ecmr.delivery.address.name}}</td>
-              <td>{{ecmr.recipient.split('#')[1].split('@')[0]}}</td>
-              <td class="alignCenter"><img src="../../../assets/icons/icon-comment.svg"/></td>
-              <td><img src="../../../assets/icons/exlamation.svg"/>
-                <!--{{ecmr.carrierComments}}-->
+              <td>{{ecmr.goods.length}} <span *ngIf="ecmr.goods.length === 1; else showCars">car</span>
+                <ng-template #showCars>cars</ng-template>
               </td>
-              <td><span class=""
-
-                        [ngClass]="{'open-status' : ecmr.status === 'OPEN' ? true : false,
+              <td>{{ecmr.delivery.address.name}}</td>
+              <td>{{ecmr.recipient.split('#')[1].split('@')[0]}}</td>
+              <td><img src="../../../assets/icons/icon-comment.svg" *ngIf="ecmr.carrierComments != '' || null"/></td>
+              <td><img src="../../../assets/icons/exlamation.svg" *ngIf="ecmr.carrierComments != '' || null"/></td>
+              <td><span
+                [ngClass]="{'open-status' : ecmr.status === 'OPEN' ? true : false,
                         'transit-status' : ecmr.status === 'ON_TRACK' ? true : false,
                         'completed-status': ecmr.status === 'CLOSED' ? true : false}">
                         {{ecmr.status}}
                       </span></td>
-              <td><a routerLink="/ecmr-detail" class="viewMore">View More</a></td>
+              <td><a routerLink="/ecmr-detail" class="viewMore">View More &#62;</a></td>
+              <!--&or;-->
             </tr>
             </tbody>
           </table>
