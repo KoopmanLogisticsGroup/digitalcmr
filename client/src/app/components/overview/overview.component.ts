@@ -24,25 +24,16 @@ export class OverviewComponent implements OnInit {
       // TODO implement in backend
       const userOrg = JSON.parse(localStorage.getItem('currentUser')).user.org;
       const userEmail = JSON.parse(localStorage.getItem('currentUser')).user.userEmail;
-
-      console.log(userOrg);
-      console.log(userEmail);
-      // const compoundOrg = 'resource:org.digitalcmr.CompoundOrg#amsterdamcompound';
       this.ecmrs = this.ecmrs.filter(ecmr =>
         ecmr.source.split('#')[1] === userOrg ||
         (ecmr.transporter.split('#')[1] === userEmail && ecmr.carrier.split('#')[1] === userOrg) ||
         ecmr.owner.split('#')[1] === userOrg);
-
       this.ecmrsFiltered = this.ecmrs.filter(ecmr => ecmr.status.toUpperCase() === 'OPEN');
     });
-
   }
 
   public setCurrentView(view: string) {
     this.currentView = view;
-
     this.ecmrsFiltered = this.ecmrs.filter(ecmr => ecmr.status.toUpperCase() === view.toUpperCase());
   }
-
-
 }

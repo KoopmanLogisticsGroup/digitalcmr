@@ -14,7 +14,7 @@ export class EcmrService {
                      private _configuration: Configuration,
                      private _authenticationService: AuthenticationService) {
     this.actionUrl = `${_configuration.composerHost}${_configuration.composerPrefix}ECMR/`;
-    this.headers   = _authenticationService.createAuthorizationHeader();
+    this.headers = _authenticationService.createAuthorizationHeader();
   }
 
   public getAllEcmrs(ecmrID: string) {
@@ -23,13 +23,4 @@ export class EcmrService {
       .get(this.actionUrl + ecmrID, {headers: this.headers})
       .map(res => res.json());
   }
-
-
-  // private cloneObject(obj: any): any {
-  //   const obj2: any = {};
-  //   Object.keys(obj).forEach(function (key, index) {
-  //     obj2[key] = obj[key];
-  //   });
-  //   return obj2;
-  // }
 }
