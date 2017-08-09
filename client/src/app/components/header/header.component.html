@@ -3,7 +3,7 @@
   <div class="right menu">
     <div *ngIf="getUser() != null" class="userDisplay"><span class="welcomeMsg">Welcome {{getUser()}}</span>
       <img src="../../../assets/icons/placeholder-willem.svg" class="userImage"/>
-      <div (click)="logout()" class="logoutIcon"><a routerLink="/login"><img
+      <div (click)="logout()" routerLink="/login" class="logoutIcon"><a><img
         src="../../../assets/icons/iconlogout.svg"/></a>
       </div>
     </div>

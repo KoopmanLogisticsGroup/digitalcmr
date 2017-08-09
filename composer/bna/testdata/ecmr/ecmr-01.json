@@ -18,7 +18,7 @@
         "longitude": 22.3249,
         "id": "string"
       },
-      "date": "16/09/2017",
+      "date": 1502488800000,
       "id": "id"
     },
     "loading": {
@@ -35,7 +35,7 @@
         "longitude": 23.3249,
         "id": "string"
       },
-      "date": "16/09/2017",
+      "date": 1502488800000,
       "id": "id"
     },
     "delivery": {
@@ -52,7 +52,7 @@
         "longitude": 60.3323,
         "id": "id"
       },
-      "date": "10/09/2017",
+      "date": 1502661600000,
       "id": "id"
     },
     "owner": "resource:org.digitalcmr.LegalOwnerOrg#leaseplan",
