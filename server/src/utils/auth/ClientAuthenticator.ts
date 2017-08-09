@@ -1,14 +1,12 @@
 import {LoggerInstance} from 'winston';
 import {UserAuthenticator} from './UserAuthenticator';
-import {AuthController} from '../../api/v1/AuthController';
 import {DataService} from '../../datasource/DataService';
 
 export class ClientAuthenticator {
   public constructor(private logger: LoggerInstance,
                      private username: string,
                      private password: string,
-                     private dataService: DataService,
-                     private authController: AuthController) {
+                     private dataService: DataService) {
   }
 
   public async authenticate(): Promise<AuthenticationResponse> {

@@ -1,5 +1,5 @@
 {
-  "$class": "org.digitalcmr.CreateCMR",
+  "$class": "org.digitalcmr.CreateECMR",
   "ecmr": {
     "$class": "org.digitalcmr.ECMR",
     "ecmrID": "U727316312A",
@@ -61,7 +61,7 @@
     "carrier": "resource:org.digitalcmr.CarrierOrg#koopman",
     "recipientOrg": "resource:org.digitalcmr.RecipientOrg#cardealer",
     "recipient": "participant:org.digitalcmr.RecipientMember#rob@cardealer.org",
-    "issueDate": 0,
+    "issueDate": 1502190664000,
     "issuedBy": "resource:org.digitalcmr.CarrierOrg#koopman",
     "carrierComments": "No comments",
     "documents": [

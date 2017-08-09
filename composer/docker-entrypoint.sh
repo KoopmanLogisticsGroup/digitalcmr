@@ -29,7 +29,7 @@ composer network deploy \
 
 #add testdata
 echo 'Invoking testdata script'
-source testdata/add-testdata.sh
+source testdata/add-testdata.sh &
 
 ## Start server
 composer-rest-server \
@@ -38,6 +38,6 @@ composer-rest-server \
     -i "${COMPOSER_PEER_ADMIN}" \
     -s "${COMPOSER_PASSWORD}" \
     -S "${COMPOSER_SECURITY}" \
-    -N "required"
+    -N "required" \
 
 exec "$@"
