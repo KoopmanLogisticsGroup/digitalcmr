@@ -2,16 +2,22 @@
   "users": [
     {
       "userID": "willem",
+      "org": "amsterdamcompound",
+      "userEmail": "willem@amsterdamcompound.org",
       "username": "willem",
       "password": "passw0rd"
     },
     {
       "userID": "lapo",
+      "org": "leaseplan",
+      "userEmail": "",
       "username": "lapo",
       "password": "passw0rd"
     },
     {
       "userID": "harry",
+      "org": "koopman",
+      "userEmail": "harry@koopman.org",
       "username": "harry",
       "password": "passw0rd"
     }

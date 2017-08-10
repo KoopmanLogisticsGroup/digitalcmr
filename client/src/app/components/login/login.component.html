@@ -1,25 +1,25 @@
-<div class="red-bar">
-</div>
-
 <div class="ui grid">
-  <div class="five wide column centered login-box">
-    <img class="logo" src="../assets/img/Koopman.jpg">
+  <div class="four wide column centered login-box content-top-margin">
+    <p class="login-text-label">Login</p>
     <div class="label">
-      Username
-    </div>
-    <div class="ui left icon input width-scale">
-      <input type="text" placeholder="Username" [(ngModel)]="username">
-      <i class="user icon"></i>
-    </div>
-    <div class="label">
-      Password
-    </div>
-    <div class="ui left icon input width-scale">
-      <input type="password" placeholder="Password" [(ngModel)]="password" (keypress)="cleanError()">
-      <i class="lock icon"></i>
+      <br>
+      <br>
     </div>
     <br>
-    <button class="ui button login-label" (click)="login(username, password)">Login</button>
+    <br>
+    <div class="ui left icon input width-scale">
+      <input type="text" placeholder="Username" [(ngModel)]="username">
+      <img class="icon-username" src="../../../assets/icons/IconUsername.svg"/>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div class="ui left icon input width-scale">
+      <input type="password" placeholder="Password" [(ngModel)]="password" (keypress)="cleanError()">
+      <img class="icon-password" src="../../../assets/icons/icon-password.svg"/>
+    </div>
+    <br>
+    <button class="circular ui button login-label" (click)="login(username, password)">Login</button>
     <div *ngIf="loading" class="ui active inverted dimmer">
       <div class="ui text loader">Loading</div>
     </div>

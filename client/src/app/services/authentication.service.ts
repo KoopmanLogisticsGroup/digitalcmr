@@ -60,4 +60,8 @@ export class AuthenticationService {
     const userToken = JSON.parse(localStorage.getItem(this.TOKEN_KEY));
     return userToken ? userToken.token : null;
   }
+
+  public isAuthenticated(): boolean {
+    return this.getToken() != null;
+  }
 }

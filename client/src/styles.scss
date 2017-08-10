@@ -1,1 +1,17 @@
-/* You can add global styles to this file, and also import other style files */
+html, body {
+  position: relative;
+  width: 100%;
+  margin: 0px;
+  background-color: #fafafa !important;
+  font-family: 'Roboto', sans-serif !important;
+}
+
+.content-top-margin {
+  margin-top: 25vh !important;
+}
+
+.footer {
+  height: 25vh;
+  font-family: 'Roboto', sans-serif;
+  top: 20%;
+}

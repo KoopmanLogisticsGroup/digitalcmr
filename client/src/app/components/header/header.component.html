@@ -1,25 +1,11 @@
-<div class="ui small menu">
+<div class="ui fixed menu designMenu">
   <img class="logo" src="/../assets/img/Koopman.jpg">
-  <!--<div class="ui primary button">Sign Up</div>-->
-  <a class="item" (click)="setOverview()" [ngClass]="{'active' : currentView === 'overview' ? true : false}"
-     routerLinkActive="active" [routerLinkActiveOptions]="{exact:false}" routerLink="/overview/">
-    Overview
-  </a>
-  <a class="item" (click)="setDetails()" [ngClass]="{'active' : currentView === 'details' ? true : false}"
-     routerLinkActive="active" [routerLinkActiveOptions]="{exact:false}" routerLink="/details">
-    Details
-  </a>
   <div class="right menu">
-    <div class="item no-border">
-      Welcome back, {{getUser()}}!
-    </div>
-    <div class="ui dropdown item no-border" id="hiddenmenu">
-      <img *ngIf="getUser()==='Harry'" class="avatar" src="/../assets/img/Harry.jpg">
-      <i class="dropdown icon"></i>
-      <div class="menu">
-        <a class="item logout"  routerLink="/">Logout</a>
+    <div *ngIf="getUser() != null" class="userDisplay"><span class="welcomeMsg">Welcome {{getUser()}}</span>
+      <img src="../../../assets/icons/placeholder-willem.svg" class="userImage"/>
+      <div (click)="logout()" routerLink="/login" class="logoutIcon"><a><img
+        src="../../../assets/icons/iconlogout.svg"/></a>
       </div>
     </div>
   </div>
 </div>
-
