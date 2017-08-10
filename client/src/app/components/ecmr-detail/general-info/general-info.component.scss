@@ -1,10 +1,28 @@
 @import url("/styles.scss");
 
-
-.progressbar{
+.progressbar {
   margin-left: 25%;
   width: 50%;
   padding: 10px;
 }
+
+.ui.table {
+  font-size: 1em;
+  box-shadow: 0 2px 4px #e3e3e3;
+  border: 0;
+  th {
+    background-color: #FFFFFF;
+  }
+  .spacing-table {
+    border-spacing: 0 1em;
+
+  }
+}
+
+.ui.steps:first-child {
+  //margin-top: 0;
+  border: 0;
+}
+
 
 

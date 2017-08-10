@@ -480,7 +480,7 @@
     },
     {
       "$class": "org.digitalcmr.ECMR",
-      "ecmrID": "B72361235U",
+      "ecmrID": "B71361235U",
       "status": "CLOSED",
       "creation": {
         "$class": "org.digitalcmr.Creation",
