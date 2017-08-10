@@ -12,7 +12,6 @@ export class AppComponent {
 
   public constructor(private router: Router) {
     router.events.subscribe((url: any) => {
-        console.log(url.url);
         this.activeUrl = url.url;
       }
     );
