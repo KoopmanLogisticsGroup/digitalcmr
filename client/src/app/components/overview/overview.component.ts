@@ -19,7 +19,6 @@ export class OverviewComponent implements OnInit {
 
   public ngOnInit() {
     this.ecmrService.getAllEcmrs('').subscribe(ecmrs => {
-      console.log(ecmrs);
       this.ecmrs = ecmrs instanceof Array ? ecmrs : new Array(ecmrs);
       // TODO implement in backend
       const userOrg = JSON.parse(localStorage.getItem('currentUser')).user.org;

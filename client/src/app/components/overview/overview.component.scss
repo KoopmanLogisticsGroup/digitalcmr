@@ -94,6 +94,11 @@
   color: #3a3670;
 }
 
+.viewMore:hover{
+  background-color: #3a3670;
+  color: #FFFFFF;
+}
+
 .open-status {
   background-color: rgba(41, 135, 205, 0.2);
   color: #2987cd;
@@ -117,26 +122,30 @@
 
 //Design ui tables
 
-.ui.secondary.pointing.menu .active.item {
-  background-color: transparent;
-  box-shadow: none;
-  border-color: #3a3670;
-  font-weight: bold;
-  color: #3a3670;
-}
+.ui {
+  .secondary.pointing.menu {
+    color: #dededf;
 
-.ui.secondary.pointing.menu .item {
-  background-color: transparent;
-  box-shadow: none;
-  font-weight: bold;
-  color: #dededf;
-}
-
-.ui.secondary.pointing.menu {
-  color: #dededf;
-}
-
-.ui.table:last-child {
-  background-color: transparent;
-  border: 0;
+    .active.item {
+      background-color: transparent;
+      box-shadow: none;
+      border-color: #3a3670;
+      font-weight: bold;
+      color: #3a3670;
+    }
+    .item {
+      background-color: transparent;
+      box-shadow: none;
+      font-weight: bold;
+      color: #dededf;
+    }
+  }
+  .table:last-child {
+    background-color: transparent;
+    border: 0;
+  }
+  .grid > * {
+    padding-left: 0rem;
+    padding-right: 0rem;
+  }
 }
