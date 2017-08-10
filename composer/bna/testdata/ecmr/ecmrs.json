@@ -3,7 +3,7 @@
   "ecmrs": [
     {
       "$class": "org.digitalcmr.ECMR",
-      "ecmrID": "U2382918471L",
+      "ecmrID": "A1234567890",
       "status": "OPEN",
       "creation": {
         "$class": "org.digitalcmr.Creation",
@@ -92,7 +92,7 @@
     },
     {
       "$class": "org.digitalcmr.ECMR",
-      "ecmrID": "U28172D2729S",
+      "ecmrID": "B1234567890",
       "status": "OPEN",
       "creation": {
         "$class": "org.digitalcmr.Creation",
@@ -197,7 +197,7 @@
     },
     {
       "$class": "org.digitalcmr.ECMR",
-      "ecmrID": "U2831817312O",
+      "ecmrID": "C1234567890",
       "status": "CLOSED",
       "creation": {
         "$class": "org.digitalcmr.Creation",
@@ -286,7 +286,7 @@
     },
     {
       "$class": "org.digitalcmr.ECMR",
-      "ecmrID": "Z333322222P",
+      "ecmrID": "D1234567890",
       "status": "ON_TRACK",
       "creation": {
         "$class": "org.digitalcmr.Creation",
@@ -375,7 +375,7 @@
     },
     {
       "$class": "org.digitalcmr.ECMR",
-      "ecmrID": "B72361235U",
+      "ecmrID": "E1234567890",
       "status": "ON_TRACK",
       "creation": {
         "$class": "org.digitalcmr.Creation",
@@ -480,7 +480,7 @@
     },
     {
       "$class": "org.digitalcmr.ECMR",
-      "ecmrID": "B72361235U",
+      "ecmrID": "F1234567890",
       "status": "CLOSED",
       "creation": {
         "$class": "org.digitalcmr.Creation",
@@ -608,6 +608,111 @@
           },
           "description": "vehicle",
           "weight": 1500,
+          "id": "string"
+        }
+      ],
+      "legalOwnerInstructions": "string",
+      "paymentInstructions": "string",
+      "payOnDelivery": "string"
+    },
+    {
+      "$class": "org.digitalcmr.ECMR",
+      "ecmrID": "G1234567890",
+      "status": "ON_TRACK",
+      "creation": {
+        "$class": "org.digitalcmr.Creation",
+        "address": {
+          "$class": "org.digitalcmr.Address",
+          "name": "Amsterdam Compound",
+          "street": "compenstraat",
+          "houseNumber": "21",
+          "city": "Assen",
+          "zipCode": "9976ZH",
+          "country": "Netherlands",
+          "latitude": 43.1927,
+          "longitude": 23.3249,
+          "id": "string"
+        },
+        "date": 1502402400000,
+        "id": "id"
+      },
+      "loading": {
+        "$class": "org.digitalcmr.Loading",
+        "address": {
+          "$class": "org.digitalcmr.Address",
+          "name": "Amsterdam Compound",
+          "street": "compenstraat",
+          "houseNumber": "21",
+          "city": "Amsterdam",
+          "zipCode": "9976ZH",
+          "country": "Netherlands",
+          "latitude": 43.1927,
+          "longitude": 23.3249,
+          "id": "string"
+        },
+        "date": 1502402400000,
+        "id": "id"
+      },
+      "delivery": {
+        "$class": "org.digitalcmr.Delivery",
+        "address": {
+          "$class": "org.digitalcmr.Address",
+          "name": "Rob Carman",
+          "street": "autostraat",
+          "houseNumber": "12",
+          "city": "Rotterdam",
+          "zipCode": "9442KO",
+          "country": "Netherlands",
+          "latitude": 51.4443,
+          "longitude": 60.3323,
+          "id": "id"
+        },
+        "date": 1502488800000,
+        "id": "id"
+      },
+      "owner": "resource:org.digitalcmr.LegalOwnerOrg#leaseplan",
+      "source": "resource:org.digitalcmr.CompoundOrg#amsterdamcompound",
+      "transporter": "participant:org.digitalcmr.CarrierMember#james@koopman.org",
+      "carrier": "resource:org.digitalcmr.CarrierOrg#koopman",
+      "recipientOrg": "resource:org.digitalcmr.RecipientOrg#cardealer",
+      "recipient": "participant:org.digitalcmr.RecipientMember#rob@cardealer.org",
+      "issueDate": 0,
+      "issuedBy": "resource:org.digitalcmr.CarrierOrg#koopman",
+      "carrierComments": "No comments",
+      "documents": [
+        "doc1"
+      ],
+      "goods": [
+        {
+          "$class": "org.digitalcmr.Good",
+          "vehicle": {
+            "$class": "org.digitalcmr.Vehicle",
+            "vin": "183726339N",
+            "manufacturer": "Audi",
+            "model": "A1",
+            "type": "sportback",
+            "ECMRs": [],
+            "odoMeterReading": 0,
+            "plateNumber": "AV198RX"
+          },
+          "description": "vehicle",
+          "weight": 1500,
+          "id": "string"
+        },
+        {
+          "$class": "org.digitalcmr.Good",
+          "vehicle": {
+            "$class": "org.digitalcmr.Vehicle",
+            "vin": "736182CHD28172",
+            "manufacturer": "Mercedes",
+            "model": "SLK",
+            "type": "Station",
+            "ECMRs": [],
+            "odoMeterReading": 0,
+            "plateNumber": "I827YE"
+          },
+          "description": "vehicle",
+          "weight": 1800,
           "id": "string"
         }
       ],
