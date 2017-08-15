@@ -1,11 +1,3 @@
-@import url("/styles.scss");
-
-.progressbar {
-  margin-left: 25%;
-  width: 50%;
-  padding: 10px;
-}
-
 .ui.table {
   font-size: 1em;
   box-shadow: 0 2px 4px #e3e3e3;
@@ -24,5 +16,61 @@
   border: 0;
 }
 
+.generalInfo {
+  box-shadow: 0 2px 4px #e3e3e3;
+  background-color: white;
+  border-top-left-radius: 0.5em;
+  border-top-right-radius: 0.5em;
+  border-bottom-left-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
+  font-size: 0.9em;
+  padding: 15px 0px;
+  .column {
+    width: 308px;
+    height: 320px;
+    padding-left: 40px;
 
+    .commentOverview {
+      margin-top: 15%;
+    }
 
+  }
+  .column:nth-child(n+2) {
+    border-left: 1px solid #d8dde6;
+  }
+  .header {
+    color: #2272c2;
+    white-space: nowrap;
+
+  }
+  .ecmrInfo {
+    text-transform: capitalize;
+
+    .imgandtext > img {
+      float: left;
+    }
+    .imgandtext, #addressInfo {
+      overflow: hidden;
+    }
+    .addressImg{
+      padding-bottom: 35px;
+      width: auto;
+      height: auto;
+    }
+  }
+}
+
+.titles {
+  color: #424244;
+  margin-left: 4%;
+}
+
+.progressBar {
+  width: 100%;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+.topLine{
+  border-top: 1px solid #d8dde6;
+}

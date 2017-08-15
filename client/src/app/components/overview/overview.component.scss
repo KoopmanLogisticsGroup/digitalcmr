@@ -1,18 +1,23 @@
 .spacing-table {
-  border-collapse: separate;
-  table-layout: fixed;
+  //border-collapse: separate;
+  //table-layout: fixed;
   border-spacing: 0 8px; /* this is the ultimate fix */
   th {
     text-align: left;
-    padding: 5px 15px;
     border-bottom: none;
+  }
+  th:first-child {
+    width: 20px;
   }
   td {
     border-width: 3px 0;
     width: 65%;
     color: black;
-    padding: 5px 15px;
+    //padding: 5px 15px;
     border-top: none;
+  }
+  td:first-child {
+    width: 20px;
   }
   thead {
     display: table;
@@ -51,30 +56,33 @@
         border-right-width: 3px;
         border-radius: 0 5px 5px 0;
       }
-
       .centerContent {
-        padding-left: 3%;
+        padding-left: 2%;
       }
     }
   }
-}
-
-.table-header {
-  font-size: 1vw;
-  line-height: 1.2vw;
-  vertical-align: top;
-  text-align: left;
+  .table-header {
+    font-size: 1vw;
+    line-height: 1.2vw;
+    vertical-align: top;
+    text-align: left;
+  }
+  .table-row {
+    font-size: 0.9vw;
+    line-height: 1.0vw;
+    white-space: nowrap;
+    img {
+      width: 1.2vw;
+      height: 1.2vw;
+    }
+  }
 }
 
 .table-title {
   color: #32649e;
   font-size: 1.6vw;
-}
+  margin-bottom: 5%;
 
-.table-row {
-  font-size: 0.9vw;
-  line-height: 1.0vw;
-  white-space: nowrap;
 }
 
 .statusStyle {
@@ -94,7 +102,7 @@
   color: #3a3670;
 }
 
-.viewMore:hover{
+.viewMore:hover {
   background-color: #3a3670;
   color: #FFFFFF;
 }
@@ -125,7 +133,6 @@
 .ui {
   .secondary.pointing.menu {
     color: #dededf;
-
     .active.item {
       background-color: transparent;
       box-shadow: none;
@@ -148,4 +155,10 @@
     padding-left: 0rem;
     padding-right: 0rem;
   }
+  .tab.active{
+    margin-left: 0.1%;
+    width: 100%;
+  }
 }
+
+

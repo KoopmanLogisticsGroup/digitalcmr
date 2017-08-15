@@ -1,51 +1,102 @@
-<div class="ui mini steps progressbar content-top-margin">
-  <div class="step">
-    <i class="truck icon"></i>
-    <div class="content">
-      <div class="title">CREATED</div>
-      <div class="description">Date: 03 august 2017</div>
+<div class="row titles">
+  <div class="column">CMR {{ecmr?.ecmrID}}</div>
+</div>
+<div class="row topLine"></div>
+<img class="progressBar" *ngIf="ecmr?.status === 'OPEN'" src="../../../../assets/img/progress-indicator-01.svg" />
+<img class="progressBar" *ngIf="ecmr?.status === 'LOAD'" src="../../../../assets/img/progress-indicator-02.svg" />
+<img class="progressBar" *ngIf="ecmr?.status === 'ON_TRACK'" src="../../../../assets/img/progress-indicator-03.svg" />
+<img class="progressBar" *ngIf="ecmr?.status === 'CLOSED'" src="../../../../assets/img/progress-indicator-04.svg" />
+
+<div class="row titles">GENERAL INFORMATION</div>
+<div class="ui four column padded doubling unstackable grid generalInfo">
+  <div class="column">
+    <div class="header">ORDER GIVER</div>
+    <br>
+    <div class="center ecmrInfo">
+      <div class="imgandtext">
+        <img class="addressImg" src="../../../../assets/icons/page-1.svg">
+        <div class="addressInfo">
+          {{ecmr?.owner.split('#')[1]}}<br/>
+          {{ecmr?.loading.address.street}} {{ecmr?.loading.address.houseNumber}}<br/>
+          {{ecmr?.loading.address.zipCode}}, {{ecmr?.loading.address.city}}
+        </div>
+      </div>
+      <br>
+      <p>Reference Nr. : 213141214</p>
+      <p>Signed by: Leaseplan<br>
+        Date: xx-xx-xx</p>
+    </div>
+    <div class="commentOverview">
+      <img src="../../../assets/icons/icon-comment.svg"/> {{ecmr?.carrierComments}}
     </div>
   </div>
-  <div class="active step">
-    <i class="payment icon"></i>
+  <div class="column">
     <div class="content">
-      <div class="title">LOAD</div>
-      <div class="description">to be concluded</div>
+      <div class="header">KOOPMAN COMPOUND</div>
+      <br>
+      <div class="ecmrInfo">
+        <div class="imgandtext">
+          <img class="addressImg" src="../../../../assets/icons/page-1.svg">
+          <div class="addressInfo">
+            {{ecmr?.source.split('#')[1]}}<br>
+            {{ecmr?.creation.address.street}} {{ecmr?.creation.address.houseNumber}}<br>
+            {{ecmr?.creation.address.zipCode}}, {{ecmr?.creation.address.city}}
+          </div>
+        </div>
+        <br>
+        <p>Reference Nr. : 213141214</p>
+        <p>Signed by: Leaseplan
+          <br>Date: 24-01-2017</p>
+      </div>
+    </div>
+    <div class="commentOverview">
+      <img src="../../../assets/icons/icon-comment.svg"/> {{ecmr?.carrierComments}}
     </div>
   </div>
-  <div class="disabled step">
-    <i class="info icon"></i>
-    <div class="content">
-      <div class="title">DELIVERED</div>
-      <div class="description">Date: 06 august 2017</div>
+  <div class="column">
+    <div>
+      <div class="header">TRANSPORTER</div>
+      <br>
+      <div class="ecmrInfo">
+        <div class="imgandtext">
+          <img class="addressImg" src="../../../../assets/icons/page-1.svg">
+          <div class="addressInfo">
+            {{ecmr?.carrier.split('#')[1]}} - {{ecmr?.transporter.split('#')[1].split('@')[0]}}<br>
+            {{ecmr?.creation.address.street}} {{ecmr?.creation.address.houseNumber}}<br>
+            {{ecmr?.creation.address.zipCode}}, {{ecmr?.creation.address.city}}
+          </div>
+        </div>
+        <br>
+        <p><strong>Reference Nr.:</strong> 213141214</p>
+        <p><strong>Signed by:</strong> Leaseplan<br>
+          <strong>Date:</strong> xx-xx-xx</p>
+      </div>
+    </div>
+    <div class="commentOverview">
+      <img src="../../../assets/icons/icon-comment.svg"/> {{ecmr?.carrierComments}}
+    </div>
+  </div>
+  <div class="column">
+    <div>
+      <div class="header">CAR DEALER</div>
+      <br>
+      <div class="ecmrInfo">
+        <div class="imgandtext">
+          <img class="addressImg" src="../../../../assets/icons/page-1.svg">
+          <div class="addressInfo">
+            {{ecmr?.recipient.split('#')[1]}}<br>
+            {{ecmr?.delivery.address.street}} {{ecmr?.delivery.address.houseNumber}}<br>
+            {{ecmr?.delivery.address.zipCode}}, {{ecmr?.delivery.address.city}}
+          </div>
+        </div>
+        <br>
+        <p><strong>Reference Nr.:</strong> 213141214</p>
+        <p><strong>Signed by:</strong> Leaseplan<br>
+          <strong>Date:</strong> 21-10-2017(10:10)</p>
+      </div>
+    </div>
+    <div class="commentOverview">
+      <img src="../../../assets/icons/icon-comment.svg" /> {{ecmr?.carrierComments}}
     </div>
   </div>
 </div>
-<table class="ui table spacing-table">
-  <thead>
-  <tr>
-    <th colspan="4">General information</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-    <td>ORDER GIVER</td>
-    <td><p>KOOPMAN COMPOUND</p>
-      <i class="folder icon"></i><p>Address lines</p>
-    </td>
-    <td>Test1</td>
-    <td>Test2</td>
-  </tr>
-  <tr>
-    <td><i class="folder icon"></i> <p>Reference nr. : 20310231923</p>
-    <br>
-      <p>Signed by: Leaseplan</p>
-      <p>Date: xx-xx-xx</p>
-    </td>
-    <td class="TableDef"><p>Reference nr. : 20310231923</p></td>
-    <td class="TableDef"><p>Reference nr. : 20310231923</p></td>
-    <td class="TableDef"><p>Reference nr. : 20310231923</p></td>
-  </tr>
-  <tr>
-  </tbody>
-</table>

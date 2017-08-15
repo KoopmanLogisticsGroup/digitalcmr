@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import {EcmrService} from '../../../services/ecmr.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-goods',
@@ -7,9 +9,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GoodsComponent implements OnInit {
 
-  constructor() { }
+  public ecmr: any;
+  public ecmrID: any;
+  public updateComment: any;
 
-  ngOnInit() {
+  addRemark() {
+    this.updateComment = this.ecmr.carrierComments;
   }
 
+  constructor(private route: ActivatedRoute,
+              private ecmrService: EcmrService) {
+  }
+
+  ngOnInit() {
+    this.route.params
+      .subscribe(params => {
+        this.ecmrID = params['ecmrID'];
+        this.ecmrService.getAllEcmrs('').subscribe(ecmrs => {
+          this.ecmr = ecmrs instanceof Array ? ecmrs.filter(x => x.ecmrID === this.ecmrID) : undefined;
+          if (this.ecmr.length) {
+            this.ecmr = this.ecmr[0];
+          }
+        });
+      });
+
+  }
 }

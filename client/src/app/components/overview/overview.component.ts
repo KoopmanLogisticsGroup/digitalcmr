@@ -35,4 +35,5 @@ export class OverviewComponent implements OnInit {
     this.currentView = view;
     this.ecmrsFiltered = this.ecmrs.filter(ecmr => ecmr.status.toUpperCase() === view.toUpperCase());
   }
+
 }
