@@ -2,101 +2,97 @@
   <div class="column">CMR {{ecmr?.ecmrID}}</div>
 </div>
 <div class="row topLine"></div>
-<img class="progressBar" *ngIf="ecmr?.status === 'OPEN'" src="../../../../assets/img/progress-indicator-01.svg" />
-<img class="progressBar" *ngIf="ecmr?.status === 'LOAD'" src="../../../../assets/img/progress-indicator-02.svg" />
-<img class="progressBar" *ngIf="ecmr?.status === 'ON_TRACK'" src="../../../../assets/img/progress-indicator-03.svg" />
-<img class="progressBar" *ngIf="ecmr?.status === 'CLOSED'" src="../../../../assets/img/progress-indicator-04.svg" />
-
+<div id="test222">
+  <img class="progressBar" *ngIf="ecmr?.status === 'OPEN'" src="../../../../assets/img/progress-indicator-01.svg"/>
+  <img class="progressBar" *ngIf="ecmr?.status === 'LOAD'" src="../../../../assets/img/progress-indicator-02.svg"/>
+  <img class="progressBar" *ngIf="ecmr?.status === 'ON_TRACK'" src="../../../../assets/img/progress-indicator-03.svg"/>
+  <img class="progressBar" *ngIf="ecmr?.status === 'CLOSED'" src="../../../../assets/img/progress-indicator-04.svg"
+       [ngClass]="{'selectedImg1' : selectedImage[0], 'selectedImg2' : selectedImage[1], 'selectedImg3' : selectedImage[2], 'selectedImg4' : selectedImage[3]}"/>
+</div>
 <div class="row titles">GENERAL INFORMATION</div>
 <div class="ui four column padded doubling unstackable grid generalInfo">
-  <div class="column">
+  <div class="column" [ngClass]="{'completed': ecmr?.status === 'CLOSED', 'active': selectedColumns[0],
+  'inactive': !selectedColumns[0]}" (click)="selectColumn(0)">
     <div class="header">ORDER GIVER</div>
-    <br>
     <div class="center ecmrInfo">
       <div class="imgandtext">
         <img class="addressImg" src="../../../../assets/icons/page-1.svg">
         <div class="addressInfo">
-          {{ecmr?.owner.split('#')[1]}}<br/>
-          {{ecmr?.loading.address.street}} {{ecmr?.loading.address.houseNumber}}<br/>
-          {{ecmr?.loading.address.zipCode}}, {{ecmr?.loading.address.city}}
+          <span>{{ecmr?.owner.split('#')[1]}}</span>
+          <span>{{ecmr?.loading.address.street}} {{ecmr?.loading.address.houseNumber}}</span>
+          <span>{{ecmr?.loading.address.zipCode}}, {{ecmr?.loading.address.city}}</span>
         </div>
       </div>
-      <br>
-      <p>Reference Nr. : 213141214</p>
-      <p>Signed by: Leaseplan<br>
-        Date: xx-xx-xx</p>
+      <span><b>Reference Nr.:</b> 213141214</span>
+      <span class="addressInfo"><b>Signed by:</b> Leaseplan</span>
+      <span><b>Date:</b> 25-10-2017(12:22)</span>
     </div>
-    <div class="commentOverview">
-      <img src="../../../assets/icons/icon-comment.svg"/> {{ecmr?.carrierComments}}
-    </div>
+    <img class="commentOverview" src="../../../assets/icons/icon-comment.svg"/> {{ecmr?.carrierComments}}
   </div>
-  <div class="column">
+  <div class="column" [ngClass]="{'completed': ecmr?.status === 'CLOSED', 'active': selectedColumns[1],
+  'inactive': !selectedColumns[1]}" (click)="selectColumn(1)">
     <div class="content">
       <div class="header">KOOPMAN COMPOUND</div>
-      <br>
       <div class="ecmrInfo">
         <div class="imgandtext">
           <img class="addressImg" src="../../../../assets/icons/page-1.svg">
           <div class="addressInfo">
-            {{ecmr?.source.split('#')[1]}}<br>
-            {{ecmr?.creation.address.street}} {{ecmr?.creation.address.houseNumber}}<br>
-            {{ecmr?.creation.address.zipCode}}, {{ecmr?.creation.address.city}}
+            <span>{{ecmr?.source.split('#')[1]}}</span>
+            <span>{{ecmr?.creation.address.street}} {{ecmr?.creation.address.houseNumber}}</span>
+            <span>{{ecmr?.creation.address.zipCode}}, {{ecmr?.creation.address.city}}</span>
           </div>
         </div>
-        <br>
-        <p>Reference Nr. : 213141214</p>
-        <p>Signed by: Leaseplan
-          <br>Date: 24-01-2017</p>
+        <span><b>Reference Nr.:</b> 213141214</span>
+        <span class="addressInfo"><b>Signed by:</b> Leaseplan</span>
+        <span><b>Date:</b> 24-01-2017(13:09)</span>
       </div>
     </div>
     <div class="commentOverview">
       <img src="../../../assets/icons/icon-comment.svg"/> {{ecmr?.carrierComments}}
     </div>
   </div>
-  <div class="column">
+  <div class="column" [ngClass]="{'completed': ecmr?.status === 'CLOSED', 'active': selectedColumns[2],
+  'inactive': !selectedColumns[2]}" (click)="selectColumn(2)">
     <div>
       <div class="header">TRANSPORTER</div>
-      <br>
       <div class="ecmrInfo">
         <div class="imgandtext">
           <img class="addressImg" src="../../../../assets/icons/page-1.svg">
           <div class="addressInfo">
-            {{ecmr?.carrier.split('#')[1]}} - {{ecmr?.transporter.split('#')[1].split('@')[0]}}<br>
-            {{ecmr?.creation.address.street}} {{ecmr?.creation.address.houseNumber}}<br>
-            {{ecmr?.creation.address.zipCode}}, {{ecmr?.creation.address.city}}
+            <span>{{ecmr?.carrier.split('#')[1]}} - {{ecmr?.transporter.split('#')[1].split('@')[0]}}</span>
+            <span>{{ecmr?.creation.address.street}} {{ecmr?.creation.address.houseNumber}}</span>
+            <span>{{ecmr?.creation.address.zipCode}}, {{ecmr?.creation.address.city}}</span>
           </div>
         </div>
-        <br>
-        <p><strong>Reference Nr.:</strong> 213141214</p>
-        <p><strong>Signed by:</strong> Leaseplan<br>
-          <strong>Date:</strong> xx-xx-xx</p>
+        <span><b>Reference Nr.:</b> 213141214</span>
+        <span class="addressInfo"><b>Signed by:</b> Leaseplan</span>
+        <span><b>Date:</b> 01-05-2017(15:54)</span>
       </div>
     </div>
     <div class="commentOverview">
       <img src="../../../assets/icons/icon-comment.svg"/> {{ecmr?.carrierComments}}
     </div>
   </div>
-  <div class="column">
+  <div class="column" [ngClass]="{'completed': ecmr?.status === 'CLOSED', 'active': selectedColumns[3],
+  'inactive': !selectedColumns[3]}" (click)="selectColumn(3)">
     <div>
       <div class="header">CAR DEALER</div>
-      <br>
       <div class="ecmrInfo">
         <div class="imgandtext">
           <img class="addressImg" src="../../../../assets/icons/page-1.svg">
           <div class="addressInfo">
-            {{ecmr?.recipient.split('#')[1]}}<br>
-            {{ecmr?.delivery.address.street}} {{ecmr?.delivery.address.houseNumber}}<br>
-            {{ecmr?.delivery.address.zipCode}}, {{ecmr?.delivery.address.city}}
+            <span>{{ecmr?.recipient.split('#')[1]}}</span>
+            <span>{{ecmr?.delivery.address.street}} {{ecmr?.delivery.address.houseNumber}}</span>
+            <span>{{ecmr?.delivery.address.zipCode}}, {{ecmr?.delivery.address.city}}</span>
           </div>
         </div>
-        <br>
-        <p><strong>Reference Nr.:</strong> 213141214</p>
-        <p><strong>Signed by:</strong> Leaseplan<br>
-          <strong>Date:</strong> 21-10-2017(10:10)</p>
+        <span><b>Reference Nr.:</b> 213141214</span>
+        <span class="addressInfo"><b>Signed by:</b> Leaseplan</span>
+        <span><b>Date:</b> 21-10-2017(10:10)</span>
       </div>
     </div>
     <div class="commentOverview">
-      <img src="../../../assets/icons/icon-comment.svg" /> {{ecmr?.carrierComments}}
+      <img src="../../../assets/icons/icon-comment.svg"/> {{ecmr?.carrierComments}}
     </div>
   </div>
 </div>

@@ -2,9 +2,16 @@
   <img class="logo" src="/../assets/img/Koopman.jpg">
   <div class="right menu">
     <div *ngIf="getUser() != null" class="userDisplay"><span class="welcomeMsg">Welcome {{getUser()}}</span>
-      <img src="../../../assets/icons/placeholder-willem.svg" class="userImage"/>
-      <div (click)="logout()" routerLink="/login" class="logoutIcon"><a><img
-        src="../../../assets/icons/iconlogout.svg"/></a>
+      <img *ngIf="getUser() === 'willem' || 'lapo'" src="../../../assets/icons/placeholder-willem.svg"
+           class="userImage"/>
+      <img *ngIf="getUser() === 'harry'" src="../../../assets/icons/placeholder-harry.svg" class="userImage"/>
+      <img *ngIf="getUser() === 'rob'" src="../../../assets/icons/icon-rob.svg" class="userImage"/>
+      <div (click)="logout()" routerLink="/login" class="logoutIcon">
+        <img
+          src="../../../assets/icons/iconlogout.svg"
+          onmouseover="this.src='../../../assets/icons/icon-logout-off.svg'"
+          onmouseout="this.src='../../../assets/icons/iconlogout.svg'"
+        />
       </div>
     </div>
   </div>

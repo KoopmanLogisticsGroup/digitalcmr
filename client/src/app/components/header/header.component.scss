@@ -1,6 +1,6 @@
 .designMenu {
   position: relative;
-  height: 90px;
+  height: 70px;
 }
 
 .logo {
@@ -23,7 +23,7 @@ a{
   position: relative;
   width: 400px;
   display: block;
-  margin-top: 2%;
+  //margin-top: 20%;
 }
 
 .logoutIcon{
@@ -31,7 +31,9 @@ a{
   display: inline-block;
   margin-left: 45%;
   padding-left: 20px;
-  margin-top: 4.7%;
+  margin-top: 4.4%;
+  //background-image: url("../../../assets/icons/iconlogout.svg");
+
 }
 
 .userImage{
@@ -44,6 +46,6 @@ a{
 .welcomeMsg{
   position: absolute;
   display: inline-block;
-  margin-top: 6%;
+  margin-top: 5%;
   margin-left: 5%;
 }

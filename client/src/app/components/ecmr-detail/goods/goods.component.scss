@@ -1,13 +1,44 @@
-.ui.padded.table{
+.ui.padded.table {
   border: 0px;
   box-shadow: 0 2px 4px #e3e3e3;
-  th{
+  th {
     background-color: #FFFFFF;
   }
 }
 
-.titles{
+.titles {
   color: #424244;
-  margin-left: 4%;
-  margin-top: 8%;
+  margin-left: 3%;
+  margin-top: 5%;
+  margin-bottom: 0.5%;
+  font-size: 1.4em;
+}
+
+tr > th {
+  color: #2f62a0;
+  font-weight: bold;
+}
+
+.buttonDesign {
+  background-color: #3a3670;
+  color: white;
+}
+
+.remarkBox {
+  width: 192px;
+  height: 38px;
+  border-radius: 4px;
+  border: solid 1px #dededf;
+  padding-left: 4%;
+}
+
+.checkBox {
+  margin-left: 40%;
+  transform: translateX(-50%);
+}
+
+tr {
+  th:first-child, td:first-child{
+    padding-left: 3.2%;
+  }
 }

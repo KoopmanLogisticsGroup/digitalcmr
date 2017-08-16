@@ -57,7 +57,18 @@
         border-radius: 0 5px 5px 0;
       }
       .centerContent {
-        padding-left: 2%;
+        margin-left: 50%;
+        transform: translateX(-50%);
+      }
+      .centerContent2 {
+        margin-left: 30%;
+        transform: translateX(-50%);
+      }
+      .respImg{
+        img {
+          width: 1.2vw;
+          height: 1.2vw;
+        }
       }
     }
   }
@@ -71,10 +82,6 @@
     font-size: 0.9vw;
     line-height: 1.0vw;
     white-space: nowrap;
-    img {
-      width: 1.2vw;
-      height: 1.2vw;
-    }
   }
 }
 
@@ -93,18 +100,15 @@
 }
 
 .viewMore {
-  width: 117px;
-  height: 36px;
-  border-radius: 50px;
-  border: solid 0.01vw #3a3670;
-  padding: 8px;
-  white-space: nowrap;
-  color: #3a3670;
+  width: 110%;
+  height: 110%;
+  content: url("../../../assets/icons/button-view-more.svg");
+  padding-right: 15%;
 }
 
 .viewMore:hover {
-  background-color: #3a3670;
-  color: #FFFFFF;
+  content: url("../../../assets/icons/button-view-more-hover.svg");
+  cursor: pointer;
 }
 
 .open-status {

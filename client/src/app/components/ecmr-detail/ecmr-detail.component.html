@@ -1,13 +1,11 @@
 <div class="ui container content-top-margin">
-    <div class="row">
-        <i class="arrow left icon"></i>
-        <a routerLink="/overview"><span
-          style="color: #5aa0d4">BACK</span></a>
-    </div>
-  <br>
-  <br>
-    <div class="fourteen wide column firstColumn"></div>
-  <app-general-info></app-general-info>
+  <div class="row">
+    <img src="../../../assets/icons/backbutton.svg"/>
+    <div routerLink="/overview" class="titles">BACK</div>
+  </div>
+
+  <div class="fourteen wide column firstColumn"></div>
+  <app-general-info [ecmr]="ecmr" [selectedColumns]="selectedColumns"></app-general-info>
   <div class="ten wide column"></div>
-  <app-goods></app-goods>
+  <app-goods [ecmr]="ecmr"></app-goods>
 </div>

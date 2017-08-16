@@ -17,6 +17,7 @@
           <thead class="table-header">
           <th></th>
           <th>Date</th>
+          <th>CMR Nr.</th>
           <th>Embarkment</th>
           <th>Destination</th>
           <th>Number of vehicles</th>
@@ -31,22 +32,26 @@
           <tr *ngFor="let ecmr of ecmrsFiltered" class="table-row">
             <td></td>
             <td>{{ecmr.creation.date | date:"dd-MM-yyyy"}}</td>
+            <td>{{ecmr.ecmrID}}</td>
             <td>{{ecmr.loading.address.city}}</td>
             <td>{{ecmr.delivery.address.city}}</td>
-            <td class="centerContent">{{ecmr.goods.length}}</td>
-            <td>{{ecmr.carrier.split('#')[1]}}</td>
+            <td><div class="centerContent">{{ecmr.goods.length}}</div></td>
+            <td>{{ecmr.carrier.split('#')[1]  }}</td>
             <td>{{ecmr.recipient.split('#')[1].split('@')[0]}}</td>
-            <td class="centerContent"><img src="../../../assets/icons/icon-comment.svg"
+            <td class="respImg"><img class="centerContent2" src="../../../assets/icons/icon-comment.svg"
                                            *ngIf="ecmr.carrierComments != '' || null"/></td>
-            <td class="centerContent"><img src="../../../assets/icons/exlamation.svg"
+            <td class="respImg"><img class="centerContent2" src="../../../assets/icons/exlamation.svg"
                                            *ngIf="ecmr.carrierComments != '' || null"/></td>
             <td><span
-              [ngClass]="{'open-status' : ecmr.status === 'OPEN' ? true : false,
-                        'transit-status' : ecmr.status === 'ON_TRACK' ? true : false,
-                        'completed-status': ecmr.status === 'CLOSED' ? true : false}">
+              [ngClass]="{'open-status' : ecmr.status === 'OPEN',
+                        'transit-status' : ecmr.status === 'ON_TRACK',
+                        'completed-status': ecmr.status === 'CLOSED'}">
                         {{ecmr.status}}
                       </span></td>
-            <td><a routerLink="/ecmr/{{ecmr.ecmrID}}" class="viewMore">View More &#62;</a></td>
+            <td>
+              <div routerLink="/ecmr/{{ecmr.ecmrID}}"><img class="viewMore"/></div>
+            </td>
+
           </tr>
           </tbody>
         </table>
