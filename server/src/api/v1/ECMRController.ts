@@ -12,9 +12,10 @@ import {
 } from 'routing-controllers';
 import {Container} from 'typedi';
 import {ApiFactory} from '../../utils';
-import {ECMR, ECMRApi, QueryApi} from '../../sdk/api';
+import {ECMR, ECMRApi, QueryApi, Remark, Signature} from '../../sdk/api';
 import {ErrorHandlerMiddleware, ComposerInterceptor, TransactionHandler} from '../../middleware';
 import {JSONWebToken} from '../../utils/auth/JSONWebToken';
+import StatusEnum = ECMR.StatusEnum;
 
 @JsonController('/ECMR')
 @UseInterceptor(ComposerInterceptor)
@@ -27,7 +28,7 @@ export class ECMRController {
   public constructor(private _transactor: TransactionHandler) {
     const apiFactory   = Container.get(ApiFactory);
     this.queryApi      = apiFactory.get(QueryApi);
-    this.api = apiFactory.get(ECMRApi);
+    this.api           = apiFactory.get(ECMRApi);
     this.assetRegistry = 'ECMR';
     this._transactor   = new TransactionHandler();
   }
@@ -47,9 +48,34 @@ export class ECMRController {
   }
 
   @Put('/')
-  public async update(@Body() ecmr: any, @Req() request: any): Promise<any> {
+  public async update(@Body() ecmr: ECMR, @Req() request: any): Promise<any> {
     let enrollmentID = new JSONWebToken(request).getUserID();
-    let secret = request.headers.secret;
+    let secret       = request.headers.secret;
+
+    let signature: Signature = {
+      '$Class':        'org.digitalcmr.Signature',
+      'certificate':   enrollmentID,
+      'timestamp':     new Date().getTime(),
+      'latitude':      50.5,
+      'longitude':     50.5,
+      'ip':            '127.0.0.1',
+      'generalRemark': new Remark(),
+      'id':            'string'
+    };
+    let userRole             = new JSONWebToken(request).getUserRole();
+    if (userRole === 'compound' && ecmr.status === StatusEnum.CREATED) {
+      ecmr.compoundSignature = signature;
+    }
+    if (userRole === 'carrier' && ecmr.status === StatusEnum.LOADED) {
+      ecmr.carrierLoadingSignature = signature;
+    }
+    if (userRole === 'carrier' && ecmr.status === StatusEnum.INTRANSIT) {
+      ecmr.carrierDeliverySignature = signature;
+    }
+    if (userRole === 'recipient' && ecmr.status === StatusEnum.INTRANSIT) {
+      ecmr.recipientSignature = signature;
+    }
+
     return this._transactor.put(ecmr, enrollmentID, secret, (factory, data) => this._transactor.updateECMR(factory, data));
   }
 }

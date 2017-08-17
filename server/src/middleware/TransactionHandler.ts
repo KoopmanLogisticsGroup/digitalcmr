@@ -72,6 +72,19 @@ export class TransactionHandler {
     transaction.ecmr.recipient    = factory.newRelationship(this.namespace, 'RecipientMember', ecmr.recipient);
     transaction.ecmr.issuedBy     = factory.newRelationship(this.namespace, 'Entity', ecmr.issuedBy);
 
+    if (ecmr.compoundSignature) {
+      transaction.ecmr.compoundSignature = this.createConcept('Signature', ecmr.compoundSignature, factory);
+    }
+    if (ecmr.carrierLoadingSignature) {
+      transaction.ecmr.carrierLoadingSignature = this.createConcept('Signature', ecmr.carrierLoadingSignature, factory);
+    }
+    if (ecmr.carrierDeliverySignature) {
+      transaction.ecmr.carrierDeliverySignature = this.createConcept('Signature', ecmr.carrierDeliverySignature, factory);
+    }
+    if (ecmr.recipientSignature) {
+      transaction.ecmr.recipientSignature = this.createConcept('Signature', ecmr.recipientSignature, factory);
+    }
+
     for (let i = 0; i < transaction.ecmr.goods.length; i++) {
       transaction.ecmr.goods[i]         = this.createConcept('Good', ecmr.goods[i], factory);
       let vehicle                       = factory.newResource(this.namespace, 'Vehicle', uuid());

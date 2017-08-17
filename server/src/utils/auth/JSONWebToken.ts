@@ -16,6 +16,10 @@ export class JSONWebToken {
     return this.decodedToken ? this.decodedToken.userID : null;
   }
 
+  public getUserRole(): string {
+    return this.decodedToken ? this.decodedToken.role : null;
+  }
+
   public static getTokenFromRequest(request: Request): string {
     let token = request.headers['x-access-token'];
     if (!token) {

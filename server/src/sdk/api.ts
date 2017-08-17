@@ -545,9 +545,9 @@ export class CreateCarrierOrg {
             "type": "string"
         },
         {
-          'name': 'carrierOrg',
-          'baseName': 'carrierOrg',
-          'type': 'CarrierOrg'
+          "name":     "carrierOrg",
+          "baseName": "carrierOrg",
+          "type":     "CarrierOrg"
         },
         {
             "name": "transactionId",
@@ -584,24 +584,24 @@ export class CreateCompoundOrg {
 
   static attributeTypeMap: Array<{ name: string, baseName: string, type: string }> = [
     {
-      'name': '$Class',
-      'baseName': '$class',
-      'type': 'string'
+      "name":     "$Class",
+      "baseName": "$class",
+      "type":     "string"
     },
     {
-      'name': 'compoundOrg',
-      'baseName': 'compoundOrg',
-      'type': 'CompoundOrg'
+      "name":     "compoundOrg",
+      "baseName": "compoundOrg",
+      "type":     "CompoundOrg"
     },
     {
-      'name': 'transactionId',
-      'baseName': 'transactionId',
-      'type': 'string'
+      "name":     "transactionId",
+      "baseName": "transactionId",
+      "type":     "string"
     },
     {
-      'name': 'timestamp',
-      'baseName': 'timestamp',
-      'type': 'Date'
+      "name":     "timestamp",
+      "baseName": "timestamp",
+      "type":     "Date"
     }];
 
   static getAttributeTypeMap() {
@@ -628,24 +628,24 @@ export class CreateECMR {
 
   static attributeTypeMap: Array<{ name: string, baseName: string, type: string }> = [
     {
-      'name': '$Class',
-      'baseName': '$class',
-      'type': 'string'
+      "name":     "$Class",
+      "baseName": "$class",
+      "type":     "string"
     },
     {
-      'name': 'ecmr',
-      'baseName': 'ecmr',
-      'type': 'ECMR'
+      "name":     "ecmr",
+      "baseName": "ecmr",
+      "type":     "ECMR"
     },
     {
-      'name': 'transactionId',
-      'baseName': 'transactionId',
-      'type': 'string'
+      "name":     "transactionId",
+      "baseName": "transactionId",
+      "type":     "string"
     },
     {
-      'name': 'timestamp',
-      'baseName': 'timestamp',
-      'type': 'Date'
+      "name":     "timestamp",
+      "baseName": "timestamp",
+      "type":     "Date"
     }];
 
   static getAttributeTypeMap() {
@@ -672,24 +672,24 @@ export class CreateECMRs {
 
   static attributeTypeMap: Array<{ name: string, baseName: string, type: string }> = [
     {
-      'name': '$Class',
-      'baseName': '$class',
-      'type': 'string'
+      "name":     "$Class",
+      "baseName": "$class",
+      "type":     "string"
     },
     {
-      'name': 'ecmrs',
-      'baseName': 'ecmrs',
-      'type': 'Array<ECMR>'
+      "name":     "ecmrs",
+      "baseName": "ecmrs",
+      "type":     "Array<ECMR>"
     },
     {
-      'name': 'transactionId',
-      'baseName': 'transactionId',
-      'type': 'string'
+      "name":     "transactionId",
+      "baseName": "transactionId",
+      "type":     "string"
     },
     {
-      'name': 'timestamp',
-      'baseName': 'timestamp',
-      'type': 'Date'
+      "name":     "timestamp",
+      "baseName": "timestamp",
+      "type":     "Date"
     }];
 
   static getAttributeTypeMap() {
@@ -716,24 +716,24 @@ export class CreateLegalOwnerOrg {
 
   static attributeTypeMap: Array<{ name: string, baseName: string, type: string }> = [
     {
-      'name': '$Class',
-      'baseName': '$class',
-      'type': 'string'
+      "name":     "$Class",
+      "baseName": "$class",
+      "type":     "string"
     },
     {
-      'name': 'legalOwnerOrg',
-      'baseName': 'legalOwnerOrg',
-      'type': 'LegalOwnerOrg'
+      "name":     "legalOwnerOrg",
+      "baseName": "legalOwnerOrg",
+      "type":     "LegalOwnerOrg"
     },
     {
-      'name': 'transactionId',
-      'baseName': 'transactionId',
-      'type': 'string'
+      "name":     "transactionId",
+      "baseName": "transactionId",
+      "type":     "string"
     },
     {
-      'name': 'timestamp',
-      'baseName': 'timestamp',
-      'type': 'Date'
+      "name":     "timestamp",
+      "baseName": "timestamp",
+      "type":     "Date"
     }];
 
   static getAttributeTypeMap() {
@@ -760,24 +760,24 @@ export class CreateRecipientOrg {
 
   static attributeTypeMap: Array<{ name: string, baseName: string, type: string }> = [
     {
-      'name': '$Class',
-      'baseName': '$class',
-      'type': 'string'
+      "name":     "$Class",
+      "baseName": "$class",
+      "type":     "string"
     },
     {
-      'name': 'recipientOrg',
-      'baseName': 'recipientOrg',
-      'type': 'RecipientOrg'
+      "name":     "recipientOrg",
+      "baseName": "recipientOrg",
+      "type":     "RecipientOrg"
     },
     {
-      'name': 'transactionId',
-      'baseName': 'transactionId',
-      'type': 'string'
+      "name":     "transactionId",
+      "baseName": "transactionId",
+      "type":     "string"
     },
     {
-      'name': 'timestamp',
-      'baseName': 'timestamp',
-      'type': 'Date'
+      "name":     "timestamp",
+      "baseName": "timestamp",
+      "type":     "Date"
     }];
 
   static getAttributeTypeMap() {
@@ -804,24 +804,24 @@ export class CreateVehicles {
 
   static attributeTypeMap: Array<{ name: string, baseName: string, type: string }> = [
     {
-      'name': '$Class',
-      'baseName': '$class',
-      'type': 'string'
+      "name":     "$Class",
+      "baseName": "$class",
+      "type":     "string"
     },
     {
-      'name': 'vehicles',
-      'baseName': 'vehicles',
-      'type': 'Array<Vehicle>'
+      "name":     "vehicles",
+      "baseName": "vehicles",
+      "type":     "Array<Vehicle>"
     },
     {
-      'name': 'transactionId',
-      'baseName': 'transactionId',
-      'type': 'string'
+      "name":     "transactionId",
+      "baseName": "transactionId",
+      "type":     "string"
     },
     {
-      'name': 'timestamp',
-      'baseName': 'timestamp',
-      'type': 'Date'
+      "name":     "timestamp",
+      "baseName": "timestamp",
+      "type":     "Date"
     }];
 
   static getAttributeTypeMap() {
@@ -845,24 +845,24 @@ export class Creation {
 
   static attributeTypeMap: Array<{ name: string, baseName: string, type: string }> = [
     {
-      'name': '$Class',
-      'baseName': '$class',
-      'type': 'string'
+      "name":     "$Class",
+      "baseName": "$class",
+      "type":     "string"
     },
     {
-      'name': 'address',
-      'baseName': 'address',
-      'type': 'Address'
+      "name":     "address",
+      "baseName": "address",
+      "type":     "Address"
     },
     {
-      'name': 'date',
-      'baseName': 'date',
-      'type': 'number'
+      "name":     "date",
+      "baseName": "date",
+      "type":     "number"
     },
     {
-      'name': 'id',
-      'baseName': 'id',
-      'type': 'string'
+      "name":     "id",
+      "baseName": "id",
+      "type":     "string"
     }];
 
   static getAttributeTypeMap() {
@@ -896,9 +896,9 @@ export class Delivery {
             "type": "Address"
         },
         {
-          'name': 'date',
+          "name":       "date",
             "baseName": "date",
-          'type': 'number'
+          "type":       "number"
         },
         {
             "name": "id",
@@ -962,6 +962,10 @@ export class ECMR {
     'paymentInstructions': string;
     'payOnDelivery': string;
     'documents': Array<string>;
+    'compoundSignature': Signature;
+    'carrierLoadingSignature': Signature;
+    'recipientSignature': Signature;
+    'carrierDeliverySignature': Signature;
 
     static discriminator = undefined;
 
@@ -982,19 +986,19 @@ export class ECMR {
             "type": "ECMR.StatusEnum"
         },
         {
-          'name': 'creation',
-          'baseName': 'creation',
-          'type': 'Creation'
+          "name":     "creation",
+          "baseName": "creation",
+          "type":     "Creation"
         },
       {
-        'name': 'loading',
-        'baseName': 'loading',
+        "name":     "loading",
+        "baseName": "loading",
             "type": "Loading"
         },
         {
-          'name': 'delivery',
-          'baseName': 'delivery',
-          'type': 'Delivery'
+          "name":     "delivery",
+          "baseName": "delivery",
+          "type":     "Delivery"
         },
         {
             "name": "owner",
@@ -1032,14 +1036,14 @@ export class ECMR {
             "type": "number"
         },
         {
-          'name': 'issuedBy',
-          'baseName': 'issuedBy',
-          'type': 'string'
+          "name":     "issuedBy",
+          "baseName": "issuedBy",
+          "type":     "string"
         },
       {
-        'name': 'carrierComments',
-        'baseName': 'carrierComments',
-        'type': 'string'
+        "name":     "carrierComments",
+        "baseName": "carrierComments",
+        "type":     "string"
       },
         {
             "name": "goods",
@@ -1062,9 +1066,29 @@ export class ECMR {
             "type": "string"
         },
       {
-        'name': 'documents',
-        'baseName': 'documents',
-        'type': 'Array<string>'
+        "name":     "documents",
+        "baseName": "documents",
+        "type":     "Array<string>"
+      },
+      {
+        "name":     "compoundSignature",
+        "baseName": "compoundSignature",
+        "type":     "Signature"
+      },
+      {
+        "name":     "carrierLoadingSignature",
+        "baseName": "carrierLoadingSignature",
+        "type":     "Signature"
+      },
+      {
+        "name":     "recipientSignature",
+        "baseName": "recipientSignature",
+        "type":     "Signature"
+      },
+      {
+        "name":     "carrierDeliverySignature",
+        "baseName": "carrierDeliverySignature",
+        "type":     "Signature"
       }];
 
     static getAttributeTypeMap() {
@@ -1074,8 +1098,8 @@ export class ECMR {
 
 export namespace ECMR {
     export enum StatusEnum {
-      CREATED = <any> 'CREATED',
-      LOADED = <any> 'LOADED',
+      CREATED   = <any> 'CREATED',
+      LOADED    = <any> 'LOADED',
       INTRANSIT = <any> 'IN_TRANSIT',
       DELIVERED = <any> 'DELIVERED'
     }
@@ -1106,9 +1130,9 @@ export class Good {
             "type": "string"
         },
         {
-          'name': 'vehicle',
+          "name":       "vehicle",
             "baseName": "vehicle",
-          'type': 'Vehicle'
+          "type":       "Vehicle"
         },
         {
             "name": "carrierLoadingRemark",
@@ -1131,9 +1155,9 @@ export class Good {
             "type": "Remark"
         },
         {
-          'name': 'description',
-          'baseName': 'description',
-          'type': 'string'
+          "name":     "description",
+          "baseName": "description",
+          "type":     "string"
         },
         {
             "name": "weight",
@@ -1361,9 +1385,9 @@ export class Loading {
             "type": "Address"
         },
         {
-          'name': 'date',
+          "name":       "date",
             "baseName": "date",
-          'type': 'number'
+          "type":       "number"
         },
         {
             "name": "id",
@@ -1618,6 +1642,74 @@ export class Remark {
 }
 
 /**
+ * A concept named Signature
+ */
+export class Signature {
+  /**
+   * The class identifier for this type
+   */
+  '$Class': string;
+  /**
+   * The identifier of an instance of certificate
+   */
+  'certificate': string;
+  'latitude': number;
+  'longitude': number;
+  'ip': string;
+  'timestamp': number;
+  'generalRemark': Remark;
+  'id': string;
+
+  static discriminator = undefined;
+
+  static attributeTypeMap: Array<{ name: string, baseName: string, type: string }> = [
+    {
+      "name":     "$Class",
+      "baseName": "$class",
+      "type":     "string"
+    },
+    {
+      "name":     "certificate",
+      "baseName": "certificate",
+      "type":     "string"
+    },
+    {
+      "name":     "latitude",
+      "baseName": "latitude",
+      "type":     "number"
+    },
+    {
+      "name":     "longitute",
+      "baseName": "longitute",
+      "type":     "number"
+    },
+    {
+      "name":     "ip",
+      "baseName": "ip",
+      "type":     "string"
+    },
+    {
+      "name":     "timestamp",
+      "baseName": "timestamp",
+      "type":     "number"
+    },
+    {
+      "name":     "generalRemark",
+      "baseName": "generalRemark",
+      "type":     "Remark"
+    },
+    {
+      "name":     "id",
+      "baseName": "id",
+      "type":     "string"
+    }];
+
+  static getAttributeTypeMap() {
+    return Signature.attributeTypeMap;
+  }
+}
+
+/**
  * A transaction named UpdateECMR
  */
 export class UpdateECMR {
@@ -1636,24 +1728,24 @@ export class UpdateECMR {
 
   static attributeTypeMap: Array<{ name: string, baseName: string, type: string }> = [
     {
-      'name': '$Class',
-      'baseName': '$class',
-      'type': 'string'
+      "name":     "$Class",
+      "baseName": "$class",
+      "type":     "string"
     },
     {
-      'name': 'ecmr',
-      'baseName': 'ecmr',
-      'type': 'ECMR'
+      "name":     "ecmr",
+      "baseName": "ecmr",
+      "type":     "ECMR"
     },
     {
-      'name': 'transactionId',
-      'baseName': 'transactionId',
-      'type': 'string'
+      "name":     "transactionId",
+      "baseName": "transactionId",
+      "type":     "string"
     },
     {
-      'name': 'timestamp',
-      'baseName': 'timestamp',
-      'type': 'Date'
+      "name":     "timestamp",
+      "baseName": "timestamp",
+      "type":     "Date"
     }];
 
   static getAttributeTypeMap() {
@@ -1679,7 +1771,7 @@ export class Vehicle {
   /**
    * The identifier of an instance of ecmrs
    */
-  'ecmrs': Array<string>;
+    'ecmrs': Array<string>;
     'odoMeterReading': number;
     'plateNumber': string;
 
@@ -1692,9 +1784,9 @@ export class Vehicle {
             "type": "string"
         },
         {
-          'name': 'vin',
-          'baseName': 'vin',
-          'type': 'string'
+          "name":     "vin",
+          "baseName": "vin",
+          "type":     "string"
         },
         {
             "name": "manufacturer",
@@ -1702,29 +1794,29 @@ export class Vehicle {
             "type": "string"
         },
       {
-        'name': 'model',
-        'baseName': 'model',
-        'type': 'string'
+        "name":     "model",
+        "baseName": "model",
+        "type":     "string"
       },
       {
-        'name': 'type',
-        'baseName': 'type',
-        'type': 'string'
+        "name":     "type",
+        "baseName": "type",
+        "type":     "string"
       },
       {
-        'name': 'ecmrs',
-        'baseName': 'ecmrs',
-        'type': 'Array<string>'
+        "name":     "ecmrs",
+        "baseName": "ecmrs",
+        "type":     "Array<string>"
       },
       {
-        'name': 'odoMeterReading',
-        'baseName': 'odoMeterReading',
-        'type': 'number'
+        "name":     "odoMeterReading",
+        "baseName": "odoMeterReading",
+        "type":     "number"
       },
       {
-        'name': 'plateNumber',
-        'baseName': 'plateNumber',
-        'type': 'string'
+        "name":     "plateNumber",
+        "baseName": "plateNumber",
+        "type":     "string"
       }];
 
     static getAttributeTypeMap() {
@@ -1738,37 +1830,38 @@ let enumsMap = {
 }
 
 let typeMap = {
-  'Address': Address,
-  'BindIdentityRequest': BindIdentityRequest,
-  'CarrierAdmin': CarrierAdmin,
-  'CarrierMember': CarrierMember,
-  'CarrierOrg': CarrierOrg,
-  'CompoundAdmin': CompoundAdmin,
-  'CompoundOrg': CompoundOrg,
-  'CreateCarrierOrg': CreateCarrierOrg,
-  'CreateCompoundOrg': CreateCompoundOrg,
-  'CreateECMR': CreateECMR,
-  'CreateECMRs': CreateECMRs,
-  'CreateLegalOwnerOrg': CreateLegalOwnerOrg,
-  'CreateRecipientOrg': CreateRecipientOrg,
-  'CreateVehicles': CreateVehicles,
-  'Creation': Creation,
-  'Delivery': Delivery,
-  'ECMR': ECMR,
-  'Good': Good,
-  'InlineResponse200': InlineResponse200,
-  'IssueIdentityRequest': IssueIdentityRequest,
+  "Address":                 Address,
+  "BindIdentityRequest":     BindIdentityRequest,
+  "CarrierAdmin":            CarrierAdmin,
+  "CarrierMember":           CarrierMember,
+  "CarrierOrg":              CarrierOrg,
+  "CompoundAdmin":           CompoundAdmin,
+  "CompoundOrg":             CompoundOrg,
+  "CreateCarrierOrg":        CreateCarrierOrg,
+  "CreateCompoundOrg":       CreateCompoundOrg,
+  "CreateECMR":              CreateECMR,
+  "CreateECMRs":             CreateECMRs,
+  "CreateLegalOwnerOrg":     CreateLegalOwnerOrg,
+  "CreateRecipientOrg":      CreateRecipientOrg,
+  "CreateVehicles":          CreateVehicles,
+  "Creation":                Creation,
+  "Delivery":                Delivery,
+  "ECMR":                    ECMR,
+  "Good":                    Good,
+  "InlineResponse200":       InlineResponse200,
+  "IssueIdentityRequest":    IssueIdentityRequest,
     "IssueIdentityResponse": IssueIdentityResponse,
-  'LegalOwnerAdmin': LegalOwnerAdmin,
-  'LegalOwnerOrg': LegalOwnerOrg,
-  'Loading': Loading,
-  'PingResponse': PingResponse,
-  'RecipientAdmin': RecipientAdmin,
-  'RecipientMember': RecipientMember,
-  'RecipientOrg': RecipientOrg,
-  'Remark': Remark,
-  'UpdateECMR': UpdateECMR,
-  'Vehicle': Vehicle,
+  "LegalOwnerAdmin":         LegalOwnerAdmin,
+  "LegalOwnerOrg":           LegalOwnerOrg,
+  "Loading":                 Loading,
+  "PingResponse":            PingResponse,
+  "RecipientAdmin":          RecipientAdmin,
+  "RecipientMember":         RecipientMember,
+  "RecipientOrg":            RecipientOrg,
+  "Remark":                  Remark,
+  "Signature":               Signature,
+  "UpdateECMR":              UpdateECMR,
+  "Vehicle":                 Vehicle,
 }
 
 export interface Authentication {
@@ -3716,23 +3809,23 @@ export class CreateCarrierOrgApi {
      * @param data Model instance data
      */
     public createCarrierOrgCreate(data?: CreateCarrierOrg): Promise<{ response: http.IncomingMessage; body: CreateCarrierOrg; }> {
-      const localVarPath = this.basePath + '/CreateCarrierOrg';
+      const localVarPath         = this.basePath + '/CreateCarrierOrg';
         let queryParameters: any = {};
-      let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
-      let formParams: any = {};
+      let headerParams: any      = (<any>Object).assign({}, this.defaultHeaders);
+      let formParams: any        = {};
 
 
 
         let useFormData = false;
 
         let requestOptions: request.Options = {
-          method: 'POST',
-          qs: queryParameters,
-          headers: headerParams,
-          uri: localVarPath,
+          method:           'POST',
+          qs:               queryParameters,
+          headers:          headerParams,
+          uri:              localVarPath,
             useQuerystring: this._useQuerystring,
-          json: true,
-          body: ObjectSerializer.serialize(data, 'CreateCarrierOrg')
+          json:             true,
+          body:             ObjectSerializer.serialize(data, "CreateCarrierOrg")
         };
 
         this.authentications.default.applyToRequest(requestOptions);
@@ -3749,7 +3842,7 @@ export class CreateCarrierOrgApi {
                 if (error) {
                     reject(error);
                 } else {
-                  body = ObjectSerializer.deserialize(body, 'CreateCarrierOrg');
+                  body = ObjectSerializer.deserialize(body, "CreateCarrierOrg");
                     if (response.statusCode >= 200 && response.statusCode <= 299) {
                         resolve({ response: response, body: body });
                     } else {
@@ -3764,8 +3857,8 @@ export enum CreateCompoundOrgApiApiKeys {
 }
 
 export class CreateCompoundOrgApi {
-  protected _basePath = defaultBasePath;
-  protected defaultHeaders: any = {};
+  protected _basePath                = defaultBasePath;
+  protected defaultHeaders: any      = {};
   protected _useQuerystring: boolean = false;
 
   protected authentications = {
@@ -3811,22 +3904,22 @@ export class CreateCompoundOrgApi {
    * @param data Model instance data
    */
   public createCompoundOrgCreate(data?: CreateCompoundOrg): Promise<{ response: http.IncomingMessage; body: CreateCompoundOrg; }> {
-    const localVarPath = this.basePath + '/CreateCompoundOrg';
+    const localVarPath       = this.basePath + '/CreateCompoundOrg';
     let queryParameters: any = {};
-    let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
-    let formParams: any = {};
+    let headerParams: any    = (<any>Object).assign({}, this.defaultHeaders);
+    let formParams: any      = {};
 
 
     let useFormData = false;
 
     let requestOptions: request.Options = {
-      method: 'POST',
-      qs: queryParameters,
-      headers: headerParams,
-      uri: localVarPath,
+      method:         'POST',
+      qs:             queryParameters,
+      headers:        headerParams,
+      uri:            localVarPath,
       useQuerystring: this._useQuerystring,
-      json: true,
-      body: ObjectSerializer.serialize(data, 'CreateCompoundOrg')
+      json:           true,
+      body:           ObjectSerializer.serialize(data, "CreateCompoundOrg")
     };
 
     this.authentications.default.applyToRequest(requestOptions);
@@ -3843,7 +3936,7 @@ export class CreateCompoundOrgApi {
         if (error) {
           reject(error);
         } else {
-          body = ObjectSerializer.deserialize(body, 'CreateCompoundOrg');
+          body = ObjectSerializer.deserialize(body, "CreateCompoundOrg");
           if (response.statusCode >= 200 && response.statusCode <= 299) {
             resolve({response: response, body: body});
           } else {
@@ -3858,8 +3951,8 @@ export enum CreateECMRApiApiKeys {
 }
 
 export class CreateECMRApi {
-  protected _basePath = defaultBasePath;
-  protected defaultHeaders: any = {};
+  protected _basePath                = defaultBasePath;
+  protected defaultHeaders: any      = {};
   protected _useQuerystring: boolean = false;
 
   protected authentications = {
@@ -3905,22 +3998,22 @@ export class CreateECMRApi {
    * @param data Model instance data
    */
   public createECMRCreate(data?: CreateECMR): Promise<{ response: http.IncomingMessage; body: CreateECMR; }> {
-    const localVarPath = this.basePath + '/CreateECMR';
+    const localVarPath       = this.basePath + '/CreateECMR';
     let queryParameters: any = {};
-    let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
-    let formParams: any = {};
+    let headerParams: any    = (<any>Object).assign({}, this.defaultHeaders);
+    let formParams: any      = {};
 
 
     let useFormData = false;
 
     let requestOptions: request.Options = {
-      method: 'POST',
-      qs: queryParameters,
-      headers: headerParams,
-      uri: localVarPath,
+      method:         'POST',
+      qs:             queryParameters,
+      headers:        headerParams,
+      uri:            localVarPath,
       useQuerystring: this._useQuerystring,
-      json: true,
-      body: ObjectSerializer.serialize(data, 'CreateECMR')
+      json:           true,
+      body:           ObjectSerializer.serialize(data, "CreateECMR")
     };
 
     this.authentications.default.applyToRequest(requestOptions);
@@ -3937,7 +4030,7 @@ export class CreateECMRApi {
         if (error) {
           reject(error);
         } else {
-          body = ObjectSerializer.deserialize(body, 'CreateECMR');
+          body = ObjectSerializer.deserialize(body, "CreateECMR");
           if (response.statusCode >= 200 && response.statusCode <= 299) {
             resolve({response: response, body: body});
           } else {
@@ -3948,13 +4041,12 @@ export class CreateECMRApi {
     });
   }
 }
-
 export enum CreateECMRsApiApiKeys {
 }
 
 export class CreateECMRsApi {
-  protected _basePath = defaultBasePath;
-  protected defaultHeaders: any = {};
+  protected _basePath                = defaultBasePath;
+  protected defaultHeaders: any      = {};
   protected _useQuerystring: boolean = false;
 
   protected authentications = {
@@ -4000,22 +4092,22 @@ export class CreateECMRsApi {
    * @param data Model instance data
    */
   public createECMRsCreate(data?: CreateECMRs): Promise<{ response: http.IncomingMessage; body: CreateECMRs; }> {
-    const localVarPath = this.basePath + '/CreateECMRs';
+    const localVarPath       = this.basePath + '/CreateECMRs';
     let queryParameters: any = {};
-    let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
-    let formParams: any = {};
+    let headerParams: any    = (<any>Object).assign({}, this.defaultHeaders);
+    let formParams: any      = {};
 
 
     let useFormData = false;
 
     let requestOptions: request.Options = {
-      method: 'POST',
-      qs: queryParameters,
-      headers: headerParams,
-      uri: localVarPath,
+      method:         'POST',
+      qs:             queryParameters,
+      headers:        headerParams,
+      uri:            localVarPath,
       useQuerystring: this._useQuerystring,
-      json: true,
-      body: ObjectSerializer.serialize(data, 'CreateECMRs')
+      json:           true,
+      body:           ObjectSerializer.serialize(data, "CreateECMRs")
     };
 
     this.authentications.default.applyToRequest(requestOptions);
@@ -4032,7 +4124,7 @@ export class CreateECMRsApi {
         if (error) {
           reject(error);
         } else {
-          body = ObjectSerializer.deserialize(body, 'CreateECMRs');
+          body = ObjectSerializer.deserialize(body, "CreateECMRs");
           if (response.statusCode >= 200 && response.statusCode <= 299) {
             resolve({response: response, body: body});
           } else {
@@ -4047,8 +4139,8 @@ export enum CreateLegalOwnerOrgApiApiKeys {
 }
 
 export class CreateLegalOwnerOrgApi {
-  protected _basePath = defaultBasePath;
-  protected defaultHeaders: any = {};
+  protected _basePath                = defaultBasePath;
+  protected defaultHeaders: any      = {};
   protected _useQuerystring: boolean = false;
 
   protected authentications = {
@@ -4094,22 +4186,22 @@ export class CreateLegalOwnerOrgApi {
    * @param data Model instance data
    */
   public createLegalOwnerOrgCreate(data?: CreateLegalOwnerOrg): Promise<{ response: http.IncomingMessage; body: CreateLegalOwnerOrg; }> {
-    const localVarPath = this.basePath + '/CreateLegalOwnerOrg';
+    const localVarPath       = this.basePath + '/CreateLegalOwnerOrg';
     let queryParameters: any = {};
-    let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
-    let formParams: any = {};
+    let headerParams: any    = (<any>Object).assign({}, this.defaultHeaders);
+    let formParams: any      = {};
 
 
     let useFormData = false;
 
     let requestOptions: request.Options = {
-      method: 'POST',
-      qs: queryParameters,
-      headers: headerParams,
-      uri: localVarPath,
+      method:         'POST',
+      qs:             queryParameters,
+      headers:        headerParams,
+      uri:            localVarPath,
       useQuerystring: this._useQuerystring,
-      json: true,
-      body: ObjectSerializer.serialize(data, 'CreateLegalOwnerOrg')
+      json:           true,
+      body:           ObjectSerializer.serialize(data, "CreateLegalOwnerOrg")
     };
 
     this.authentications.default.applyToRequest(requestOptions);
@@ -4126,7 +4218,7 @@ export class CreateLegalOwnerOrgApi {
         if (error) {
           reject(error);
         } else {
-          body = ObjectSerializer.deserialize(body, 'CreateLegalOwnerOrg');
+          body = ObjectSerializer.deserialize(body, "CreateLegalOwnerOrg");
           if (response.statusCode >= 200 && response.statusCode <= 299) {
             resolve({response: response, body: body});
           } else {
@@ -4141,8 +4233,8 @@ export enum CreateRecipientOrgApiApiKeys {
 }
 
 export class CreateRecipientOrgApi {
-  protected _basePath = defaultBasePath;
-  protected defaultHeaders: any = {};
+  protected _basePath                = defaultBasePath;
+  protected defaultHeaders: any      = {};
   protected _useQuerystring: boolean = false;
 
   protected authentications = {
@@ -4188,22 +4280,22 @@ export class CreateRecipientOrgApi {
    * @param data Model instance data
    */
   public createRecipientOrgCreate(data?: CreateRecipientOrg): Promise<{ response: http.IncomingMessage; body: CreateRecipientOrg; }> {
-    const localVarPath = this.basePath + '/CreateRecipientOrg';
+    const localVarPath       = this.basePath + '/CreateRecipientOrg';
     let queryParameters: any = {};
-    let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
-    let formParams: any = {};
+    let headerParams: any    = (<any>Object).assign({}, this.defaultHeaders);
+    let formParams: any      = {};
 
 
     let useFormData = false;
 
     let requestOptions: request.Options = {
-      method: 'POST',
-      qs: queryParameters,
-      headers: headerParams,
-      uri: localVarPath,
+      method:         'POST',
+      qs:             queryParameters,
+      headers:        headerParams,
+      uri:            localVarPath,
       useQuerystring: this._useQuerystring,
-      json: true,
-      body: ObjectSerializer.serialize(data, 'CreateRecipientOrg')
+      json:           true,
+      body:           ObjectSerializer.serialize(data, "CreateRecipientOrg")
     };
 
     this.authentications.default.applyToRequest(requestOptions);
@@ -4220,7 +4312,7 @@ export class CreateRecipientOrgApi {
         if (error) {
           reject(error);
         } else {
-          body = ObjectSerializer.deserialize(body, 'CreateRecipientOrg');
+          body = ObjectSerializer.deserialize(body, "CreateRecipientOrg");
           if (response.statusCode >= 200 && response.statusCode <= 299) {
             resolve({response: response, body: body});
           } else {
@@ -4235,8 +4327,8 @@ export enum CreateVehiclesApiApiKeys {
 }
 
 export class CreateVehiclesApi {
-  protected _basePath = defaultBasePath;
-  protected defaultHeaders: any = {};
+  protected _basePath                = defaultBasePath;
+  protected defaultHeaders: any      = {};
   protected _useQuerystring: boolean = false;
 
   protected authentications = {
@@ -4282,22 +4374,22 @@ export class CreateVehiclesApi {
    * @param data Model instance data
    */
   public createVehiclesCreate(data?: CreateVehicles): Promise<{ response: http.IncomingMessage; body: CreateVehicles; }> {
-    const localVarPath = this.basePath + '/CreateVehicles';
+    const localVarPath       = this.basePath + '/CreateVehicles';
     let queryParameters: any = {};
-    let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
-    let formParams: any = {};
+    let headerParams: any    = (<any>Object).assign({}, this.defaultHeaders);
+    let formParams: any      = {};
 
 
     let useFormData = false;
 
     let requestOptions: request.Options = {
-      method: 'POST',
-      qs: queryParameters,
-      headers: headerParams,
-      uri: localVarPath,
+      method:         'POST',
+      qs:             queryParameters,
+      headers:        headerParams,
+      uri:            localVarPath,
       useQuerystring: this._useQuerystring,
-      json: true,
-      body: ObjectSerializer.serialize(data, 'CreateVehicles')
+      json:           true,
+      body:           ObjectSerializer.serialize(data, "CreateVehicles")
     };
 
     this.authentications.default.applyToRequest(requestOptions);
@@ -4314,7 +4406,7 @@ export class CreateVehiclesApi {
         if (error) {
           reject(error);
         } else {
-          body = ObjectSerializer.deserialize(body, 'CreateVehicles');
+          body = ObjectSerializer.deserialize(body, "CreateVehicles");
           if (response.statusCode >= 200 && response.statusCode <= 299) {
             resolve({response: response, body: body});
           } else {
@@ -5436,8 +5528,8 @@ export enum QueryApiApiKeys {
 }
 
 export class QueryApi {
-  protected _basePath = defaultBasePath;
-  protected defaultHeaders: any = {};
+  protected _basePath                = defaultBasePath;
+  protected defaultHeaders: any      = {};
   protected _useQuerystring: boolean = false;
 
   protected authentications = {
@@ -5482,21 +5574,21 @@ export class QueryApi {
    * @summary Select all ECMRs (user has permission to)
    */
   public queryGetAllEcmrs(): Promise<{ response: http.IncomingMessage; body: Array<ECMR>; }> {
-    const localVarPath = this.basePath + '/queries/getAllEcmrs';
+    const localVarPath       = this.basePath + '/queries/getAllEcmrs';
     let queryParameters: any = {};
-    let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
-    let formParams: any = {};
+    let headerParams: any    = (<any>Object).assign({}, this.defaultHeaders);
+    let formParams: any      = {};
 
 
     let useFormData = false;
 
     let requestOptions: request.Options = {
-      method: 'GET',
-      qs: queryParameters,
-      headers: headerParams,
-      uri: localVarPath,
+      method:         'GET',
+      qs:             queryParameters,
+      headers:        headerParams,
+      uri:            localVarPath,
       useQuerystring: this._useQuerystring,
-      json: true,
+      json:           true,
     };
 
     this.authentications.default.applyToRequest(requestOptions);
@@ -5513,7 +5605,7 @@ export class QueryApi {
         if (error) {
           reject(error);
         } else {
-          body = ObjectSerializer.deserialize(body, 'Array<ECMR>');
+          body = ObjectSerializer.deserialize(body, "Array<ECMR>");
           if (response.statusCode >= 200 && response.statusCode <= 299) {
             resolve({response: response, body: body});
           } else {
@@ -5530,10 +5622,10 @@ export class QueryApi {
    * @param carrier
    */
   public queryGetEcmrsByCarrier(carrier: string): Promise<{ response: http.IncomingMessage; body: Array<ECMR>; }> {
-    const localVarPath = this.basePath + '/queries/getEcmrsByCarrier';
+    const localVarPath       = this.basePath + '/queries/getEcmrsByCarrier';
     let queryParameters: any = {};
-    let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
-    let formParams: any = {};
+    let headerParams: any    = (<any>Object).assign({}, this.defaultHeaders);
+    let formParams: any      = {};
 
 
     // verify required parameter 'carrier' is not null or undefined
@@ -5542,19 +5634,19 @@ export class QueryApi {
     }
 
     if (carrier !== undefined) {
-      queryParameters['carrier'] = ObjectSerializer.serialize(carrier, 'string');
+      queryParameters['carrier'] = ObjectSerializer.serialize(carrier, "string");
     }
 
 
     let useFormData = false;
 
     let requestOptions: request.Options = {
-      method: 'GET',
-      qs: queryParameters,
-      headers: headerParams,
-      uri: localVarPath,
+      method:         'GET',
+      qs:             queryParameters,
+      headers:        headerParams,
+      uri:            localVarPath,
       useQuerystring: this._useQuerystring,
-      json: true,
+      json:           true,
     };
 
     this.authentications.default.applyToRequest(requestOptions);
@@ -5571,7 +5663,7 @@ export class QueryApi {
         if (error) {
           reject(error);
         } else {
-          body = ObjectSerializer.deserialize(body, 'Array<ECMR>');
+          body = ObjectSerializer.deserialize(body, "Array<ECMR>");
           if (response.statusCode >= 200 && response.statusCode <= 299) {
             resolve({response: response, body: body});
           } else {
@@ -5588,10 +5680,10 @@ export class QueryApi {
    * @param transporter
    */
   public queryGetEcmrsByCarrierMember(transporter: string): Promise<{ response: http.IncomingMessage; body: Array<ECMR>; }> {
-    const localVarPath = this.basePath + '/queries/getEcmrsByCarrierMember';
+    const localVarPath       = this.basePath + '/queries/getEcmrsByCarrierMember';
     let queryParameters: any = {};
-    let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
-    let formParams: any = {};
+    let headerParams: any    = (<any>Object).assign({}, this.defaultHeaders);
+    let formParams: any      = {};
 
 
     // verify required parameter 'transporter' is not null or undefined
@@ -5600,19 +5692,19 @@ export class QueryApi {
     }
 
     if (transporter !== undefined) {
-      queryParameters['transporter'] = ObjectSerializer.serialize(transporter, 'string');
+      queryParameters['transporter'] = ObjectSerializer.serialize(transporter, "string");
     }
 
 
     let useFormData = false;
 
     let requestOptions: request.Options = {
-      method: 'GET',
-      qs: queryParameters,
-      headers: headerParams,
-      uri: localVarPath,
+      method:         'GET',
+      qs:             queryParameters,
+      headers:        headerParams,
+      uri:            localVarPath,
       useQuerystring: this._useQuerystring,
-      json: true,
+      json:           true,
     };
 
     this.authentications.default.applyToRequest(requestOptions);
@@ -5629,7 +5721,7 @@ export class QueryApi {
         if (error) {
           reject(error);
         } else {
-          body = ObjectSerializer.deserialize(body, 'Array<ECMR>');
+          body = ObjectSerializer.deserialize(body, "Array<ECMR>");
           if (response.statusCode >= 200 && response.statusCode <= 299) {
             resolve({response: response, body: body});
           } else {
@@ -5646,10 +5738,10 @@ export class QueryApi {
    * @param compound
    */
   public queryGetEcmrsByCompound(compound: string): Promise<{ response: http.IncomingMessage; body: Array<ECMR>; }> {
-    const localVarPath = this.basePath + '/queries/getEcmrsByCompound';
+    const localVarPath       = this.basePath + '/queries/getEcmrsByCompound';
     let queryParameters: any = {};
-    let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
-    let formParams: any = {};
+    let headerParams: any    = (<any>Object).assign({}, this.defaultHeaders);
+    let formParams: any      = {};
 
 
     // verify required parameter 'compound' is not null or undefined
@@ -5658,19 +5750,19 @@ export class QueryApi {
     }
 
     if (compound !== undefined) {
-      queryParameters['compound'] = ObjectSerializer.serialize(compound, 'string');
+      queryParameters['compound'] = ObjectSerializer.serialize(compound, "string");
     }
 
 
     let useFormData = false;
 
     let requestOptions: request.Options = {
-      method: 'GET',
-      qs: queryParameters,
-      headers: headerParams,
-      uri: localVarPath,
+      method:         'GET',
+      qs:             queryParameters,
+      headers:        headerParams,
+      uri:            localVarPath,
       useQuerystring: this._useQuerystring,
-      json: true,
+      json:           true,
     };
 
     this.authentications.default.applyToRequest(requestOptions);
@@ -5687,7 +5779,7 @@ export class QueryApi {
         if (error) {
           reject(error);
         } else {
-          body = ObjectSerializer.deserialize(body, 'Array<ECMR>');
+          body = ObjectSerializer.deserialize(body, "Array<ECMR>");
           if (response.statusCode >= 200 && response.statusCode <= 299) {
             resolve({response: response, body: body});
           } else {
@@ -5705,10 +5797,10 @@ export class QueryApi {
    * @param maxAge
    */
   public queryGetEcmrsByIssueTimeRange(minAge: number, maxAge: number): Promise<{ response: http.IncomingMessage; body: Array<ECMR>; }> {
-    const localVarPath = this.basePath + '/queries/getEcmrsByIssueTimeRange';
+    const localVarPath       = this.basePath + '/queries/getEcmrsByIssueTimeRange';
     let queryParameters: any = {};
-    let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
-    let formParams: any = {};
+    let headerParams: any    = (<any>Object).assign({}, this.defaultHeaders);
+    let formParams: any      = {};
 
 
     // verify required parameter 'minAge' is not null or undefined
@@ -5722,23 +5814,23 @@ export class QueryApi {
     }
 
     if (minAge !== undefined) {
-      queryParameters['min_age'] = ObjectSerializer.serialize(minAge, 'number');
+      queryParameters['min_age'] = ObjectSerializer.serialize(minAge, "number");
     }
 
     if (maxAge !== undefined) {
-      queryParameters['max_age'] = ObjectSerializer.serialize(maxAge, 'number');
+      queryParameters['max_age'] = ObjectSerializer.serialize(maxAge, "number");
     }
 
 
     let useFormData = false;
 
     let requestOptions: request.Options = {
-      method: 'GET',
-      qs: queryParameters,
-      headers: headerParams,
-      uri: localVarPath,
+      method:         'GET',
+      qs:             queryParameters,
+      headers:        headerParams,
+      uri:            localVarPath,
       useQuerystring: this._useQuerystring,
-      json: true,
+      json:           true,
     };
 
     this.authentications.default.applyToRequest(requestOptions);
@@ -5755,7 +5847,7 @@ export class QueryApi {
         if (error) {
           reject(error);
         } else {
-          body = ObjectSerializer.deserialize(body, 'Array<ECMR>');
+          body = ObjectSerializer.deserialize(body, "Array<ECMR>");
           if (response.statusCode >= 200 && response.statusCode <= 299) {
             resolve({response: response, body: body});
           } else {
@@ -5772,10 +5864,10 @@ export class QueryApi {
    * @param owner
    */
   public queryGetEcmrsByOwner(owner: string): Promise<{ response: http.IncomingMessage; body: Array<ECMR>; }> {
-    const localVarPath = this.basePath + '/queries/getEcmrsByOwner';
+    const localVarPath       = this.basePath + '/queries/getEcmrsByOwner';
     let queryParameters: any = {};
-    let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
-    let formParams: any = {};
+    let headerParams: any    = (<any>Object).assign({}, this.defaultHeaders);
+    let formParams: any      = {};
 
 
     // verify required parameter 'owner' is not null or undefined
@@ -5784,19 +5876,19 @@ export class QueryApi {
     }
 
     if (owner !== undefined) {
-      queryParameters['owner'] = ObjectSerializer.serialize(owner, 'string');
+      queryParameters['owner'] = ObjectSerializer.serialize(owner, "string");
     }
 
 
     let useFormData = false;
 
     let requestOptions: request.Options = {
-      method: 'GET',
-      qs: queryParameters,
-      headers: headerParams,
-      uri: localVarPath,
+      method:         'GET',
+      qs:             queryParameters,
+      headers:        headerParams,
+      uri:            localVarPath,
       useQuerystring: this._useQuerystring,
-      json: true,
+      json:           true,
     };
 
     this.authentications.default.applyToRequest(requestOptions);
@@ -5813,7 +5905,7 @@ export class QueryApi {
         if (error) {
           reject(error);
         } else {
-          body = ObjectSerializer.deserialize(body, 'Array<ECMR>');
+          body = ObjectSerializer.deserialize(body, "Array<ECMR>");
           if (response.statusCode >= 200 && response.statusCode <= 299) {
             resolve({response: response, body: body});
           } else {
@@ -5830,10 +5922,10 @@ export class QueryApi {
    * @param recipient
    */
   public queryGetEcmrsByRecipientMember(recipient: string): Promise<{ response: http.IncomingMessage; body: Array<ECMR>; }> {
-    const localVarPath = this.basePath + '/queries/getEcmrsByRecipientMember';
+    const localVarPath       = this.basePath + '/queries/getEcmrsByRecipientMember';
     let queryParameters: any = {};
-    let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
-    let formParams: any = {};
+    let headerParams: any    = (<any>Object).assign({}, this.defaultHeaders);
+    let formParams: any      = {};
 
 
     // verify required parameter 'recipient' is not null or undefined
@@ -5842,19 +5934,19 @@ export class QueryApi {
     }
 
     if (recipient !== undefined) {
-      queryParameters['recipient'] = ObjectSerializer.serialize(recipient, 'string');
+      queryParameters['recipient'] = ObjectSerializer.serialize(recipient, "string");
     }
 
 
     let useFormData = false;
 
     let requestOptions: request.Options = {
-      method: 'GET',
-      qs: queryParameters,
-      headers: headerParams,
-      uri: localVarPath,
+      method:         'GET',
+      qs:             queryParameters,
+      headers:        headerParams,
+      uri:            localVarPath,
       useQuerystring: this._useQuerystring,
-      json: true,
+      json:           true,
     };
 
     this.authentications.default.applyToRequest(requestOptions);
@@ -5871,7 +5963,7 @@ export class QueryApi {
         if (error) {
           reject(error);
         } else {
-          body = ObjectSerializer.deserialize(body, 'Array<ECMR>');
+          body = ObjectSerializer.deserialize(body, "Array<ECMR>");
           if (response.statusCode >= 200 && response.statusCode <= 299) {
             resolve({response: response, body: body});
           } else {
@@ -5888,10 +5980,10 @@ export class QueryApi {
    * @param recipientOrg
    */
   public queryGetEcmrsByRecipientOrg(recipientOrg: string): Promise<{ response: http.IncomingMessage; body: Array<ECMR>; }> {
-    const localVarPath = this.basePath + '/queries/getEcmrsByRecipientOrg';
+    const localVarPath       = this.basePath + '/queries/getEcmrsByRecipientOrg';
     let queryParameters: any = {};
-    let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
-    let formParams: any = {};
+    let headerParams: any    = (<any>Object).assign({}, this.defaultHeaders);
+    let formParams: any      = {};
 
 
     // verify required parameter 'recipientOrg' is not null or undefined
@@ -5900,19 +5992,19 @@ export class QueryApi {
     }
 
     if (recipientOrg !== undefined) {
-      queryParameters['recipientOrg'] = ObjectSerializer.serialize(recipientOrg, 'string');
+      queryParameters['recipientOrg'] = ObjectSerializer.serialize(recipientOrg, "string");
     }
 
 
     let useFormData = false;
 
     let requestOptions: request.Options = {
-      method: 'GET',
-      qs: queryParameters,
-      headers: headerParams,
-      uri: localVarPath,
+      method:         'GET',
+      qs:             queryParameters,
+      headers:        headerParams,
+      uri:            localVarPath,
       useQuerystring: this._useQuerystring,
-      json: true,
+      json:           true,
     };
 
     this.authentications.default.applyToRequest(requestOptions);
@@ -5929,7 +6021,7 @@ export class QueryApi {
         if (error) {
           reject(error);
         } else {
-          body = ObjectSerializer.deserialize(body, 'Array<ECMR>');
+          body = ObjectSerializer.deserialize(body, "Array<ECMR>");
           if (response.statusCode >= 200 && response.statusCode <= 299) {
             resolve({response: response, body: body});
           } else {
@@ -5946,10 +6038,10 @@ export class QueryApi {
    * @param status
    */
   public queryGetEcmrsByStatus(status: string): Promise<{ response: http.IncomingMessage; body: Array<ECMR>; }> {
-    const localVarPath = this.basePath + '/queries/getEcmrsByStatus';
+    const localVarPath       = this.basePath + '/queries/getEcmrsByStatus';
     let queryParameters: any = {};
-    let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
-    let formParams: any = {};
+    let headerParams: any    = (<any>Object).assign({}, this.defaultHeaders);
+    let formParams: any      = {};
 
 
     // verify required parameter 'status' is not null or undefined
@@ -5958,19 +6050,19 @@ export class QueryApi {
     }
 
     if (status !== undefined) {
-      queryParameters['status'] = ObjectSerializer.serialize(status, 'string');
+      queryParameters['status'] = ObjectSerializer.serialize(status, "string");
     }
 
 
     let useFormData = false;
 
     let requestOptions: request.Options = {
-      method: 'GET',
-      qs: queryParameters,
-      headers: headerParams,
-      uri: localVarPath,
+      method:         'GET',
+      qs:             queryParameters,
+      headers:        headerParams,
+      uri:            localVarPath,
       useQuerystring: this._useQuerystring,
-      json: true,
+      json:           true,
     };
 
     this.authentications.default.applyToRequest(requestOptions);
@@ -5987,7 +6079,7 @@ export class QueryApi {
         if (error) {
           reject(error);
         } else {
-          body = ObjectSerializer.deserialize(body, 'Array<ECMR>');
+          body = ObjectSerializer.deserialize(body, "Array<ECMR>");
           if (response.statusCode >= 200 && response.statusCode <= 299) {
             resolve({response: response, body: body});
           } else {
@@ -7559,13 +7651,12 @@ export class SystemApi {
         });
     }
 }
-
 export enum UpdateECMRApiApiKeys {
 }
 
 export class UpdateECMRApi {
-  protected _basePath = defaultBasePath;
-  protected defaultHeaders: any = {};
+  protected _basePath                = defaultBasePath;
+  protected defaultHeaders: any      = {};
   protected _useQuerystring: boolean = false;
 
   protected authentications = {
@@ -7611,22 +7702,22 @@ export class UpdateECMRApi {
    * @param data Model instance data
    */
   public updateECMRCreate(data?: UpdateECMR): Promise<{ response: http.IncomingMessage; body: UpdateECMR; }> {
-    const localVarPath = this.basePath + '/UpdateECMR';
+    const localVarPath       = this.basePath + '/UpdateECMR';
     let queryParameters: any = {};
-    let headerParams: any = (<any>Object).assign({}, this.defaultHeaders);
-    let formParams: any = {};
+    let headerParams: any    = (<any>Object).assign({}, this.defaultHeaders);
+    let formParams: any      = {};
 
 
     let useFormData = false;
 
     let requestOptions: request.Options = {
-      method: 'POST',
-      qs: queryParameters,
-      headers: headerParams,
-      uri: localVarPath,
+      method:         'POST',
+      qs:             queryParameters,
+      headers:        headerParams,
+      uri:            localVarPath,
       useQuerystring: this._useQuerystring,
-      json: true,
-      body: ObjectSerializer.serialize(data, 'UpdateECMR')
+      json:           true,
+      body:           ObjectSerializer.serialize(data, "UpdateECMR")
     };
 
     this.authentications.default.applyToRequest(requestOptions);
@@ -7643,7 +7734,7 @@ export class UpdateECMRApi {
         if (error) {
           reject(error);
         } else {
-          body = ObjectSerializer.deserialize(body, 'UpdateECMR');
+          body = ObjectSerializer.deserialize(body, "UpdateECMR");
           if (response.statusCode >= 200 && response.statusCode <= 299) {
             resolve({response: response, body: body});
           } else {

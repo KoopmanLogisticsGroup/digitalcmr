@@ -28,6 +28,10 @@ asset ECMR identified by ecmrID {
   o String paymentInstructions
   o String payOnDelivery
   o String[] documents optional
+  o Signature compoundSignature optional
+  o Signature carrierLoadingSignature optional
+  o Signature recipientSignature optional
+  o Signature carrierDeliverySignature optional
 }
 
 abstract asset Entity identified by entityID {
@@ -105,8 +109,8 @@ concept Address {
   o String city
   o String zipCode
   o String country
-  o Integer latitude
-  o Integer longitude
+  o Double latitude
+  o Double longitude
 }
 
 concept Delivery {
@@ -131,12 +135,21 @@ concept Good {
   o Remark recipientRemark optional
   o Remark carrierDeliveryRemark optional
   o String description optional
-  o Integer weight optional
+  o Double weight optional
 }
 
 concept Remark {
   o String comments
   o Boolean isDamaged
+}
+
+concept Signature {
+  --> User certificate
+  o Double latitude optional
+  o Double longitude optional
+  o String ip optional
+  o Integer timestamp
+  o Remark generalRemark optional
 }
 
 /**
