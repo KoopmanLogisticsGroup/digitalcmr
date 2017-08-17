@@ -14,7 +14,7 @@ export class EcmrDetailComponent implements OnInit {
   public selectedColumns: boolean[];
 
   public constructor(private route: ActivatedRoute,
-              private ecmrService: EcmrService) {
+                     private ecmrService: EcmrService) {
     this.selectedColumns = [false, false, false, false];
   }
 
@@ -41,14 +41,10 @@ export class EcmrDetailComponent implements OnInit {
               break;
             }
             case 'CLOSED': {
-              // this.selectedColumns.forEach((val, index) => {
-              //   this.selectedColumns[index] = true;
-              // });
               this.selectedColumns[3] = true;
               break;
             }
           }
-          console.log(this.selectedColumns);
         });
       });
   }

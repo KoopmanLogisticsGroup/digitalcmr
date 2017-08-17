@@ -1,34 +1,33 @@
 <div class="ui container">
- <div class="row titles">LINE ITEMS</div>
+  <div class="row titles">LINE ITEMS</div>
   <div class="row">
-      <table class="ui padded table">
-        <thead>
-        <tr>
-          <th>VIN</th>
-          <th>Manufacturer</th>
-          <th>Description</th>
-          <th>Weight</th>
-          <th>ODO Meter</th>
-          <th>License Plate</th>
-          <th>Remarks</th>
-          <th>Damage</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let vehicle of ecmr?.goods">
-          <td>{{vehicle?.vehicle.vin}}</td>
-          <td>{{vehicle?.vehicle.manufacturer}}</td>
-          <td>{{vehicle?.description}}</td>
-          <td>{{vehicle?.weight}} kg</td>
-          <td>{{vehicle?.vehicle.odoMeterReading}}</td>
-          <td>{{vehicle?.vehicle.plateNumber}}</td>
-          <td><input (ngModel)="ecmr.carrierComments" class="remarkBox" placeholder="Add remark..."/></td>
-          <td><input class="checkBox" type="checkbox"></td>
-        </tr>
-        </tbody>
-      </table>
-      <button class="ui right floated button buttonDesign" (click)="addRemark()">SIGN OFF</button>
+    <table class="ui padded table">
+      <thead>
+      <tr>
+        <th>VIN</th>
+        <th>Manufacturer</th>
+        <th>Description</th>
+        <th>Weight</th>
+        <th>ODO Meter</th>
+        <th>License Plate</th>
+        <th>Remarks</th>
+        <th>Damage</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let vehicle of ecmr?.goods">
+        <td>{{vehicle?.vehicle.vin}}</td>
+        <td>{{vehicle?.vehicle.manufacturer}}</td>
+        <td>{{vehicle?.description}}</td>
+        <td>{{vehicle?.weight}} kg</td>
+        <td>{{vehicle?.vehicle.odoMeterReading}}</td>
+        <td>{{vehicle?.vehicle.plateNumber}}</td>
+        <td><input (ngModel)="ecmr.carrierComments" class="remarkBox" placeholder="Add remark..."/></td>
+        <td><input class="checkBox" type="checkbox"></td>
+      </tr>
+      </tbody>
+    </table>
+    <button class="ui right floated button buttonDesign" (click)="addRemark()">SIGN OFF</button>
   </div>
-
 </div>
 

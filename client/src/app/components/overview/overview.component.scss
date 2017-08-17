@@ -64,11 +64,45 @@
         margin-left: 30%;
         transform: translateX(-50%);
       }
-      .respImg{
+      .respImg {
+        .commentIcon {
+          content: url("../../../assets/icons/icon-comment.svg");
+        }
+        .exclIcon {
+          content: url("../../../assets/icons/exlamation.svg");
+        }
         img {
           width: 1.2vw;
           height: 1.2vw;
         }
+      }
+      .open-status {
+        background-color: rgba(41, 135, 205, 0.2);
+        color: #2987cd;
+        border-radius: 4px;
+        padding: 6px;
+      }
+      .transit-status {
+        background-color: rgba(28, 181, 172, 0.2);
+        color: #1cb5ac;
+        border-radius: 4px;
+        padding: 6px;
+      }
+      .completed-status {
+        background-color: rgba(45, 184, 75, 0.2);
+        color: #2db84b;
+        border-radius: 4px;
+        padding: 6px;
+      }
+      .viewMore {
+        width: 110%;
+        height: 110%;
+        content: url("../../../assets/icons/button-view-more.svg");
+        padding-right: 15%;
+      }
+      .viewMore:hover {
+        content: url("../../../assets/icons/button-view-more-hover.svg");
+        cursor: pointer;
       }
     }
   }
@@ -89,47 +123,6 @@
   color: #32649e;
   font-size: 1.6vw;
   margin-bottom: 5%;
-
-}
-
-.statusStyle {
-  width: 200px;
-  height: 60px;
-  border-radius: 4px;
-  padding: 4px;
-}
-
-.viewMore {
-  width: 110%;
-  height: 110%;
-  content: url("../../../assets/icons/button-view-more.svg");
-  padding-right: 15%;
-}
-
-.viewMore:hover {
-  content: url("../../../assets/icons/button-view-more-hover.svg");
-  cursor: pointer;
-}
-
-.open-status {
-  background-color: rgba(41, 135, 205, 0.2);
-  color: #2987cd;
-  border-radius: 4px;
-  padding: 6px;
-}
-
-.transit-status {
-  background-color: rgba(28, 181, 172, 0.2);
-  color: #1cb5ac;
-  border-radius: 4px;
-  padding: 6px;
-}
-
-.completed-status {
-  background-color: rgba(45, 184, 75, 0.2);
-  color: #2db84b;
-  border-radius: 4px;
-  padding: 6px;
 }
 
 //Design ui tables
@@ -159,7 +152,7 @@
     padding-left: 0rem;
     padding-right: 0rem;
   }
-  .tab.active{
+  .tab.active {
     margin-left: 0.1%;
     width: 100%;
   }

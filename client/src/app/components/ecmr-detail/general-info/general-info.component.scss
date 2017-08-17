@@ -9,11 +9,9 @@
     border-spacing: 0 1em;
   }
 }
-
 .ui.steps:first-child {
   border: 0;
 }
-
 .generalInfo {
   box-shadow: 0 2px 4px #e3e3e3;
   background-color: white;
@@ -22,12 +20,10 @@
   border-bottom-left-radius: 0.5em;
   border-bottom-right-radius: 0.5em;
   font-size: 0.9em;
-  //padding: 15px 0px;
   .column {
     width: 308px;
     height: 320px;
     padding-left: 40px;
-
     &.active {
       .header {
         color: #2272c2;
@@ -37,8 +33,10 @@
       .commentOverview {
         margin-top: 15%;
       }
+      .iconComment{
+        content: url("../../../../assets/icons/icon-comment.svg");
+      }
     }
-
     &.inactive {
       color: #a8b7c7;
       .header {
@@ -53,21 +51,17 @@
         content: url("../../../../assets/icons/icon-comment-inactive.svg");
       }
     }
-
     &:nth-child(n+2) {
       border-left: 1px solid #d8dde6;
     }
-
     &.completed:hover {
       cursor: pointer;
       border: 1px solid #2987cd;
       border-radius: 6px;
     }
   }
-
   .ecmrInfo {
     text-transform: capitalize;
-
     .imgandtext > img {
       float: left;
     }
@@ -78,18 +72,16 @@
       padding-bottom: 35px;
       width: auto;
       height: auto;
+      content: url("../../../../assets/icons/page-1.svg");
     }
     .addressInfo {
       margin-bottom: 10%;
     }
-
     span {
       display: block;
     }
   }
-
 }
-
 .titles {
   color: #424244;
   margin-left: 3%;
@@ -97,12 +89,10 @@
   margin-bottom: 0.5%;
   font-size: 1.4em;
 }
-
 .progressBar {
   width: 100%;
   margin-top: 3%;
 }
-
 .topLine {
   border-top: 1px solid #d8dde6;
 }

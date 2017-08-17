@@ -1,6 +1,4 @@
-import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
-import {EcmrService} from '../../../services/ecmr.service';
-import {ActivatedRoute} from '@angular/router';
+import {Component, OnInit, Input} from '@angular/core';
 
 @Component({
   selector: 'app-goods',
@@ -15,8 +13,7 @@ export class GoodsComponent implements OnInit {
     this.updateComment = this.ecmr.carrierComments;
   }
 
-  public constructor(private route: ActivatedRoute,
-              private ecmrService: EcmrService) {
+  public constructor() {
   }
 
   public ngOnInit() {

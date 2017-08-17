@@ -35,13 +35,14 @@
             <td>{{ecmr.ecmrID}}</td>
             <td>{{ecmr.loading.address.city}}</td>
             <td>{{ecmr.delivery.address.city}}</td>
-            <td><div class="centerContent">{{ecmr.goods.length}}</div></td>
-            <td>{{ecmr.carrier.split('#')[1]  }}</td>
+            <td>
+              <div class="centerContent">{{ecmr.goods.length}}</div>
+            </td>
+            <td>{{ecmr.carrier.split('#')[1] }}</td>
             <td>{{ecmr.recipient.split('#')[1].split('@')[0]}}</td>
-            <td class="respImg"><img class="centerContent2" src="../../../assets/icons/icon-comment.svg"
-                                           *ngIf="ecmr.carrierComments != '' || null"/></td>
-            <td class="respImg"><img class="centerContent2" src="../../../assets/icons/exlamation.svg"
-                                           *ngIf="ecmr.carrierComments != '' || null"/></td>
+            <td class="respImg"><img class="centerContent2 commentIcon" *ngIf="ecmr.carrierComments != '' || null"/>
+            </td>
+            <td class="respImg"><img class="centerContent2 exclIcon" *ngIf="ecmr.carrierComments != '' || null"/></td>
             <td><span
               [ngClass]="{'open-status' : ecmr.status === 'OPEN',
                         'transit-status' : ecmr.status === 'ON_TRACK',
@@ -51,7 +52,6 @@
             <td>
               <div routerLink="/ecmr/{{ecmr.ecmrID}}"><img class="viewMore"/></div>
             </td>
-
           </tr>
           </tbody>
         </table>

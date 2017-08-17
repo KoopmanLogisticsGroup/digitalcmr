@@ -12,14 +12,11 @@ export class GeneralInfoComponent implements OnInit {
 
   public constructor() {
     this.selectedImage = [false, false, false, false];
-
   }
 
   public selectColumn(number) {
     if (this.ecmr.status === 'CLOSED') {
       this.selectedImage.forEach((val, index) => {
-        console.log(val);
-        console.log(index);
         if (number === index) {
           this.selectedImage[index] = true;
           this.selectedColumns[index] = true;
@@ -28,7 +25,6 @@ export class GeneralInfoComponent implements OnInit {
           this.selectedColumns[index] = false;
         }
       });
-      console.log(this.selectedImage);
     }
   }
 
@@ -43,6 +39,5 @@ export class GeneralInfoComponent implements OnInit {
 
   public ngOnInit() {
     this.defineSelectedColumn();
-    console.log(this.selectedColumns);
   }
 }
