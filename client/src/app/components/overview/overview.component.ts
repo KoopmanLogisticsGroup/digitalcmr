@@ -25,7 +25,7 @@ export class OverviewComponent implements OnInit {
       const userEmail = JSON.parse(localStorage.getItem('currentUser')).user.userEmail;
       console.log(this.ecmrs);
       this.ecmrs = this.ecmrs.filter(ecmr =>
-          ecmr.source.indexOf(userOrg) > 0 ||
+        ecmr.source.indexOf(userOrg) > 0 ||
         (ecmr.transporter.indexOf(userEmail) > 0 && ecmr.carrier.indexOf(userOrg)) > 0 ||
         ecmr.owner.indexOf(userOrg) > 0);
       this.ecmrsFiltered = this.ecmrs.filter(ecmr => ecmr.status.toUpperCase() === 'OPEN');

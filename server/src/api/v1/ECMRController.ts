@@ -1,4 +1,15 @@
-import {Body, Get, JsonController, Post, Req, UseAfter, UseInterceptor, Param, UseBefore, Put} from 'routing-controllers';
+import {
+  Body,
+  Get,
+  JsonController,
+  Post,
+  Req,
+  UseAfter,
+  UseInterceptor,
+  Param,
+  UseBefore,
+  Put
+} from 'routing-controllers';
 import {Container} from 'typedi';
 import {ApiFactory} from '../../utils';
 import {ECMR, ECMRApi, QueryApi} from '../../sdk/api';
@@ -16,7 +27,7 @@ export class ECMRController {
   public constructor(private _transactor: TransactionHandler) {
     const apiFactory   = Container.get(ApiFactory);
     this.queryApi      = apiFactory.get(QueryApi);
-    this.api           = apiFactory.get(ECMRApi);
+    this.api = apiFactory.get(ECMRApi);
     this.assetRegistry = 'ECMR';
     this._transactor   = new TransactionHandler();
   }
@@ -38,7 +49,7 @@ export class ECMRController {
   @Put('/')
   public async update(@Body() ecmr: any, @Req() request: any): Promise<any> {
     let enrollmentID = new JSONWebToken(request).getUserID();
-    let secret       = request.headers.secret;
+    let secret = request.headers.secret;
     return this._transactor.put(ecmr, enrollmentID, secret, (factory, data) => this._transactor.updateECMR(factory, data));
   }
 }
