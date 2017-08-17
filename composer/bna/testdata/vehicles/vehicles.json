@@ -7,7 +7,7 @@
       "manufacturer": "Audi",
       "model": "A1",
       "type": "sportback",
-      "ECMRs": [],
+      "ecmrs": [],
       "odoMeterReading": 0,
       "plateNumber": "AV198RX"
     },
@@ -17,7 +17,7 @@
       "manufacturer": "Audi",
       "model": "A2",
       "type": "sportback",
-      "ECMRs": [],
+      "ecmrs": [],
       "odoMeterReading": 2132,
       "plateNumber": "BV198RX"
     },
@@ -27,7 +27,7 @@
       "manufacturer": "Audi",
       "model": "A3",
       "type": "sportback",
-      "ECMRs": [],
+      "ecmrs": [],
       "odoMeterReading": 1231,
       "plateNumber": "CV198RX"
     },
@@ -37,7 +37,7 @@
       "manufacturer": "Audi",
       "model": "A4",
       "type": "sportback",
-      "ECMRs": [],
+      "ecmrs": [],
       "odoMeterReading": 0,
       "plateNumber": "DV198RX"
     },
@@ -47,7 +47,7 @@
       "manufacturer": "Audi",
       "model": "A5",
       "type": "sportback",
-      "ECMRs": [],
+      "ecmrs": [],
       "odoMeterReading": 12043,
       "plateNumber": "EV198RX"
     },
@@ -57,7 +57,7 @@
       "manufacturer": "Audi",
       "model": "A6",
       "type": "sportback",
-      "ECMRs": [],
+      "ecmrs": [],
       "odoMeterReading": 578,
       "plateNumber": "FV198RX"
     },
@@ -67,7 +67,7 @@
       "manufacturer": "Audi",
       "model": "A7",
       "type": "sportback",
-      "ECMRs": [],
+      "ecmrs": [],
       "odoMeterReading": 0,
       "plateNumber": "GV198RX"
     },
@@ -77,7 +77,7 @@
       "manufacturer": "Audi",
       "model": "A8",
       "type": "sportback",
-      "ECMRs": [],
+      "ecmrs": [],
       "odoMeterReading": 0,
       "plateNumber": "HV198RX"
     },
@@ -87,7 +87,7 @@
       "manufacturer": "Audi",
       "model": "A9",
       "type": "sportback",
-      "ECMRs": [],
+      "ecmrs": [],
       "odoMeterReading": 12319,
       "plateNumber": "IV198RX"
     },
@@ -97,7 +97,7 @@
       "manufacturer": "Audi",
       "model": "A10",
       "type": "sportback",
-      "ECMRs": [],
+      "ecmrs": [],
       "odoMeterReading": 20000,
       "plateNumber": "JV198RX"
     }

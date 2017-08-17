@@ -124,21 +124,13 @@ composer transaction submit \
     -s "${COMPOSER_PASSWORD}" \
     -d "$( cat testdata/organizations/cardealer.json)"
 
-echo 'Creating first vehicles'
+echo 'Creating vehicles'
 composer transaction submit \
     -p defaultProfile \
     -n "${COMPOSER_NETWORK}" \
     -i "${COMPOSER_USER}" \
     -s "${COMPOSER_PASSWORD}" \
     -d "$( cat testdata/vehicles/vehicles.json)"
-
-echo 'Creating first ECMR'
-composer transaction submit \
-    -p defaultProfile \
-    -n "${COMPOSER_NETWORK}" \
-    -i "${COMPOSER_USER}" \
-    -s "${COMPOSER_PASSWORD}" \
-    -d "$( cat testdata/ecmr/ecmr-01.json)"
 
 echo 'Creating ECMRs'
 composer transaction submit \
