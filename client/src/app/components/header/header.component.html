@@ -1,10 +1,13 @@
 <div class="ui fixed menu designMenu">
-  <img class="logo" src="/../assets/img/Koopman.jpg">
+  <img class="logo"/>
   <div class="right menu">
     <div *ngIf="getUser() != null" class="userDisplay"><span class="welcomeMsg">Welcome {{getUser()}}</span>
-      <img src="../../../assets/icons/placeholder-willem.svg" class="userImage"/>
-      <div (click)="logout()" routerLink="/login" class="logoutIcon"><a><img
-        src="../../../assets/icons/iconlogout.svg"/></a>
+      <img *ngIf="getUser() === 'willem' || 'lapo'" src="../../../assets/icons/placeholder-willem.svg"
+           class="userImage"/>
+      <img *ngIf="getUser() === 'harry'" src="../../../assets/icons/placeholder-harry.svg" class="userImage"/>
+      <img *ngIf="getUser() === 'rob'" src="../../../assets/icons/icon-rob.svg" class="userImage"/>
+      <div (click)="logout()" routerLink="/login" class="logoutIcon">
+        <img class="logoutIcon"/>
       </div>
     </div>
   </div>

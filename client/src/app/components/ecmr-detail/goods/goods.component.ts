@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 
 @Component({
   selector: 'app-goods',
@@ -6,10 +6,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./goods.component.scss']
 })
 export class GoodsComponent implements OnInit {
+  @Input() public ecmr: any;
+  public updateComment: any;
 
-  constructor() { }
-
-  ngOnInit() {
+  public addRemark() {
+    this.updateComment = this.ecmr.carrierComments;
   }
 
+  public constructor() {
+  }
+
+  public ngOnInit() {
+  }
 }

@@ -3,13 +3,12 @@ import {Router} from '@angular/router';
 import {AuthenticationService} from '../../services/authentication.service';
 
 @Component({
-  selector:    'app-header',
+  selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls:   ['./header.component.scss']
+  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
 
-  public role: string;
   public currentView: string;
 
   public constructor(private router: Router,
@@ -25,14 +24,13 @@ export class HeaderComponent implements OnInit {
       return user;
     }
     return null;
-}
+  }
 
   public logout() {
     this._authenticationService.logout();
-    }
+  }
 
   public setOverview(): void {
     this.currentView = 'overview';
   }
-
 }

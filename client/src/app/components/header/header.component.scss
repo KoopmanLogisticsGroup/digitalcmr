@@ -1,49 +1,44 @@
 .designMenu {
   position: relative;
-  height: 90px;
-}
-
-.logo {
-  position: absolute;
-  width: 10%;
-  top: 50%;
-  left: 11%;
-  transform: translateY(-50%);
+  height: 70px;
+  .logo {
+    position: absolute;
+    width: 10%;
+    top: 50%;
+    left: 11%;
+    transform: translateY(-50%);
+    content: url("../../../assets/img/Koopman.jpg");
+  }
+  .userDisplay{
+    position: relative;
+    width: 400px;
+    display: block;
+    .welcomeMsg{
+      position: absolute;
+      display: inline-block;
+      margin-top: 5%;
+      margin-left: 5%;
+    }
+    .userImage{
+      position: absolute;
+      margin-top: 3.2%;
+      padding-right: 20px;
+      margin-left: 35%;
+    }
+  }
+  .logoutIcon{
+    position: absolute;
+    display: inline-block;
+    margin-left: 45%;
+    padding-left: 20px;
+    margin-top: 4.4%;
+    content: url("../../../assets/icons/iconlogout.svg");
+    &:hover{
+      content: url("../../../assets/icons/icon-logout-off.svg");
+    }
+  }
 }
 
 .no-border:before {
   width: 0px !important;
-}
-
-a{
-  color: #212121;
-}
-
-.userDisplay{
-  position: relative;
-  width: 400px;
-  display: block;
-  margin-top: 2%;
-}
-
-.logoutIcon{
-  position: absolute;
-  display: inline-block;
-  margin-left: 45%;
-  padding-left: 20px;
-  margin-top: 4.7%;
-}
-
-.userImage{
-  position: absolute;
-  margin-top: 3.2%;
-  padding-right: 20px;
-  margin-left: 35%;
-}
-
-.welcomeMsg{
-  position: absolute;
-  display: inline-block;
-  margin-top: 6%;
-  margin-left: 5%;
 }

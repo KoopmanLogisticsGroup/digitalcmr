@@ -1,51 +1,90 @@
-<div class="ui mini steps progressbar content-top-margin">
-  <div class="step">
-    <i class="truck icon"></i>
-    <div class="content">
-      <div class="title">CREATED</div>
-      <div class="description">Date: 03 august 2017</div>
+<div class="row titles">
+  <div class="column">CMR {{ecmr?.ecmrID}}</div>
+</div>
+<div class="row topLine"></div>
+<img class="progressBar" *ngIf="ecmr?.status === 'CREATED'" src="../../../../assets/img/progress-indicator-01.svg"/>
+<img class="progressBar" *ngIf="ecmr?.status === 'LOADED'" src="../../../../assets/img/progress-indicator-02.svg"/>
+<img class="progressBar" *ngIf="ecmr?.status === 'IN_TRANSIT'" src="../../../../assets/img/progress-indicator-03.svg"/>
+<img class="progressBar" *ngIf="ecmr?.status === 'DELIVERED'" src="../../../../assets/img/progress-indicator-04.svg"
+     [ngClass]="{'selectedImg1' : selectedImage[0], 'selectedImg2' : selectedImage[1], 'selectedImg3' : selectedImage[2], 'selectedImg4' : selectedImage[3]}"/>
+<div class="row titles">GENERAL INFORMATION</div>
+<div class="ui four column padded doubling unstackable grid generalInfo">
+  <div class="column" [ngClass]="{'completed': ecmr?.status === 'DELIVERED', 'active': selectedColumns[0],
+  'inactive': !selectedColumns[0]}" (click)="selectColumn(0)">
+    <div class="header">ORDER GIVER</div>
+    <div class="center ecmrInfo">
+      <div class="imgandtext">
+        <img class="addressImg"/>
+        <div class="addressInfo">
+          <span>{{ecmr?.owner.split('#')[1]}}</span>
+          <span>{{ecmr?.loading.address.street}} {{ecmr?.loading.address.houseNumber}}</span>
+          <span>{{ecmr?.loading.address.zipCode}}, {{ecmr?.loading.address.city}}</span>
+        </div>
+      </div>
+      <span><b>Reference Nr.:</b> 213141214</span>
+      <span class="addressInfo"><b>Signed by:</b> Leaseplan</span>
+      <span><b>Date:</b> 25-10-2017(12:22)</span>
     </div>
+    <img class="commentOverview iconComment"/> {{ecmr?.carrierComments}}
   </div>
-  <div class="active step">
-    <i class="payment icon"></i>
+  <div class="column" [ngClass]="{'completed': ecmr?.status === 'DELIVERED', 'active': selectedColumns[1],
+  'inactive': !selectedColumns[1]}" (click)="selectColumn(1)">
     <div class="content">
-      <div class="title">LOAD</div>
-      <div class="description">to be concluded</div>
+      <div class="header">KOOPMAN COMPOUND</div>
+      <div class="ecmrInfo">
+        <div class="imgandtext">
+          <img class="addressImg"/>
+          <div class="addressInfo">
+            <span>{{ecmr?.source.split('#')[1]}}</span>
+            <span>{{ecmr?.creation.address.street}} {{ecmr?.creation.address.houseNumber}}</span>
+            <span>{{ecmr?.creation.address.zipCode}}, {{ecmr?.creation.address.city}}</span>
+          </div>
+        </div>
+        <span><b>Reference Nr.:</b> 213141214</span>
+        <span class="addressInfo"><b>Signed by:</b> Leaseplan</span>
+        <span><b>Date:</b> 24-01-2017(13:09)</span>
+      </div>
     </div>
+    <img class="commentOverview iconComment"/> {{ecmr?.carrierComments}}
   </div>
-  <div class="disabled step">
-    <i class="info icon"></i>
-    <div class="content">
-      <div class="title">DELIVERED</div>
-      <div class="description">Date: 06 august 2017</div>
+  <div class="column" [ngClass]="{'completed': ecmr?.status === 'DELIVERED', 'active': selectedColumns[2],
+  'inactive': !selectedColumns[2]}" (click)="selectColumn(2)">
+    <div>
+      <div class="header">TRANSPORTER</div>
+      <div class="ecmrInfo">
+        <div class="imgandtext">
+          <img class="addressImg"/>
+          <div class="addressInfo">
+            <span>{{ecmr?.carrier.split('#')[1]}} - {{ecmr?.transporter.split('#')[1].split('@')[0]}}</span>
+            <span>{{ecmr?.creation.address.street}} {{ecmr?.creation.address.houseNumber}}</span>
+            <span>{{ecmr?.creation.address.zipCode}}, {{ecmr?.creation.address.city}}</span>
+          </div>
+        </div>
+        <span><b>Reference Nr.:</b> 213141214</span>
+        <span class="addressInfo"><b>Signed by:</b> Leaseplan</span>
+        <span><b>Date:</b> 01-05-2017(15:54)</span>
+      </div>
     </div>
+    <img class="commentOverview iconComment"/> {{ecmr?.carrierComments}}
+  </div>
+  <div class="column" [ngClass]="{'completed': ecmr?.status === 'DELIVERED', 'active': selectedColumns[3],
+  'inactive': !selectedColumns[3]}" (click)="selectColumn(3)">
+    <div>
+      <div class="header">CAR DEALER</div>
+      <div class="ecmrInfo">
+        <div class="imgandtext">
+          <img class="addressImg"/>
+          <div class="addressInfo">
+            <span>{{ecmr?.recipient.split('#')[1]}}</span>
+            <span>{{ecmr?.delivery.address.street}} {{ecmr?.delivery.address.houseNumber}}</span>
+            <span>{{ecmr?.delivery.address.zipCode}}, {{ecmr?.delivery.address.city}}</span>
+          </div>
+        </div>
+        <span><b>Reference Nr.:</b> 213141214</span>
+        <span class="addressInfo"><b>Signed by:</b> Leaseplan</span>
+        <span><b>Date:</b> 21-10-2017(10:10)</span>
+      </div>
+    </div>
+    <img class="commentOverview iconComment"/> {{ecmr?.carrierComments}}
   </div>
 </div>
-<table class="ui table">
-  <thead>
-  <tr>
-    <th colspan="4">General information</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-    <td>ORDER GIVER</td>
-    <td><p>KOOPMAN COMPOUND</p>
-      <i class="folder icon"></i><p>Address lines</p>
-    </td>
-    <td>Test1</td>
-    <td>Test2</td>
-  </tr>
-  <tr>
-    <td><i class="folder icon"></i> <p>Reference nr. : 20310231923</p>
-    <br>
-      <p>Signed by: Leaseplan</p>
-      <p>Date: xx-xx-xx</p>
-    </td>
-    <td class="TableDef"><p>Reference nr. : 20310231923</p></td>
-    <td class="TableDef"><p>Reference nr. : 20310231923</p></td>
-    <td class="TableDef"><p>Reference nr. : 20310231923</p></td>
-  </tr>
-  <tr>
-  </tbody>
-</table>

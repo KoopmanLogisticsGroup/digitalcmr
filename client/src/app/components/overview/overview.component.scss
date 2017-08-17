@@ -1,18 +1,23 @@
 .spacing-table {
-  border-collapse: separate;
-  table-layout: fixed;
+  //border-collapse: separate;
+  //table-layout: fixed;
   border-spacing: 0 8px; /* this is the ultimate fix */
   th {
     text-align: left;
-    padding: 5px 15px;
     border-bottom: none;
+  }
+  th:first-child {
+    width: 20px;
   }
   td {
     border-width: 3px 0;
     width: 65%;
     color: black;
-    padding: 5px 15px;
+    //padding: 5px 15px;
     border-top: none;
+  }
+  td:first-child {
+    width: 20px;
   }
   thead {
     display: table;
@@ -51,73 +56,81 @@
         border-right-width: 3px;
         border-radius: 0 5px 5px 0;
       }
-
       .centerContent {
-        padding-left: 3%;
+        margin-left: 50%;
+        transform: translateX(-50%);
+      }
+      .centerContent2 {
+        margin-left: 30%;
+        transform: translateX(-50%);
+      }
+      .respImg {
+        .commentIcon {
+          content: url("../../../assets/icons/icon-comment.svg");
+        }
+        .exclIcon {
+          content: url("../../../assets/icons/exlamation.svg");
+        }
+        img {
+          width: 1.2vw;
+          height: 1.2vw;
+        }
+      }
+      .open-status {
+        background-color: rgba(41, 135, 205, 0.2);
+        color: #2987cd;
+        border-radius: 4px;
+        padding: 6px;
+      }
+      .awaiting-status {
+        width: 120px;
+        height: 28px;
+        border-radius: 4px;
+        background-color: rgba(28, 181, 172, 0.2);
+        padding: 6px;
+        color: #1cb5ac;
+      }
+      .transit-status {
+        background-color: rgba(41, 135, 205, 0.2);
+        color: #2987cd;
+        border-radius: 4px;
+        padding: 6px;
+      }
+      .completed-status {
+        background-color: rgba(45, 184, 75, 0.2);
+        color: #2db84b;
+        border-radius: 4px;
+        padding: 6px;
+      }
+      .viewMore {
+        width: 120%;
+        height: 120%;
+        content: url("../../../assets/icons/button-view-more.svg");
+        padding-right: 20%;
+      }
+      .viewMore:hover {
+        content: url("../../../assets/icons/button-view-more-hover.svg");
+        cursor: pointer;
       }
     }
   }
-}
-
-.table-header {
-  font-size: 1vw;
-  line-height: 1.2vw;
-  vertical-align: top;
-  text-align: left;
+  .table-header {
+    font-size: 1vw;
+    line-height: 1.2vw;
+    vertical-align: top;
+    text-align: left;
+  }
+  .table-row {
+    font-size: 0.9vw;
+    line-height: 1.0vw;
+    white-space: nowrap;
+  }
 }
 
 .table-title {
   color: #32649e;
   font-size: 1.6vw;
-}
-
-.table-row {
-  font-size: 0.9vw;
-  line-height: 1.0vw;
-  white-space: nowrap;
-}
-
-.statusStyle {
-  width: 200px;
-  height: 60px;
-  border-radius: 4px;
-  padding: 4px;
-}
-
-.viewMore {
-  width: 117px;
-  height: 36px;
-  border-radius: 50px;
-  border: solid 0.01vw #3a3670;
-  padding: 8px;
-  white-space: nowrap;
-  color: #3a3670;
-}
-
-.viewMore:hover{
-  background-color: #3a3670;
-  color: #FFFFFF;
-}
-
-.open-status {
-  background-color: rgba(41, 135, 205, 0.2);
-  color: #2987cd;
-  border-radius: 4px;
-  padding: 6px;
-}
-
-.transit-status {
-  background-color: rgba(28, 181, 172, 0.2);
-  color: #1cb5ac;
-  border-radius: 4px;
-  padding: 6px;
-}
-
-.completed-status {
-  background-color: rgba(45, 184, 75, 0.2);
-  color: #2db84b;
-  border-radius: 4px;
-  padding: 6px;
+  margin-bottom: 5%;
 }
 
 //Design ui tables
@@ -125,7 +138,6 @@
 .ui {
   .secondary.pointing.menu {
     color: #dededf;
-
     .active.item {
       background-color: transparent;
       box-shadow: none;
@@ -147,5 +159,9 @@
   .grid > * {
     padding-left: 0rem;
     padding-right: 0rem;
+  }
+  .tab.active {
+    margin-left: 0.1%;
+    width: 100%;
   }
 }

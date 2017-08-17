@@ -1,63 +1,42 @@
-<br>
 <div class="ui container">
+  <div class="row titles">LINE ITEMS</div>
   <div class="row">
-    <div class="sixteen wide column">
-      <table class="ui celled padded table">
-        <thead>
-        <tr>
-          <th class="single line">VIN</th>
-          <th>Manufacturer</th>
-          <th>Description</th>
-          <th>Weight</th>
-          <th>ODO Meter</th>
-          <th>License Plate</th>
-          <th>Remarks</th>
-          <th>Damage</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td class="single line">2HDJDHF383HFJDJ</td>
-          <td class="single line">Renault</td>
-          <td class="single line">Twingo 1.2 16v</td>
-          <td class="single line">867KG</td>
-          <td class="single line">10 KM</td>
-          <td class="single line">ZF-106-HG</td>
-          <td class="single line">
-            <div class="ui input">
-              <input placeholder="Add remark" type="text">
-            </div>
-          </td>
-          <td class="single line">
-            <div class="ui checkbox">
-              <input name="example" type="checkbox">
-              <label></label>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td class="single line">2HDJDHF383HFJDJ</td>
-          <td class="single line">Renault</td>
-          <td class="single line">Twingo 1.2 16v</td>
-          <td class="single line">867KG</td>
-          <td class="single line">10 KM</td>
-          <td class="single line">ZF-106-HG</td>
-          <td class="single line">
-            <div class="ui input">
-              <input placeholder="Add remark" type="text">
-            </div>
-          </td>
-          <td class="single line">
-            <div class="ui checkbox">
-              <input name="example" type="checkbox">
-              <label></label>
-            </div>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
+    <table class="ui padded table">
+      <thead>
+      <tr>
+        <th>VIN</th>
+        <th>Manufacturer</th>
+        <th>Description</th>
+        <th>Weight</th>
+        <th>ODO Meter</th>
+        <th>License Plate</th>
+        <th>Remarks</th>
+        <th>Damage</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let vehicle of ecmr?.goods">
+        <td>{{vehicle?.vehicle.vin}}</td>
+        <td>{{vehicle?.vehicle.manufacturer}}</td>
+        <td>{{vehicle?.description}}</td>
+        <td>{{vehicle?.weight}} kg</td>
+        <td>{{vehicle?.vehicle.odoMeterReading}}</td>
+        <td>{{vehicle?.vehicle.plateNumber}}</td>
+        <td>
+          <div class="ui input">
+            <input (ngModel)="ecmr.carrierComments" type="text" placeholder="Add remark...">
+          </div>
+        </td>
+        <td>
+          <div class="ui checkbox">
+            <input type="checkbox" name="example">
+            <label></label>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <button class="ui right floated button buttonDesign" (click)="addRemark()">SIGN OFF</button>
   </div>
 </div>
-
 

@@ -1,8 +1,12 @@
-@import url("/styles.scss");
+.titles {
+  color: #3a3670;
+  margin-left: 0.9%;
+  cursor: pointer;
+  display: inline-block;
+  border: none;
+  background-color: transparent;
+}
 
-
-.progressbar{
-  margin-left: 25%;
-  width: 50%;
-  padding: 10px;
+.backButton{
+  content: url("../../../assets/icons/backbutton.svg");
 }
