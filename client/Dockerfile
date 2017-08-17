@@ -6,7 +6,7 @@ WORKDIR /usr/src/app
 RUN npm install -g @angular/cli@latest --loglevel error
 
 # use cached layer for node modules
-ADD package.json /usr/src/app/package.json
+COPY package.json package-lock.json /usr/src/app/
 RUN cd /usr/src/app/ && npm install --loglevel error
 RUN npm cache clear
 

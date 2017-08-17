@@ -53,7 +53,7 @@ asset Vehicle identified by vin {
   o String manufacturer
   o String model
   o String type
-  --> ECMR[] ECMRs
+  --> ECMR[] ecmrs
   o Integer odoMeterReading
   o String plateNumber
 }
@@ -167,8 +167,12 @@ transaction CreateVehicles {
   o Vehicle[] vehicles
 }
 
-transaction CreateCMRs {
+transaction CreateECMRs {
   o ECMR[] ecmrs
+}
+
+transaction UpdateECMR {
+  o ECMR ecmr
 }
 
 /**
@@ -181,7 +185,8 @@ transaction CreateCMRs {
  * Enums
  */
 enum ECMR_STATUS {
-    o OPEN
-    o ON_TRACK
-    o CLOSED
+    o CREATED
+    o LOADED
+    o IN_TRANSIT
+    o DELIVERED
 }

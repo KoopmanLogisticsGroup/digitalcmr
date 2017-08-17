@@ -31,7 +31,7 @@ function CreateECMR(tx) {
             Object.keys(tx.ecmr).forEach(function(key,index) {
                 ecmrObj[key] = tx.ecmr[key];
             });
-            return assetRegistry.addAll([ecmrObj]);
+            return assetRegistry.add(ecmrObj);
         }).catch(function (error) {
             console.log('An error occurred while saving the ECMR asset');
             console.log(error);
@@ -42,11 +42,11 @@ function CreateECMR(tx) {
 
 /**
  * Create ECMRs transaction processor function.
- * @param {org.digitalcmr.CreateCMRs} tx  - Create ecmrs transaction
+ * @param {org.digitalcmr.CreateECMRs} tx  - Create ecmrs transaction
  * @return {Promise} Asset registry Promise
  * @transaction
  */
-function CreateCMRs(tx) {
+function CreateECMRs(tx) {
 
     console.log('Invoking function processor to create CMRs');
     console.log(tx);
@@ -179,10 +179,12 @@ function CreateRecipientOrg(tx) {
             Object.keys(tx.recipientOrg).forEach(function(key,index) {
                 obj[key] = tx.recipientOrg[key];
             });
-            return assetRegistry.addAll([obj]);
+            return assetRegistry.addAll([obj]).catch(function (error) {
+                console.log('An error occurred while adding all the assets in the registry: ' + error);
+                return error;
+            });
         }).catch(function (error) {
-            console.log('An error occurred while saving the RecipientOrg asset');
-            console.log(error);
+            console.log('An error occurred while saving the RecipientOrg asset: ' + error);
             return error;
         });
 
@@ -213,13 +215,39 @@ function CreateVehicles(tx) {
                 vehicleArr.push(obj);
             }
             return assetRegistry.addAll(vehicleArr).catch(function (error) {
-                console.log('An error occurred while addAll the Vehicle assets');
-                console.log(error);
+                console.log('An error occurred while addAll the Vehicle assets: ' + error);
                 return error;
             });
         }).catch(function (error) {
-            console.log('An error occurred while saving the Vehicle assets');
-            console.log(error);
+            console.log('An error occurred while saving the Vehicle assets: ' + error);
+            return error;
+        });
+
+}
+
+/**
+ * Update EMCR transaction processor function.
+ * @param {org.digitalcmr.UpdateECMR} tx  - The UpdateECMR transaction
+ * @return {Promise} Asset registry Promise
+ * @transaction
+ */
+function UpdateECMR(tx) {
+
+    console.log('Invoking function processor to set update ECMR');
+    console.log(tx.ecmr);
+
+    // Get the asset registry for the asset.
+    return getAssetRegistry('org.digitalcmr.ECMR')
+        .then(function (assetRegistry) {
+            var factory = getFactory();
+            var ecmr = factory.newResource('org.digitalcmr', 'ECMR', tx.ecmr.ecmrID);
+            ecmr = tx.ecmr;
+            return assetRegistry.update(ecmr).catch(function (error) {
+                console.log('An error occurred while updating the registry asset: ' + error);
+                return error;
+            });
+        }).catch(function (error) {
+            console.log('An error occurred while updating the ECMR asset: ' + error);
             return error;
         });
 
