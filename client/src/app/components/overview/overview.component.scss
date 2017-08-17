@@ -82,9 +82,17 @@
         border-radius: 4px;
         padding: 6px;
       }
-      .transit-status {
+      .awaiting-status {
+        width: 120px;
+        height: 28px;
+        border-radius: 4px;
         background-color: rgba(28, 181, 172, 0.2);
+        padding: 6px;
         color: #1cb5ac;
+      }
+      .transit-status {
+        background-color: rgba(41, 135, 205, 0.2);
+        color: #2987cd;
         border-radius: 4px;
         padding: 6px;
       }
@@ -95,10 +103,10 @@
         padding: 6px;
       }
       .viewMore {
-        width: 110%;
-        height: 110%;
+        width: 120%;
+        height: 120%;
         content: url("../../../assets/icons/button-view-more.svg");
-        padding-right: 15%;
+        padding-right: 20%;
       }
       .viewMore:hover {
         content: url("../../../assets/icons/button-view-more-hover.svg");
@@ -157,5 +165,3 @@
     width: 100%;
   }
 }
-
-

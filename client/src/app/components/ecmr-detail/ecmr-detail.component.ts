@@ -28,19 +28,19 @@ export class EcmrDetailComponent implements OnInit {
             this.ecmr = this.ecmr[0];
           }
           switch (this.ecmr.status) {
-            case 'OPEN': {
+            case 'CREATED': {
               this.selectedColumns[0] = true;
               break;
             }
-            case 'IN_TRANSIT': {
+            case 'LOADED': {
               this.selectedColumns[1] = true;
               break;
             }
-            case 'ON_TRACK': {
+            case 'IN_TRANSIT': {
               this.selectedColumns[2] = true;
               break;
             }
-            case 'CLOSED': {
+            case 'DELIVERED': {
               this.selectedColumns[3] = true;
               break;
             }

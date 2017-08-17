@@ -22,8 +22,17 @@
         <td>{{vehicle?.weight}} kg</td>
         <td>{{vehicle?.vehicle.odoMeterReading}}</td>
         <td>{{vehicle?.vehicle.plateNumber}}</td>
-        <td><input (ngModel)="ecmr.carrierComments" class="remarkBox" placeholder="Add remark..."/></td>
-        <td><input class="checkBox" type="checkbox"></td>
+        <td>
+          <div class="ui input">
+            <input (ngModel)="ecmr.carrierComments" type="text" placeholder="Add remark...">
+          </div>
+        </td>
+        <td>
+          <div class="ui checkbox">
+            <input type="checkbox" name="example">
+            <label></label>
+          </div>
+        </td>
       </tr>
       </tbody>
     </table>

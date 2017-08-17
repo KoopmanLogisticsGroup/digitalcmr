@@ -618,7 +618,7 @@
     {
       "$class": "org.digitalcmr.ECMR",
       "ecmrID": "G1234567890",
-      "status": "LOADED",
+      "status": "IN_TRANSIT",
       "creation": {
         "$class": "org.digitalcmr.Creation",
         "address": {
