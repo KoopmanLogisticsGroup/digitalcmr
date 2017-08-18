@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {SignOffModalComponent} from './sign-off-modal/sign-off-modal.component';
 
 @Component({
   selector: 'app-ecmr-detail',
@@ -6,10 +7,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./ecmr-detail.component.scss']
 })
 export class EcmrDetailComponent implements OnInit {
+  @ViewChild(SignOffModalComponent) public signOffModal: SignOffModalComponent;
 
-  constructor() { }
+
+  constructor() {
+  }
+
 
   ngOnInit() {
+  }
+
+  public openModal(): void {
+    this.signOffModal.open();
   }
 
 }
