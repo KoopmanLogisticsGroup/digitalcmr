@@ -9,6 +9,7 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class EcmrDetailComponent implements OnInit {
 
+  public userRole: string;
   public ecmrID: any;
   public ecmr: any;
   public selectedColumns: boolean[];
@@ -24,6 +25,7 @@ export class EcmrDetailComponent implements OnInit {
         this.ecmrID = params['ecmrID'];
         this.ecmrService.getAllEcmrs('').subscribe(ecmrs => {
           this.ecmr = ecmrs instanceof Array ? ecmrs.filter(x => x.ecmrID === this.ecmrID) : undefined;
+          this.userRole = JSON.parse(localStorage.getItem('currentUser')).user.role;
           if (this.ecmr.length) {
             this.ecmr = this.ecmr[0];
           }
@@ -41,6 +43,11 @@ export class EcmrDetailComponent implements OnInit {
               break;
             }
             case 'DELIVERED': {
+              if (this.userRole === 'source') {
+                this.selectedColumns[0] = true;
+                // $('progressBar').addClass('selectedImg1');
+                break;
+              }
               this.selectedColumns[3] = true;
               break;
             }

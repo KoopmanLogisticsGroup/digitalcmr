@@ -10,6 +10,7 @@ export class User {
   private _username: string;
   private _org: string;
   private _userEmail: string;
+  private _role: string;
 
   public constructor(user: any) {
     this._userID    = user.userID;
@@ -18,6 +19,7 @@ export class User {
     this._hash      = new Password(user.password, this.salt).toHash();
     this._org       = user.org;
     this._userEmail = user.userEmail;
+    this._role = user.role;
   }
 
   public get org(): string {
@@ -44,6 +46,10 @@ export class User {
     return this._username;
   }
 
+  public get role(): string {
+    return this._role;
+  }
+
   public toJSON(): any {
     return {
       'userID':     this.userID,
@@ -51,7 +57,8 @@ export class User {
       'hash':       this.hash,
       'username':   this.username,
       'org':        this.org,
-      'userEmail':  this.userEmail
+      'userEmail': this.userEmail,
+      'role': this.role
     };
   }
 }

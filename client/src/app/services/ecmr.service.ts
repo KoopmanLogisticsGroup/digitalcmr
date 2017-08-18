@@ -10,6 +10,8 @@ export class EcmrService {
   private actionUrl: string;
   private headers: any;
 
+  public userRole: string;
+
   public constructor(private _http: Http,
                      private _configuration: Configuration,
                      private _authenticationService: AuthenticationService) {
@@ -19,6 +21,7 @@ export class EcmrService {
 
   public getAllEcmrs(ecmrID: string) {
     const user: any = JSON.parse(localStorage.getItem('currentUser')).user;
+    this.userRole = JSON.parse(localStorage.getItem('currentUser')).user.role;
     return this._http
       .get(this.actionUrl + ecmrID, {headers: this.headers})
       .map(res => res.json());
