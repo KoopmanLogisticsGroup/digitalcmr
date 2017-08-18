@@ -1,10 +1,16 @@
 <div class="ui container content-top-margin">
-  <div class="row">
-    <img class="backButton"/>
-    <div routerLink="/overview" class="titles">BACK</div>
-  </div>
-  <div class="fourteen wide column firstColumn"></div>
-  <app-general-info [ecmr]="ecmr" [selectedColumns]="selectedColumns"></app-general-info>
+    <div class="row">
+        <i class="arrow left icon"></i>
+        <a routerLink="/overview"><span
+          style="color: #5aa0d4">BACK</span></a>
+    </div>
+  <br>
+  <br>
+    <div class="fourteen wide column firstColumn"></div>
+  <app-general-info></app-general-info>
   <div class="ten wide column"></div>
   <app-goods [ecmr]="ecmr"></app-goods>
+  <app-goods></app-goods>
+  <button class="ui right floated circular ui button sign-off" (click)="openModal()">SIGN OFF</button>
+  <app-sign-off-modal></app-sign-off-modal>
 </div>
