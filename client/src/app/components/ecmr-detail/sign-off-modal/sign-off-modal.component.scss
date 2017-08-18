@@ -1,0 +1,29 @@
+.ui {
+  &.modal {
+    width: 430px;
+    height: 400px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -150px;
+    margin-top: -150px;
+
+    .header {
+      border-bottom: none;
+    }
+  }
+}
+
+.submit-button {
+  background-color: #3A386E;
+  color: white;
+  margin: 15px 0;
+  display: block;
+  float: right;
+}
+
+#remarks-field {
+  resize: none;
+}
+
+

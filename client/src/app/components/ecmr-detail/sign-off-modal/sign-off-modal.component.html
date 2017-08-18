@@ -1,0 +1,17 @@
+<div id="modal-container" class="ui container">
+  <div id="signoff-modal" class="ui modal">
+    <i class="close icon" (click)="close()"></i>
+    <div class="header">SIGN OFF</div>
+    <div class="content">
+      <p>You are about the sign off the eCMR.</p>
+
+      <div class="ui form">
+        <div class="field">
+          <label>General Remark</label>
+          <textarea id="remarks-field"></textarea>
+        </div>
+      </div>
+      <button class="circular ui button submit-button" (click)="dummyFunction()">Submit</button>
+      <!--todo: add transact function in dummy.-->
+    </div>
+  </div>
