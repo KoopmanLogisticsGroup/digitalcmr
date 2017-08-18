@@ -23,17 +23,26 @@ export class OverviewComponent implements OnInit {
       // TODO implement in backend
       const userOrg = JSON.parse(localStorage.getItem('currentUser')).user.org;
       const userEmail = JSON.parse(localStorage.getItem('currentUser')).user.userEmail;
+      console.log(this.ecmrs);
       this.ecmrs = this.ecmrs.filter(ecmr =>
-        ecmr.source.split('#')[1] === userOrg ||
-        (ecmr.transporter.split('#')[1] === userEmail && ecmr.carrier.split('#')[1] === userOrg) ||
-        ecmr.owner.split('#')[1] === userOrg);
-      this.ecmrsFiltered = this.ecmrs.filter(ecmr => ecmr.status.toUpperCase() === 'OPEN');
+        ecmr.source.indexOf(userOrg) > 0 ||
+        (ecmr.transporter.indexOf(userEmail) > 0 && ecmr.carrier.indexOf(userOrg)) > 0 ||
+        ecmr.owner.indexOf(userOrg) > 0);
+      this.ecmrsFiltered = this.ecmrs.filter(ecmr => ecmr.status.toUpperCase() === 'CREATED');
     });
   }
 
   public setCurrentView(view: string) {
     this.currentView = view;
-    this.ecmrsFiltered = this.ecmrs.filter(ecmr => ecmr.status.toUpperCase() === view.toUpperCase());
+    this.ecmrsFiltered = this.ecmrs.filter(ecmr => {
+      console.log(this.currentView);
+      if (this.currentView === 'OPEN' && ecmr.status === 'CREATED') {
+        return ecmr;
+      } else if (this.currentView === 'IN_PROGRESS' && (ecmr.status === 'LOADED' || ecmr.status === 'IN_TRANSIT')) {
+        return ecmr;
+      } else if (this.currentView === 'COMPLETED' && ecmr.status === 'DELIVERED') {
+        return ecmr;
+      }
+    });
   }
-
 }

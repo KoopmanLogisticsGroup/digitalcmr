@@ -7,15 +7,11 @@
   }
   .spacing-table {
     border-spacing: 0 1em;
-
   }
 }
-
 .ui.steps:first-child {
-  //margin-top: 0;
   border: 0;
 }
-
 .generalInfo {
   box-shadow: 0 2px 4px #e3e3e3;
   background-color: white;
@@ -24,53 +20,92 @@
   border-bottom-left-radius: 0.5em;
   border-bottom-right-radius: 0.5em;
   font-size: 0.9em;
-  padding: 15px 0px;
   .column {
     width: 308px;
     height: 320px;
     padding-left: 40px;
-
-    .commentOverview {
-      margin-top: 15%;
+    &.active {
+      .header {
+        color: #2272c2;
+        white-space: nowrap;
+        margin-bottom: 8.5%;
+      }
+      .commentOverview {
+        margin-top: 15%;
+      }
+      .iconComment{
+        content: url("../../../../assets/icons/icon-comment.svg");
+      }
     }
-
-  }
-  .column:nth-child(n+2) {
-    border-left: 1px solid #d8dde6;
-  }
-  .header {
-    color: #2272c2;
-    white-space: nowrap;
-
+    &.inactive {
+      color: #a8b7c7;
+      .header {
+        white-space: nowrap;
+        margin-bottom: 8.5%;
+      }
+      .addressImg{
+        content: url("../../../../assets/icons/icon-location-inactive.svg");
+      }
+      .commentOverview {
+        margin-top: 15%;
+        content: url("../../../../assets/icons/icon-comment-inactive.svg");
+      }
+    }
+    &:nth-child(n+2) {
+      border-left: 1px solid #d8dde6;
+    }
+    &.completed:hover {
+      cursor: pointer;
+      border: 1px solid #2987cd;
+      border-radius: 6px;
+    }
   }
   .ecmrInfo {
     text-transform: capitalize;
-
     .imgandtext > img {
       float: left;
     }
     .imgandtext, #addressInfo {
       overflow: hidden;
     }
-    .addressImg{
+    .addressImg {
       padding-bottom: 35px;
       width: auto;
       height: auto;
+      content: url("../../../../assets/icons/page-1.svg");
+    }
+    .addressInfo {
+      margin-bottom: 10%;
+    }
+    span {
+      display: block;
     }
   }
 }
-
 .titles {
   color: #424244;
-  margin-left: 4%;
+  margin-left: 3%;
+  margin-top: 3%;
+  margin-bottom: 0.5%;
+  font-size: 1em;
 }
-
 .progressBar {
   width: 100%;
-  margin-top: 5%;
-  margin-bottom: 5%;
+  margin-top: 3%;
+}
+.topLine {
+  border-top: 1px solid #d8dde6;
 }
 
-.topLine{
-  border-top: 1px solid #d8dde6;
+.selectedImg1{
+  content: url("../../../../assets/img/completed-progress-01.svg")
+}
+.selectedImg2{
+  content: url("../../../../assets/img/completed-progress-02.svg")
+}
+.selectedImg3{
+  content: url("../../../../assets/img/completed-progress-03.svg")
+}
+.selectedImg4{
+  content: url("../../../../assets/img/completed-progress-04.svg")
 }

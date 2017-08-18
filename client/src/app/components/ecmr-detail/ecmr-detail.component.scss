@@ -1,3 +1,15 @@
+.titles {
+  color: #3a3670;
+  margin-left: 0.9%;
+  cursor: pointer;
+  display: inline-block;
+  border: none;
+  background-color: transparent;
+}
+
+.backButton{
+  content: url("../../../assets/icons/backbutton.svg");
+}
 .sign-off {
   background-color: #3A386E;
   color: white;

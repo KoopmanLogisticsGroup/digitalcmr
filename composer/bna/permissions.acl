@@ -17,70 +17,87 @@
  /**
   * Leaseplan permission list
   */
-  rule LegalOwnerAdminCanCreateECMR {
-        description: "Allow Legal Owner Admin to Create an eCMR"
-        participant: "org.digitalcmr.LegalOwnerAdmin"
-        operation: CREATE
-        resource: "org.digitalcmr.ECMR"
+  rule LegalOwnerAdminCanReadAndCreateECMR {
+        description: "Allow Legal Owner Admin to CREATE an eCMR"
+        participant(p): "org.digitalcmr.LegalOwnerAdmin"
+        operation: READ, CREATE
+        resource(r): "org.digitalcmr.ECMR"
+        condition: (r.owner.getIdentifier() === p.org.getIdentifier())
         action: ALLOW
    }
 
  rule LegalOwnerAdminCanCreateECMRCreateTransaction {
-      description: "Allow Legal Owner Admin to Create an eCMR create transaction"
+      description: "Allow Legal Owner Admin to CREATE an eCMR create transaction"
       participant: "org.digitalcmr.LegalOwnerAdmin"
       operation: CREATE
       resource: "org.digitalcmr.CreateECMR"
       action: ALLOW
  }
 
-
  rule LegalOwnerAdminCanSubmitCreateECMR {
-     description: "Allow Legal Owner Admin to Submit a  Create eCMR transaction for his organization"
-     participant(m): "org.digitalcmr.LegalOwnerAdmin"
+     description: "Allow Legal Owner Admin to Submit a CREATE eCMR transaction for his organization"
+     participant: "org.digitalcmr.LegalOwnerAdmin"
      operation: CREATE
-     resource(v): "org.digitalcmr.ECMR"
-     transaction(tx): "org.digitalcmr.CreateECMR"
-     condition: (tx.ecmr.owner == m.org)
+     resource: "org.digitalcmr.ECMR"
+     transaction: "org.digitalcmr.CreateECMR"
      action: ALLOW
  }
-
-rule LegalOwnerAdminCanReadECMR {
-    description: "Allow Legal Owner Admin to Read all eCMR where his org is the owner"
-    participant(p): "org.digitalcmr.LegalOwnerAdmin"
-    operation: READ
-    resource(ecmr): "org.digitalcmr.ECMR"
-    condition: (ecmr.owner == p.org)
-    action: ALLOW
-}
 
 /**
  * Compound permission list
  */
 
 rule CompoundAdminCanReadECMR {
-    description: "Allow Compound Admin to Read all eCMR where his org is a source"
+    description: "Allow Compound Admin to READ all eCMR where his org is a source"
     participant(p): "org.digitalcmr.CompoundAdmin"
     operation: READ
-    resource(ecmr): "org.digitalcmr.ECMR"
-    condition: (ecmr.source == p.org)
+    resource(r): "org.digitalcmr.ECMR"
+    condition: (r.source == p.org)
     action: ALLOW
 }
+
+rule CompoundAdminCanUpdateECMR {
+    description: "Allow Compound Admin to UPDATE all eCMR where his org is a source"
+    participant(p): "org.digitalcmr.CompoundAdmin"
+    operation: UPDATE
+    resource(r): "org.digitalcmr.ECMR"
+    condition: (r.source == p.org)
+    action: ALLOW
+}
+
+ rule CompoundAdminCanCreateECMRUpdateTransaction {
+      description: "Allow Legal Owner Admin to CREATE an eCMR update transaction"
+      participant: "org.digitalcmr.CompoundAdmin"
+      operation: CREATE
+      resource: "org.digitalcmr.UpdateECMR"
+      action: ALLOW
+ }
+
+ rule CompoundAdminCanSubmitUpdateECMR {
+     description: "Allow CompoundAdmin to Submit a Update eCMR transaction for his organization"
+     participant(p): "org.digitalcmr.CompoundAdmin"
+     operation: CREATE
+     resource(r): "org.digitalcmr.ECMR"
+     transaction(tx): "org.digitalcmr.UpdateECMR"
+     condition: (r.source == p.org)
+     action: ALLOW
+ }
 
 /**
    * Carrier permission list
    */
 
  rule CarrierAdminCanReadECMR {
-     description: "Allow Carrier Admin to Read all eCMR where his org is a carrier"
+     description: "Allow Carrier Admin to READ all eCMR where his org is a carrier"
      participant(p): "org.digitalcmr.CarrierAdmin"
      operation: READ
-     resource(ecmr): "org.digitalcmr.ECMR"
-     condition: (ecmr.carrier == p.org)
+     resource(r): "org.digitalcmr.ECMR"
+     condition: (r.carrier == p.org)
      action: ALLOW
  }
 
- rule CarrierTransporterCanReadHisECMR {
-      description: "Allow Carrier Admin to Read all his eCMR (where he is a transporter)"
+ rule CarrierTransporterCanReadECMR {
+      description: "Allow Carrier Member to READ all his eCMR where he is a transporter"
       participant(p): "org.digitalcmr.CarrierMember"
       operation: READ
       resource(ecmr): "org.digitalcmr.ECMR"
@@ -94,7 +111,7 @@ rule CompoundAdminCanReadECMR {
    */
 
  rule RecipientAdminCanReadECMR {
-     description: "Allow Recipient Admin to Read all eCMR where his org is a recipient"
+     description: "Allow Recipient Admin to READ all eCMR where his org is a recipient"
      participant(p): "org.digitalcmr.RecipientAdmin"
      operation: READ
      resource(ecmr): "org.digitalcmr.ECMR"
@@ -103,7 +120,7 @@ rule CompoundAdminCanReadECMR {
  }
 
  rule RecipientMemberCanReadHisECMR {
-      description: "Allow Recipient to Read his own eCMR (where he is a recipient)"
+      description: "Allow Recipient to READ his own eCMR (where he is a recipient)"
       participant(p): "org.digitalcmr.RecipientMember"
       operation: READ
       resource(ecmr): "org.digitalcmr.ECMR"

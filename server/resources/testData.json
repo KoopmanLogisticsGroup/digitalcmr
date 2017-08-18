@@ -10,7 +10,7 @@
     {
       "userID": "lapo",
       "org": "leaseplan",
-      "userEmail": "",
+      "userEmail": "lapo@leaseplan.org",
       "username": "lapo",
       "password": "passw0rd"
     },
@@ -19,6 +19,13 @@
       "org": "koopman",
       "userEmail": "harry@koopman.org",
       "username": "harry",
+      "password": "passw0rd"
+    },
+    {
+      "userID": "rob",
+      "org": "cardealer",
+      "userEmail": "rob@cardealer.org",
+      "username": "rob",
       "password": "passw0rd"
     }
   ]

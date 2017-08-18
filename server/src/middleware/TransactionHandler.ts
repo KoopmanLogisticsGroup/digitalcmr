@@ -31,7 +31,7 @@ export class TransactionHandler {
     await businessNetworkHandler.disconnect();
   }
 
-  public async get (resourceID: string, assetRegistry: string, username: string, secret: string): Promise<any> {
+  public async get(resourceID: string, assetRegistry: string, username: string, secret: string): Promise<any> {
     const businessNetworkHandler    = new BusinessNetworkHandler(username, secret);
     const businessNetworkConnection = await businessNetworkHandler.connect();
     const resourceAssetRegistry     = await businessNetworkConnection.getAssetRegistry(this.namespace + '.' + assetRegistry);
@@ -52,9 +52,8 @@ export class TransactionHandler {
     return ecmrs;
   }
 
-  public createECMR(factory: any, ecmr: ECMR): any {
-    const transaction = factory.newTransaction(this.namespace, 'CreateECMR');
-    transaction.ecmr  = factory.newResource(this.namespace, 'ECMR', uuid());
+  private buildECMR(factory: any, ecmr: ECMR, transaction: any): any {
+    transaction.ecmr = factory.newResource(this.namespace, 'ECMR', uuid());
 
     transaction.ecmr = this.fillAttributes(transaction.ecmr, ecmr);
 
@@ -81,6 +80,16 @@ export class TransactionHandler {
     }
 
     return transaction;
+  }
+
+  public createECMR(factory: any, ecmr: ECMR): any {
+    const transaction = factory.newTransaction(this.namespace, 'CreateECMR');
+    return this.buildECMR(factory, ecmr, transaction);
+  }
+
+  public updateECMR(factory: any, ecmr: ECMR): any {
+    const transaction = factory.newTransaction(this.namespace, 'UpdateECMR');
+    return this.buildECMR(factory, ecmr, transaction);
   }
 
   private createConcept(conceptName: string, conceptData: any, factory: any): any {

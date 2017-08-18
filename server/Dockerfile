@@ -10,7 +10,7 @@ RUN npm install -g grunt --loglevel error
 # Make sure to build with --build-arg NPM_TOKEN="${NPM_TOKEN)"
 ARG NPM_TOKEN
 COPY .npmrc /root/.npmrc
-COPY package.json package.json
+COPY package.json package-lock.json ./
 RUN npm install --loglevel error
 RUN npm cache clean
 RUN rm -f /root/.npmrc

@@ -6,10 +6,10 @@
     <div class="ui pointing secondary menu">
       <a class="item" data-tab="first" (click)="setCurrentView('OPEN')"
          [ngClass]="{'active' : currentView === 'OPEN' ? true : false}">OPEN</a>
-      <a class="item" data-tab="second" (click)="setCurrentView('ON_TRACK')"
-         [ngClass]="{'active' : currentView === 'ON_TRACK' ? true : false}">IN PROGRESS</a>
-      <a class="item" data-tab="third" (click)="setCurrentView('CLOSED')"
-         [ngClass]="{'active' : currentView === 'CLOSED' ? true : false}">COMPLETED</a>
+      <a class="item" data-tab="second" (click)="setCurrentView('IN_PROGRESS')"
+         [ngClass]="{'active' : currentView === 'IN_PROGRESS' ? true : false}">IN PROGRESS</a>
+      <a class="item" data-tab="third" (click)="setCurrentView('COMPLETED')"
+         [ngClass]="{'active' : currentView === 'COMPLETED' ? true : false}">COMPLETED</a>
     </div>
     <div class="ui active tab grid" data-tab="first">
       <div class="row">
@@ -17,6 +17,7 @@
           <thead class="table-header">
           <th></th>
           <th>Date</th>
+          <th>CMR Nr.</th>
           <th>Embarkment</th>
           <th>Destination</th>
           <th>Number of vehicles</th>
@@ -31,22 +32,26 @@
           <tr *ngFor="let ecmr of ecmrsFiltered" class="table-row">
             <td></td>
             <td>{{ecmr.creation.date | date:"dd-MM-yyyy"}}</td>
+            <td>{{ecmr.ecmrID}}</td>
             <td>{{ecmr.loading.address.city}}</td>
             <td>{{ecmr.delivery.address.city}}</td>
-            <td class="centerContent">{{ecmr.goods.length}}</td>
-            <td>{{ecmr.carrier.split('#')[1]}}</td>
+            <td>
+              <div class="centerContent">{{ecmr.goods.length}}</div>
+            </td>
+            <td>{{ecmr.carrier.split('#')[1] }}</td>
             <td>{{ecmr.recipient.split('#')[1].split('@')[0]}}</td>
-            <td class="centerContent"><img src="../../../assets/icons/icon-comment.svg"
-                                           *ngIf="ecmr.carrierComments != '' || null"/></td>
-            <td class="centerContent"><img src="../../../assets/icons/exlamation.svg"
-                                           *ngIf="ecmr.carrierComments != '' || null"/></td>
-            <td><span
-              [ngClass]="{'open-status' : ecmr.status === 'OPEN' ? true : false,
-                        'transit-status' : ecmr.status === 'ON_TRACK' ? true : false,
-                        'completed-status': ecmr.status === 'CLOSED' ? true : false}">
+            <td class="respImg"><img class="centerContent2 commentIcon" *ngIf="ecmr.carrierComments != '' || null"/>
+            </td>
+            <td class="respImg"><img class="centerContent2 exclIcon" *ngIf="ecmr.carrierComments != '' || null"/></td>
+            <td><span [ngClass]="{'open-status' : ecmr.status === 'CREATED',
+                        'awaiting-status' : ecmr.status === 'LOADED',
+                        'transit-status' : ecmr.status === 'IN_TRANSIT',
+                        'completed-status': ecmr.status === 'DELIVERED'}">
                         {{ecmr.status}}
-                      </span></td>
-            <td><a routerLink="/ecmr/{{ecmr.ecmrID}}" class="viewMore">View More &#62;</a></td>
+            </span></td>
+            <td>
+              <img class="viewMore" routerLink="/ecmr/{{ecmr.ecmrID}}"/>
+            </td>
           </tr>
           </tbody>
         </table>
