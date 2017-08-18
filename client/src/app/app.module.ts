@@ -20,6 +20,7 @@ import {EcmrsComponent} from './components/overview/ecmrs/ecmrs.component';
 import {EcmrDetailComponent} from './components/ecmr-detail/ecmr-detail.component';
 import {GeneralInfoComponent} from './components/ecmr-detail/general-info/general-info.component';
 import {GoodsComponent} from './components/ecmr-detail/goods/goods.component';
+import {SignOffModalComponent} from './components/ecmr-detail/sign-off-modal/sign-off-modal.component';
 
 @NgModule({
   declarations: [
@@ -31,15 +32,17 @@ import {GoodsComponent} from './components/ecmr-detail/goods/goods.component';
     EcmrsComponent,
     EcmrDetailComponent,
     GeneralInfoComponent,
-    GoodsComponent
+    GoodsComponent,
+    SignOffModalComponent
+
   ],
-  imports:      [
+  imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     routing
   ],
-  providers:    [
+  providers: [
     appRoutingProviders,
     Configuration,
     AuthenticationService,
@@ -47,7 +50,7 @@ import {GoodsComponent} from './components/ecmr-detail/goods/goods.component';
     ThingService,
     EcmrService
   ],
-  bootstrap:    [AppComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }
