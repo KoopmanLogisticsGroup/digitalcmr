@@ -20,6 +20,10 @@ export class JSONWebToken {
     return this.decodedToken ? this.decodedToken.role : null;
   }
 
+  public getUserEmail(): string {
+    return this.decodedToken ? this.decodedToken.userEmail : null;
+  }
+
   public static getTokenFromRequest(request: Request): string {
     let token = request.headers['x-access-token'];
     if (!token) {

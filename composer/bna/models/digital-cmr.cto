@@ -140,7 +140,7 @@ concept Good {
 
 concept Remark {
   o String comments
-  o Boolean isDamaged
+  o Boolean isDamaged optional
 }
 
 concept Signature {

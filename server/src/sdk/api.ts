@@ -1679,8 +1679,8 @@ export class Signature {
       "type":     "number"
     },
     {
-      "name":     "longitute",
-      "baseName": "longitute",
+      "name":     "longitude",
+      "baseName": "longitude",
       "type":     "number"
     },
     {

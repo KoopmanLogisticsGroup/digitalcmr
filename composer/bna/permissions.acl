@@ -70,7 +70,7 @@ rule CompoundAdminCanReadECMR {
      operation: UPDATE
      resource(r): "org.digitalcmr.ECMR"
      transaction(tx): "org.digitalcmr.UpdateECMR"
-     condition: (r.source.getIdentifier() === p.org.getIdentifier() && tx.ecmr.status == "LOADED")
+     condition: (r.source.getIdentifier() === p.org.getIdentifier() && r.status == 'CREATED' && tx.ecmr.status == "LOADED" && tx.ecmr.compoundSignature)
      action: ALLOW
  }
 
