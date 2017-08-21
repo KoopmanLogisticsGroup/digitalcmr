@@ -15,6 +15,7 @@ import {ApiFactory} from '../../utils';
 import {ECMR, ECMRApi, QueryApi} from '../../sdk/api';
 import {ErrorHandlerMiddleware, ComposerInterceptor, TransactionHandler} from '../../middleware';
 import {JSONWebToken} from '../../utils/auth/JSONWebToken';
+import StatusEnum = ECMR.StatusEnum;
 
 @JsonController('/ECMR')
 @UseInterceptor(ComposerInterceptor)
@@ -27,7 +28,7 @@ export class ECMRController {
   public constructor(private _transactor: TransactionHandler) {
     const apiFactory   = Container.get(ApiFactory);
     this.queryApi      = apiFactory.get(QueryApi);
-    this.api = apiFactory.get(ECMRApi);
+    this.api           = apiFactory.get(ECMRApi);
     this.assetRegistry = 'ECMR';
     this._transactor   = new TransactionHandler();
   }
@@ -47,9 +48,10 @@ export class ECMRController {
   }
 
   @Put('/')
-  public async update(@Body() ecmr: any, @Req() request: any): Promise<any> {
+  public async update(@Body() ecmr: ECMR, @Req() request: any): Promise<any> {
     let enrollmentID = new JSONWebToken(request).getUserID();
-    let secret = request.headers.secret;
+    let secret       = request.headers.secret;
+
     return this._transactor.put(ecmr, enrollmentID, secret, (factory, data) => this._transactor.updateECMR(factory, data));
   }
 }

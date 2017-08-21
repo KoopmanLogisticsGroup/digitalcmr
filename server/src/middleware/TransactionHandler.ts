@@ -52,7 +52,7 @@ export class TransactionHandler {
     return ecmrs;
   }
 
-  private buildECMR(factory: any, ecmr: ECMR, transaction: any): any {
+  private buildECMR(factory: any, ecmr: any, transaction: any): any {
     transaction.ecmr = factory.newResource(this.namespace, 'ECMR', uuid());
 
     transaction.ecmr = this.fillAttributes(transaction.ecmr, ecmr);
@@ -72,6 +72,37 @@ export class TransactionHandler {
     transaction.ecmr.recipient    = factory.newRelationship(this.namespace, 'RecipientMember', ecmr.recipient);
     transaction.ecmr.issuedBy     = factory.newRelationship(this.namespace, 'Entity', ecmr.issuedBy);
 
+    if (ecmr.compoundSignature) {
+      console.log(ecmr.compoundSignature);
+      transaction.ecmr.compoundSignature             = this.createConcept('Signature', ecmr.compoundSignature, factory);
+      transaction.ecmr.compoundSignature.certificate = factory.newRelationship(this.namespace, 'User', ecmr.compoundSignature.certificate);
+      if (ecmr.compoundSignature.generalRemark) {
+        transaction.ecmr.compoundSignature.generalRemark = this.createConcept('Remark', ecmr.compoundSignature.generalRemark, factory);
+      }
+      console.log(transaction.ecmr.compoundSignature);
+    }
+    if (ecmr.carrierLoadingSignature) {
+      transaction.ecmr.carrierLoadingSignature             = this.createConcept('Signature', ecmr.carrierLoadingSignature, factory);
+      transaction.ecmr.carrierLoadingSignature.certificate = factory.newRelationship(this.namespace, 'User', ecmr.carrierLoadingSignature.certificate);
+      if (ecmr.carrierLoadingSignature.generalRemark) {
+        transaction.ecmr.carrierLoadingSignature.generalRemark = this.createConcept('Remark', ecmr.carrierLoadingSignature.generalRemark, factory);
+      }
+    }
+    if (ecmr.carrierDeliverySignature) {
+      transaction.ecmr.carrierDeliverySignature             = this.createConcept('Signature', ecmr.carrierDeliverySignature, factory);
+      transaction.ecmr.carrierDeliverySignature.certificate = factory.newRelationship(this.namespace, 'User', ecmr.carrierDeliverySignature.certificate);
+      if (ecmr.carrierDeliverySignature.generalRemark) {
+        transaction.ecmr.carrierDeliverySignature.generalRemark = this.createConcept('Remark', ecmr.carrierDeliverySignature.generalRemark, factory);
+      }
+    }
+    if (ecmr.recipientSignature) {
+      transaction.ecmr.recipientSignature             = this.createConcept('Signature', ecmr.recipientSignature, factory);
+      transaction.ecmr.recipientSignature.certificate = factory.newRelationship(this.namespace, 'User', ecmr.recipientSignature.certificate);
+      if (ecmr.recipientSignature.generalRemark) {
+        transaction.ecmr.recipientSignature.generalRemark = this.createConcept('Remark', ecmr.recipientSignature.generalRemark, factory);
+      }
+    }
+
     for (let i = 0; i < transaction.ecmr.goods.length; i++) {
       transaction.ecmr.goods[i]         = this.createConcept('Good', ecmr.goods[i], factory);
       let vehicle                       = factory.newResource(this.namespace, 'Vehicle', uuid());
@@ -87,7 +118,7 @@ export class TransactionHandler {
     return this.buildECMR(factory, ecmr, transaction);
   }
 
-  public updateECMR(factory: any, ecmr: ECMR): any {
+  public updateECMR(factory: any, ecmr: any): any {
     const transaction = factory.newTransaction(this.namespace, 'UpdateECMR');
     return this.buildECMR(factory, ecmr, transaction);
   }

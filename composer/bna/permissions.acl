@@ -48,22 +48,13 @@
  */
 
 rule CompoundAdminCanReadECMR {
-    description: "Allow Compound Admin to READ all eCMR where his org is a source"
-    participant(p): "org.digitalcmr.CompoundAdmin"
-    operation: READ
-    resource(r): "org.digitalcmr.ECMR"
-    condition: (r.source == p.org)
-    action: ALLOW
-}
-
-rule CompoundAdminCanUpdateECMR {
-    description: "Allow Compound Admin to UPDATE all eCMR where his org is a source"
-    participant(p): "org.digitalcmr.CompoundAdmin"
-    operation: UPDATE
-    resource(r): "org.digitalcmr.ECMR"
-    condition: (r.source == p.org)
-    action: ALLOW
-}
+     description: "Allow Compound Admin to READ all eCMR where his org is a source"
+     participant(p): "org.digitalcmr.CompoundAdmin"
+     operation: READ
+     resource(r): "org.digitalcmr.ECMR"
+     condition: (r.source.getIdentifier() === p.org.getIdentifier())
+     action: ALLOW
+ }
 
  rule CompoundAdminCanCreateECMRUpdateTransaction {
       description: "Allow Legal Owner Admin to CREATE an eCMR update transaction"
@@ -74,12 +65,12 @@ rule CompoundAdminCanUpdateECMR {
  }
 
  rule CompoundAdminCanSubmitUpdateECMR {
-     description: "Allow CompoundAdmin to Submit a Update eCMR transaction for his organization"
+     description: "Allow CompoundAdmin to Submit a Update eCMR transaction for his organization and status LOADED"
      participant(p): "org.digitalcmr.CompoundAdmin"
-     operation: CREATE
+     operation: UPDATE
      resource(r): "org.digitalcmr.ECMR"
      transaction(tx): "org.digitalcmr.UpdateECMR"
-     condition: (r.source == p.org)
+     condition: (r.source.getIdentifier() === p.org.getIdentifier() && r.status == 'CREATED' && tx.ecmr.status == "LOADED" && tx.ecmr.compoundSignature)
      action: ALLOW
  }
 

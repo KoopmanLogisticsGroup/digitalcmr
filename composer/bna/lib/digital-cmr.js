@@ -28,7 +28,7 @@ function CreateECMR(tx) {
         .then(function (assetRegistry) {
             var factory = getFactory();
             var ecmrObj = factory.newResource('org.digitalcmr', 'ECMR', tx.ecmr.ecmrID);
-            Object.keys(tx.ecmr).forEach(function(key,index) {
+            Object.keys(tx.ecmr).forEach(function (key, index) {
                 ecmrObj[key] = tx.ecmr[key];
             });
             return assetRegistry.add(ecmrObj);
@@ -56,10 +56,10 @@ function CreateECMRs(tx) {
         .then(function (assetRegistry) {
             var factory = getFactory();
             var ecmrArr = [];
-            for (var i = 0 ; i < tx.ecmrs.length ; i++) {
+            for (var i = 0; i < tx.ecmrs.length; i++) {
                 var inputObj = tx.ecmrs[i];
                 var obj = factory.newResource('org.digitalcmr', 'ECMR', inputObj.ecmrID);
-                Object.keys(tx.ecmrs[i]).forEach(function(key,index) {
+                Object.keys(tx.ecmrs[i]).forEach(function (key, index) {
                     obj[key] = inputObj[key];
                 });
                 ecmrArr.push(obj);
@@ -92,7 +92,7 @@ function CreateLegalOwnerOrg(tx) {
         .then(function (assetRegistry) {
             var factory = getFactory();
             var obj = factory.newResource('org.digitalcmr', 'LegalOwnerOrg', tx.legalOwnerOrg.entityID);
-            Object.keys(tx.legalOwnerOrg).forEach(function(key,index) {
+            Object.keys(tx.legalOwnerOrg).forEach(function (key, index) {
                 obj[key] = tx.legalOwnerOrg[key];
             });
             return assetRegistry.addAll([obj]);
@@ -120,7 +120,7 @@ function CreateCompoundOrg(tx) {
         .then(function (assetRegistry) {
             var factory = getFactory();
             var obj = factory.newResource('org.digitalcmr', 'CompoundOrg', tx.compoundOrg.entityID);
-            Object.keys(tx.compoundOrg).forEach(function(key,index) {
+            Object.keys(tx.compoundOrg).forEach(function (key, index) {
                 obj[key] = tx.compoundOrg[key];
             });
             return assetRegistry.addAll([obj]);
@@ -148,7 +148,7 @@ function CreateCarrierOrg(tx) {
         .then(function (assetRegistry) {
             var factory = getFactory();
             var obj = factory.newResource('org.digitalcmr', 'CarrierOrg', tx.carrierOrg.entityID);
-            Object.keys(tx.carrierOrg).forEach(function(key,index) {
+            Object.keys(tx.carrierOrg).forEach(function (key, index) {
                 obj[key] = tx.carrierOrg[key];
             });
             return assetRegistry.addAll([obj]);
@@ -176,7 +176,7 @@ function CreateRecipientOrg(tx) {
         .then(function (assetRegistry) {
             var factory = getFactory();
             var obj = factory.newResource('org.digitalcmr', 'RecipientOrg', tx.recipientOrg.entityID);
-            Object.keys(tx.recipientOrg).forEach(function(key,index) {
+            Object.keys(tx.recipientOrg).forEach(function (key, index) {
                 obj[key] = tx.recipientOrg[key];
             });
             return assetRegistry.addAll([obj]).catch(function (error) {
@@ -206,10 +206,10 @@ function CreateVehicles(tx) {
         .then(function (assetRegistry) {
             var factory = getFactory();
             var vehicleArr = [];
-            for (var i = 0 ; i < tx.vehicles.length ; i++) {
+            for (var i = 0; i < tx.vehicles.length; i++) {
                 var inputObj = tx.vehicles[i];
                 var obj = factory.newResource('org.digitalcmr', 'Vehicle', inputObj.vin);
-                Object.keys(tx.vehicles[i]).forEach(function(key,index) {
+                Object.keys(tx.vehicles[i]).forEach(function (key, index) {
                     obj[key] = inputObj[key];
                 });
                 vehicleArr.push(obj);
@@ -234,21 +234,31 @@ function CreateVehicles(tx) {
 function UpdateECMR(tx) {
 
     console.log('Invoking function processor to set update ECMR');
-    console.log(tx.ecmr);
+    console.log('ecmrID: ' + tx.ecmr.ecmrID);
 
     // Get the asset registry for the asset.
     return getAssetRegistry('org.digitalcmr.ECMR')
         .then(function (assetRegistry) {
-            var factory = getFactory();
-            var ecmr = factory.newResource('org.digitalcmr', 'ECMR', tx.ecmr.ecmrID);
-            ecmr = tx.ecmr;
-            return assetRegistry.update(ecmr).catch(function (error) {
+            return assetRegistry.get(tx.ecmr.ecmrID).catch(function (error) {
                 console.log('An error occurred while updating the registry asset: ' + error);
                 return error;
             });
-        }).catch(function (error) {
-            console.log('An error occurred while updating the ECMR asset: ' + error);
-            return error;
+        })
+        .then(function (ecmr) {
+            ecmr.status = tx.ecmr.status;
+            ecmr.compoundSignature = tx.ecmr.compoundSignature;
+            ecmr.carrierLoadingSignature = tx.ecmr.carrierLoadingSignature;
+            ecmr.carrierDeliverySignature = tx.ecmr.carrierDeliverySignature;
+            ecmr.recipientSignature = tx.ecmr.recipientSignature;
+            return getAssetRegistry('org.digitalcmr.ECMR')
+                .then(function (assetRegistry) {
+                    return assetRegistry.update(ecmr).catch(function (error) {
+                        console.log('An error occurred while updating the registry asset: ' + error);
+                        return error;
+                    });
+                }).catch(function (error) {
+                    console.log('An error occurred while updating the ECMR asset: ' + error);
+                    return error;
+                });
         });
-
 }
