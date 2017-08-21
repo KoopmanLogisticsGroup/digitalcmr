@@ -1,42 +1,47 @@
 <div class="ui container">
   <div class="row titles">LINE ITEMS</div>
   <div class="row">
-    <table class="ui padded table">
-      <thead>
-      <tr>
-        <th>VIN</th>
-        <th>Manufacturer</th>
-        <th>Description</th>
-        <th>Weight</th>
-        <th>ODO Meter</th>
-        <th>License Plate</th>
-        <th>Remarks</th>
-        <th>Damage</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let vehicle of ecmr?.goods">
-        <td>{{vehicle?.vehicle.vin}}</td>
-        <td>{{vehicle?.vehicle.manufacturer}}</td>
-        <td>{{vehicle?.description}}</td>
-        <td>{{vehicle?.weight}} kg</td>
-        <td>{{vehicle?.vehicle.odoMeterReading}}</td>
-        <td>{{vehicle?.vehicle.plateNumber}}</td>
-        <td>
-          <div class="ui input">
-            <input (ngModel)="ecmr.carrierComments" type="text" placeholder="Add remark...">
-          </div>
-        </td>
-        <td>
-          <div class="ui checkbox">
-            <input type="checkbox" name="example">
-            <label></label>
-          </div>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-    <button class="ui right floated button buttonDesign" (click)="addRemark()">SIGN OFF</button>
+    <form>
+      <table class="ui padded table">
+        <thead>
+        <tr>
+          <th>VIN</th>
+          <th>Manufacturer</th>
+          <th>Description</th>
+          <th>Weight</th>
+          <th>ODO Meter</th>
+          <th>License Plate</th>
+          <th>Remarks</th>
+          <th>Damage</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let good of ecmr?.goods; let i = index">
+          <td>{{good?.vehicle.vin}}</td>
+          <td>{{good?.vehicle.manufacturer}}</td>
+          <td>{{good?.description}}</td>
+          <td>{{good?.weight}} kg</td>
+          <td>{{good?.vehicle.odoMeterReading}}</td>
+          <td>{{good?.vehicle.plateNumber}}</td>
+          <td>
+            <div class="ui input" [ngClass]="{'disabled' : ecmr.status === 'DELIVERED'}">
+              <input name="remark-{{i}}" [(ngModel)]="good.carrierLoadingRemark" placeholder="Add remark..."/>
+            </div>
+          </td>
+          <td>
+            <div class="ui checkbox">
+              <input type="checkbox" name="options" (ngModel)="option.checked">
+              <label></label>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <button *ngIf="ecmr?.status !== 'DELIVERED'" type="submit" class="ui right floated circular ui button sign-off"
+              (click)="openModal()">SIGN OFF
+      </button>
+      <app-sign-off-modal></app-sign-off-modal>
+    </form>
   </div>
 </div>
 

@@ -11,7 +11,8 @@
         </div>
         <div class="field">
           <label>General Remark</label>
-          <textarea name="generalRemarks" [(ngModel)]="ecmr.carrierComments" placeholder="Enter your general remarks here..." maxlength="136"></textarea>
+          <textarea name="generalRemarks" [(ngModel)]="ecmr.carrierComments"
+                    placeholder="Enter your general remarks here..." maxlength="136"></textarea>
         </div>
         <button class="circular ui float right button submitButton" (click)="onSubmit()" type="submit">Submit</button>
       </form>

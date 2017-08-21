@@ -17,7 +17,12 @@
 .login-label {
   background-color: #3A386E;
   color: white;
-  margin: 15px 0;
+  margin-right: 10%;
+  margin-top: 12%;
+  display: block;
+  float: right;
+  font-family: Roboto;
+  text-transform: uppercase;
   display: block;
   float: right;
 }
@@ -54,11 +59,24 @@
 }
 
 .width-scale{
-  width: 100%
+  margin-left: 10%;
+  width: 80%;
+  font-family: Roboto;
+  font-size: 13px;
+  color: #b8b7c2;
+  font-weight: 100;
+
+  input {
+    font-family: Roboto;
+  }
 }
 
 .login-text-label{
-  color: #32639E;
+  padding-top: 28px;
+  padding-left: 30px;
+  color: #2f62a0;
+  font-size: 20px;
+  font-family: Roboto;
   font-size: 20px;
 }
 
