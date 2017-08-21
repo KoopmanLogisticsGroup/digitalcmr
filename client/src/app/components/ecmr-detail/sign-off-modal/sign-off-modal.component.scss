@@ -1,29 +1,27 @@
 .ui {
+  position: relative;
   &.modal {
-    width: 430px;
-    height: 400px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    margin-left: -150px;
+    width: 500px;
+    height: 65%;
+    margin-left: -250px;
     margin-top: -150px;
-
     .header {
       border-bottom: none;
     }
+    .submitButton {
+      background-color: #3A386E;
+      color: white;
+      display: block;
+      float: right;
+    }
   }
-}
-
-.submit-button {
-  background-color: #3A386E;
-  color: white;
-  margin: 15px 0;
-  display: block;
-  float: right;
-}
-
-#remarks-field {
-  resize: none;
+  .field {
+    margin-top: 5%;
+    resize: none;
+  }
+  span {
+    display: block;
+  }
 }
 
 

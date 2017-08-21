@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { SignOffModalComponent } from './sign-off-modal.component';
+import {SignOffModalComponent} from './sign-off-modal.component';
 
 describe('SignOffModalComponent', () => {
   let component: SignOffModalComponent;
@@ -8,9 +8,9 @@ describe('SignOffModalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SignOffModalComponent ]
-    })
-    .compileComponents();
+        declarations: [SignOffModalComponent]
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {

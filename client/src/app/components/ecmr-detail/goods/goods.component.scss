@@ -25,17 +25,18 @@
       padding-left: 4%;
     }
   }
-}
-
-.titles {
-  color: #424244;
-  margin-left: 3%;
-  margin-top: 5%;
-  margin-bottom: 0.5%;
-  font-size: 1em;
-}
-
-.buttonDesign {
-  background-color: #3a3670;
-  color: white;
+  .sign-off {
+    background-color: #3A386E;
+    color: white;
+    margin: 15px 0;
+    display: block;
+    float: right;
+  }
+  .titles {
+    color: #424244;
+    margin-left: 3%;
+    margin-top: 5%;
+    margin-bottom: 0.5%;
+    font-size: 1em;
+  }
 }

@@ -1,5 +1,6 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {SignOffModalComponent} from './sign-off-modal/sign-off-modal.component';
+import {Component, OnInit} from '@angular/core';
+import {EcmrService} from '../../services/ecmr.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-ecmr-detail',
@@ -7,18 +8,51 @@ import {SignOffModalComponent} from './sign-off-modal/sign-off-modal.component';
   styleUrls: ['./ecmr-detail.component.scss']
 })
 export class EcmrDetailComponent implements OnInit {
-  @ViewChild(SignOffModalComponent) public signOffModal: SignOffModalComponent;
 
+  public userRole: string;
+  public ecmrID: any;
+  public ecmr: any;
+  public selectedColumns: boolean[];
 
-  constructor() {
+  public constructor(private route: ActivatedRoute,
+                     private ecmrService: EcmrService) {
+    this.selectedColumns = [false, false, false, false];
   }
 
-
-  ngOnInit() {
+  public ngOnInit() {
+    this.route.params
+      .subscribe(params => {
+        this.ecmrID = params['ecmrID'];
+        this.ecmrService.getAllEcmrs('').subscribe(ecmrs => {
+          this.ecmr = ecmrs instanceof Array ? ecmrs.filter(x => x.ecmrID === this.ecmrID) : undefined;
+          this.userRole = JSON.parse(localStorage.getItem('currentUser')).user.role;
+          if (this.ecmr.length) {
+            this.ecmr = this.ecmr[0];
+          }
+          switch (this.ecmr.status) {
+            case 'CREATED': {
+              this.selectedColumns[0] = true;
+              break;
+            }
+            case 'LOADED': {
+              this.selectedColumns[1] = true;
+              break;
+            }
+            case 'IN_TRANSIT': {
+              this.selectedColumns[2] = true;
+              break;
+            }
+            case 'DELIVERED': {
+              if (this.userRole === 'source') {
+                this.selectedColumns[0] = true;
+                // $('progressBar').addClass('selectedImg1');
+                break;
+              }
+              this.selectedColumns[3] = true;
+              break;
+            }
+          }
+        });
+      });
   }
-
-  public openModal(): void {
-    this.signOffModal.open();
-  }
-
 }

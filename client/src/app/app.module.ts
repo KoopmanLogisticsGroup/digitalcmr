@@ -34,7 +34,6 @@ import {SignOffModalComponent} from './components/ecmr-detail/sign-off-modal/sig
     GeneralInfoComponent,
     GoodsComponent,
     SignOffModalComponent
-
   ],
   imports: [
     BrowserModule,

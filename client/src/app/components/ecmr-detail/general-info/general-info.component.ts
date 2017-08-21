@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {AuthenticationService} from '../../../services/authentication.service';
 
 @Component({
   selector: 'app-general-info',
@@ -8,9 +9,10 @@ import {Component, Input, OnInit} from '@angular/core';
 export class GeneralInfoComponent implements OnInit {
   @Input() public ecmr: any;
   @Input() public selectedColumns: boolean[];
+
   public selectedImage: boolean[];
 
-  public constructor() {
+  public constructor(private _authenticationService: AuthenticationService) {
     this.selectedImage = [false, false, false, false];
   }
 
@@ -35,6 +37,14 @@ export class GeneralInfoComponent implements OnInit {
         this.selectedColumns[index] = true;
       }
     });
+  }
+
+  public userRole(): string {
+    if (this._authenticationService.isAuthenticated()) {
+      const userRole = JSON.parse(localStorage.getItem('currentUser')).user.role;
+      return userRole;
+    }
+    return null;
   }
 
   public ngOnInit() {

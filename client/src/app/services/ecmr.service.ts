@@ -4,6 +4,8 @@ import 'rxjs/add/operator/map';
 
 import {Configuration} from '../app.constants';
 import {AuthenticationService} from './authentication.service';
+import {Ecmr} from '../classes/ecmr.model';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class EcmrService {
@@ -15,6 +17,7 @@ export class EcmrService {
                      private _authenticationService: AuthenticationService) {
     this.actionUrl = `${_configuration.composerHost}${_configuration.composerPrefix}ECMR/`;
     this.headers = _authenticationService.createAuthorizationHeader();
+    console.log(this.headers);
   }
 
   public getAllEcmrs(ecmrID: string) {
@@ -22,5 +25,16 @@ export class EcmrService {
     return this._http
       .get(this.actionUrl + ecmrID, {headers: this.headers})
       .map(res => res.json());
+  }
+
+  public updateEcmr(ecmr: Ecmr) {
+    // return this._http.post(this.actionUrl, ecmr, {headers: this.headers})
+    //   .map(res => res.json())
+    //   .catch(this.handleErrorObservable);
+  }
+
+  private handleErrorObservable(error: Response | any) {
+    console.error(error.message || error);
+    return Observable.throw(error.message || error);
   }
 }
