@@ -38,6 +38,7 @@ describe('digitalcmr', () => {
     const adminIdentity = {'userID': 'admin', 'userSecret': 'adminpw'};
     let legalOwnerIdentity;
     let compoundIdentity;
+    let carrierMemberIdentity;
     // These are a list of received events.
     let events;
 
@@ -208,6 +209,26 @@ describe('digitalcmr', () => {
                     });
             })
             .then(() => {
+                // Get the factory for the business network
+                factory = businessNetworkConnection.getBusinessNetwork().getFactory();
+                // Create the CarrierMember
+                const carrierMember = factory.newResource(namespace, 'CarrierMember', 'harry@koopman.org');
+                carrierMember.userName = 'harry';
+                carrierMember.firstName = 'harry';
+                carrierMember.lastName = 'Koppy';
+                carrierMember.address = buildAddress();
+                carrierMember.org = factory.newRelationship(namespace, 'CarrierOrg', 'koopman');
+
+                // Add participant to the registry
+                return businessNetworkConnection.getParticipantRegistry('org.digitalcmr.CarrierMember')
+                    .then((participantRegistry) => {
+                        participantRegistry.add(carrierMember);
+                    })
+                    .catch((error) => {
+                        console.log('participant carrier member add error: ' + error);
+                    });
+            })
+            .then(() => {
                 // Issue the identity of the participant
                 return businessNetworkConnection.issueIdentity('org.digitalcmr.LegalOwnerAdmin#lapo@leaseplan.org', 'lapo')
                     .then((identity) => {
@@ -237,6 +258,13 @@ describe('digitalcmr', () => {
                 return businessNetworkConnection.issueIdentity('org.digitalcmr.CompoundAdmin#willem@compoundcompany.org', 'willem')
                     .then((identity) => {
                         compoundIdentity = identity;
+                    });
+            })
+            .then(() => {
+                // Issue the identity of the carrier member
+                return businessNetworkConnection.issueIdentity('org.digitalcmr.CarrierMember#harry@koopman.org', 'harry')
+                    .then((identity) => {
+                        carrierMemberIdentity = identity;
                     });
             });
     });
@@ -324,7 +352,7 @@ describe('digitalcmr', () => {
             })
     });
 
-    it('CompoundAdmin can CREATE UpdateECMR method and UPDATE and ECMR only if the status is LOADED', () => {
+    it('CompoundAdmin can CREATE UpdateECMR method and UPDATE and ECMR only if the status is from CREATED to LOADED', () => {
         // Use the identity for CompoundAdmin
         return connectAs(compoundIdentity)
             .then(() => {
@@ -346,6 +374,39 @@ describe('digitalcmr', () => {
                 asset.source.getFullyQualifiedIdentifier().should.equal('org.digitalcmr.CompoundOrg#amsterdamcompound');
                 asset.status.should.equal('LOADED');
                 asset.compoundSignature.certificate.getFullyQualifiedIdentifier().should.equal('org.digitalcmr.User#willem@amsterdamcompound.org');
+            });
+    });
+
+    it('CarrierMember can CREATE UpdateECMR method and UPDATE and ECMR only if the status is from LOADED to IN_TRANSIT and he is the actual transporter', () => {
+        // Use the identity for CarrierMember
+        return connectAs(carrierMemberIdentity)
+
+            .then(() => {
+                // Get the assets
+                return businessNetworkConnection.getAssetRegistry('org.digitalcmr.ECMR')
+                    .then((assetRegistry) => {
+                        return assetRegistry.get('compound');
+                    });
+            })
+            .then((asset) => {
+                const transaction = factory.newTransaction(namespace, 'UpdateECMR');
+                transaction.ecmr = asset;
+                transaction.ecmr.status = 'IN_TRANSIT';
+                transaction.ecmr.carrierLoadingSignature = buildSignature('harry@koopman.org');
+                return businessNetworkConnection.submitTransaction(transaction);
+            })
+            .then(() => {
+                // Get the asset back
+                return businessNetworkConnection.getAssetRegistry('org.digitalcmr.ECMR')
+                    .then((assetRegistry) => {
+                        return assetRegistry.get('compound');
+                    });
+            })
+            .then((asset) => {
+                // Validate the result
+                asset.source.getFullyQualifiedIdentifier().should.equal('org.digitalcmr.CompoundOrg#amsterdamcompound');
+                asset.status.should.equal('IN_TRANSIT');
+                asset.carrierLoadingSignature.certificate.getFullyQualifiedIdentifier().should.equal('org.digitalcmr.User#harry@koopman.org');
             });
     });
 

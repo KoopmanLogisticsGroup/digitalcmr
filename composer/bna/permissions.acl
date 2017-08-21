@@ -96,6 +96,34 @@ rule CompoundAdminCanReadECMR {
       action: ALLOW
   }
 
+  rule CarrierTransporterCreateECMRUpdateTransaction {
+        description: "Allow Transporter to CREATE an eCMR update transaction"
+        participant: "org.digitalcmr.CarrierMember"
+        operation: CREATE
+        resource: "org.digitalcmr.UpdateECMR"
+        action: ALLOW
+   }
+
+   rule CarrierTransporterCanSubmitUpdateECMRForLoading {
+       description: "Allow Transporter to Submit a Update eCMR transaction for his organization and status LOADED"
+       participant(p): "org.digitalcmr.CarrierMember"
+       operation: UPDATE
+       resource(r): "org.digitalcmr.ECMR"
+       transaction(tx): "org.digitalcmr.UpdateECMR"
+       condition: (r.transporter.getIdentifier() === p.getIdentifier() && r.status == 'LOADED' && tx.ecmr.status == "IN_TRANSIT" && tx.ecmr.carrierLoadingSignature)
+       action: ALLOW
+   }
+
+   rule CarrierTransporterCanSubmitUpdateECMRForDelivery {
+          description: "Allow Transporter to Submit a Update eCMR transaction for his organization and status LOADED"
+          participant(p): "org.digitalcmr.CarrierMember"
+          operation: UPDATE
+          resource(r): "org.digitalcmr.ECMR"
+          transaction(tx): "org.digitalcmr.UpdateECMR"
+          condition: (r.transporter.getIdentifier() === p.getIdentifier() && r.status == 'IN_TRANSIT' && tx.ecmr.status == "DELIVERED" && tx.ecmr.carrierDeliverySignature)
+          action: ALLOW
+      }
+
 
 /**
    * Recipient permission list
@@ -118,5 +146,15 @@ rule CompoundAdminCanReadECMR {
       condition: (ecmr.recipientOrg == p.org && ecmr.recipient == p.getIdentifier())
       action: ALLOW
   }
+
+  rule recipientCanSubmitUpdateECMRForDelivery {
+        description: "Allow Transporter to Submit a Update eCMR transaction for his organization and status LOADED"
+        participant(p): "org.digitalcmr.RecipientMember"
+        operation: UPDATE
+        resource(r): "org.digitalcmr.ECMR"
+        transaction(tx): "org.digitalcmr.UpdateECMR"
+        condition: (r.transporter.getIdentifier() === p.getIdentifier() && r.status == 'DELIVERED' && tx.ecmr.status == "CONFIRMED_DELIVERED" && tx.ecmr.recipientSignature)
+        action: ALLOW
+    }
 
 

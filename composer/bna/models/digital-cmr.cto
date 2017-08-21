@@ -30,8 +30,8 @@ asset ECMR identified by ecmrID {
   o String[] documents optional
   o Signature compoundSignature optional
   o Signature carrierLoadingSignature optional
-  o Signature recipientSignature optional
   o Signature carrierDeliverySignature optional
+  o Signature recipientSignature optional
 }
 
 abstract asset Entity identified by entityID {
@@ -202,4 +202,5 @@ enum ECMR_STATUS {
     o LOADED
     o IN_TRANSIT
     o DELIVERED
+    o CONFIRMED_DELIVERED
 }
