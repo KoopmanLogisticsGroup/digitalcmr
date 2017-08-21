@@ -1,0 +1,27 @@
+.ui {
+  position: relative;
+  &.modal {
+    width: 500px;
+    height: 65%;
+    margin-left: -250px;
+    margin-top: -150px;
+    .header {
+      border-bottom: none;
+    }
+    .submitButton {
+      background-color: #3A386E;
+      color: white;
+      display: block;
+      float: right;
+    }
+  }
+  .field {
+    margin-top: 5%;
+    resize: none;
+  }
+  span {
+    display: block;
+  }
+}
+
+
