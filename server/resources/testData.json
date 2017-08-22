@@ -7,7 +7,7 @@
       "username": "willem",
       "password": "passw0rd",
       "role": "owner",
-      "secret": "gnmjsyzbKMkY"
+      "secret": "sBCUltvNjlLm"
     },
     {
       "userID": "lapo",
@@ -16,7 +16,7 @@
       "username": "lapo",
       "password": "passw0rd",
       "role": "source",
-      "secret": "oTyTuuZeZBkE"
+      "secret": "TUokCNullpxU"
     },
     {
       "userID": "harry",
@@ -25,7 +25,7 @@
       "username": "harry",
       "password": "passw0rd",
       "role": "carrier",
-      "secret": "WOtjvnlarhUu"
+      "secret": "VEKLJZLxNeEM"
     },
     {
       "userID": "rob",
@@ -34,7 +34,7 @@
       "username": "rob",
       "password": "passw0rd",
       "role": "recipient",
-      "secret": "XlabrhoSqQBs"
+      "secret": "JEDbeaGQBHxQ"
     }
   ]
 }
