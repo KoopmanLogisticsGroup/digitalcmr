@@ -5,28 +5,36 @@
       "org": "amsterdamcompound",
       "userEmail": "willem@amsterdamcompound.org",
       "username": "willem",
-      "password": "passw0rd"
+      "password": "passw0rd",
+      "role": "owner",
+      "secret": "gnmjsyzbKMkY"
     },
     {
       "userID": "lapo",
       "org": "leaseplan",
       "userEmail": "lapo@leaseplan.org",
       "username": "lapo",
-      "password": "passw0rd"
+      "password": "passw0rd",
+      "role": "source",
+      "secret": "oTyTuuZeZBkE"
     },
     {
       "userID": "harry",
       "org": "koopman",
       "userEmail": "harry@koopman.org",
       "username": "harry",
-      "password": "passw0rd"
+      "password": "passw0rd",
+      "role": "carrier",
+      "secret": "WOtjvnlarhUu"
     },
     {
       "userID": "rob",
       "org": "cardealer",
       "userEmail": "rob@cardealer.org",
       "username": "rob",
-      "password": "passw0rd"
+      "password": "passw0rd",
+      "role": "recipient",
+      "secret": "XlabrhoSqQBs"
     }
   ]
 }

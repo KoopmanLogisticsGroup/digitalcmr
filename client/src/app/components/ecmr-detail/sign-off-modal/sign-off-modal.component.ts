@@ -1,4 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {EcmrService} from '../../../services/ecmr.service';
+import {Ecmr} from '../../../classes/ecmr.model';
 
 @Component({
   selector: 'app-sign-off-modal',
@@ -8,14 +10,17 @@ import {Component, OnInit} from '@angular/core';
 
 export class SignOffModalComponent implements OnInit {
 
+  @Input() ecmr: Ecmr;
 
-  constructor() {
+  public constructor(private ecmrService: EcmrService) {
+    this.ecmr = new Ecmr();
   }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
-  public open(): void {
+  public open(ecmr: Ecmr): void {
+    this.ecmr = ecmr;
     $('#signoff-modal.ui.modal').modal('show');
     $('#signoff-modal.ui.modal').parent().css({'background-color': 'rgba(0,0,0,0.7)'});
   }
@@ -24,8 +29,11 @@ export class SignOffModalComponent implements OnInit {
     $('#signoff-modal.ui.modal').modal('hide');
   }
 
-  public dummyFunction(): void {
-    alert('Ey mate, nothing happening yet');
+  public onSubmit() {
+    // this.ecmrService.updateEcmr(this.ecmr).subscribe(result => {
+    // });
+    console.log(this.ecmr);
+    $('#signoff-modal.ui.modal').modal('hide');
   }
 }
 

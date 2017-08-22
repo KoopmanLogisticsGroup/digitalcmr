@@ -36,21 +36,23 @@ export class ECMRController {
   @Get('/')
   public async getAll(@Req() request: any): Promise<any> {
     let enrollmentID = new JSONWebToken(request).getUserID();
-    let secret       = request.headers.secret;
+    let secret       = new JSONWebToken(request).getSecret();
+
     return this._transactor.getAllECMRs(enrollmentID, secret, () => this.queryApi.queryGetAllEcmrs());
   }
 
   @Post('/')
   public async create(@Body() ecmr: ECMR, @Req() request: any): Promise<any> {
     let enrollmentID = new JSONWebToken(request).getUserID();
-    let secret       = request.headers.secret;
+    let secret       = new JSONWebToken(request).getSecret();
+
     return this._transactor.put(ecmr, enrollmentID, secret, (factory, data) => this._transactor.createECMR(factory, data));
   }
 
   @Put('/')
   public async update(@Body() ecmr: ECMR, @Req() request: any): Promise<any> {
     let enrollmentID = new JSONWebToken(request).getUserID();
-    let secret       = request.headers.secret;
+    let secret       = new JSONWebToken(request).getSecret();
 
     return this._transactor.put(ecmr, enrollmentID, secret, (factory, data) => this._transactor.updateECMR(factory, data));
   }
