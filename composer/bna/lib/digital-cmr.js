@@ -241,7 +241,7 @@ function UpdateECMR(tx) {
         .then(function (assetRegistry) {
             return assetRegistry.get(tx.ecmr.ecmrID).catch(function (error) {
                 console.log('An error occurred while updating the registry asset: ' + error);
-                return error;
+                throw error;
             });
         })
         .then(function (ecmr) {
@@ -292,11 +292,11 @@ function UpdateECMR(tx) {
                 .then(function (assetRegistry) {
                     return assetRegistry.update(ecmr).catch(function (error) {
                         console.log('An error occurred while updating the registry asset: ' + error);
-                        return error;
+                        throw error;
                     });
                 }).catch(function (error) {
                     console.log('An error occurred while updating the ECMR asset: ' + error);
-                    return error;
+                    throw error;
                 });
         });
 }
