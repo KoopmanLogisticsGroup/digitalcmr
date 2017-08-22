@@ -15,6 +15,7 @@ services:
       - ./server/tsconfig.json:/usr/src/app/tsconfig.json # TS filenames get added automatically to this file on build
       - ./server/package.json:/usr/src/app/package.json
       - ./server/resources/connection.json:/root/.composer-connection-profiles/defaultProfile/connection.json
+      - ./server/resources/testData.json:/usr/src/app/resources/testData.json
 #    links:
 #      - composer
     command: bash -c "grunt build; grunt"
