@@ -147,7 +147,7 @@
       },
       "owner": "resource:org.digitalcmr.LegalOwnerOrg#leaseplan",
       "source": "resource:org.digitalcmr.CompoundOrg#amsterdamcompound",
-      "transporter": "participant:org.digitalcmr.CarrierMember#james@koopman.org",
+      "transporter": "participant:org.digitalcmr.CarrierMember#harry@koopman.org",
       "carrier": "resource:org.digitalcmr.CarrierOrg#koopman",
       "recipientOrg": "resource:org.digitalcmr.RecipientOrg#cardealer",
       "recipient": "participant:org.digitalcmr.RecipientMember#rob@cardealer.org",

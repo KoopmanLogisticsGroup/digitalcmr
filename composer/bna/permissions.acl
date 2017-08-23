@@ -83,7 +83,7 @@ rule CompoundAdminCanReadECMR {
      participant(p): "org.digitalcmr.CarrierAdmin"
      operation: READ
      resource(r): "org.digitalcmr.ECMR"
-     condition: (r.carrier == p.org)
+     condition: (r.carrier.getIdentifier() === p.org.getIdentifier())
      action: ALLOW
  }
 
@@ -92,9 +92,37 @@ rule CompoundAdminCanReadECMR {
       participant(p): "org.digitalcmr.CarrierMember"
       operation: READ
       resource(ecmr): "org.digitalcmr.ECMR"
-      condition: (ecmr.carrier == p.org && ecmr.transporter == p.getIdentifier())
+      condition: (ecmr.carrier.getIdentifier() === p.org.getIdentifier() && ecmr.transporter.getIdentifier() === p.getIdentifier())
       action: ALLOW
   }
+
+  rule CarrierTransporterCreateECMRUpdateTransaction {
+        description: "Allow Transporter to CREATE an eCMR update transaction"
+        participant: "org.digitalcmr.CarrierMember"
+        operation: CREATE
+        resource: "org.digitalcmr.UpdateECMR"
+        action: ALLOW
+   }
+
+   rule CarrierTransporterCanSubmitUpdateECMRForLoading {
+       description: "Allow Transporter to Submit a Update eCMR transaction for his organization and status LOADED"
+       participant(p): "org.digitalcmr.CarrierMember"
+       operation: UPDATE
+       resource(r): "org.digitalcmr.ECMR"
+       transaction(tx): "org.digitalcmr.UpdateECMR"
+       condition: (r.transporter.getIdentifier() === p.getIdentifier() && r.status == 'LOADED' && tx.ecmr.status == "IN_TRANSIT" && tx.ecmr.carrierLoadingSignature)
+       action: ALLOW
+   }
+
+   rule CarrierTransporterCanSubmitUpdateECMRForDelivery {
+          description: "Allow Transporter to Submit a Update eCMR transaction for his organization and status LOADED"
+          participant(p): "org.digitalcmr.CarrierMember"
+          operation: UPDATE
+          resource(r): "org.digitalcmr.ECMR"
+          transaction(tx): "org.digitalcmr.UpdateECMR"
+          condition: (r.transporter.getIdentifier() === p.getIdentifier() && r.status == 'IN_TRANSIT' && tx.ecmr.status == "DELIVERED" && tx.ecmr.carrierDeliverySignature)
+          action: ALLOW
+      }
 
 
 /**
@@ -106,7 +134,7 @@ rule CompoundAdminCanReadECMR {
      participant(p): "org.digitalcmr.RecipientAdmin"
      operation: READ
      resource(ecmr): "org.digitalcmr.ECMR"
-     condition: (ecmr.recipientOrg == p.org)
+     condition: (ecmr.recipientOrg.getIdentifier() === p.org.getIdentifier())
      action: ALLOW
  }
 
@@ -115,8 +143,26 @@ rule CompoundAdminCanReadECMR {
       participant(p): "org.digitalcmr.RecipientMember"
       operation: READ
       resource(ecmr): "org.digitalcmr.ECMR"
-      condition: (ecmr.recipientOrg == p.org && ecmr.recipient == p.getIdentifier())
+      condition: (ecmr.recipientOrg.getIdentifier() === p.org.getIdentifier() && ecmr.recipient.getIdentifier() === p.getIdentifier())
       action: ALLOW
   }
+
+  rule RecipientMemberCanCreateECMRUpdateTransaction {
+          description: "Allow recipient member to CREATE an eCMR update transaction"
+          participant: "org.digitalcmr.RecipientMember"
+          operation: CREATE
+          resource: "org.digitalcmr.UpdateECMR"
+          action: ALLOW
+     }
+
+  rule recipientMemberCanSubmitUpdateECMRForConfirmed {
+        description: "Allow recipient to Submit a Update eCMR transaction for his organization and status LOADED"
+        participant(p): "org.digitalcmr.RecipientMember"
+        operation: UPDATE
+        resource(r): "org.digitalcmr.ECMR"
+        transaction(tx): "org.digitalcmr.UpdateECMR"
+        condition: (r.recipient.getIdentifier() === p.getIdentifier() && r.status == 'DELIVERED' && tx.ecmr.status == "CONFIRMED_DELIVERED" && tx.ecmr.recipientSignature)
+        action: ALLOW
+    }
 
 
