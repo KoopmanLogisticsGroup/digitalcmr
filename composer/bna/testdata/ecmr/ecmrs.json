@@ -57,7 +57,7 @@
         "id": "id"
       },
       "owner": "resource:org.digitalcmr.LegalOwnerOrg#leaseplan",
-      "source": "resource:org.digitalcmr.CompoundOrg#assencompound",
+      "source": "resource:org.digitalcmr.CompoundOrg#amsterdamcompound",
       "transporter": "participant:org.digitalcmr.CarrierMember#harry@koopman.org",
       "carrier": "resource:org.digitalcmr.CarrierOrg#koopman",
       "recipientOrg": "resource:org.digitalcmr.RecipientOrg#cardealer",
@@ -340,8 +340,8 @@
         "id": "id"
       },
       "owner": "resource:org.digitalcmr.LegalOwnerOrg#leaseplan",
-      "source": "resource:org.digitalcmr.CompoundOrg#eindhovencompound",
-      "transporter": "participant:org.digitalcmr.CarrierMember#jack@koopman.org",
+      "source": "resource:org.digitalcmr.CompoundOrg#amsterdamcompound",
+      "transporter": "participant:org.digitalcmr.CarrierMember#harry@koopman.org",
       "carrier": "resource:org.digitalcmr.CarrierOrg#koopman",
       "recipientOrg": "resource:org.digitalcmr.RecipientOrg#cardealer",
       "recipient": "participant:org.digitalcmr.RecipientMember#rob@cardealer.org",
@@ -371,7 +371,11 @@
       ],
       "legalOwnerInstructions": "string",
       "paymentInstructions": "string",
-      "payOnDelivery": "string"
+      "payOnDelivery": "string",
+      "compoundSignature": {
+        "certificate": "participant:org.digitalcmr.CompoundAdmin#willem@amsterdamcompound.org",
+        "timestamp": 0
+      }
     },
     {
       "$class": "org.digitalcmr.ECMR",
@@ -429,7 +433,7 @@
         "id": "id"
       },
       "owner": "resource:org.digitalcmr.LegalOwnerOrg#leaseplan",
-      "source": "resource:org.digitalcmr.CompoundOrg#eindhovencompound",
+      "source": "resource:org.digitalcmr.CompoundOrg#amsterdamcompound",
       "transporter": "participant:org.digitalcmr.CarrierMember#harry@koopman.org",
       "carrier": "resource:org.digitalcmr.CarrierOrg#koopman",
       "recipientOrg": "resource:org.digitalcmr.RecipientOrg#cardealer",
@@ -476,7 +480,15 @@
       ],
       "legalOwnerInstructions": "string",
       "paymentInstructions": "string",
-      "payOnDelivery": "string"
+      "payOnDelivery": "string",
+      "compoundSignature": {
+        "certificate": "participant:org.digitalcmr.CompoundAdmin#willem@amsterdamcompound.org",
+        "timestamp": 0
+      },
+      "carrierLoadingSignature": {
+        "certificate": "participant:org.digitalcmr.CarrierMember#harry@koopman.org",
+        "timestamp": 0
+      }
     },
     {
       "$class": "org.digitalcmr.ECMR",
@@ -534,8 +546,8 @@
         "id": "id"
       },
       "owner": "resource:org.digitalcmr.LegalOwnerOrg#leaseplan",
-      "source": "resource:org.digitalcmr.CompoundOrg#eindhovencompound",
-      "transporter": "participant:org.digitalcmr.CarrierMember#bert@koopman.org",
+      "source": "resource:org.digitalcmr.CompoundOrg#amsterdamcompound",
+      "transporter": "participant:org.digitalcmr.CarrierMember#harry@koopman.org",
       "carrier": "resource:org.digitalcmr.CarrierOrg#koopman",
       "recipientOrg": "resource:org.digitalcmr.RecipientOrg#cardealer",
       "recipient": "participant:org.digitalcmr.RecipientMember#rob@cardealer.org",
@@ -613,7 +625,19 @@
       ],
       "legalOwnerInstructions": "string",
       "paymentInstructions": "string",
-      "payOnDelivery": "string"
+      "payOnDelivery": "string",
+      "compoundSignature": {
+        "certificate": "resource:org.digitalcmr.CompoundAdmin#willem@amsterdamcompound.org",
+        "timestamp": 0
+      },
+      "carrierLoadingSignature": {
+        "certificate": "participant:org.digitalcmr.CarrierMember#harry@koopman.org",
+        "timestamp": 0
+      },
+      "carrierDeliverySignature": {
+        "certificate": "participant:org.digitalcmr.CarrierMember#harry@koopman.org",
+        "timestamp": 0
+      }
     },
     {
       "$class": "org.digitalcmr.ECMR",
@@ -672,7 +696,7 @@
       },
       "owner": "resource:org.digitalcmr.LegalOwnerOrg#leaseplan",
       "source": "resource:org.digitalcmr.CompoundOrg#amsterdamcompound",
-      "transporter": "participant:org.digitalcmr.CarrierMember#james@koopman.org",
+      "transporter": "participant:org.digitalcmr.CarrierMember#harry@koopman.org",
       "carrier": "resource:org.digitalcmr.CarrierOrg#koopman",
       "recipientOrg": "resource:org.digitalcmr.RecipientOrg#cardealer",
       "recipient": "participant:org.digitalcmr.RecipientMember#rob@cardealer.org",
@@ -718,7 +742,15 @@
       ],
       "legalOwnerInstructions": "string",
       "paymentInstructions": "string",
-      "payOnDelivery": "string"
+      "payOnDelivery": "string",
+      "compoundSignature": {
+        "certificate": "participant:org.digitalcmr.CompoundAdmin#willem@amsterdamcompound.org",
+        "timestamp": 0
+      },
+      "carrierLoadingSignature": {
+        "certificate": "participant:org.digitalcmr.CarrierMember#harry@koopman.org",
+        "timestamp": 0
+      }
     }
   ]
 }

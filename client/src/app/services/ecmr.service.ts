@@ -31,7 +31,8 @@ export class EcmrService {
       .map(res => res.json());
   }
 
-  public updateEcmr(ecmr: Ecmr) {
+  public updateEcmr(ecmr: any) {
+    console.log(ecmr);
     return this._http.put(this.actionUrl, ecmr, {headers: this.headers})
       .map(res => res.json())
       .catch(this.handleErrorObservable);

@@ -6,8 +6,8 @@
       "userEmail": "willem@amsterdamcompound.org",
       "username": "willem",
       "password": "passw0rd",
-      "role": "owner",
-      "secret": "sBCUltvNjlLm"
+      "role": "source",
+      "secret": "IevwqXApHTiC"
     },
     {
       "userID": "lapo",
@@ -15,8 +15,8 @@
       "userEmail": "lapo@leaseplan.org",
       "username": "lapo",
       "password": "passw0rd",
-      "role": "source",
-      "secret": "TUokCNullpxU"
+      "role": "owner",
+      "secret": "HPxzmJMcJvMk"
     },
     {
       "userID": "harry",
@@ -25,7 +25,7 @@
       "username": "harry",
       "password": "passw0rd",
       "role": "carrier",
-      "secret": "VEKLJZLxNeEM"
+      "secret": "ohDvxyFROqUl"
     },
     {
       "userID": "rob",
@@ -34,7 +34,7 @@
       "username": "rob",
       "password": "passw0rd",
       "role": "recipient",
-      "secret": "JEDbeaGQBHxQ"
+      "secret": "cRAPkFmEReqf"
     }
   ]
 }

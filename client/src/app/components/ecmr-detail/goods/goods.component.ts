@@ -1,6 +1,5 @@
 import {Component, OnInit, Input, ViewChild} from '@angular/core';
 import {SignOffModalComponent} from '../sign-off-modal/sign-off-modal.component';
-import {CarrierLoadingRemark} from '../../../classes/remark.model';
 
 @Component({
   selector: 'app-goods',

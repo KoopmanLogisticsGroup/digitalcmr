@@ -1,7 +1,7 @@
 {
   "$class": "org.digitalcmr.CompoundAdmin",
   "org": "resource:org.digitalcmr.CompoundOrg#amsterdamcompound",
-  "userID": "willem@compoundcompany.org",
+  "userID": "willem@amsterdamcompound.org",
   "userName": "willem",
   "firstName": "willem",
   "lastName": "compy",

@@ -35,7 +35,7 @@ export class OverviewComponent implements OnInit {
   }
 
   private firstView(): void {
-    if (this.userRole() === 'owner') {
+    if (this.userRole() === 'source') {
       this.currentView = 'OPEN';
     } else if (this.userRole() === 'carrier' || this.userRole() === 'recipient') {
       this.currentView = 'IN_PROGRESS';
@@ -44,7 +44,7 @@ export class OverviewComponent implements OnInit {
           return ecmr;
         }
       });
-    } else if (this.userRole() === 'source') {
+    } else if (this.userRole() === 'owner') {
       this.currentView = 'COMPLETED';
       this.ecmrsFiltered = this.ecmrs.filter(ecmr => ecmr.status.toUpperCase() === ('DELIVERED'));
     }

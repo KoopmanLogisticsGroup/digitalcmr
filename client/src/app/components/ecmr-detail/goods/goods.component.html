@@ -30,14 +30,15 @@
           </td>
           <td>
             <div class="ui checkbox">
-              <input type="checkbox" name="isDamaged" ([checked])="good.carrierLoadingRemark.isDamaged">
+              <input type="checkbox" name="isDamaged" (ngModel)="good.carrierLoadingRemark.isDamaged = true">
               <label></label>
             </div>
           </td>
         </tr>
         </tbody>
       </table>
-      <button *ngIf="ecmr?.status !== 'DELIVERED'" type="submit" class="ui right floated circular ui button sign-off"
+      <button *ngIf="ecmr?.status !== 'CONFIRMED_DELIVERED'" type="submit"
+              class="ui right floated circular ui button sign-off"
               (click)="openModal()">SIGN OFF
       </button>
       <app-sign-off-modal></app-sign-off-modal>

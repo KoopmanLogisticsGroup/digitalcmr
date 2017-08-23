@@ -43,7 +43,7 @@ export class EcmrDetailComponent implements OnInit {
               break;
             }
             case 'DELIVERED': {
-              if (this.userRole === 'source') {
+              if (this.userRole === 'owner') {
                 this.selectedColumns[0] = true;
                 // $('progressBar').addClass('selectedImg1');
                 break;
@@ -56,9 +56,18 @@ export class EcmrDetailComponent implements OnInit {
             if (!good.carrierLoadingRemark) {
               good.carrierLoadingRemark = {
                 'comments': '',
-                'isDamaged': true
+                'isDamaged': false
               };
             }
+          }
+          if (this.userRole === 'source') {
+            this.ecmr.compoundSignature = {};
+          } else if (this.userRole === 'carrier' && ecmr.status === 'LOADED') {
+            this.ecmr.carrierLoadingSignature = {};
+          } else if (this.userRole === 'carrier') {
+            this.ecmr.carrierDeliverySignature = {};
+          } else if (this.userRole === 'recipient') {
+            this.ecmr.recipientSignature = {};
           }
         });
       });
