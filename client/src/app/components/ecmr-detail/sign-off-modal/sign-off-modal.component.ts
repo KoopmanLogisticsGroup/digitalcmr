@@ -30,10 +30,14 @@ export class SignOffModalComponent implements OnInit {
   }
 
   public onSubmit() {
-    // this.ecmrService.updateEcmr(this.ecmr).subscribe(result => {
-    // });
     console.log(this.ecmr);
-    $('#signoff-modal.ui.modal').modal('hide');
+    this.ecmrService.updateEcmr(this.ecmr).subscribe(result => {
+      // TODO add console log for changing ecmr status field --> change ecmr status to next stage
+      // TODO check why permissions are giving a warning
+      $('#signoff-modal.ui.modal').modal('hide');
+
+      // done - TODO activate router on front end
+    });
   }
 }
 
