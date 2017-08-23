@@ -122,8 +122,8 @@ export class UsersService {
     const businessNetworkConnection = await this.businessNetworkHandler.connect();
 
     return new Promise((resolve: (result: any) => void, reject: (error: Error) => void) => {
-      console.log ('Issuing identity for participant ' + this.namespace + '.' + participant.$class + '#' + participant.userID, participant.userName);
-      businessNetworkConnection.issueIdentity(this.namespace + '.' + participant.$class + '#' + participant.userID, participant.userName)
+      console.log ('Issuing identity for participant ' + this.namespace + '.' + participant.$class + '#' + participant.userID, participant.userID);
+      businessNetworkConnection.issueIdentity(this.namespace + '.' + participant.$class + '#' + participant.userID, participant.userID)
         .then((identity) => {
           resolve(identity);
         })
