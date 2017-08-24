@@ -8,7 +8,6 @@ export class ErrorHandlerMiddleware implements ErrorMiddlewareInterface {
   private logger: LoggerInstance = Container.get(LoggerFactory).create('Request Error');
 
   public error(error: any, request: any, response: any, next: (err: any) => any): void {
-    console.log('error', error);
     if (error.body && error.body.error) {
       error = error.body.error;
     }
