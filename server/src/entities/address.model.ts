@@ -111,7 +111,7 @@ export class Address {
       'name':        this._name,
       'street':      this._street,
       'houseNumber': this._houseNumber,
-      'city':        this.city,
+      'city':        this._city,
       'zipCode':     this._zipCode,
       'country':     this._country,
       'latitude':    this._latitude,

@@ -324,7 +324,6 @@ describe('digitalcmr', () => {
                     // Issue the identity of the participant
                     return businessNetworkConnection.issueIdentity('org.digitalcmr.LegalOwnerAdmin#lapo@leaseplan.org', 'lapo')
                         .then((identity) => {
-                        console.log(identity);
                             legalOwnerIdentity = identity;
                         });
                 })
