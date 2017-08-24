@@ -16,7 +16,6 @@ export class GoodsComponent implements OnInit {
   }
 
   public openModal(): void {
-    console.log(this.ecmr);
     this.signOffModal.open(this.ecmr);
   }
 

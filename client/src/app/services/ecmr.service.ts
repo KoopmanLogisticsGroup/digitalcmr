@@ -32,14 +32,12 @@ export class EcmrService {
   }
 
   public updateEcmr(ecmr: any) {
-    console.log(ecmr);
     return this._http.put(this.actionUrl, ecmr, {headers: this.headers})
       .map(res => res.json())
       .catch(this.handleErrorObservable);
   }
 
   private handleErrorObservable(error: Response | any) {
-    console.error(error.message || error);
     return Observable.throw(error.message || error);
   }
 }

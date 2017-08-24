@@ -147,8 +147,6 @@ export class TransactionHandler {
       vehicle = this.fillAttributes(vehicle, ecmr.goods[i].vehicle);
       transaction.ecmr.goods[i].vehicle = vehicle;
     }
-
-    console.log(transaction.ecmr);
     return transaction;
   }
 
