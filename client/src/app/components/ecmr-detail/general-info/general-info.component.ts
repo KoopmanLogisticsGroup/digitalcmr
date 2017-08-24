@@ -2,9 +2,9 @@ import {Component, Input, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../../services/authentication.service';
 
 @Component({
-  selector: 'app-general-info',
+  selector   : 'app-general-info',
   templateUrl: './general-info.component.html',
-  styleUrls: ['./general-info.component.scss']
+  styleUrls  : ['./general-info.component.scss']
 })
 export class GeneralInfoComponent implements OnInit {
   @Input() public ecmr: any;
@@ -20,10 +20,10 @@ export class GeneralInfoComponent implements OnInit {
     if (this.ecmr.status === 'DELIVERED' || this.ecmr.status === 'CONFIRMED_DELIVERED') {
       this.selectedImage.forEach((val, index) => {
         if (number === index) {
-          this.selectedImage[index] = true;
+          this.selectedImage[index]   = true;
           this.selectedColumns[index] = true;
         } else {
-          this.selectedImage[index] = false;
+          this.selectedImage[index]   = false;
           this.selectedColumns[index] = false;
         }
       });
@@ -33,7 +33,7 @@ export class GeneralInfoComponent implements OnInit {
   public defineSelectedColumn(): void {
     this.selectedColumns.forEach((val, index) => {
       if (this.selectedColumns[index]) {
-        this.selectedImage[index] = true;
+        this.selectedImage[index]   = true;
         this.selectedColumns[index] = true;
       }
     });

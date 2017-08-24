@@ -4,7 +4,7 @@ export class CarrierLoadingRemark {
   private _isDamaged: boolean;
 
   public constructor(remark: any) {
-    this._comments = remark.comments;
+    this._comments  = remark.comments;
     this._isDamaged = remark.isDamaged;
   }
 
@@ -16,7 +16,6 @@ export class CarrierLoadingRemark {
     this._comments = value;
   }
 
-
   public get isDamaged(): boolean {
     return this._isDamaged;
   }
@@ -27,7 +26,7 @@ export class CarrierLoadingRemark {
 
   public toJSON(): any {
     return {
-      'comments': this.comments,
+      'comments' : this.comments,
       'isDamaged': this.isDamaged
     };
   }

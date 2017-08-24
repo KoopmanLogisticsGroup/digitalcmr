@@ -3,9 +3,9 @@ import {Router} from '@angular/router';
 import {AuthenticationService} from '../../services/authentication.service';
 
 @Component({
-  selector: 'app-header',
+  selector   : 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls  : ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
 

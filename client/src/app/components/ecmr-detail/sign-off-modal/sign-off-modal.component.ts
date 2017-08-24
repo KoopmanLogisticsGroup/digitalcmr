@@ -3,9 +3,9 @@ import {EcmrService} from '../../../services/ecmr.service';
 import {Ecmr} from '../../../classes/ecmr.model';
 
 @Component({
-  selector: 'app-sign-off-modal',
+  selector   : 'app-sign-off-modal',
   templateUrl: './sign-off-modal.component.html',
-  styleUrls: ['./sign-off-modal.component.scss']
+  styleUrls  : ['./sign-off-modal.component.scss']
 })
 
 export class SignOffModalComponent implements OnInit {

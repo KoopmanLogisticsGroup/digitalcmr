@@ -4,9 +4,9 @@ import {ActivatedRoute} from '@angular/router';
 import {CarrierLoadingRemark} from '../../classes/remark.model';
 
 @Component({
-  selector: 'app-ecmr-detail',
+  selector   : 'app-ecmr-detail',
   templateUrl: './ecmr-detail.component.html',
-  styleUrls: ['./ecmr-detail.component.scss']
+  styleUrls  : ['./ecmr-detail.component.scss']
 })
 export class EcmrDetailComponent implements OnInit {
 
@@ -27,7 +27,7 @@ export class EcmrDetailComponent implements OnInit {
       .subscribe(params => {
         this.ecmrID = params['ecmrID'];
         this.ecmrService.getECMRByID(this.ecmrID).subscribe(ecmr => {
-          this.ecmr = ecmr;
+          this.ecmr     = ecmr;
           this.userRole = JSON.parse(localStorage.getItem('currentUser')).user.role;
           console.log(JSON.parse(localStorage.getItem('currentUser')).user);
           switch (this.ecmr.status) {
@@ -56,7 +56,7 @@ export class EcmrDetailComponent implements OnInit {
           for (const good of this.ecmr.goods) {
             if (!good.carrierLoadingRemark) {
               good.carrierLoadingRemark = {
-                'comments': '',
+                'comments' : '',
                 'isDamaged': false
               };
             }

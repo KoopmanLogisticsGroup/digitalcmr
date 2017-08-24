@@ -16,7 +16,7 @@ export class EcmrService {
                      private _configuration: Configuration,
                      private _authenticationService: AuthenticationService) {
     this.actionUrl = `${_configuration.apiHost}${_configuration.apiPrefix}ECMR/`;
-    this.headers = _authenticationService.createAuthorizationHeader();
+    this.headers   = _authenticationService.createAuthorizationHeader();
   }
 
   public getECMRByID(ecmrID: string) {

@@ -9,9 +9,11 @@
     border-spacing: 0 1em;
   }
 }
+
 .ui.steps:first-child {
   border: 0;
 }
+
 .generalInfo {
   box-shadow: 0 2px 4px #e3e3e3;
   background-color: white;
@@ -33,7 +35,7 @@
       .commentOverview {
         margin-top: 15%;
       }
-      .iconComment{
+      .iconComment {
         content: url("../../../../assets/icons/icon-comment.svg");
       }
     }
@@ -43,7 +45,7 @@
         white-space: nowrap;
         margin-bottom: 8.5%;
       }
-      .addressImg{
+      .addressImg {
         content: url("../../../../assets/icons/icon-location-inactive.svg");
       }
       .commentOverview {
@@ -82,6 +84,7 @@
     }
   }
 }
+
 .titles {
   color: #424244;
   margin-left: 3%;
@@ -89,23 +92,28 @@
   margin-bottom: 0.5%;
   font-size: 1em;
 }
+
 .progressBar {
   width: 100%;
   margin-top: 3%;
 }
+
 .topLine {
   border-top: 1px solid #d8dde6;
 }
 
-.selectedImg1{
+.selectedImg1 {
   content: url("../../../../assets/img/completed-progress-01.svg")
 }
-.selectedImg2{
+
+.selectedImg2 {
   content: url("../../../../assets/img/completed-progress-02.svg")
 }
-.selectedImg3{
+
+.selectedImg3 {
   content: url("../../../../assets/img/completed-progress-03.svg")
 }
-.selectedImg4{
+
+.selectedImg4 {
   content: url("../../../../assets/img/completed-progress-04.svg")
 }
