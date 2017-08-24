@@ -7,7 +7,7 @@
 <img class="progressBar" *ngIf="ecmr?.status === 'IN_TRANSIT'" src="../../../../assets/img/progress-indicator-03.svg"/>
 <img class="progressBar" *ngIf="ecmr?.status === 'DELIVERED' || ecmr?.status === 'CONFIRMED_DELIVERED'"
      src="../../../../assets/img/progress-indicator-04.svg"
-     [ngClass]="{'selectedImg1' : selectedImage[0] || userRole() === 'owner', 'selectedImg2' : selectedImage[1], 'selectedImg3' : selectedImage[2], 'selectedImg4' : selectedImage[3]}"/>
+     [ngClass]="{'selectedImg1' : selectedImage[0] || userRole() === 'LegalOwnerAdmin', 'selectedImg2' : selectedImage[1], 'selectedImg3' : selectedImage[2], 'selectedImg4' : selectedImage[3]}"/>
 <div class="row titles">GENERAL INFORMATION</div>
 <div class="ui four column padded doubling unstackable grid generalInfo">
   <div class="column" [ngClass]="{'completed': ecmr?.status === 'DELIVERED' || ecmr?.status === 'CONFIRMED_DELIVERED', 'active': selectedColumns[0],

@@ -41,7 +41,7 @@ export class EcmrDetailComponent implements OnInit {
               break;
             }
             case 'DELIVERED': {
-              if (this.userRole === 'owner') {
+              if (this.userRole === 'LegalOwnerAdmin') {
                 this.selectedColumns[0] = true;
                 break;
               }
@@ -61,13 +61,13 @@ export class EcmrDetailComponent implements OnInit {
               };
             }
           }
-          if (this.userRole === 'source') {
+          if (this.userRole === 'CompoundAdmin') {
             this.ecmr.compoundSignature = {};
-          } else if (this.userRole === 'carrier' && ecmr.status === 'LOADED') {
+          } else if (this.userRole === 'CarrierMember' && ecmr.status === 'LOADED') {
             this.ecmr.carrierLoadingSignature = {};
-          } else if (this.userRole === 'carrier') {
+          } else if (this.userRole === 'CarrierMember') {
             this.ecmr.carrierDeliverySignature = {};
-          } else if (this.userRole === 'recipient') {
+          } else if (this.userRole === 'RecipientMember') {
             this.ecmr.recipientSignature = {};
           }
         });
