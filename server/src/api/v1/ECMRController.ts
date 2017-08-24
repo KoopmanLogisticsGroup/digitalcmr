@@ -53,7 +53,7 @@ export class ECMRController {
     let enrollmentID = new JSONWebToken(request).getUserID();
     let secret = new JSONWebToken(request).getSecret();
 
-    return this._transactor.put(ecmr, enrollmentID, secret, (factory, data) => this._transactor.createECMR(factory, data));
+    return this._transactor.put(ecmr, enrollmentID, secret, (factory, data) => this._transactor.createECMR(factory, data, enrollmentID));
   }
 
   @Put('/')
@@ -61,6 +61,6 @@ export class ECMRController {
     let enrollmentID = new JSONWebToken(request).getUserID();
     let secret = new JSONWebToken(request).getSecret();
 
-    return this._transactor.put(ecmr, enrollmentID, secret, (factory, data) => this._transactor.updateECMR(factory, data));
+    return this._transactor.put(ecmr, enrollmentID, secret, (factory, data) => this._transactor.updateECMR(factory, data, enrollmentID));
   }
 }

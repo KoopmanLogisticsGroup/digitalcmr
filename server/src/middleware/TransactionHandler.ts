@@ -52,7 +52,7 @@ export class TransactionHandler {
     return ecmrs;
   }
 
-  private buildECMR(factory: any, ecmr: any, transaction: any): any {
+  private buildECMR(factory: any, ecmr: any, transaction: any, enrollmentID: string): any {
     transaction.ecmr = factory.newResource(this.namespace, 'ECMR', uuid());
 
     transaction.ecmr = this.fillAttributes(transaction.ecmr, ecmr);
@@ -73,8 +73,8 @@ export class TransactionHandler {
     transaction.ecmr.issuedBy = factory.newRelationship(this.namespace, 'Entity', ecmr.issuedBy);
 
     if (ecmr.compoundSignature) {
-      transaction.ecmr.compoundSignature = this.createConcept('Signature', ecmr.compoundSignature, factory);
-      transaction.ecmr.compoundSignature.certificate = factory.newRelationship(this.namespace, 'User', ecmr.compoundSignature.certificate);
+      transaction.ecmr.compoundSignature             = this.createConcept('Signature', ecmr.compoundSignature, factory);
+      transaction.ecmr.compoundSignature.certificate = factory.newRelationship(this.namespace, 'User', enrollmentID);
       if (ecmr.compoundSignature.generalRemark) {
         transaction.ecmr.compoundSignature.generalRemark = this.createConcept('Remark', ecmr.compoundSignature.generalRemark, factory);
       }
@@ -86,8 +86,8 @@ export class TransactionHandler {
       transaction.ecmr.compoundSignature.timestamp = new Date().getTime();
     }
     if (ecmr.carrierLoadingSignature) {
-      transaction.ecmr.carrierLoadingSignature = this.createConcept('Signature', ecmr.carrierLoadingSignature, factory);
-      transaction.ecmr.carrierLoadingSignature.certificate = factory.newRelationship(this.namespace, 'User', ecmr.carrierLoadingSignature.certificate);
+      transaction.ecmr.carrierLoadingSignature             = this.createConcept('Signature', ecmr.carrierLoadingSignature, factory);
+      transaction.ecmr.carrierLoadingSignature.certificate = factory.newRelationship(this.namespace, 'User', enrollmentID);
       if (ecmr.carrierLoadingSignature.generalRemark) {
         transaction.ecmr.carrierLoadingSignature.generalRemark = this.createConcept('Remark', ecmr.carrierLoadingSignature.generalRemark, factory);
       }
@@ -99,8 +99,8 @@ export class TransactionHandler {
       transaction.ecmr.carrierLoadingSignature.timestamp = new Date().getTime();
     }
     if (ecmr.carrierDeliverySignature) {
-      transaction.ecmr.carrierDeliverySignature = this.createConcept('Signature', ecmr.carrierDeliverySignature, factory);
-      transaction.ecmr.carrierDeliverySignature.certificate = factory.newRelationship(this.namespace, 'User', ecmr.carrierDeliverySignature.certificate);
+      transaction.ecmr.carrierDeliverySignature             = this.createConcept('Signature', ecmr.carrierDeliverySignature, factory);
+      transaction.ecmr.carrierDeliverySignature.certificate = factory.newRelationship(this.namespace, 'User', enrollmentID);
       if (ecmr.carrierDeliverySignature.generalRemark) {
         transaction.ecmr.carrierDeliverySignature.generalRemark = this.createConcept('Remark', ecmr.carrierDeliverySignature.generalRemark, factory);
       }
@@ -112,8 +112,8 @@ export class TransactionHandler {
       transaction.ecmr.carrierDeliverySignature.timestamp = new Date().getTime();
     }
     if (ecmr.recipientSignature) {
-      transaction.ecmr.recipientSignature = this.createConcept('Signature', ecmr.recipientSignature, factory);
-      transaction.ecmr.recipientSignature.certificate = factory.newRelationship(this.namespace, 'User', ecmr.recipientSignature.certificate);
+      transaction.ecmr.recipientSignature             = this.createConcept('Signature', ecmr.recipientSignature, factory);
+      transaction.ecmr.recipientSignature.certificate = factory.newRelationship(this.namespace, 'User', enrollmentID);
       if (ecmr.recipientSignature.generalRemark) {
         transaction.ecmr.recipientSignature.generalRemark = this.createConcept('Remark', ecmr.recipientSignature.generalRemark, factory);
       }
@@ -150,14 +150,14 @@ export class TransactionHandler {
     return transaction;
   }
 
-  public createECMR(factory: any, ecmr: ECMR): any {
+  public createECMR(factory: any, ecmr: ECMR, enrollmentID: string): any {
     const transaction = factory.newTransaction(this.namespace, 'CreateECMR');
-    return this.buildECMR(factory, ecmr, transaction);
+    return this.buildECMR(factory, ecmr, transaction, enrollmentID);
   }
 
-  public updateECMR(factory: any, ecmr: any): any {
+  public updateECMR(factory: any, ecmr: any, enrollmentID: string): any {
     const transaction = factory.newTransaction(this.namespace, 'UpdateECMR');
-    return this.buildECMR(factory, ecmr, transaction);
+    return this.buildECMR(factory, ecmr, transaction, enrollmentID);
   }
 
   private createConcept(conceptName: string, conceptData: any, factory: any): any {
