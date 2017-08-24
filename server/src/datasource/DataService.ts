@@ -39,7 +39,6 @@ export class DataService {
       let idArr: string[] = [];
       let done            = 0;
       for (let i = 0; i < documents.length; i++) {
-        console.log(documents[i]);
         this.db.put(documents[i], ID).then((documentID) => {
           idArr.push(documentID);
           done++;
