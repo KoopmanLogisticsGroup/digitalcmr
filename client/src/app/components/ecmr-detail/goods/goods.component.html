@@ -24,13 +24,13 @@
           <td>{{good?.vehicle.odoMeterReading}}</td>
           <td>{{good?.vehicle.plateNumber}}</td>
           <td>
-            <div class="ui input" [ngClass]="{'disabled' : ecmr.status === 'DELIVERED'}">
+            <div class="ui input" [ngClass]="{'disabled' : ecmr?.status === 'CONFIRM_DELIVERED'}">
               <input name="remark-{{i}}" [(ngModel)]="good?.carrierLoadingRemark.comments" placeholder="Add remark..."/>
             </div>
           </td>
           <td>
             <div class="ui checkbox">
-              <input type="checkbox" name="isDamaged" (ngModel)="good.carrierLoadingRemark.isDamaged = true">
+              <input type="checkbox" name="isDamaged" (checked)="good?.carrierLoadingRemark.isDamaged = true">
               <label></label>
             </div>
           </td>

@@ -12,7 +12,7 @@ export class OverviewComponent implements OnInit {
   public currentView = 'OPEN';
 
   private ecmrs: any;
-  private ecmrsFiltered: any;
+  public ecmrsFiltered: any;
 
   public constructor(private ecmrService: EcmrService,
                      private _authenticationService: AuthenticationService) {
@@ -57,7 +57,7 @@ export class OverviewComponent implements OnInit {
         return ecmr;
       } else if (this.currentView === 'IN_PROGRESS' && (ecmr.status === 'LOADED' || ecmr.status === 'IN_TRANSIT')) {
         return ecmr;
-      } else if (this.currentView === 'COMPLETED' && ecmr.status === 'DELIVERED') {
+      } else if (this.currentView === 'COMPLETED' && ecmr.status === 'DELIVERED' || ecmr.status === 'CONFIRMED_DELIVERED') {
         return ecmr;
       }
     });

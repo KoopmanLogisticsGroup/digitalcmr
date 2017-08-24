@@ -3,21 +3,17 @@
     <i class="close icon" (click)="close()"></i>
     <div class="header">SIGN OFF</div>
     <div class="content">
-      <p>You are about to sign off the eCMR. Please check your remarks below:</p>
+      <p>You are about to sign off the eCMR</p>
       <form class="ui form">
-        <div *ngFor="let good of ecmr?.goods">
-          <span><b>VIN:</b> {{ good.vehicle.vin }}</span>
-          <span><b>Remark:</b> {{good.carrierLoadingRemark.comments}}</span>
-        </div>
         <div class="field">
           <label>General Remark</label>
-          <textarea name="generalRemarks" [(ngModel)]="ecmr.carrierComments"
+          <textarea *ngIf="ecmr" name="generalRemarks" [(ngModel)]="ecmr.carrierComments"
                     placeholder="Enter your general remarks here..." maxlength="136"></textarea>
         </div>
-        <button class="circular ui float right button submitButton" (click)="onSubmit()" type="submit">Submit</button>
-        <!--routerLink="/overview"-->
+        <button id="submitButton" class="circular ui float right button submitButton" (click)="onSubmit()"
+                type="submit">Submit
+        </button>
       </form>
-      <!--todo: add transact function in dummy.-->
     </div>
   </div>
 </div>

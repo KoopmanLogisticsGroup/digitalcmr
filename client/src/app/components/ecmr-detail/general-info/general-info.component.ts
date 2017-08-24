@@ -17,7 +17,7 @@ export class GeneralInfoComponent implements OnInit {
   }
 
   public selectColumn(number) {
-    if (this.ecmr.status === 'DELIVERED') {
+    if (this.ecmr.status === 'DELIVERED' || this.ecmr.status === 'CONFIRMED_DELIVERED') {
       this.selectedImage.forEach((val, index) => {
         if (number === index) {
           this.selectedImage[index] = true;

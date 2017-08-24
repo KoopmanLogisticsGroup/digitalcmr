@@ -10,16 +10,15 @@ import {Ecmr} from '../../../classes/ecmr.model';
 
 export class SignOffModalComponent implements OnInit {
 
-  @Input() ecmr: Ecmr;
+  @Input() ecmr: any;
 
   public constructor(private ecmrService: EcmrService) {
-    this.ecmr = new Ecmr();
   }
 
   public ngOnInit() {
   }
 
-  public open(ecmr: Ecmr): void {
+  public open(ecmr: any): void {
     this.ecmr = ecmr;
     $('#signoff-modal.ui.modal').modal('show');
     $('#signoff-modal.ui.modal').parent().css({'background-color': 'rgba(0,0,0,0.7)'});
@@ -30,11 +29,10 @@ export class SignOffModalComponent implements OnInit {
   }
 
   public onSubmit() {
+    $('#submitButton').addClass('basic loading');
     this.ecmrService.updateEcmr(this.ecmr).subscribe(result => {
-      // TODO add console log for changing ecmr status field --> change ecmr status to next stage
-      // TODO check why permissions are giving a warning
       $('#signoff-modal.ui.modal').modal('hide');
-      // done - activate router on front end
+      location.reload();
     });
   }
 }

@@ -49,7 +49,8 @@
             <td><span [ngClass]="{'open-status' : ecmr.status === 'CREATED',
                         'awaiting-status' : ecmr.status === 'LOADED',
                         'transit-status' : ecmr.status === 'IN_TRANSIT',
-                        'completed-status': ecmr.status === 'DELIVERED'}">
+                        'completed-status': ecmr.status === 'DELIVERED',
+                        'confirmed-status': ecmr.status === 'CONFIRMED_DELIVERED'}">
                         {{ecmr.status}}
             </span></td>
             <td>

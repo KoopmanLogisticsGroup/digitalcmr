@@ -5,11 +5,12 @@
 <img class="progressBar" *ngIf="ecmr?.status === 'CREATED'" src="../../../../assets/img/progress-indicator-01.svg"/>
 <img class="progressBar" *ngIf="ecmr?.status === 'LOADED'" src="../../../../assets/img/progress-indicator-02.svg"/>
 <img class="progressBar" *ngIf="ecmr?.status === 'IN_TRANSIT'" src="../../../../assets/img/progress-indicator-03.svg"/>
-<img class="progressBar" *ngIf="ecmr?.status === 'DELIVERED'" src="../../../../assets/img/progress-indicator-04.svg"
+<img class="progressBar" *ngIf="ecmr?.status === 'DELIVERED' || ecmr?.status === 'CONFIRMED_DELIVERED'"
+     src="../../../../assets/img/progress-indicator-04.svg"
      [ngClass]="{'selectedImg1' : selectedImage[0] || userRole() === 'owner', 'selectedImg2' : selectedImage[1], 'selectedImg3' : selectedImage[2], 'selectedImg4' : selectedImage[3]}"/>
 <div class="row titles">GENERAL INFORMATION</div>
 <div class="ui four column padded doubling unstackable grid generalInfo">
-  <div class="column" [ngClass]="{'completed': ecmr?.status === 'DELIVERED', 'active': selectedColumns[0],
+  <div class="column" [ngClass]="{'completed': ecmr?.status === 'DELIVERED' || ecmr?.status === 'CONFIRMED_DELIVERED', 'active': selectedColumns[0],
   'inactive': !selectedColumns[0]}" (click)="selectColumn(0)">
     <div class="header">ORDER GIVER</div>
     <div class="center ecmrInfo">
@@ -27,7 +28,7 @@
     </div>
     <img class="commentOverview iconComment"/> {{ecmr?.carrierComments}}
   </div>
-  <div class="column" [ngClass]="{'completed': ecmr?.status === 'DELIVERED', 'active': selectedColumns[1],
+  <div class="column" [ngClass]="{'completed': ecmr?.status === 'DELIVERED' || ecmr?.status === 'CONFIRMED_DELIVERED', 'active': selectedColumns[1],
   'inactive': !selectedColumns[1]}" (click)="selectColumn(1)">
     <div class="content">
       <div class="header">KOOPMAN COMPOUND</div>
@@ -47,7 +48,7 @@
     </div>
     <img class="commentOverview iconComment"/> {{ecmr?.carrierComments}}
   </div>
-  <div class="column" [ngClass]="{'completed': ecmr?.status === 'DELIVERED', 'active': selectedColumns[2],
+  <div class="column" [ngClass]="{'completed': ecmr?.status === 'DELIVERED' || ecmr?.status === 'CONFIRMED_DELIVERED', 'active': selectedColumns[2],
   'inactive': !selectedColumns[2]}" (click)="selectColumn(2)">
     <div>
       <div class="header">TRANSPORTER</div>
@@ -67,7 +68,7 @@
     </div>
     <img class="commentOverview iconComment"/> {{ecmr?.carrierComments}}
   </div>
-  <div class="column" [ngClass]="{'completed': ecmr?.status === 'DELIVERED', 'active': selectedColumns[3],
+  <div class="column" [ngClass]="{'completed': ecmr?.status === 'DELIVERED' || ecmr?.status === 'CONFIRMED_DELIVERED', 'active': selectedColumns[3],
   'inactive': !selectedColumns[3]}" (click)="selectColumn(3)">
     <div>
       <div class="header">CAR DEALER</div>
