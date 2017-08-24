@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {EcmrService} from '../../services/ecmr.service';
 import {ActivatedRoute} from '@angular/router';
+import {CarrierLoadingRemark} from '../../classes/remark.model';
 
 @Component({
-  selector: 'app-ecmr-detail',
+  selector   : 'app-ecmr-detail',
   templateUrl: './ecmr-detail.component.html',
-  styleUrls: ['./ecmr-detail.component.scss']
+  styleUrls  : ['./ecmr-detail.component.scss']
 })
 export class EcmrDetailComponent implements OnInit {
 
@@ -23,12 +24,9 @@ export class EcmrDetailComponent implements OnInit {
     this.route.params
       .subscribe(params => {
         this.ecmrID = params['ecmrID'];
-        this.ecmrService.getAllEcmrs('').subscribe(ecmrs => {
-          this.ecmr = ecmrs instanceof Array ? ecmrs.filter(x => x.ecmrID === this.ecmrID) : undefined;
+        this.ecmrService.getECMRByID(this.ecmrID).subscribe(ecmr => {
+          this.ecmr     = ecmr;
           this.userRole = JSON.parse(localStorage.getItem('currentUser')).user.role;
-          if (this.ecmr.length) {
-            this.ecmr = this.ecmr[0];
-          }
           switch (this.ecmr.status) {
             case 'CREATED': {
               this.selectedColumns[0] = true;
@@ -43,14 +41,34 @@ export class EcmrDetailComponent implements OnInit {
               break;
             }
             case 'DELIVERED': {
-              if (this.userRole === 'source') {
+              if (this.userRole === 'owner') {
                 this.selectedColumns[0] = true;
-                // $('progressBar').addClass('selectedImg1');
                 break;
               }
               this.selectedColumns[3] = true;
               break;
             }
+            case 'CONFIRMED_DELIVERED': {
+              this.selectedColumns[3] = true;
+              break;
+            }
+          }
+          for (const good of this.ecmr.goods) {
+            if (!good.carrierLoadingRemark) {
+              good.carrierLoadingRemark = {
+                'comments' : '',
+                'isDamaged': false
+              };
+            }
+          }
+          if (this.userRole === 'source') {
+            this.ecmr.compoundSignature = {};
+          } else if (this.userRole === 'carrier' && ecmr.status === 'LOADED') {
+            this.ecmr.carrierLoadingSignature = {};
+          } else if (this.userRole === 'carrier') {
+            this.ecmr.carrierDeliverySignature = {};
+          } else if (this.userRole === 'recipient') {
+            this.ecmr.recipientSignature = {};
           }
         });
       });

@@ -24,20 +24,21 @@
           <td>{{good?.vehicle.odoMeterReading}}</td>
           <td>{{good?.vehicle.plateNumber}}</td>
           <td>
-            <div class="ui input" [ngClass]="{'disabled' : ecmr.status === 'DELIVERED'}">
-              <input name="remark-{{i}}" [(ngModel)]="good.carrierLoadingRemark" placeholder="Add remark..."/>
+            <div class="ui input" [ngClass]="{'disabled' : ecmr?.status === 'CONFIRM_DELIVERED'}">
+              <input name="remark-{{i}}" [(ngModel)]="good?.carrierLoadingRemark.comments" placeholder="Add remark..."/>
             </div>
           </td>
           <td>
             <div class="ui checkbox">
-              <input type="checkbox" name="options" (ngModel)="option.checked">
+              <input type="checkbox" name="isDamaged" (ngModel)="good?.carrierLoadingRemark.isDamaged = true">
               <label></label>
             </div>
           </td>
         </tr>
         </tbody>
       </table>
-      <button *ngIf="ecmr?.status !== 'DELIVERED'" type="submit" class="ui right floated circular ui button sign-off"
+      <button *ngIf="ecmr?.status !== 'CONFIRMED_DELIVERED'" type="submit"
+              class="ui right floated circular ui button sign-off"
               (click)="openModal()">SIGN OFF
       </button>
       <app-sign-off-modal></app-sign-off-modal>

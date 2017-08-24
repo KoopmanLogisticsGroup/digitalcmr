@@ -15,26 +15,29 @@ export class EcmrService {
   public constructor(private _http: Http,
                      private _configuration: Configuration,
                      private _authenticationService: AuthenticationService) {
-    this.actionUrl = `${_configuration.composerHost}${_configuration.composerPrefix}ECMR/`;
-    this.headers = _authenticationService.createAuthorizationHeader();
-    console.log(this.headers);
+    this.actionUrl = `${_configuration.apiHost}${_configuration.apiPrefix}ECMR/`;
+    this.headers   = _authenticationService.createAuthorizationHeader();
   }
 
-  public getAllEcmrs(ecmrID: string) {
-    const user: any = JSON.parse(localStorage.getItem('currentUser')).user;
+  public getECMRByID(ecmrID: string) {
     return this._http
-      .get(this.actionUrl + ecmrID, {headers: this.headers})
+      .get(this._configuration.composerHost + this._configuration.composerPrefix + 'ECMR/' + ecmrID, {headers: this.headers})
       .map(res => res.json());
   }
 
-  public updateEcmr(ecmr: Ecmr) {
-    // return this._http.post(this.actionUrl, ecmr, {headers: this.headers})
-    //   .map(res => res.json())
-    //   .catch(this.handleErrorObservable);
+  public getAllEcmrs() {
+    return this._http
+      .get(this.actionUrl, {headers: this.headers})
+      .map(res => res.json());
+  }
+
+  public updateEcmr(ecmr: any) {
+    return this._http.put(this.actionUrl, ecmr, {headers: this.headers})
+      .map(res => res.json())
+      .catch(this.handleErrorObservable);
   }
 
   private handleErrorObservable(error: Response | any) {
-    console.error(error.message || error);
     return Observable.throw(error.message || error);
   }
 }

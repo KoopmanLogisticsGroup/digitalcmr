@@ -35,13 +35,13 @@ import {SignOffModalComponent} from './components/ecmr-detail/sign-off-modal/sig
     GoodsComponent,
     SignOffModalComponent
   ],
-  imports: [
+  imports     : [
     BrowserModule,
     FormsModule,
     HttpModule,
     routing
   ],
-  providers: [
+  providers   : [
     appRoutingProviders,
     Configuration,
     AuthenticationService,
@@ -49,7 +49,7 @@ import {SignOffModalComponent} from './components/ecmr-detail/sign-off-modal/sig
     ThingService,
     EcmrService
   ],
-  bootstrap: [AppComponent]
+  bootstrap   : [AppComponent]
 })
 export class AppModule {
 }

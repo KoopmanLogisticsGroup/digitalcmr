@@ -4,14 +4,14 @@
   </div>
   <div class="row">
     <div class="ui pointing secondary menu">
-      <div *ngIf="(userRole() === 'owner')">
+      <div *ngIf="(userRole() === 'source')">
         <a class="item" data-tab="first" (click)="setCurrentView('OPEN')"
            [ngClass]="{'active' : currentView === 'OPEN' ? true : false}">OPEN</a></div>
       <a class="item" data-tab="second" (click)="setCurrentView('IN_PROGRESS')"
-         *ngIf="userRole() === 'owner' || userRole() === 'carrier' || userRole() === 'recipient'"
+         *ngIf="userRole() === 'source' || userRole() === 'carrier' || userRole() === 'recipient'"
          [ngClass]="{'active' : currentView === 'IN_PROGRESS' ? true : false}">IN PROGRESS</a>
       <a class="item" data-tab="third" (click)="setCurrentView('COMPLETED')"
-         *ngIf="userRole() === 'owner' || userRole() === 'source' || userRole() === 'carrier' || userRole() === 'recipient'"
+         *ngIf="userRole() === 'source' || userRole() === 'owner' || userRole() === 'carrier' || userRole() === 'recipient'"
          [ngClass]="{'active' : currentView === 'COMPLETED' ? true : false}">COMPLETED</a>
     </div>
     <div class="ui active tab grid" data-tab="first">
@@ -49,8 +49,14 @@
             <td><span [ngClass]="{'open-status' : ecmr.status === 'CREATED',
                         'awaiting-status' : ecmr.status === 'LOADED',
                         'transit-status' : ecmr.status === 'IN_TRANSIT',
-                        'completed-status': ecmr.status === 'DELIVERED'}">
-                        {{ecmr.status}}
+                        'completed-status': ecmr.status === 'DELIVERED',
+                        'confirmed-status': ecmr.status === 'CONFIRMED_DELIVERED'}">
+
+              {{ecmr.status === 'CREATED' ? 'Open CMR' :
+                ecmr.status === 'LOADED' ? 'Loaded' :
+                ecmr.status === 'IN_TRANSIT' ? 'In Transit' :
+                ecmr.status === 'DELIVERED' ? 'Delivered' :
+                ecmr.status === 'CONFIRMED_DELIVERED' ? 'Confirmed' : ecmr.status}}
             </span></td>
             <td>
               <img class="viewMore" routerLink="/ecmr/{{ecmr.ecmrID}}"/>

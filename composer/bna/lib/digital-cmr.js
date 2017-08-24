@@ -255,7 +255,7 @@ function UpdateECMR(tx) {
             //if the transporter updated the ecmr status as IN_TRANSIT, add the transporter signature confirming the loading
             if (ecmr.status === 'IN_TRANSIT') {
                 // check if the required signatures has been placed in the previous steps
-                if (! ecmr.compoundSignature ) {
+                if (!ecmr.compoundSignature) {
                     throw new Error("Transaction is not valid. Attempt to set the status on IN_TRANSIT before the compound admin signature");
                 }
                 ecmr.carrierLoadingSignature = tx.ecmr.carrierLoadingSignature;
@@ -264,10 +264,10 @@ function UpdateECMR(tx) {
             //if the transporter updated the ecmr status as DELIVERED, add the trasnsporter admin signature
             if (ecmr.status === 'DELIVERED') {
                 // check if the required signatures has been placed in the previous steps
-                if (! ecmr.compoundSignature ) {
+                if (!ecmr.compoundSignature) {
                     throw new Error("Transaction is not valid. Attempt to set the status on DELIVERED before the compound admin signed!");
                 }
-                if (! ecmr.carrierLoadingSignature ) {
+                if (!ecmr.carrierLoadingSignature) {
                     throw new Error("Transaction is not valid. Attempt to set the status on DELIVERED before the transporter signed for the loading!");
                 }
                 ecmr.carrierDeliverySignature = tx.ecmr.carrierDeliverySignature;
@@ -276,13 +276,13 @@ function UpdateECMR(tx) {
             //if the recipient has confirmed the delivery and updated the ecmr status as CONFIRMED_DELIVERED, add the recipient signature
             if (ecmr.status === 'CONFIRMED_DELIVERED') {
                 // check if the required signatures has been placed in the previous steps
-                if (! ecmr.compoundSignature ) {
+                if (!ecmr.compoundSignature) {
                     throw new Error("Transaction is not valid. Attempt to set the status on CONFIRMED_DELIVERED before the compound admin signed!");
                 }
-                if (! ecmr.carrierLoadingSignature ) {
+                if (!ecmr.carrierLoadingSignature) {
                     throw new Error("Transaction is not valid. Attempt to set the status on CONFIRMED_DELIVERED before the transporter signed for the loading!");
                 }
-                if (! ecmr.carrierDeliverySignature ) {
+                if (!ecmr.carrierDeliverySignature) {
                     throw new Error("Transaction is not valid. Attempt to set the status on CONFIRMED_DELIVERED before the transporter signed for the delivery!");
                 }
                 ecmr.recipientSignature = tx.ecmr.recipientSignature;

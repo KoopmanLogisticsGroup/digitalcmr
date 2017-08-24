@@ -3,42 +3,36 @@
   height: 70px;
   .logo {
     position: absolute;
-    width: 10%;
+    width: 105px;
+    height: 18px;
     top: 50%;
     left: 11%;
     transform: translateY(-50%);
     content: url("../../../assets/img/Koopman.jpg");
   }
-  .userDisplay{
-    position: relative;
-    width: 400px;
-    display: block;
-    .welcomeMsg{
-      position: absolute;
-      display: inline-block;
-      margin-top: 5%;
-      margin-left: 5%;
-    }
-    .userImage{
-      position: absolute;
-      margin-top: 3.2%;
-      padding-right: 20px;
-      margin-left: 35%;
+  .logoutIcon {
+    cursor: pointer;
+    content: url("../../../assets/icons/iconlogout.svg");
+    &:hover {
+      content: url("../../../assets/icons/icon-logout-off.svg");
     }
   }
-  .logoutIcon{
-    position: absolute;
-    display: inline-block;
-    margin-left: 45%;
-    padding-left: 20px;
-    margin-top: 4.4%;
-    content: url("../../../assets/icons/iconlogout.svg");
-    &:hover{
-      content: url("../../../assets/icons/icon-logout-off.svg");
+  .right.menu {
+    ::before {
+      width: 0px !important;
+    }
+    margin-right: 12%;
+    .item:first-child {
+      padding: 0;
+    }
+    .item:last-child {
+      padding: 0;
     }
   }
 }
 
-.no-border:before {
-  width: 0px !important;
+@media (max-width: 640px) {
+  #welcomeMsg {
+    display: none;
+  }
 }

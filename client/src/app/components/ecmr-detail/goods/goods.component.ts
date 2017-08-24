@@ -2,9 +2,9 @@ import {Component, OnInit, Input, ViewChild} from '@angular/core';
 import {SignOffModalComponent} from '../sign-off-modal/sign-off-modal.component';
 
 @Component({
-  selector: 'app-goods',
+  selector   : 'app-goods',
   templateUrl: './goods.component.html',
-  styleUrls: ['./goods.component.scss']
+  styleUrls  : ['./goods.component.scss']
 })
 export class GoodsComponent implements OnInit {
 
@@ -16,10 +16,10 @@ export class GoodsComponent implements OnInit {
   }
 
   public openModal(): void {
-    console.log(this.ecmr);
     this.signOffModal.open(this.ecmr);
   }
 
   public ngOnInit() {
+
   }
 }

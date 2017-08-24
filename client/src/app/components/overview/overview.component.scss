@@ -1,6 +1,4 @@
 .spacing-table {
-  //border-collapse: separate;
-  //table-layout: fixed;
   border-spacing: 0 8px; /* this is the ultimate fix */
   th {
     text-align: left;
@@ -13,7 +11,6 @@
     border-width: 3px 0;
     width: 65%;
     color: black;
-    //padding: 5px 15px;
     border-top: none;
   }
   td:first-child {
@@ -102,6 +99,12 @@
         border-radius: 4px;
         padding: 6px;
       }
+      .confirmed-status {
+        background-color: rgba(45, 184, 75, 0.2);
+        color: #2db84b;
+        border-radius: 4px;
+        padding: 6px;
+      }
       .viewMore {
         width: 120%;
         height: 120%;
@@ -138,6 +141,7 @@
 .ui {
   .secondary.pointing.menu {
     color: #dededf;
+    font-size: 1vw;
     .active.item {
       background-color: transparent;
       box-shadow: none;
