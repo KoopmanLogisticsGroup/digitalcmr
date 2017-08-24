@@ -7,10 +7,10 @@
         </div>
       </div>
       <div class="item">
-        <img *ngIf="getUser() === 'willem'" src="../../../assets/icons/placeholder-willem.svg"/>
-        <img *ngIf="getUser() === 'harry'" src="../../../assets/icons/placeholder-harry.svg"/>
-        <img *ngIf="getUser() === 'rob'" src="../../../assets/icons/icon-rob.svg"/>
-        <img *ngIf="getUser() === 'lapo'" src="../../../assets/icons/icon-rob.svg"/>
+        <img *ngIf="getUser() === 'willem@amsterdamcompound.org'" src="../../../assets/icons/placeholder-willem.svg"/>
+        <img *ngIf="getUser() === 'harry@koopman.org'" src="../../../assets/icons/placeholder-harry.svg"/>
+        <img *ngIf="getUser() === 'robcardealer.org'" src="../../../assets/icons/icon-rob.svg"/>
+        <img *ngIf="getUser() === 'lapo@leaseplan.org'" src="../../../assets/icons/icon-rob.svg"/>
       </div>
       <div class="item">
         <div (click)="logout()" routerLink="/login" class="logoutIcon">

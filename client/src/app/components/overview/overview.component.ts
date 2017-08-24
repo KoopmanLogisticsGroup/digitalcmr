@@ -33,16 +33,16 @@ export class OverviewComponent implements OnInit {
   }
 
   private firstView(): void {
-    if (this.userRole() === 'source') {
+    if (this.userRole() === 'amsterdamcompound') {
       this.currentView = 'OPEN';
-    } else if (this.userRole() === 'carrier' || this.userRole() === 'recipient') {
+    } else if (this.userRole() === 'CarrierMember' || this.userRole() === 'RecipientMember') {
       this.currentView   = 'IN_PROGRESS';
       this.ecmrsFiltered = this.ecmrs.filter(ecmr => {
         if (this.currentView === 'IN_PROGRESS' && (ecmr.status === 'LOADED' || ecmr.status === 'IN_TRANSIT')) {
           return ecmr;
         }
       });
-    } else if (this.userRole() === 'owner') {
+    } else if (this.userRole() === 'LegalOwnerAdmin') {
       this.currentView   = 'COMPLETED';
       this.ecmrsFiltered = this.ecmrs.filter(ecmr => ecmr.status.toUpperCase() === ('DELIVERED'));
     }
