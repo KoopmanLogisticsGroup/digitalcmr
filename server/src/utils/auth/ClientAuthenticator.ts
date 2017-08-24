@@ -15,7 +15,7 @@ export class ClientAuthenticator {
     let user: any;
     try {
       let result = await this.dataService.getDocuments([this.username]);
-      user       = result[0].users;
+      user       = result[0];
       if (!new UserAuthenticator().validPassword(user, this.password)) {
         return <AuthenticationResponse>{
           success: false,
