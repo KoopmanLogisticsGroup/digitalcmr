@@ -14,12 +14,10 @@ export class EcmrDetailComponent implements OnInit {
   public ecmrID: any;
   public ecmr: any;
   public selectedColumns: boolean[];
-  public carrierLoadingRemark: CarrierLoadingRemark;
 
   public constructor(private route: ActivatedRoute,
                      private ecmrService: EcmrService) {
     this.selectedColumns = [false, false, false, false];
-    // this.carrierLoadingRemark = new CarrierLoadingRemark();
   }
 
   public ngOnInit() {
@@ -46,9 +44,12 @@ export class EcmrDetailComponent implements OnInit {
             case 'DELIVERED': {
               if (this.userRole === 'owner') {
                 this.selectedColumns[0] = true;
-                // $('progressBar').addClass('selectedImg1');
                 break;
               }
+              this.selectedColumns[3] = true;
+              break;
+            }
+            case 'CONFIRMED_DELIVERED': {
               this.selectedColumns[3] = true;
               break;
             }

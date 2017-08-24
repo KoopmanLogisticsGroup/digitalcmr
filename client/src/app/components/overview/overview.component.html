@@ -51,7 +51,12 @@
                         'transit-status' : ecmr.status === 'IN_TRANSIT',
                         'completed-status': ecmr.status === 'DELIVERED',
                         'confirmed-status': ecmr.status === 'CONFIRMED_DELIVERED'}">
-                        {{ecmr.status}}
+
+              {{ecmr.status === 'CREATED' ? 'Open CMR' :
+                ecmr.status === 'LOADED' ? 'Loaded' :
+                ecmr.status === 'IN_TRANSIT' ? 'In Transit' :
+                ecmr.status === 'DELIVERED' ? 'Delivered' :
+                ecmr.status === 'CONFIRMED_DELIVERED' ? 'Confirmed' : ecmr.status}}
             </span></td>
             <td>
               <img class="viewMore" routerLink="/ecmr/{{ecmr.ecmrID}}"/>

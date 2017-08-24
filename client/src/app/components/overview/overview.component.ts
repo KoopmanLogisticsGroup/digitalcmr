@@ -56,7 +56,7 @@ export class OverviewComponent implements OnInit {
         return ecmr;
       } else if (this.currentView === 'IN_PROGRESS' && (ecmr.status === 'LOADED' || ecmr.status === 'IN_TRANSIT')) {
         return ecmr;
-      } else if (this.currentView === 'COMPLETED' && ecmr.status === 'DELIVERED' || ecmr.status === 'CONFIRMED_DELIVERED') {
+      } else if (this.currentView === 'COMPLETED' && (ecmr.status === 'DELIVERED' || ecmr.status === 'CONFIRMED_DELIVERED')) {
         return ecmr;
       }
     });

@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {EcmrService} from '../../../services/ecmr.service';
-import {Ecmr} from '../../../classes/ecmr.model';
 
 @Component({
   selector   : 'app-sign-off-modal',
