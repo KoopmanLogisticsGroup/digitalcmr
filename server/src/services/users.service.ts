@@ -22,7 +22,7 @@ export class UsersService {
     this.businessNetworkHandler = new BusinessNetworkHandler(this.adminUsername, this.adminPassword);
   }
 
-  public async addUser(participant: Participant): Promise<any> {
+  public async addUser(participant: Participant, maxHop?: number): Promise<any> {
     this.logger.info('[Users service]' , 'Adding user: ' + participant.userID);
 
     return new Promise((resolve: (result: any) => void, reject: (error: Error) => void) => {
@@ -48,8 +48,16 @@ export class UsersService {
           this.logger.debug('[Users service]' , 'User: ' + participant.userID + ' already exists');
           resolve('User: ' + participant.userID + 'already exists');
         } else {
-          this.logger.error('Was not possible to add participant ' + participant.userID + ' to Blockchain: ', error);
-          resolve('Was not possible to add participant ' + participant.userID + ' to Blockchain');
+          // retry to add the user for 3 times, in case temporary network problems happened
+          if (maxHop > 0 || maxHop === undefined) {
+            this.logger.debug('[Users service] Retrying to add participant ' + participant.userID + ' to Blockchain: ');
+            return setTimeout(() => {
+              return this.addUser(participant, maxHop ? maxHop - 1 : 3);
+            } , 2000);
+          } else {
+            this.logger.error('[Users service] Was not possible to add participant ' + participant.userID + ' to Blockchain: ', error);
+            resolve('[Users service] Was not possible to add participant ' + participant.userID + ' to Blockchain');
+          }
         }
       });
     });
@@ -122,7 +130,7 @@ export class UsersService {
     return addressConcept;
   }
 
-  private async issueIdentityToParticipant(participant: Participant): Promise<any> {
+  private async issueIdentityToParticipant(participant: Participant, maxHop?: number): Promise<any> {
 
     const businessNetworkConnection = await this.businessNetworkHandler.connect();
 
@@ -133,7 +141,14 @@ export class UsersService {
           resolve(identity);
         })
         .catch((error) => {
-            reject(error);
+            if (maxHop > 0 || maxHop === undefined) {
+              this.logger.debug('[Users service] Retrying to issue identity to participant ' + participant.userID);
+              return setTimeout(() => {
+                return this.issueIdentityToParticipant(participant, maxHop ? maxHop - 1 : 3);
+              } , 2000);
+            } else {
+              reject(error);
+            }
           }
         );
     });
