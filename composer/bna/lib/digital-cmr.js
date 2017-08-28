@@ -249,7 +249,14 @@ function UpdateECMR(tx) {
 
             //if the compound admin updated the ecmr status as LOADED, add the compound admin signature
             if (ecmr.status === 'LOADED') {
+                // write the compound signature into the ecmr
                 ecmr.compoundSignature = tx.ecmr.compoundSignature;
+                // write the compound remarks into the ecmr
+                for (var i = 0; tx.ecmr.goods && i < tx.ecmr.goods.length; i++) {
+                    if (tx.ecmr.goods[i].compoundRemark) {
+                        ecmr.goods[i].compoundRemark = tx.ecmr.goods[i].compoundRemark;
+                    }
+                }
             }
 
             //if the transporter updated the ecmr status as IN_TRANSIT, add the transporter signature confirming the loading
@@ -258,7 +265,14 @@ function UpdateECMR(tx) {
                 if (!ecmr.compoundSignature) {
                     throw new Error("Transaction is not valid. Attempt to set the status on IN_TRANSIT before the compound admin signature");
                 }
+                // write the carrier loading signature into the ecmr
                 ecmr.carrierLoadingSignature = tx.ecmr.carrierLoadingSignature;
+                // write the carrier loading remarks into the ecmr
+                for (var i = 0; tx.ecmr.goods && i < tx.ecmr.goods.length; i++) {
+                    if (tx.ecmr.goods[i].carrierLoadingRemark) {
+                        ecmr.goods[i].carrierLoadingRemark = tx.ecmr.goods[i].carrierLoadingRemark;
+                    }
+                }
             }
 
             //if the transporter updated the ecmr status as DELIVERED, add the trasnsporter admin signature
@@ -270,7 +284,14 @@ function UpdateECMR(tx) {
                 if (!ecmr.carrierLoadingSignature) {
                     throw new Error("Transaction is not valid. Attempt to set the status on DELIVERED before the transporter signed for the loading!");
                 }
+                // write the carrier delivery signature into the ecmr
                 ecmr.carrierDeliverySignature = tx.ecmr.carrierDeliverySignature;
+                // write the carrier delivery remarks into the ecmr
+                for (var i = 0; tx.ecmr.goods && i < tx.ecmr.goods.length; i++) {
+                    if (tx.ecmr.goods[i].carrierDeliveryRemark) {
+                        ecmr.goods[i].carrierDeliveryRemark = tx.ecmr.goods[i].carrierDeliveryRemark;
+                    }
+                }
             }
 
             //if the recipient has confirmed the delivery and updated the ecmr status as CONFIRMED_DELIVERED, add the recipient signature
@@ -285,7 +306,14 @@ function UpdateECMR(tx) {
                 if (!ecmr.carrierDeliverySignature) {
                     throw new Error("Transaction is not valid. Attempt to set the status on CONFIRMED_DELIVERED before the transporter signed for the delivery!");
                 }
+                // write the recipient signature into the ecmr
                 ecmr.recipientSignature = tx.ecmr.recipientSignature;
+                // write the recipient remarks into the ecmr
+                for (var i = 0; tx.ecmr.goods && i < tx.ecmr.goods.length; i++) {
+                    if (tx.ecmr.goods[i].recipientRemark) {
+                        ecmr.goods[i].recipientRemark = tx.ecmr.goods[i].recipientRemark;
+                    }
+                }
             }
 
             return getAssetRegistry('org.digitalcmr.ECMR')

@@ -125,22 +125,30 @@ export class TransactionHandler {
       transaction.ecmr.recipientSignature.timestamp = new Date().getTime();
     }
 
-    for (let i = 0; i < transaction.ecmr.goods.length; i++) {
+    for (let i = 0; i < ecmr.goods.length; i++) {
       transaction.ecmr.goods[i] = this.createConcept('Good', ecmr.goods[i], factory);
-      if (transaction.ecmr.goods[i].compoundRemark) {
+      if (ecmr.goods[i].compoundRemark) {
         transaction.ecmr.goods[i].compoundRemark = this.createConcept('Remark', ecmr.goods[i].compoundRemark, factory);
+        transaction.ecmr.goods[i].compoundRemark.comments =  ecmr.goods[i].compoundRemark.comments;
+        transaction.ecmr.goods[i].compoundRemark.isDamaged =  ecmr.goods[i].compoundRemark.isDamaged;
       }
 
-      if (transaction.ecmr.goods[i].carrierLoadingRemark) {
+      if (ecmr.goods[i].carrierLoadingRemark) {
         transaction.ecmr.goods[i].carrierLoadingRemark = this.createConcept('Remark', ecmr.goods[i].carrierLoadingRemark, factory);
+        transaction.ecmr.goods[i].carrierLoadingRemark.comments =  ecmr.goods[i].carrierLoadingRemark.comments;
+        transaction.ecmr.goods[i].carrierLoadingRemark.isDamaged =  ecmr.goods[i].carrierLoadingRemark.isDamaged;
       }
 
-      if (transaction.ecmr.goods[i].carrierDeliveryRemark) {
+      if (ecmr.goods[i].carrierDeliveryRemark) {
         transaction.ecmr.goods[i].carrierDeliveryRemark = this.createConcept('Remark', ecmr.goods[i].carrierDeliveryRemark, factory);
+        transaction.ecmr.goods[i].carrierDeliveryRemark.comments =  ecmr.goods[i].carrierDeliveryRemark.comments;
+        transaction.ecmr.goods[i].carrierDeliveryRemark.isDamaged =  ecmr.goods[i].carrierDeliveryRemark.isDamaged;
       }
 
-      if (transaction.ecmr.goods[i].recipientRemark) {
+      if (ecmr.goods[i].recipientRemark) {
         transaction.ecmr.goods[i].recipientRemark = this.createConcept('Remark', ecmr.goods[i].recipientRemark, factory);
+        transaction.ecmr.goods[i].recipientRemark.comments =  ecmr.goods[i].recipientRemark.comments;
+        transaction.ecmr.goods[i].recipientRemark.isDamaged =  ecmr.goods[i].recipientRemark.isDamaged;
       }
 
       let vehicle = factory.newResource(this.namespace, 'Vehicle', uuid());
