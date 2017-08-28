@@ -1,48 +1,81 @@
-<div class="ui container">
-  <div class="row titles">LINE ITEMS</div>
-  <div class="row">
-    <form>
-      <table class="ui padded table">
-        <thead>
-        <tr>
-          <th>VIN</th>
-          <th>Manufacturer</th>
-          <th>Description</th>
-          <th>Weight</th>
-          <th>ODO Meter</th>
-          <th>License Plate</th>
-          <th>Remarks</th>
-          <th>Damage</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let good of ecmr?.goods; let i = index">
-          <td>{{good?.vehicle.vin}}</td>
-          <td>{{good?.vehicle.manufacturer}}</td>
-          <td>{{good?.description}}</td>
-          <td>{{good?.weight}} kg</td>
-          <td>{{good?.vehicle.odoMeterReading}}</td>
-          <td>{{good?.vehicle.plateNumber}}</td>
-          <td>
-            <div class="ui input" [ngClass]="{'disabled' : ecmr?.status === 'CONFIRM_DELIVERED'}">
-              <input name="remark-{{i}}" [(ngModel)]="good?.carrierLoadingRemark.comments" placeholder="Add remark..."/>
+<div class="row titles">LINE ITEMS</div>
+<div class="row">
+  <form>
+    <table class="ui padded unstackable table">
+      <thead>
+      <tr>
+        <th>VIN</th>
+        <th>Manufacturer</th>
+        <th>Description</th>
+        <th>Weight</th>
+        <th>ODO Meter</th>
+        <th>License Plate</th>
+        <th>Remarks</th>
+        <th>Damage</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let good of ecmr?.goods; let i = index">
+        <td>{{good?.vehicle.vin}}</td>
+        <td>{{good?.vehicle.manufacturer}}</td>
+        <td>{{good?.description}}</td>
+        <td>{{good?.weight}} kg</td>
+        <td>{{good?.vehicle.odoMeterReading}}</td>
+        <td>{{good?.vehicle.plateNumber}}</td>
+        <td>
+          <div class="ui input" [ngClass]="{'disabled' : ecmr?.status === 'CONFIRMED_DELIVERED'}">
+            <div *ngIf="userRole() === 'CompoundAdmin' && ecmr?.status === 'CREATED'">
+              <input name="remark-{{userRole()}}-{{i}}" placeholder="Add remark..."
+                     [(ngModel)]="good?.compoundRemark.comments">
             </div>
-          </td>
-          <td>
-            <div class="ui checkbox">
-              <input type="checkbox" name="isDamaged" (ngModel)="good?.carrierLoadingRemark.isDamaged = true">
+            <div *ngIf="userRole() === 'CarrierMember' && ecmr?.status === 'LOADED'">
+              <input name="remark-{{userRole()}}-{{i}}" placeholder="Add remark..."
+                     [(ngModel)]="good?.carrierLoadingRemark.comments">
+            </div>
+            <div *ngIf="userRole() === 'CarrierMember' && ecmr?.status === 'IN_TRANSIT'">
+              <input name="remark-{{userRole()}}-{{i}}" placeholder="Add remark..."
+                     [(ngModel)]="good?.carrierDeliveryRemark.comments">
+            </div>
+            <div *ngIf="userRole() === 'RecipientMember' && ecmr?.status === 'DELIVERED'">
+              <input name="remark-{{userRole()}}-{{i}}" placeholder="Add remark..."
+                     [(ngModel)]="good?.recipientRemark.comments">
+            </div>
+          </div>
+        </td>
+        <td>
+          <div class="ui checkbox">
+            <div *ngIf="userRole() === 'CompoundAdmin' && ecmr?.status === 'CREATED'">
+              <input type="checkbox" name="remark-isDamaged-{{userRole()}}-{{i}}"
+                     [(ngModel)]="good?.compoundRemark.isDamaged">
               <label></label>
             </div>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-      <button *ngIf="ecmr?.status !== 'CONFIRMED_DELIVERED'" type="submit"
-              class="ui right floated circular ui button sign-off"
-              (click)="openModal()">SIGN OFF
-      </button>
-      <app-sign-off-modal></app-sign-off-modal>
-    </form>
-  </div>
+            <div *ngIf="userRole() === 'CarrierMember' && ecmr?.status === 'LOADED'">
+              <input type="checkbox" name="remark-isDamaged-{{userRole()}}-{{i}}"
+                     [(ngModel)]="good?.carrierLoadingRemark.isDamaged">
+              <label></label>
+            </div>
+            <div *ngIf="userRole() === 'CarrierMember' && ecmr?.status === 'IN_TRANSIT'">
+              <input type="checkbox" name="remark-isDamaged-{{userRole()}}-{{i}}"
+                     [(ngModel)]="good?.carrierDeliveryRemark.isDamaged">
+              <label></label>
+            </div>
+            <div *ngIf="userRole() === 'RecipientMember' && ecmr?.status === 'DELIVERED'">
+              <input type="checkbox" name="remark-isDamaged-{{userRole()}}-{{i}}"
+                     [(ngModel)]="good?.recipientRemark.isDamaged">
+              <label></label>
+            </div>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <button *ngIf="enableButton()" type="submit" class="ui right floated circular button sign-off"
+            (click)="openModal()">
+      SIGN OFF
+    </button>
+    <button *ngIf="!enableButton()" type="submit" class="ui right floated circular button sign-off disabled-button">
+      SIGN OFF
+    </button>
+    <app-sign-off-modal></app-sign-off-modal>
+  </form>
 </div>
-

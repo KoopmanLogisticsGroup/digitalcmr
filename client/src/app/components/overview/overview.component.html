@@ -34,16 +34,17 @@
           <tbody>
           <tr *ngFor="let ecmr of ecmrsFiltered" class="table-row">
             <td></td>
-            <td>{{ecmr.creation.date | date:"dd-MM-yyyy"}}</td>
-            <td>{{ecmr.ecmrID}}</td>
-            <td>{{ecmr.loading.address.city}}</td>
-            <td>{{ecmr.delivery.address.city}}</td>
+            <td>{{ecmr?.creation.date | date:"dd-MM-yyyy"}}</td>
+            <td>{{ecmr?.ecmrID}}</td>
+            <td>{{ecmr?.loading.address.city}}</td>
+            <td>{{ecmr?.delivery.address.city}}</td>
             <td>
-              <div class="centerContent">{{ecmr.goods.length}}</div>
+              <div class="centerContent">{{ecmr?.goods.length}}</div>
             </td>
-            <td>{{ecmr.carrier.split('#')[1] }}</td>
-            <td>{{ecmr.recipient.split('#')[1].split('@')[0]}}</td>
-            <td class="respImg"><img class="centerContent2 commentIcon" *ngIf="ecmr.carrierComments != '' || null"/>
+            <td>{{ecmr?.carrier.split('#')[1] }}</td>
+            <td>{{ecmr?.recipient.split('#')[1].split('@')[0]}}</td>
+            <td class="respImg"><img class="centerContent2 commentIcon"
+                                     *ngIf="ecmr?.carrierLoadingRemark != '' || null"/>
             </td>
             <td class="respImg"><img class="centerContent2 exclIcon" *ngIf="ecmr.carrierComments != '' || null"/></td>
             <td><span [ngClass]="{'open-status' : ecmr.status === 'CREATED',

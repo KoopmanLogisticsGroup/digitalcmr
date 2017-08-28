@@ -27,6 +27,8 @@ export class EcmrDetailComponent implements OnInit {
         this.ecmrService.getECMRByID(this.ecmrID).subscribe(ecmr => {
           this.ecmr     = ecmr;
           this.userRole = JSON.parse(localStorage.getItem('currentUser')).user.role;
+          console.log(this.ecmr);
+
           switch (this.ecmr.status) {
             case 'CREATED': {
               this.selectedColumns[0] = true;
@@ -53,14 +55,7 @@ export class EcmrDetailComponent implements OnInit {
               break;
             }
           }
-          for (const good of this.ecmr.goods) {
-            if (!good.carrierLoadingRemark) {
-              good.carrierLoadingRemark = {
-                'comments' : '',
-                'isDamaged': false
-              };
-            }
-          }
+          this.instantiateRemarks();
           if (this.userRole === 'CompoundAdmin') {
             this.ecmr.compoundSignature = {};
           } else if (this.userRole === 'CarrierMember' && ecmr.status === 'LOADED') {
@@ -72,5 +67,34 @@ export class EcmrDetailComponent implements OnInit {
           }
         });
       });
+  }
+
+  public instantiateRemarks(): void {
+    for (const good of this.ecmr.goods) {
+      if (!good.compoundRemark) {
+        good.compoundRemark = {
+          'comments' : '',
+          'isDamaged': false
+        };
+      }
+      if (!good.carrierLoadingRemark) {
+        good.carrierLoadingRemark = {
+          'comments' : '',
+          'isDamaged': false
+        };
+      }
+      if (!good.carrierDeliveryRemark) {
+        good.carrierDeliveryRemark = {
+          'comments' : '',
+          'isDamaged': false
+        };
+      }
+      if (!good.recipientRemark) {
+        good.recipientRemark = {
+          'comments' : '',
+          'isDamaged': false
+        };
+      }
+    }
   }
 }
