@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {EcmrService} from '../../services/ecmr.service';
 import {ActivatedRoute} from '@angular/router';
-import {CarrierLoadingRemark} from '../../classes/remark.model';
 
 @Component({
   selector   : 'app-ecmr-detail',
@@ -27,6 +26,8 @@ export class EcmrDetailComponent implements OnInit {
         this.ecmrService.getECMRByID(this.ecmrID).subscribe(ecmr => {
           this.ecmr     = ecmr;
           this.userRole = JSON.parse(localStorage.getItem('currentUser')).user.role;
+          console.log(this.ecmr);
+
           switch (this.ecmr.status) {
             case 'CREATED': {
               this.selectedColumns[0] = true;
@@ -53,24 +54,54 @@ export class EcmrDetailComponent implements OnInit {
               break;
             }
           }
-          for (const good of this.ecmr.goods) {
-            if (!good.carrierLoadingRemark) {
-              good.carrierLoadingRemark = {
-                'comments' : '',
-                'isDamaged': false
-              };
-            }
-          }
-          if (this.userRole === 'CompoundAdmin') {
-            this.ecmr.compoundSignature = {};
-          } else if (this.userRole === 'CarrierMember' && ecmr.status === 'LOADED') {
-            this.ecmr.carrierLoadingSignature = {};
-          } else if (this.userRole === 'CarrierMember') {
-            this.ecmr.carrierDeliverySignature = {};
-          } else if (this.userRole === 'RecipientMember') {
-            this.ecmr.recipientSignature = {};
+          this.instantiateRemarks();
+          if (this.userRole === 'CompoundAdmin' && !this.ecmr.compoundSignature) {
+            this.ecmr.compoundSignature                        = {};
+            this.ecmr.compoundSignature.generalRemark          = {};
+            this.ecmr.compoundSignature.generalRemark.comments = '';
+          } else if (this.userRole === 'CarrierMember' && ecmr.status === 'LOADED' && !this.ecmr.carrierDeliverySignature) {
+            this.ecmr.carrierLoadingSignature                        = {};
+            this.ecmr.carrierLoadingSignature.generalRemark          = {};
+            this.ecmr.carrierLoadingSignature.generalRemark.comments = '';
+          } else if (this.userRole === 'CarrierMember' && ecmr.status === 'IN_TRANSIT' && !this.ecmr.carrierDeliverySignature) {
+            this.ecmr.carrierDeliverySignature                        = {};
+            this.ecmr.carrierDeliverySignature.generalRemark          = {};
+            this.ecmr.carrierDeliverySignature.generalRemark.comments = '';
+          } else if (this.userRole === 'RecipientMember' && !this.ecmr.recipientSignature) {
+            this.ecmr.recipientSignature                        = {};
+            this.ecmr.recipientSignature.generalRemark          = {};
+            this.ecmr.recipientSignature.generalRemark.comments = '';
           }
         });
       });
+  }
+
+  public instantiateRemarks(): void {
+    for (const good of this.ecmr.goods) {
+      if (!good.compoundRemark) {
+        good.compoundRemark = {
+          'comments' : '',
+          'isDamaged': false
+        };
+      }
+      if (!good.carrierLoadingRemark) {
+        good.carrierLoadingRemark = {
+          'comments' : '',
+          'isDamaged': false
+        };
+      }
+      if (!good.carrierDeliveryRemark) {
+        good.carrierDeliveryRemark = {
+          'comments' : '',
+          'isDamaged': false
+        };
+      }
+      if (!good.recipientRemark) {
+        good.recipientRemark = {
+          'comments' : '',
+          'isDamaged': false
+        };
+      }
+    }
   }
 }

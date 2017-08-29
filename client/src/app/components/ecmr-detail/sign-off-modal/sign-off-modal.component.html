@@ -7,8 +7,23 @@
       <form class="ui form">
         <div class="field">
           <label>General Remark</label>
-          <textarea *ngIf="ecmr" name="generalRemarks" [(ngModel)]="ecmr.carrierComments"
+          <div *ngIf="userRole() === 'CompoundAdmin' && ecmr?.status === 'CREATED'">
+          <textarea *ngIf="ecmr" name="generalRemarks" [(ngModel)]="ecmr.compoundSignature.generalRemark.comments"
                     placeholder="Enter your general remarks here..." maxlength="136"></textarea>
+          </div>
+          <div *ngIf="userRole() === 'CarrierMember' && ecmr?.status === 'LOADED'">
+          <textarea *ngIf="ecmr" name="generalRemarks" [(ngModel)]="ecmr.carrierLoadingSignature.generalRemark.comments"
+                    placeholder="Enter your general remarks here..." maxlength="136"></textarea>
+          </div>
+          <div *ngIf="userRole() === 'CarrierMember' && ecmr?.status === 'IN_TRANSIT'">
+          <textarea *ngIf="ecmr" name="generalRemarks"
+                    [(ngModel)]="ecmr.carrierDeliverySignature.generalRemark.comments"
+                    placeholder="Enter your general remarks here..." maxlength="136"></textarea>
+          </div>
+          <div *ngIf="userRole() === 'RecipientMember' && ecmr?.status === 'DELIVERED'">
+          <textarea *ngIf="ecmr" name="generalRemarks" [(ngModel)]="ecmr.recipientSignature.generalRemark.comments"
+                    placeholder="Enter your general remarks here..." maxlength="136"></textarea>
+          </div>
         </div>
         <button id="submitButton" class="circular ui float right button submitButton" (click)="onSubmit()"
                 type="submit">Submit

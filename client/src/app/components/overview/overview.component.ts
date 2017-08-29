@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {EcmrService} from '../../services/ecmr.service';
 import {AuthenticationService} from '../../services/authentication.service';
 
@@ -9,6 +9,8 @@ import {AuthenticationService} from '../../services/authentication.service';
 })
 export class OverviewComponent implements OnInit {
   public currentView = 'OPEN';
+
+  @Input() public ecmr: any;
 
   private ecmrs: any;
   public ecmrsFiltered: any;
