@@ -46,7 +46,11 @@ export class OverviewComponent implements OnInit {
       });
     } else if (this.userRole() === 'LegalOwnerAdmin') {
       this.currentView   = 'COMPLETED';
-      this.ecmrsFiltered = this.ecmrs.filter(ecmr => ecmr.status.toUpperCase() === ('DELIVERED'));
+      this.ecmrsFiltered = this.ecmrs.filter(ecmr => {
+        if (this.currentView === 'COMPLETED' && (ecmr.status === 'DELIVERED' || ecmr.status === 'CONFIRMED_DELIVERED')) {
+          return ecmr;
+        }
+      });
     }
   }
 

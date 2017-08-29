@@ -13,6 +13,7 @@ export class GoodsComponent implements OnInit {
 
   @Input() public ecmr: any;
   @Input() public selectedColumnIs: any;
+  @Input() public selectedColumns: any;
 
   public constructor(private _authenticationService: AuthenticationService) {
   }
@@ -35,6 +36,7 @@ export class GoodsComponent implements OnInit {
   }
 
   public ngOnInit() {
+    console.log(this.selectedColumns);
   }
 
   public userRole(): string {

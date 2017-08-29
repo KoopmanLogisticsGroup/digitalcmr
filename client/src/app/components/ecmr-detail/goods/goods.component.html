@@ -28,62 +28,103 @@
               <input name="remark-{{userRole()}}-{{i}}" placeholder="Add remark..."
                      [(ngModel)]="good?.compoundRemark.comments">
             </div>
-            <div *ngIf="userRole() === 'CarrierMember' && ecmr?.status === 'LOADED'">
+            <div
+              *ngIf="userRole() === 'CarrierMember' && ecmr?.status === 'LOADED'; else showCompoundRemark">
               <input name="remark-{{userRole()}}-{{i}}" placeholder="Add remark..."
                      [(ngModel)]="good?.carrierLoadingRemark.comments">
             </div>
-            <div *ngIf="userRole() === 'CarrierMember' && ecmr?.status === 'IN_TRANSIT'">
+            <ng-template #showCompoundRemark>
+              <div *ngIf="userRole() !== 'CarrierMember' && selectedColumns[1] === true && selectColumn() !== 1">
+                {{good?.compoundRemark.comments}}
+              </div>
+            </ng-template>
+            <div
+              *ngIf="userRole() === 'CarrierMember' && ecmr?.status === 'IN_TRANSIT'; else showCarrierLoadingRemark">
               <input name="remark-{{userRole()}}-{{i}}" placeholder="Add remark..."
                      [(ngModel)]="good?.carrierDeliveryRemark.comments">
             </div>
-            <div *ngIf="userRole() === 'RecipientMember' && ecmr?.status === 'DELIVERED'">
+            <ng-template #showCarrierLoadingRemark>
+              <div *ngIf="userRole() !== 'CarrierMember' && selectedColumns[2] === true && selectColumn() !== 2">
+                {{good?.carrierLoadingRemark.comments}}
+              </div>
+            </ng-template>
+            <div
+              *ngIf="userRole() === 'RecipientMember' && ecmr?.status === 'DELIVERED' && selectedColumns[3] === true; else showCarrierDeliveryRemark">
               <input name="remark-{{userRole()}}-{{i}}" placeholder="Add remark..."
                      [(ngModel)]="good?.recipientRemark.comments">
             </div>
+            <ng-template #showCarrierDeliveryRemark>
+              <div *ngIf="userRole() !== 'CarrierMember' && selectedColumns[3] === true && selectColumn() !== 3">
+                {{good?.carrierDeliveryRemark.comments}}
+              </div>
+            </ng-template>
             <div *ngIf="selectColumn() === 0">{{good?.compoundRemark.comments}}</div>
             <div *ngIf="selectColumn() === 1">{{good?.carrierLoadingRemark.comments}}</div>
             <div *ngIf="selectColumn() === 2">{{good?.carrierDeliveryRemark.comments}}</div>
             <div *ngIf="selectColumn() === 3">{{good?.recipientRemark.comments}}</div>
+            <div *ngIf="selectedColumns[3] === true && ecmr.status === 'CONFIRMED_DELIVERED'">
+              {{good?.recipientRemark.comments}}
+            </div>
           </div>
         </td>
         <td>
           <div class="ui checkbox">
-            <div *ngIf="userRole() === 'CompoundAdmin' && ecmr?.status === 'CREATED'">
+            <div *ngIf="userRole() === 'CompoundAdmin' && ecmr?.status === 'CREATED'; else showLegalRemark">
               <input type="checkbox" name="remark-isDamaged-{{userRole()}}-{{i}}"
                      [(ngModel)]="good?.compoundRemark.isDamaged">
               <label></label>
             </div>
-            <div *ngIf="userRole() === 'CarrierMember' && ecmr?.status === 'LOADED'">
+            <div
+              *ngIf="userRole() === 'CarrierMember' && ecmr?.status === 'LOADED'; else showCompoundCheck">
               <input type="checkbox" name="remark-isDamaged-{{userRole()}}-{{i}}"
                      [(ngModel)]="good?.carrierLoadingRemark.isDamaged">
               <label></label>
             </div>
-            <div *ngIf="userRole() === 'CarrierMember' && ecmr?.status === 'IN_TRANSIT'">
+            <ng-template #showCompoundCheck>
+              <div
+                *ngIf="userRole() !== 'CarrierMember' && selectedColumns[1] === true && selectColumn() !== 1 && good?.compoundRemark.isDamaged === true">
+                <img
+                  class="checkIcon"/></div>
+            </ng-template>
+            <div
+              *ngIf="userRole() === 'CarrierMember' && ecmr?.status === 'IN_TRANSIT'; else showCarrierLoadingCheck">
               <input type="checkbox" name="remark-isDamaged-{{userRole()}}-{{i}}"
                      [(ngModel)]="good?.carrierDeliveryRemark.isDamaged">
               <label></label>
             </div>
-            <div *ngIf="userRole() === 'RecipientMember' && ecmr?.status === 'DELIVERED'">
+            <ng-template #showCarrierLoadingCheck>
+              <div
+                *ngIf="userRole() !== 'CarrierMember' && selectedColumns[2] === true && selectColumn() !== 2 && good?.carrierLoadingRemark.isDamaged === true">
+                <img
+                  class="checkIcon"/></div>
+            </ng-template>
+            <div
+              *ngIf="userRole() === 'RecipientMember' && ecmr?.status === 'DELIVERED' && selectedColumns[3] === true; else showCarrierDeliveryCheck">
               <input type="checkbox" name="remark-isDamaged-{{userRole()}}-{{i}}"
                      [(ngModel)]="good?.recipientRemark.isDamaged">
               <label></label>
             </div>
+            <ng-template #showCarrierDeliveryCheck>
+              <div
+                *ngIf="userRole() !== 'CarrierMember' && selectColumn() === 3 && selectedColumns[3] === true && good?.carrierDeliveryRemark.isDamaged === true">
+                <img
+                  class="checkIcon"/></div>
+            </ng-template>
             <div *ngIf="selectColumn() === 0">
-              <div *ngIf="good?.compoundRemark.isDamaged === true"><input type="checkbox" checked="true"><label></label>
-              </div>
+              <div *ngIf="good?.compoundRemark.isDamaged === true"><img class="checkIcon"/></div>
             </div>
             <div *ngIf="selectColumn() === 1">
-              <div *ngIf="good?.carrierLoadingRemark.isDamaged === true"><input type="checkbox"
-                                                                                checked="true"><label></label></div>
+              <div *ngIf="good?.carrierLoadingRemark.isDamaged === true"><img class="checkIcon"/></div>
             </div>
             <div *ngIf="selectColumn() === 2">
-              <div *ngIf="good?.carrierDeliveryRemark.isDamaged === true"><input type="checkbox"
-                                                                                 checked="true"><label></label></div>
+              <div *ngIf="good?.carrierDeliveryRemark.isDamaged === true"><img class="checkIcon"/></div>
             </div>
             <div *ngIf="selectColumn() === 3">
-              <div *ngIf="good?.recipientRemark.isDamaged === true"><input type="checkbox"
-                                                                           checked="true"><label></label></div>
+              <div *ngIf="good?.recipientRemark.isDamaged === true"><img class="checkIcon"/></div>
             </div>
+            <div
+              *ngIf="selectedColumns[3] === true && ecmr.status === 'CONFIRMED_DELIVERED' && good?.recipientRemark.isDamaged === true">
+              <img class="checkIcon"/></div>
           </div>
         </td>
       </tr>
