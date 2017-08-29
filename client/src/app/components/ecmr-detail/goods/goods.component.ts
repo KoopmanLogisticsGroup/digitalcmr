@@ -12,6 +12,7 @@ export class GoodsComponent implements OnInit {
   @ViewChild(SignOffModalComponent) public signOffModal: SignOffModalComponent;
 
   @Input() public ecmr: any;
+  @Input() public selectedColumnIs: any;
 
   public constructor(private _authenticationService: AuthenticationService) {
   }
@@ -19,6 +20,18 @@ export class GoodsComponent implements OnInit {
   public openModal(): void {
     this.signOffModal.open(this.ecmr);
     console.log(this.ecmr);
+  }
+
+  public selectColumn() {
+    if (this.selectedColumnIs === 0) {
+      return 0;
+    } else if (this.selectedColumnIs === 1) {
+      return 1;
+    } else if (this.selectedColumnIs === 2) {
+      return 2;
+    } else if (this.selectedColumnIs === 3) {
+      return 3;
+    }
   }
 
   public ngOnInit() {
@@ -35,9 +48,11 @@ export class GoodsComponent implements OnInit {
   public enableButton() {
     if (this.ecmr && this.ecmr.status === 'CREATED' && this.userRole() === 'CompoundAdmin') {
       return true;
-    } else if (this.ecmr && this.ecmr.status === ('LOADED' || 'IN_TRANSIT') && this.userRole() === 'CarrierMember') {
+    } else if (this.ecmr && this.ecmr.status === 'LOADED' && this.userRole() === 'CarrierMember') {
       return true;
-    } else if (this.ecmr && this.ecmr.status === ('DELIVERED' || 'CONFIRMED_DELIVERED') && this.userRole() === 'RecipientMember') {
+    } else if (this.ecmr && this.ecmr.status === 'IN_TRANSIT' && this.userRole() === 'CarrierMember') {
+      return true;
+    } else if (this.ecmr && this.ecmr.status === 'DELIVERED' && this.userRole() === 'RecipientMember') {
       return true;
     }
   }

@@ -11,6 +11,7 @@ export class GeneralInfoComponent implements OnInit {
   @Input() public selectedColumns: boolean[];
 
   public selectedImage: boolean[];
+  public selectedColumnIs: any;
 
   public constructor(private _authenticationService: AuthenticationService) {
     this.selectedImage = [false, false, false, false];
@@ -22,6 +23,7 @@ export class GeneralInfoComponent implements OnInit {
         if (number === index) {
           this.selectedImage[index]   = true;
           this.selectedColumns[index] = true;
+          this.selectedColumnIs       = number;
         } else {
           this.selectedImage[index]   = false;
           this.selectedColumns[index] = false;

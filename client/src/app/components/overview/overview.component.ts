@@ -70,12 +70,4 @@ export class OverviewComponent implements OnInit {
     }
     return null;
   }
-
-  // public isDamagedSign() {
-  //   if (this.ecmr && this.ecmr.carrierLoadingRemark.comments === '' || null) {
-  //     return true;
-  //   } else if (this.ecmr && this.ecmr.carrierLoadingRemark !== null || '') {
-  //     return true;
-  //   }
-  // }
 }

@@ -26,7 +26,7 @@
       <span class="addressInfo"><b>Signed by:</b> Leaseplan</span>
       <span><b>Date:</b> 25-10-2017(12:22)</span>
     </div>
-    <img class="commentOverview iconComment"/> {{ecmr?.carrierComments}}
+    <img class="commentOverview iconComment"/>
   </div>
   <div class="column" [ngClass]="{'completed': ecmr?.status === 'DELIVERED' || ecmr?.status === 'CONFIRMED_DELIVERED', 'active': selectedColumns[1],
   'inactive': !selectedColumns[1]}" (click)="selectColumn(1)">
@@ -46,7 +46,8 @@
         <span><b>Date:</b> 24-01-2017(13:09)</span>
       </div>
     </div>
-    <img class="commentOverview iconComment"/> {{ecmr?.carrierComments}}
+    <img class="commentOverview iconComment"/>
+    <p>{{ ecmr?.compoundSignature?.generalRemark?.comments }}</p>
   </div>
   <div class="column" [ngClass]="{'completed': ecmr?.status === 'DELIVERED' || ecmr?.status === 'CONFIRMED_DELIVERED', 'active': selectedColumns[2],
   'inactive': !selectedColumns[2]}" (click)="selectColumn(2)">
@@ -66,7 +67,9 @@
         <span><b>Date:</b> 01-05-2017(15:54)</span>
       </div>
     </div>
-    <img class="commentOverview iconComment"/> {{ecmr?.carrierComments}}
+    <img class="commentOverview iconComment"/>
+    <p>{{ ecmr?.carrierLoadingSignature?.generalRemark?.comments }}</p>
+    <p>{{ ecmr?.carrierDeliverySignature?.generalRemark?.comments }}</p>
   </div>
   <div class="column" [ngClass]="{'completed': ecmr?.status === 'DELIVERED' || ecmr?.status === 'CONFIRMED_DELIVERED', 'active': selectedColumns[3],
   'inactive': !selectedColumns[3]}" (click)="selectColumn(3)">
@@ -86,6 +89,8 @@
         <span><b>Date:</b> 21-10-2017(10:10)</span>
       </div>
     </div>
-    <img class="commentOverview iconComment"/> {{ecmr?.carrierComments}}
+    <img class="commentOverview iconComment"/>
+    <p>{{ ecmr?.recipientSignature?.generalRemark?.comments }}</p>
   </div>
 </div>
+<app-goods [ecmr]="ecmr" [selectedColumnIs]="selectedColumnIs"></app-goods>

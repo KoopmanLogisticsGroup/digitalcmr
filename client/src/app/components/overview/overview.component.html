@@ -43,21 +43,22 @@
             </td>
             <td>{{ecmr?.carrier.split('#')[1] }}</td>
             <td>{{ecmr?.recipient.split('#')[1].split('@')[0]}}</td>
-            <td class="respImg"><img class="centerContent2 commentIcon"
-                                     *ngIf="ecmr?.carrierLoadingRemark != '' || null"/>
+            <td class="respImg">
+              <img class="centerContent2 commentIcon"
+                   *ngIf="ecmr?.carrierLoadingRemark != '' || null"/>
             </td>
             <td class="respImg"><img class="centerContent2 exclIcon" *ngIf="ecmr.carrierComments != '' || null"/></td>
-            <td><span [ngClass]="{'open-status' : ecmr.status === 'CREATED',
-                        'awaiting-status' : ecmr.status === 'LOADED',
-                        'transit-status' : ecmr.status === 'IN_TRANSIT',
-                        'completed-status': ecmr.status === 'DELIVERED',
-                        'confirmed-status': ecmr.status === 'CONFIRMED_DELIVERED'}">
+            <td><span [ngClass]="{'open-status' : ecmr?.status === 'CREATED',
+                        'awaiting-status' : ecmr?.status === 'LOADED',
+                        'transit-status' : ecmr?.status === 'IN_TRANSIT',
+                        'completed-status': ecmr?.status === 'DELIVERED',
+                        'confirmed-status': ecmr?.status === 'CONFIRMED_DELIVERED'}">
 
-              {{ecmr.status === 'CREATED' ? 'Open CMR' :
-                ecmr.status === 'LOADED' ? 'Loaded' :
-                ecmr.status === 'IN_TRANSIT' ? 'In Transit' :
-                ecmr.status === 'DELIVERED' ? 'Delivered' :
-                ecmr.status === 'CONFIRMED_DELIVERED' ? 'Confirmed' : ecmr.status}}
+              {{ecmr?.status === 'CREATED' ? 'Open CMR' :
+                ecmr?.status === 'LOADED' ? 'Loaded' :
+                ecmr?.status === 'IN_TRANSIT' ? 'In Transit' :
+                ecmr?.status === 'DELIVERED' ? 'Delivered' :
+                ecmr?.status === 'CONFIRMED_DELIVERED' ? 'Confirmed' : ecmr?.status}}
             </span></td>
             <td>
               <img class="viewMore" routerLink="/ecmr/{{ecmr.ecmrID}}"/>

@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {EcmrService} from '../../services/ecmr.service';
 import {ActivatedRoute} from '@angular/router';
-import {CarrierLoadingRemark} from '../../classes/remark.model';
 
 @Component({
   selector   : 'app-ecmr-detail',
@@ -56,14 +55,22 @@ export class EcmrDetailComponent implements OnInit {
             }
           }
           this.instantiateRemarks();
-          if (this.userRole === 'CompoundAdmin') {
-            this.ecmr.compoundSignature = {};
-          } else if (this.userRole === 'CarrierMember' && ecmr.status === 'LOADED') {
-            this.ecmr.carrierLoadingSignature = {};
-          } else if (this.userRole === 'CarrierMember') {
-            this.ecmr.carrierDeliverySignature = {};
-          } else if (this.userRole === 'RecipientMember') {
-            this.ecmr.recipientSignature = {};
+          if (this.userRole === 'CompoundAdmin' && !this.ecmr.compoundSignature) {
+            this.ecmr.compoundSignature                        = {};
+            this.ecmr.compoundSignature.generalRemark          = {};
+            this.ecmr.compoundSignature.generalRemark.comments = '';
+          } else if (this.userRole === 'CarrierMember' && ecmr.status === 'LOADED' && !this.ecmr.carrierDeliverySignature) {
+            this.ecmr.carrierLoadingSignature                        = {};
+            this.ecmr.carrierLoadingSignature.generalRemark          = {};
+            this.ecmr.carrierLoadingSignature.generalRemark.comments = '';
+          } else if (this.userRole === 'CarrierMember' && ecmr.status === 'IN_TRANSIT' && !this.ecmr.carrierDeliverySignature) {
+            this.ecmr.carrierDeliverySignature                        = {};
+            this.ecmr.carrierDeliverySignature.generalRemark          = {};
+            this.ecmr.carrierDeliverySignature.generalRemark.comments = '';
+          } else if (this.userRole === 'RecipientMember' && !this.ecmr.recipientSignature) {
+            this.ecmr.recipientSignature                        = {};
+            this.ecmr.recipientSignature.generalRemark          = {};
+            this.ecmr.recipientSignature.generalRemark.comments = '';
           }
         });
       });

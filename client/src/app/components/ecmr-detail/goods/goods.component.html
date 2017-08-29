@@ -23,7 +23,7 @@
         <td>{{good?.vehicle.odoMeterReading}}</td>
         <td>{{good?.vehicle.plateNumber}}</td>
         <td>
-          <div class="ui input" [ngClass]="{'disabled' : ecmr?.status === 'CONFIRMED_DELIVERED'}">
+          <div class="ui input">
             <div *ngIf="userRole() === 'CompoundAdmin' && ecmr?.status === 'CREATED'">
               <input name="remark-{{userRole()}}-{{i}}" placeholder="Add remark..."
                      [(ngModel)]="good?.compoundRemark.comments">
@@ -40,6 +40,10 @@
               <input name="remark-{{userRole()}}-{{i}}" placeholder="Add remark..."
                      [(ngModel)]="good?.recipientRemark.comments">
             </div>
+            <div *ngIf="selectColumn() === 0">{{good?.compoundRemark.comments}}</div>
+            <div *ngIf="selectColumn() === 1">{{good?.carrierLoadingRemark.comments}}</div>
+            <div *ngIf="selectColumn() === 2">{{good?.carrierDeliveryRemark.comments}}</div>
+            <div *ngIf="selectColumn() === 3">{{good?.recipientRemark.comments}}</div>
           </div>
         </td>
         <td>
@@ -63,6 +67,22 @@
               <input type="checkbox" name="remark-isDamaged-{{userRole()}}-{{i}}"
                      [(ngModel)]="good?.recipientRemark.isDamaged">
               <label></label>
+            </div>
+            <div *ngIf="selectColumn() === 0">
+              <div *ngIf="good?.compoundRemark.isDamaged === true"><input type="checkbox" checked="true"><label></label>
+              </div>
+            </div>
+            <div *ngIf="selectColumn() === 1">
+              <div *ngIf="good?.carrierLoadingRemark.isDamaged === true"><input type="checkbox"
+                                                                                checked="true"><label></label></div>
+            </div>
+            <div *ngIf="selectColumn() === 2">
+              <div *ngIf="good?.carrierDeliveryRemark.isDamaged === true"><input type="checkbox"
+                                                                                 checked="true"><label></label></div>
+            </div>
+            <div *ngIf="selectColumn() === 3">
+              <div *ngIf="good?.recipientRemark.isDamaged === true"><input type="checkbox"
+                                                                           checked="true"><label></label></div>
             </div>
           </div>
         </td>
