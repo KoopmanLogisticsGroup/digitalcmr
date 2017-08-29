@@ -60,7 +60,7 @@ export class ECMRController {
   public async update(@Body() ecmr: ECMR, @Req() request: any): Promise<any> {
     let enrollmentID = new JSONWebToken(request).getUserID();
     let secret = new JSONWebToken(request).getSecret();
-
-    return this._transactor.put(ecmr, enrollmentID, secret, (factory, data) => this._transactor.updateECMR(factory, data, enrollmentID));
+    const ip = request.ip;
+    return this._transactor.put(ecmr, enrollmentID, secret, (factory, data) => this._transactor.updateECMR(factory, data, enrollmentID, ip));
   }
 }
