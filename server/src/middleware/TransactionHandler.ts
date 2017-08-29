@@ -52,7 +52,7 @@ export class TransactionHandler {
     return ecmrs;
   }
 
-  private buildECMR(factory: any, ecmr: any, transaction: any, enrollmentID: string): any {
+  private buildECMR(factory: any, ecmr: any, transaction: any, enrollmentID: string, ip?: any): any {
     transaction.ecmr = factory.newResource(this.namespace, 'ECMR', uuid());
 
     transaction.ecmr = this.fillAttributes(transaction.ecmr, ecmr);
@@ -81,6 +81,9 @@ export class TransactionHandler {
 
       if (ecmr.status === 'CREATED') {
         transaction.ecmr.status = 'LOADED';
+        if (ip) {
+          transaction.ecmr.compoundSignature.ip = ip;
+        }
       }
 
       transaction.ecmr.compoundSignature.timestamp = new Date().getTime();
@@ -94,6 +97,9 @@ export class TransactionHandler {
 
       if (ecmr.status === 'LOADED') {
         transaction.ecmr.status = 'IN_TRANSIT';
+        if (ip) {
+          transaction.ecmr.carrierLoadingSignature.ip = ip;
+        }
       }
 
       transaction.ecmr.carrierLoadingSignature.timestamp = new Date().getTime();
@@ -106,6 +112,9 @@ export class TransactionHandler {
       }
 
       if (ecmr.status === 'IN_TRANSIT') {
+        if (ip) {
+          transaction.ecmr.carrierDeliverySignature.ip = ip;
+        }
         transaction.ecmr.status = 'DELIVERED';
       }
 
@@ -120,6 +129,9 @@ export class TransactionHandler {
 
       if (ecmr.status === 'DELIVERED') {
         transaction.ecmr.status = 'CONFIRMED_DELIVERED';
+        if (ip) {
+          transaction.ecmr.recipientSignature.ip = ip;
+        }
       }
 
       transaction.ecmr.recipientSignature.timestamp = new Date().getTime();
@@ -163,9 +175,9 @@ export class TransactionHandler {
     return this.buildECMR(factory, ecmr, transaction, enrollmentID);
   }
 
-  public updateECMR(factory: any, ecmr: any, enrollmentID: string): any {
+  public updateECMR(factory: any, ecmr: any, enrollmentID: string, ip?: any): any {
     const transaction = factory.newTransaction(this.namespace, 'UpdateECMR');
-    return this.buildECMR(factory, ecmr, transaction, enrollmentID);
+    return this.buildECMR(factory, ecmr, transaction, enrollmentID, ip);
   }
 
   private createConcept(conceptName: string, conceptData: any, factory: any): any {
