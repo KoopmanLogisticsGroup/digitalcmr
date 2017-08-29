@@ -74,4 +74,26 @@ export class OverviewComponent implements OnInit {
     }
     return null;
   }
+
+  public hasComments(ecmr: any) {
+    return ecmr && ecmr.goods.filter(good => {
+      if ((good.compoundRemark && good.compoundRemark.comments) ||
+        (good.carrierLoadingRemark && good.carrierLoadingRemark.comments) ||
+        (good.carrierDeliveryRemark && good.carrierDeliveryRemark.comments) ||
+        (good.recipientRemark && good.recipientRemark.comments)) {
+        return good;
+      }
+    }).length > 0;
+  }
+
+  public isDamaged(ecmr: any) {
+    return ecmr && ecmr.goods.filter(good => {
+      if ((good.compoundRemark && good.compoundRemark.isDamaged) ||
+        (good.carrierLoadingRemark && good.carrierLoadingRemark.isDamaged) ||
+        (good.carrierDeliveryRemark && good.carrierDeliveryRemark.isDamaged) ||
+        (good.recipientRemark && good.recipientRemark.isDamaged)) {
+        return good;
+      }
+    }).length > 0;
+  }
 }
