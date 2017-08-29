@@ -45,9 +45,9 @@
             <td>{{ecmr?.recipient.split('#')[1].split('@')[0]}}</td>
             <td class="respImg">
               <img class="centerContent2 commentIcon"
-                   *ngIf="ecmr?.carrierLoadingRemark != '' || null"/>
+                   *ngIf="hasComments(ecmr)"/>
             </td>
-            <td class="respImg"><img class="centerContent2 exclIcon" *ngIf="ecmr.carrierComments != '' || null"/></td>
+            <td class="respImg"><img class="centerContent2 exclIcon" *ngIf="isDamaged(ecmr)"/></td>
             <td><span [ngClass]="{'open-status' : ecmr?.status === 'CREATED',
                         'awaiting-status' : ecmr?.status === 'LOADED',
                         'transit-status' : ecmr?.status === 'IN_TRANSIT',
