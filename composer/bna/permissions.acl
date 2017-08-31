@@ -52,7 +52,7 @@ rule CompoundAdminCanReadECMR {
      participant(p): "org.digitalcmr.CompoundAdmin"
      operation: READ
      resource(r): "org.digitalcmr.ECMR"
-     condition: (r.source.getIdentifier() === p.org.getIdentifier())
+     condition: (p.org.getIdentifier() === p.org.getIdentifier())
      action: ALLOW
  }
 
