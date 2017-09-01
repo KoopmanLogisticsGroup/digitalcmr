@@ -20,8 +20,7 @@ export class FilterByPipe implements PipeTransform {
         }
       });
       keys.forEach(k => {
-        if (x[k].toString().toLocaleLowerCase().indexOf(query) !== -1) {
-          console.log('info: ' + x[k]);
+        if (x[k] !== undefined && x[k].toString().toLocaleLowerCase().indexOf(query) !== -1) {
           filtered.add(x);
         }
       });
