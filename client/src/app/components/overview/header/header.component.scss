@@ -1,0 +1,60 @@
+.designMenu {
+  position: relative;
+  height: 70px;
+  .logo {
+    position: absolute;
+    width: 105px;
+    height: 16.5px;
+    top: 50%;
+    left: 11%;
+    transform: translateY(-50%);
+    content: url("../../../../assets/img/Koopman.jpg");
+  }
+  .logoutIcon {
+    cursor: pointer;
+    content: url("../../../../assets/icons/iconlogout.svg");
+    &:hover {
+      content: url("../../../../assets/icons/icon-logout-off.svg");
+    }
+  }
+  .right.menu {
+    ::before {
+      //width: 0px !important;
+      opacity: 0;
+    }
+    margin-right: 12%;
+    .item:first-child {
+      padding-right: 10%;
+    }
+    .item:nth-child(2) {
+      padding: 0;
+    }
+    .item:last-child {
+      padding: 0;
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  #welcomeMsg {
+    display: none;
+  }
+}
+
+.ui.icon.input > i.icon {
+  width: 1.2em;
+  margin-right: 5%;
+  color: #3a3670;
+  content: url("../../../../assets/icons/search.svg");
+  opacity: 1;
+}
+
+.ui.icon.input {
+  width: 300px;
+  height: 40px;
+  //font-family: Roboto !important;
+}
+
+.ui.search .prompt {
+  border: 1px solid #dededf;
+}

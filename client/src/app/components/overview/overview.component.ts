@@ -1,22 +1,29 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {EcmrService} from '../../services/ecmr.service';
 import {AuthenticationService} from '../../services/authentication.service';
+import {SearchService} from '../../services/search.service';
 
 @Component({
   selector   : 'app-overview',
   templateUrl: './overview.component.html',
-  styleUrls  : ['./overview.component.scss']
+  styleUrls  : ['./overview.component.scss'],
 })
 export class OverviewComponent implements OnInit {
   public currentView = 'OPEN';
 
   @Input() public ecmr: any;
 
+  public searchBarData: any;
   private ecmrs: any;
   public ecmrsFiltered: any;
 
   public constructor(private ecmrService: EcmrService,
+                     private searchService: SearchService,
                      private _authenticationService: AuthenticationService) {
+    this.searchService.searchData$.subscribe((data) => {
+        this.searchBarData = data;
+      }
+    );
   }
 
   public ngOnInit() {
@@ -31,6 +38,7 @@ export class OverviewComponent implements OnInit {
         ecmr.recipient.indexOf(userOrg) > 0);
       this.ecmrsFiltered = this.ecmrs.filter(ecmr => ecmr.status.toUpperCase() === 'CREATED');
       this.firstView();
+      console.log(this.ecmrsFiltered);
     });
   }
 

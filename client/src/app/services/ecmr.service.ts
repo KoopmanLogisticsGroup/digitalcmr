@@ -4,7 +4,6 @@ import 'rxjs/add/operator/map';
 
 import {Configuration} from '../app.constants';
 import {AuthenticationService} from './authentication.service';
-import {Ecmr} from '../classes/ecmr.model';
 import {Observable} from 'rxjs/Observable';
 
 @Injectable()

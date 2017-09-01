@@ -23,7 +23,7 @@
           <th>CMR Nr.</th>
           <th>Embarkment</th>
           <th>Destination</th>
-          <th>Number of vehicles</th>
+          <th>Number of Goods</th>
           <th>Carrier</th>
           <th>Recipient</th>
           <th>Remark</th>
@@ -32,7 +32,7 @@
           <th></th>
           </thead>
           <tbody>
-          <tr *ngFor="let ecmr of ecmrsFiltered" class="table-row">
+          <tr *ngFor="let ecmr of ecmrsFiltered | filterBy: searchBarData" class="table-row">
             <td></td>
             <td>{{ecmr?.creation.date | date:"dd-MM-yyyy"}}</td>
             <td>{{ecmr?.ecmrID}}</td>
@@ -54,7 +54,7 @@
                         'completed-status': ecmr?.status === 'DELIVERED',
                         'confirmed-status': ecmr?.status === 'CONFIRMED_DELIVERED'}">
 
-              {{ecmr?.status === 'CREATED' ? 'Open CMR' :
+              {{ecmr?.status === 'CREATED' ? 'New CMR' :
                 ecmr?.status === 'LOADED' ? 'Loaded' :
                 ecmr?.status === 'IN_TRANSIT' ? 'In Transit' :
                 ecmr?.status === 'DELIVERED' ? 'Delivered' :
