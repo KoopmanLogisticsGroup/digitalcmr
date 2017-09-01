@@ -69,6 +69,16 @@ export class ECMRController {
     return ecmrs;
   }
 
+  @Get('/byPlateNumber/:plateNumber')
+  public async getEcmrsByplateNumber(@Param('plateNumber') plateNumber: string, @Req() request: any): Promise<any> {
+    let enrollmentID = new JSONWebToken(request).getUserID();
+    let secret       = new JSONWebToken(request).getSecret();
+
+    const ecmrs = await this._transactor.getEcmrsByPlateNumber(enrollmentID, secret, plateNumber);
+
+    return ecmrs;
+  }
+
   @Post('/')
   public async create(@Body() ecmr: ECMR, @Req() request: any): Promise<any> {
     let enrollmentID = new JSONWebToken(request).getUserID();

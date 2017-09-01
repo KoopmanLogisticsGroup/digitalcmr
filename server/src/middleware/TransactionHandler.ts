@@ -88,16 +88,15 @@ export class TransactionHandler {
         });
       } else {
         let promises = [];
-        for (let ecmr of vehicles[0].ecmrs){
+        for (let ecmr of vehicles[0].ecmrs) {
           // get the ecmr identifier
           let ecmrId = ecmr;
           // get all the ecmrs contained in the vehicle
           promises.push(this.executeQuery('getEcmrById', username, secret, {id: ecmr.$identifier}).then((assets) => {
-            // console.log(assets);
             if (assets.body.length > 0) {
               result.body.push(assets.body[0]);
             }
-          } ));
+          }));
         }
         return Promise.all(promises).then((values) => {
           console.log(result);
@@ -105,7 +104,37 @@ export class TransactionHandler {
         });
       }
     });
+  }
 
+  public async getEcmrsByPlateNumber(username: string, secret: string, plateNumber: string): Promise<any> {
+    const businessNetworkHandler = new BusinessNetworkHandler(username, secret);
+    const businessNetwork        = await businessNetworkHandler.connect();
+
+    // get vehicle by vin
+    return businessNetwork.query('getVehicleByPlateNumber', {plateNumber: plateNumber}).then((vehicles) => {
+      let result = {body: []};
+      if (vehicles.length === 0) {
+        businessNetworkHandler.disconnect().then(() => {
+          return result;
+        });
+      } else {
+        let promises = [];
+        for (let ecmr of vehicles[0].ecmrs) {
+          // get the ecmr identifier
+          let ecmrId = ecmr;
+          // get all the ecmrs contained in the vehicle
+          promises.push(this.executeQuery('getEcmrById', username, secret, {id: ecmr.$identifier}).then((assets) => {
+            if (assets.body.length > 0) {
+              result.body.push(assets.body[0]);
+            }
+          }));
+        }
+        return Promise.all(promises).then((values) => {
+          console.log(result);
+          return result;
+        });
+      }
+    });
   }
 
   private buildECMR(factory: any, ecmr: any, transaction: any, enrollmentID: string, ip?: any): any {
