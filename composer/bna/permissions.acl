@@ -10,6 +10,14 @@
    action: ALLOW
  }
 
+rule EveryBodyCanReadVehicles {
+   description:  "Allow everybody to read vehicle data"
+   participant: "org.hyperledger.composer.system.Participant"
+   operation: READ
+   resource: "org.digitalcmr.Vehicle"
+   action: ALLOW
+ }
+
 /**
  * Digital CMR permission list
  */
@@ -52,7 +60,7 @@ rule CompoundAdminCanReadECMR {
      participant(p): "org.digitalcmr.CompoundAdmin"
      operation: READ
      resource(r): "org.digitalcmr.ECMR"
-     condition: (p.org.getIdentifier() === p.org.getIdentifier())
+     condition: (r.source.getIdentifier() === p.org.getIdentifier())
      action: ALLOW
  }
 

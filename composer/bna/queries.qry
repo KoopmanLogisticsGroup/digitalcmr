@@ -4,6 +4,13 @@ query getAllEcmrs {
       SELECT org.digitalcmr.ECMR
 }
 
+query getEcmrById {
+  description: "Get ECMR by ID"
+  statement:
+      SELECT org.digitalcmr.ECMR
+          WHERE (ecmrID == _$id)
+}
+
 query getEcmrsByStatus {
   description: "Select all ECMRs based on their status"
   statement:
@@ -58,5 +65,12 @@ query getEcmrsByRecipientMember {
   statement:
       SELECT org.digitalcmr.ECMR
           WHERE (recipient == _$recipient)
+}
+
+query getVehicleByVin {
+  description: "Get the vehicle by vin number"
+  statement:
+      SELECT org.digitalcmr.Vehicle
+          WHERE (vin == _$vin)
 }
 
