@@ -1,6 +1,12 @@
 <div class="ui container">
   <div class="row content-top-margin">
-    <div class="table-title">E-CMR Overview</div>
+    <div class="table-title">
+      <div *ngIf="searchBarData === '' || null; else searchResults">E-CMR Overview</div>
+      <ng-template #searchResults>
+        SEARCH RESULTS
+        <img class="closeResults" (click)="clearSearchBar()">
+      </ng-template>
+    </div>
   </div>
   <div class="row">
     <div class="ui pointing secondary menu">
@@ -67,6 +73,9 @@
           </tbody>
         </table>
       </div>
+    </div>
+    <div>
+      <p>Showing {{ecmrsFiltered?.length}} of {{ecmrsFiltered?.length}} Results</p>
     </div>
   </div>
 </div>

@@ -134,6 +134,11 @@
   color: #32649e;
   font-size: 1.6vw;
   margin-bottom: 5%;
+  .closeResults {
+    float: right;
+    content: url("../../../assets/icons/close.svg");
+    cursor: pointer;
+  }
 }
 
 //Design ui tables

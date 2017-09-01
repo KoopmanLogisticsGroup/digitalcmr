@@ -21,6 +21,7 @@ export class FilterByPipe implements PipeTransform {
       });
       keys.forEach(k => {
         if (x[k].toString().toLocaleLowerCase().indexOf(query) !== -1) {
+          console.log('info: ' + x[k]);
           filtered.add(x);
         }
       });

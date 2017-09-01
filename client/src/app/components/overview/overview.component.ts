@@ -13,7 +13,7 @@ export class OverviewComponent implements OnInit {
 
   @Input() public ecmr: any;
 
-  public searchBarData: any;
+  public searchBarData: any = '';
   private ecmrs: any;
   public ecmrsFiltered: any;
 
@@ -103,5 +103,9 @@ export class OverviewComponent implements OnInit {
         return good;
       }
     }).length > 0;
+  }
+
+  public clearSearchBar() {
+    this.searchBarData = '';
   }
 }
