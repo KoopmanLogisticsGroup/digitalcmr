@@ -41,8 +41,8 @@ export class ECMRController {
     return ecmrs;
   }
 
-  @Get('/byid/:ecmrID')
-  public async getEcmrByID(@Param('ecmrID') ecmrID: string, @Req() request: any): Promise<any> {
+  @Get('/ecmrID/:ecmrID')
+  public async getEcmrByEcmrID(@Param('ecmrID') ecmrID: string, @Req() request: any): Promise<any> {
     let enrollmentID = new JSONWebToken(request).getUserID();
     let secret       = new JSONWebToken(request).getSecret();
 
@@ -50,8 +50,8 @@ export class ECMRController {
     return ecmrs;
   }
 
-  @Get('/bystatus/:ecmrStatus')
-  public async getEcmrByStatus(@Param('ecmrStatus') ecmrStatus: string, @Req() request: any): Promise<any> {
+  @Get('/status/:ecmrStatus')
+  public async getAllEcmrsByStatus(@Param('ecmrStatus') ecmrStatus: string, @Req() request: any): Promise<any> {
     let enrollmentID = new JSONWebToken(request).getUserID();
     let secret       = new JSONWebToken(request).getSecret();
 
@@ -59,8 +59,8 @@ export class ECMRController {
     return ecmrs;
   }
 
-  @Get('/byVin/:vin')
-  public async getEcmrsByVin(@Param('vin') vin: string, @Req() request: any): Promise<any> {
+  @Get('/vehicle/vin/:vin')
+  public async getAllEcmrsFromVehicleByVin(@Param('vin') vin: string, @Req() request: any): Promise<any> {
     let enrollmentID = new JSONWebToken(request).getUserID();
     let secret       = new JSONWebToken(request).getSecret();
 
@@ -69,8 +69,8 @@ export class ECMRController {
     return ecmrs;
   }
 
-  @Get('/byPlateNumber/:plateNumber')
-  public async getEcmrsByplateNumber(@Param('plateNumber') plateNumber: string, @Req() request: any): Promise<any> {
+  @Get('/vehicle/plateNumber/:plateNumber')
+  public async getAllEcmrsFromVehicleByPlateNumber(@Param('plateNumber') plateNumber: string, @Req() request: any): Promise<any> {
     let enrollmentID = new JSONWebToken(request).getUserID();
     let secret       = new JSONWebToken(request).getSecret();
 

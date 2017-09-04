@@ -39,8 +39,8 @@ export class ECMRController {
     return vehicles;
   }
 
-  @Get('/byVin/:vin')
-  public async getVehiclesByVin(@Param('vin') vin: string, @Req() request: any): Promise<any> {
+  @Get('/vin/:vin/')
+  public async getVehicleByVin(@Param('vin') vin: string, @Req() request: any): Promise<any> {
     let enrollmentID = new JSONWebToken(request).getUserID();
     let secret       = new JSONWebToken(request).getSecret();
 
@@ -49,8 +49,8 @@ export class ECMRController {
     return vehicles;
   }
 
-  @Get('/byPlateNumber/:plateNumber')
-  public async getEcmrsByplateNumber(@Param('plateNumber') plateNumber: string, @Req() request: any): Promise<any> {
+  @Get('/plateNumber/:plateNumber/')
+  public async getVehicleByPlateNumber(@Param('plateNumber') plateNumber: string, @Req() request: any): Promise<any> {
     let enrollmentID = new JSONWebToken(request).getUserID();
     let secret       = new JSONWebToken(request).getSecret();
 
