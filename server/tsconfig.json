@@ -23,6 +23,7 @@
     "src/api/v1/AuthController.ts",
     "src/api/v1/ECMRController.ts",
     "src/api/v1/LegalOwnerOrgController.ts",
+    "src/api/v1/OrganizationController.ts",
     "src/api/v1/VehicleController.ts",
     "src/app.ts",
     "src/config/default.config.ts",

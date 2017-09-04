@@ -87,3 +87,82 @@ query getVehicleByPlateNumber {
           WHERE (plateNumber == _$plateNumber)
 }
 
+query getAllLegalOwnerOrgs {
+  description: "Get all the Legal Owner Organizations"
+  statement:
+      SELECT org.digitalcmr.LegalOwnerOrg
+}
+
+query getLegalOwnerOrgByEntityID {
+  description: "Get the Legal Owner Organization by the entity ID"
+  statement:
+      SELECT org.digitalcmr.LegalOwnerOrg
+          WHERE (entityID == _$entityID)
+}
+
+query getLegalOwnerOrgByName {
+  description: "Get the Legal Owner organization by name"
+  statement:
+      SELECT org.digitalcmr.LegalOwnerOrg
+          WHERE (name == _$name)
+}
+
+query getAllCompoundOrgs {
+  description: "Get all the Compound Organizations"
+  statement:
+      SELECT org.digitalcmr.CompoundOrg
+}
+
+query getCompoundOrgByEntityID {
+  description: "Get the Compound Organization by the entity ID"
+  statement:
+      SELECT org.digitalcmr.CompoundOrg
+          WHERE (entityID == _$entityID)
+}
+
+query getCompoundOrgByName {
+  description: "Get the Compound organization by name"
+  statement:
+      SELECT org.digitalcmr.CompoundOrg
+          WHERE (name == _$name)
+}
+
+query getAllCarrierOrgs {
+  description: "Get all the Carrier Organizations"
+  statement:
+      SELECT org.digitalcmr.CarrierOrg
+}
+
+query getCarrierOrgByEntityID {
+  description: "Get the Carrier Organization by the entity ID"
+  statement:
+      SELECT org.digitalcmr.CarrierOrg
+          WHERE (entityID == _$entityID)
+}
+
+query getCarrierOrgByName {
+  description: "Get the Carrier organization by name"
+  statement:
+      SELECT org.digitalcmr.CarrierOrg
+          WHERE (name == _$name)
+}
+
+query getAllRecipientOrgs {
+  description: "Get all the Recipient Organizations"
+  statement:
+      SELECT org.digitalcmr.RecipientOrg
+}
+
+query getRecipientOrgByEntityID {
+  description: "Get the Recipient Organization by the entity ID"
+  statement:
+      SELECT org.digitalcmr.RecipientOrg
+          WHERE (entityID == _$entityID)
+}
+
+query getRecipientOrgByName {
+  description: "Get the Recipient organization by name"
+  statement:
+      SELECT org.digitalcmr.RecipientOrg
+          WHERE (name == _$name)
+}
