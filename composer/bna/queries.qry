@@ -166,3 +166,123 @@ query getRecipientOrgByName {
       SELECT org.digitalcmr.RecipientOrg
           WHERE (name == _$name)
 }
+
+query getAllLegalOwnerAdmins {
+  description: "Get all the Legal Owner Admins"
+  statement:
+      SELECT org.digitalcmr.LegalOwnerAdmin
+}
+
+query getLegalOwnerAdminByUserID {
+  description: "Get the Legal Owner Admin by the user ID"
+  statement:
+      SELECT org.digitalcmr.LegalOwnerAdmin
+          WHERE (userID == _$userID)
+}
+
+query getLegalOwnerAdminByOrg {
+  description: "Get the Legal Owner Admin by organization"
+  statement:
+      SELECT org.digitalcmr.LegalOwnerAdmin
+          WHERE (org == _$org)
+}
+
+query getAllCompoundAdmins {
+  description: "Get all the Compound Admins"
+  statement:
+      SELECT org.digitalcmr.CompoundAdmin
+}
+
+query getCompoundAdminByUserID {
+  description: "Get the Compound Admin by the user ID"
+  statement:
+      SELECT org.digitalcmr.LegalOwnerAdmin
+          WHERE (userID == _$userID)
+}
+
+query getCompoundAdminByOrg {
+  description: "Get the Compound Admin by organization"
+  statement:
+      SELECT org.digitalcmr.CompoundAdmin
+          WHERE (org == _$org)
+}
+
+query getAllCarrierAdmins {
+  description: "Get all the Carrier Admins"
+  statement:
+      SELECT org.digitalcmr.CarrierAdmin
+}
+
+query getCarrierAdminByUserID {
+  description: "Get the Carrier Admin by the user ID"
+  statement:
+      SELECT org.digitalcmr.CarrierAdmin
+          WHERE (userID == _$userID)
+}
+
+query getCarrierAdminByOrg {
+  description: "Get the Carrier Admin by organization"
+  statement:
+      SELECT org.digitalcmr.CarrierAdmin
+          WHERE (org == _$org)
+}
+
+query getAllCarrierMembers {
+  description: "Get all the Carrier Members"
+  statement:
+      SELECT org.digitalcmr.CarrierMember
+}
+
+query getCarrierMemberByUserID {
+  description: "Get the Carrier Member by the user ID"
+  statement:
+      SELECT org.digitalcmr.CarrierMember
+          WHERE (userID == _$userID)
+}
+
+query getCarrierMemberByOrg {
+  description: "Get the Carrier Member by organization"
+  statement:
+      SELECT org.digitalcmr.CarrierMember
+          WHERE (org == _$org)
+}
+
+query getAllRecipientAdmins {
+  description: "Get all the Recipient Admins"
+  statement:
+      SELECT org.digitalcmr.RecipientAdmin
+}
+
+query getRecipientAdminByUserID {
+  description: "Get the Recipient Admin by the user ID"
+  statement:
+      SELECT org.digitalcmr.RecipientAdmin
+          WHERE (userID == _$userID)
+}
+
+query getRecipientAdminByOrg {
+  description: "Get the Recipient Admin by organization"
+  statement:
+      SELECT org.digitalcmr.RecipientAdmin
+          WHERE (org == _$org)
+}
+
+query getAllRecipientMembers {
+  description: "Get all the Recipient Members"
+  statement:
+      SELECT org.digitalcmr.RecipientMember
+}
+
+query getRecipientMemberByUserID {
+  description: "Get the Recipient Member by the user ID"
+  statement:
+      SELECT org.digitalcmr.RecipientMember
+          WHERE (userID == _$userID)
+}
+
+query getRecipientMemberByOrg {
+  description: "Get the Recipient Member by organization"
+  statement:
+      SELECT org.digitalcmr.RecipientMember
+          WHERE (org == _$org)
+}
