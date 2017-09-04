@@ -16,14 +16,18 @@ export class OverviewComponent implements OnInit {
   public searchBarData: any = '';
   private ecmrs: any;
   public ecmrsFiltered: any;
+  public filterEcmr: any    = 0;
 
   public constructor(private ecmrService: EcmrService,
                      private searchService: SearchService,
                      private _authenticationService: AuthenticationService) {
     this.searchService.searchData$.subscribe((data) => {
-        this.searchBarData = data;
-      }
-    );
+      this.searchBarData = data;
+    })
+    this.searchService.filterEcmr$.subscribe((data) => {
+      this.filterEcmr = data;
+      console.log(this.filterEcmr);
+    });
   }
 
   public ngOnInit() {

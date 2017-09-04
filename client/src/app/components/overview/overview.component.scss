@@ -48,7 +48,6 @@
         border-left-width: 3px;
         border-radius: 5px 0 0 5px;
       }
-
       td:last-child {
         border-right-width: 3px;
         border-radius: 0 5px 5px 0;
@@ -109,7 +108,8 @@
         width: 120%;
         height: 120%;
         content: url("../../../assets/icons/button-view-more.svg");
-        padding-right: 20%;
+        padding-right: 10%;
+        margin-left: -15%;
       }
       .viewMore:hover {
         content: url("../../../assets/icons/button-view-more-hover.svg");
@@ -127,6 +127,9 @@
     font-size: 0.9vw;
     line-height: 1.0vw;
     white-space: nowrap;
+  }
+  .headerDesign {
+    visibility: hidden;
   }
 }
 
@@ -172,5 +175,12 @@
   .tab.active {
     margin-left: 0.1%;
     width: 100%;
+  }
+  .noResults {
+    margin-left: 25%;
+    content: url("../../../assets/img/no-results.svg");
+  }
+  .showResults {
+    font-size: 0.8vw;
   }
 }

@@ -23,20 +23,22 @@
     <div class="ui active tab grid" data-tab="first">
       <div class="row">
         <table class="ui unstackable table spacing-table">
-          <thead class="table-header">
-          <th></th>
-          <th>Date</th>
-          <th>CMR Nr.</th>
-          <th>Embarkment</th>
-          <th>Destination</th>
-          <th>Number of Goods</th>
-          <th>Carrier</th>
-          <th>Recipient</th>
-          <th>Remark</th>
-          <th>Damage Remark</th>
-          <th>Status</th>
-          <th></th>
-          </thead>
+          <div [hidden]="(filterEcmr < 1 && searchBarData)">
+            <thead class="table-header">
+            <th></th>
+            <th>Date</th>
+            <th>CMR Nr.</th>
+            <th>Embarkment</th>
+            <th>Destination</th>
+            <th>Number of Goods</th>
+            <th>Carrier</th>
+            <th>Recipient</th>
+            <th>Remark</th>
+            <th>Damage Remark</th>
+            <th>Status</th>
+            <th></th>
+            </thead>
+          </div>
           <tbody>
           <tr *ngFor="let ecmr of ecmrsFiltered | filterBy: searchBarData" class="table-row">
             <td></td>
@@ -73,9 +75,12 @@
           </tbody>
         </table>
       </div>
+      <img class="noResults" *ngIf="filterEcmr < 1 && searchBarData !== ''">
     </div>
-    <div>
-      <p>Showing {{ecmrsFiltered?.length}} of {{ecmrsFiltered?.length}} Results</p>
+    <div class="showResults">Showing
+      <span *ngIf="searchBarData === ''; else showFilteredResults">{{ecmrsFiltered?.length}}</span>
+      <ng-template #showFilteredResults>{{filterEcmr}}</ng-template>
+      of {{ecmrsFiltered?.length}} Results
     </div>
   </div>
 </div>
