@@ -57,6 +57,141 @@ export class OrganizationController {
     return participants;
   }
 
+  @Get('/compound/admin/')
+  public async getAllCompoundAdmins(@Req() request: any): Promise<any> {
+    let enrollmentID = new JSONWebToken(request).getUserID();
+    let secret       = new JSONWebToken(request).getSecret();
+
+    const participants = await this._transactor.executeQuery('getAllCompoundAdmins', enrollmentID, secret);
+    return participants;
+  }
+
+  @Get('/compound/admin/userID/:userID')
+  public async getCompoundAdminByUserID(@Param('userID') userID: string, @Req() request: any): Promise<any> {
+    let enrollmentID = new JSONWebToken(request).getUserID();
+    let secret       = new JSONWebToken(request).getSecret();
+
+    const participants = await this._transactor.executeQuery('getCompoundAdminByUserID', enrollmentID, secret, {userID: userID});
+    return participants;
+  }
+
+  @Get('/compound/admin/organization/:org')
+  public async getCompoundAdminByOrg(@Param('org') org: string, @Req() request: any): Promise<any> {
+    let enrollmentID = new JSONWebToken(request).getUserID();
+    let secret       = new JSONWebToken(request).getSecret();
+
+    const participants = await this._transactor.executeQuery('getCompoundAdminByOrg', enrollmentID, secret, {org: org});
+    return participants;
+  }
+
+  @Get('/carrier/admin/')
+  public async getAllCarrierAdmins(@Req() request: any): Promise<any> {
+    let enrollmentID = new JSONWebToken(request).getUserID();
+    let secret       = new JSONWebToken(request).getSecret();
+
+    const participants = await this._transactor.executeQuery('getAllCarrierAdmins', enrollmentID, secret);
+    return participants;
+  }
+
+  @Get('/carrier/admin/userID/:userID')
+  public async getCarrierAdminByUserID(@Param('userID') userID: string, @Req() request: any): Promise<any> {
+    let enrollmentID = new JSONWebToken(request).getUserID();
+    let secret       = new JSONWebToken(request).getSecret();
+
+    const participants = await this._transactor.executeQuery('getCarrierAdminByUserID', enrollmentID, secret, {userID: userID});
+    return participants;
+  }
+
+  @Get('/carrier/admin/organization/:org')
+  public async getCarrierAdminByOrg(@Param('org') org: string, @Req() request: any): Promise<any> {
+    let enrollmentID = new JSONWebToken(request).getUserID();
+    let secret       = new JSONWebToken(request).getSecret();
+
+    const participants = await this._transactor.executeQuery('getCarrierAdminByOrg', enrollmentID, secret, {org: org});
+    return participants;
+  }
+
+  @Get('/carrier/member/')
+  public async getAllCarrierMembers(@Req() request: any): Promise<any> {
+    let enrollmentID = new JSONWebToken(request).getUserID();
+    let secret       = new JSONWebToken(request).getSecret();
+
+    const participants = await this._transactor.executeQuery('getAllCarrierMembers', enrollmentID, secret);
+    return participants;
+  }
+
+  @Get('/carrier/member/userID/:userID')
+  public async getCarrierMemberByUserID(@Param('userID') userID: string, @Req() request: any): Promise<any> {
+    let enrollmentID = new JSONWebToken(request).getUserID();
+    let secret       = new JSONWebToken(request).getSecret();
+
+    const participants = await this._transactor.executeQuery('getCarrierMemberByUserID', enrollmentID, secret, {userID: userID});
+    return participants;
+  }
+
+  @Get('/carrier/member/organization/:org')
+  public async getCarrierMemberByOrg(@Param('org') org: string, @Req() request: any): Promise<any> {
+    let enrollmentID = new JSONWebToken(request).getUserID();
+    let secret       = new JSONWebToken(request).getSecret();
+
+    const participants = await this._transactor.executeQuery('getCarrierMemberByOrg', enrollmentID, secret, {org: org});
+    return participants;
+  }
+
+  @Get('/recipient/admin/')
+  public async getAllRecipientAdmins(@Req() request: any): Promise<any> {
+    let enrollmentID = new JSONWebToken(request).getUserID();
+    let secret       = new JSONWebToken(request).getSecret();
+
+    const participants = await this._transactor.executeQuery('getAllRecipientAdmins', enrollmentID, secret);
+    return participants;
+  }
+
+  @Get('/recipient/admin/userID/:userID')
+  public async getRecipientAdminByUserID(@Param('userID') userID: string, @Req() request: any): Promise<any> {
+    let enrollmentID = new JSONWebToken(request).getUserID();
+    let secret       = new JSONWebToken(request).getSecret();
+
+    const participants = await this._transactor.executeQuery('getRecipientAdminByUserID', enrollmentID, secret, {userID: userID});
+    return participants;
+  }
+
+  @Get('/recipient/admin/organization/:org')
+  public async getRecipientAdminByOrg(@Param('org') org: string, @Req() request: any): Promise<any> {
+    let enrollmentID = new JSONWebToken(request).getUserID();
+    let secret       = new JSONWebToken(request).getSecret();
+
+    const participants = await this._transactor.executeQuery('getRecipientAdminByOrg', enrollmentID, secret, {org: org});
+    return participants;
+  }
+
+  @Get('/recipient/member/')
+  public async getAllRecipientMembers(@Req() request: any): Promise<any> {
+    let enrollmentID = new JSONWebToken(request).getUserID();
+    let secret       = new JSONWebToken(request).getSecret();
+
+    const participants = await this._transactor.executeQuery('getAllRecipientMembers', enrollmentID, secret);
+    return participants;
+  }
+
+  @Get('/recipient/member/userID/:userID')
+  public async getRecipientMemberByUserID(@Param('userID') userID: string, @Req() request: any): Promise<any> {
+    let enrollmentID = new JSONWebToken(request).getUserID();
+    let secret       = new JSONWebToken(request).getSecret();
+
+    const participants = await this._transactor.executeQuery('getRecipientMemberByUserID', enrollmentID, secret, {userID: userID});
+    return participants;
+  }
+
+  @Get('/recipient/member/organization/:org')
+  public async getRecipientMemberByOrg(@Param('org') org: string, @Req() request: any): Promise<any> {
+    let enrollmentID = new JSONWebToken(request).getUserID();
+    let secret       = new JSONWebToken(request).getSecret();
+
+    const participants = await this._transactor.executeQuery('getRecipientMemberByOrg', enrollmentID, secret, {org: org});
+    return participants;
+  }
+
   // @Post('/')
   // public async create(@Body() ecmr: ECMR, @Req() request: any): Promise<any> {
   //   let enrollmentID = new JSONWebToken(request).getUserID();

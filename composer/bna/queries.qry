@@ -196,7 +196,7 @@ query getAllCompoundAdmins {
 query getCompoundAdminByUserID {
   description: "Get the Compound Admin by the user ID"
   statement:
-      SELECT org.digitalcmr.LegalOwnerAdmin
+      SELECT org.digitalcmr.CompoundAdmin
           WHERE (userID == _$userID)
 }
 
