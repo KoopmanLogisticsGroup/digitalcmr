@@ -20,23 +20,23 @@
  */
 function CreateECMR(tx) {
 
-    console.log('Invoking function processor create CMR');
-    console.log(tx);
+  console.log('Invoking function processor create CMR');
+  console.log(tx);
 
-    // Get the asset registry for the asset.
-    return getAssetRegistry('org.digitalcmr.ECMR')
-        .then(function (assetRegistry) {
-            var factory = getFactory();
-            var ecmrObj = factory.newResource('org.digitalcmr', 'ECMR', tx.ecmr.ecmrID);
-            Object.keys(tx.ecmr).forEach(function (key, index) {
-                ecmrObj[key] = tx.ecmr[key];
-            });
-            return assetRegistry.add(ecmrObj);
-        }).catch(function (error) {
-            console.log('An error occurred while saving the ECMR asset');
-            console.log(error);
-            return error;
-        });
+  // Get the asset registry for the asset.
+  return getAssetRegistry('org.digitalcmr.ECMR')
+    .then(function (assetRegistry) {
+      var factory = getFactory();
+      var ecmrObj = factory.newResource('org.digitalcmr', 'ECMR', tx.ecmr.ecmrID);
+      Object.keys(tx.ecmr).forEach(function (key, index) {
+        ecmrObj[key] = tx.ecmr[key];
+      });
+      return assetRegistry.add(ecmrObj);
+    }).catch(function (error) {
+      console.log('An error occurred while saving the ECMR asset');
+      console.log(error);
+      return error;
+    });
 
 }
 
@@ -48,32 +48,32 @@ function CreateECMR(tx) {
  */
 function CreateECMRs(tx) {
 
-    console.log('Invoking function processor to create CMRs');
-    console.log(tx);
+  console.log('Invoking function processor to create CMRs');
+  console.log(tx);
 
-    // Get the asset registry for the asset.
-    return getAssetRegistry('org.digitalcmr.ECMR')
-        .then(function (assetRegistry) {
-            var factory = getFactory();
-            var ecmrArr = [];
-            for (var i = 0; i < tx.ecmrs.length; i++) {
-                var inputObj = tx.ecmrs[i];
-                var obj = factory.newResource('org.digitalcmr', 'ECMR', inputObj.ecmrID);
-                Object.keys(tx.ecmrs[i]).forEach(function (key, index) {
-                    obj[key] = inputObj[key];
-                });
-                ecmrArr.push(obj);
-            }
-            return assetRegistry.addAll(ecmrArr).catch(function (error) {
-                console.log('An error occurred while addAll ecmr assets');
-                console.log(error);
-                return error;
-            });
-        }).catch(function (error) {
-            console.log('An error occurred while saving the ecmr assets');
-            console.log(error);
-            return error;
+  // Get the asset registry for the asset.
+  return getAssetRegistry('org.digitalcmr.ECMR')
+    .then(function (assetRegistry) {
+      var factory = getFactory();
+      var ecmrArr = [];
+      for (var i = 0; i < tx.ecmrs.length; i++) {
+        var inputObj = tx.ecmrs[i];
+        var obj = factory.newResource('org.digitalcmr', 'ECMR', inputObj.ecmrID);
+        Object.keys(tx.ecmrs[i]).forEach(function (key, index) {
+          obj[key] = inputObj[key];
         });
+        ecmrArr.push(obj);
+      }
+      return assetRegistry.addAll(ecmrArr).catch(function (error) {
+        console.log('An error occurred while addAll ecmr assets');
+        console.log(error);
+        return error;
+      });
+    }).catch(function (error) {
+      console.log('An error occurred while saving the ecmr assets');
+      console.log(error);
+      return error;
+    });
 }
 
 /**
@@ -84,23 +84,23 @@ function CreateECMRs(tx) {
  */
 function CreateLegalOwnerOrg(tx) {
 
-    console.log('Invoking function processor CreateLegalOwnerOrg');
-    console.log(tx);
+  console.log('Invoking function processor CreateLegalOwnerOrg');
+  console.log(tx);
 
-    // Get the asset registry for the asset.
-    return getAssetRegistry('org.digitalcmr.LegalOwnerOrg')
-        .then(function (assetRegistry) {
-            var factory = getFactory();
-            var obj = factory.newResource('org.digitalcmr', 'LegalOwnerOrg', tx.legalOwnerOrg.entityID);
-            Object.keys(tx.legalOwnerOrg).forEach(function (key, index) {
-                obj[key] = tx.legalOwnerOrg[key];
-            });
-            return assetRegistry.addAll([obj]);
-        }).catch(function (error) {
-            console.log('An error occurred while saving the LegalOwnerOrg asset');
-            console.log(error);
-            return error;
-        });
+  // Get the asset registry for the asset.
+  return getAssetRegistry('org.digitalcmr.LegalOwnerOrg')
+    .then(function (assetRegistry) {
+      var factory = getFactory();
+      var obj = factory.newResource('org.digitalcmr', 'LegalOwnerOrg', tx.legalOwnerOrg.entityID);
+      Object.keys(tx.legalOwnerOrg).forEach(function (key, index) {
+        obj[key] = tx.legalOwnerOrg[key];
+      });
+      return assetRegistry.addAll([obj]);
+    }).catch(function (error) {
+      console.log('An error occurred while saving the LegalOwnerOrg asset');
+      console.log(error);
+      return error;
+    });
 
 }
 
@@ -112,23 +112,23 @@ function CreateLegalOwnerOrg(tx) {
  */
 function CreateCompoundOrg(tx) {
 
-    console.log('Invoking function processor create CompoundOrg');
-    console.log(tx);
+  console.log('Invoking function processor create CompoundOrg');
+  console.log(tx);
 
-    // Get the asset registry for the asset.
-    return getAssetRegistry('org.digitalcmr.CompoundOrg')
-        .then(function (assetRegistry) {
-            var factory = getFactory();
-            var obj = factory.newResource('org.digitalcmr', 'CompoundOrg', tx.compoundOrg.entityID);
-            Object.keys(tx.compoundOrg).forEach(function (key, index) {
-                obj[key] = tx.compoundOrg[key];
-            });
-            return assetRegistry.addAll([obj]);
-        }).catch(function (error) {
-            console.log('An error occurred while saving the CompoundOrg asset');
-            console.log(error);
-            return error;
-        });
+  // Get the asset registry for the asset.
+  return getAssetRegistry('org.digitalcmr.CompoundOrg')
+    .then(function (assetRegistry) {
+      var factory = getFactory();
+      var obj = factory.newResource('org.digitalcmr', 'CompoundOrg', tx.compoundOrg.entityID);
+      Object.keys(tx.compoundOrg).forEach(function (key, index) {
+        obj[key] = tx.compoundOrg[key];
+      });
+      return assetRegistry.addAll([obj]);
+    }).catch(function (error) {
+      console.log('An error occurred while saving the CompoundOrg asset');
+      console.log(error);
+      return error;
+    });
 
 }
 
@@ -140,23 +140,23 @@ function CreateCompoundOrg(tx) {
  */
 function CreateCarrierOrg(tx) {
 
-    console.log('Invoking function processor create CarrierOrg');
-    console.log(tx);
+  console.log('Invoking function processor create CarrierOrg');
+  console.log(tx);
 
-    // Get the asset registry for the asset.
-    return getAssetRegistry('org.digitalcmr.CarrierOrg')
-        .then(function (assetRegistry) {
-            var factory = getFactory();
-            var obj = factory.newResource('org.digitalcmr', 'CarrierOrg', tx.carrierOrg.entityID);
-            Object.keys(tx.carrierOrg).forEach(function (key, index) {
-                obj[key] = tx.carrierOrg[key];
-            });
-            return assetRegistry.addAll([obj]);
-        }).catch(function (error) {
-            console.log('An error occurred while saving the CarrierOrg asset');
-            console.log(error);
-            return error;
-        });
+  // Get the asset registry for the asset.
+  return getAssetRegistry('org.digitalcmr.CarrierOrg')
+    .then(function (assetRegistry) {
+      var factory = getFactory();
+      var obj = factory.newResource('org.digitalcmr', 'CarrierOrg', tx.carrierOrg.entityID);
+      Object.keys(tx.carrierOrg).forEach(function (key, index) {
+        obj[key] = tx.carrierOrg[key];
+      });
+      return assetRegistry.addAll([obj]);
+    }).catch(function (error) {
+      console.log('An error occurred while saving the CarrierOrg asset');
+      console.log(error);
+      return error;
+    });
 
 }
 
@@ -168,25 +168,25 @@ function CreateCarrierOrg(tx) {
  */
 function CreateRecipientOrg(tx) {
 
-    console.log('Invoking function processor create RecipientOrg');
-    console.log(tx);
+  console.log('Invoking function processor create RecipientOrg');
+  console.log(tx);
 
-    // Get the asset registry for the asset.
-    return getAssetRegistry('org.digitalcmr.RecipientOrg')
-        .then(function (assetRegistry) {
-            var factory = getFactory();
-            var obj = factory.newResource('org.digitalcmr', 'RecipientOrg', tx.recipientOrg.entityID);
-            Object.keys(tx.recipientOrg).forEach(function (key, index) {
-                obj[key] = tx.recipientOrg[key];
-            });
-            return assetRegistry.addAll([obj]).catch(function (error) {
-                console.log('An error occurred while adding all the assets in the registry: ' + error);
-                return error;
-            });
-        }).catch(function (error) {
-            console.log('An error occurred while saving the RecipientOrg asset: ' + error);
-            return error;
-        });
+  // Get the asset registry for the asset.
+  return getAssetRegistry('org.digitalcmr.RecipientOrg')
+    .then(function (assetRegistry) {
+      var factory = getFactory();
+      var obj = factory.newResource('org.digitalcmr', 'RecipientOrg', tx.recipientOrg.entityID);
+      Object.keys(tx.recipientOrg).forEach(function (key, index) {
+        obj[key] = tx.recipientOrg[key];
+      });
+      return assetRegistry.addAll([obj]).catch(function (error) {
+        console.log('An error occurred while adding all the assets in the registry: ' + error);
+        return error;
+      });
+    }).catch(function (error) {
+      console.log('An error occurred while saving the RecipientOrg asset: ' + error);
+      return error;
+    });
 
 }
 
@@ -198,30 +198,30 @@ function CreateRecipientOrg(tx) {
  */
 function CreateVehicles(tx) {
 
-    console.log('Invoking function processor CreateVehicles');
-    console.log(tx);
+  console.log('Invoking function processor CreateVehicles');
+  console.log(tx);
 
-    // Get the asset registry for the asset.
-    return getAssetRegistry('org.digitalcmr.Vehicle')
-        .then(function (assetRegistry) {
-            var factory = getFactory();
-            var vehicleArr = [];
-            for (var i = 0; i < tx.vehicles.length; i++) {
-                var inputObj = tx.vehicles[i];
-                var obj = factory.newResource('org.digitalcmr', 'Vehicle', inputObj.vin);
-                Object.keys(tx.vehicles[i]).forEach(function (key, index) {
-                    obj[key] = inputObj[key];
-                });
-                vehicleArr.push(obj);
-            }
-            return assetRegistry.addAll(vehicleArr).catch(function (error) {
-                console.log('An error occurred while addAll the Vehicle assets: ' + error);
-                return error;
-            });
-        }).catch(function (error) {
-            console.log('An error occurred while saving the Vehicle assets: ' + error);
-            return error;
+  // Get the asset registry for the asset.
+  return getAssetRegistry('org.digitalcmr.Vehicle')
+    .then(function (assetRegistry) {
+      var factory = getFactory();
+      var vehicleArr = [];
+      for (var i = 0; i < tx.vehicles.length; i++) {
+        var inputObj = tx.vehicles[i];
+        var obj = factory.newResource('org.digitalcmr', 'Vehicle', inputObj.vin);
+        Object.keys(tx.vehicles[i]).forEach(function (key, index) {
+          obj[key] = inputObj[key];
         });
+        vehicleArr.push(obj);
+      }
+      return assetRegistry.addAll(vehicleArr).catch(function (error) {
+        console.log('An error occurred while addAll the Vehicle assets: ' + error);
+        return error;
+      });
+    }).catch(function (error) {
+      console.log('An error occurred while saving the Vehicle assets: ' + error);
+      return error;
+    });
 
 }
 
@@ -233,108 +233,165 @@ function CreateVehicles(tx) {
  */
 function UpdateECMR(tx) {
 
-    console.log('Invoking function processor to set update ECMR');
-    console.log('ecmrID: ' + tx.ecmr.ecmrID);
+  console.log('Invoking function processor to set update ECMR');
+  console.log('ecmrID: ' + tx.ecmr.ecmrID);
 
-    // Get the asset registry for the asset.
-    return getAssetRegistry('org.digitalcmr.ECMR')
+  // Get the asset registry for the asset.
+  return getAssetRegistry('org.digitalcmr.ECMR')
+    .then(function (assetRegistry) {
+      return assetRegistry.get(tx.ecmr.ecmrID).catch(function (error) {
+        console.log('[Update ECMR] An error occurred while updating the registry asset: ' + error);
+        throw error;
+      });
+    })
+    .then(function (ecmr) {
+      ecmr.status = tx.ecmr.status;
+
+      var statusIsValid = false;
+
+      //if the compound admin updated the ecmr status as LOADED, add the compound admin signature
+      if (ecmr.status === 'LOADED') {
+        statusIsValid = true;
+        // write the compound signature into the ecmr
+        ecmr.compoundSignature = tx.ecmr.compoundSignature;
+        // write the compound remarks into the ecmr
+        for (var i = 0; tx.ecmr.goods && i < tx.ecmr.goods.length; i++) {
+          if (tx.ecmr.goods[i].compoundRemark) {
+            ecmr.goods[i].compoundRemark = tx.ecmr.goods[i].compoundRemark;
+          }
+        }
+      }
+
+      //if the transporter updated the ecmr status as IN_TRANSIT, add the transporter signature confirming the loading
+      if (ecmr.status === 'IN_TRANSIT') {
+        statusIsValid = true;
+        // check if the required signatures has been placed in the previous steps
+        if (!ecmr.compoundSignature) {
+          throw new Error("[Update ECMR] Transaction is not valid. Attempt to set the status on IN_TRANSIT before the compound admin signature");
+        }
+        // write the carrier loading signature into the ecmr
+        ecmr.carrierLoadingSignature = tx.ecmr.carrierLoadingSignature;
+        // write the carrier loading remarks into the ecmr
+        for (var i = 0; tx.ecmr.goods && i < tx.ecmr.goods.length; i++) {
+          if (tx.ecmr.goods[i].carrierLoadingRemark) {
+            ecmr.goods[i].carrierLoadingRemark = tx.ecmr.goods[i].carrierLoadingRemark;
+          }
+        }
+      }
+
+      //if the transporter updated the ecmr status as DELIVERED, add the trasnsporter admin signature
+      if (ecmr.status === 'DELIVERED') {
+        statusIsValid = true;
+        // check if the required signatures has been placed in the previous steps
+        if (!ecmr.compoundSignature) {
+          throw new Error("[Update ECMR] Transaction is not valid. Attempt to set the status on DELIVERED before the compound admin signed!");
+        }
+        if (!ecmr.carrierLoadingSignature) {
+          throw new Error("[Update ECMR] Transaction is not valid. Attempt to set the status on DELIVERED before the transporter signed for the loading!");
+        }
+        // write the carrier delivery signature into the ecmr
+        ecmr.carrierDeliverySignature = tx.ecmr.carrierDeliverySignature;
+        // write the carrier delivery remarks into the ecmr
+        for (var i = 0; tx.ecmr.goods && i < tx.ecmr.goods.length; i++) {
+          if (tx.ecmr.goods[i].carrierDeliveryRemark) {
+            ecmr.goods[i].carrierDeliveryRemark = tx.ecmr.goods[i].carrierDeliveryRemark;
+          }
+        }
+      }
+
+      //if the recipient has confirmed the delivery and updated the ecmr status as CONFIRMED_DELIVERED, add the recipient signature
+      if (ecmr.status === 'CONFIRMED_DELIVERED') {
+        statusIsValid = true;
+        // check if the required signatures has been placed in the previous steps
+        if (!ecmr.compoundSignature) {
+          throw new Error("[Update ECMR] Transaction is not valid. Attempt to set the status on CONFIRMED_DELIVERED before the compound admin signed!");
+        }
+        if (!ecmr.carrierLoadingSignature) {
+          throw new Error("[Update ECMR] Transaction is not valid. Attempt to set the status on CONFIRMED_DELIVERED before the transporter signed for the loading!");
+        }
+        if (!ecmr.carrierDeliverySignature) {
+          throw new Error("[Update ECMR] Transaction is not valid. Attempt to set the status on CONFIRMED_DELIVERED before the transporter signed for the delivery!");
+        }
+        // write the recipient signature into the ecmr
+        ecmr.recipientSignature = tx.ecmr.recipientSignature;
+        // write the recipient remarks into the ecmr
+        for (var i = 0; tx.ecmr.goods && i < tx.ecmr.goods.length; i++) {
+          if (tx.ecmr.goods[i].recipientRemark) {
+            ecmr.goods[i].recipientRemark = tx.ecmr.goods[i].recipientRemark;
+          }
+        }
+      }
+
+      if (!statusIsValid) {
+        throw new Error("[Update ECMR] Validation failure! Provided status: " + ecmr.status + "is not a valid status!");
+      }
+
+      return getAssetRegistry('org.digitalcmr.ECMR')
         .then(function (assetRegistry) {
-            return assetRegistry.get(tx.ecmr.ecmrID).catch(function (error) {
-                console.log('[Update ECMR] An error occurred while updating the registry asset: ' + error);
-                throw error;
-            });
-        })
-        .then(function (ecmr) {
-            ecmr.status = tx.ecmr.status;
-
-            var statusIsValid = false;
-
-            //if the compound admin updated the ecmr status as LOADED, add the compound admin signature
-            if (ecmr.status === 'LOADED') {
-                statusIsValid = true;
-                // write the compound signature into the ecmr
-                ecmr.compoundSignature = tx.ecmr.compoundSignature;
-                // write the compound remarks into the ecmr
-                for (var i = 0; tx.ecmr.goods && i < tx.ecmr.goods.length; i++) {
-                    if (tx.ecmr.goods[i].compoundRemark) {
-                        ecmr.goods[i].compoundRemark = tx.ecmr.goods[i].compoundRemark;
-                    }
-                }
-            }
-
-            //if the transporter updated the ecmr status as IN_TRANSIT, add the transporter signature confirming the loading
-            if (ecmr.status === 'IN_TRANSIT') {
-                statusIsValid = true;
-                // check if the required signatures has been placed in the previous steps
-                if (!ecmr.compoundSignature) {
-                    throw new Error("[Update ECMR] Transaction is not valid. Attempt to set the status on IN_TRANSIT before the compound admin signature");
-                }
-                // write the carrier loading signature into the ecmr
-                ecmr.carrierLoadingSignature = tx.ecmr.carrierLoadingSignature;
-                // write the carrier loading remarks into the ecmr
-                for (var i = 0; tx.ecmr.goods && i < tx.ecmr.goods.length; i++) {
-                    if (tx.ecmr.goods[i].carrierLoadingRemark) {
-                        ecmr.goods[i].carrierLoadingRemark = tx.ecmr.goods[i].carrierLoadingRemark;
-                    }
-                }
-            }
-
-            //if the transporter updated the ecmr status as DELIVERED, add the trasnsporter admin signature
-            if (ecmr.status === 'DELIVERED') {
-                statusIsValid = true;
-                // check if the required signatures has been placed in the previous steps
-                if (!ecmr.compoundSignature) {
-                    throw new Error("[Update ECMR] Transaction is not valid. Attempt to set the status on DELIVERED before the compound admin signed!");
-                }
-                if (!ecmr.carrierLoadingSignature) {
-                    throw new Error("[Update ECMR] Transaction is not valid. Attempt to set the status on DELIVERED before the transporter signed for the loading!");
-                }
-                // write the carrier delivery signature into the ecmr
-                ecmr.carrierDeliverySignature = tx.ecmr.carrierDeliverySignature;
-                // write the carrier delivery remarks into the ecmr
-                for (var i = 0; tx.ecmr.goods && i < tx.ecmr.goods.length; i++) {
-                    if (tx.ecmr.goods[i].carrierDeliveryRemark) {
-                        ecmr.goods[i].carrierDeliveryRemark = tx.ecmr.goods[i].carrierDeliveryRemark;
-                    }
-                }
-            }
-
-            //if the recipient has confirmed the delivery and updated the ecmr status as CONFIRMED_DELIVERED, add the recipient signature
-            if (ecmr.status === 'CONFIRMED_DELIVERED') {
-                statusIsValid = true;
-                // check if the required signatures has been placed in the previous steps
-                if (!ecmr.compoundSignature) {
-                    throw new Error("[Update ECMR] Transaction is not valid. Attempt to set the status on CONFIRMED_DELIVERED before the compound admin signed!");
-                }
-                if (!ecmr.carrierLoadingSignature) {
-                    throw new Error("[Update ECMR] Transaction is not valid. Attempt to set the status on CONFIRMED_DELIVERED before the transporter signed for the loading!");
-                }
-                if (!ecmr.carrierDeliverySignature) {
-                    throw new Error("[Update ECMR] Transaction is not valid. Attempt to set the status on CONFIRMED_DELIVERED before the transporter signed for the delivery!");
-                }
-                // write the recipient signature into the ecmr
-                ecmr.recipientSignature = tx.ecmr.recipientSignature;
-                // write the recipient remarks into the ecmr
-                for (var i = 0; tx.ecmr.goods && i < tx.ecmr.goods.length; i++) {
-                    if (tx.ecmr.goods[i].recipientRemark) {
-                        ecmr.goods[i].recipientRemark = tx.ecmr.goods[i].recipientRemark;
-                    }
-                }
-            }
-
-            if (!statusIsValid) {
-                throw new Error("[Update ECMR] Validation failure! Provided status: " + ecmr.status + "is not a valid status!");
-            }
-
-            return getAssetRegistry('org.digitalcmr.ECMR')
-                .then(function (assetRegistry) {
-                    return assetRegistry.update(ecmr).catch(function (error) {
-                        console.log('[Update ECMR] An error occurred while updating the registry asset: ' + error);
-                        throw error;
-                    });
-                }).catch(function (error) {
-                    console.log('[Update ECMR] An error occurred while updating the ECMR asset: ' + error);
-                    throw error;
-                });
+          return assetRegistry.update(ecmr).catch(function (error) {
+            console.log('[Update ECMR] An error occurred while updating the registry asset: ' + error);
+            throw error;
+          });
+        }).catch(function (error) {
+          console.log('[Update ECMR] An error occurred while updating the ECMR asset: ' + error);
+          throw error;
         });
+    });
+}
+
+/**
+ * Create UpdateRegistrationCountry transaction processor function.
+ * @param {org.digitalcmr.UpdateRegistrationCountry} tx  - Create registration country transaction
+ * @return {Promise} Asset registry Promise
+ * @transaction
+ */
+function UpdateRegistrationCountry(tx) {
+
+  console.log('Invoking function processor to update RegistrationCountry');
+  console.log(tx);
+  console.log(tx.vin)
+
+  // Get the asset registry for the asset.
+  return getAssetRegistry('org.digitalcmr.Vehicle')
+    .then(function (assetRegistry) {
+      console.log(tx.vehicle);
+      return assetRegistry.get(tx.vehicle.vin).catch(function (error) {
+        console.log('[Update Vehicle] An error occurred while updating the registry asset: ' + error);
+        throw error;
+      });
+    })
+    .then(function (vehicle) {
+      vehicle.registrationCountry = tx.vehicle.registrationCountry;
+
+      //   var registrationCountryIsValid = false;
+      //
+      //   if the compound admin updated the ecmr status as LOADED, add the compound admin signature
+      //   if (ecmr.status === 'LOADED') {
+      //     statusIsValid = true;
+      //     // write the compound signature into the ecmr
+      //     ecmr.compoundSignature = tx.ecmr.compoundSignature;
+      //     // write the compound remarks into the ecmr
+      //     for (var i = 0; tx.ecmr.goods && i < tx.ecmr.goods.length; i++) {
+      //       if (tx.ecmr.goods[i].compoundRemark) {
+      //         ecmr.goods[i].compoundRemark = tx.ecmr.goods[i].compoundRemark;
+      //       }
+      //     }
+      //   }
+      // }
+
+      // if (!statusIsValid) {
+      //   throw new Error("[Update ECMR] Validation failure! Provided status: " + ecmr.status + "is not a valid status!");
+      // }
+
+      return getAssetRegistry('org.digitalcmr.Vehicle')
+        .then(function (assetRegistry) {
+          return assetRegistry.update(vehicle).catch(function (error) {
+            console.log('[Update Vehicle] An error occurred while updating the registry asset: ' + error);
+            throw error;
+          });
+        }).catch(function (error) {
+          console.log('[Update Vehicle] An error occurred while updating the Vehicle asset: ' + error);
+          throw error;
+        });
+    })
 }
