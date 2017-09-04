@@ -43,15 +43,6 @@
      action: ALLOW
  }
 
-  rule LegalOwnerAdminCanUpdateRegistrationCountry {
-      description: "Allow Legal Owner Admin to update a vehicle by Registration Country transaction"
-      participant: "org.digitalcmr.LegalOwnerAdmin"
-      operation: UPDATE
-      resource: "org.digitalcmr.Vehicle"
-      transaction: "org.digitalcmr.UpdateRegistrationCountry"
-      action: ALLOW
-  }
-
 /**
  * Compound permission list
  */
