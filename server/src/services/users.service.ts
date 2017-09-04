@@ -77,6 +77,10 @@ export class UsersService {
     });
   }
 
+  public isAdmin(enrollmentID: string, secret: string): boolean {
+    return enrollmentID === this.adminUsername && secret === this.adminPassword;
+  }
+
   private buildUserObject(participant: Participant, identity: any): User {
 
     let user = new User({

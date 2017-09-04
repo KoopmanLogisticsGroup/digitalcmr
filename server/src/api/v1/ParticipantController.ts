@@ -12,9 +12,11 @@ import {
 } from 'routing-controllers';
 import {Container} from 'typedi';
 import {ApiFactory} from '../../utils';
-import {LegalOwnerOrg, CompoundOrg, RecipientOrg, CarrierOrg, QueryApi} from '../../sdk/api';
+import {QueryApi} from '../../sdk/api';
 import {ErrorHandlerMiddleware, ComposerInterceptor, TransactionHandler} from '../../middleware';
 import {JSONWebToken} from '../../utils/auth/JSONWebToken';
+import {Participant} from '../../entities/participant.model';
+import {UsersService} from '../../services/users.service';
 
 @JsonController('/participant')
 @UseInterceptor(ComposerInterceptor)
@@ -22,12 +24,14 @@ import {JSONWebToken} from '../../utils/auth/JSONWebToken';
 export class OrganizationController {
   private queryApi: QueryApi;
   private assetRegistry: string;
+  private userService: UsersService;
 
   public constructor(private _transactor: TransactionHandler) {
     const apiFactory   = Container.get(ApiFactory);
     this.queryApi      = apiFactory.get(QueryApi);
     this.assetRegistry = 'Participant';
     this._transactor   = new TransactionHandler();
+    this.userService   = new UsersService();
   }
 
   @Get('/legalowner/admin/')
@@ -55,6 +59,19 @@ export class OrganizationController {
 
     const participants = await this._transactor.executeQuery('getLegalOwnerAdminByOrg', enrollmentID, secret, {org: org});
     return participants;
+  }
+
+  @Post('/')
+  public async addParticipant(@Body() participant: Participant, @Req() request: any): Promise<any> {
+    let enrollmentID = new JSONWebToken(request).getUserID();
+    let secret       = new JSONWebToken(request).getSecret();
+
+    if (this.userService.isAdmin(enrollmentID, secret)) {
+      console.log('user is admin');
+      return this.userService.addUser(participant);
+    } else {
+      return [];
+    }
   }
 
   @Get('/compound/admin/')
