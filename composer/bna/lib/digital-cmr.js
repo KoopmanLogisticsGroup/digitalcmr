@@ -337,4 +337,4 @@ function UpdateECMR(tx) {
                     throw error;
                 });
         });
-}
+    }

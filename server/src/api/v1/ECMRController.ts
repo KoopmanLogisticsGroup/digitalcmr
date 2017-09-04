@@ -25,33 +25,64 @@ export class ECMRController {
   private assetRegistry: string;
 
   public constructor(private _transactor: TransactionHandler) {
-    const apiFactory = Container.get(ApiFactory);
-    this.queryApi = apiFactory.get(QueryApi);
-    this.api = apiFactory.get(ECMRApi);
+    const apiFactory   = Container.get(ApiFactory);
+    this.queryApi      = apiFactory.get(QueryApi);
+    this.api           = apiFactory.get(ECMRApi);
     this.assetRegistry = 'ECMR';
-    this._transactor = new TransactionHandler();
-  }
-
-  @Get('/:ecmrID')
-  public async get(@Param('ecmrID') ecmrID: string, @Req() request: any): Promise<any> {
-    let enrollmentID = new JSONWebToken(request).getUserID();
-    let secret = new JSONWebToken(request).getSecret();
-
-    return this._transactor.get(ecmrID, this.assetRegistry, enrollmentID, secret);
+    this._transactor   = new TransactionHandler();
   }
 
   @Get('/')
-  public async getAll(@Req() request: any): Promise<any> {
+  public async getAllEcmrs(@Req() request: any): Promise<any> {
     let enrollmentID = new JSONWebToken(request).getUserID();
-    let secret = new JSONWebToken(request).getSecret();
+    let secret       = new JSONWebToken(request).getSecret();
 
-    return this._transactor.getAllECMRs(enrollmentID, secret, () => this.queryApi.queryGetAllEcmrs());
+    const ecmrs = await this._transactor.executeQuery('getAllEcmrs', enrollmentID, secret);
+    return ecmrs;
+  }
+
+  @Get('/ecmrID/:ecmrID')
+  public async getEcmrByEcmrID(@Param('ecmrID') ecmrID: string, @Req() request: any): Promise<any> {
+    let enrollmentID = new JSONWebToken(request).getUserID();
+    let secret       = new JSONWebToken(request).getSecret();
+
+    const ecmrs = await this._transactor.executeQuery('getEcmrById', enrollmentID, secret, {id: ecmrID});
+    return ecmrs;
+  }
+
+  @Get('/status/:ecmrStatus')
+  public async getAllEcmrsByStatus(@Param('ecmrStatus') ecmrStatus: string, @Req() request: any): Promise<any> {
+    let enrollmentID = new JSONWebToken(request).getUserID();
+    let secret       = new JSONWebToken(request).getSecret();
+
+    const ecmrs = await this._transactor.executeQuery('getEcmrsByStatus', enrollmentID, secret, {status: ecmrStatus});
+    return ecmrs;
+  }
+
+  @Get('/vehicle/vin/:vin')
+  public async getAllEcmrsFromVehicleByVin(@Param('vin') vin: string, @Req() request: any): Promise<any> {
+    let enrollmentID = new JSONWebToken(request).getUserID();
+    let secret       = new JSONWebToken(request).getSecret();
+
+    const ecmrs = await this._transactor.getEcmrsByVin(enrollmentID, secret, vin);
+
+    return ecmrs;
+  }
+
+  @Get('/vehicle/plateNumber/:plateNumber')
+  public async getAllEcmrsFromVehicleByPlateNumber(@Param('plateNumber') plateNumber: string, @Req() request: any): Promise<any> {
+    let enrollmentID = new JSONWebToken(request).getUserID();
+    let secret       = new JSONWebToken(request).getSecret();
+
+    const ecmrs = await this._transactor.getEcmrsByPlateNumber(enrollmentID, secret, plateNumber);
+
+    return ecmrs;
   }
 
   @Post('/')
   public async create(@Body() ecmr: ECMR, @Req() request: any): Promise<any> {
     let enrollmentID = new JSONWebToken(request).getUserID();
-    let secret = new JSONWebToken(request).getSecret();
+    let secret       = new JSONWebToken(request).getSecret();
 
     return this._transactor.put(ecmr, enrollmentID, secret, (factory, data) => this._transactor.createECMR(factory, data, enrollmentID));
   }
@@ -59,8 +90,8 @@ export class ECMRController {
   @Put('/')
   public async update(@Body() ecmr: ECMR, @Req() request: any): Promise<any> {
     let enrollmentID = new JSONWebToken(request).getUserID();
-    let secret = new JSONWebToken(request).getSecret();
-    const ip = request.ip;
+    let secret       = new JSONWebToken(request).getSecret();
+    const ip         = request.ip;
     return this._transactor.put(ecmr, enrollmentID, secret, (factory, data) => this._transactor.updateECMR(factory, data, enrollmentID, ip));
   }
 }
