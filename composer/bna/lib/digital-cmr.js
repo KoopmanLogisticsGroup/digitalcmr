@@ -349,39 +349,18 @@ function UpdateRegistrationCountry(tx) {
 
   console.log('Invoking function processor to update RegistrationCountry');
   console.log(tx);
-  console.log(tx.vin)
+  console.log(tx.vin);
 
   // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.Vehicle')
     .then(function (assetRegistry) {
-      console.log(tx.vehicle);
-      return assetRegistry.get(tx.vehicle.vin).catch(function (error) {
+      return assetRegistry.get(tx.vin).catch(function (error) {
         console.log('[Update Vehicle] An error occurred while updating the registry asset: ' + error);
         throw error;
       });
     })
     .then(function (vehicle) {
-      vehicle.registrationCountry = tx.vehicle.registrationCountry;
-
-      //   var registrationCountryIsValid = false;
-      //
-      //   if the compound admin updated the ecmr status as LOADED, add the compound admin signature
-      //   if (ecmr.status === 'LOADED') {
-      //     statusIsValid = true;
-      //     // write the compound signature into the ecmr
-      //     ecmr.compoundSignature = tx.ecmr.compoundSignature;
-      //     // write the compound remarks into the ecmr
-      //     for (var i = 0; tx.ecmr.goods && i < tx.ecmr.goods.length; i++) {
-      //       if (tx.ecmr.goods[i].compoundRemark) {
-      //         ecmr.goods[i].compoundRemark = tx.ecmr.goods[i].compoundRemark;
-      //       }
-      //     }
-      //   }
-      // }
-
-      // if (!statusIsValid) {
-      //   throw new Error("[Update ECMR] Validation failure! Provided status: " + ecmr.status + "is not a valid status!");
-      // }
+      vehicle.registrationCountry = tx.registrationCountry;
 
       return getAssetRegistry('org.digitalcmr.Vehicle')
         .then(function (assetRegistry) {
