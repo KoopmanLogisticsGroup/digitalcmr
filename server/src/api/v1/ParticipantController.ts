@@ -61,19 +61,6 @@ export class OrganizationController {
     return participants;
   }
 
-  @Post('/')
-  public async addParticipant(@Body() participant: Participant, @Req() request: any): Promise<any> {
-    let enrollmentID = new JSONWebToken(request).getUserID();
-    let secret       = new JSONWebToken(request).getSecret();
-
-    if (this.userService.isAdmin(enrollmentID, secret)) {
-      console.log('user is admin');
-      return this.userService.addUser(participant);
-    } else {
-      return [];
-    }
-  }
-
   @Get('/compound/admin/')
   public async getAllCompoundAdmins(@Req() request: any): Promise<any> {
     let enrollmentID = new JSONWebToken(request).getUserID();
@@ -207,6 +194,21 @@ export class OrganizationController {
 
     const participants = await this._transactor.executeQuery('getRecipientMemberByOrg', enrollmentID, secret, {org: org});
     return participants;
+  }
+
+  @Post('/')
+  public async addParticipant(@Body() participant: any, @Req() request: any): Promise<any> {
+    let enrollmentID = new JSONWebToken(request).getUserID();
+    let secret       = new JSONWebToken(request).getSecret();
+
+    if (!this.userService.isAdmin(enrollmentID, secret)) {
+      return {body: 'Cannot issue participant. User is not admin.'};
+    }
+      return this.userService.addUser(new Participant(participant)).then((result) => {
+        return {body: result};
+      }).catch((error) => {
+        return {body: error};
+      });
   }
 
   // @Post('/')
