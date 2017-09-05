@@ -28,8 +28,8 @@ composer network deploy \
     -p defaultProfile
 
 #add testdata
-echo 'Invoking testdata script'
-source testdata/add-testdata.sh &
+#echo 'Invoking testdata script'
+#source testdata/add-testdata.sh &
 
 ## Start server
 composer-rest-server \

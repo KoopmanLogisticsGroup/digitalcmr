@@ -60,6 +60,7 @@ asset Vehicle identified by vin {
   --> ECMR[] ecmrs
   o Integer odoMeterReading
   o String plateNumber
+  o String registrationCountry optional
 }
 
 /**
@@ -186,6 +187,11 @@ transaction CreateECMRs {
 
 transaction UpdateECMR {
   o ECMR ecmr
+}
+
+transaction UpdateRegistrationCountry {
+  o String vin
+  o String registrationCountry
 }
 
 /**

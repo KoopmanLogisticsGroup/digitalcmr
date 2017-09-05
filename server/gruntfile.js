@@ -39,7 +39,8 @@ module.exports = function (grunt) {
             options: {
                 logConcurrentOutput: true
             },
-            run: ['nodemon', 'watch'],
+            run: ['nodemon'],
+            // run: ['nodemon', 'watch'],
             build: ['ts']
         },
         nodemon: {

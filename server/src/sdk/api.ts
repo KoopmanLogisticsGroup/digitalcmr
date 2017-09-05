@@ -545,9 +545,9 @@ export class CreateCarrierOrg {
             "type": "string"
         },
         {
-          "name":     "carrierOrg",
+          "name"    : "carrierOrg",
           "baseName": "carrierOrg",
-          "type":     "CarrierOrg"
+          "type"    : "CarrierOrg"
         },
         {
             "name": "transactionId",
@@ -584,24 +584,24 @@ export class CreateCompoundOrg {
 
   static attributeTypeMap: Array<{ name: string, baseName: string, type: string }> = [
     {
-      "name":     "$Class",
+      "name"    : "$Class",
       "baseName": "$class",
-      "type":     "string"
+      "type"    : "string"
     },
     {
-      "name":     "compoundOrg",
+      "name"    : "compoundOrg",
       "baseName": "compoundOrg",
-      "type":     "CompoundOrg"
+      "type"    : "CompoundOrg"
     },
     {
-      "name":     "transactionId",
+      "name"    : "transactionId",
       "baseName": "transactionId",
-      "type":     "string"
+      "type"    : "string"
     },
     {
-      "name":     "timestamp",
+      "name"    : "timestamp",
       "baseName": "timestamp",
-      "type":     "Date"
+      "type"    : "Date"
     }];
 
   static getAttributeTypeMap() {
@@ -628,24 +628,24 @@ export class CreateECMR {
 
   static attributeTypeMap: Array<{ name: string, baseName: string, type: string }> = [
     {
-      "name":     "$Class",
+      "name"    : "$Class",
       "baseName": "$class",
-      "type":     "string"
+      "type"    : "string"
     },
     {
-      "name":     "ecmr",
+      "name"    : "ecmr",
       "baseName": "ecmr",
-      "type":     "ECMR"
+      "type"    : "ECMR"
     },
     {
-      "name":     "transactionId",
+      "name"    : "transactionId",
       "baseName": "transactionId",
-      "type":     "string"
+      "type"    : "string"
     },
     {
-      "name":     "timestamp",
+      "name"    : "timestamp",
       "baseName": "timestamp",
-      "type":     "Date"
+      "type"    : "Date"
     }];
 
   static getAttributeTypeMap() {
@@ -672,24 +672,24 @@ export class CreateECMRs {
 
   static attributeTypeMap: Array<{ name: string, baseName: string, type: string }> = [
     {
-      "name":     "$Class",
+      "name"    : "$Class",
       "baseName": "$class",
-      "type":     "string"
+      "type"    : "string"
     },
     {
-      "name":     "ecmrs",
+      "name"    : "ecmrs",
       "baseName": "ecmrs",
-      "type":     "Array<ECMR>"
+      "type"    : "Array<ECMR>"
     },
     {
-      "name":     "transactionId",
+      "name"    : "transactionId",
       "baseName": "transactionId",
-      "type":     "string"
+      "type"    : "string"
     },
     {
-      "name":     "timestamp",
+      "name"    : "timestamp",
       "baseName": "timestamp",
-      "type":     "Date"
+      "type"    : "Date"
     }];
 
   static getAttributeTypeMap() {
@@ -716,24 +716,24 @@ export class CreateLegalOwnerOrg {
 
   static attributeTypeMap: Array<{ name: string, baseName: string, type: string }> = [
     {
-      "name":     "$Class",
+      "name"    : "$Class",
       "baseName": "$class",
-      "type":     "string"
+      "type"    : "string"
     },
     {
-      "name":     "legalOwnerOrg",
+      "name"    : "legalOwnerOrg",
       "baseName": "legalOwnerOrg",
-      "type":     "LegalOwnerOrg"
+      "type"    : "LegalOwnerOrg"
     },
     {
-      "name":     "transactionId",
+      "name"    : "transactionId",
       "baseName": "transactionId",
-      "type":     "string"
+      "type"    : "string"
     },
     {
-      "name":     "timestamp",
+      "name"    : "timestamp",
       "baseName": "timestamp",
-      "type":     "Date"
+      "type"    : "Date"
     }];
 
   static getAttributeTypeMap() {
@@ -760,24 +760,24 @@ export class CreateRecipientOrg {
 
   static attributeTypeMap: Array<{ name: string, baseName: string, type: string }> = [
     {
-      "name":     "$Class",
+      "name"    : "$Class",
       "baseName": "$class",
-      "type":     "string"
+      "type"    : "string"
     },
     {
-      "name":     "recipientOrg",
+      "name"    : "recipientOrg",
       "baseName": "recipientOrg",
-      "type":     "RecipientOrg"
+      "type"    : "RecipientOrg"
     },
     {
-      "name":     "transactionId",
+      "name"    : "transactionId",
       "baseName": "transactionId",
-      "type":     "string"
+      "type"    : "string"
     },
     {
-      "name":     "timestamp",
+      "name"    : "timestamp",
       "baseName": "timestamp",
-      "type":     "Date"
+      "type"    : "Date"
     }];
 
   static getAttributeTypeMap() {
@@ -804,24 +804,24 @@ export class CreateVehicles {
 
   static attributeTypeMap: Array<{ name: string, baseName: string, type: string }> = [
     {
-      "name":     "$Class",
+      "name"    : "$Class",
       "baseName": "$class",
-      "type":     "string"
+      "type"    : "string"
     },
     {
-      "name":     "vehicles",
+      "name"    : "vehicles",
       "baseName": "vehicles",
-      "type":     "Array<Vehicle>"
+      "type"    : "Array<Vehicle>"
     },
     {
-      "name":     "transactionId",
+      "name"    : "transactionId",
       "baseName": "transactionId",
-      "type":     "string"
+      "type"    : "string"
     },
     {
-      "name":     "timestamp",
+      "name"    : "timestamp",
       "baseName": "timestamp",
-      "type":     "Date"
+      "type"    : "Date"
     }];
 
   static getAttributeTypeMap() {
@@ -845,24 +845,24 @@ export class Creation {
 
   static attributeTypeMap: Array<{ name: string, baseName: string, type: string }> = [
     {
-      "name":     "$Class",
+      "name"    : "$Class",
       "baseName": "$class",
-      "type":     "string"
+      "type"    : "string"
     },
     {
-      "name":     "address",
+      "name"    : "address",
       "baseName": "address",
-      "type":     "Address"
+      "type"    : "Address"
     },
     {
-      "name":     "date",
+      "name"    : "date",
       "baseName": "date",
-      "type":     "number"
+      "type"    : "number"
     },
     {
-      "name":     "id",
+      "name"    : "id",
       "baseName": "id",
-      "type":     "string"
+      "type"    : "string"
     }];
 
   static getAttributeTypeMap() {
@@ -896,9 +896,9 @@ export class Delivery {
             "type": "Address"
         },
         {
-          "name":       "date",
+          "name"      : "date",
             "baseName": "date",
-          "type":       "number"
+          "type"      : "number"
         },
         {
             "name": "id",
@@ -964,8 +964,8 @@ export class ECMR {
     'documents': Array<string>;
     'compoundSignature': Signature;
     'carrierLoadingSignature': Signature;
-    'recipientSignature': Signature;
     'carrierDeliverySignature': Signature;
+    'recipientSignature': Signature;
 
     static discriminator = undefined;
 
@@ -986,19 +986,19 @@ export class ECMR {
             "type": "ECMR.StatusEnum"
         },
         {
-          "name":     "creation",
+          "name"    : "creation",
           "baseName": "creation",
-          "type":     "Creation"
+          "type"    : "Creation"
         },
       {
-        "name":     "loading",
+        "name"    : "loading",
         "baseName": "loading",
             "type": "Loading"
         },
         {
-          "name":     "delivery",
+          "name"    : "delivery",
           "baseName": "delivery",
-          "type":     "Delivery"
+          "type"    : "Delivery"
         },
         {
             "name": "owner",
@@ -1036,14 +1036,14 @@ export class ECMR {
             "type": "number"
         },
         {
-          "name":     "issuedBy",
+          "name"    : "issuedBy",
           "baseName": "issuedBy",
-          "type":     "string"
+          "type"    : "string"
         },
       {
-        "name":     "carrierComments",
+        "name"    : "carrierComments",
         "baseName": "carrierComments",
-        "type":     "string"
+        "type"    : "string"
       },
         {
             "name": "goods",
@@ -1066,29 +1066,29 @@ export class ECMR {
             "type": "string"
         },
       {
-        "name":     "documents",
+        "name"    : "documents",
         "baseName": "documents",
-        "type":     "Array<string>"
+        "type"    : "Array<string>"
       },
       {
-        "name":     "compoundSignature",
+        "name"    : "compoundSignature",
         "baseName": "compoundSignature",
-        "type":     "Signature"
+        "type"    : "Signature"
       },
       {
-        "name":     "carrierLoadingSignature",
+        "name"    : "carrierLoadingSignature",
         "baseName": "carrierLoadingSignature",
-        "type":     "Signature"
+        "type"    : "Signature"
       },
       {
-        "name":     "recipientSignature",
-        "baseName": "recipientSignature",
-        "type":     "Signature"
-      },
-      {
-        "name":     "carrierDeliverySignature",
+        "name"    : "carrierDeliverySignature",
         "baseName": "carrierDeliverySignature",
-        "type":     "Signature"
+        "type"    : "Signature"
+      },
+      {
+        "name"    : "recipientSignature",
+        "baseName": "recipientSignature",
+        "type"    : "Signature"
       }];
 
     static getAttributeTypeMap() {
@@ -1098,10 +1098,11 @@ export class ECMR {
 
 export namespace ECMR {
     export enum StatusEnum {
-      CREATED   = <any> 'CREATED',
-      LOADED    = <any> 'LOADED',
-      INTRANSIT = <any> 'IN_TRANSIT',
-      DELIVERED = <any> 'DELIVERED'
+      CREATED            = <any> 'CREATED',
+      LOADED             = <any> 'LOADED',
+      INTRANSIT          = <any> 'IN_TRANSIT',
+      DELIVERED          = <any> 'DELIVERED',
+      CONFIRMEDDELIVERED = <any> 'CONFIRMED_DELIVERED'
     }
 }
 /**
@@ -1130,9 +1131,9 @@ export class Good {
             "type": "string"
         },
         {
-          "name":       "vehicle",
+          "name"      : "vehicle",
             "baseName": "vehicle",
-          "type":       "Vehicle"
+          "type"      : "Vehicle"
         },
         {
             "name": "carrierLoadingRemark",
@@ -1155,9 +1156,9 @@ export class Good {
             "type": "Remark"
         },
         {
-          "name":     "description",
+          "name"    : "description",
           "baseName": "description",
-          "type":     "string"
+          "type"    : "string"
         },
         {
             "name": "weight",
@@ -1385,9 +1386,9 @@ export class Loading {
             "type": "Address"
         },
         {
-          "name":       "date",
+          "name"      : "date",
             "baseName": "date",
-          "type":       "number"
+          "type"      : "number"
         },
         {
             "name": "id",
@@ -1664,44 +1665,44 @@ export class Signature {
 
   static attributeTypeMap: Array<{ name: string, baseName: string, type: string }> = [
     {
-      "name":     "$Class",
+      "name"    : "$Class",
       "baseName": "$class",
-      "type":     "string"
+      "type"    : "string"
     },
     {
-      "name":     "certificate",
+      "name"    : "certificate",
       "baseName": "certificate",
-      "type":     "string"
+      "type"    : "string"
     },
     {
-      "name":     "latitude",
+      "name"    : "latitude",
       "baseName": "latitude",
-      "type":     "number"
+      "type"    : "number"
     },
     {
-      "name":     "longitude",
+      "name"    : "longitude",
       "baseName": "longitude",
-      "type":     "number"
+      "type"    : "number"
     },
     {
-      "name":     "ip",
+      "name"    : "ip",
       "baseName": "ip",
-      "type":     "string"
+      "type"    : "string"
     },
     {
-      "name":     "timestamp",
+      "name"    : "timestamp",
       "baseName": "timestamp",
-      "type":     "number"
+      "type"    : "number"
     },
     {
-      "name":     "generalRemark",
+      "name"    : "generalRemark",
       "baseName": "generalRemark",
-      "type":     "Remark"
+      "type"    : "Remark"
     },
     {
-      "name":     "id",
+      "name"    : "id",
       "baseName": "id",
-      "type":     "string"
+      "type"    : "string"
     }];
 
   static getAttributeTypeMap() {
@@ -1728,28 +1729,78 @@ export class UpdateECMR {
 
   static attributeTypeMap: Array<{ name: string, baseName: string, type: string }> = [
     {
-      "name":     "$Class",
+      "name"    : "$Class",
       "baseName": "$class",
-      "type":     "string"
+      "type"    : "string"
     },
     {
-      "name":     "ecmr",
+      "name"    : "ecmr",
       "baseName": "ecmr",
-      "type":     "ECMR"
+      "type"    : "ECMR"
     },
     {
-      "name":     "transactionId",
+      "name"    : "transactionId",
       "baseName": "transactionId",
-      "type":     "string"
+      "type"    : "string"
     },
     {
-      "name":     "timestamp",
+      "name"    : "timestamp",
       "baseName": "timestamp",
-      "type":     "Date"
+      "type"    : "Date"
     }];
 
   static getAttributeTypeMap() {
     return UpdateECMR.attributeTypeMap;
+  }
+}
+
+/**
+ * A transaction named UpdateRegistrationCountry
+ */
+export class UpdateRegistrationCountry {
+  /**
+   * The class identifier for this type
+   */
+  '$Class': string;
+  'vin': string;
+  'registrationCountry': string;
+  /**
+   * The instance identifier for this type
+   */
+  'transactionId': string;
+  'timestamp': Date;
+
+  static discriminator = undefined;
+
+  static attributeTypeMap: Array<{ name: string, baseName: string, type: string }> = [
+    {
+      "name"    : "$Class",
+      "baseName": "$class",
+      "type"    : "string"
+    },
+    {
+      "name"    : "vin",
+      "baseName": "vin",
+      "type"    : "string"
+    },
+    {
+      "name"    : "registrationCountry",
+      "baseName": "registrationCountry",
+      "type"    : "string"
+    },
+    {
+      "name"    : "transactionId",
+      "baseName": "transactionId",
+      "type"    : "string"
+    },
+    {
+      "name"    : "timestamp",
+      "baseName": "timestamp",
+      "type"    : "Date"
+    }];
+
+  static getAttributeTypeMap() {
+    return UpdateRegistrationCountry.attributeTypeMap;
   }
 }
 
@@ -1774,6 +1825,7 @@ export class Vehicle {
     'ecmrs': Array<string>;
     'odoMeterReading': number;
     'plateNumber': string;
+    'registrationCountry': string;
 
     static discriminator = undefined;
 
@@ -1784,9 +1836,9 @@ export class Vehicle {
             "type": "string"
         },
         {
-          "name":     "vin",
+          "name"    : "vin",
           "baseName": "vin",
-          "type":     "string"
+          "type"    : "string"
         },
         {
             "name": "manufacturer",
@@ -1794,29 +1846,34 @@ export class Vehicle {
             "type": "string"
         },
       {
-        "name":     "model",
+        "name"    : "model",
         "baseName": "model",
-        "type":     "string"
+        "type"    : "string"
       },
       {
-        "name":     "type",
+        "name"    : "type",
         "baseName": "type",
-        "type":     "string"
+        "type"    : "string"
       },
       {
-        "name":     "ecmrs",
+        "name"    : "ecmrs",
         "baseName": "ecmrs",
-        "type":     "Array<string>"
+        "type"    : "Array<string>"
       },
       {
-        "name":     "odoMeterReading",
+        "name"    : "odoMeterReading",
         "baseName": "odoMeterReading",
-        "type":     "number"
+        "type"    : "number"
       },
       {
-        "name":     "plateNumber",
+        "name"    : "plateNumber",
         "baseName": "plateNumber",
-        "type":     "string"
+        "type"    : "string"
+      },
+      {
+        "name"    : "registrationCountry",
+        "baseName": "registrationCountry",
+        "type"    : "string"
       }];
 
     static getAttributeTypeMap() {
@@ -1830,38 +1887,39 @@ let enumsMap = {
 }
 
 let typeMap = {
-  "Address":                 Address,
-  "BindIdentityRequest":     BindIdentityRequest,
-  "CarrierAdmin":            CarrierAdmin,
-  "CarrierMember":           CarrierMember,
-  "CarrierOrg":              CarrierOrg,
-  "CompoundAdmin":           CompoundAdmin,
-  "CompoundOrg":             CompoundOrg,
-  "CreateCarrierOrg":        CreateCarrierOrg,
-  "CreateCompoundOrg":       CreateCompoundOrg,
-  "CreateECMR":              CreateECMR,
-  "CreateECMRs":             CreateECMRs,
-  "CreateLegalOwnerOrg":     CreateLegalOwnerOrg,
-  "CreateRecipientOrg":      CreateRecipientOrg,
-  "CreateVehicles":          CreateVehicles,
-  "Creation":                Creation,
-  "Delivery":                Delivery,
-  "ECMR":                    ECMR,
-  "Good":                    Good,
-  "InlineResponse200":       InlineResponse200,
-  "IssueIdentityRequest":    IssueIdentityRequest,
-    "IssueIdentityResponse": IssueIdentityResponse,
-  "LegalOwnerAdmin":         LegalOwnerAdmin,
-  "LegalOwnerOrg":           LegalOwnerOrg,
-  "Loading":                 Loading,
-  "PingResponse":            PingResponse,
-  "RecipientAdmin":          RecipientAdmin,
-  "RecipientMember":         RecipientMember,
-  "RecipientOrg":            RecipientOrg,
-  "Remark":                  Remark,
-  "Signature":               Signature,
-  "UpdateECMR":              UpdateECMR,
-  "Vehicle":                 Vehicle,
+  "Address"                  : Address,
+  "BindIdentityRequest"      : BindIdentityRequest,
+  "CarrierAdmin"             : CarrierAdmin,
+  "CarrierMember"            : CarrierMember,
+  "CarrierOrg"               : CarrierOrg,
+  "CompoundAdmin"            : CompoundAdmin,
+  "CompoundOrg"              : CompoundOrg,
+  "CreateCarrierOrg"         : CreateCarrierOrg,
+  "CreateCompoundOrg"        : CreateCompoundOrg,
+  "CreateECMR"               : CreateECMR,
+  "CreateECMRs"              : CreateECMRs,
+  "CreateLegalOwnerOrg"      : CreateLegalOwnerOrg,
+  "CreateRecipientOrg"       : CreateRecipientOrg,
+  "CreateVehicles"           : CreateVehicles,
+  "Creation"                 : Creation,
+  "Delivery"                 : Delivery,
+  "ECMR"                     : ECMR,
+  "Good"                     : Good,
+  "InlineResponse200"        : InlineResponse200,
+  "IssueIdentityRequest"     : IssueIdentityRequest,
+    "IssueIdentityResponse"  : IssueIdentityResponse,
+  "LegalOwnerAdmin"          : LegalOwnerAdmin,
+  "LegalOwnerOrg"            : LegalOwnerOrg,
+  "Loading"                  : Loading,
+  "PingResponse"             : PingResponse,
+  "RecipientAdmin"           : RecipientAdmin,
+  "RecipientMember"          : RecipientMember,
+  "RecipientOrg"             : RecipientOrg,
+  "Remark"                   : Remark,
+  "Signature"                : Signature,
+  "UpdateECMR"               : UpdateECMR,
+  "UpdateRegistrationCountry": UpdateRegistrationCountry,
+  "Vehicle"                  : Vehicle,
 }
 
 export interface Authentication {
@@ -3819,13 +3877,13 @@ export class CreateCarrierOrgApi {
         let useFormData = false;
 
         let requestOptions: request.Options = {
-          method:           'POST',
-          qs:               queryParameters,
-          headers:          headerParams,
-          uri:              localVarPath,
+          method          : 'POST',
+          qs              : queryParameters,
+          headers         : headerParams,
+          uri             : localVarPath,
             useQuerystring: this._useQuerystring,
-          json:             true,
-          body:             ObjectSerializer.serialize(data, "CreateCarrierOrg")
+          json            : true,
+          body            : ObjectSerializer.serialize(data, "CreateCarrierOrg")
         };
 
         this.authentications.default.applyToRequest(requestOptions);
@@ -3909,17 +3967,16 @@ export class CreateCompoundOrgApi {
     let headerParams: any    = (<any>Object).assign({}, this.defaultHeaders);
     let formParams: any      = {};
 
-
     let useFormData = false;
 
     let requestOptions: request.Options = {
-      method:         'POST',
-      qs:             queryParameters,
-      headers:        headerParams,
-      uri:            localVarPath,
+      method        : 'POST',
+      qs            : queryParameters,
+      headers       : headerParams,
+      uri           : localVarPath,
       useQuerystring: this._useQuerystring,
-      json:           true,
-      body:           ObjectSerializer.serialize(data, "CreateCompoundOrg")
+      json          : true,
+      body          : ObjectSerializer.serialize(data, "CreateCompoundOrg")
     };
 
     this.authentications.default.applyToRequest(requestOptions);
@@ -4003,17 +4060,16 @@ export class CreateECMRApi {
     let headerParams: any    = (<any>Object).assign({}, this.defaultHeaders);
     let formParams: any      = {};
 
-
     let useFormData = false;
 
     let requestOptions: request.Options = {
-      method:         'POST',
-      qs:             queryParameters,
-      headers:        headerParams,
-      uri:            localVarPath,
+      method        : 'POST',
+      qs            : queryParameters,
+      headers       : headerParams,
+      uri           : localVarPath,
       useQuerystring: this._useQuerystring,
-      json:           true,
-      body:           ObjectSerializer.serialize(data, "CreateECMR")
+      json          : true,
+      body          : ObjectSerializer.serialize(data, "CreateECMR")
     };
 
     this.authentications.default.applyToRequest(requestOptions);
@@ -4097,17 +4153,16 @@ export class CreateECMRsApi {
     let headerParams: any    = (<any>Object).assign({}, this.defaultHeaders);
     let formParams: any      = {};
 
-
     let useFormData = false;
 
     let requestOptions: request.Options = {
-      method:         'POST',
-      qs:             queryParameters,
-      headers:        headerParams,
-      uri:            localVarPath,
+      method        : 'POST',
+      qs            : queryParameters,
+      headers       : headerParams,
+      uri           : localVarPath,
       useQuerystring: this._useQuerystring,
-      json:           true,
-      body:           ObjectSerializer.serialize(data, "CreateECMRs")
+      json          : true,
+      body          : ObjectSerializer.serialize(data, "CreateECMRs")
     };
 
     this.authentications.default.applyToRequest(requestOptions);
@@ -4191,17 +4246,16 @@ export class CreateLegalOwnerOrgApi {
     let headerParams: any    = (<any>Object).assign({}, this.defaultHeaders);
     let formParams: any      = {};
 
-
     let useFormData = false;
 
     let requestOptions: request.Options = {
-      method:         'POST',
-      qs:             queryParameters,
-      headers:        headerParams,
-      uri:            localVarPath,
+      method        : 'POST',
+      qs            : queryParameters,
+      headers       : headerParams,
+      uri           : localVarPath,
       useQuerystring: this._useQuerystring,
-      json:           true,
-      body:           ObjectSerializer.serialize(data, "CreateLegalOwnerOrg")
+      json          : true,
+      body          : ObjectSerializer.serialize(data, "CreateLegalOwnerOrg")
     };
 
     this.authentications.default.applyToRequest(requestOptions);
@@ -4285,17 +4339,16 @@ export class CreateRecipientOrgApi {
     let headerParams: any    = (<any>Object).assign({}, this.defaultHeaders);
     let formParams: any      = {};
 
-
     let useFormData = false;
 
     let requestOptions: request.Options = {
-      method:         'POST',
-      qs:             queryParameters,
-      headers:        headerParams,
-      uri:            localVarPath,
+      method        : 'POST',
+      qs            : queryParameters,
+      headers       : headerParams,
+      uri           : localVarPath,
       useQuerystring: this._useQuerystring,
-      json:           true,
-      body:           ObjectSerializer.serialize(data, "CreateRecipientOrg")
+      json          : true,
+      body          : ObjectSerializer.serialize(data, "CreateRecipientOrg")
     };
 
     this.authentications.default.applyToRequest(requestOptions);
@@ -4379,17 +4432,16 @@ export class CreateVehiclesApi {
     let headerParams: any    = (<any>Object).assign({}, this.defaultHeaders);
     let formParams: any      = {};
 
-
     let useFormData = false;
 
     let requestOptions: request.Options = {
-      method:         'POST',
-      qs:             queryParameters,
-      headers:        headerParams,
-      uri:            localVarPath,
+      method        : 'POST',
+      qs            : queryParameters,
+      headers       : headerParams,
+      uri           : localVarPath,
       useQuerystring: this._useQuerystring,
-      json:           true,
-      body:           ObjectSerializer.serialize(data, "CreateVehicles")
+      json          : true,
+      body          : ObjectSerializer.serialize(data, "CreateVehicles")
     };
 
     this.authentications.default.applyToRequest(requestOptions);
@@ -5579,16 +5631,15 @@ export class QueryApi {
     let headerParams: any    = (<any>Object).assign({}, this.defaultHeaders);
     let formParams: any      = {};
 
-
     let useFormData = false;
 
     let requestOptions: request.Options = {
-      method:         'GET',
-      qs:             queryParameters,
-      headers:        headerParams,
-      uri:            localVarPath,
+      method        : 'GET',
+      qs            : queryParameters,
+      headers       : headerParams,
+      uri           : localVarPath,
       useQuerystring: this._useQuerystring,
-      json:           true,
+      json          : true,
     };
 
     this.authentications.default.applyToRequest(requestOptions);
@@ -5627,7 +5678,6 @@ export class QueryApi {
     let headerParams: any    = (<any>Object).assign({}, this.defaultHeaders);
     let formParams: any      = {};
 
-
     // verify required parameter 'carrier' is not null or undefined
     if (carrier === null || carrier === undefined) {
       throw new Error('Required parameter carrier was null or undefined when calling queryGetEcmrsByCarrier.');
@@ -5637,16 +5687,15 @@ export class QueryApi {
       queryParameters['carrier'] = ObjectSerializer.serialize(carrier, "string");
     }
 
-
     let useFormData = false;
 
     let requestOptions: request.Options = {
-      method:         'GET',
-      qs:             queryParameters,
-      headers:        headerParams,
-      uri:            localVarPath,
+      method        : 'GET',
+      qs            : queryParameters,
+      headers       : headerParams,
+      uri           : localVarPath,
       useQuerystring: this._useQuerystring,
-      json:           true,
+      json          : true,
     };
 
     this.authentications.default.applyToRequest(requestOptions);
@@ -5685,7 +5734,6 @@ export class QueryApi {
     let headerParams: any    = (<any>Object).assign({}, this.defaultHeaders);
     let formParams: any      = {};
 
-
     // verify required parameter 'transporter' is not null or undefined
     if (transporter === null || transporter === undefined) {
       throw new Error('Required parameter transporter was null or undefined when calling queryGetEcmrsByCarrierMember.');
@@ -5695,16 +5743,15 @@ export class QueryApi {
       queryParameters['transporter'] = ObjectSerializer.serialize(transporter, "string");
     }
 
-
     let useFormData = false;
 
     let requestOptions: request.Options = {
-      method:         'GET',
-      qs:             queryParameters,
-      headers:        headerParams,
-      uri:            localVarPath,
+      method        : 'GET',
+      qs            : queryParameters,
+      headers       : headerParams,
+      uri           : localVarPath,
       useQuerystring: this._useQuerystring,
-      json:           true,
+      json          : true,
     };
 
     this.authentications.default.applyToRequest(requestOptions);
@@ -5743,7 +5790,6 @@ export class QueryApi {
     let headerParams: any    = (<any>Object).assign({}, this.defaultHeaders);
     let formParams: any      = {};
 
-
     // verify required parameter 'compound' is not null or undefined
     if (compound === null || compound === undefined) {
       throw new Error('Required parameter compound was null or undefined when calling queryGetEcmrsByCompound.');
@@ -5753,16 +5799,15 @@ export class QueryApi {
       queryParameters['compound'] = ObjectSerializer.serialize(compound, "string");
     }
 
-
     let useFormData = false;
 
     let requestOptions: request.Options = {
-      method:         'GET',
-      qs:             queryParameters,
-      headers:        headerParams,
-      uri:            localVarPath,
+      method        : 'GET',
+      qs            : queryParameters,
+      headers       : headerParams,
+      uri           : localVarPath,
       useQuerystring: this._useQuerystring,
-      json:           true,
+      json          : true,
     };
 
     this.authentications.default.applyToRequest(requestOptions);
@@ -5802,7 +5847,6 @@ export class QueryApi {
     let headerParams: any    = (<any>Object).assign({}, this.defaultHeaders);
     let formParams: any      = {};
 
-
     // verify required parameter 'minAge' is not null or undefined
     if (minAge === null || minAge === undefined) {
       throw new Error('Required parameter minAge was null or undefined when calling queryGetEcmrsByIssueTimeRange.');
@@ -5821,16 +5865,15 @@ export class QueryApi {
       queryParameters['max_age'] = ObjectSerializer.serialize(maxAge, "number");
     }
 
-
     let useFormData = false;
 
     let requestOptions: request.Options = {
-      method:         'GET',
-      qs:             queryParameters,
-      headers:        headerParams,
-      uri:            localVarPath,
+      method        : 'GET',
+      qs            : queryParameters,
+      headers       : headerParams,
+      uri           : localVarPath,
       useQuerystring: this._useQuerystring,
-      json:           true,
+      json          : true,
     };
 
     this.authentications.default.applyToRequest(requestOptions);
@@ -5869,7 +5912,6 @@ export class QueryApi {
     let headerParams: any    = (<any>Object).assign({}, this.defaultHeaders);
     let formParams: any      = {};
 
-
     // verify required parameter 'owner' is not null or undefined
     if (owner === null || owner === undefined) {
       throw new Error('Required parameter owner was null or undefined when calling queryGetEcmrsByOwner.');
@@ -5879,16 +5921,15 @@ export class QueryApi {
       queryParameters['owner'] = ObjectSerializer.serialize(owner, "string");
     }
 
-
     let useFormData = false;
 
     let requestOptions: request.Options = {
-      method:         'GET',
-      qs:             queryParameters,
-      headers:        headerParams,
-      uri:            localVarPath,
+      method        : 'GET',
+      qs            : queryParameters,
+      headers       : headerParams,
+      uri           : localVarPath,
       useQuerystring: this._useQuerystring,
-      json:           true,
+      json          : true,
     };
 
     this.authentications.default.applyToRequest(requestOptions);
@@ -5927,7 +5968,6 @@ export class QueryApi {
     let headerParams: any    = (<any>Object).assign({}, this.defaultHeaders);
     let formParams: any      = {};
 
-
     // verify required parameter 'recipient' is not null or undefined
     if (recipient === null || recipient === undefined) {
       throw new Error('Required parameter recipient was null or undefined when calling queryGetEcmrsByRecipientMember.');
@@ -5937,16 +5977,15 @@ export class QueryApi {
       queryParameters['recipient'] = ObjectSerializer.serialize(recipient, "string");
     }
 
-
     let useFormData = false;
 
     let requestOptions: request.Options = {
-      method:         'GET',
-      qs:             queryParameters,
-      headers:        headerParams,
-      uri:            localVarPath,
+      method        : 'GET',
+      qs            : queryParameters,
+      headers       : headerParams,
+      uri           : localVarPath,
       useQuerystring: this._useQuerystring,
-      json:           true,
+      json          : true,
     };
 
     this.authentications.default.applyToRequest(requestOptions);
@@ -5985,7 +6024,6 @@ export class QueryApi {
     let headerParams: any    = (<any>Object).assign({}, this.defaultHeaders);
     let formParams: any      = {};
 
-
     // verify required parameter 'recipientOrg' is not null or undefined
     if (recipientOrg === null || recipientOrg === undefined) {
       throw new Error('Required parameter recipientOrg was null or undefined when calling queryGetEcmrsByRecipientOrg.');
@@ -5995,16 +6033,15 @@ export class QueryApi {
       queryParameters['recipientOrg'] = ObjectSerializer.serialize(recipientOrg, "string");
     }
 
-
     let useFormData = false;
 
     let requestOptions: request.Options = {
-      method:         'GET',
-      qs:             queryParameters,
-      headers:        headerParams,
-      uri:            localVarPath,
+      method        : 'GET',
+      qs            : queryParameters,
+      headers       : headerParams,
+      uri           : localVarPath,
       useQuerystring: this._useQuerystring,
-      json:           true,
+      json          : true,
     };
 
     this.authentications.default.applyToRequest(requestOptions);
@@ -6043,7 +6080,6 @@ export class QueryApi {
     let headerParams: any    = (<any>Object).assign({}, this.defaultHeaders);
     let formParams: any      = {};
 
-
     // verify required parameter 'status' is not null or undefined
     if (status === null || status === undefined) {
       throw new Error('Required parameter status was null or undefined when calling queryGetEcmrsByStatus.');
@@ -6053,16 +6089,15 @@ export class QueryApi {
       queryParameters['status'] = ObjectSerializer.serialize(status, "string");
     }
 
-
     let useFormData = false;
 
     let requestOptions: request.Options = {
-      method:         'GET',
-      qs:             queryParameters,
-      headers:        headerParams,
-      uri:            localVarPath,
+      method        : 'GET',
+      qs            : queryParameters,
+      headers       : headerParams,
+      uri           : localVarPath,
       useQuerystring: this._useQuerystring,
-      json:           true,
+      json          : true,
     };
 
     this.authentications.default.applyToRequest(requestOptions);
@@ -7707,17 +7742,16 @@ export class UpdateECMRApi {
     let headerParams: any    = (<any>Object).assign({}, this.defaultHeaders);
     let formParams: any      = {};
 
-
     let useFormData = false;
 
     let requestOptions: request.Options = {
-      method:         'POST',
-      qs:             queryParameters,
-      headers:        headerParams,
-      uri:            localVarPath,
+      method        : 'POST',
+      qs            : queryParameters,
+      headers       : headerParams,
+      uri           : localVarPath,
       useQuerystring: this._useQuerystring,
-      json:           true,
-      body:           ObjectSerializer.serialize(data, "UpdateECMR")
+      json          : true,
+      body          : ObjectSerializer.serialize(data, "UpdateECMR")
     };
 
     this.authentications.default.applyToRequest(requestOptions);
@@ -7735,6 +7769,100 @@ export class UpdateECMRApi {
           reject(error);
         } else {
           body = ObjectSerializer.deserialize(body, "UpdateECMR");
+          if (response.statusCode >= 200 && response.statusCode <= 299) {
+            resolve({response: response, body: body});
+          } else {
+            reject({response: response, body: body});
+          }
+        }
+      });
+    });
+  }
+}
+
+export enum UpdateRegistrationCountryApiApiKeys {
+}
+
+export class UpdateRegistrationCountryApi {
+  protected _basePath                = defaultBasePath;
+  protected defaultHeaders: any      = {};
+  protected _useQuerystring: boolean = false;
+
+  protected authentications = {
+    'default': <Authentication>new VoidAuth(),
+  }
+
+  constructor(basePath?: string);
+  constructor(basePathOrUsername: string, password?: string, basePath?: string) {
+    if (password) {
+      if (basePath) {
+        this.basePath = basePath;
+      }
+    } else {
+      if (basePathOrUsername) {
+        this.basePath = basePathOrUsername
+      }
+    }
+  }
+
+  set useQuerystring(value: boolean) {
+    this._useQuerystring = value;
+  }
+
+  set basePath(basePath: string) {
+    this._basePath = basePath;
+  }
+
+  get basePath() {
+    return this._basePath;
+  }
+
+  public setDefaultAuthentication(auth: Authentication) {
+    this.authentications.default = auth;
+  }
+
+  public setApiKey(key: UpdateRegistrationCountryApiApiKeys, value: string) {
+    this.authentications[UpdateRegistrationCountryApiApiKeys[key]].apiKey = value;
+  }
+
+  /**
+   *
+   * @summary Create a new instance of the model and persist it into the data source.
+   * @param data Model instance data
+   */
+  public updateRegistrationCountryCreate(data?: UpdateRegistrationCountry): Promise<{ response: http.IncomingMessage; body: UpdateRegistrationCountry; }> {
+    const localVarPath       = this.basePath + '/UpdateRegistrationCountry';
+    let queryParameters: any = {};
+    let headerParams: any    = (<any>Object).assign({}, this.defaultHeaders);
+    let formParams: any      = {};
+
+    let useFormData = false;
+
+    let requestOptions: request.Options = {
+      method        : 'POST',
+      qs            : queryParameters,
+      headers       : headerParams,
+      uri           : localVarPath,
+      useQuerystring: this._useQuerystring,
+      json          : true,
+      body          : ObjectSerializer.serialize(data, "UpdateRegistrationCountry")
+    };
+
+    this.authentications.default.applyToRequest(requestOptions);
+
+    if (Object.keys(formParams).length) {
+      if (useFormData) {
+        (<any>requestOptions).formData = formParams;
+      } else {
+        requestOptions.form = formParams;
+      }
+    }
+    return new Promise<{ response: http.IncomingMessage; body: UpdateRegistrationCountry; }>((resolve, reject) => {
+      request(requestOptions, (error, response, body) => {
+        if (error) {
+          reject(error);
+        } else {
+          body = ObjectSerializer.deserialize(body, "UpdateRegistrationCountry");
           if (response.statusCode >= 200 && response.statusCode <= 299) {
             resolve({response: response, body: body});
           } else {

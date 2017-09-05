@@ -12,7 +12,7 @@ import {
 } from 'routing-controllers';
 import {Container} from 'typedi';
 import {ApiFactory} from '../../utils';
-import {ECMR, ECMRApi, QueryApi} from '../../sdk/api';
+import {ECMR, ECMRApi, QueryApi, Vehicle} from '../../sdk/api';
 import {ErrorHandlerMiddleware, ComposerInterceptor, TransactionHandler} from '../../middleware';
 import {JSONWebToken} from '../../utils/auth/JSONWebToken';
 
@@ -24,10 +24,10 @@ export class ECMRController {
   private api: ECMRApi;
 
   public constructor(private _transactor: TransactionHandler) {
-    const apiFactory   = Container.get(ApiFactory);
-    this.queryApi      = apiFactory.get(QueryApi);
-    this.api           = apiFactory.get(ECMRApi);
-    this._transactor   = new TransactionHandler();
+    const apiFactory = Container.get(ApiFactory);
+    this.queryApi    = apiFactory.get(QueryApi);
+    this.api         = apiFactory.get(ECMRApi);
+    this._transactor = new TransactionHandler();
   }
 
   @Get('/')
@@ -59,4 +59,11 @@ export class ECMRController {
     return vehicles;
   }
 
+  @Post('/')
+  public async createVehicles(@Body() vehicles: Vehicle[], @Req() request: any): Promise<any> {
+    let enrollmentID = new JSONWebToken(request).getUserID();
+    let secret       = new JSONWebToken(request).getSecret();
+
+    return this._transactor.put(vehicles, enrollmentID, secret, (factory, data) => this._transactor.createVehicles(factory, data, enrollmentID));
+  }
 }
