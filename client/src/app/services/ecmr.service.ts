@@ -20,7 +20,7 @@ export class EcmrService {
 
   public getECMRByID(ecmrID: string) {
     return this._http
-      .get(this._configuration.composerHost + this._configuration.composerPrefix + 'ecmrID/' + ecmrID, {headers: this.headers})
+      .get(this.actionUrl + 'ecmrID/' + ecmrID, {headers: this.headers})
       .map(res => res.json());
   }
 
