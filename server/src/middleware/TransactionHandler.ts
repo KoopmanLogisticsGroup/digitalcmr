@@ -1,7 +1,7 @@
 import {BusinessNetworkHandler} from './BusinessNetworkHandler';
 import * as uuid from 'uuid/v4';
 import {Config} from '../config';
-import {CarrierOrg, CompoundOrg, ECMR, ECMRApi, LegalOwnerOrg, RecipientOrg} from '../sdk/api';
+import {CarrierOrg, CompoundOrg, ECMR, ECMRApi, LegalOwnerOrg, RecipientOrg, Vehicle} from '../sdk/api';
 import http = require('http');
 
 export class TransactionHandler {
@@ -167,6 +167,11 @@ export class TransactionHandler {
     return this.buildRecipientOrg(factory, recipientOrg, transaction, enrollmentID);
   }
 
+  public createVehicles(factory: any, vehicles: Vehicle[], enrollmentID: string): any {
+    const transaction = factory.newTransaction(this.namespace, 'CreateVehicles');
+    return this.buildVehicles(factory, vehicles, transaction, enrollmentID);
+  }
+
   private createConcept(conceptName: string, conceptData: any, factory: any): any {
     let concept = factory.newConcept(this.namespace, conceptName);
     return this.fillAttributes(concept, conceptData);
@@ -231,6 +236,19 @@ export class TransactionHandler {
 
     transaction.recipientOrg.address = this.createConcept('Address', recipientOrg.address, factory);
 
+    return transaction;
+  }
+
+  private buildVehicles(factory: any, vehicles: Vehicle[], transaction: any, enrollmentID: string): any {
+    transaction.vehicles = [];
+
+    for (let i = 0; i < vehicles.length; i++) {
+      transaction.vehicles.push(factory.newResource(this.namespace, 'Vehicle', uuid()));
+      transaction.vehicles[i] = this.fillAttributes(transaction.vehicles[i], vehicles[i]);
+      for (let j = 0; j < vehicles[i].ecmrs.length; j++) {
+        transaction.vehicles[i].ecmrs[j] = factory.newRelationship(this.namespace, 'ECMR', vehicles[i].ecmrs[j]);
+      }
+    }
     return transaction;
   }
 
