@@ -137,14 +137,39 @@ export class OrganizationController {
     const orgs = await this._transactor.executeQuery('getRecipientOrgByName', enrollmentID, secret, {name: name});
     return orgs;
   }
-  // @Post('/')
-  // public async create(@Body() ecmr: ECMR, @Req() request: any): Promise<any> {
-  //   let enrollmentID = new JSONWebToken(request).getUserID();
-  //   let secret       = new JSONWebToken(request).getSecret();
-  //
-  //   return this._transactor.put(ecmr, enrollmentID, secret, (factory, data) => this._transactor.createECMR(factory, data, enrollmentID));
-  // }
-  //
+
+  @Post('/legalowner/')
+  public async createLegalOwnerOrg(@Body() legalOwnerOrg: LegalOwnerOrg, @Req() request: any): Promise<any> {
+    let enrollmentID = new JSONWebToken(request).getUserID();
+    let secret       = new JSONWebToken(request).getSecret();
+
+    return this._transactor.put(legalOwnerOrg, enrollmentID, secret, (factory, data) => this._transactor.createLegalOwnerOrg(factory, data, enrollmentID));
+  }
+
+  @Post('/compound/')
+  public async createCompoundOrg(@Body() compoundOrg: CompoundOrg, @Req() request: any): Promise<any> {
+    let enrollmentID = new JSONWebToken(request).getUserID();
+    let secret       = new JSONWebToken(request).getSecret();
+
+    return this._transactor.put(compoundOrg, enrollmentID, secret, (factory, data) => this._transactor.createCompoundOrg(factory, data, enrollmentID));
+  }
+
+  @Post('/carrier/')
+  public async createCarrierOrg(@Body() carrierOrg: CarrierOrg, @Req() request: any): Promise<any> {
+    let enrollmentID = new JSONWebToken(request).getUserID();
+    let secret       = new JSONWebToken(request).getSecret();
+
+    return this._transactor.put(carrierOrg, enrollmentID, secret, (factory, data) => this._transactor.createCarrierOrg(factory, data, enrollmentID));
+  }
+
+  @Post('/recipient/')
+  public async createRecipientOrg(@Body() recipientOrg: RecipientOrg, @Req() request: any): Promise<any> {
+    let enrollmentID = new JSONWebToken(request).getUserID();
+    let secret       = new JSONWebToken(request).getSecret();
+
+    return this._transactor.put(recipientOrg, enrollmentID, secret, (factory, data) => this._transactor.createRecipientOrg(factory, data, enrollmentID));
+  }
+
   // @Put('/')
   // public async update(@Body() ecmr: ECMR, @Req() request: any): Promise<any> {
   //   let enrollmentID = new JSONWebToken(request).getUserID();
