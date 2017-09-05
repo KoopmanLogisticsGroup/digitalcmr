@@ -24,10 +24,10 @@ export class ECMRController {
   private api: ECMRApi;
 
   public constructor(private _transactor: TransactionHandler) {
-    const apiFactory   = Container.get(ApiFactory);
-    this.queryApi      = apiFactory.get(QueryApi);
-    this.api           = apiFactory.get(ECMRApi);
-    this._transactor   = new TransactionHandler();
+    const apiFactory = Container.get(ApiFactory);
+    this.queryApi    = apiFactory.get(QueryApi);
+    this.api         = apiFactory.get(ECMRApi);
+    this._transactor = new TransactionHandler();
   }
 
   @Get('/')
