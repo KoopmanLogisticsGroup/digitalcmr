@@ -23,7 +23,7 @@ class App {
     const app = express();
     app.use(cors());
     app.use(this.loggerFactory.requestLogger);
-
+    process.setMaxListeners(0);
     this.debug('dependency injection');
     useContainer(Container);
     Container.set(ApiFactory, new ApiFactory(Config.settings.composer.url));

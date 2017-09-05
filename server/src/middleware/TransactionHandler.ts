@@ -1,7 +1,7 @@
 import {BusinessNetworkHandler} from './BusinessNetworkHandler';
 import * as uuid from 'uuid/v4';
 import {Config} from '../config';
-import {ECMR, ECMRApi} from '../sdk/api';
+import {CarrierOrg, CompoundOrg, ECMR, ECMRApi, LegalOwnerOrg, RecipientOrg, Vehicle} from '../sdk/api';
 import http = require('http');
 
 export class TransactionHandler {
@@ -137,6 +137,121 @@ export class TransactionHandler {
     });
   }
 
+  public createECMR(factory: any, ecmr: ECMR, enrollmentID: string): any {
+    const transaction = factory.newTransaction(this.namespace, 'CreateECMR');
+    return this.buildECMR(factory, ecmr, transaction, enrollmentID);
+  }
+
+  public updateECMR(factory: any, ecmr: any, enrollmentID: string, ip?: any): any {
+    const transaction = factory.newTransaction(this.namespace, 'UpdateECMR');
+    return this.buildECMR(factory, ecmr, transaction, enrollmentID, ip);
+  }
+
+  public createLegalOwnerOrg(factory: any, legalOwnerOrg: LegalOwnerOrg, enrollmentID: string): any {
+    const transaction = factory.newTransaction(this.namespace, 'CreateLegalOwnerOrg');
+    return this.buildLegalOwnerOrg(factory, legalOwnerOrg, transaction, enrollmentID);
+  }
+
+  public createCompoundOrg(factory: any, compoundOrg: CompoundOrg, enrollmentID: string): any {
+    const transaction = factory.newTransaction(this.namespace, 'CreateCompoundOrg');
+    return this.buildCompoundOrg(factory, compoundOrg, transaction, enrollmentID);
+  }
+
+  public createCarrierOrg(factory: any, carrierOrg: CarrierOrg, enrollmentID: string): any {
+    const transaction = factory.newTransaction(this.namespace, 'CreateCarrierOrg');
+    return this.buildCarrierOrg(factory, carrierOrg, transaction, enrollmentID);
+  }
+
+  public createRecipientOrg(factory: any, recipientOrg: RecipientOrg, enrollmentID: string): any {
+    const transaction = factory.newTransaction(this.namespace, 'CreateRecipientOrg');
+    return this.buildRecipientOrg(factory, recipientOrg, transaction, enrollmentID);
+  }
+
+  public createVehicles(factory: any, vehicles: Vehicle[], enrollmentID: string): any {
+    const transaction = factory.newTransaction(this.namespace, 'CreateVehicles');
+    return this.buildVehicles(factory, vehicles, transaction, enrollmentID);
+  }
+
+  private createConcept(conceptName: string, conceptData: any, factory: any): any {
+    let concept = factory.newConcept(this.namespace, conceptName);
+    return this.fillAttributes(concept, conceptData);
+  }
+
+  private convertAssetsToConcepts(assetName: string, assets: any[], factory: any): any[] {
+    let assetsConcepts = [];
+
+    for (let asset of assets) {
+      let assetConcept = this.createConcept(assetName, asset, factory);
+      assetConcept.id  = uuid();
+
+      assetsConcepts.push(assetConcept);
+    }
+
+    return assetsConcepts;
+  }
+
+  private fillAttributes(outObject: any, inObject: any): any {
+    for (let key in inObject) {
+      if (inObject.hasOwnProperty(key)) {
+        outObject[key] = inObject[key];
+      }
+    }
+    return outObject;
+  }
+
+  private buildLegalOwnerOrg(factory: any, legalOwnerOrg: LegalOwnerOrg, transaction: any, enrollmentID: string): any {
+    transaction.legalOwnerOrg = factory.newResource(this.namespace, 'LegalOwnerOrg', uuid());
+
+    transaction.legalOwnerOrg = this.fillAttributes(transaction.legalOwnerOrg, legalOwnerOrg);
+
+    transaction.legalOwnerOrg.address = this.createConcept('Address', legalOwnerOrg.address, factory);
+
+    return transaction;
+  }
+
+  private buildCompoundOrg(factory: any, compoundOrg: CompoundOrg, transaction: any, enrollmentID: string): any {
+    transaction.compoundOrg = factory.newResource(this.namespace, 'CompoundOrg', uuid());
+
+    transaction.compoundOrg = this.fillAttributes(transaction.compoundOrg, compoundOrg);
+
+    transaction.compoundOrg.address = this.createConcept('Address', compoundOrg.address, factory);
+
+    return transaction;
+  }
+
+  private buildCarrierOrg(factory: any, carrierOrg: CarrierOrg, transaction: any, enrollmentID: string): any {
+    transaction.carrierOrg = factory.newResource(this.namespace, 'CarrierOrg', uuid());
+
+    transaction.carrierOrg = this.fillAttributes(transaction.carrierOrg, carrierOrg);
+
+    transaction.carrierOrg.address = this.createConcept('Address', carrierOrg.address, factory);
+
+    return transaction;
+  }
+
+  private buildRecipientOrg(factory: any, recipientOrg: RecipientOrg, transaction: any, enrollmentID: string): any {
+    transaction.recipientOrg = factory.newResource(this.namespace, 'RecipientOrg', uuid());
+
+    transaction.recipientOrg = this.fillAttributes(transaction.recipientOrg, recipientOrg);
+
+    transaction.recipientOrg.address = this.createConcept('Address', recipientOrg.address, factory);
+
+    return transaction;
+  }
+
+  private buildVehicles(factory: any, vehicles: Vehicle[], transaction: any, enrollmentID: string): any {
+    transaction.vehicles = [];
+
+    for (let i = 0; i < vehicles.length; i++) {
+      transaction.vehicles.push(factory.newResource(this.namespace, 'Vehicle', uuid()));
+      transaction.vehicles[i] = this.fillAttributes(transaction.vehicles[i], vehicles[i]);
+      for (let j = 0; j < vehicles[i].ecmrs.length; j++) {
+        transaction.vehicles[i].ecmrs[j] = factory.newRelationship(this.namespace, 'ECMR', vehicles[i].ecmrs[j]);
+      }
+    }
+    return transaction;
+  }
+
   private buildECMR(factory: any, ecmr: any, transaction: any, enrollmentID: string, ip?: any): any {
     transaction.ecmr = factory.newResource(this.namespace, 'ECMR', uuid());
 
@@ -253,43 +368,6 @@ export class TransactionHandler {
       transaction.ecmr.goods[i].vehicle = vehicle;
     }
     return transaction;
-  }
-
-  public createECMR(factory: any, ecmr: ECMR, enrollmentID: string): any {
-    const transaction = factory.newTransaction(this.namespace, 'CreateECMR');
-    return this.buildECMR(factory, ecmr, transaction, enrollmentID);
-  }
-
-  public updateECMR(factory: any, ecmr: any, enrollmentID: string, ip?: any): any {
-    const transaction = factory.newTransaction(this.namespace, 'UpdateECMR');
-    return this.buildECMR(factory, ecmr, transaction, enrollmentID, ip);
-  }
-
-  private createConcept(conceptName: string, conceptData: any, factory: any): any {
-    let concept = factory.newConcept(this.namespace, conceptName);
-    return this.fillAttributes(concept, conceptData);
-  }
-
-  private convertAssetsToConcepts(assetName: string, assets: any[], factory: any): any[] {
-    let assetsConcepts = [];
-
-    for (let asset of assets) {
-      let assetConcept = this.createConcept(assetName, asset, factory);
-      assetConcept.id  = uuid();
-
-      assetsConcepts.push(assetConcept);
-    }
-
-    return assetsConcepts;
-  }
-
-  private fillAttributes(outObject: any, inObject: any): any {
-    for (let key in inObject) {
-      if (inObject.hasOwnProperty(key)) {
-        outObject[key] = inObject[key];
-      }
-    }
-    return outObject;
   }
 
 }
