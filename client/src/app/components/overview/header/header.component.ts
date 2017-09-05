@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../../services/authentication.service';
 import {SearchService} from '../../../services/search.service';
+import {NavbarService} from '../../../services/navbar.service';
 
 @Component({
   selector   : 'app-header',
@@ -11,7 +12,8 @@ export class HeaderComponent implements OnInit {
   public currentView: string;
 
   public constructor(private searchService: SearchService,
-                     private _authenticationService: AuthenticationService) {
+                     private _authenticationService: AuthenticationService,
+                     public nav: NavbarService) {
   }
 
   public ngOnInit() {

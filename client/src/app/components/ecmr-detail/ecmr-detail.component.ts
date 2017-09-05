@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {EcmrService} from '../../services/ecmr.service';
 import {ActivatedRoute} from '@angular/router';
+import {NavbarService} from '../../services/navbar.service';
 
 @Component({
   selector   : 'app-ecmr-detail',
@@ -15,11 +16,13 @@ export class EcmrDetailComponent implements OnInit {
   public selectedColumns: boolean[];
 
   public constructor(private route: ActivatedRoute,
-                     private ecmrService: EcmrService) {
+                     private ecmrService: EcmrService,
+                     public nav: NavbarService) {
     this.selectedColumns = [false, false, false, false];
   }
 
   public ngOnInit() {
+    this.nav.hide();
     this.route.params
       .subscribe(params => {
         this.ecmrID = params['ecmrID'];

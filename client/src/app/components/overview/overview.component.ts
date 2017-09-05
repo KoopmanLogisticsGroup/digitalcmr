@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {EcmrService} from '../../services/ecmr.service';
 import {AuthenticationService} from '../../services/authentication.service';
 import {SearchService} from '../../services/search.service';
+import {NavbarService} from '../../services/navbar.service';
 
 @Component({
   selector   : 'app-overview',
@@ -20,10 +21,11 @@ export class OverviewComponent implements OnInit {
 
   public constructor(private ecmrService: EcmrService,
                      private searchService: SearchService,
-                     private _authenticationService: AuthenticationService) {
+                     private _authenticationService: AuthenticationService,
+                     public nav: NavbarService) {
     this.searchService.searchData$.subscribe((data) => {
       this.searchBarData = data;
-    })
+    });
     this.searchService.filterEcmr$.subscribe((data) => {
       this.filterEcmr = data;
       console.log(this.filterEcmr);
@@ -31,6 +33,7 @@ export class OverviewComponent implements OnInit {
   }
 
   public ngOnInit() {
+    this.nav.show();
     this.ecmrService.getAllEcmrs().subscribe(ecmrs => {
       this.ecmrs         = ecmrs instanceof Array ? ecmrs : new Array(ecmrs);
       const userOrg      = JSON.parse(localStorage.getItem('currentUser')).user.org;

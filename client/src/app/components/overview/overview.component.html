@@ -9,16 +9,25 @@
     </div>
   </div>
   <div class="row">
-    <div class="ui pointing secondary menu">
-      <div *ngIf="(userRole() === 'CompoundAdmin')">
-        <a class="item" data-tab="first" (click)="setCurrentView('OPEN')"
-           [ngClass]="{'active' : currentView === 'OPEN' ? true : false}">OPEN</a></div>
-      <a class="item" data-tab="second" (click)="setCurrentView('IN_PROGRESS')"
-         *ngIf="userRole() === 'CompoundAdmin' || userRole() === 'CarrierMember' || userRole() === 'RecipientMember'"
-         [ngClass]="{'active' : currentView === 'IN_PROGRESS' ? true : false}">IN PROGRESS</a>
-      <a class="item" data-tab="third" (click)="setCurrentView('COMPLETED')"
-         *ngIf="userRole() === 'CompoundAdmin' || userRole() === 'LegalOwnerAdmin' || userRole() === 'CarrierMember' || userRole() === 'RecipientMember'"
-         [ngClass]="{'active' : currentView === 'COMPLETED' ? true : false}">COMPLETED</a>
+    <div class="ui pointing secondary menu" *ngIf="searchBarData !== ''">
+      <div class="resultsTop">Showing
+        <span *ngIf="searchBarData === ''; else showFilteredResults">{{ecmrsFiltered?.length}}</span>
+        <ng-template #showFilteredResults>{{filterEcmr}}</ng-template>
+        of {{ecmrsFiltered?.length}} Results
+      </div>
+    </div>
+    <div *ngIf="searchBarData === ''">
+      <div class="ui pointing secondary menu">
+        <div *ngIf="(userRole() === 'CompoundAdmin')">
+          <a class="item" data-tab="first" (click)="setCurrentView('OPEN')"
+             [ngClass]="{'active' : currentView === 'OPEN' ? true : false}">OPEN</a></div>
+        <a class="item" data-tab="second" (click)="setCurrentView('IN_PROGRESS')"
+           *ngIf="userRole() === 'CompoundAdmin' || userRole() === 'CarrierMember' || userRole() === 'RecipientMember'"
+           [ngClass]="{'active' : currentView === 'IN_PROGRESS' ? true : false}">IN PROGRESS</a>
+        <a class="item" data-tab="third" (click)="setCurrentView('COMPLETED')"
+           *ngIf="userRole() === 'CompoundAdmin' || userRole() === 'LegalOwnerAdmin' || userRole() === 'CarrierMember' || userRole() === 'RecipientMember'"
+           [ngClass]="{'active' : currentView === 'COMPLETED' ? true : false}">COMPLETED</a>
+      </div>
     </div>
     <div class="ui active tab grid" data-tab="first">
       <div class="row">
@@ -76,8 +85,9 @@
         </table>
       </div>
       <img class="noResults" *ngIf="filterEcmr < 1 && searchBarData !== ''">
+      <p *ngIf="filterEcmr < 1 && searchBarData !== ''" class="noResultsText">NO RESULTS FOUND</p>
     </div>
-    <div class="showResults">Showing
+    <div class="showResults" *ngIf="searchBarData === ''">Showing
       <span *ngIf="searchBarData === ''; else showFilteredResults">{{ecmrsFiltered?.length}}</span>
       <ng-template #showFilteredResults>{{filterEcmr}}</ng-template>
       of {{ecmrsFiltered?.length}} Results

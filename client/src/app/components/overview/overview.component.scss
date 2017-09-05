@@ -136,11 +136,12 @@
 .table-title {
   color: #32649e;
   font-size: 1.6vw;
-  margin-bottom: 5%;
+  margin-bottom: 3%;
   .closeResults {
     float: right;
     content: url("../../../assets/icons/close.svg");
     cursor: pointer;
+    margin-top: 2%;
   }
 }
 
@@ -163,6 +164,9 @@
       font-weight: bold;
       color: #dededf;
     }
+    .resultsTop {
+      color: black;
+    }
   }
   .table:last-child {
     background-color: transparent;
@@ -177,8 +181,13 @@
     width: 100%;
   }
   .noResults {
-    margin-left: 25%;
+    margin-left: 29%;
     content: url("../../../assets/img/no-results.svg");
+  }
+  .noResultsText {
+    text-align: center;
+    margin-top: 3%;
+    font-size: 1.5em;
   }
   .showResults {
     font-size: 0.8vw;

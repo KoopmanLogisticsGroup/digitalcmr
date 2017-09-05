@@ -9,9 +9,7 @@ import {AuthGuard} from './guards/index';
 
 import {AppComponent} from './app.component';
 import {LoginComponent} from './components/login/login.component';
-import {ThingsComponent} from './components/things/things.component';
 
-import {ThingService} from './services/thing.service';
 import {AuthenticationService} from './services/authentication.service';
 import {EcmrService} from './services/ecmr.service';
 import {HeaderComponent} from './components/overview/header/header.component';
@@ -23,12 +21,12 @@ import {GoodsComponent} from './components/ecmr-detail/goods/goods.component';
 import {SignOffModalComponent} from './components/ecmr-detail/sign-off-modal/sign-off-modal.component';
 import {FilterByPipe} from '../../src/app/utils/filterBy.pipe';
 import {SearchService} from './services/search.service';
+import {NavbarService} from './services/navbar.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    ThingsComponent,
     HeaderComponent,
     OverviewComponent,
     EcmrsComponent,
@@ -49,9 +47,9 @@ import {SearchService} from './services/search.service';
     Configuration,
     AuthenticationService,
     AuthGuard,
-    ThingService,
     EcmrService,
-    SearchService
+    SearchService,
+    NavbarService
   ],
   bootstrap   : [AppComponent]
 })
