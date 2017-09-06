@@ -1,0 +1,21 @@
+version: '2'
+services:
+  composer-cli:
+    image: hyperledger/composer-cli:0.12.0
+    env_file: .env
+    volumes:
+      - ./bna:/home/composer/bna
+      - ./resources:/home/composer/resources
+      - ./hlfv1/composer/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp:/admin-crypto
+      - ./resources/connectionProfiles:/home/composer/.composer-connection-profiles
+    command: >
+      sh -c "/home/composer/resources/deploy.sh"
+
+  composer-rest-server:
+    image: hyperledger/composer-rest-server:0.12.0
+    ports:
+      - "3000:3000"
+    env_file: .env
+    volumes:
+      - ./hlfv1/composer/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp:/admin-crypto
+      - ./resources/connectionProfiles:/home/composer/.composer-connection-profiles

@@ -103,7 +103,7 @@ export class TestData {
   }
 
   private async addParticipants(): Promise<any> {
-    this.logger.info('[TestData]Adding participants');
+    this.logger.info('[TestData] Adding participants');
     let promises = [];
     for (let participant of participants) {
       promises.push(this.userService.addUser(participant));
