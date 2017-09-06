@@ -1,0 +1,657 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Digital ECMR APIs",
+        "description": "APIs for managing the digital ECMR",
+        "version": "1.0.0"
+    },
+    "host": "digital-ecmr.bluemix.net",
+    "schemes": [
+        "https"
+    ],
+    "securityDefinitions":{
+        
+        "UserSecurity": {
+            "type": "basic"            
+        }
+        
+    },  
+    "basePath": "/api/v1",    
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/ECMR/": {
+            "post": {
+                "x-swagger-router-controller": "ECMRController",
+                "operationId": "create",
+                "summary": "Creates a new ECMR",
+                "description": "Creates a new ECMR and saves it into blockchain, if the user has the proper permissions.\n",
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "ecmr",
+                        "in": "body",
+                        "description": "The ECMR object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ECMR"
+                        }
+                    }
+                ],
+                "responses": {                    
+                    "200": {
+                        "description": "The ECMR has been created and written into the blockchain\n",
+                        "schema": {
+                            "$ref": "#/definitions/ECMR"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "get": {
+                "x-swagger-router-controller": "ECMRController",
+                "operationId": "getAllEcmrs",
+                "summary": "Returns the complete list of the ECMRs",
+                "description": "Returns the complete list of the ECMRs current user has the right to read",
+                "parameters": [
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The patient has been found. The qr code data are packed into the response object\n",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ECMR"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+    },
+    "definitions": {
+        "Address": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "required": true
+                },
+                "street": {
+                    "type": "string",
+                    "required": true
+                },
+                "houseNumber": {
+                    "type": "string",
+                    "required": true
+                },
+                "city": {
+                    "type": "string",
+                    "required": true
+                },
+                "zipCode": {
+                    "type": "string",
+                    "required": true
+                },
+                "country": {
+                    "type": "string",
+                    "required": true
+                },
+                "latitude": {
+                    "type": "number",
+                    "required": true
+                },
+                "longitude": {
+                    "type": "number",
+                    "required": true
+                }
+            }
+        },
+        "Delivery": {
+            "type": "object",
+            "properties": {
+                "Address": {
+                    "$ref": "#/definitions/Address",
+                    "required": true
+                },
+                "date": {
+                    "type": "number",
+                    "required": false
+                }
+            }
+        },
+        "Loading": {
+            "type": "object",
+            "properties": {
+                "Address": {
+                    "$ref": "#/definitions/Address",
+                    "required": true
+                },
+                "date": {
+                    "type": "number",
+                    "required": true
+                }
+            }
+        },
+        "Creation": {
+            "type": "object",
+            "properties": {
+                "Address": {
+                    "$ref": "#/definitions/Address",
+                    "required": true
+                },
+                "date": {
+                    "type": "number",
+                    "required": true
+                }
+            }
+        },
+        "Remark": {
+            "type": "object",
+            "properties": {
+                "comments": {
+                    "type": "string",
+                    "required": true
+                },
+                "isDamaged": {
+                    "type": "boolean",
+                    "required": false
+                }
+            }
+        },
+        "Vehicle": {
+            "type": "object",
+            "properties": {
+                "vin": {
+                    "type": "string",
+                    "required": true
+                },
+                "manufacturer": {
+                    "type": "boolean",
+                    "required": true
+                },
+                "model": {
+                    "type": "string",
+                    "required": true
+                },
+                "type": {
+                    "type": "boolean",
+                    "required": true
+                },
+                "emcrs": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ECMR"
+                    },
+                    "required": true
+                },
+                "odoMeterReading": {
+                    "type": "number",
+                    "required": true
+                },
+                "plateNumber": {
+                    "type": "string",
+                    "required": true
+                },
+                "registrationCountry": {
+                    "type": "string",
+                    "required": false
+                }
+            }
+        },
+        "ECMR_STATUS": {
+            "type": "string",
+            "enum": [
+                "CREATED",
+                "LOADED",
+                "IN_TRANSIT",
+                "DELIVERED",
+                "CONFIRMED_DELIVERED"
+            ]
+        },
+        "ECMR": {
+            "type": "object",
+            "description": "description",
+            "properties": {
+                "ecmrID": {
+                    "type": "string",
+                    "required": true
+                },
+                "status": {
+                    "$ref": "#/definitions/ECMR_STATUS",
+                    "required": true
+                },
+                "creation": {
+                    "$ref": "#/definitions/Creation",
+                    "required": true
+                },
+                "loading": {
+                    "$ref": "#/definitions/Loading",
+                    "required": true
+                },
+                "delivery": {
+                    "$ref": "#/definitions/Delivery",
+                    "required": true
+                },
+                "owner": {
+                    "type": "string",
+                    "description": "The id of the legal owner org",
+                    "required": true
+                },
+                "source": {
+                    "type": "string",
+                    "description": "The id of the compound org",
+                    "required": true
+                },
+                "transporter": {
+                    "type": "string",
+                    "description": "The id of the transporter user",
+                    "required": false
+                },
+                "carrier": {
+                    "type": "string",
+                    "description": "The id of the carrier org",
+                    "required": true
+                },
+                "recipientOrg": {
+                    "type": "string",
+                    "description": "The id of the recipient org",
+                    "required": true
+                },
+                "recipient": {
+                    "type": "string",
+                    "description": "The id of the recipient user",
+                    "required": false
+                },
+                "issueDate": {
+                    "type": "number",
+                    "required": true
+                },
+                "issuedBy": {
+                    "type": "string",
+                    "description": "The id of the Legal Owner org who issued the ECMR",
+                    "required": true
+                },
+                "carrierComments": {
+                    "type": "string",
+                    "required": true
+                },
+                "goods": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Good"
+                    },
+                    "required": true
+                },
+                "legalOwnerInstructions": {
+                    "type": "string",
+                    "required": true
+                },
+                "paymentInstructions": {
+                    "type": "string",
+                    "required": true
+                },
+                "payOnDelivery": {
+                    "type": "string",
+                    "required": true
+                },
+                "documents": {
+                    "type": "string",
+                    "required": false
+                },
+                "compoundSignature": {
+                    "$ref": "#/definitions/Signature",
+                    "required": false
+                },
+                "carrierLoadingSignature": {
+                    "$ref": "#/definitions/Signature",
+                    "required": false
+                },
+                "carrierDeliverySignature": {
+                    "$ref": "#/definitions/Signature",
+                    "required": false
+                },
+                "recipientSignature": {
+                    "$ref": "#/definitions/Signature",
+                    "required": false
+                }
+            }
+        },
+        "LegalOwnerOrg": {
+            "type": "object",
+            "properties": {
+                "entityID": {
+                    "type": "string",
+                    "required": true
+                },
+                "name": {
+                    "type": "string",
+                    "required": true
+                },
+                "address": {
+                    "$ref": "#/definitions/Address",
+                    "required": true
+                }
+            }
+        },
+        "CompoundOrg": {
+            "type": "object",
+            "properties": {
+                "entityID": {
+                    "type": "string",
+                    "required": true
+                },
+                "name": {
+                    "type": "string",
+                    "required": true
+                },
+                "address": {
+                    "$ref": "#/definitions/Address",
+                    "required": true
+                }
+            }
+        },
+        "CarrierOrg": {
+            "type": "object",
+            "properties": {
+                "entityID": {
+                    "type": "string",
+                    "required": true
+                },
+                "name": {
+                    "type": "string",
+                    "required": true
+                },
+                "address": {
+                    "$ref": "#/definitions/Address",
+                    "required": true
+                }
+            }
+        },
+        "RecipientOrg": {
+            "type": "object",
+            "properties": {
+                "entityID": {
+                    "type": "string",
+                    "required": true
+                },
+                "name": {
+                    "type": "string",
+                    "required": true
+                },
+                "address": {
+                    "$ref": "#/definitions/Address",
+                    "required": true
+                }
+            }
+        },
+        "Good": {
+            "type": "object",
+            "properties": {
+                "vehicle": {
+                    "$ref": "#/definitions/Vehicle",
+                    "required": true
+                },
+                "carrierLoadingRemark": {
+                    "$ref": "#/definitions/Remark",
+                    "required": false
+                },
+                "compoundRemark": {
+                    "$ref": "#/definitions/Remark",
+                    "required": false
+                },
+                "recipientRemark": {
+                    "$ref": "#/definitions/Remark",
+                    "required": false
+                },
+                "carrierDeliveryRemark": {
+                    "$ref": "#/definitions/Remark",
+                    "required": false
+                },
+                "description": {
+                    "type": "string",
+                    "required": false
+                },
+                "weight": {
+                    "type": "number",
+                    "required": false
+                }
+            }
+        },
+        "LegalOwnerAdmin": {
+            "type": "object",
+            "properties": {
+                "userID": {
+                    "type": "string",
+                    "required": true
+                },
+                "userName": {
+                    "type": "string",
+                    "required": true
+                },
+                "firstName": {
+                    "type": "string",
+                    "required": true
+                },
+                "lastName": {
+                    "type": "string",
+                    "required": true
+                },
+                "address": {
+                    "$ref": "#/definitions/Address",
+                    "required": true
+                },
+                "org": {
+                    "type": "string",
+                    "description": "The id of the legal owner organization",
+                    "required": true
+                }
+            }
+        },
+        "CompoundAdmin": {
+            "type": "object",
+            "properties": {
+                "userID": {
+                    "type": "string",
+                    "required": true
+                },
+                "userName": {
+                    "type": "string",
+                    "required": true
+                },
+                "firstName": {
+                    "type": "string",
+                    "required": true
+                },
+                "lastName": {
+                    "type": "string",
+                    "required": true
+                },
+                "address": {
+                    "$ref": "#/definitions/Address",
+                    "required": true
+                },
+                "org": {
+                    "type": "string",
+                    "description": "The id of the compound organization",
+                    "required": true
+                }
+            }
+        },
+        "CarrierAdmin": {
+            "type": "object",
+            "properties": {
+                "userID": {
+                    "type": "string",
+                    "required": true
+                },
+                "userName": {
+                    "type": "string",
+                    "required": true
+                },
+                "firstName": {
+                    "type": "string",
+                    "required": true
+                },
+                "lastName": {
+                    "type": "string",
+                    "required": true
+                },
+                "address": {
+                    "$ref": "#/definitions/Address",
+                    "required": true
+                },
+                "org": {
+                    "type": "string",
+                    "description": "The id of the Carrier organization",
+                    "required": true
+                }
+            }
+        },
+        "CarrierMember": {
+            "type": "object",
+            "properties": {
+                "userID": {
+                    "type": "string",
+                    "required": true
+                },
+                "userName": {
+                    "type": "string",
+                    "required": true
+                },
+                "firstName": {
+                    "type": "string",
+                    "required": true
+                },
+                "lastName": {
+                    "type": "string",
+                    "required": true
+                },
+                "address": {
+                    "$ref": "#/definitions/Address",
+                    "required": true
+                },
+                "org": {
+                    "type": "string",
+                    "description": "The id of the Carrier organization",
+                    "required": true
+                }
+            }
+        },
+        "RecipientAdmin": {
+            "type": "object",
+            "properties": {
+                "userID": {
+                    "type": "string",
+                    "required": true
+                },
+                "userName": {
+                    "type": "string",
+                    "required": true
+                },
+                "firstName": {
+                    "type": "string",
+                    "required": true
+                },
+                "lastName": {
+                    "type": "string",
+                    "required": true
+                },
+                "address": {
+                    "$ref": "#/definitions/Address",
+                    "required": true
+                },
+                "org": {
+                    "type": "string",
+                    "description": "The id of the Recipient organization",
+                    "required": true
+                }
+            }
+        },
+        "RecipientMember": {
+            "type": "object",
+            "properties": {
+                "userID": {
+                    "type": "string",
+                    "required": true
+                },
+                "userName": {
+                    "type": "string",
+                    "required": true
+                },
+                "firstName": {
+                    "type": "string",
+                    "required": true
+                },
+                "lastName": {
+                    "type": "string",
+                    "required": true
+                },
+                "address": {
+                    "$ref": "#/definitions/Address",
+                    "required": true
+                },
+                "org": {
+                    "type": "string",
+                    "description": "The id of the Recipient organization",
+                    "required": true
+                }
+            }
+        },
+        "Signature": {
+            "type": "object",
+            "properties": {
+                "certificate": {
+                    "type": "number",
+                    "required": true
+                },
+                "latitude": {
+                    "type": "number",
+                    "required": false
+                },
+                "longitude": {
+                    "type": "string",
+                    "required": true
+                },
+                "ip": {
+                    "type": "string",
+                    "required": false
+                },
+                "timestamp": {
+                    "type": "number",
+                    "required": true
+                },
+                "generalRemark": {
+                    "$ref": "#/definitions/Remark",
+                    "description": "General remarks for the signature",
+                    "required": true
+                }
+            }
+        },
+        "Error": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
