@@ -17,7 +17,7 @@ export class AuthenticationService {
                      private _configuration: Configuration) {
     this.actionUrl = `${_configuration.apiHost}${_configuration.apiPrefix}login`;
     // set token if saved in local storage
-    this.token = this.getToken();
+    this.token     = this.getToken();
   }
 
   public login(username: string, password: string): Observable<any> {
@@ -36,7 +36,7 @@ export class AuthenticationService {
 
         // store username and jwt token in local storage to keep user logged in between page refreshes
         localStorage.setItem(this.TOKEN_KEY, JSON.stringify({token}));
-        localStorage.setItem(this.USER_KEY,  JSON.stringify({user}));
+        localStorage.setItem(this.USER_KEY, JSON.stringify({user}));
 
         return true;
       }).catch((error: any) => Observable.throw(error.json().error || 'Server error'));

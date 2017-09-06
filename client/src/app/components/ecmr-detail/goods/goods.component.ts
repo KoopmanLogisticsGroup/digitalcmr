@@ -20,7 +20,6 @@ export class GoodsComponent implements OnInit {
 
   public openModal(): void {
     this.signOffModal.open(this.ecmr);
-    console.log(this.ecmr);
   }
 
   public selectColumn() {
@@ -36,7 +35,6 @@ export class GoodsComponent implements OnInit {
   }
 
   public ngOnInit() {
-    console.log(this.selectedColumns);
   }
 
   public userRole(): string {

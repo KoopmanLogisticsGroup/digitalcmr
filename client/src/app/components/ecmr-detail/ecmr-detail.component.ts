@@ -29,8 +29,6 @@ export class EcmrDetailComponent implements OnInit {
         this.ecmrService.getECMRByID(this.ecmrID).subscribe(response => {
           this.ecmr     = response.body[0];
           this.userRole = JSON.parse(localStorage.getItem('currentUser')).user.role;
-          console.log(this.ecmr);
-
           switch (this.ecmr.status) {
             case 'CREATED': {
               this.selectedColumns[0] = true;

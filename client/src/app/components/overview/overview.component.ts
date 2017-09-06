@@ -28,7 +28,6 @@ export class OverviewComponent implements OnInit {
     });
     this.searchService.filterEcmr$.subscribe((data) => {
       this.filterEcmr = data;
-      console.log(this.filterEcmr);
     });
   }
 
@@ -45,7 +44,6 @@ export class OverviewComponent implements OnInit {
       //   (this.ecmr && this.ecmr.recipient.indexOf(userOrg) > 0));
       this.ecmrsFiltered = this.ecmrs.filter(ecmr => ecmr.status.toUpperCase() === 'CREATED');
       this.firstView();
-      console.log(this.ecmrsFiltered);
     });
   }
 
