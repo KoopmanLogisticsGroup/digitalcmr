@@ -77,6 +77,7 @@
         color: #2987cd;
         border-radius: 4px;
         padding: 6px;
+        margin-left: -10%;
       }
       .awaiting-status {
         width: 120px;
@@ -85,24 +86,29 @@
         background-color: rgba(28, 181, 172, 0.2);
         padding: 6px;
         color: #1cb5ac;
+        word-wrap: break-word;
+        margin-left: -30%;
       }
       .transit-status {
-        background-color: rgba(41, 135, 205, 0.2);
+        background-color: rgba(124, 93, 192, 0.2);
         color: #2987cd;
         border-radius: 4px;
         padding: 6px;
+        margin-left: -10%;
       }
       .completed-status {
         background-color: rgba(45, 184, 75, 0.2);
         color: #2db84b;
         border-radius: 4px;
         padding: 6px;
+        margin-left: -10%;
       }
       .confirmed-status {
         background-color: rgba(45, 184, 75, 0.2);
         color: #2db84b;
         border-radius: 4px;
         padding: 6px;
+        margin-left: -10%;
       }
       .viewMore {
         width: 120%;
@@ -181,13 +187,14 @@
     width: 100%;
   }
   .noResults {
-    margin-left: 29%;
+    margin-left: 50%;
+    transform: translateX(-50%);
     content: url("../../../assets/img/no-results.svg");
   }
   .noResultsText {
     text-align: center;
     margin-top: 3%;
-    font-size: 1.5em;
+    font-size: 1.3em;
   }
   .showResults {
     font-size: 0.8vw;

@@ -1,6 +1,7 @@
 <div class="ui container">
   <div class="ui fixed menu designMenu">
-    <img class="logo"/>
+    <img class="logo" [ngClass]="{'logoLeaseplan': getUser() === 'lapo',
+                                  'logoCarDealer': getUser() === 'rob'}"/>
     <div *ngIf="getUser() != null" class="right menu">
       <div class="item">
         <form name="searchBox" class="searchBox">
@@ -29,9 +30,7 @@
         <img *ngIf="getUser() === 'lapo'" src="../../../../assets/icons/icon-rob.svg"/>
       </div>
       <div class="item">
-        <div (click)="logout()" routerLink="/login" class="logoutIcon">
-          <img class="logoutIcon"/>
-        </div>
+        <img (click)="logout()" routerLink="/login" class="logoutIcon">
       </div>
     </div>
   </div>

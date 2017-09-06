@@ -10,10 +10,12 @@
   </div>
   <div class="row">
     <div class="ui pointing secondary menu" *ngIf="searchBarData !== ''">
-      <div class="resultsTop">Showing
-        <span *ngIf="searchBarData === ''; else showFilteredResults">{{ecmrsFiltered?.length}}</span>
-        <ng-template #showFilteredResults>{{filterEcmr}}</ng-template>
-        of {{ecmrsFiltered?.length}} Results
+      <div [hidden]="(filterEcmr < 1 && searchBarData)">
+        <div class="resultsTop">Showing
+          <span *ngIf="searchBarData === ''; else showFilteredResults">{{ecmrsFiltered?.length}}</span>
+          <ng-template #showFilteredResults>{{filterEcmr}}</ng-template>
+          of {{ecmrsFiltered?.length}} Results
+        </div>
       </div>
     </div>
     <div *ngIf="searchBarData === ''">
@@ -72,10 +74,10 @@
                         'confirmed-status': ecmr?.status === 'CONFIRMED_DELIVERED'}">
 
               {{ecmr?.status === 'CREATED' ? 'New CMR' :
-                ecmr?.status === 'LOADED' ? 'Loaded' :
+              ecmr?.status === 'LOADED' ? 'Awaiting Carrier' :
                 ecmr?.status === 'IN_TRANSIT' ? 'In Transit' :
                 ecmr?.status === 'DELIVERED' ? 'Delivered' :
-                ecmr?.status === 'CONFIRMED_DELIVERED' ? 'Confirmed' : ecmr?.status}}
+                ecmr?.status === 'CONFIRMED_DELIVERED' ? 'Completed' : ecmr?.status}}
             </span></td>
             <td>
               <img class="viewMore" routerLink="/ecmr/{{ecmr.ecmrID}}"/>

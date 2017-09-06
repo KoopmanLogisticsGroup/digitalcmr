@@ -65,18 +65,36 @@
               <p>{{good?.compoundRemark.comments}}</p>
             </div>
             <div *ngIf="selectColumn() === 1">
+              <b class="remarkPerson" *ngIf="good?.compoundRemark.comments !== '' || null">{{ecmr?.compoundSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
+              <p>{{good?.compoundRemark.comments}}</p>
               <b class="remarkPerson" *ngIf="good?.carrierLoadingRemark.comments !== '' || null">{{ecmr?.carrierLoadingSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
               <p>{{good?.carrierLoadingRemark.comments}}</p>
             </div>
             <div *ngIf="selectColumn() === 2">
+              <b class="remarkPerson" *ngIf="good?.compoundRemark.comments !== '' || null">{{ecmr?.compoundSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
+              <p>{{good?.compoundRemark.comments}}</p>
+              <b class="remarkPerson" *ngIf="good?.carrierLoadingRemark.comments !== '' || null">{{ecmr?.carrierLoadingSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
+              <p>{{good?.carrierLoadingRemark.comments}}</p>
               <b class="remarkPerson" *ngIf="good?.carrierDeliveryRemark.comments !== '' || null">{{ecmr?.carrierDeliverySignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
               <p>{{good?.carrierDeliveryRemark.comments}}</p>
             </div>
             <div *ngIf="selectColumn() === 3">
+              <b class="remarkPerson" *ngIf="good?.compoundRemark.comments !== '' || null">{{ecmr?.compoundSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
+              <p>{{good?.compoundRemark.comments}}</p>
+              <b class="remarkPerson" *ngIf="good?.carrierLoadingRemark.comments !== '' || null">{{ecmr?.carrierLoadingSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
+              <p>{{good?.carrierLoadingRemark.comments}}</p>
+              <b class="remarkPerson" *ngIf="good?.carrierDeliveryRemark.comments !== '' || null">{{ecmr?.carrierDeliverySignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
+              <p>{{good?.carrierDeliveryRemark.comments}}</p>
               <b class="remarkPerson" *ngIf="good?.recipientRemark.comments !== '' || null">{{ecmr?.recipientSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
               <p>{{good?.recipientRemark.comments}}</p>
             </div>
             <div *ngIf="selectedColumns[3] === true && ecmr.status === 'CONFIRMED_DELIVERED' && selectColumn() !== 3">
+              <b class="remarkPerson" *ngIf="good?.compoundRemark.comments !== '' || null">{{ecmr?.compoundSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
+              <p>{{good?.compoundRemark.comments}}</p>
+              <b class="remarkPerson" *ngIf="good?.carrierLoadingRemark.comments !== '' || null">{{ecmr?.carrierLoadingSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
+              <p>{{good?.carrierLoadingRemark.comments}}</p>
+              <b class="remarkPerson" *ngIf="good?.carrierDeliveryRemark.comments !== '' || null">{{ecmr?.carrierDeliverySignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
+              <p>{{good?.carrierDeliveryRemark.comments}}</p>
               <b class="remarkPerson" *ngIf="good?.recipientRemark.comments !== '' || null">{{ecmr?.recipientSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
               <p>{{good?.recipientRemark.comments}}</p>
             </div>

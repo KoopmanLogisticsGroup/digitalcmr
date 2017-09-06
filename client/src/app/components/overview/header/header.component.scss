@@ -10,6 +10,24 @@
     transform: translateY(-50%);
     content: url("../../../../assets/img/Koopman.jpg");
   }
+  .logoLeaseplan {
+    position: absolute;
+    width: 105px;
+    height: 50px;
+    top: 50%;
+    left: 11%;
+    transform: translateY(-50%);
+    content: url("../../../../assets/img/logo-leaseplan.svg");
+  }
+  .logoCarDealer {
+    position: absolute;
+    width: 105px;
+    height: 50px;
+    top: 50%;
+    left: 11%;
+    transform: translateY(-50%);
+    content: url("../../../../assets/img/icon-auto-seller.svg");
+  }
   .logoutIcon {
     cursor: pointer;
     width: 22px;
