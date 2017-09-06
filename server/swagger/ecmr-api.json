@@ -82,6 +82,33 @@
                 }
             }
         },
+      "/ECMR/ecmrID": {
+        "get": {
+          "x-swagger-router-controller": "ECMRController",
+          "operationId": "getEcmrByEcmrID",
+          "summary": "Returns the ECMR selected by ID",
+          "description": "Returns the ECMR selected by ID",
+          "parameters": [
+          ],
+          "responses": {
+            "200": {
+              "description": "The list contains the ECMR, or is empty if no ECMR with the provided exists or user has no permission to read the ECMR\n",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/ECMR"
+                }
+              }
+            },
+            "default": {
+              "description": "Unexpected error",
+              "schema": {
+                "$ref": "#/definitions/Error"
+              }
+            }
+          }
+        }
+      }
     },
     "definitions": {
         "Address": {
