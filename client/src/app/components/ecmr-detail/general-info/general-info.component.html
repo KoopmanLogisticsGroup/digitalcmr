@@ -17,16 +17,20 @@
       <div class="imgandtext">
         <img class="addressImg"/>
         <div class="addressInfo">
-          <span>{{ecmr?.owner.split('#')[1]}}</span>
-          <span>{{ecmr?.loading.address.street}} {{ecmr?.loading.address.houseNumber}}</span>
-          <span>{{ecmr?.loading.address.zipCode}}, {{ecmr?.loading.address.city}}</span>
+          <span>{{ecmr?.owner?.split('#')[1]}}</span>
+          <span>{{ecmr?.loading?.address.street}} {{ecmr?.loading?.address.houseNumber}}</span>
+          <span>{{ecmr?.loading?.address.zipCode}}, {{ecmr?.loading?.address.city}}</span>
         </div>
       </div>
-      <span><b>Reference Nr.:</b> 213141214</span>
-      <span class="addressInfo"><b>Signed by:</b> Leaseplan</span>
+      <span class="addressInfo"><b>Signed by:</b> {{ecmr?.owner?.split('#')[1]}}</span>
       <span><b>Date:</b> 25-10-2017(12:22)</span>
     </div>
-    <img class="commentOverview iconComment"/>
+    <div class="commentInfo">
+      <div class="imgandtext">
+        <img class="commentOverview iconComment"/>
+        <span></span>
+      </div>
+    </div>
   </div>
   <div class="column" [ngClass]="{'completed': ecmr?.status === 'DELIVERED' || ecmr?.status === 'CONFIRMED_DELIVERED', 'active': selectedColumns[1],
   'inactive': !selectedColumns[1]}" (click)="selectColumn(1)">
@@ -36,61 +40,70 @@
         <div class="imgandtext">
           <img class="addressImg"/>
           <div class="addressInfo">
-            <span>{{ecmr?.source.split('#')[1]}}</span>
-            <span>{{ecmr?.creation.address.street}} {{ecmr?.creation.address.houseNumber}}</span>
-            <span>{{ecmr?.creation.address.zipCode}}, {{ecmr?.creation.address.city}}</span>
+            <span>{{ecmr?.source?.split('#')[1]}}</span>
+            <span>{{ecmr?.creation?.address?.street}} {{ecmr?.creation?.address?.houseNumber}}</span>
+            <span>{{ecmr?.creation?.address?.zipCode}}, {{ecmr?.creation?.address?.city}}</span>
           </div>
         </div>
-        <span><b>Reference Nr.:</b> 213141214</span>
-        <span class="addressInfo"><b>Signed by:</b> Leaseplan</span>
+        <span class="addressInfo"><b>Signed by:</b> {{ecmr?.compoundSignature?.certificate?.split('#')[1].split('@')[0]}}</span>
         <span><b>Date:</b> 24-01-2017(13:09)</span>
       </div>
     </div>
-    <img class="commentOverview iconComment"/>
-    <p>{{ ecmr?.compoundSignature?.generalRemark?.comments }}</p>
+    <div class="commentInfo">
+      <div class="imgandtext">
+        <img class="commentOverview iconComment"/>
+        <span>{{ ecmr?.compoundSignature?.generalRemark?.comments }}</span>
+      </div>
+    </div>
   </div>
   <div class="column" [ngClass]="{'completed': ecmr?.status === 'DELIVERED' || ecmr?.status === 'CONFIRMED_DELIVERED', 'active': selectedColumns[2],
   'inactive': !selectedColumns[2]}" (click)="selectColumn(2)">
     <div>
-      <div class="header">TRANSPORTER</div>
+      <div class="header">CARRIER</div>
       <div class="ecmrInfo">
         <div class="imgandtext">
           <img class="addressImg"/>
           <div class="addressInfo">
-            <span>{{ecmr?.carrier.split('#')[1]}} - {{ecmr?.transporter.split('#')[1].split('@')[0]}}</span>
-            <span>{{ecmr?.creation.address.street}} {{ecmr?.creation.address.houseNumber}}</span>
-            <span>{{ecmr?.creation.address.zipCode}}, {{ecmr?.creation.address.city}}</span>
+            <span>{{ecmr?.carrier?.split('#')[1]}} - {{ecmr?.transporter?.split('#')[1].split('@')[0]}}</span>
+            <span>{{ecmr?.creation?.address?.street}} {{ecmr?.creation?.address?.houseNumber}}</span>
+            <span>{{ecmr?.creation?.address?.zipCode}}, {{ecmr?.creation?.address?.city}}</span>
           </div>
         </div>
-        <span><b>Reference Nr.:</b> 213141214</span>
-        <span class="addressInfo"><b>Signed by:</b> Leaseplan</span>
+        <span class="addressInfo"><b>Signed by:</b> {{ecmr?.carrierLoadingSignature?.certificate?.split('#')[1].split('@')[0]}}</span>
         <span><b>Date:</b> 01-05-2017(15:54)</span>
       </div>
     </div>
-    <img class="commentOverview iconComment"/>
-    <p>{{ ecmr?.carrierLoadingSignature?.generalRemark?.comments }}</p>
-    <p>{{ ecmr?.carrierDeliverySignature?.generalRemark?.comments }}</p>
+    <div class="commentInfo">
+      <div class="imgandtext">
+        <img class="commentOverview iconComment"/>
+        <span>{{ ecmr?.carrierLoadingSignature?.generalRemark?.comments }}</span>
+        <span>{{ ecmr?.carrierDeliverySignature?.generalRemark?.comments }}</span>
+      </div>
+    </div>
   </div>
   <div class="column" [ngClass]="{'completed': ecmr?.status === 'DELIVERED' || ecmr?.status === 'CONFIRMED_DELIVERED', 'active': selectedColumns[3],
   'inactive': !selectedColumns[3]}" (click)="selectColumn(3)">
     <div>
-      <div class="header">CAR DEALER</div>
+      <div class="header">RECEIVER</div>
       <div class="ecmrInfo">
         <div class="imgandtext">
           <img class="addressImg"/>
           <div class="addressInfo">
-            <span>{{ecmr?.recipient.split('#')[1]}}</span>
-            <span>{{ecmr?.delivery.address.street}} {{ecmr?.delivery.address.houseNumber}}</span>
-            <span>{{ecmr?.delivery.address.zipCode}}, {{ecmr?.delivery.address.city}}</span>
+            <span>{{ecmr?.recipient?.split('#')[1]}}</span>
+            <span>{{ecmr?.delivery?.address.street}} {{ecmr?.delivery?.address.houseNumber}}</span>
+            <span>{{ecmr?.delivery?.address.zipCode}}, {{ecmr?.delivery?.address.city}}</span>
           </div>
         </div>
-        <span><b>Reference Nr.:</b> 213141214</span>
-        <span class="addressInfo"><b>Signed by:</b> Leaseplan</span>
+        <span class="addressInfo"><b>Signed by:</b> {{ecmr?.recipientSignature?.certificate?.split('#')[1].split('@')[0]}}</span>
         <span><b>Date:</b> 21-10-2017(10:10)</span>
       </div>
     </div>
-    <img class="commentOverview iconComment"/>
-    <p>{{ ecmr?.recipientSignature?.generalRemark?.comments }}</p>
+    <div class="commentInfo">
+      <div class="imgandtext">
+        <img class="commentOverview iconComment"/>
+        <span>{{ ecmr?.recipientSignature?.generalRemark?.comments }}</span>
+      </div>
+    </div>
   </div>
 </div>
 <app-goods [ecmr]="ecmr" [selectedColumnIs]="selectedColumnIs" [selectedColumns]="selectedColumns"></app-goods>

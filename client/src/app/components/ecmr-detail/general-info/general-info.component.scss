@@ -24,7 +24,7 @@
   font-size: 0.9em;
   .column {
     width: 308px;
-    height: 400px;
+    height: 320px;
     padding-left: 40px;
     &.active {
       .header {
@@ -37,6 +37,20 @@
       }
       .iconComment {
         content: url("../../../../assets/icons/icon-comment.svg");
+      }
+      .commentInfo {
+        text-transform: capitalize;
+        .imgandtext > img {
+          float: left;
+        }
+        .imgandtext {
+          overflow: hidden;
+        }
+        span {
+          display: block;
+          margin-top: 15%;
+          padding-left: 15%;
+        }
       }
     }
     &.inactive {
@@ -60,6 +74,20 @@
       cursor: pointer;
       border: 1px solid #2987cd;
       border-radius: 6px;
+    }
+    .commentInfo {
+      text-transform: capitalize;
+      .imgandtext > img {
+        float: left;
+      }
+      .imgandtext {
+        overflow: hidden;
+      }
+      span {
+        display: block;
+        margin-top: 15%;
+        padding-left: 15%;
+      }
     }
   }
   .ecmrInfo {
@@ -90,7 +118,7 @@
   margin-left: 3%;
   margin-top: 3%;
   margin-bottom: 0.5%;
-  font-size: 1em;
+  font-size: 18px;
 }
 
 .progressBar {

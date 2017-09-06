@@ -1,48 +1,67 @@
 <div class="ui container">
   <div class="row content-top-margin">
-    <div class="table-title">E-CMR Overview</div>
+    <div class="table-title">
+      <div *ngIf="searchBarData === '' || null; else searchResults">E-CMR Overview</div>
+      <ng-template #searchResults>
+        SEARCH RESULTS
+        <img class="closeResults" (click)="clearSearchBar()">
+      </ng-template>
+    </div>
   </div>
   <div class="row">
-    <div class="ui pointing secondary menu">
-      <div *ngIf="(userRole() === 'CompoundAdmin')">
-        <a class="item" data-tab="first" (click)="setCurrentView('OPEN')"
-           [ngClass]="{'active' : currentView === 'OPEN' ? true : false}">OPEN</a></div>
-      <a class="item" data-tab="second" (click)="setCurrentView('IN_PROGRESS')"
-         *ngIf="userRole() === 'CompoundAdmin' || userRole() === 'CarrierMember' || userRole() === 'RecipientMember'"
-         [ngClass]="{'active' : currentView === 'IN_PROGRESS' ? true : false}">IN PROGRESS</a>
-      <a class="item" data-tab="third" (click)="setCurrentView('COMPLETED')"
-         *ngIf="userRole() === 'CompoundAdmin' || userRole() === 'LegalOwnerAdmin' || userRole() === 'CarrierMember' || userRole() === 'RecipientMember'"
-         [ngClass]="{'active' : currentView === 'COMPLETED' ? true : false}">COMPLETED</a>
+    <div class="ui pointing secondary menu" *ngIf="searchBarData !== ''">
+      <div [hidden]="(filterEcmr < 1 && searchBarData)">
+        <div class="resultsTop">Showing
+          <span *ngIf="searchBarData === ''; else showFilteredResults">{{ecmrsFiltered?.length}}</span>
+          <ng-template #showFilteredResults>{{filterEcmr}}</ng-template>
+          of {{ecmrsFiltered?.length}} Results
+        </div>
+      </div>
+    </div>
+    <div *ngIf="searchBarData === ''">
+      <div class="ui pointing secondary menu">
+        <div *ngIf="(userRole() === 'CompoundAdmin')">
+          <a class="item" data-tab="first" (click)="setCurrentView('OPEN')"
+             [ngClass]="{'active' : currentView === 'OPEN' ? true : false}">OPEN</a></div>
+        <a class="item" data-tab="second" (click)="setCurrentView('IN_PROGRESS')"
+           *ngIf="userRole() === 'CompoundAdmin' || userRole() === 'CarrierMember' || userRole() === 'RecipientMember'"
+           [ngClass]="{'active' : currentView === 'IN_PROGRESS' ? true : false}">IN PROGRESS</a>
+        <a class="item" data-tab="third" (click)="setCurrentView('COMPLETED')"
+           *ngIf="userRole() === 'CompoundAdmin' || userRole() === 'LegalOwnerAdmin' || userRole() === 'CarrierMember' || userRole() === 'RecipientMember'"
+           [ngClass]="{'active' : currentView === 'COMPLETED' ? true : false}">COMPLETED</a>
+      </div>
     </div>
     <div class="ui active tab grid" data-tab="first">
       <div class="row">
         <table class="ui unstackable table spacing-table">
-          <thead class="table-header">
-          <th></th>
-          <th>Date</th>
-          <th>CMR Nr.</th>
-          <th>Embarkment</th>
-          <th>Destination</th>
-          <th>Number of vehicles</th>
-          <th>Carrier</th>
-          <th>Recipient</th>
-          <th>Remark</th>
-          <th>Damage Remark</th>
-          <th>Status</th>
-          <th></th>
-          </thead>
+          <div [hidden]="(filterEcmr < 1 && searchBarData)">
+            <thead class="table-header">
+            <th></th>
+            <th>Date</th>
+            <th>CMR Nr.</th>
+            <th>Pick up location</th>
+            <th>Destination</th>
+            <th>Number of Goods</th>
+            <th>Carrier</th>
+            <th>Recipient</th>
+            <th>Remark</th>
+            <th>Damage Remark</th>
+            <th>Status</th>
+            <th></th>
+            </thead>
+          </div>
           <tbody>
-          <tr *ngFor="let ecmr of ecmrsFiltered" class="table-row">
+          <tr *ngFor="let ecmr of ecmrsFiltered | filterBy: searchBarData" class="table-row">
             <td></td>
-            <td>{{ecmr?.creation.date | date:"dd-MM-yyyy"}}</td>
+            <td>{{ecmr?.creation?.date | date:"dd-MM-yyyy"}}</td>
             <td>{{ecmr?.ecmrID}}</td>
-            <td>{{ecmr?.loading.address.city}}</td>
-            <td>{{ecmr?.delivery.address.city}}</td>
+            <td>{{ecmr?.loading?.address.city}}</td>
+            <td>{{ecmr?.delivery?.address.city}}</td>
             <td>
               <div class="centerContent">{{ecmr?.goods.length}}</div>
             </td>
-            <td>{{ecmr?.carrier.split('#')[1] }}</td>
-            <td>{{ecmr?.recipient.split('#')[1].split('@')[0]}}</td>
+            <td>{{ecmr?.carrier?.split('#')[1] }}</td>
+            <td>{{ecmr?.recipient?.split('#')[1].split('@')[0]}}</td>
             <td class="respImg">
               <img class="centerContent2 commentIcon"
                    *ngIf="hasComments(ecmr)"/>
@@ -54,11 +73,11 @@
                         'completed-status': ecmr?.status === 'DELIVERED',
                         'confirmed-status': ecmr?.status === 'CONFIRMED_DELIVERED'}">
 
-              {{ecmr?.status === 'CREATED' ? 'Open CMR' :
-                ecmr?.status === 'LOADED' ? 'Loaded' :
+              {{ecmr?.status === 'CREATED' ? 'New CMR' :
+              ecmr?.status === 'LOADED' ? 'Awaiting Carrier' :
                 ecmr?.status === 'IN_TRANSIT' ? 'In Transit' :
                 ecmr?.status === 'DELIVERED' ? 'Delivered' :
-                ecmr?.status === 'CONFIRMED_DELIVERED' ? 'Confirmed' : ecmr?.status}}
+                ecmr?.status === 'CONFIRMED_DELIVERED' ? 'Completed' : ecmr?.status}}
             </span></td>
             <td>
               <img class="viewMore" routerLink="/ecmr/{{ecmr.ecmrID}}"/>
@@ -67,6 +86,13 @@
           </tbody>
         </table>
       </div>
+      <img class="noResults" *ngIf="filterEcmr < 1 && searchBarData !== ''">
+      <p *ngIf="filterEcmr < 1 && searchBarData !== ''" class="noResultsText">NO RESULTS FOUND</p>
+    </div>
+    <div class="showResults" *ngIf="searchBarData === ''">Showing
+      <span *ngIf="searchBarData === ''; else showFilteredResults">{{ecmrsFiltered?.length}}</span>
+      <ng-template #showFilteredResults>{{filterEcmr}}</ng-template>
+      of {{ecmrsFiltered?.length}} Results
     </div>
   </div>
 </div>
