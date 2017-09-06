@@ -26,8 +26,8 @@ export class EcmrDetailComponent implements OnInit {
     this.route.params
       .subscribe(params => {
         this.ecmrID = params['ecmrID'];
-        this.ecmrService.getECMRByID(this.ecmrID).subscribe(ecmr => {
-          this.ecmr     = ecmr[0];
+        this.ecmrService.getECMRByID(this.ecmrID).subscribe(response => {
+          this.ecmr     = response.body[0];
           this.userRole = JSON.parse(localStorage.getItem('currentUser')).user.role;
           console.log(this.ecmr);
 
@@ -62,11 +62,11 @@ export class EcmrDetailComponent implements OnInit {
             this.ecmr.compoundSignature                        = {};
             this.ecmr.compoundSignature.generalRemark          = {};
             this.ecmr.compoundSignature.generalRemark.comments = '';
-          } else if (this.userRole === 'CarrierMember' && ecmr.status === 'LOADED' && !this.ecmr.carrierDeliverySignature) {
+          } else if (this.userRole === 'CarrierMember' && this.ecmr.status === 'LOADED' && !this.ecmr.carrierDeliverySignature) {
             this.ecmr.carrierLoadingSignature                        = {};
             this.ecmr.carrierLoadingSignature.generalRemark          = {};
             this.ecmr.carrierLoadingSignature.generalRemark.comments = '';
-          } else if (this.userRole === 'CarrierMember' && ecmr.status === 'IN_TRANSIT' && !this.ecmr.carrierDeliverySignature) {
+          } else if (this.userRole === 'CarrierMember' && this.ecmr.status === 'IN_TRANSIT' && !this.ecmr.carrierDeliverySignature) {
             this.ecmr.carrierDeliverySignature                        = {};
             this.ecmr.carrierDeliverySignature.generalRemark          = {};
             this.ecmr.carrierDeliverySignature.generalRemark.comments = '';

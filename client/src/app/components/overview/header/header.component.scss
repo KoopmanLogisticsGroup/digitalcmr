@@ -12,6 +12,8 @@
   }
   .logoutIcon {
     cursor: pointer;
+    width: 22px;
+    height: 22px;
     content: url("../../../../assets/icons/iconlogout.svg");
     &:hover {
       content: url("../../../../assets/icons/icon-logout-off.svg");

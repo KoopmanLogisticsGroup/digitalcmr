@@ -5,7 +5,6 @@
       <thead>
       <tr>
         <th>VIN</th>
-        <th>Manufacturer</th>
         <th>Description</th>
         <th>Weight</th>
         <th>ODO Meter</th>
@@ -17,7 +16,6 @@
       <tbody>
       <tr *ngFor="let good of ecmr?.goods; let i = index">
         <td>{{good?.vehicle.vin}}</td>
-        <td>{{good?.vehicle.manufacturer}}</td>
         <td>{{good?.description}}</td>
         <td>{{good?.weight}} kg</td>
         <td>{{good?.vehicle.odoMeterReading}}</td>

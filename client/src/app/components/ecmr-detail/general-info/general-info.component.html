@@ -61,7 +61,7 @@
   <div class="column" [ngClass]="{'completed': ecmr?.status === 'DELIVERED' || ecmr?.status === 'CONFIRMED_DELIVERED', 'active': selectedColumns[2],
   'inactive': !selectedColumns[2]}" (click)="selectColumn(2)">
     <div>
-      <div class="header">TRANSPORTER</div>
+      <div class="header">CARRIER</div>
       <div class="ecmrInfo">
         <div class="imgandtext">
           <img class="addressImg"/>
@@ -87,7 +87,7 @@
   <div class="column" [ngClass]="{'completed': ecmr?.status === 'DELIVERED' || ecmr?.status === 'CONFIRMED_DELIVERED', 'active': selectedColumns[3],
   'inactive': !selectedColumns[3]}" (click)="selectColumn(3)">
     <div>
-      <div class="header">CAR DEALER</div>
+      <div class="header">RECEIVER</div>
       <div class="ecmrInfo">
         <div class="imgandtext">
           <img class="addressImg"/>

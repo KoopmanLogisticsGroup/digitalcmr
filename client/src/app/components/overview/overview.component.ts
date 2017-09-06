@@ -34,15 +34,15 @@ export class OverviewComponent implements OnInit {
 
   public ngOnInit() {
     this.nav.show();
-    this.ecmrService.getAllEcmrs().subscribe(ecmrs => {
-      this.ecmrs         = ecmrs instanceof Array ? ecmrs : new Array(ecmrs);
+    this.ecmrService.getAllEcmrs().subscribe(response => {
+      this.ecmrs         = response.body instanceof Array ? response.body : [];
       const userOrg      = JSON.parse(localStorage.getItem('currentUser')).user.org;
       const userEmail    = JSON.parse(localStorage.getItem('currentUser')).user.userEmail;
-      this.ecmrs         = this.ecmrs.filter(ecmr =>
-        ecmr.source.indexOf(userOrg) > 0 ||
-        (ecmr.transporter.indexOf(userEmail) > 0 && ecmr.carrier.indexOf(userOrg)) > 0 ||
-        ecmr.owner.indexOf(userOrg) > 0 ||
-        ecmr.recipient.indexOf(userOrg) > 0);
+      // this.ecmrs         = this.ecmrs[0].body.filter(ecmr =>
+      //   (this.ecmr && this.ecmr.source.indexOf(userOrg) > 0) ||
+      //   (this.ecmr && this.ecmr.transporter.indexOf(userEmail) > 0) && (this.ecmr && this.ecmr.carrier.indexOf(userOrg) > 0) ||
+      //   (this.ecmr && this.ecmr.owner.indexOf(userOrg) > 0) ||
+      //   (this.ecmr && this.ecmr.recipient.indexOf(userOrg) > 0));
       this.ecmrsFiltered = this.ecmrs.filter(ecmr => ecmr.status.toUpperCase() === 'CREATED');
       this.firstView();
       console.log(this.ecmrsFiltered);
