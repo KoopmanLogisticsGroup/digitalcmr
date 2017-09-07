@@ -121,6 +121,10 @@
         content: url("../../../assets/icons/button-view-more-hover.svg");
         cursor: pointer;
       }
+      .viewMore:active {
+        outline: none;
+        border: none;
+      }
     }
   }
   .table-header {

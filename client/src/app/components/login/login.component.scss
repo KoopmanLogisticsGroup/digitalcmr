@@ -83,12 +83,15 @@
 .icon-username {
   position: absolute;
   top: 4px;
-  left: 1px;
+  left: 3px;
 }
 
 .icon-password {
   position: absolute;
-  top: 10px;
-  left: 7px;
+  top: 8px;
+  left: 10px;
+}
 
+.login-top-margin {
+  margin-top: 22vh !important;
 }
