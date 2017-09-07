@@ -34,7 +34,7 @@ export class UsersService {
           let user: User = this.buildUserObject(participant, identity);
           this.addUserToDB(user).then(() => {
             this.logger.info('User: ' + participant.userID + 'successfully added');
-            resolve('Success');
+            return resolve('Success');
           }).catch((error) => {
             this.logger.error('Was not possible to save user ' + participant.userID + 'to DB');
             resolve('Was not possible to save user ' + participant.userID + 'to DB');
