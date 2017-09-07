@@ -19,6 +19,42 @@
     "application/json"
   ],
   "paths": {
+    "/login": {
+      "post": {
+        "x-swagger-router-controller": "AuthController",
+        "operationId": "login",
+        "summary": "Login on the server",
+        "description": "The user logs into the system and gets back user metadata an auth x-access-token\n",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "login-credentials",
+            "in": "body",
+            "description": "The login credentials",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LoginCredentials"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The user has successfully logged in\n",
+            "schema": {
+              "$ref": "#/definitions/LoginResponse"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/ECMR/": {
       "post": {
         "x-swagger-router-controller": "ECMRController",
@@ -512,7 +548,7 @@
             "description": "The authentication token",
             "required": true,
             "type": "string"
-          },
+          }
         ],
         "responses": {
           "200": {
@@ -1485,6 +1521,32 @@
         "generalRemark": {
           "$ref": "#/definitions/Remark",
           "description": "General remarks for the signature",
+          "required": true
+        }
+      }
+    },
+    "LoginCredentials": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "required": true
+        },
+        "password": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    "LoginResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "required": true
+        },
+        "token": {
+          "type": "string",
           "required": true
         }
       }
