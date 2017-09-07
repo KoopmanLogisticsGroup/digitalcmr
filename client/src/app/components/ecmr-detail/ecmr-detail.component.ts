@@ -22,7 +22,7 @@ export class EcmrDetailComponent implements OnInit {
   }
 
   public ngOnInit() {
-    this.nav.hide();
+    this.nav.show();
     this.route.params
       .subscribe(params => {
         this.ecmrID = params['ecmrID'];

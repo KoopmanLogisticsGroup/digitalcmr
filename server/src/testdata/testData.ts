@@ -109,17 +109,17 @@ export class TestData {
       promises.push(this.userService.addUser(participant));
     }
 
-    await Promise.all(promises);
+    this.logger.debug('Adding admin user');
 
     let adminUser: Participant = new Participant({
-      $class:    'org.hyperledger.composer.system.Participant',
-      org:       '',
-      userID:    'admin',
-      userName:  'admin',
-      password:  'passw0rd',
+      $class   : 'org.hyperledger.composer.system.Participant',
+      org      : '',
+      userID   : 'admin',
+      userName : 'admin',
+      password : 'passw0rd',
       firstName: 'admin',
-      lastName:  'admin',
-      address:   {}
+      lastName : 'admin',
+      address  : {}
     });
 
     let identity = {
