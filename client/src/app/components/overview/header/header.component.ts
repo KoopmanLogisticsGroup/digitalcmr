@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {AuthenticationService} from '../../services/authentication.service';
+import {AuthenticationService} from '../../../services/authentication.service';
+import {SearchService} from '../../../services/search.service';
+import {NavbarService} from '../../../services/navbar.service';
 
 @Component({
   selector   : 'app-header',
@@ -8,14 +9,18 @@ import {AuthenticationService} from '../../services/authentication.service';
   styleUrls  : ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-
   public currentView: string;
 
-  public constructor(private router: Router,
-                     private _authenticationService: AuthenticationService) {
+  public constructor(private searchService: SearchService,
+                     private _authenticationService: AuthenticationService,
+                     public nav: NavbarService) {
   }
 
   public ngOnInit() {
+  }
+
+  public sendData(data: any) {
+    this.searchService.searchData(data);
   }
 
   public getUser() {

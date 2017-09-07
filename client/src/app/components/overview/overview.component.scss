@@ -48,7 +48,6 @@
         border-left-width: 3px;
         border-radius: 5px 0 0 5px;
       }
-
       td:last-child {
         border-right-width: 3px;
         border-radius: 0 5px 5px 0;
@@ -78,6 +77,7 @@
         color: #2987cd;
         border-radius: 4px;
         padding: 6px;
+        margin-left: -10%;
       }
       .awaiting-status {
         width: 120px;
@@ -86,30 +86,36 @@
         background-color: rgba(28, 181, 172, 0.2);
         padding: 6px;
         color: #1cb5ac;
+        word-wrap: break-word;
+        margin-left: -30%;
       }
       .transit-status {
-        background-color: rgba(41, 135, 205, 0.2);
+        background-color: rgba(124, 93, 192, 0.2);
         color: #2987cd;
         border-radius: 4px;
         padding: 6px;
+        margin-left: -10%;
       }
       .completed-status {
         background-color: rgba(45, 184, 75, 0.2);
         color: #2db84b;
         border-radius: 4px;
         padding: 6px;
+        margin-left: -10%;
       }
       .confirmed-status {
         background-color: rgba(45, 184, 75, 0.2);
         color: #2db84b;
         border-radius: 4px;
         padding: 6px;
+        margin-left: -10%;
       }
       .viewMore {
         width: 120%;
         height: 120%;
         content: url("../../../assets/icons/button-view-more.svg");
-        padding-right: 20%;
+        padding-right: 10%;
+        margin-left: -15%;
       }
       .viewMore:hover {
         content: url("../../../assets/icons/button-view-more-hover.svg");
@@ -128,12 +134,21 @@
     line-height: 1.0vw;
     white-space: nowrap;
   }
+  .headerDesign {
+    visibility: hidden;
+  }
 }
 
 .table-title {
   color: #32649e;
   font-size: 1.6vw;
-  margin-bottom: 5%;
+  margin-bottom: 3%;
+  .closeResults {
+    float: right;
+    content: url("../../../assets/icons/close.svg");
+    cursor: pointer;
+    margin-top: 2%;
+  }
 }
 
 //Design ui tables
@@ -155,6 +170,9 @@
       font-weight: bold;
       color: #dededf;
     }
+    .resultsTop {
+      color: black;
+    }
   }
   .table:last-child {
     background-color: transparent;
@@ -167,5 +185,18 @@
   .tab.active {
     margin-left: 0.1%;
     width: 100%;
+  }
+  .noResults {
+    margin-left: 50%;
+    transform: translateX(-50%);
+    content: url("../../../assets/img/no-results.svg");
+  }
+  .noResultsText {
+    text-align: center;
+    margin-top: 3%;
+    font-size: 1.3em;
+  }
+  .showResults {
+    font-size: 0.8vw;
   }
 }

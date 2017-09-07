@@ -35,8 +35,11 @@ export class ECMRController {
     let enrollmentID = new JSONWebToken(request).getUserID();
     let secret       = new JSONWebToken(request).getSecret();
 
-    const vehicles = await this._transactor.executeQuery('getAllVehicles', enrollmentID, secret);
-    return vehicles;
+    let result = {body: {}};
+
+    result.body = await this._transactor.executeQuery('getAllVehicles', enrollmentID, secret);
+
+    return result;
   }
 
   @Get('/vin/:vin/')
@@ -44,9 +47,11 @@ export class ECMRController {
     let enrollmentID = new JSONWebToken(request).getUserID();
     let secret       = new JSONWebToken(request).getSecret();
 
-    const vehicles = await this._transactor.executeQuery('getVehicleByVin', enrollmentID, secret, {vin: vin});
+    let result = {body: {}};
 
-    return vehicles;
+    result.body = await this._transactor.executeQuery('getVehicleByVin', enrollmentID, secret, {vin: vin});
+
+    return result;
   }
 
   @Get('/plateNumber/:plateNumber/')
@@ -54,9 +59,11 @@ export class ECMRController {
     let enrollmentID = new JSONWebToken(request).getUserID();
     let secret       = new JSONWebToken(request).getSecret();
 
-    const vehicles = await this._transactor.executeQuery('getVehicleByPlateNumber', enrollmentID, secret, {plateNumber: plateNumber});
+    let result = {body: {}};
 
-    return vehicles;
+    result.body = await this._transactor.executeQuery('getVehicleByPlateNumber', enrollmentID, secret, {plateNumber: plateNumber});
+
+    return result;
   }
 
   @Post('/')
@@ -64,6 +71,10 @@ export class ECMRController {
     let enrollmentID = new JSONWebToken(request).getUserID();
     let secret       = new JSONWebToken(request).getSecret();
 
-    return this._transactor.put(vehicles, enrollmentID, secret, (factory, data) => this._transactor.createVehicles(factory, data, enrollmentID));
+    let result = {body: {}};
+
+    result.body = await this._transactor.put(vehicles, enrollmentID, secret, (factory, data) => this._transactor.createVehicles(factory, data, enrollmentID));
+
+    return result;
   }
 }

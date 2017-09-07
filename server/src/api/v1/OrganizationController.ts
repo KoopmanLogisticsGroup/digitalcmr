@@ -35,8 +35,11 @@ export class OrganizationController {
     let enrollmentID = new JSONWebToken(request).getUserID();
     let secret       = new JSONWebToken(request).getSecret();
 
-    const orgs = await this._transactor.executeQuery('getAllLegalOwnerOrgs', enrollmentID, secret);
-    return orgs;
+    let result = {body: {}};
+
+    result.body = await this._transactor.executeQuery('getAllLegalOwnerOrgs', enrollmentID, secret);
+
+    return result;
   }
 
   @Get('/legalowner/entityID/:entityID')
@@ -44,8 +47,11 @@ export class OrganizationController {
     let enrollmentID = new JSONWebToken(request).getUserID();
     let secret       = new JSONWebToken(request).getSecret();
 
-    const orgs = await this._transactor.executeQuery('getLegalOwnerOrgByEntityID', enrollmentID, secret, {entityID: entityID});
-    return orgs;
+    let result = {body: {}};
+
+    result.body = await this._transactor.executeQuery('getLegalOwnerOrgByEntityID', enrollmentID, secret, {entityID: entityID});
+
+    return result;
   }
 
   @Get('/legalowner/name/:name')
@@ -53,8 +59,11 @@ export class OrganizationController {
     let enrollmentID = new JSONWebToken(request).getUserID();
     let secret       = new JSONWebToken(request).getSecret();
 
-    const orgs = await this._transactor.executeQuery('getLegalOwnerOrgByName', enrollmentID, secret, {name: name});
-    return orgs;
+    let result = {body: {}};
+
+    result.body = await this._transactor.executeQuery('getLegalOwnerOrgByName', enrollmentID, secret, {name: name});
+
+    return result;
   }
 
   @Get('/compound/')
@@ -62,8 +71,11 @@ export class OrganizationController {
     let enrollmentID = new JSONWebToken(request).getUserID();
     let secret       = new JSONWebToken(request).getSecret();
 
-    const orgs = await this._transactor.executeQuery('getAllCompoundOrgs', enrollmentID, secret);
-    return orgs;
+    let result = {body: {}};
+
+    result.body = await this._transactor.executeQuery('getAllCompoundOrgs', enrollmentID, secret);
+
+    return result;
   }
 
   @Get('/compound/entityID/:entityID')
@@ -71,8 +83,11 @@ export class OrganizationController {
     let enrollmentID = new JSONWebToken(request).getUserID();
     let secret       = new JSONWebToken(request).getSecret();
 
-    const orgs = await this._transactor.executeQuery('getCompoundOrgByEntityID', enrollmentID, secret, {entityID: entityID});
-    return orgs;
+    let result = {body: {}};
+
+    result.body = await this._transactor.executeQuery('getCompoundOrgByEntityID', enrollmentID, secret, {entityID: entityID});
+
+    return result;
   }
 
   @Get('/compound/name/:name')
@@ -80,8 +95,11 @@ export class OrganizationController {
     let enrollmentID = new JSONWebToken(request).getUserID();
     let secret       = new JSONWebToken(request).getSecret();
 
-    const orgs = await this._transactor.executeQuery('getCompoundOrgByName', enrollmentID, secret, {name: name});
-    return orgs;
+    let result = {body: {}};
+
+    result.body = await this._transactor.executeQuery('getCompoundOrgByName', enrollmentID, secret, {name: name});
+
+    return result;
   }
 
   @Get('/carrier/')
@@ -89,8 +107,11 @@ export class OrganizationController {
     let enrollmentID = new JSONWebToken(request).getUserID();
     let secret       = new JSONWebToken(request).getSecret();
 
-    const orgs = await this._transactor.executeQuery('getAllCarrierOrgs', enrollmentID, secret);
-    return orgs;
+    let result = {body: {}};
+
+    result.body = await this._transactor.executeQuery('getAllCarrierOrgs', enrollmentID, secret);
+
+    return result;
   }
 
   @Get('/carrier/entityID/:entityID')
@@ -98,8 +119,11 @@ export class OrganizationController {
     let enrollmentID = new JSONWebToken(request).getUserID();
     let secret       = new JSONWebToken(request).getSecret();
 
-    const orgs = await this._transactor.executeQuery('getCarrierOrgByEntityID', enrollmentID, secret, {entityID: entityID});
-    return orgs;
+    let result = {body: {}};
+
+    result.body = await this._transactor.executeQuery('getCarrierOrgByEntityID', enrollmentID, secret, {entityID: entityID});
+
+    return result;
   }
 
   @Get('/carrier/name/:name')
@@ -107,8 +131,11 @@ export class OrganizationController {
     let enrollmentID = new JSONWebToken(request).getUserID();
     let secret       = new JSONWebToken(request).getSecret();
 
-    const orgs = await this._transactor.executeQuery('getCarrierOrgByName', enrollmentID, secret, {name: name});
-    return orgs;
+    let result = {body: {}};
+
+    result.body = await this._transactor.executeQuery('getCarrierOrgByName', enrollmentID, secret, {name: name});
+
+    return result;
   }
 
   @Get('/recipient/')
@@ -116,8 +143,11 @@ export class OrganizationController {
     let enrollmentID = new JSONWebToken(request).getUserID();
     let secret       = new JSONWebToken(request).getSecret();
 
-    const orgs = await this._transactor.executeQuery('getAllRecipientOrgs', enrollmentID, secret);
-    return orgs;
+    let result = {body: {}};
+
+    result.body = await this._transactor.executeQuery('getAllRecipientOrgs', enrollmentID, secret);
+
+    return result;
   }
 
   @Get('/recipient/entityID/:entityID')
@@ -125,8 +155,11 @@ export class OrganizationController {
     let enrollmentID = new JSONWebToken(request).getUserID();
     let secret       = new JSONWebToken(request).getSecret();
 
-    const orgs = await this._transactor.executeQuery('getRecipientOrgByEntityID', enrollmentID, secret, {entityID: entityID});
-    return orgs;
+    let result = {body: {}};
+
+    result.body = await this._transactor.executeQuery('getRecipientOrgByEntityID', enrollmentID, secret, {entityID: entityID});
+
+    return result;
   }
 
   @Get('/recipient/name/:name')
@@ -134,14 +167,19 @@ export class OrganizationController {
     let enrollmentID = new JSONWebToken(request).getUserID();
     let secret       = new JSONWebToken(request).getSecret();
 
-    const orgs = await this._transactor.executeQuery('getRecipientOrgByName', enrollmentID, secret, {name: name});
-    return orgs;
+    let result = {body: {}};
+
+    result.body = await this._transactor.executeQuery('getRecipientOrgByName', enrollmentID, secret, {name: name});
+
+    return result;
   }
 
   @Post('/legalowner/')
   public async createLegalOwnerOrg(@Body() legalOwnerOrg: LegalOwnerOrg, @Req() request: any): Promise<any> {
     let enrollmentID = new JSONWebToken(request).getUserID();
     let secret       = new JSONWebToken(request).getSecret();
+
+    let result = {body: {}};
 
     return this._transactor.put(legalOwnerOrg, enrollmentID, secret, (factory, data) => this._transactor.createLegalOwnerOrg(factory, data, enrollmentID));
   }
@@ -151,7 +189,11 @@ export class OrganizationController {
     let enrollmentID = new JSONWebToken(request).getUserID();
     let secret       = new JSONWebToken(request).getSecret();
 
-    return this._transactor.put(compoundOrg, enrollmentID, secret, (factory, data) => this._transactor.createCompoundOrg(factory, data, enrollmentID));
+    let result = {body: {}};
+
+    result.body = await this._transactor.put(compoundOrg, enrollmentID, secret, (factory, data) => this._transactor.createCompoundOrg(factory, data, enrollmentID));
+
+    return result;
   }
 
   @Post('/carrier/')
@@ -159,7 +201,11 @@ export class OrganizationController {
     let enrollmentID = new JSONWebToken(request).getUserID();
     let secret       = new JSONWebToken(request).getSecret();
 
-    return this._transactor.put(carrierOrg, enrollmentID, secret, (factory, data) => this._transactor.createCarrierOrg(factory, data, enrollmentID));
+    let result = {body: {}};
+
+    result.body = await this._transactor.put(carrierOrg, enrollmentID, secret, (factory, data) => this._transactor.createCarrierOrg(factory, data, enrollmentID));
+
+    return result;
   }
 
   @Post('/recipient/')
@@ -167,7 +213,11 @@ export class OrganizationController {
     let enrollmentID = new JSONWebToken(request).getUserID();
     let secret       = new JSONWebToken(request).getSecret();
 
-    return this._transactor.put(recipientOrg, enrollmentID, secret, (factory, data) => this._transactor.createRecipientOrg(factory, data, enrollmentID));
+    let result = {body: {}};
+
+    result.body = await this._transactor.put(recipientOrg, enrollmentID, secret, (factory, data) => this._transactor.createRecipientOrg(factory, data, enrollmentID));
+
+    return result;
   }
 
   // @Put('/')

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {EcmrService} from '../../services/ecmr.service';
 import {ActivatedRoute} from '@angular/router';
+import {NavbarService} from '../../services/navbar.service';
 
 @Component({
   selector   : 'app-ecmr-detail',
@@ -15,19 +16,19 @@ export class EcmrDetailComponent implements OnInit {
   public selectedColumns: boolean[];
 
   public constructor(private route: ActivatedRoute,
-                     private ecmrService: EcmrService) {
+                     private ecmrService: EcmrService,
+                     public nav: NavbarService) {
     this.selectedColumns = [false, false, false, false];
   }
 
   public ngOnInit() {
+    this.nav.hide();
     this.route.params
       .subscribe(params => {
         this.ecmrID = params['ecmrID'];
-        this.ecmrService.getECMRByID(this.ecmrID).subscribe(ecmr => {
-          this.ecmr     = ecmr;
+        this.ecmrService.getECMRByID(this.ecmrID).subscribe(response => {
+          this.ecmr     = response.body[0];
           this.userRole = JSON.parse(localStorage.getItem('currentUser')).user.role;
-          console.log(this.ecmr);
-
           switch (this.ecmr.status) {
             case 'CREATED': {
               this.selectedColumns[0] = true;
@@ -59,11 +60,11 @@ export class EcmrDetailComponent implements OnInit {
             this.ecmr.compoundSignature                        = {};
             this.ecmr.compoundSignature.generalRemark          = {};
             this.ecmr.compoundSignature.generalRemark.comments = '';
-          } else if (this.userRole === 'CarrierMember' && ecmr.status === 'LOADED' && !this.ecmr.carrierDeliverySignature) {
+          } else if (this.userRole === 'CarrierMember' && this.ecmr.status === 'LOADED' && !this.ecmr.carrierDeliverySignature) {
             this.ecmr.carrierLoadingSignature                        = {};
             this.ecmr.carrierLoadingSignature.generalRemark          = {};
             this.ecmr.carrierLoadingSignature.generalRemark.comments = '';
-          } else if (this.userRole === 'CarrierMember' && ecmr.status === 'IN_TRANSIT' && !this.ecmr.carrierDeliverySignature) {
+          } else if (this.userRole === 'CarrierMember' && this.ecmr.status === 'IN_TRANSIT' && !this.ecmr.carrierDeliverySignature) {
             this.ecmr.carrierDeliverySignature                        = {};
             this.ecmr.carrierDeliverySignature.generalRemark          = {};
             this.ecmr.carrierDeliverySignature.generalRemark.comments = '';

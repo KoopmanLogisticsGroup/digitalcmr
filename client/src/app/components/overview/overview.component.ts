@@ -1,34 +1,47 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {EcmrService} from '../../services/ecmr.service';
 import {AuthenticationService} from '../../services/authentication.service';
+import {SearchService} from '../../services/search.service';
+import {NavbarService} from '../../services/navbar.service';
 
 @Component({
   selector   : 'app-overview',
   templateUrl: './overview.component.html',
-  styleUrls  : ['./overview.component.scss']
+  styleUrls  : ['./overview.component.scss'],
 })
 export class OverviewComponent implements OnInit {
   public currentView = 'OPEN';
 
   @Input() public ecmr: any;
 
+  public searchBarData: any = '';
   private ecmrs: any;
   public ecmrsFiltered: any;
+  public filterEcmr: any    = 0;
 
   public constructor(private ecmrService: EcmrService,
-                     private _authenticationService: AuthenticationService) {
+                     private searchService: SearchService,
+                     private _authenticationService: AuthenticationService,
+                     public nav: NavbarService) {
+    this.searchService.searchData$.subscribe((data) => {
+      this.searchBarData = data;
+    });
+    this.searchService.filterEcmr$.subscribe((data) => {
+      this.filterEcmr = data;
+    });
   }
 
   public ngOnInit() {
-    this.ecmrService.getAllEcmrs().subscribe(ecmrs => {
-      this.ecmrs         = ecmrs instanceof Array ? ecmrs : new Array(ecmrs);
+    this.nav.show();
+    this.ecmrService.getAllEcmrs().subscribe(response => {
+      this.ecmrs         = response.body instanceof Array ? response.body : [];
       const userOrg      = JSON.parse(localStorage.getItem('currentUser')).user.org;
       const userEmail    = JSON.parse(localStorage.getItem('currentUser')).user.userEmail;
-      this.ecmrs         = this.ecmrs.filter(ecmr =>
-        ecmr.source.indexOf(userOrg) > 0 ||
-        (ecmr.transporter.indexOf(userEmail) > 0 && ecmr.carrier.indexOf(userOrg)) > 0 ||
-        ecmr.owner.indexOf(userOrg) > 0 ||
-        ecmr.recipient.indexOf(userOrg) > 0);
+      // this.ecmrs         = this.ecmrs[0].body.filter(ecmr =>
+      //   (this.ecmr && this.ecmr.source.indexOf(userOrg) > 0) ||
+      //   (this.ecmr && this.ecmr.transporter.indexOf(userEmail) > 0) && (this.ecmr && this.ecmr.carrier.indexOf(userOrg) > 0) ||
+      //   (this.ecmr && this.ecmr.owner.indexOf(userOrg) > 0) ||
+      //   (this.ecmr && this.ecmr.recipient.indexOf(userOrg) > 0));
       this.ecmrsFiltered = this.ecmrs.filter(ecmr => ecmr.status.toUpperCase() === 'CREATED');
       this.firstView();
     });
@@ -95,5 +108,9 @@ export class OverviewComponent implements OnInit {
         return good;
       }
     }).length > 0;
+  }
+
+  public clearSearchBar() {
+    this.searchBarData = '';
   }
 }
