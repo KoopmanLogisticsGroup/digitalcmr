@@ -1,6 +1,0 @@
-*.bna
-bna/node_modules/
-logs/
-out/
-*.log
-hlfv1/

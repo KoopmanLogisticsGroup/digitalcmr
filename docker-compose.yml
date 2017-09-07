@@ -36,54 +36,18 @@ services:
       file: composer/hlfv1/composer/docker-compose.yml
       service: couchdb
 
-  composer:
-    build: composer
-    ports:
-      - 3000:3000
-    environment:
-      - COMPOSER_WAIT_TIME=0
-    volumes:
-      - ./composer/bna:/bna
-      - ./composer/hlfv1/composer/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com:/admin-crypto
-      - ./composer/connection.json:/root/.composer-connection-profiles/defaultProfile/connection.json
+  composer-cli:
+    extends:
+      file: composer/docker-compose.yml
+      service: composer-cli
     depends_on:
+      - ca.org1.example.com
       - orderer.example.com
       - peer0.org1.example.com
       - couchdb
-    env_file: ./composer/.env
+      - util
 
-#  server:
-#    build:
-#      context: server
-#      args:
-#        NPM_TOKEN: ${NPM_TOKEN}
-#    ports:
-#      - 8080:8080
-#    env_file: ./server/.env
-#    environment:
-#      - NPM_TOKEN=${NPM_TOKEN}
-#    volumes:
-#      - ./server/src:/usr/src/app/src
-#      - ./server/tsconfig.json:/usr/src/app/tsconfig.json # TS filenames get added automatically to this file on build
-#      - ./server/package.json:/usr/src/app/package.json
-#      - ./server/resources/connection.json:/root/.composer-connection-profiles/defaultProfile/connection.json
-##    links:
-##      - composer
-#    command: bash -c "grunt build; grunt"
-#
-#  client:
-#      build: client
-#      ports:
-#          - "4200:4200"
-#          - "49153:49153"
-#      volumes:
-#          - ./client/src:/usr/src/app/src
-#          - ./client/.angular-cli.json:/usr/src/app/.angular-cli.json
-#          - ./client/tslint.json:/usr/src/app/tslint.json
-#      command: bash -c "ng lint && ng serve --host 0.0.0.0"
-#
-#  couchdb-private:
-#    container_name: couchdb-private
-#    image: couchdb
-#    ports:
-#      - "5985:5984"
+  composer-rest-server:
+    extends:
+      file: composer/docker-compose.yml
+      service: composer-rest-server
