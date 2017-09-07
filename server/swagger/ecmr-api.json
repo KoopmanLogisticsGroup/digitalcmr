@@ -1117,6 +1117,692 @@
           }
         }
       }
+    },
+    "/participant/": {
+      "post": {
+        "x-swagger-router-controller": "ParticipantController",
+        "operationId": "addParticipant",
+        "summary": "Creates a new participant and issues an identity on the blockchain",
+        "description": "Creates a new participant and issues an identity on the blockchain, and a new user for the app server\n",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "participant",
+            "in": "body",
+            "description": "The list of vehicles",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Participant"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The vehicles have been created and written into the blockchain\n",
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Vehicle"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/participant/legalowner/admin/": {
+      "get": {
+        "x-swagger-router-controller": "ParticipantController",
+        "operationId": "getAllLegalOwnerAdmins",
+        "summary": "Returns the list of the legal owner admins",
+        "description": "Returns the list of the legal owner admins",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of the legal owner admins is returned\n",
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/LegalOwnerAdmin"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/participant/legalowner/admin/userID/{userID}": {
+      "get": {
+        "x-swagger-router-controller": "ParticipantController",
+        "operationId": "getLegalOwnerAdminByUserID",
+        "summary": "Returns the legal owner admin with the specified user ID",
+        "description": "Returns the legal owner admin with the specified user ID",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userID",
+            "in": "path",
+            "description": "The user ID",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The legal owner admin is returned\n",
+            "$ref": "#/definitions/LegalOwnerAdmin"
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/participant/legalowner/admin/organization/{org}": {
+      "get": {
+        "x-swagger-router-controller": "ParticipantController",
+        "operationId": "getLegalOwnerAdminByOrg",
+        "summary": "Returns the list of the legal owner admins part of the specified organization",
+        "description": "Returns the list of the legal owner admins part of the specified organization",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "org",
+            "in": "path",
+            "description": "The organization id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The legal owner admins are returned\n",
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/LegalOwnerAdmin"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/participant/compound/admin/": {
+      "get": {
+        "x-swagger-router-controller": "ParticipantController",
+        "operationId": "getAllCompoundAdmins",
+        "summary": "Returns the list of the Compound admins",
+        "description": "Returns the list of the Compound admins",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of the Compound admins is returned\n",
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/CompoundAdmin"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/participant/compound/admin/userID/{userID}": {
+      "get": {
+        "x-swagger-router-controller": "ParticipantController",
+        "operationId": "getCompoundAdminByUserID",
+        "summary": "Returns the Compound admin with the specified user ID",
+        "description": "Returns the Compound admin with the specified user ID",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userID",
+            "in": "path",
+            "description": "The user ID",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The legal owner admin is returned\n",
+            "$ref": "#/definitions/CompoundAdmin"
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/participant/compound/admin/organization/{org}": {
+      "get": {
+        "x-swagger-router-controller": "ParticipantController",
+        "operationId": "getCompoundAdminByOrg",
+        "summary": "Returns the list of the Compound admins part of the specified organization",
+        "description": "Returns the list of the Compound admins part of the specified organization",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "org",
+            "in": "path",
+            "description": "The organization id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The compound admins are returned\n",
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/CompoundAdmin"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/participant/carrier/member/": {
+      "get": {
+        "x-swagger-router-controller": "ParticipantController",
+        "operationId": "getAllCarrierMembers",
+        "summary": "Returns the list of the Carrier members",
+        "description": "Returns the list of the Carrier members",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of the Carrier members is returned\n",
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/CarrierMember"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/participant/carrier/member/userID/{userID}": {
+      "get": {
+        "x-swagger-router-controller": "ParticipantController",
+        "operationId": "getCarrierMemberByUserID",
+        "summary": "Returns the Carrier member with the specified user ID",
+        "description": "Returns the Carrier member with the specified user ID",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userID",
+            "in": "path",
+            "description": "The user ID",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The carrier member is returned\n",
+            "$ref": "#/definitions/CarrierMember"
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/participant/carrier/member/organization/{org}": {
+      "get": {
+        "x-swagger-router-controller": "ParticipantController",
+        "operationId": "getCarrierMemberByOrg",
+        "summary": "Returns the list of the Carrier members part of the specified organization",
+        "description": "Returns the list of the Carrier members part of the specified organization",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "org",
+            "in": "path",
+            "description": "The organization id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The Carrier members are returned\n",
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/CarrierMember"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/participant/carrier/admin/": {
+      "get": {
+        "x-swagger-router-controller": "ParticipantController",
+        "operationId": "getAllCarrierAdmins",
+        "summary": "Returns the list of the Carrier admins",
+        "description": "Returns the list of the Carrier admins",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of the Carrier admins is returned\n",
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/CarrierAdmin"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/participant/carrier/admin/userID/{userID}": {
+      "get": {
+        "x-swagger-router-controller": "ParticipantController",
+        "operationId": "getCarrierAdminByUserID",
+        "summary": "Returns the Carrier admin with the specified user ID",
+        "description": "Returns the Carrier admin with the specified user ID",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userID",
+            "in": "path",
+            "description": "The user ID",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The carrier admin is returned\n",
+            "$ref": "#/definitions/CarrierAdmin"
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/participant/carrier/admin/organization/{org}": {
+      "get": {
+        "x-swagger-router-controller": "ParticipantController",
+        "operationId": "getCarrierAdminByOrg",
+        "summary": "Returns the list of the Carrier admins part of the specified organization",
+        "description": "Returns the list of the Carrier admins part of the specified organization",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "org",
+            "in": "path",
+            "description": "The organization id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The Carrier admins are returned\n",
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/CarrierAdmin"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/participant/recipient/admin/": {
+      "get": {
+        "x-swagger-router-controller": "ParticipantController",
+        "operationId": "getAllRecipientAdmins",
+        "summary": "Returns the list of the Recipient admins",
+        "description": "Returns the list of the Recipient admins",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of the Recipient admins is returned\n",
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/RecipientAdmin"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/participant/recipient/admin/userID/{userID}": {
+      "get": {
+        "x-swagger-router-controller": "ParticipantController",
+        "operationId": "getRecipientAdminByUserID",
+        "summary": "Returns the Recipient admin with the specified user ID",
+        "description": "Returns the Recipient admin with the specified user ID",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userID",
+            "in": "path",
+            "description": "The user ID",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The Recipient admin is returned\n",
+            "$ref": "#/definitions/RecipientAdmin"
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/participant/recipient/admin/organization/{org}": {
+      "get": {
+        "x-swagger-router-controller": "ParticipantController",
+        "operationId": "getRecipientAdminByOrg",
+        "summary": "Returns the list of the Recipient admins part of the specified organization",
+        "description": "Returns the list of the Recipient admins part of the specified organization",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "org",
+            "in": "path",
+            "description": "The organization id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The Recipient admins are returned\n",
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/CarrierAdmin"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/participant/recipient/member/": {
+      "get": {
+        "x-swagger-router-controller": "ParticipantController",
+        "operationId": "getAllRecipientMember",
+        "summary": "Returns the list of the Recipient members",
+        "description": "Returns the list of the Recipient members",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of the Recipient members is returned\n",
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/RecipientMember"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/participant/recipient/member/userID/{userID}": {
+      "get": {
+        "x-swagger-router-controller": "ParticipantController",
+        "operationId": "getRecipientMemberByUserID",
+        "summary": "Returns the Recipient member with the specified user ID",
+        "description": "Returns the Recipient member with the specified user ID",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userID",
+            "in": "path",
+            "description": "The user ID",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The Recipient admin is returned\n",
+            "$ref": "#/definitions/RecipientMember"
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/participant/recipient/member/organization/{org}": {
+      "get": {
+        "x-swagger-router-controller": "ParticipantController",
+        "operationId": "getRecipientMemberByOrg",
+        "summary": "Returns the list of the Recipient members part of the specified organization",
+        "description": "Returns the list of the Recipient members part of the specified organization",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "org",
+            "in": "path",
+            "description": "The organization id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The Recipient members are returned\n",
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/CarrierMember"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -1465,6 +2151,40 @@
         "weight": {
           "type": "number",
           "required": false
+        }
+      }
+    },
+    "Participant": {
+      "type": "object",
+      "properties": {
+        "$class": {
+          "type": "string",
+          "required": true
+        },
+        "userID": {
+          "type": "string",
+          "required": true
+        },
+        "userName": {
+          "type": "string",
+          "required": true
+        },
+        "firstName": {
+          "type": "string",
+          "required": true
+        },
+        "lastName": {
+          "type": "string",
+          "required": true
+        },
+        "address": {
+          "$ref": "#/definitions/Address",
+          "required": true
+        },
+        "org": {
+          "type": "string",
+          "description": "The id of the legal owner organization",
+          "required": true
         }
       }
     },
