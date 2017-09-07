@@ -5,9 +5,9 @@
     "description": "APIs for managing the digital ECMR",
     "version": "1.0.0"
   },
-  "host": "digital-ecmr.bluemix.net",
+  "host": "localhost:8080",
   "schemes": [
-    "https"
+    "http"
   ],
   "securityDefinitions": {
     "UserSecurity": {
@@ -154,7 +154,7 @@
         ],
         "responses": {
           "200": {
-            "description": "The patient has been found. The qr code data are packed into the response object\n",
+            "description": "The list of the ECMRs is returned\n",
             "schema": {
               "type": "array",
               "items": {
@@ -171,7 +171,7 @@
         }
       }
     },
-    "/ECMR/ecmrID": {
+    "/ECMR/ecmrID/{ecmrID}": {
       "get": {
         "x-swagger-router-controller": "ECMRController",
         "operationId": "getEcmrByEcmrID",
@@ -212,7 +212,7 @@
         }
       }
     },
-    "/ECMR/status": {
+    "/ECMR/status/{status}": {
       "get": {
         "x-swagger-router-controller": "ECMRController",
         "operationId": "getAllEcmrsByStatus",
@@ -253,7 +253,7 @@
         }
       }
     },
-    "/ECMR/vehicle/vin": {
+    "/ECMR/vehicle/vin/{vin}": {
       "get": {
         "x-swagger-router-controller": "ECMRController",
         "operationId": "getAllEcmrsFromVehicleByVin",
@@ -270,7 +270,6 @@
           {
             "name": "vin",
             "in": "path",
-            "$ref": "#/definitions/Vehicle/properties/vin",
             "type": "string",
             "description": "The unique vin of a vehicle",
             "required": "true"
@@ -295,7 +294,7 @@
         }
       }
     },
-    "/ECMR/vehicle/plateNumber": {
+    "/ECMR/vehicle/plateNumber/{plateNumber}": {
       "get": {
         "x-swagger-router-controller": "ECMRController",
         "operationId": "getAllEcmrsFromVehicleByPlateNumber",
@@ -312,7 +311,6 @@
           {
             "name": "plateNumber",
             "in": "path",
-            "$ref": "#/definitions/Vehicle/properties/plateNumber",
             "type": "string",
             "description": "The unique plateNumber of a vehicle",
             "required": "true"
@@ -412,7 +410,7 @@
         }
       }
     },
-    "/organization/legalowner/entityID/": {
+    "/organization/legalowner/entityID/{entityID}": {
       "get": {
         "x-swagger-router-controller": "OrganizationController",
         "operationId": "getLegalOwnerOrgByEntityID",
@@ -453,7 +451,7 @@
         }
       }
     },
-    "/organization/legalowner/name/": {
+    "/organization/legalowner/name/{name}": {
       "get": {
         "x-swagger-router-controller": "OrganizationController",
         "operationId": "getLegalOwnerOrgByName",
@@ -569,7 +567,7 @@
         }
       }
     },
-    "/organization/compound/entityID/": {
+    "/organization/compound/entityID/{entityID}": {
       "get": {
         "x-swagger-router-controller": "OrganizationController",
         "operationId": "getCompoundOrgByEntityID",
@@ -610,7 +608,7 @@
         }
       }
     },
-    "/organization/compound/name/": {
+    "/organization/compound/name/{name}": {
       "get": {
         "x-swagger-router-controller": "OrganizationController",
         "operationId": "getCompoundOrgByName",
@@ -726,7 +724,7 @@
         }
       }
     },
-    "/organization/carrier/entityID/": {
+    "/organization/carrier/entityID/{entityID}": {
       "get": {
         "x-swagger-router-controller": "OrganizationController",
         "operationId": "getCarrierOrgByEntityID",
@@ -767,7 +765,7 @@
         }
       }
     },
-    "/organization/carrier/name/": {
+    "/organization/carrier/name/{name}": {
       "get": {
         "x-swagger-router-controller": "OrganizationController",
         "operationId": "getCarrierOrgByName",
@@ -883,7 +881,7 @@
         }
       }
     },
-    "/organization/recipient/entityID/": {
+    "/organization/recipient/entityID/{entityID}": {
       "get": {
         "x-swagger-router-controller": "OrganizationController",
         "operationId": "getRecipientOrgByEntityID",
@@ -924,7 +922,7 @@
         }
       }
     },
-    "/organization/recipient/name/": {
+    "/organization/recipient/name/{name}": {
       "get": {
         "x-swagger-router-controller": "OrganizationController",
         "operationId": "getRecipientOrgByName",
@@ -954,6 +952,161 @@
               "items": {
                 "$ref": "#/definitions/RecipientOrg"
               }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/vehicle/": {
+      "post": {
+        "x-swagger-router-controller": "VehicleController",
+        "operationId": "createVehicles",
+        "summary": "Creates a set of vehicles from a list",
+        "description": "Creates a set of vehicles from a list, if the user has the proper permissions.\n",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "vehicles",
+            "in": "body",
+            "description": "The list of vehicles",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Vehicle"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The vehicles have been created and written into the blockchain\n",
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Vehicle"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "x-swagger-router-controller": "VehicleController",
+        "operationId": "getAllVehicles",
+        "summary": "Returns the complete list of vehicles",
+        "description": "Returns the complete list of all vehicles which the current user has the right to read",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The vehicles list is returned\n",
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Vehicle"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/vehicle/vin/{vin}": {
+      "get": {
+        "x-swagger-router-controller": "VehicleController",
+        "operationId": "getVehicleByVin",
+        "summary": "Returns the vehicle having the provided vin",
+        "description": "Returns the vehicle having the provided vin",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "vin",
+            "in": "path",
+            "description": "The vin of the vehicle",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The vehicles is returned\n",
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Vehicle"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/vehicle/plateNumber/{plateNumber}": {
+      "get": {
+        "x-swagger-router-controller": "VehicleController",
+        "operationId": "getVehicleByPlateNumber",
+        "summary": "Returns the vehicle having the provided plateNumber",
+        "description": "Returns the vehicle having the provided plateNumber",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "plateNumber",
+            "in": "path",
+            "description": "The plateNumber of the vehicle",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The vehicles is returned\n",
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Vehicle"
             }
           },
           "default": {
@@ -1078,7 +1231,7 @@
         "emcrs": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/ECMR"
+            "type": "string"
           },
           "required": true
         },

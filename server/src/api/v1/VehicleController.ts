@@ -35,11 +35,7 @@ export class ECMRController {
     let enrollmentID = new JSONWebToken(request).getUserID();
     let secret       = new JSONWebToken(request).getSecret();
 
-    let result = {body: {}};
-
-    result.body = await this._transactor.executeQuery('getAllVehicles', enrollmentID, secret);
-
-    return result;
+    return await this._transactor.executeQuery('getAllVehicles', enrollmentID, secret);
   }
 
   @Get('/vin/:vin/')
@@ -47,11 +43,8 @@ export class ECMRController {
     let enrollmentID = new JSONWebToken(request).getUserID();
     let secret       = new JSONWebToken(request).getSecret();
 
-    let result = {body: {}};
+    return await this._transactor.executeQuery('getVehicleByVin', enrollmentID, secret, {vin: vin});
 
-    result.body = await this._transactor.executeQuery('getVehicleByVin', enrollmentID, secret, {vin: vin});
-
-    return result;
   }
 
   @Get('/plateNumber/:plateNumber/')
@@ -59,11 +52,8 @@ export class ECMRController {
     let enrollmentID = new JSONWebToken(request).getUserID();
     let secret       = new JSONWebToken(request).getSecret();
 
-    let result = {body: {}};
+    return await this._transactor.executeQuery('getVehicleByPlateNumber', enrollmentID, secret, {plateNumber: plateNumber});
 
-    result.body = await this._transactor.executeQuery('getVehicleByPlateNumber', enrollmentID, secret, {plateNumber: plateNumber});
-
-    return result;
   }
 
   @Post('/')
@@ -71,10 +61,7 @@ export class ECMRController {
     let enrollmentID = new JSONWebToken(request).getUserID();
     let secret       = new JSONWebToken(request).getSecret();
 
-    let result = {body: {}};
+    return await this._transactor.put(vehicles, enrollmentID, secret, (factory, data) => this._transactor.createVehicles(factory, data, enrollmentID));
 
-    result.body = await this._transactor.put(vehicles, enrollmentID, secret, (factory, data) => this._transactor.createVehicles(factory, data, enrollmentID));
-
-    return result;
   }
 }
