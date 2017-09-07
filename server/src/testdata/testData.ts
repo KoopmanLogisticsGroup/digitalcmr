@@ -109,8 +109,6 @@ export class TestData {
       promises.push(this.userService.addUser(participant));
     }
 
-    await Promise.all(promises);
-
     let adminUser: Participant = new Participant({
       $class:    'org.hyperledger.composer.system.Participant',
       org:       '',
@@ -126,7 +124,9 @@ export class TestData {
       userSecret: 'adminpw'
     };
 
-    return await this.userService.addExistingUser(adminUser, identity);
+    promises.push(this.userService.addExistingUser(adminUser, identity));
+
+    return Promise.all(promises);
   }
 
   private addTestDataToDB(testData: any): Promise<any> {

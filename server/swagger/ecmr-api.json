@@ -30,6 +30,13 @@
         ],
         "parameters": [
           {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "ecmr",
             "in": "body",
             "description": "The ECMR object",
@@ -64,6 +71,13 @@
         ],
         "parameters": [
           {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "ecmr",
             "in": "body",
             "description": "Updates the ECMR object",
@@ -94,6 +108,13 @@
         "summary": "Returns the complete list of the ECMRs",
         "description": "Returns the complete list of the ECMRs current user has the right to read",
         "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          }
         ],
         "responses": {
           "200": {
@@ -122,8 +143,16 @@
         "description": "Returns the ECMR selected by ID",
         "parameters": [
           {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "ecmrID",
             "type": "string",
+            "in": "path",
             "description": "The unique ID of the ECMR",
             "required": "true"
           }
@@ -155,7 +184,15 @@
         "description": "Returns the ECMR selected by status",
         "parameters": [
           {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "status",
+            "in": "path",
             "$ref": "#/definitions/ECMR_STATUS",
             "description": "The status of the ECMR",
             "required": "true"
@@ -184,11 +221,19 @@
       "get": {
         "x-swagger-router-controller": "ECMRController",
         "operationId": "getAllEcmrsFromVehicleByVin",
-        "summary": "Returns the vehicles selected by vin",
-        "description": "Returns the vehicles selected by vin",
+        "summary": "Returns the ECMRs containing a vehicle with the provided vin",
+        "description": "Returns the ECMRs containing a vehicle with the provided vin",
         "parameters": [
           {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "vin",
+            "in": "path",
             "$ref": "#/definitions/Vehicle/properties/vin",
             "type": "string",
             "description": "The unique vin of a vehicle",
@@ -197,7 +242,7 @@
         ],
         "responses": {
           "200": {
-            "description": "The list contains the vehicles by vin, or is empty if no vehicle with the provided vin exists or if the user has no permission to read the ECMR\n",
+            "description": "The list contains the ECMRs containing a vehicle with the provided vin, or is empty if they do not exist or if the user has no permission to read them\n",
             "schema": {
               "type": "array",
               "items": {
@@ -218,11 +263,19 @@
       "get": {
         "x-swagger-router-controller": "ECMRController",
         "operationId": "getAllEcmrsFromVehicleByPlateNumber",
-        "summary": "Returns the vehicles selected by platenumber",
-        "description": "Returns the vehicles selected by platenumber",
+        "summary": "Returns the ECMRs containing a vehicle with the provided platenumber",
+        "description": "Returns the ECMRs containing a vehicle with the provided platenumber",
         "parameters": [
           {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "plateNumber",
+            "in": "path",
             "$ref": "#/definitions/Vehicle/properties/plateNumber",
             "type": "string",
             "description": "The unique plateNumber of a vehicle",
@@ -231,7 +284,7 @@
         ],
         "responses": {
           "200": {
-            "description": "The list contains the vehicles by platenumber, or is empty if no vehicle with the provided platenumber exists or if the user has no permission to read the ECMR\n",
+            "description": "The list contains the ECMRs containing a vehicle with the provided platenumber, or is empty if they do not exist or if the user has no permission to read them\n",
             "schema": {
               "type": "array",
               "items": {
@@ -258,6 +311,13 @@
           "application/json"
         ],
         "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          },
           {
             "name": "legalOwnerOrg",
             "in": "body",
@@ -289,10 +349,99 @@
         "summary": "Returns the complete list of all Legal Owners",
         "description": "Returns the complete list of all Legal Owners which the current user has the right to read",
         "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          }
         ],
         "responses": {
           "200": {
             "description": "The legal owner has been found.\n",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/LegalOwnerOrg"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/organization/legalowner/entityID/": {
+      "get": {
+        "x-swagger-router-controller": "OrganizationController",
+        "operationId": "getLegalOwnerOrgByEntityID",
+        "summary": "Returns the Legal Owner Organization selected by ID",
+        "description": "Returns the Legal Owner Organization selected by ID",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "entityID",
+            "in": "path",
+            "description": "The ID of the organization",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The legal owner has been found and is returned.\n",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/LegalOwnerOrg"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/organization/legalowner/name/": {
+      "get": {
+        "x-swagger-router-controller": "OrganizationController",
+        "operationId": "getLegalOwnerOrgByName",
+        "summary": "Returns the Legal Owner Organization selected by name",
+        "description": "Returns the Legal Owner Organization selected by name",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "description": "The name of the organization",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The legal owner has been found and is returned.\n",
             "schema": {
               "type": "array",
               "items": {
@@ -319,6 +468,13 @@
           "application/json"
         ],
         "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          },
           {
             "name": "CompoundOrg",
             "in": "body",
@@ -350,10 +506,99 @@
         "summary": "Returns the complete list of all Compound Orgs",
         "description": "Returns the complete list of all Legal Owners which the current user has the right to read",
         "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          },
         ],
         "responses": {
           "200": {
             "description": "The compound org has been found.\n",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/CompoundOrg"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/organization/compound/entityID/": {
+      "get": {
+        "x-swagger-router-controller": "OrganizationController",
+        "operationId": "getCompoundOrgByEntityID",
+        "summary": "Returns the Compound Organization selected by ID",
+        "description": "Returns the Compound Organization selected by ID",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "entityID",
+            "in": "path",
+            "description": "The ID of the organization",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The Compound has been found and is returned.\n",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/CompoundOrg"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/organization/compound/name/": {
+      "get": {
+        "x-swagger-router-controller": "OrganizationController",
+        "operationId": "getCompoundOrgByName",
+        "summary": "Returns the Compound Organization selected by name",
+        "description": "Returns the Compound Organization selected by name",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "description": "The name of the organization",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The Compound has been found and is returned.\n",
             "schema": {
               "type": "array",
               "items": {
@@ -380,6 +625,13 @@
           "application/json"
         ],
         "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          },
           {
             "name": "CarrierOrg",
             "in": "body",
@@ -411,10 +663,99 @@
         "summary": "Returns the complete list of all Carrier Orgs",
         "description": "Returns the complete list of all Carriers which the current user has the right to read",
         "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          }
         ],
         "responses": {
           "200": {
             "description": "The carrier org has been found.\n",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/CarrierOrg"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/organization/carrier/entityID/": {
+      "get": {
+        "x-swagger-router-controller": "OrganizationController",
+        "operationId": "getCarrierOrgByEntityID",
+        "summary": "Returns the Carrier Organization selected by ID",
+        "description": "Returns the Carrier Organization selected by ID",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "entityID",
+            "in": "path",
+            "description": "The ID of the organization",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The Carrier has been found and is returned.\n",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/CarrierOrg"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/organization/carrier/name/": {
+      "get": {
+        "x-swagger-router-controller": "OrganizationController",
+        "operationId": "getCarrierOrgByName",
+        "summary": "Returns the Carrier Organization selected by name",
+        "description": "Returns the Carrier Organization selected by name",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "description": "The name of the organization",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The Carrier has been found and is returned.\n",
             "schema": {
               "type": "array",
               "items": {
@@ -441,6 +782,13 @@
           "application/json"
         ],
         "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          },
           {
             "name": "RecipientOrg",
             "in": "body",
@@ -472,10 +820,99 @@
         "summary": "Returns the complete list of all Recipient Orgs",
         "description": "Returns the complete list of all Recipients which the current user has the right to read",
         "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          }
         ],
         "responses": {
           "200": {
             "description": "The recipient org has been found.\n",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/RecipientOrg"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/organization/recipient/entityID/": {
+      "get": {
+        "x-swagger-router-controller": "OrganizationController",
+        "operationId": "getRecipientOrgByEntityID",
+        "summary": "Returns the Recipient Organization selected by ID",
+        "description": "Returns the Recipient Organization selected by ID",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "entityID",
+            "in": "path",
+            "description": "The ID of the organization",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The Recipient has been found and is returned.\n",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/RecipientOrg"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/organization/recipient/name/": {
+      "get": {
+        "x-swagger-router-controller": "OrganizationController",
+        "operationId": "getRecipientOrgByName",
+        "summary": "Returns the Recipient Organization selected by name",
+        "description": "Returns the Recipient Organization selected by name",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "description": "The authentication token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "description": "The name of the organization",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The Recipient has been found and is returned.\n",
             "schema": {
               "type": "array",
               "items": {
