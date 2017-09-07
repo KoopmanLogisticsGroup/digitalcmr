@@ -12,7 +12,6 @@ export class GeneralInfoComponent implements OnInit {
 
   public selectedImage: boolean[];
   public selectedColumnIs: any;
-  private compoundTime: any;
 
   public constructor(private _authenticationService: AuthenticationService) {
     this.selectedImage = [false, false, false, false];
@@ -52,22 +51,5 @@ export class GeneralInfoComponent implements OnInit {
 
   public ngOnInit() {
     this.defineSelectedColumn();
-  }
-
-  public showCompoundTime(time) {
-    const utcSeconds = time;
-    const d          = new Date(0);
-    d.setUTCSeconds(utcSeconds);
-    const year: number    = d.getFullYear();
-    const month: number   = d.getMonth();
-    const day: number     = d.getDay();
-    const hours: number   = d.getHours();
-    const minutes: number = d.getMinutes();
-    console.log(day);
-    console.log('hours: ' + hours);
-    console.log(year);
-    console.log(month);
-    this.compoundTime = d;
-    return true;
   }
 }

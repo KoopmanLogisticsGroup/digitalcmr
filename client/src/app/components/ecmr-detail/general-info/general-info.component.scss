@@ -24,9 +24,15 @@
   font-size: 0.9em;
   .column {
     width: 308px;
-    height: 320px;
+    height: 300px;
     padding-left: 40px;
+    &:nth-child(n+2) {
+      border-left: 1px solid #d8dde6;
+    }
     &.active {
+      cursor: pointer;
+      border: 1px solid #2987cd;
+      border-radius: 6px;
       .header {
         color: #2272c2;
         white-space: nowrap;
@@ -66,9 +72,6 @@
         margin-top: 15%;
         content: url("../../../../assets/icons/icon-comment-inactive.svg");
       }
-    }
-    &:nth-child(n+2) {
-      border-left: 1px solid #d8dde6;
     }
     &.completed:hover {
       cursor: pointer;

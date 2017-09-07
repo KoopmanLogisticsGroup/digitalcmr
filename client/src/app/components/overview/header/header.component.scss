@@ -37,6 +37,10 @@
       content: url("../../../../assets/icons/icon-logout-off.svg");
     }
   }
+  .logoutIcon:active {
+    outline: none;
+    border: none;
+  }
   .right.menu {
     margin-right: 12%;
     ::before {
