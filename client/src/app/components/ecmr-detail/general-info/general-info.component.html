@@ -12,7 +12,7 @@
 <div class="ui four column padded doubling unstackable grid generalInfo">
   <div class="column" [ngClass]="{'completed': ecmr?.status === 'DELIVERED' || ecmr?.status === 'CONFIRMED_DELIVERED', 'active': selectedColumns[0],
   'inactive': !selectedColumns[0]}" (click)="selectColumn(0)">
-    <div class="header">ORDER GIVER</div>
+    <div class="header">SENDER</div>
     <div class="center ecmrInfo">
       <div class="imgandtext">
         <img class="addressImg"/>
@@ -22,8 +22,8 @@
           <span>{{ecmr?.loading?.address.zipCode}}, {{ecmr?.loading?.address.city}}</span>
         </div>
       </div>
-      <span class="addressInfo"><b>Signed by:</b> {{ecmr?.owner?.split('#')[1]}}</span>
-      <span><b>Date:</b> 25-10-2017(12:22)</span>
+      <span><b>Signed by:</b> {{ecmr?.owner?.split('#')[1]}}</span>
+      <span><b>Date:</b> {{ecmr?.creation?.date | date:'dd-MM-yyyy'}} ({{ecmr?.creation?.date | date:'hh:mm'}})</span>
     </div>
     <div class="commentInfo">
       <div class="imgandtext">
@@ -45,8 +45,8 @@
             <span>{{ecmr?.creation?.address?.zipCode}}, {{ecmr?.creation?.address?.city}}</span>
           </div>
         </div>
-        <span class="addressInfo"><b>Signed by:</b> {{ecmr?.compoundSignature?.certificate?.split('#')[1].split('@')[0]}}</span>
-        <span><b>Date:</b> 24-01-2017(13:09)</span>
+        <span><b>Signed by:</b> {{ecmr?.compoundSignature?.certificate?.split('#')[1].split('@')[0]}}</span>
+        <span><b>Date:</b>{{ecmr?.compoundSignature?.timestamp | date:'dd-MM-yyyy'}} ({{ecmr?.compoundSignature?.timestamp | date:'hh:mm'}})</span>
       </div>
     </div>
     <div class="commentInfo">
@@ -69,8 +69,8 @@
             <span>{{ecmr?.creation?.address?.zipCode}}, {{ecmr?.creation?.address?.city}}</span>
           </div>
         </div>
-        <span class="addressInfo"><b>Signed by:</b> {{ecmr?.carrierLoadingSignature?.certificate?.split('#')[1].split('@')[0]}}</span>
-        <span><b>Date:</b> 01-05-2017(15:54)</span>
+        <span><b>Signed by:</b> {{ecmr?.carrierLoadingSignature?.certificate?.split('#')[1].split('@')[0]}}</span>
+        <span><b>Date:</b> {{ecmr?.carrierLoadingSignature?.timestamp | date:'dd-MM-yyyy'}} ({{ecmr?.carrierLoadingSignature?.timestamp | date:'hh:mm'}})</span>
       </div>
     </div>
     <div class="commentInfo">
@@ -94,8 +94,8 @@
             <span>{{ecmr?.delivery?.address.zipCode}}, {{ecmr?.delivery?.address.city}}</span>
           </div>
         </div>
-        <span class="addressInfo"><b>Signed by:</b> {{ecmr?.recipientSignature?.certificate?.split('#')[1].split('@')[0]}}</span>
-        <span><b>Date:</b> 21-10-2017(10:10)</span>
+        <span><b>Signed by:</b> {{ecmr?.recipientSignature?.certificate?.split('#')[1].split('@')[0]}}</span>
+        <span><b>Date:</b> {{ecmr?.recipientSignature?.timestamp | date:'dd-MM-yyyy'}} ({{ecmr?.recipientSignature?.timestamp | date:'hh:mm'}})</span>
       </div>
     </div>
     <div class="commentInfo">
