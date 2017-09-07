@@ -369,6 +369,128 @@
           }
         }
       }
+    },
+    "/organization/carrier/": {
+      "post": {
+        "x-swagger-router-controller": "OrganizationController",
+        "operationId": "create",
+        "summary": "Creates a new Carrier org",
+        "description": "Creates a new Carrier org and saves it into blockchain, if the user has the proper permissions.\n",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "CarrierOrg",
+            "in": "body",
+            "description": "The carrier org object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CarrierOrg"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The carrier org has been created and written into the blockchain\n",
+            "schema": {
+              "$ref": "#/definitions/CarrierOrg"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "x-swagger-router-controller": "OrganizationController",
+        "operationId": "getAllCarrierOrgs",
+        "summary": "Returns the complete list of all Carrier Orgs",
+        "description": "Returns the complete list of all Carriers which the current user has the right to read",
+        "parameters": [
+        ],
+        "responses": {
+          "200": {
+            "description": "The carrier org has been found.\n",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/CarrierOrg"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/organization/recipient/": {
+      "post": {
+        "x-swagger-router-controller": "OrganizationController",
+        "operationId": "create",
+        "summary": "Creates a new recipient org",
+        "description": "Creates a new recipient org and saves it into blockchain, if the user has the proper permissions.\n",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "RecipientOrg",
+            "in": "body",
+            "description": "The recipient org object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RecipientOrg"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The recipient org has been created and written into the blockchain\n",
+            "schema": {
+              "$ref": "#/definitions/RecipientOrg"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "x-swagger-router-controller": "OrganizationController",
+        "operationId": "getAllRecipientOrgs",
+        "summary": "Returns the complete list of all Recipient Orgs",
+        "description": "Returns the complete list of all Recipients which the current user has the right to read",
+        "parameters": [
+        ],
+        "responses": {
+          "200": {
+            "description": "The recipient org has been found.\n",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/RecipientOrg"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
