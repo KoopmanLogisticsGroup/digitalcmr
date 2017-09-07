@@ -1160,7 +1160,7 @@
     "Delivery": {
       "type": "object",
       "properties": {
-        "Address": {
+        "address": {
           "$ref": "#/definitions/Address",
           "required": true
         },
@@ -1173,7 +1173,7 @@
     "Loading": {
       "type": "object",
       "properties": {
-        "Address": {
+        "address": {
           "$ref": "#/definitions/Address",
           "required": true
         },
@@ -1186,7 +1186,7 @@
     "Creation": {
       "type": "object",
       "properties": {
-        "Address": {
+        "address": {
           "$ref": "#/definitions/Address",
           "required": true
         },
@@ -1217,7 +1217,7 @@
           "required": true
         },
         "manufacturer": {
-          "type": "boolean",
+          "type": "string",
           "required": true
         },
         "model": {
@@ -1225,10 +1225,10 @@
           "required": true
         },
         "type": {
-          "type": "boolean",
+          "type": "string",
           "required": true
         },
-        "emcrs": {
+        "ecmrs": {
           "type": "array",
           "items": {
             "type": "string"
