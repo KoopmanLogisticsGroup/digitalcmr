@@ -2421,6 +2421,27 @@
         "token": {
           "type": "string",
           "required": true
+        },
+        "user": {
+          "type": "object",
+          "properties": {
+            "userID": {
+              "type": "string",
+              "required": true
+            },
+            "username": {
+              "type": "string",
+              "required": true
+            },
+            "userEmail": {
+              "type": "string",
+              "required": true
+            },
+            "role": {
+              "type": "string",
+              "required": true
+            }
+          }
         }
       }
     },
