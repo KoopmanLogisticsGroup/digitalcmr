@@ -128,7 +128,9 @@ export class TestData {
       userSecret: 'adminpw'
     };
 
-    return await this.userService.addExistingUser(adminUser, identity);
+    promises.push(this.userService.addExistingUser(adminUser, identity));
+
+    return Promise.all(promises);
   }
 
   private addTestDataToDB(testData: any): Promise<any> {

@@ -6,7 +6,7 @@ export class ComposerInterceptor implements InterceptorInterface {
     if (!content && response) {
       return response.statusCode;
     } else {
-      return content.body;
+      return content.body || content;
     }
   }
 }

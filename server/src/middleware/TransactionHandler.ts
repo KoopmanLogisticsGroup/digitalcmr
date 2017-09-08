@@ -29,7 +29,10 @@ export class TransactionHandler {
     const transaction = transactionCreator(factory, data);
 
     await businessNetworkConnection.submitTransaction(transaction);
-    await businessNetworkHandler.disconnect();
+
+    let result  = {body: {}};
+    result.body = await businessNetworkHandler.disconnect();
+    return result;
   }
 
   public async get(resourceID: string, assetRegistry: string, username: string, secret: string): Promise<any> {
@@ -63,10 +66,10 @@ export class TransactionHandler {
 
     const assets = await businessNetwork.query(queryName, parameters);
 
-    let result = {body: []};
+    let result = [];
 
     for (let asset of assets) {
-      result.body.push(businessNetworkHandler.getSerializer().toJSON(asset));
+      result.push(businessNetworkHandler.getSerializer().toJSON(asset));
     }
 
     await businessNetworkHandler.disconnect();
@@ -81,7 +84,7 @@ export class TransactionHandler {
 
     // get vehicle by vin
     return businessNetwork.query('getVehicleByVin', {vin: vin}).then((vehicles) => {
-      let result = {body: []};
+      let result = [];
       if (vehicles.length === 0) {
         businessNetworkHandler.disconnect().then(() => {
           return result;
@@ -93,13 +96,12 @@ export class TransactionHandler {
           let ecmrId = ecmr;
           // get all the ecmrs contained in the vehicle
           promises.push(this.executeQuery('getEcmrById', username, secret, {id: ecmr.$identifier}).then((assets) => {
-            if (assets.body.length > 0) {
-              result.body.push(assets.body[0]);
+            if (assets.length > 0) {
+              result.push(assets[0]);
             }
           }));
         }
         return Promise.all(promises).then((values) => {
-          console.log(result);
           return result;
         });
       }
@@ -112,7 +114,7 @@ export class TransactionHandler {
 
     // get vehicle by vin
     return businessNetwork.query('getVehicleByPlateNumber', {plateNumber: plateNumber}).then((vehicles) => {
-      let result = {body: []};
+      let result = [];
       if (vehicles.length === 0) {
         businessNetworkHandler.disconnect().then(() => {
           return result;
@@ -124,13 +126,12 @@ export class TransactionHandler {
           let ecmrId = ecmr;
           // get all the ecmrs contained in the vehicle
           promises.push(this.executeQuery('getEcmrById', username, secret, {id: ecmr.$identifier}).then((assets) => {
-            if (assets.body.length > 0) {
-              result.body.push(assets.body[0]);
+            if (assets.length > 0) {
+              result.push(assets[0]);
             }
           }));
         }
         return Promise.all(promises).then((values) => {
-          console.log(result);
           return result;
         });
       }

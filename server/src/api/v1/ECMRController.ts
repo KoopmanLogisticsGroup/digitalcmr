@@ -84,11 +84,8 @@ export class ECMRController {
     let enrollmentID = new JSONWebToken(request).getUserID();
     let secret       = new JSONWebToken(request).getSecret();
 
-    let result = {body: {}};
+    return await this._transactor.put(ecmr, enrollmentID, secret, (factory, data) => this._transactor.createECMR(factory, data, enrollmentID));
 
-    result.body = await this._transactor.put(ecmr, enrollmentID, secret, (factory, data) => this._transactor.createECMR(factory, data, enrollmentID));
-
-    return result;
   }
 
   @Put('/')
@@ -97,10 +94,7 @@ export class ECMRController {
     let secret       = new JSONWebToken(request).getSecret();
     const ip         = request.ip;
 
-    let result = {body: {}};
+    return await this._transactor.put(ecmr, enrollmentID, secret, (factory, data) => this._transactor.updateECMR(factory, data, enrollmentID, ip));
 
-    result.body = await this._transactor.put(ecmr, enrollmentID, secret, (factory, data) => this._transactor.updateECMR(factory, data, enrollmentID, ip));
-
-    return result;
   }
 }
