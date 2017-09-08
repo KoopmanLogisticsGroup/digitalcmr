@@ -1,5 +1,3 @@
-'use strict';
-
 export class Address {
   private _$class: string;
   private _name: string;

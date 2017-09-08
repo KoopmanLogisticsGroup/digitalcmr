@@ -1,5 +1,3 @@
-'use strict';
-
 const testData     = require('../../resources/testData.json');
 const participants = require('../../resources/participants.json').participants;
 import {LoggerInstance} from 'winston';

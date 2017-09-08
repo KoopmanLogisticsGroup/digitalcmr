@@ -39,7 +39,7 @@ module.exports = function (grunt) {
             options: {
                 logConcurrentOutput: true
             },
-            run: ['nodemon:dev'],
+            run: ['nodemon'],
             // run: ['nodemon', 'watch'],
             build: ['ts']
         },
@@ -55,20 +55,6 @@ module.exports = function (grunt) {
                         PORT: 8080,
                         HOST: "0.0.0.0",
                         NODE_ENV: 'development'
-                    }
-                }
-            },
-            production: {
-                script: outDir + '/app.js',
-                watch: [outDir],
-                delay: 2000,
-                ext: 'js',
-                legacyWatch: true,
-                options: {
-                    env: {
-                        PORT: 8080,
-                        HOST: "0.0.0.0",
-                        NODE_ENV: 'production'
                     }
                 }
             }

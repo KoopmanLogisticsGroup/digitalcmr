@@ -10,6 +10,9 @@ services:
     env_file: ./server/.env
     environment:
       - NPM_TOKEN=${NPM_TOKEN}
+      - NODE_ENV=development
+      - HOST=0.0.0.0
+      - PORT=8080
     volumes:
       - ./server/src:/usr/src/app/src
       - ./server/tsconfig.json:/usr/src/app/tsconfig.json # TS filenames get added automatically to this file on build
@@ -39,8 +42,8 @@ services:
     container_name: swagger-ui
     image: swaggerapi/swagger-ui
     ports:
-      - "80:8080"
+      - "8001:8080"
     volumes:
-      - ./server/swagger:/docs/swagger
+      - ./api_doc:/docs/api_doc
     environment:
-      - SWAGGER_JSON=/docs/swagger/ecmr-api.json
+      - SWAGGER_JSON=/docs/api_doc/digital-cmr.api.json

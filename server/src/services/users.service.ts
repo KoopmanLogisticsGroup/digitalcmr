@@ -1,5 +1,3 @@
-'use strict';
-
 import {LoggerInstance} from 'winston';
 import {LoggerFactory} from '../utils/logger/LoggerFactory';
 import {Container} from 'typedi';
