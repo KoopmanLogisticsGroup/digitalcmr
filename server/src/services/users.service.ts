@@ -33,11 +33,11 @@ export class UsersService {
           //create new user object and save it into db
           let user: User = this.buildUserObject(participant, identity);
           this.addUserToDB(user).then(() => {
-            this.logger.info('User: ' + participant.userID + 'successfully added');
+            this.logger.info('User: ' + participant.userID + ' successfully added');
             return resolve('Success');
           }).catch((error) => {
             this.logger.error('Was not possible to save user ' + participant.userID + 'to DB');
-            resolve('Was not possible to save user ' + participant.userID + 'to DB');
+            resolve('Was not possible to save user ' + participant.userID + ' to DB');
           });
         }).catch((error) => {
           this.logger.error('Was not possible to issue the identity to ' + participant.userID + ' to Blockchain');
@@ -46,7 +46,7 @@ export class UsersService {
       }).catch((error) => {
         if (error.toString().indexOf('already exists') !== -1) {
           this.logger.debug('User: ' + participant.userID + ' already exists');
-          resolve('User: ' + participant.userID + 'already exists');
+          resolve('User: ' + participant.userID + ' already exists');
         } else {
           // retry to add the user for 3 times, in case temporary network problems happened
           if (maxHop > 0 || maxHop === undefined) {
@@ -68,11 +68,11 @@ export class UsersService {
 
     return new Promise((resolve: (result: any) => void, reject: (error: Error) => void) => {
       this.addUserToDB(this.buildUserObject(participant, identity)).then(() => {
-        this.logger.info('User: ' + participant.userID + 'successfully added');
+        this.logger.info('User: ' + participant.userID + ' successfully added');
         resolve('Success');
       }).catch((error) => {
-        this.logger.error('Was not possible to save user ' + participant.userID + 'to DB');
-        resolve('Was not possible to save user ' + participant.userID + 'to DB');
+        this.logger.error('Was not possible to save user ' + participant.userID + ' to DB');
+        resolve('Was not possible to save user ' + participant.userID + ' to DB');
       });
     });
   }
@@ -110,7 +110,7 @@ export class UsersService {
           participantRegistry.add(participantResource).then((participantRegistry) => {
             resolve('success');
           }).catch((error) => {
-            reject(new Error('Participant' + participant.userID + ' add error: ' + error));
+            reject(new Error('Participant ' + participant.userID + ' add error: ' + error));
           });
         })
         .catch((error) => {
@@ -174,9 +174,9 @@ export class UsersService {
 
   private addUserToDB(user: User): Promise<any> {
     return this.dataService.putDocuments([user], user.userID).then((result: any) => {
-      this.logger.debug('User ' + user.userID + 'successfully added to DB');
+      this.logger.debug('User ' + user.userID + ' successfully added to DB');
     }).catch((err: any) => {
-      this.logger.error('It was not possible to add ' + user.userID + 'to DB :', err);
+      this.logger.error('It was not possible to add ' + user.userID + ' to DB :', err);
     });
   }
 }

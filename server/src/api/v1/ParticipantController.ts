@@ -202,12 +202,12 @@ export class OrganizationController {
     let secret       = new JSONWebToken(request).getSecret();
 
     if (!this.userService.isAdmin(enrollmentID, secret)) {
-      return {body: 'Cannot issue participant. User is not admin.'};
+      return 'Cannot issue participant. User is not admin.';
     }
     return this.userService.addUser(new Participant(participant)).then((result) => {
-      return {body: result};
+      return {result};
     }).catch((error) => {
-      return {body: error};
+      return {error};
     });
   }
 
