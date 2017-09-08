@@ -29,9 +29,11 @@ class App {
     Container.set(ApiFactory, new ApiFactory(Config.settings.composer.url));
     Container.set(LoggerFactory, this.loggerFactory);
     Container.set(DataService, await this.initDataSource());
-    setTimeout(() => {
-      this.addTestData();
-    }, 5000);
+    if (process.env.NODE_ENV !== 'production') {
+      setTimeout(() => {
+        this.addTestData();
+      }, 5000);
+    }
 
     const apiPath = Config.settings.apiPath;
     const routingControllersOptions: RoutingControllersOptions = {

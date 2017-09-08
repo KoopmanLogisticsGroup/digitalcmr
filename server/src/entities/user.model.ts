@@ -1,5 +1,3 @@
-'use strict';
-
 import * as crypto from 'crypto';
 import {Password} from '../utils/auth/Password';
 

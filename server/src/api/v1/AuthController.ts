@@ -1,4 +1,3 @@
-'use strict';
 import {Response} from 'express';
 import * as winston from 'winston';
 import {Service} from 'typedi';

@@ -1,5 +1,3 @@
-'use strict';
-
 import {Address} from './address.model';
 
 export class Participant {
