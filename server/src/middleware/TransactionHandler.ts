@@ -84,7 +84,7 @@ export class TransactionHandler {
 
     // get vehicle by vin
     return businessNetwork.query('getVehicleByVin', {vin: vin}).then((vehicles) => {
-      let result = [];
+      let result = {body: []};
       if (vehicles.length === 0) {
         businessNetworkHandler.disconnect().then(() => {
           return result;
@@ -97,7 +97,7 @@ export class TransactionHandler {
           // get all the ecmrs contained in the vehicle
           promises.push(this.executeQuery('getEcmrById', username, secret, {id: ecmr.$identifier}).then((assets) => {
             if (assets.length > 0) {
-              result.push(assets[0]);
+              result = assets;
             }
           }));
         }
@@ -114,7 +114,7 @@ export class TransactionHandler {
 
     // get vehicle by vin
     return businessNetwork.query('getVehicleByPlateNumber', {plateNumber: plateNumber}).then((vehicles) => {
-      let result = [];
+      let result = {body: []};
       if (vehicles.length === 0) {
         businessNetworkHandler.disconnect().then(() => {
           return result;
@@ -127,7 +127,7 @@ export class TransactionHandler {
           // get all the ecmrs contained in the vehicle
           promises.push(this.executeQuery('getEcmrById', username, secret, {id: ecmr.$identifier}).then((assets) => {
             if (assets.length > 0) {
-              result.push(assets[0]);
+              result = assets;
             }
           }));
         }
