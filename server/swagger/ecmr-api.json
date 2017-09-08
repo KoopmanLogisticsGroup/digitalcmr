@@ -229,7 +229,7 @@
           {
             "name": "status",
             "in": "path",
-            "$ref": "#/definitions/ECMR_STATUS",
+            "type": "string",
             "description": "The status of the ECMR",
             "required": "true"
           }
@@ -1103,7 +1103,7 @@
         ],
         "responses": {
           "200": {
-            "description": "The vehicles is returned\n",
+            "description": "The vehicle is returned\n",
             "type": "array",
             "items": {
               "$ref": "#/definitions/Vehicle"
@@ -1138,7 +1138,7 @@
           {
             "name": "participant",
             "in": "body",
-            "description": "The list of vehicles",
+            "description": "The list of participants",
             "required": true,
             "schema": {
               "$ref": "#/definitions/Participant"
@@ -1147,7 +1147,7 @@
         ],
         "responses": {
           "200": {
-            "description": "The vehicles have been created and written into the blockchain\n",
+            "description": "The participant(s) have been created and written into the blockchain\n",
             "type": "array",
             "items": {
               "$ref": "#/definitions/Vehicle"
@@ -1179,7 +1179,7 @@
         ],
         "responses": {
           "200": {
-            "description": "The list of the legal owner admins is returned\n",
+            "description": "The list of legal owner admins is returned\n",
             "type": "array",
             "items": {
               "$ref": "#/definitions/LegalOwnerAdmin"
@@ -1234,8 +1234,8 @@
       "get": {
         "x-swagger-router-controller": "ParticipantController",
         "operationId": "getLegalOwnerAdminByOrg",
-        "summary": "Returns the list of the legal owner admins part of the specified organization",
-        "description": "Returns the list of the legal owner admins part of the specified organization",
+        "summary": "Returns the list of legal owner admins who are part of the specified organization",
+        "description": "Returns the list of legal owner admins who are part of the specified organization",
         "parameters": [
           {
             "name": "x-access-token",
@@ -1273,8 +1273,8 @@
       "get": {
         "x-swagger-router-controller": "ParticipantController",
         "operationId": "getAllCompoundAdmins",
-        "summary": "Returns the list of the Compound admins",
-        "description": "Returns the list of the Compound admins",
+        "summary": "Returns the list of Compound admins",
+        "description": "Returns the list of Compound admins",
         "parameters": [
           {
             "name": "x-access-token",
@@ -1286,7 +1286,7 @@
         ],
         "responses": {
           "200": {
-            "description": "The list of the Compound admins is returned\n",
+            "description": "The list of Compound admins is returned\n",
             "type": "array",
             "items": {
               "$ref": "#/definitions/CompoundAdmin"
@@ -1341,8 +1341,8 @@
       "get": {
         "x-swagger-router-controller": "ParticipantController",
         "operationId": "getCompoundAdminByOrg",
-        "summary": "Returns the list of the Compound admins part of the specified organization",
-        "description": "Returns the list of the Compound admins part of the specified organization",
+        "summary": "Returns the list of Compound admins who are part of the specified organization",
+        "description": "Returns the list of Compound admins who are part of the specified organization",
         "parameters": [
           {
             "name": "x-access-token",
@@ -1380,8 +1380,8 @@
       "get": {
         "x-swagger-router-controller": "ParticipantController",
         "operationId": "getAllCarrierMembers",
-        "summary": "Returns the list of the Carrier members",
-        "description": "Returns the list of the Carrier members",
+        "summary": "Returns the list of Carrier members",
+        "description": "Returns the list of Carrier members",
         "parameters": [
           {
             "name": "x-access-token",
@@ -1393,7 +1393,7 @@
         ],
         "responses": {
           "200": {
-            "description": "The list of the Carrier members is returned\n",
+            "description": "The list of Carrier members is returned\n",
             "type": "array",
             "items": {
               "$ref": "#/definitions/CarrierMember"
@@ -1448,8 +1448,8 @@
       "get": {
         "x-swagger-router-controller": "ParticipantController",
         "operationId": "getCarrierMemberByOrg",
-        "summary": "Returns the list of the Carrier members part of the specified organization",
-        "description": "Returns the list of the Carrier members part of the specified organization",
+        "summary": "Returns the list of Carrier members who are part of the specified organization",
+        "description": "Returns the list of Carrier members who are part of the specified organization",
         "parameters": [
           {
             "name": "x-access-token",
@@ -1487,8 +1487,8 @@
       "get": {
         "x-swagger-router-controller": "ParticipantController",
         "operationId": "getAllCarrierAdmins",
-        "summary": "Returns the list of the Carrier admins",
-        "description": "Returns the list of the Carrier admins",
+        "summary": "Returns the list of Carrier admins",
+        "description": "Returns the list of Carrier admins",
         "parameters": [
           {
             "name": "x-access-token",
@@ -1500,7 +1500,7 @@
         ],
         "responses": {
           "200": {
-            "description": "The list of the Carrier admins is returned\n",
+            "description": "The list of Carrier admins is returned\n",
             "type": "array",
             "items": {
               "$ref": "#/definitions/CarrierAdmin"
@@ -1555,8 +1555,8 @@
       "get": {
         "x-swagger-router-controller": "ParticipantController",
         "operationId": "getCarrierAdminByOrg",
-        "summary": "Returns the list of the Carrier admins part of the specified organization",
-        "description": "Returns the list of the Carrier admins part of the specified organization",
+        "summary": "Returns the list of Carrier admins who are part of the specified organization",
+        "description": "Returns the list of Carrier admins who are part of the specified organization",
         "parameters": [
           {
             "name": "x-access-token",
@@ -1594,8 +1594,8 @@
       "get": {
         "x-swagger-router-controller": "ParticipantController",
         "operationId": "getAllRecipientAdmins",
-        "summary": "Returns the list of the Recipient admins",
-        "description": "Returns the list of the Recipient admins",
+        "summary": "Returns the list of Recipient admins",
+        "description": "Returns the list of Recipient admins",
         "parameters": [
           {
             "name": "x-access-token",
@@ -1607,7 +1607,7 @@
         ],
         "responses": {
           "200": {
-            "description": "The list of the Recipient admins is returned\n",
+            "description": "The list of Recipient admins is returned\n",
             "type": "array",
             "items": {
               "$ref": "#/definitions/RecipientAdmin"
@@ -1662,8 +1662,8 @@
       "get": {
         "x-swagger-router-controller": "ParticipantController",
         "operationId": "getRecipientAdminByOrg",
-        "summary": "Returns the list of the Recipient admins part of the specified organization",
-        "description": "Returns the list of the Recipient admins part of the specified organization",
+        "summary": "Returns the list of Recipient admins who are part of the specified organization",
+        "description": "Returns the list of Recipient admins who are part of the specified organization",
         "parameters": [
           {
             "name": "x-access-token",
@@ -1714,7 +1714,7 @@
         ],
         "responses": {
           "200": {
-            "description": "The list of the Recipient members is returned\n",
+            "description": "The list of Recipient members is returned\n",
             "type": "array",
             "items": {
               "$ref": "#/definitions/RecipientMember"
@@ -1769,8 +1769,8 @@
       "get": {
         "x-swagger-router-controller": "ParticipantController",
         "operationId": "getRecipientMemberByOrg",
-        "summary": "Returns the list of the Recipient members part of the specified organization",
-        "description": "Returns the list of the Recipient members part of the specified organization",
+        "summary": "Returns the list of Recipient members who are part of the specified organization",
+        "description": "Returns the list of Recipient members who are part of the specified organization",
         "parameters": [
           {
             "name": "x-access-token",
@@ -2421,6 +2421,27 @@
         "token": {
           "type": "string",
           "required": true
+        },
+        "user": {
+          "type": "object",
+          "properties": {
+            "userID": {
+              "type": "string",
+              "required": true
+            },
+            "username": {
+              "type": "string",
+              "required": true
+            },
+            "userEmail": {
+              "type": "string",
+              "required": true
+            },
+            "role": {
+              "type": "string",
+              "required": true
+            }
+          }
         }
       }
     },

@@ -26,7 +26,12 @@ export class ClientAuthenticator {
       return <AuthenticationResponse>{
         success: true,
         token:   new UserAuthenticator().generateToken(user),
-        user:    user
+        user:    {
+          userID: user.userID,
+          username: user.username,
+          userEmail: user.userEmail,
+          role: user.role
+        }
       };
     } catch (error) {
       return <AuthenticationResponse>{
