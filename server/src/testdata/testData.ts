@@ -109,8 +109,6 @@ export class TestData {
       promises.push(this.userService.addUser(participant));
     }
 
-    await Promise.all(promises);
-
     this.logger.debug('Adding admin user');
 
     let adminUser: Participant = new Participant({
