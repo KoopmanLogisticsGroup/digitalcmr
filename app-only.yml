@@ -34,3 +34,13 @@ services:
     image: couchdb
     ports:
       - "5985:5984"
+
+  swagger:
+    container_name: swagger-ui
+    image: swaggerapi/swagger-ui
+    ports:
+      - "80:8080"
+    volumes:
+      - ./server/swagger:/docs/swagger
+    environment:
+      - SWAGGER_JSON=/docs/swagger/ecmr-api.json
