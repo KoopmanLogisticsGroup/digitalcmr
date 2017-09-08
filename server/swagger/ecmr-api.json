@@ -229,7 +229,7 @@
           {
             "name": "status",
             "in": "path",
-            "$ref": "#/definitions/ECMR_STATUS",
+            "type": "string",
             "description": "The status of the ECMR",
             "required": "true"
           }
