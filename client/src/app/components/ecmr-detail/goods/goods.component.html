@@ -32,7 +32,8 @@
                      [(ngModel)]="good?.carrierLoadingRemark.comments">
             </div>
             <ng-template #showCompoundRemark>
-              <div *ngIf="userRole() !== 'CarrierMember' && selectedColumns[1] === true && selectColumn() !== 1">
+              <div
+                *ngIf="userRole() !== 'CarrierMember' && userRole() !== 'LegalOwnerAdmin' && selectedColumns[1] === true && selectColumn() !== 1">
                 <ol>
                   <li class="remarkListStyling" *ngIf="good?.compoundRemark.comments !== ''">
                     <b class="remarkPerson" *ngIf="good?.compoundRemark.comments !== '' || null">{{ecmr?.compoundSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
@@ -47,7 +48,8 @@
                      [(ngModel)]="good?.carrierDeliveryRemark.comments">
             </div>
             <ng-template #showCarrierLoadingRemark>
-              <div *ngIf="userRole() !== 'CarrierMember' && selectedColumns[2] === true && selectColumn() !== 2">
+              <div
+                *ngIf="userRole() !== 'CarrierMember' && userRole() !== 'LegalOwnerAdmin' && selectedColumns[2] === true && selectColumn() !== 2">
                 <ol>
                   <li class="remarkListStyling" *ngIf="good?.carrierLoadingRemark.comments !== ''">
                     <b class="remarkPerson" *ngIf="good?.carrierLoadingRemark.comments !== '' || null">{{ecmr?.carrierLoadingSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
@@ -63,7 +65,7 @@
             </div>
             <ng-template #showCarrierDeliveryRemark>
               <div
-                *ngIf="userRole() !== 'CarrierMember' && userRole() !== 'RecipientMember' && selectedColumns[3] === true && selectColumn() !== 3">
+                *ngIf="userRole() !== 'CarrierMember' && userRole() !== 'RecipientMember' && userRole() !== 'LegalOwnerAdmin' && selectedColumns[3] === true && selectColumn() !== 3">
                 <ol>
                   <li class="remarkListStyling" *ngIf="good?.carrierDeliveryRemark.comments !== ''">
                     <b class="remarkPerson" *ngIf="good?.carrierDeliveryRemark.comments !== '' || null">{{ecmr?.carrierDeliverySignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
@@ -186,7 +188,7 @@
             </div>
             <ng-template #showCompoundCheck>
               <div
-                *ngIf="userRole() !== 'CarrierMember' && selectedColumns[1] === true && selectColumn() !== 1 && good?.compoundRemark.isDamaged === true">
+                *ngIf="userRole() !== 'CarrierMember' && userRole() !== 'LegalOwnerAdmin' && selectedColumns[1] === true && selectColumn() !== 1 && good?.compoundRemark.isDamaged === true">
                 <img class="checkIcon"/></div>
             </ng-template>
             <div
@@ -197,7 +199,7 @@
             </div>
             <ng-template #showCarrierLoadingCheck>
               <div
-                *ngIf="userRole() !== 'CarrierMember' && selectedColumns[2] === true && selectColumn() !== 2 && good?.carrierLoadingRemark.isDamaged === true">
+                *ngIf="userRole() !== 'CarrierMember' && userRole() !== 'LegalOwnerAdmin' && selectedColumns[2] === true && selectColumn() !== 2 && good?.carrierLoadingRemark.isDamaged === true">
                 <img class="checkIcon"/></div>
             </ng-template>
             <div
@@ -208,7 +210,7 @@
             </div>
             <ng-template #showCarrierDeliveryCheck>
               <div
-                *ngIf="userRole() !== 'CarrierMember' && userRole() !== 'RecipientMember' && selectColumn() !== 3 && selectedColumns[3] === true && good?.carrierDeliveryRemark.isDamaged === true">
+                *ngIf="userRole() !== 'CarrierMember' && userRole() !== 'LegalOwnerAdmin' && userRole() !== 'RecipientMember' && selectColumn() !== 3 && selectedColumns[3] === true && good?.carrierDeliveryRemark.isDamaged === true">
                 <img class="checkIcon"/></div>
             </ng-template>
             <div *ngIf="selectColumn() === 0">
