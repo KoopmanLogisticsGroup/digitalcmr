@@ -49,7 +49,8 @@ export class UsersService {
           // retry to add the user for 3 times, in case temporary network problems happened
           if (maxHop > 0 || maxHop === undefined) {
             this.logger.debug(' Retrying to add participant ' + participant.userID + ' to Blockchain: ');
-            return setTimeout(() => {
+            setTimeout(() => {
+              resolve('Close promise');
               return this.addUser(participant, maxHop ? maxHop - 1 : 3);
             }, 2000);
           } else {
@@ -82,7 +83,6 @@ export class UsersService {
   private buildUserObject(participant: Participant, identity: any): User {
 
     let user = new User({
-
       'userID':    participant.userID,
       'username':  participant.userName,
       'password':  participant.password,

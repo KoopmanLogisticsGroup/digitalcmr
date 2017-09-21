@@ -12,5 +12,7 @@ RUN npm cache clear
 
 ADD . /usr/src/app
 
+RUN ng build --prod
+
 EXPOSE 4200
 EXPOSE 49153

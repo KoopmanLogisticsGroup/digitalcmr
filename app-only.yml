@@ -19,7 +19,7 @@ services:
       - ./server/package.json:/usr/src/app/package.json
       - ./server/resources/connectionProfiles:/root/.composer-connection-profiles
       - ./server/resources/testData.json:/usr/src/app/resources/testData.json
-    command: bash -c "grunt build; grunt"
+    command: bash -c "grunt"
 
   client:
       build: client
@@ -38,12 +38,8 @@ services:
     ports:
       - "5985:5984"
 
-  swagger:
-    container_name: swagger-ui
-    image: swaggerapi/swagger-ui
+  api_doc:
+    container_name: api_doc
+    build: api_doc
     ports:
       - "8001:8080"
-    volumes:
-      - ./api_doc:/docs/api_doc
-    environment:
-      - SWAGGER_JSON=/docs/api_doc/digital-cmr.api.json

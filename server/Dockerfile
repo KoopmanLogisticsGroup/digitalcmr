@@ -16,4 +16,7 @@ RUN npm cache clean
 RUN rm -f /root/.npmrc
 
 COPY . .
+
+COPY ./resources/connectionProfiles /root/.composer-connection-profiles
+
 RUN grunt build

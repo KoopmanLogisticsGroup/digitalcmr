@@ -5,6 +5,4 @@ import {environment} from '../environments/environment';
 export class Configuration {
   public apiHost: string        = environment.apiHost;
   public apiPrefix: string      = environment.apiPrefix;
-  public composerHost: string   = environment.composerHost;
-  public composerPrefix: string = environment.composerPrefix;
 }
