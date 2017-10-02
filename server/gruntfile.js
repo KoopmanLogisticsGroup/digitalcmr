@@ -54,7 +54,7 @@ module.exports = function (grunt) {
                     env: {
                         PORT: 8080,
                         HOST: "0.0.0.0",
-                        NODE_ENV: 'development'
+                        NODE_ENV: 'production'
                     }
                 }
             }

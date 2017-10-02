@@ -15,8 +15,8 @@ import {TestData} from './testdata/testData';
 
 class App {
   private loggerFactory: LoggerFactory = new LoggerFactory(Config.settings.winston, Config.settings.morgan);
-  private logger: LoggerInstance = this.loggerFactory.create('App');
-  private debug: IDebugger = debug('app:main');
+  private logger: LoggerInstance       = this.loggerFactory.create('App');
+  private debug: IDebugger             = debug('app:main');
 
   public async run(): Promise<void> {
     this.debug('express app');
@@ -29,17 +29,15 @@ class App {
     Container.set(ApiFactory, new ApiFactory(Config.settings.composer.url));
     Container.set(LoggerFactory, this.loggerFactory);
     Container.set(DataService, await this.initDataSource());
-    if (process.env.NODE_ENV !== 'production') {
-      setTimeout(() => {
-        this.addTestData();
-      }, 5000);
-    }
+    setTimeout(() => {
+      this.addTestData();
+    }, 5000);
 
-    const apiPath = Config.settings.apiPath;
+    const apiPath                                              = Config.settings.apiPath;
     const routingControllersOptions: RoutingControllersOptions = {
-      defaultErrorHandler : false,
-      routePrefix: apiPath,
-      controllers: [`${__dirname}${apiPath}/*.js`]
+      defaultErrorHandler: false,
+      routePrefix:         apiPath,
+      controllers:         [`${__dirname}${apiPath}/*.js`]
     };
 
     this.debug('routing: %o', routingControllersOptions);

@@ -1,4 +1,4 @@
-FROM node:6
+FROM node:6.11.2
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
@@ -11,6 +11,8 @@ RUN cd /usr/src/app/ && npm install --loglevel error
 RUN npm cache clear
 
 ADD . /usr/src/app
+
+RUN ng build --prod
 
 EXPOSE 4200
 EXPOSE 49153

@@ -28,4 +28,4 @@ if [ ! -f $TARGET ]; then
 fi
 
 sed -i "s/apiHost.*/apiHost: 'http:\/\/$SERVER_IP:$SERVER_PORT\/',/g" $TARGET
-ng serve -H 0.0.0.0 -p $CLIENT_PORT -e $ENV
+ng serve -H 0.0.0.0 -p $CLIENT_PORT -e $ENV --disable-host-check
