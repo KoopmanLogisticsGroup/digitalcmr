@@ -3,18 +3,21 @@ import {Options} from 'morgan';
 
 export interface Settings {
   apiPath?: string;
-  composer?: {
+  composer: {
     url: string;
-    profile?: string;
+    channel: string;
+    profile: string;
     network?: string;
-    channel?: string;
-    namespace?: string;
+    namespace: string;
   };
   env?: string;
-  host?: string;
+  host: string;
   morgan?: Options;
-  port?: number;
+  port?: number | string;
   winston?: LoggerOptions;
-  secret?: string;
-  serverDir?: string;
+  serverSecret: string;
+  privateDB: {
+    host: string,
+    port: string
+  };
 }

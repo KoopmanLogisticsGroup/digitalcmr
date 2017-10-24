@@ -5,9 +5,9 @@ import {SearchService} from '../../services/search.service';
 import {NavbarService} from '../../services/navbar.service';
 
 @Component({
-  selector   : 'app-overview',
+  selector:    'app-overview',
   templateUrl: './overview.component.html',
-  styleUrls  : ['./overview.component.scss'],
+  styleUrls:   ['./overview.component.scss'],
 })
 export class OverviewComponent implements OnInit {
   public currentView = 'OPEN';

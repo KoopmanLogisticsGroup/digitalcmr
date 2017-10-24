@@ -1,14 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-    <defs>
-        <filter id="a" width="101.2%" height="104%" x="-.7%" y="-1.4%" filterUnits="objectBoundingBox">
-            <feOffset dy="2" in="SourceAlpha" result="shadowOffsetOuter1"/>
-            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="2"/>
-            <feColorMatrix in="shadowBlurOuter1" result="shadowMatrixOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0"/>
-            <feMerge>
-                <feMergeNode in="shadowMatrixOuter1"/>
-                <feMergeNode in="SourceGraphic"/>
-            </feMerge>
-        </filter>
-    </defs>
-    <path fill="#A8B7C7" fill-rule="evenodd" d="M982.501 260h4.999a.501.501 0 0 1 0 1.002h-4.999a.501.501 0 0 1 0-1.002m6-2H981.5a.5.5 0 0 1 0-1h7.001a.5.5 0 0 1 0 1M985 253c-3.865 0-6.999 2.686-6.999 6 0 2.033 1.193 3.81 3 4.892v2.608l3-1.498s-.148-.002.999-.002c3.866 0 7.001-2.685 7.001-6 0-3.314-3.135-6-7.001-6m0 13c-.306 0-.606-.017-.903-.048l-4.096 2.05v-3.541c-1.828-1.284-3.001-3.25-3.001-5.46 0-3.866 3.582-7.001 8-7.001 4.419 0 8.001 3.135 8.001 7 0 3.866-3.582 7-8.001 7" filter="url(#a)" transform="translate(-973 -250)"/>
+  <defs>
+    <filter id="a" width="101.2%" height="104%" x="-.7%" y="-1.4%" filterUnits="objectBoundingBox">
+      <feOffset dy="2" in="SourceAlpha" result="shadowOffsetOuter1"/>
+      <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="2"/>
+      <feColorMatrix in="shadowBlurOuter1" result="shadowMatrixOuter1"
+                     values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0"/>
+      <feMerge>
+        <feMergeNode in="shadowMatrixOuter1"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <path fill="#A8B7C7" fill-rule="evenodd"
+        d="M982.501 260h4.999a.501.501 0 0 1 0 1.002h-4.999a.501.501 0 0 1 0-1.002m6-2H981.5a.5.5 0 0 1 0-1h7.001a.5.5 0 0 1 0 1M985 253c-3.865 0-6.999 2.686-6.999 6 0 2.033 1.193 3.81 3 4.892v2.608l3-1.498s-.148-.002.999-.002c3.866 0 7.001-2.685 7.001-6 0-3.314-3.135-6-7.001-6m0 13c-.306 0-.606-.017-.903-.048l-4.096 2.05v-3.541c-1.828-1.284-3.001-3.25-3.001-5.46 0-3.866 3.582-7.001 8-7.001 4.419 0 8.001 3.135 8.001 7 0 3.866-3.582 7-8.001 7"
+        filter="url(#a)" transform="translate(-973 -250)"/>
 </svg>

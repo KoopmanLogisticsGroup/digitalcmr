@@ -1,59 +1,22 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs",
-    "declaration": false,
-    "removeComments": true,
-    "sourceMap": true,
-    "noLib": false,
-    "outDir": "dist",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "target":                 "es6",
+    "module":                 "commonjs",
+    "declaration":            false,
+    "removeComments":         true,
+    "sourceMap":              true,
+    "noLib":                  false,
+    "outDir":                 "dist",
+    "emitDecoratorMetadata":  true,
+    "experimentalDecorators": true,
+    "strictNullChecks":       true
   },
-  "exclude": [
+  "include":         [
+    "src/**/*",
+    "test/**/*"
+  ],
+  "exclude":         [
     "node_modules",
-    "typings/**/*.d.ts",
     "src/sdk/**"
-  ],
-  "filesGlob": [
-    "src/**/*.ts",
-    "src/*.ts"
-  ],
-  "files": [
-    "src/api/v1/AuthController.ts",
-    "src/api/v1/ECMRController.ts",
-    "src/api/v1/LegalOwnerOrgController.ts",
-    "src/api/v1/OrganizationController.ts",
-    "src/api/v1/ParticipantController.ts",
-    "src/api/v1/VehicleController.ts",
-    "src/app.ts",
-    "src/config/default.config.ts",
-    "src/config/development.config.ts",
-    "src/config/index.ts",
-    "src/config/production.config.ts",
-    "src/config/settings.interface.ts",
-    "src/datasource/CouchDBSource.ts",
-    "src/datasource/DataService.ts",
-    "src/datasource/DBSource.ts",
-    "src/entities/address.model.ts",
-    "src/entities/participant.model.ts",
-    "src/entities/user.model.ts",
-    "src/middleware/BusinessNetworkHandler.ts",
-    "src/middleware/ComposerInterceptor.ts",
-    "src/middleware/ErrorHandlerMiddleware.ts",
-    "src/middleware/index.ts",
-    "src/middleware/TransactionHandler.ts",
-    "src/middleware/UserAuthenticatorMiddleware.ts",
-    "src/sdk/api.ts",
-    "src/services/users.service.ts",
-    "src/testdata/testData.ts",
-    "src/utils/ApiFactory.ts",
-    "src/utils/auth/ClientAuthenticator.ts",
-    "src/utils/auth/JSONWebToken.ts",
-    "src/utils/auth/Password.ts",
-    "src/utils/auth/UserAuthenticator.ts",
-    "src/utils/index.ts",
-    "src/utils/logger/index.ts",
-    "src/utils/logger/LoggerFactory.ts"
   ]
 }

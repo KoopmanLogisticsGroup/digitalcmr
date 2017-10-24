@@ -1,20 +1,20 @@
 {
-  "$class": "org.digitalcmr.CarrierMember",
-  "org": "resource:org.digitalcmr.CarrierOrg#koopman",
-  "userID": "harry@koopman.org",
-  "userName": "harry",
+  "$class":    "org.digitalcmr.CarrierMember",
+  "org":       "resource:org.digitalcmr.CarrierOrg#koopman",
+  "userID":    "harry@koopman.org",
+  "userName":  "harry",
   "firstName": "Harry",
-  "lastName": "Koppy",
-  "address": {
-    "$class": "org.digitalcmr.Address",
-    "name": "Harry Koppy",
-    "street": "koppenstraat",
+  "lastName":  "Koppy",
+  "address":   {
+    "$class":      "org.digitalcmr.Address",
+    "name":        "Harry Koppy",
+    "street":      "koppenstraat",
     "houseNumber": "43",
-    "city": "Groningen",
-    "zipCode": "9712HX",
-    "country": "Netherlands",
-    "latitude": 53.4443,
-    "longitude": 62.3323,
-    "id": "id"
+    "city":        "Groningen",
+    "zipCode":     "9712HX",
+    "country":     "Netherlands",
+    "latitude":    53.4443,
+    "longitude":   62.3323,
+    "id":          "id"
   }
 }

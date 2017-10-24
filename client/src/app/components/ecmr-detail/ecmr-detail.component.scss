@@ -1,18 +1,19 @@
 .titles {
-  position: absolute;
-  color: #3a3670;
-  margin-left: 0.9%;
-  cursor: pointer;
-  display: inline-block;
-  border: none;
+  position:         absolute;
+  color:            #3a3670;
+  margin-left:      0.9%;
+  cursor:           pointer;
+  display:          inline-block;
+  border:           none;
   background-color: transparent;
-  font-size: 1vw;
+  font-size:        1vw;
 }
 
 .titles:active {
   outline: none;
-  border: none;
+  border:  none;
 }
+
 .backButton {
   content: url("../../../assets/icons/backbutton.svg");
 }

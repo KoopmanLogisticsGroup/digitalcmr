@@ -1,9 +1,8 @@
-import {Response} from 'express';
-import * as winston from 'winston';
-import {Service} from 'typedi';
-import {JsonController, Post, Res, Body, Req} from 'routing-controllers';
-import {ClientAuthenticator, AuthenticationResponse} from '../../utils/auth/ClientAuthenticator';
-import {LoggerFactory} from '../../utils/logger/LoggerFactory';
+import {Container, Service} from 'typedi';
+import {JsonController, Post, Body} from 'routing-controllers';
+import {ClientAuthenticator, AuthenticationResponse} from '../../utils/authentication/ClientAuthenticator';
+import {LoggerFactory} from '../../utils/logger';
+import {LoggerInstance} from 'winston';
 import {DataService} from '../../datasource/DataService';
 
 class LoginParams {
@@ -14,15 +13,11 @@ class LoginParams {
 @JsonController()
 @Service()
 export class AuthController {
-  private logger: winston.LoggerInstance;
-
-  public constructor(loggerFactory: LoggerFactory,
-                     private dataService: DataService) {
-    this.logger = loggerFactory.create();
-  }
+  private logger: LoggerInstance   = Container.get(LoggerFactory).get('AuthController');
+  private dataService: DataService = Container.get(DataService);
 
   @Post('/login')
-  public async login(@Body() loginParams: LoginParams, @Res() response: Response): Promise<AuthenticationResponse> {
+  public async login(@Body() loginParams: LoginParams): Promise<AuthenticationResponse> {
     let clientAuthenticator = new ClientAuthenticator(
       this.logger,
       loginParams.username,

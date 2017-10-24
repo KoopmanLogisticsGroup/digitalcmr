@@ -1,20 +1,20 @@
 {
-  "$class": "org.digitalcmr.RecipientAdmin",
-  "org": "resource:org.digitalcmr.RecipientOrg#cardealer",
-  "userID": "clara@cardealer.org",
-  "userName": "clara",
+  "$class":    "org.digitalcmr.RecipientAdmin",
+  "org":       "resource:org.digitalcmr.RecipientOrg#cardealer",
+  "userID":    "clara@cardealer.org",
+  "userName":  "clara",
   "firstName": "Clara",
-  "lastName": "Petacci",
-  "address": {
-    "$class": "org.digitalcmr.Address",
-    "name": "Clara Petacci",
-    "street": "singenstraat",
+  "lastName":  "Petacci",
+  "address":   {
+    "$class":      "org.digitalcmr.Address",
+    "name":        "Clara Petacci",
+    "street":      "singenstraat",
     "houseNumber": "3",
-    "city": "Eindhoven",
-    "zipCode": "94132OK",
-    "country": "Netherlands",
-    "latitude": 51.84443,
-    "longitude": 60.43323,
-    "id": "id"
+    "city":        "Eindhoven",
+    "zipCode":     "94132OK",
+    "country":     "Netherlands",
+    "latitude":    51.84443,
+    "longitude":   60.43323,
+    "id":          "id"
   }
 }

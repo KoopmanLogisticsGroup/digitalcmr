@@ -14,7 +14,7 @@ import {Container} from 'typedi';
 import {ApiFactory} from '../../utils';
 import {LegalOwnerOrg, CompoundOrg, RecipientOrg, CarrierOrg, QueryApi} from '../../sdk/api';
 import {ErrorHandlerMiddleware, ComposerInterceptor, TransactionHandler} from '../../middleware';
-import {JSONWebToken} from '../../utils/auth/JSONWebToken';
+import {JSONWebToken} from '../../utils/authentication/JSONWebToken';
 
 @JsonController('/organization')
 @UseInterceptor(ComposerInterceptor)

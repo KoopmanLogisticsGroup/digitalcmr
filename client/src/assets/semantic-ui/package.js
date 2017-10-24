@@ -3,13 +3,13 @@ var
 ;
 
 Package.describe({
-  name    : 'semantic:ui-css',
-  summary : 'Semantic UI - CSS Release of Semantic UI',
-  version : '2.2.9',
-  git     : 'git://github.com/Semantic-Org/Semantic-UI-CSS.git',
+  name: 'semantic:ui-css',
+  summary: 'Semantic UI - CSS Release of Semantic UI',
+  version: '2.2.9',
+  git: 'git://github.com/Semantic-Org/Semantic-UI-CSS.git',
 });
 
-Package.onUse(function(api) {
+Package.onUse(function (api) {
 
   api.versionsFrom('1.0');
 

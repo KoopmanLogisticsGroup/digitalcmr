@@ -12,7 +12,7 @@ export class LegalOwnerController {
 
   public constructor() {
     const apiFactory = Container.get(ApiFactory);
-    this.api = apiFactory.get(LegalOwnerOrgApi);
+    this.api         = apiFactory.get(LegalOwnerOrgApi);
   }
 
   @Get('/')

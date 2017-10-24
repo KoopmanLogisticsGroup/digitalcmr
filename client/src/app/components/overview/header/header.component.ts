@@ -4,15 +4,16 @@ import {SearchService} from '../../../services/search.service';
 import {NavbarService} from '../../../services/navbar.service';
 
 @Component({
-  selector   : 'app-header',
+  selector:    'app-header',
   templateUrl: './header.component.html',
-  styleUrls  : ['./header.component.scss']
+  styleUrls:   ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
   public currentView: string;
+  public queryData: string;
 
   public constructor(private searchService: SearchService,
-                     private _authenticationService: AuthenticationService,
+                     private authenticationService: AuthenticationService,
                      public nav: NavbarService) {
   }
 
@@ -24,7 +25,7 @@ export class HeaderComponent implements OnInit {
   }
 
   public getUser() {
-    if (this._authenticationService.isAuthenticated()) {
+    if (this.authenticationService.isAuthenticated()) {
       const user = JSON.parse(localStorage.getItem('currentUser')).user.username;
       return user;
     }
@@ -33,7 +34,7 @@ export class HeaderComponent implements OnInit {
 
   public logout() {
     location.reload();
-    this._authenticationService.logout();
+    this.authenticationService.logout();
   }
 
   public setOverview(): void {

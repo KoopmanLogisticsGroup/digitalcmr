@@ -4,9 +4,9 @@ import {ActivatedRoute} from '@angular/router';
 import {NavbarService} from '../../services/navbar.service';
 
 @Component({
-  selector   : 'app-ecmr-detail',
+  selector:    'app-ecmr-detail',
   templateUrl: './ecmr-detail.component.html',
-  styleUrls  : ['./ecmr-detail.component.scss']
+  styleUrls:   ['./ecmr-detail.component.scss']
 })
 export class EcmrDetailComponent implements OnInit {
 
@@ -81,25 +81,25 @@ export class EcmrDetailComponent implements OnInit {
     for (const good of this.ecmr.goods) {
       if (!good.compoundRemark) {
         good.compoundRemark = {
-          'comments' : '',
+          'comments':  '',
           'isDamaged': false
         };
       }
       if (!good.carrierLoadingRemark) {
         good.carrierLoadingRemark = {
-          'comments' : '',
+          'comments':  '',
           'isDamaged': false
         };
       }
       if (!good.carrierDeliveryRemark) {
         good.carrierDeliveryRemark = {
-          'comments' : '',
+          'comments':  '',
           'isDamaged': false
         };
       }
       if (!good.recipientRemark) {
         good.recipientRemark = {
-          'comments' : '',
+          'comments':  '',
           'isDamaged': false
         };
       }

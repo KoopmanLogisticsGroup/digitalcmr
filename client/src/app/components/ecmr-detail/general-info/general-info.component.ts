@@ -2,9 +2,9 @@ import {Component, Input, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../../services/authentication.service';
 
 @Component({
-  selector   : 'app-general-info',
+  selector:    'app-general-info',
   templateUrl: './general-info.component.html',
-  styleUrls  : ['./general-info.component.scss']
+  styleUrls:   ['./general-info.component.scss']
 })
 export class GeneralInfoComponent implements OnInit {
   @Input() public ecmr: any;

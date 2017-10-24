@@ -3,9 +3,9 @@ import {SignOffModalComponent} from '../sign-off-modal/sign-off-modal.component'
 import {AuthenticationService} from '../../../services/authentication.service';
 
 @Component({
-  selector   : 'app-goods',
+  selector:    'app-goods',
   templateUrl: './goods.component.html',
-  styleUrls  : ['./goods.component.scss']
+  styleUrls:   ['./goods.component.scss']
 })
 export class GoodsComponent implements OnInit {
 

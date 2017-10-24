@@ -1,128 +1,165 @@
 import {DBSource} from './DBSource';
 import {CouchDBSource} from './CouchDBSource';
+import {LoggerInstance} from 'winston';
+import {Container} from 'typedi';
+import {LoggerFactory} from '../utils/logger/LoggerFactory';
 
 export class DataService {
   private db: DBSource;
   private couchDB: CouchDBSource;
-  private dbName: string;
+  private logger: LoggerInstance = Container.get(LoggerFactory).get('DataService');
 
-  public constructor() {
-    this.dbName = 'db';
-    this.initDB().then((result) => {
-      console.log('DB initialized');
-      this.db = this.couchDB;
-    }).catch(this.printError);
-  }
-
-  private async initDB(): Promise<CouchDBSource> {
+  private async initDB(dbName: string): Promise<CouchDBSource> {
     return new Promise((resolve: (result: CouchDBSource) => void, reject: (error: Error) => void) => {
       this.couchDB = new CouchDBSource();
-      this.couchDB.createDatabase(this.dbName).then((result) => {
-        this.couchDB.connectToDatabase(this.dbName);
+      this.couchDB.createDatabase(dbName).then((result) => {
+        this.couchDB.connectToDatabase(dbName);
         resolve(this.couchDB);
       }).catch((error) => {
-        let connect = this.couchDB.connectToDatabase(this.dbName);
+        this.logger.warn('An error occurred while creating the database ' + dbName, error.message);
+        let connect = this.couchDB.connectToDatabase(dbName);
         if (connect) {
-          console.log('Test init: Connected to database: ' + this.dbName);
+          this.logger.info('Connected to database: ' + dbName);
           resolve(this.couchDB);
         } else {
-          let err     = new Error();
-          err.message = 'Test init failed: It was not possible to connect to database: ' + this.dbName;
-          reject(err);
+          reject(new Error('It was not possible to connect to database: ' + dbName));
         }
       });
     });
   }
 
-  public async putDocuments(documents: any[], ID?: string): Promise<any> {
+  public async putDocuments(dbName: string, documents: any[], documentIDs?: string[]): Promise<any> {
+    this.db = await this.initDB(dbName);
     return new Promise((resolve: (result: any) => void, reject: (error: Error) => void) => {
-      let idArr: string[] = [];
-      let done            = 0;
-      for (let i = 0; i < documents.length; i++) {
-        this.db.put(documents[i], ID).then((documentID) => {
-          idArr.push(documentID);
-          done++;
-          if (done === documents.length) {
-            resolve(idArr);
-          }
-        }).catch((error) => {
-          let err     = new Error();
-          err.message = 'Put documents: It was not possible to put documents. ' + error.message;
-          reject(err);
-        });
+      if (documentIDs && (documents.length !== documentIDs.length)) {
+        return reject(new Error('Incorrect number of IDs provided'));
       }
+
+      let promises: Promise<any>[] = [];
+
+      documents.forEach((document: any, index: number) => {
+        if (documentIDs) {
+          promises.push(this.db.put(document, documentIDs[index]));
+        } else {
+          promises.push(this.db.put(document));
+        }
+      });
+
+      return Promise.all(promises)
+        .then((documentsIDs: string[]) => {
+          resolve(documentsIDs);
+        })
+        .catch((error) => {
+          reject(new Error('Put documents: It was not possible to put documents. ' + error.message));
+        });
     });
   }
 
-  public async updateDocument(documentID: string, document: any): Promise<any> {
+  public async putDocument(dbName: string, document: any, documentID?: string): Promise<any> {
+    this.db = await this.initDB(dbName);
+    return new Promise((resolve: (result: any) => void, reject: (error: Error) => void) => {
+      let promise: Promise<any>;
+      if (documentID) {
+        promise = this.db.put(document, documentID);
+      } else {
+        promise = this.db.put(document);
+      }
+
+      promise
+        .then((documentID: string) => {
+          resolve(documentID);
+        })
+        .catch((error) => {
+          reject(new Error('Put document: It was not possible to put documents. ' + error.message));
+        });
+    });
+  }
+
+  public async updateDocument(dbName: string, documentID: string, document: any): Promise<any> {
+    this.db = await this.initDB(dbName);
+
     return new Promise((resolve: (result: any) => void, reject: (error: Error) => void) => {
       if (!documentID) {
-        let err     = new Error();
-        err.message = 'No document ID provided';
-        reject(err);
+        return reject(new Error('No document ID provided'));
       }
-      this.db.update(document).then((documentID) => {
-        resolve(documentID);
+
+      this.db.update(documentID, document).then((docID) => {
+        resolve(docID);
       }).catch((error) => {
-        let err     = new Error();
-        err.message = 'Update document: It was not possible to update document. ' + error.message;
-        reject(err);
+        reject(new Error('Update document: It was not possible to update document. ' + error.message));
       });
     });
   }
 
-  public async deleteDocument(documentID: string): Promise<any> {
+  public async deleteDocument(dbName: string, documentID: string): Promise<any> {
+    this.db = await this.initDB(dbName);
+
     return new Promise((resolve: (result: any) => void, reject: (error: Error) => void) => {
       if (!documentID) {
-        let err     = new Error();
-        err.message = 'No document ID provided';
-        reject(err);
+        return reject(new Error('No document ID provided'));
       }
+
       this.db.delete(documentID).then((documentID) => {
         resolve(documentID);
       }).catch((error) => {
-        let err     = new Error();
-        err.message = 'Update document: It was not possible to update document. ' + error.message;
-        reject(err);
+        reject(new Error('Update document: It was not possible to update document. ' + error.message));
       });
     });
   }
 
-  public async getDocuments(idArr: string[]): Promise<any> {
+  public async getDocument(dbName: string, documentID: string): Promise<any> {
+    this.db = await this.initDB(dbName);
+
     return new Promise((resolve: (result: any) => void, reject: (error: Error) => void) => {
-      let documentArr: any[] = [];
-      let done               = 0;
-      for (let i = 0; i < idArr.length; i++) {
-        this.db.get(idArr[i]).then((document) => {
-          done++;
-          documentArr.push(document.resource);
-          if (done === idArr.length) {
-            resolve(documentArr);
-          }
-        }).catch((error) => {
-          let err     = new Error();
-          err.message = 'Get documents: It was not possible to get documents. ' + error.message;
-          reject(err);
-        });
-      }
+      this.db.get(documentID).then((document: any) => {
+        resolve(document);
+      }).catch((error) => {
+        reject(new Error('Get document: It was not possible to get document. ' + error.message));
+      });
     });
   }
 
-  public async addTestData(testData: any): Promise<any> {
-    let promises: Promise<any>[] = [];
-    for (let key in testData) {
-      if (testData.hasOwnProperty(key)) {
-        for (let item of testData[key]) {
-          let doc  = {};
-          doc[key] = item;
-          promises.push(await this.putDocuments([doc], item[Object.keys(item)[0]]));
-        }
+  public async getDocuments(dbName: string, documentIDs: string[]): Promise<any> {
+    this.db = await this.initDB(dbName);
+
+    return new Promise((resolve: (result: any) => void, reject: (error: Error) => void) => {
+      let promises: Promise<any>[] = [];
+      for (const documentID of documentIDs) {
+        promises.push(this.db.get(documentID));
       }
-    }
-    return Promise.all(promises);
+
+      return Promise.all(promises)
+        .then((documents: any) => {
+          resolve(documents);
+        }).catch((error) => {
+          reject(new Error('Get documents: It was not possible to get documents. ' + error.message));
+        });
+    });
   }
 
-  private printError(error: any): void {
-    console.log(error);
+  public async getAllDocuments(dbName: string): Promise<any> {
+    this.db = await this.initDB(dbName);
+
+    return new Promise((resolve: (result: any) => void, reject: (error: Error) => void) => {
+      this.db.all().then((docs) => {
+          resolve(docs);
+        }
+      ).catch((error) => {
+        reject(new Error('Get List: It was not possible to get list of docs. ' + error.message));
+      });
+    });
+  }
+
+  public async addPrivateData(testData: any): Promise<any> {
+    let promises: Promise<any>[] = [];
+    for (const key of Object.keys(testData)) {
+      // create database
+      this.db = await this.initDB(key);
+      for (let item of testData[key]) {
+        promises.push(this.putDocument(key, item, item[Object.keys(item)[0]]));
+      }
+    }
+
+    return Promise.all(promises);
   }
 }

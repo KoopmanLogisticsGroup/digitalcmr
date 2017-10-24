@@ -4,54 +4,54 @@
 
 .red-bar {
   background-color: #e32526;
-  height: 75px;
-  width: 100%;
-  margin: 3.5% 0;
+  height:           75px;
+  width:            100%;
+  margin:           3.5% 0;
 }
 
 .fill-label {
-  margin: 0px;
+  margin:  0px;
   padding: 0px;
 }
 
 .login-label {
   background-color: #3A386E;
-  color: white;
-  margin-right: 10%;
-  margin-top: 12%;
-  display: block;
-  float: right;
-  font-family: Roboto;
-  text-transform: uppercase;
-  display: block;
-  float: right;
+  color:            white;
+  margin-right:     10%;
+  margin-top:       12%;
+  display:          block;
+  float:            right;
+  font-family:      Roboto;
+  text-transform:   uppercase;
+  display:          block;
+  float:            right;
 }
 
 .login-box {
-  width: 322px;
-  height: 342px;
-  margin: 8em auto;
-  border-radius: 6px;
+  width:            322px;
+  height:           342px;
+  margin:           8em auto;
+  border-radius:    6px;
   background-color: #ffffff;
-  box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15);
+  box-shadow:       0px 1px 2px 0 rgba(34, 36, 38, 0.15);
 }
 
 .label {
-  font-weight: bold;
-  font-size: 13px;
-  float: left;
-  margin-top: 20px;
+  font-weight:   bold;
+  font-size:     13px;
+  float:         left;
+  margin-top:    20px;
   margin-bottom: 5px;
 }
 
 .logo {
   background-color: white;
-  margin-top: 30px;
-  margin-bottom: 10px;
-  max-height: 100px;
-  padding: 5px;
-  width: 100%;
-  object-fit: scale-down;
+  margin-top:       30px;
+  margin-bottom:    10px;
+  max-height:       100px;
+  padding:          5px;
+  width:            100%;
+  object-fit:       scale-down;
 }
 
 .icon-box {
@@ -60,10 +60,10 @@
 
 .width-scale {
   margin-left: 10%;
-  width: 80%;
+  width:       80%;
   font-family: Roboto;
-  font-size: 13px;
-  color: #b8b7c2;
+  font-size:   13px;
+  color:       #b8b7c2;
   font-weight: 100;
 
   input {
@@ -72,24 +72,24 @@
 }
 
 .login-text-label {
-  padding-top: 28px;
+  padding-top:  28px;
   padding-left: 30px;
-  color: #2f62a0;
-  font-size: 20px;
-  font-family: Roboto;
-  font-size: 20px;
+  color:        #2f62a0;
+  font-size:    20px;
+  font-family:  Roboto;
+  font-size:    20px;
 }
 
 .icon-username {
   position: absolute;
-  top: 4px;
-  left: 3px;
+  top:      4px;
+  left:     3px;
 }
 
 .icon-password {
   position: absolute;
-  top: 8px;
-  left: 10px;
+  top:      8px;
+  left:     10px;
 }
 
 .login-top-margin {

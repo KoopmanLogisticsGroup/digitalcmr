@@ -1,13 +1,15 @@
-version: '2.0'
+version: '2'
 services:
   ca.org1.example.com:
     extends:
       file: composer/hlfv1/composer/docker-compose.yml
       service: ca.org1.example.com
+
   orderer.example.com:
     extends:
       file: composer/hlfv1/composer/docker-compose.yml
       service: orderer.example.com
+
   peer0.org1.example.com:
     extends:
       file: composer/hlfv1/composer/docker-compose.yml
@@ -29,7 +31,8 @@ services:
         sleep 10; \
         docker exec -e \"CORE_PEER_LOCALMSPID=Org1MSP\" -e \"CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@org1.example.com/msp\" peer0.org1.example.com peer channel create -o orderer.example.com:7050 -c composerchannel -f /etc/hyperledger/configtx/composer-channel.tx; \
         docker exec -e \"CORE_PEER_LOCALMSPID=Org1MSP\" -e \"CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@org1.example.com/msp\" peer0.org1.example.com peer channel join -b composerchannel.block && \
-        echo 'Created channels! Exiting.'"
+        echo 'Created channels! Exiting.'
+        "
 
   couchdb:
     extends:
@@ -45,7 +48,6 @@ services:
       - orderer.example.com
       - peer0.org1.example.com
       - couchdb
-      - util
 
   composer-rest-server:
     extends:

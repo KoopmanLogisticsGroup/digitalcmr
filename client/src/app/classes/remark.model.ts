@@ -26,7 +26,7 @@ export class CarrierLoadingRemark {
 
   public toJSON(): any {
     return {
-      'comments' : this.comments,
+      'comments':  this.comments,
       'isDamaged': this.isDamaged
     };
   }

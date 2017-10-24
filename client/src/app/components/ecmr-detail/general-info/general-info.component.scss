@@ -1,7 +1,7 @@
 .ui.table {
-  font-size: 1em;
+  font-size:  1em;
   box-shadow: 0 2px 4px #e3e3e3;
-  border: 0;
+  border:     0;
   th {
     background-color: #FFFFFF;
   }
@@ -15,27 +15,27 @@
 }
 
 .generalInfo {
-  box-shadow: 0 2px 4px #e3e3e3;
-  background-color: white;
-  border-top-left-radius: 0.5em;
-  border-top-right-radius: 0.5em;
-  border-bottom-left-radius: 0.5em;
+  box-shadow:                 0 2px 4px #e3e3e3;
+  background-color:           white;
+  border-top-left-radius:     0.5em;
+  border-top-right-radius:    0.5em;
+  border-bottom-left-radius:  0.5em;
   border-bottom-right-radius: 0.5em;
-  font-size: 0.9em;
+  font-size:                  0.9em;
   .column {
-    width: 308px;
-    height: 300px;
+    width:        308px;
+    height:       300px;
     padding-left: 40px;
     &:nth-child(n+2) {
       border-left: 1px solid #d8dde6;
     }
     &.active {
-      cursor: pointer;
-      border: 1px solid #2987cd;
+      cursor:        pointer;
+      border:        1px solid #2987cd;
       border-radius: 6px;
       .header {
-        color: #2272c2;
-        white-space: nowrap;
+        color:         #2272c2;
+        white-space:   nowrap;
         margin-bottom: 8.5%;
       }
       .commentOverview {
@@ -53,8 +53,8 @@
           overflow: hidden;
         }
         span {
-          display: block;
-          margin-top: 15%;
+          display:      block;
+          margin-top:   15%;
           padding-left: 15%;
         }
       }
@@ -62,7 +62,7 @@
     &.inactive {
       color: #a8b7c7;
       .header {
-        white-space: nowrap;
+        white-space:   nowrap;
         margin-bottom: 8.5%;
       }
       .addressImg {
@@ -70,12 +70,12 @@
       }
       .commentOverview {
         margin-top: 15%;
-        content: url("../../../../assets/icons/icon-comment-inactive.svg");
+        content:    url("../../../../assets/icons/icon-comment-inactive.svg");
       }
     }
     &.completed:hover {
-      cursor: pointer;
-      border: 1px solid #2987cd;
+      cursor:        pointer;
+      border:        1px solid #2987cd;
       border-radius: 6px;
     }
     .commentInfo {
@@ -87,8 +87,8 @@
         overflow: hidden;
       }
       span {
-        display: block;
-        margin-top: 15%;
+        display:      block;
+        margin-top:   15%;
         padding-left: 15%;
       }
     }
@@ -103,9 +103,9 @@
     }
     .addressImg {
       padding-bottom: 35px;
-      width: auto;
-      height: auto;
-      content: url("../../../../assets/icons/page-1.svg");
+      width:          auto;
+      height:         auto;
+      content:        url("../../../../assets/icons/page-1.svg");
     }
     .addressInfo {
       margin-bottom: 10%;
@@ -117,15 +117,15 @@
 }
 
 .titles {
-  color: #424244;
-  margin-left: 3%;
-  margin-top: 3%;
+  color:         #424244;
+  margin-left:   3%;
+  margin-top:    3%;
   margin-bottom: 0.5%;
-  font-size: 18px;
+  font-size:     18px;
 }
 
 .progressBar {
-  width: 100%;
+  width:      100%;
   margin-top: 3%;
 }
 

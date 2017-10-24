@@ -1,0 +1,1124 @@
+{
+  "entities":      [
+    {
+      "participant": {
+        "participantID": "userID",
+        "$class":        "CompoundAdmin",
+        "org":           "CompoundOrg#amsterdamcompound",
+        "userID":        "willem@amsterdamcompound.org",
+        "password":      "passw0rd",
+        "userName":      "willem",
+        "firstName":     "willem",
+        "lastName":      "compy",
+        "address":       {
+          "$class":      "Address",
+          "name":        "willem compy",
+          "street":      "compenstraat",
+          "houseNumber": "18",
+          "city":        "Amsterdam",
+          "zipCode":     "9867UG",
+          "country":     "Netherlands",
+          "latitude":    52.2443,
+          "longitude":   65.2323,
+          "id":          "id"
+        }
+      },
+      "identity":    {
+        "userID": "willem@amsterdamcompound.org"
+      },
+      "userApp":     {
+        "username":  "willem@amsterdamcompound.org",
+        "password":  "passw0rd",
+        "firstName": "Willem",
+        "lastName":  "Compy",
+        "role":      "CompoundAdmin"
+      }
+    },
+    {
+      "participant": {
+        "participantID": "userID",
+        "$class":        "RecipientMember",
+        "org":           "RecipientOrg#cardealer",
+        "userID":        "rob@cardealer.org",
+        "password":      "passw0rd",
+        "userName":      "rob",
+        "firstName":     "Rob",
+        "lastName":      "Carman",
+        "address":       {
+          "$class":      "Address",
+          "name":        "Rob Carman",
+          "street":      "autostraat",
+          "houseNumber": "12",
+          "city":        "Rotterdam",
+          "zipCode":     "9442KO",
+          "country":     "Netherlands",
+          "latitude":    51.4443,
+          "longitude":   60.3323,
+          "id":          "id"
+        }
+      },
+      "identity":    {
+        "userID": "rob@cardealer.org"
+      },
+      "userApp":     {
+        "username":  "rob@cardealer.org",
+        "password":  "passw0rd",
+        "firstName": "Rob",
+        "lastName":  "Carman",
+        "role":      "RecipientMember"
+      }
+    },
+    {
+      "participant": {
+        "participantID": "userID",
+        "$class":        "LegalOwnerAdmin",
+        "org":           "LegalOwnerOrg#leaseplan",
+        "userID":        "lapo@leaseplan.org",
+        "password":      "passw0rd",
+        "userName":      "lapo",
+        "firstName":     "lapo",
+        "lastName":      "kelkann",
+        "address":       {
+          "$class":      "Address",
+          "name":        "lapo kelkann",
+          "street":      "leesenstraat",
+          "houseNumber": "20",
+          "city":        "Utrecht",
+          "zipCode":     "9867RF",
+          "country":     "Netherlands",
+          "latitude":    57.2443,
+          "longitude":   62.2323,
+          "id":          "id"
+        }
+      },
+      "identity":    {
+        "userID": "lapo@leaseplan.org"
+      },
+      "userApp":     {
+        "username":  "lapo@leaseplan.org",
+        "password":  "passw0rd",
+        "firstName": "Lapo",
+        "lastName":  "Kelkann",
+        "role":      "LegalOwnerAdmin"
+      }
+    },
+    {
+      "participant": {
+        "participantID": "userID",
+        "$class":        "CarrierMember",
+        "org":           "CarrierOrg#koopman",
+        "userID":        "harry@koopman.org",
+        "password":      "passw0rd",
+        "userName":      "harry",
+        "firstName":     "Harry",
+        "lastName":      "Koppy",
+        "address":       {
+          "$class":      "Address",
+          "name":        "Harry Koppy",
+          "street":      "koppenstraat",
+          "houseNumber": "43",
+          "city":        "Groningen",
+          "zipCode":     "9712HX",
+          "country":     "Netherlands",
+          "latitude":    53.4443,
+          "longitude":   62.3323,
+          "id":          "id"
+        }
+      },
+      "identity":    {
+        "userID": "harry@koopman.org"
+      },
+      "userApp":     {
+        "username":  "harry@koopman.org",
+        "password":  "passw0rd",
+        "firstName": "Harry",
+        "lastName":  "Koppy",
+        "role":      "CarrierMember"
+      }
+    },
+    {
+      "participant": {
+        "participantID": "userID",
+        "$class":        "CarrierAdmin",
+        "org":           "CarrierOrg#koopman",
+        "userID":        "goslin@koopman.org",
+        "password":      "passw0rd",
+        "userName":      "goslin",
+        "firstName":     "Goslin",
+        "lastName":      "Jackson",
+        "address":       {
+          "$class":      "Address",
+          "name":        "Goslin Jackson",
+          "street":      "jackiestraat",
+          "houseNumber": "71",
+          "city":        "Groningen",
+          "zipCode":     "9712HX",
+          "country":     "Netherlands",
+          "latitude":    51.6443,
+          "longitude":   64.3323,
+          "id":          "id"
+        }
+      },
+      "identity":    {
+        "userID": "goslin@koopman.org"
+      },
+      "userApp":     {
+        "username":  "goslin@koopman.org",
+        "password":  "passw0rd",
+        "firstName": "Goslin",
+        "lastName":  "Jackson",
+        "role":      "CarrierAdmin"
+      }
+    },
+    {
+      "participant": {
+        "participantID": "userID",
+        "$class":        "RecipientAdmin",
+        "org":           "RecipientOrg#cardealer",
+        "userID":        "clara@cardealer.org",
+        "password":      "passw0rd",
+        "userName":      "clara",
+        "firstName":     "Clara",
+        "lastName":      "Petacci",
+        "address":       {
+          "$class":      "Address",
+          "name":        "Clara Petacci",
+          "street":      "singenstraat",
+          "houseNumber": "3",
+          "city":        "Eindhoven",
+          "zipCode":     "94132OK",
+          "country":     "Netherlands",
+          "latitude":    51.84443,
+          "longitude":   60.43323,
+          "id":          "id"
+        }
+      },
+      "identity":    {
+        "userID": "clara@cardealer.org"
+      },
+      "userApp":     {
+        "username":  "clara@cardealer.org",
+        "password":  "passw0rd",
+        "firstName": "Clara",
+        "lastName":  "Petacci",
+        "role":      "RecipientAdmin"
+      }
+    }
+  ],
+  "organizations": {
+    "legalOwnerOrgs": [
+      {
+        "$class":   "org.digitalcmr.LegalOwnerOrg",
+        "entityID": "leaseplan",
+        "name":     "Lease Plan",
+        "address":  {
+          "$class":      "org.digitalcmr.Address",
+          "name":        "Lease Plan",
+          "street":      "leesenstraat",
+          "houseNumber": "12",
+          "city":        "Groningen",
+          "zipCode":     "9876ZH",
+          "country":     "Netherlands",
+          "latitude":    43.1927,
+          "longitude":   23.3249
+        }
+      }
+    ],
+    "compoundOrgs":   [
+      {
+        "$class":   "org.digitalcmr.CompoundOrg",
+        "entityID": "amsterdamcompound",
+        "name":     "Amsterdam Compound",
+        "address":  {
+          "$class":      "org.digitalcmr.Address",
+          "name":        "Amsterdam Compound",
+          "street":      "compenstraat",
+          "houseNumber": "21",
+          "city":        "Assen",
+          "zipCode":     "9976ZH",
+          "country":     "Netherlands",
+          "latitude":    43.1927,
+          "longitude":   23.3249
+        }
+      }
+    ],
+    "carrierOrgs":    [
+      {
+        "$class":   "org.digitalcmr.CarrierOrg",
+        "entityID": "koopman",
+        "name":     "Koopman",
+        "address":  {
+          "$class":      "org.digitalcmr.Address",
+          "name":        "Amsterdam Compound",
+          "street":      "koopmanstraat",
+          "houseNumber": "213",
+          "city":        "Groningen",
+          "zipCode":     "4976ZH",
+          "country":     "Netherlands",
+          "latitude":    53.1927,
+          "longitude":   53.3249
+        }
+      }
+    ],
+    "recipientOrgs":  [
+      {
+        "$class":   "org.digitalcmr.RecipientOrg",
+        "entityID": "cardealer",
+        "name":     "Car Dealer",
+        "address":  {
+          "$class":      "org.digitalcmr.Address",
+          "name":        "Car Dealer",
+          "street":      "carstraat",
+          "houseNumber": "312",
+          "city":        "Assen",
+          "zipCode":     "64976ZH",
+          "country":     "Netherlands",
+          "latitude":    54.1927,
+          "longitude":   54.3249
+        }
+      }
+    ]
+  },
+  "vehicles":      [
+    {
+      "$class":          "org.digitalcmr.Vehicle",
+      "vin":             "183726339N",
+      "manufacturer":    "Audi",
+      "model":           "A1",
+      "type":            "sportback",
+      "ecmrs":           [
+        "A1234567890",
+        "B1234567890"
+      ],
+      "odoMeterReading": 0,
+      "plateNumber":     "AV198RX"
+    },
+    {
+      "$class":          "org.digitalcmr.Vehicle",
+      "vin":             "283726339N",
+      "manufacturer":    "Audi",
+      "model":           "A2",
+      "type":            "sportback",
+      "ecmrs":           [
+        "A1234567890",
+        "B1234567890"
+      ],
+      "odoMeterReading": 2132,
+      "plateNumber":     "BV198RX"
+    },
+    {
+      "$class":          "org.digitalcmr.Vehicle",
+      "vin":             "383726339N",
+      "manufacturer":    "Audi",
+      "model":           "A3",
+      "type":            "sportback",
+      "ecmrs":           [
+        "A1234567890",
+        "B1234567890"
+      ],
+      "odoMeterReading": 1231,
+      "plateNumber":     "CV198RX"
+    },
+    {
+      "$class":          "org.digitalcmr.Vehicle",
+      "vin":             "483726339N",
+      "manufacturer":    "Audi",
+      "model":           "A4",
+      "type":            "sportback",
+      "ecmrs":           [
+        "A1234567890",
+        "B1234567890"
+      ],
+      "odoMeterReading": 0,
+      "plateNumber":     "DV198RX"
+    },
+    {
+      "$class":          "org.digitalcmr.Vehicle",
+      "vin":             "583726339N",
+      "manufacturer":    "Audi",
+      "model":           "A5",
+      "type":            "sportback",
+      "ecmrs":           [
+        "A1234567890",
+        "B1234567890"
+      ],
+      "odoMeterReading": 12043,
+      "plateNumber":     "EV198RX"
+    },
+    {
+      "$class":          "org.digitalcmr.Vehicle",
+      "vin":             "683726339N",
+      "manufacturer":    "Audi",
+      "model":           "A6",
+      "type":            "sportback",
+      "ecmrs":           [
+        "A1234567890",
+        "B1234567890"
+      ],
+      "odoMeterReading": 578,
+      "plateNumber":     "FV198RX"
+    },
+    {
+      "$class":          "org.digitalcmr.Vehicle",
+      "vin":             "783726339N",
+      "manufacturer":    "Audi",
+      "model":           "A7",
+      "type":            "sportback",
+      "ecmrs":           [
+        "A1234567890",
+        "B1234567890"
+      ],
+      "odoMeterReading": 0,
+      "plateNumber":     "GV198RX"
+    },
+    {
+      "$class":          "org.digitalcmr.Vehicle",
+      "vin":             "883726339N",
+      "manufacturer":    "Audi",
+      "model":           "A8",
+      "type":            "sportback",
+      "ecmrs":           [
+        "A1234567890",
+        "B1234567890"
+      ],
+      "odoMeterReading": 0,
+      "plateNumber":     "HV198RX"
+    },
+    {
+      "$class":          "org.digitalcmr.Vehicle",
+      "vin":             "983726339N",
+      "manufacturer":    "Audi",
+      "model":           "A9",
+      "type":            "sportback",
+      "ecmrs":           [
+        "A1234567890",
+        "B1234567890"
+      ],
+      "odoMeterReading": 12319,
+      "plateNumber":     "IV198RX"
+    },
+    {
+      "$class":          "org.digitalcmr.Vehicle",
+      "vin":             "103726339N",
+      "manufacturer":    "Audi",
+      "model":           "A10",
+      "type":            "sportback",
+      "ecmrs":           [
+        "A1234567890",
+        "B1234567890"
+      ],
+      "odoMeterReading": 20000,
+      "plateNumber":     "JV198RX"
+    }
+  ],
+  "ecmrs":         [
+    {
+      "$class":                 "org.digitalcmr.ECMR",
+      "ecmrID":                 "A1234567890",
+      "status":                 "CREATED",
+      "creation":               {
+        "$class":  "org.digitalcmr.Creation",
+        "address": {
+          "$class":      "org.digitalcmr.Address",
+          "name":        "Amsterdam Compound",
+          "street":      "Compoundstraat",
+          "houseNumber": "21",
+          "city":        "Assen",
+          "zipCode":     "9976ZH",
+          "country":     "Netherlands",
+          "latitude":    52.377698,
+          "longitude":   4.896555
+        },
+        "date":    1502402400000
+      },
+      "loading":                {
+        "$class":  "org.digitalcmr.Loading",
+        "address": {
+          "$class":      "org.digitalcmr.Address",
+          "name":        "Amsterdam Compound",
+          "street":      "Compoundstraat",
+          "houseNumber": "21",
+          "city":        "Assen",
+          "zipCode":     "9976ZH",
+          "country":     "Netherlands",
+          "latitude":    43.1927,
+          "longitude":   23.3249
+        },
+        "date":    1502488800000
+      },
+      "delivery":               {
+        "$class":  "org.digitalcmr.Delivery",
+        "address": {
+          "$class":      "org.digitalcmr.Address",
+          "name":        "Rob el Caro",
+          "street":      "De straat",
+          "houseNumber": "302",
+          "city":        "Almere",
+          "zipCode":     "6736AE",
+          "country":     "Netherlands",
+          "latitude":    51.917153,
+          "longitude":   4.474623
+        },
+        "date":    1502834400000
+      },
+      "owner":                  "leaseplan",
+      "source":                 "amsterdamcompound",
+      "transporter":            "harry@koopman.org",
+      "carrier":                "koopman",
+      "recipientOrg":           "cardealer",
+      "recipient":              "rob@cardealer.org",
+      "issueDate":              0,
+      "issuedBy":               "koopman",
+      "carrierComments":        "",
+      "documents":              [
+        "doc1"
+      ],
+      "goods":                  [
+        {
+          "$class":      "org.digitalcmr.Good",
+          "vehicle":     {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "2131231414CN",
+            "manufacturer":    "BMW",
+            "model":           "X5",
+            "type":            "sportsback",
+            "ecmrs":           [],
+            "odoMeterReading": 0,
+            "plateNumber":     "O291RX"
+          },
+          "description": "vehicle",
+          "weight":      1900
+        }
+      ],
+      "legalOwnerInstructions": "string",
+      "paymentInstructions":    "string",
+      "payOnDelivery":          "string"
+    },
+    {
+      "$class":                 "org.digitalcmr.ECMR",
+      "ecmrID":                 "B1234567890",
+      "status":                 "CREATED",
+      "creation":               {
+        "$class":  "org.digitalcmr.Creation",
+        "address": {
+          "$class":      "org.digitalcmr.Address",
+          "name":        "Amsterdam Compound",
+          "street":      "compenstraat",
+          "houseNumber": "21",
+          "city":        "Assen",
+          "zipCode":     "9976ZH",
+          "country":     "Netherlands",
+          "latitude":    51.917153,
+          "longitude":   4.474623
+        },
+        "date":    1502402400000
+      },
+      "loading":                {
+        "$class":  "org.digitalcmr.Loading",
+        "address": {
+          "$class":      "org.digitalcmr.Address",
+          "name":        "Amsterdam Compound",
+          "street":      "compenstraat",
+          "houseNumber": "21",
+          "city":        "Amsterdam",
+          "zipCode":     "9976ZH",
+          "country":     "Netherlands",
+          "latitude":    52.377698,
+          "longitude":   4.896555
+        },
+        "date":    1502402400000
+      },
+      "delivery":               {
+        "$class":  "org.digitalcmr.Delivery",
+        "address": {
+          "$class":      "org.digitalcmr.Address",
+          "name":        "Rob Carman",
+          "street":      "autostraat",
+          "houseNumber": "12",
+          "city":        "Rotterdam",
+          "zipCode":     "9442KO",
+          "country":     "Netherlands",
+          "latitude":    51.917153,
+          "longitude":   4.474623
+        },
+        "date":    1502488800000
+      },
+      "owner":                  "leaseplan",
+      "source":                 "amsterdamcompound",
+      "transporter":            "harry@koopman.org",
+      "carrier":                "koopman",
+      "recipientOrg":           "cardealer",
+      "recipient":              "rob@cardealer.org",
+      "issueDate":              0,
+      "issuedBy":               "koopman",
+      "carrierComments":        "No comments",
+      "documents":              [
+        "doc1"
+      ],
+      "goods":                  [
+        {
+          "$class":      "org.digitalcmr.Good",
+          "vehicle":     {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "183726339N",
+            "manufacturer":    "Audi",
+            "model":           "A1",
+            "type":            "sportback",
+            "ecmrs":           [],
+            "odoMeterReading": 0,
+            "plateNumber":     "AV198RX"
+          },
+          "description": "vehicle",
+          "weight":      1500
+        },
+        {
+          "$class":      "org.digitalcmr.Good",
+          "vehicle":     {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "736182CHD28172",
+            "manufacturer":    "Mercedes",
+            "model":           "SLK",
+            "type":            "Station",
+            "ecmrs":           [],
+            "odoMeterReading": 0,
+            "plateNumber":     "I827YE"
+          },
+          "description": "vehicle",
+          "weight":      1800
+        }
+      ],
+      "legalOwnerInstructions": "string",
+      "paymentInstructions":    "string",
+      "payOnDelivery":          "string"
+    },
+    {
+      "$class":                   "org.digitalcmr.ECMR",
+      "ecmrID":                   "C1234567890",
+      "status":                   "DELIVERED",
+      "creation":                 {
+        "$class":  "org.digitalcmr.Creation",
+        "address": {
+          "$class":      "org.digitalcmr.Address",
+          "name":        "Amsterdam Compound",
+          "street":      "compenstraat",
+          "houseNumber": "21",
+          "city":        "Assen",
+          "zipCode":     "9976ZH",
+          "country":     "Netherlands",
+          "latitude":    52.377698,
+          "longitude":   4.896555
+        },
+        "date":    1502143200000
+      },
+      "loading":                  {
+        "$class":  "org.digitalcmr.Loading",
+        "address": {
+          "$class":      "org.digitalcmr.Address",
+          "name":        "Amsterdam Compound",
+          "street":      "compenstraat",
+          "houseNumber": "21",
+          "city":        "Amsterdam",
+          "zipCode":     "9976ZH",
+          "country":     "Netherlands",
+          "latitude":    52.377698,
+          "longitude":   4.896555
+        },
+        "date":    1502143200000
+      },
+      "delivery":                 {
+        "$class":  "org.digitalcmr.Delivery",
+        "address": {
+          "$class":      "org.digitalcmr.Address",
+          "name":        "James Carman",
+          "street":      "Carstreet",
+          "houseNumber": "12",
+          "city":        "Eindhoven",
+          "zipCode":     "9442KO",
+          "country":     "Netherlands",
+          "latitude":    51.917153,
+          "longitude":   4.474623
+        },
+        "date":    1502229600000
+      },
+      "owner":                    "leaseplan",
+      "source":                   "amsterdamcompound",
+      "transporter":              "harry@koopman.org",
+      "carrier":                  "koopman",
+      "recipientOrg":             "cardealer",
+      "recipient":                "rob@cardealer.org",
+      "issueDate":                0,
+      "issuedBy":                 "koopman",
+      "carrierComments":          "No comments",
+      "documents":                [
+        "doc1"
+      ],
+      "goods":                    [
+        {
+          "$class":      "org.digitalcmr.Good",
+          "vehicle":     {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "183726339N",
+            "manufacturer":    "Audi",
+            "model":           "A1",
+            "type":            "sportback",
+            "ecmrs":           [],
+            "odoMeterReading": 0,
+            "plateNumber":     "AV198RX"
+          },
+          "description": "vehicle",
+          "weight":      1500
+        }
+      ],
+      "legalOwnerInstructions":   "string",
+      "paymentInstructions":      "string",
+      "payOnDelivery":            "string",
+      "compoundSignature":        {
+        "certificate": "willem@amsterdamcompound.org",
+        "timestamp":   0
+      },
+      "carrierLoadingSignature":  {
+        "certificate": "harry@koopman.org",
+        "timestamp":   0
+      },
+      "carrierDeliverySignature": {
+        "certificate": "harry@koopman.org",
+        "timestamp":   0
+      }
+    },
+    {
+      "$class":                 "org.digitalcmr.ECMR",
+      "ecmrID":                 "D1234567890",
+      "status":                 "LOADED",
+      "creation":               {
+        "$class":  "org.digitalcmr.Creation",
+        "address": {
+          "$class":      "org.digitalcmr.Address",
+          "name":        "Amsterdam Compound",
+          "street":      "compenstraat",
+          "houseNumber": "21",
+          "city":        "Assen",
+          "zipCode":     "9976ZH",
+          "country":     "Netherlands",
+          "latitude":    52.377698,
+          "longitude":   4.896555
+        },
+        "date":    1502229600000
+      },
+      "loading":                {
+        "$class":  "org.digitalcmr.Loading",
+        "address": {
+          "$class":      "org.digitalcmr.Address",
+          "name":        "Amsterdam Compound",
+          "street":      "compenstraat",
+          "houseNumber": "21",
+          "city":        "Assen",
+          "zipCode":     "9976ZH",
+          "country":     "Netherlands",
+          "latitude":    52.377698,
+          "longitude":   4.896555
+        },
+        "date":    1502229600000
+      },
+      "delivery":               {
+        "$class":  "org.digitalcmr.Delivery",
+        "address": {
+          "$class":      "org.digitalcmr.Address",
+          "name":        "Rob Carman",
+          "street":      "autostraat",
+          "houseNumber": "12",
+          "city":        "Rotterdam",
+          "zipCode":     "9442KO",
+          "country":     "Netherlands",
+          "latitude":    51.917153,
+          "longitude":   4.474623
+        },
+        "date":    1502920800000
+      },
+      "owner":                  "leaseplan",
+      "source":                 "amsterdamcompound",
+      "transporter":            "harry@koopman.org",
+      "carrier":                "koopman",
+      "recipientOrg":           "cardealer",
+      "recipient":              "rob@cardealer.org",
+      "issueDate":              0,
+      "issuedBy":               "koopman",
+      "carrierComments":        "No comments",
+      "documents":              [
+        "doc1"
+      ],
+      "goods":                  [
+        {
+          "$class":      "org.digitalcmr.Good",
+          "vehicle":     {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "183726339N",
+            "manufacturer":    "Audi",
+            "model":           "A1",
+            "type":            "sportback",
+            "ecmrs":           [],
+            "odoMeterReading": 0,
+            "plateNumber":     "AV198RX"
+          },
+          "description": "vehicle",
+          "weight":      1500
+        }
+      ],
+      "legalOwnerInstructions": "string",
+      "paymentInstructions":    "string",
+      "payOnDelivery":          "string",
+      "compoundSignature":      {
+        "certificate": "willem@amsterdamcompound.org",
+        "timestamp":   0
+      }
+    },
+    {
+      "$class":                  "org.digitalcmr.ECMR",
+      "ecmrID":                  "E1234567890",
+      "status":                  "IN_TRANSIT",
+      "creation":                {
+        "$class":  "org.digitalcmr.Creation",
+        "address": {
+          "$class":      "org.digitalcmr.Address",
+          "name":        "Amsterdam Compound",
+          "street":      "compenstraat",
+          "houseNumber": "21",
+          "city":        "Assen",
+          "zipCode":     "9976ZH",
+          "country":     "Netherlands",
+          "latitude":    52.377698,
+          "longitude":   4.896555
+        },
+        "date":    1502229600000
+      },
+      "loading":                 {
+        "$class":  "org.digitalcmr.Loading",
+        "address": {
+          "$class":      "org.digitalcmr.Address",
+          "name":        "Eindhoven Compound",
+          "street":      "Compound Eindhoven",
+          "houseNumber": "21",
+          "city":        "Eindhoven",
+          "zipCode":     "6452KJ",
+          "country":     "Netherlands",
+          "latitude":    52.377698,
+          "longitude":   4.896555
+        },
+        "date":    1502229600000
+      },
+      "delivery":                {
+        "$class":  "org.digitalcmr.Delivery",
+        "address": {
+          "$class":      "org.digitalcmr.Address",
+          "name":        "Rob Carman",
+          "street":      "autostraat",
+          "houseNumber": "12",
+          "city":        "Rotterdam",
+          "zipCode":     "9442KO",
+          "country":     "Netherlands",
+          "latitude":    51.917153,
+          "longitude":   4.474623
+        },
+        "date":    1502920800000
+      },
+      "owner":                   "leaseplan",
+      "source":                  "amsterdamcompound",
+      "transporter":             "harry@koopman.org",
+      "carrier":                 "koopman",
+      "recipientOrg":            "cardealer",
+      "recipient":               "rob@cardealer.org",
+      "issueDate":               0,
+      "issuedBy":                "koopman",
+      "carrierComments":         "",
+      "documents":               [
+        "doc1"
+      ],
+      "goods":                   [
+        {
+          "$class":      "org.digitalcmr.Good",
+          "vehicle":     {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "183726339N",
+            "manufacturer":    "Audi",
+            "model":           "A1",
+            "type":            "sportback",
+            "ecmrs":           [],
+            "odoMeterReading": 0,
+            "plateNumber":     "AV198RX"
+          },
+          "description": "vehicle",
+          "weight":      1500
+        },
+        {
+          "$class":      "org.digitalcmr.Good",
+          "vehicle":     {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "37316231GA",
+            "manufacturer":    "Mercedes",
+            "model":           "Benz",
+            "type":            "sportback",
+            "ecmrs":           [],
+            "odoMeterReading": 0,
+            "plateNumber":     "M238KA"
+          },
+          "description": "vehicle",
+          "weight":      1500
+        }
+      ],
+      "legalOwnerInstructions":  "string",
+      "paymentInstructions":     "string",
+      "payOnDelivery":           "string",
+      "compoundSignature":       {
+        "certificate": "willem@amsterdamcompound.org",
+        "timestamp":   0
+      },
+      "carrierLoadingSignature": {
+        "certificate": "harry@koopman.org",
+        "timestamp":   0
+      }
+    },
+    {
+      "$class":                   "org.digitalcmr.ECMR",
+      "ecmrID":                   "F1234567890",
+      "status":                   "DELIVERED",
+      "creation":                 {
+        "$class":  "org.digitalcmr.Creation",
+        "address": {
+          "$class":      "org.digitalcmr.Address",
+          "name":        "Amsterdam Compound",
+          "street":      "compenstraat",
+          "houseNumber": "21",
+          "city":        "Assen",
+          "zipCode":     "9976ZH",
+          "country":     "Netherlands",
+          "latitude":    52.377698,
+          "longitude":   4.896555
+        },
+        "date":    1502229600000
+      },
+      "loading":                  {
+        "$class":  "org.digitalcmr.Loading",
+        "address": {
+          "$class":      "org.digitalcmr.Address",
+          "name":        "Eindhoven Compound",
+          "street":      "Compound Eindhoven",
+          "houseNumber": "21",
+          "city":        "Eindhoven",
+          "zipCode":     "6452KJ",
+          "country":     "Netherlands",
+          "latitude":    52.377698,
+          "longitude":   4.896555
+        },
+        "date":    1502229600000
+      },
+      "delivery":                 {
+        "$class":  "org.digitalcmr.Delivery",
+        "address": {
+          "$class":      "org.digitalcmr.Address",
+          "name":        "Rob Carman",
+          "street":      "autostraat",
+          "houseNumber": "12",
+          "city":        "Rotterdam",
+          "zipCode":     "9442KO",
+          "country":     "Netherlands",
+          "latitude":    51.917153,
+          "longitude":   4.474623
+        },
+        "date":    1502920800000
+      },
+      "owner":                    "leaseplan",
+      "source":                   "amsterdamcompound",
+      "transporter":              "harry@koopman.org",
+      "carrier":                  "koopman",
+      "recipientOrg":             "cardealer",
+      "recipient":                "rob@cardealer.org",
+      "issueDate":                0,
+      "issuedBy":                 "koopman",
+      "carrierComments":          "",
+      "documents":                [
+        "doc1"
+      ],
+      "goods":                    [
+        {
+          "$class":      "org.digitalcmr.Good",
+          "vehicle":     {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "183726339N",
+            "manufacturer":    "Audi",
+            "model":           "A1",
+            "type":            "sportback",
+            "ecmrs":           [],
+            "odoMeterReading": 0,
+            "plateNumber":     "AV198RX"
+          },
+          "description": "vehicle",
+          "weight":      1500
+        },
+        {
+          "$class":      "org.digitalcmr.Good",
+          "vehicle":     {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "DS8281321",
+            "manufacturer":    "Mercedes",
+            "model":           "Benz",
+            "type":            "sportback",
+            "ecmrs":           [],
+            "odoMeterReading": 0,
+            "plateNumber":     "M238KA"
+          },
+          "description": "vehicle",
+          "weight":      1500
+        },
+        {
+          "$class":      "org.digitalcmr.Good",
+          "vehicle":     {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "183726339N",
+            "manufacturer":    "Audi",
+            "model":           "A1",
+            "type":            "sportback",
+            "ecmrs":           [],
+            "odoMeterReading": 0,
+            "plateNumber":     "AV198RX"
+          },
+          "description": "vehicle",
+          "weight":      1500
+        },
+        {
+          "$class":      "org.digitalcmr.Good",
+          "vehicle":     {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "8762178623GA",
+            "manufacturer":    "Mercedes",
+            "model":           "Benz",
+            "type":            "sportback",
+            "ecmrs":           [],
+            "odoMeterReading": 0,
+            "plateNumber":     "M238KA"
+          },
+          "description": "vehicle",
+          "weight":      1500
+        }
+      ],
+      "legalOwnerInstructions":   "string",
+      "paymentInstructions":      "string",
+      "payOnDelivery":            "string",
+      "compoundSignature":        {
+        "certificate": "willem@amsterdamcompound.org",
+        "timestamp":   0
+      },
+      "carrierLoadingSignature":  {
+        "certificate": "harry@koopman.org",
+        "timestamp":   0
+      },
+      "carrierDeliverySignature": {
+        "certificate": "harry@koopman.org",
+        "timestamp":   0
+      }
+    },
+    {
+      "$class":                  "org.digitalcmr.ECMR",
+      "ecmrID":                  "G1234567890",
+      "status":                  "IN_TRANSIT",
+      "creation":                {
+        "$class":  "org.digitalcmr.Creation",
+        "address": {
+          "$class":      "org.digitalcmr.Address",
+          "name":        "Amsterdam Compound",
+          "street":      "compenstraat",
+          "houseNumber": "21",
+          "city":        "Assen",
+          "zipCode":     "9976ZH",
+          "country":     "Netherlands",
+          "latitude":    52.377698,
+          "longitude":   4.896555
+        },
+        "date":    1502402400000
+      },
+      "loading":                 {
+        "$class":  "org.digitalcmr.Loading",
+        "address": {
+          "$class":      "org.digitalcmr.Address",
+          "name":        "Amsterdam Compound",
+          "street":      "compenstraat",
+          "houseNumber": "21",
+          "city":        "Amsterdam",
+          "zipCode":     "9976ZH",
+          "country":     "Netherlands",
+          "latitude":    52.377698,
+          "longitude":   4.896555
+        },
+        "date":    1502402400000
+      },
+      "delivery":                {
+        "$class":  "org.digitalcmr.Delivery",
+        "address": {
+          "$class":      "org.digitalcmr.Address",
+          "name":        "Rob Carman",
+          "street":      "autostraat",
+          "houseNumber": "12",
+          "city":        "Rotterdam",
+          "zipCode":     "9442KO",
+          "country":     "Netherlands",
+          "latitude":    51.917153,
+          "longitude":   4.474623
+        },
+        "date":    1502488800000
+      },
+      "owner":                   "leaseplan",
+      "source":                  "amsterdamcompound",
+      "transporter":             "harry@koopman.org",
+      "carrier":                 "koopman",
+      "recipientOrg":            "cardealer",
+      "recipient":               "rob@cardealer.org",
+      "issueDate":               0,
+      "issuedBy":                "koopman",
+      "carrierComments":         "No comments",
+      "documents":               [
+        "doc1"
+      ],
+      "goods":                   [
+        {
+          "$class":      "org.digitalcmr.Good",
+          "vehicle":     {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "183726339N",
+            "manufacturer":    "Audi",
+            "model":           "A1",
+            "type":            "sportback",
+            "ecmrs":           [],
+            "odoMeterReading": 0,
+            "plateNumber":     "AV198RX"
+          },
+          "description": "vehicle",
+          "weight":      1500
+        },
+        {
+          "$class":      "org.digitalcmr.Good",
+          "vehicle":     {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "736182CHD28172",
+            "manufacturer":    "Mercedes",
+            "model":           "SLK",
+            "type":            "Station",
+            "ecmrs":           [],
+            "odoMeterReading": 0,
+            "plateNumber":     "I827YE"
+          },
+          "description": "vehicle",
+          "weight":      1800
+        }
+      ],
+      "legalOwnerInstructions":  "string",
+      "paymentInstructions":     "string",
+      "payOnDelivery":           "string",
+      "compoundSignature":       {
+        "certificate": "willem@amsterdamcompound.org",
+        "timestamp":   0
+      },
+      "carrierLoadingSignature": {
+        "certificate": "harry@koopman.org",
+        "timestamp":   0
+      }
+    }
+  ]
+}

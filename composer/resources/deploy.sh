@@ -8,4 +8,4 @@ composer identity import -u "${COMPOSER_ENROLLMENT_ID}" \
 
  composer archive create -t dir -n bna -a ./"${COMPOSER_BUSINESS_NETWORK}".bna
 
- composer network deploy -a "${COMPOSER_BUSINESS_NETWORK}".bna -i "${COMPOSER_ENROLLMENT_ID}" -s "${COMPOSER_ENROLLMENT_SECRET}" -p "${COMPOSER_CONNECTION_PROFILE}"
+ composer network deploy -a "${COMPOSER_BUSINESS_NETWORK}".bna -i "${COMPOSER_ENROLLMENT_ID}" -s "${COMPOSER_ENROLLMENT_SECRET}" -p "${COMPOSER_CONNECTION_PROFILE}" -A admin -S

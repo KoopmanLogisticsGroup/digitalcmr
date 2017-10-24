@@ -5,8 +5,8 @@ import {ProductionConfig} from './production.config';
 import {Settings} from './settings.interface';
 
 export class Config {
-  private static NAMESPACE: string          = 'app:config';
-  private static combinedSettings: Settings = null;
+  private static NAMESPACE: string = 'app:config';
+  private static combinedSettings: Settings;
 
   /**
    * Merge two settings. Only the top level keys are considered!
@@ -32,7 +32,7 @@ export class Config {
    * @returns {Settings}
    */
   public static get settings(): Settings {
-    if (this.combinedSettings !== null) {
+    if (this.combinedSettings !== undefined && this.combinedSettings !== null) {
       return this.combinedSettings;
     }
 

@@ -14,7 +14,7 @@ import {Container} from 'typedi';
 import {ApiFactory} from '../../utils';
 import {QueryApi} from '../../sdk/api';
 import {ErrorHandlerMiddleware, ComposerInterceptor, TransactionHandler} from '../../middleware';
-import {JSONWebToken} from '../../utils/auth/JSONWebToken';
+import {JSONWebToken} from '../../utils/authentication/JSONWebToken';
 import {Participant} from '../../entities/participant.model';
 import {UsersService} from '../../services/users.service';
 

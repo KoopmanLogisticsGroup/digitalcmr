@@ -1,20 +1,20 @@
 {
-  "$class": "org.digitalcmr.LegalOwnerAdmin",
-  "org": "resource:org.digitalcmr.LegalOwnerOrg#leaseplan",
-  "userID": "lapo@leaseplan.org",
-  "userName": "lapo",
+  "$class":    "org.digitalcmr.LegalOwnerAdmin",
+  "org":       "resource:org.digitalcmr.LegalOwnerOrg#leaseplan",
+  "userID":    "lapo@leaseplan.org",
+  "userName":  "lapo",
   "firstName": "lapo",
-  "lastName": "kelkann",
-  "address": {
-    "$class": "org.digitalcmr.Address",
-    "name": "lapo kelkann",
-    "street": "leesenstraat",
+  "lastName":  "kelkann",
+  "address":   {
+    "$class":      "org.digitalcmr.Address",
+    "name":        "lapo kelkann",
+    "street":      "leesenstraat",
     "houseNumber": "20",
-    "city": "Utrecht",
-    "zipCode": "9867RF",
-    "country": "Netherlands",
-    "latitude": 57.2443,
-    "longitude": 62.2323,
-    "id": "id"
+    "city":        "Utrecht",
+    "zipCode":     "9867RF",
+    "country":     "Netherlands",
+    "latitude":    57.2443,
+    "longitude":   62.2323,
+    "id":          "id"
   }
 }

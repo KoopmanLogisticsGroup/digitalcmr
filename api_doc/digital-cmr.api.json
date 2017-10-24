@@ -1,12 +1,12 @@
 {
-  "swagger": "2.0",
-  "info": {
-    "title": "Digital ECMR APIs",
+  "swagger":             "2.0",
+  "info":                {
+    "title":       "Digital ECMR APIs",
     "description": "APIs for managing the digital ECMR",
-    "version": "1.0.0"
+    "version":     "1.0.0"
   },
-  "host": "169.51.10.201:31001",
-  "schemes": [
+  "host":                "169.51.10.201:31001",
+  "schemes":             [
     "http"
   ],
   "securityDefinitions": {
@@ -14,149 +14,149 @@
       "type": "basic"
     }
   },
-  "basePath": "/api/v1",
-  "produces": [
+  "basePath":            "/api/v1",
+  "produces":            [
     "application/json"
   ],
-  "paths": {
-    "/login": {
+  "paths":               {
+    "/login":                                           {
       "post": {
         "x-swagger-router-controller": "AuthController",
-        "operationId": "login",
-        "summary": "Login on the server",
-        "description": "The user logs into the system and gets back user metadata an auth x-access-token\n",
-        "consumes": [
+        "operationId":                 "login",
+        "summary":                     "Login on the server",
+        "description":                 "The user logs into the system and gets back user metadata an auth x-access-token\n",
+        "consumes":                    [
           "application/json"
         ],
-        "parameters": [
+        "parameters":                  [
           {
-            "name": "login-credentials",
-            "in": "body",
+            "name":        "login-credentials",
+            "in":          "body",
             "description": "The login credentials",
-            "required": true,
-            "schema": {
+            "required":    true,
+            "schema":      {
               "$ref": "#/definitions/LoginCredentials"
             }
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The user has successfully logged in\n",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/LoginResponse"
             }
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       }
     },
-    "/ECMR/": {
+    "/ECMR/":                                           {
       "post": {
         "x-swagger-router-controller": "ECMRController",
-        "operationId": "create",
-        "summary": "Creates a new ECMR",
-        "description": "Creates a new ECMR and saves it into blockchain, if the user has the proper permissions.\n",
-        "consumes": [
+        "operationId":                 "create",
+        "summary":                     "Creates a new ECMR",
+        "description":                 "Creates a new ECMR and saves it into blockchain, if the user has the proper permissions.\n",
+        "consumes":                    [
           "application/json"
         ],
-        "parameters": [
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           },
           {
-            "name": "ecmr",
-            "in": "body",
+            "name":        "ecmr",
+            "in":          "body",
             "description": "The ECMR object",
-            "required": true,
-            "schema": {
+            "required":    true,
+            "schema":      {
               "$ref": "#/definitions/ECMR"
             }
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The ECMR has been created and written into the blockchain\n",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/ECMR"
             }
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       },
-      "put": {
+      "put":  {
         "x-swagger-router-controller": "ECMRController",
-        "operationId": "update",
-        "summary": "Updates an existing ECMR",
-        "description": "Updates an existing ECMR and saves it into blockchain, if the user has the proper permissions.\n",
-        "consumes": [
+        "operationId":                 "update",
+        "summary":                     "Updates an existing ECMR",
+        "description":                 "Updates an existing ECMR and saves it into blockchain, if the user has the proper permissions.\n",
+        "consumes":                    [
           "application/json"
         ],
-        "parameters": [
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           },
           {
-            "name": "ecmr",
-            "in": "body",
+            "name":        "ecmr",
+            "in":          "body",
             "description": "Updates the ECMR object",
-            "required": true,
-            "schema": {
+            "required":    true,
+            "schema":      {
               "$ref": "#/definitions/ECMR"
             }
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The ECMR has been updated and written into the blockchain\n",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/ECMR"
             }
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       },
-      "get": {
+      "get":  {
         "x-swagger-router-controller": "ECMRController",
-        "operationId": "getAllEcmrs",
-        "summary": "Returns the complete list of the ECMRs",
-        "description": "Returns the complete list of the ECMRs current user has the right to read",
-        "parameters": [
+        "operationId":                 "getAllEcmrs",
+        "summary":                     "Returns the complete list of the ECMRs",
+        "description":                 "Returns the complete list of the ECMRs current user has the right to read",
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The list of the ECMRs is returned\n",
-            "schema": {
-              "type": "array",
+            "schema":      {
+              "type":  "array",
               "items": {
                 "$ref": "#/definitions/ECMR"
               }
@@ -164,40 +164,40 @@
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       }
     },
-    "/ECMR/ecmrID/{ecmrID}": {
+    "/ECMR/ecmrID/{ecmrID}":                            {
       "get": {
         "x-swagger-router-controller": "ECMRController",
-        "operationId": "getEcmrByEcmrID",
-        "summary": "Returns the ECMR selected by ID",
-        "description": "Returns the ECMR selected by ID",
-        "parameters": [
+        "operationId":                 "getEcmrByEcmrID",
+        "summary":                     "Returns the ECMR selected by ID",
+        "description":                 "Returns the ECMR selected by ID",
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           },
           {
-            "name": "ecmrID",
-            "type": "string",
-            "in": "path",
+            "name":        "ecmrID",
+            "type":        "string",
+            "in":          "path",
             "description": "The unique ID of the ECMR",
-            "required": "true"
+            "required":    "true"
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The list contains the ECMR, or is empty if no ECMR with the provided id exists or if the user has no permission to read the ECMR\n",
-            "schema": {
-              "type": "array",
+            "schema":      {
+              "type":  "array",
               "items": {
                 "$ref": "#/definitions/ECMR"
               }
@@ -205,40 +205,40 @@
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       }
     },
-    "/ECMR/status/{status}": {
+    "/ECMR/status/{status}":                            {
       "get": {
         "x-swagger-router-controller": "ECMRController",
-        "operationId": "getAllEcmrsByStatus",
-        "summary": "Returns the ECMR selected by status",
-        "description": "Returns the ECMR selected by status",
-        "parameters": [
+        "operationId":                 "getAllEcmrsByStatus",
+        "summary":                     "Returns the ECMR selected by status",
+        "description":                 "Returns the ECMR selected by status",
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           },
           {
-            "name": "status",
-            "in": "path",
-            "type": "string",
+            "name":        "status",
+            "in":          "path",
+            "type":        "string",
             "description": "The status of the ECMR",
-            "required": "true"
+            "required":    "true"
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The list contains the ECMR(s) by status, or is empty if no ECMR with the provided status exists or if the user has no permission to read the ECMR\n",
-            "schema": {
-              "type": "array",
+            "schema":      {
+              "type":  "array",
               "items": {
                 "$ref": "#/definitions/ECMR"
               }
@@ -246,40 +246,40 @@
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       }
     },
-    "/ECMR/vehicle/vin/{vin}": {
+    "/ECMR/vehicle/vin/{vin}":                          {
       "get": {
         "x-swagger-router-controller": "ECMRController",
-        "operationId": "getAllEcmrsFromVehicleByVin",
-        "summary": "Returns the ECMRs containing a vehicle with the provided vin",
-        "description": "Returns the ECMRs containing a vehicle with the provided vin",
-        "parameters": [
+        "operationId":                 "getAllEcmrsFromVehicleByVin",
+        "summary":                     "Returns the ECMRs containing a vehicle with the provided vin",
+        "description":                 "Returns the ECMRs containing a vehicle with the provided vin",
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           },
           {
-            "name": "vin",
-            "in": "path",
-            "type": "string",
+            "name":        "vin",
+            "in":          "path",
+            "type":        "string",
             "description": "The unique vin of a vehicle",
-            "required": "true"
+            "required":    "true"
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The list contains the ECMRs containing a vehicle with the provided vin, or is empty if they do not exist or if the user has no permission to read them\n",
-            "schema": {
-              "type": "array",
+            "schema":      {
+              "type":  "array",
               "items": {
                 "$ref": "#/definitions/ECMR"
               }
@@ -287,40 +287,40 @@
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       }
     },
-    "/ECMR/vehicle/plateNumber/{plateNumber}": {
+    "/ECMR/vehicle/plateNumber/{plateNumber}":          {
       "get": {
         "x-swagger-router-controller": "ECMRController",
-        "operationId": "getAllEcmrsFromVehicleByPlateNumber",
-        "summary": "Returns the ECMRs containing a vehicle with the provided platenumber",
-        "description": "Returns the ECMRs containing a vehicle with the provided platenumber",
-        "parameters": [
+        "operationId":                 "getAllEcmrsFromVehicleByPlateNumber",
+        "summary":                     "Returns the ECMRs containing a vehicle with the provided platenumber",
+        "description":                 "Returns the ECMRs containing a vehicle with the provided platenumber",
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           },
           {
-            "name": "plateNumber",
-            "in": "path",
-            "type": "string",
+            "name":        "plateNumber",
+            "in":          "path",
+            "type":        "string",
             "description": "The unique plateNumber of a vehicle",
-            "required": "true"
+            "required":    "true"
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The list contains the ECMRs containing a vehicle with the provided platenumber, or is empty if they do not exist or if the user has no permission to read them\n",
-            "schema": {
-              "type": "array",
+            "schema":      {
+              "type":  "array",
               "items": {
                 "$ref": "#/definitions/ECMR"
               }
@@ -328,74 +328,74 @@
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       }
     },
-    "/organization/legalowner/": {
+    "/organization/legalowner/":                        {
       "post": {
         "x-swagger-router-controller": "OrganizationController",
-        "operationId": "create",
-        "summary": "Creates a new Legal Owner",
-        "description": "Creates a new Legal Owner and saves it into blockchain, if the user has the proper permissions.\n",
-        "consumes": [
+        "operationId":                 "create",
+        "summary":                     "Creates a new Legal Owner",
+        "description":                 "Creates a new Legal Owner and saves it into blockchain, if the user has the proper permissions.\n",
+        "consumes":                    [
           "application/json"
         ],
-        "parameters": [
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           },
           {
-            "name": "legalOwnerOrg",
-            "in": "body",
+            "name":        "legalOwnerOrg",
+            "in":          "body",
             "description": "The Legal Owner Org object",
-            "required": true,
-            "schema": {
+            "required":    true,
+            "schema":      {
               "$ref": "#/definitions/LegalOwnerOrg"
             }
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The Legal Owner has been created and written into the blockchain\n",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/LegalOwnerOrg"
             }
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       },
-      "get": {
+      "get":  {
         "x-swagger-router-controller": "OrganizationController",
-        "operationId": "getAllLegalOwnerOrgs",
-        "summary": "Returns the complete list of all Legal Owners",
-        "description": "Returns the complete list of all Legal Owners which the current user has the right to read",
-        "parameters": [
+        "operationId":                 "getAllLegalOwnerOrgs",
+        "summary":                     "Returns the complete list of all Legal Owners",
+        "description":                 "Returns the complete list of all Legal Owners which the current user has the right to read",
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The legal owner has been found.\n",
-            "schema": {
-              "type": "array",
+            "schema":      {
+              "type":  "array",
               "items": {
                 "$ref": "#/definitions/LegalOwnerOrg"
               }
@@ -403,40 +403,40 @@
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       }
     },
-    "/organization/legalowner/entityID/{entityID}": {
+    "/organization/legalowner/entityID/{entityID}":     {
       "get": {
         "x-swagger-router-controller": "OrganizationController",
-        "operationId": "getLegalOwnerOrgByEntityID",
-        "summary": "Returns the Legal Owner Organization selected by ID",
-        "description": "Returns the Legal Owner Organization selected by ID",
-        "parameters": [
+        "operationId":                 "getLegalOwnerOrgByEntityID",
+        "summary":                     "Returns the Legal Owner Organization selected by ID",
+        "description":                 "Returns the Legal Owner Organization selected by ID",
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           },
           {
-            "name": "entityID",
-            "in": "path",
+            "name":        "entityID",
+            "in":          "path",
             "description": "The ID of the organization",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The legal owner has been found and is returned.\n",
-            "schema": {
-              "type": "array",
+            "schema":      {
+              "type":  "array",
               "items": {
                 "$ref": "#/definitions/LegalOwnerOrg"
               }
@@ -444,40 +444,40 @@
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       }
     },
-    "/organization/legalowner/name/{name}": {
+    "/organization/legalowner/name/{name}":             {
       "get": {
         "x-swagger-router-controller": "OrganizationController",
-        "operationId": "getLegalOwnerOrgByName",
-        "summary": "Returns the Legal Owner Organization selected by name",
-        "description": "Returns the Legal Owner Organization selected by name",
-        "parameters": [
+        "operationId":                 "getLegalOwnerOrgByName",
+        "summary":                     "Returns the Legal Owner Organization selected by name",
+        "description":                 "Returns the Legal Owner Organization selected by name",
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           },
           {
-            "name": "name",
-            "in": "path",
+            "name":        "name",
+            "in":          "path",
             "description": "The name of the organization",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The legal owner has been found and is returned.\n",
-            "schema": {
-              "type": "array",
+            "schema":      {
+              "type":  "array",
               "items": {
                 "$ref": "#/definitions/LegalOwnerOrg"
               }
@@ -485,74 +485,74 @@
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       }
     },
-    "/organization/compound/": {
+    "/organization/compound/":                          {
       "post": {
         "x-swagger-router-controller": "OrganizationController",
-        "operationId": "create",
-        "summary": "Creates a new Compound org",
-        "description": "Creates a new Compound org and saves it into blockchain, if the user has the proper permissions.\n",
-        "consumes": [
+        "operationId":                 "create",
+        "summary":                     "Creates a new Compound org",
+        "description":                 "Creates a new Compound org and saves it into blockchain, if the user has the proper permissions.\n",
+        "consumes":                    [
           "application/json"
         ],
-        "parameters": [
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           },
           {
-            "name": "CompoundOrg",
-            "in": "body",
+            "name":        "CompoundOrg",
+            "in":          "body",
             "description": "The compound org object",
-            "required": true,
-            "schema": {
+            "required":    true,
+            "schema":      {
               "$ref": "#/definitions/CompoundOrg"
             }
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The compound org has been created and written into the blockchain\n",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/CompoundOrg"
             }
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       },
-      "get": {
+      "get":  {
         "x-swagger-router-controller": "OrganizationController",
-        "operationId": "getAllCompoundOrgs",
-        "summary": "Returns the complete list of all Compound Orgs",
-        "description": "Returns the complete list of all Legal Owners which the current user has the right to read",
-        "parameters": [
+        "operationId":                 "getAllCompoundOrgs",
+        "summary":                     "Returns the complete list of all Compound Orgs",
+        "description":                 "Returns the complete list of all Legal Owners which the current user has the right to read",
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The compound org has been found.\n",
-            "schema": {
-              "type": "array",
+            "schema":      {
+              "type":  "array",
               "items": {
                 "$ref": "#/definitions/CompoundOrg"
               }
@@ -560,40 +560,40 @@
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       }
     },
-    "/organization/compound/entityID/{entityID}": {
+    "/organization/compound/entityID/{entityID}":       {
       "get": {
         "x-swagger-router-controller": "OrganizationController",
-        "operationId": "getCompoundOrgByEntityID",
-        "summary": "Returns the Compound Organization selected by ID",
-        "description": "Returns the Compound Organization selected by ID",
-        "parameters": [
+        "operationId":                 "getCompoundOrgByEntityID",
+        "summary":                     "Returns the Compound Organization selected by ID",
+        "description":                 "Returns the Compound Organization selected by ID",
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           },
           {
-            "name": "entityID",
-            "in": "path",
+            "name":        "entityID",
+            "in":          "path",
             "description": "The ID of the organization",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The Compound has been found and is returned.\n",
-            "schema": {
-              "type": "array",
+            "schema":      {
+              "type":  "array",
               "items": {
                 "$ref": "#/definitions/CompoundOrg"
               }
@@ -601,40 +601,40 @@
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       }
     },
-    "/organization/compound/name/{name}": {
+    "/organization/compound/name/{name}":               {
       "get": {
         "x-swagger-router-controller": "OrganizationController",
-        "operationId": "getCompoundOrgByName",
-        "summary": "Returns the Compound Organization selected by name",
-        "description": "Returns the Compound Organization selected by name",
-        "parameters": [
+        "operationId":                 "getCompoundOrgByName",
+        "summary":                     "Returns the Compound Organization selected by name",
+        "description":                 "Returns the Compound Organization selected by name",
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           },
           {
-            "name": "name",
-            "in": "path",
+            "name":        "name",
+            "in":          "path",
             "description": "The name of the organization",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The Compound has been found and is returned.\n",
-            "schema": {
-              "type": "array",
+            "schema":      {
+              "type":  "array",
               "items": {
                 "$ref": "#/definitions/CompoundOrg"
               }
@@ -642,74 +642,74 @@
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       }
     },
-    "/organization/carrier/": {
+    "/organization/carrier/":                           {
       "post": {
         "x-swagger-router-controller": "OrganizationController",
-        "operationId": "create",
-        "summary": "Creates a new Carrier org",
-        "description": "Creates a new Carrier org and saves it into blockchain, if the user has the proper permissions.\n",
-        "consumes": [
+        "operationId":                 "create",
+        "summary":                     "Creates a new Carrier org",
+        "description":                 "Creates a new Carrier org and saves it into blockchain, if the user has the proper permissions.\n",
+        "consumes":                    [
           "application/json"
         ],
-        "parameters": [
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           },
           {
-            "name": "CarrierOrg",
-            "in": "body",
+            "name":        "CarrierOrg",
+            "in":          "body",
             "description": "The carrier org object",
-            "required": true,
-            "schema": {
+            "required":    true,
+            "schema":      {
               "$ref": "#/definitions/CarrierOrg"
             }
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The carrier org has been created and written into the blockchain\n",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/CarrierOrg"
             }
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       },
-      "get": {
+      "get":  {
         "x-swagger-router-controller": "OrganizationController",
-        "operationId": "getAllCarrierOrgs",
-        "summary": "Returns the complete list of all Carrier Orgs",
-        "description": "Returns the complete list of all Carriers which the current user has the right to read",
-        "parameters": [
+        "operationId":                 "getAllCarrierOrgs",
+        "summary":                     "Returns the complete list of all Carrier Orgs",
+        "description":                 "Returns the complete list of all Carriers which the current user has the right to read",
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The carrier org has been found.\n",
-            "schema": {
-              "type": "array",
+            "schema":      {
+              "type":  "array",
               "items": {
                 "$ref": "#/definitions/CarrierOrg"
               }
@@ -717,40 +717,40 @@
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       }
     },
-    "/organization/carrier/entityID/{entityID}": {
+    "/organization/carrier/entityID/{entityID}":        {
       "get": {
         "x-swagger-router-controller": "OrganizationController",
-        "operationId": "getCarrierOrgByEntityID",
-        "summary": "Returns the Carrier Organization selected by ID",
-        "description": "Returns the Carrier Organization selected by ID",
-        "parameters": [
+        "operationId":                 "getCarrierOrgByEntityID",
+        "summary":                     "Returns the Carrier Organization selected by ID",
+        "description":                 "Returns the Carrier Organization selected by ID",
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           },
           {
-            "name": "entityID",
-            "in": "path",
+            "name":        "entityID",
+            "in":          "path",
             "description": "The ID of the organization",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The Carrier has been found and is returned.\n",
-            "schema": {
-              "type": "array",
+            "schema":      {
+              "type":  "array",
               "items": {
                 "$ref": "#/definitions/CarrierOrg"
               }
@@ -758,40 +758,40 @@
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       }
     },
-    "/organization/carrier/name/{name}": {
+    "/organization/carrier/name/{name}":                {
       "get": {
         "x-swagger-router-controller": "OrganizationController",
-        "operationId": "getCarrierOrgByName",
-        "summary": "Returns the Carrier Organization selected by name",
-        "description": "Returns the Carrier Organization selected by name",
-        "parameters": [
+        "operationId":                 "getCarrierOrgByName",
+        "summary":                     "Returns the Carrier Organization selected by name",
+        "description":                 "Returns the Carrier Organization selected by name",
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           },
           {
-            "name": "name",
-            "in": "path",
+            "name":        "name",
+            "in":          "path",
             "description": "The name of the organization",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The Carrier has been found and is returned.\n",
-            "schema": {
-              "type": "array",
+            "schema":      {
+              "type":  "array",
               "items": {
                 "$ref": "#/definitions/CarrierOrg"
               }
@@ -799,74 +799,74 @@
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       }
     },
-    "/organization/recipient/": {
+    "/organization/recipient/":                         {
       "post": {
         "x-swagger-router-controller": "OrganizationController",
-        "operationId": "create",
-        "summary": "Creates a new recipient org",
-        "description": "Creates a new recipient org and saves it into blockchain, if the user has the proper permissions.\n",
-        "consumes": [
+        "operationId":                 "create",
+        "summary":                     "Creates a new recipient org",
+        "description":                 "Creates a new recipient org and saves it into blockchain, if the user has the proper permissions.\n",
+        "consumes":                    [
           "application/json"
         ],
-        "parameters": [
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           },
           {
-            "name": "RecipientOrg",
-            "in": "body",
+            "name":        "RecipientOrg",
+            "in":          "body",
             "description": "The recipient org object",
-            "required": true,
-            "schema": {
+            "required":    true,
+            "schema":      {
               "$ref": "#/definitions/RecipientOrg"
             }
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The recipient org has been created and written into the blockchain\n",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/RecipientOrg"
             }
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       },
-      "get": {
+      "get":  {
         "x-swagger-router-controller": "OrganizationController",
-        "operationId": "getAllRecipientOrgs",
-        "summary": "Returns the complete list of all Recipient Orgs",
-        "description": "Returns the complete list of all Recipients which the current user has the right to read",
-        "parameters": [
+        "operationId":                 "getAllRecipientOrgs",
+        "summary":                     "Returns the complete list of all Recipient Orgs",
+        "description":                 "Returns the complete list of all Recipients which the current user has the right to read",
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The recipient org has been found.\n",
-            "schema": {
-              "type": "array",
+            "schema":      {
+              "type":  "array",
               "items": {
                 "$ref": "#/definitions/RecipientOrg"
               }
@@ -874,40 +874,40 @@
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       }
     },
-    "/organization/recipient/entityID/{entityID}": {
+    "/organization/recipient/entityID/{entityID}":      {
       "get": {
         "x-swagger-router-controller": "OrganizationController",
-        "operationId": "getRecipientOrgByEntityID",
-        "summary": "Returns the Recipient Organization selected by ID",
-        "description": "Returns the Recipient Organization selected by ID",
-        "parameters": [
+        "operationId":                 "getRecipientOrgByEntityID",
+        "summary":                     "Returns the Recipient Organization selected by ID",
+        "description":                 "Returns the Recipient Organization selected by ID",
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           },
           {
-            "name": "entityID",
-            "in": "path",
+            "name":        "entityID",
+            "in":          "path",
             "description": "The ID of the organization",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The Recipient has been found and is returned.\n",
-            "schema": {
-              "type": "array",
+            "schema":      {
+              "type":  "array",
               "items": {
                 "$ref": "#/definitions/RecipientOrg"
               }
@@ -915,40 +915,40 @@
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       }
     },
-    "/organization/recipient/name/{name}": {
+    "/organization/recipient/name/{name}":              {
       "get": {
         "x-swagger-router-controller": "OrganizationController",
-        "operationId": "getRecipientOrgByName",
-        "summary": "Returns the Recipient Organization selected by name",
-        "description": "Returns the Recipient Organization selected by name",
-        "parameters": [
+        "operationId":                 "getRecipientOrgByName",
+        "summary":                     "Returns the Recipient Organization selected by name",
+        "description":                 "Returns the Recipient Organization selected by name",
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           },
           {
-            "name": "name",
-            "in": "path",
+            "name":        "name",
+            "in":          "path",
             "description": "The name of the organization",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The Recipient has been found and is returned.\n",
-            "schema": {
-              "type": "array",
+            "schema":      {
+              "type":  "array",
               "items": {
                 "$ref": "#/definitions/RecipientOrg"
               }
@@ -956,274 +956,274 @@
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       }
     },
-    "/vehicle/": {
+    "/vehicle/":                                        {
       "post": {
         "x-swagger-router-controller": "VehicleController",
-        "operationId": "createVehicles",
-        "summary": "Creates a set of vehicles from a list",
-        "description": "Creates a set of vehicles from a list, if the user has the proper permissions.\n",
-        "consumes": [
+        "operationId":                 "createVehicles",
+        "summary":                     "Creates a set of vehicles from a list",
+        "description":                 "Creates a set of vehicles from a list, if the user has the proper permissions.\n",
+        "consumes":                    [
           "application/json"
         ],
-        "parameters": [
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           },
           {
-            "name": "vehicles",
-            "in": "body",
+            "name":        "vehicles",
+            "in":          "body",
             "description": "The list of vehicles",
-            "required": true,
-            "schema": {
-              "type": "array",
+            "required":    true,
+            "schema":      {
+              "type":  "array",
               "items": {
                 "$ref": "#/definitions/Vehicle"
               }
             }
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The vehicles have been created and written into the blockchain\n",
-            "type": "array",
-            "items": {
+            "type":        "array",
+            "items":       {
               "$ref": "#/definitions/Vehicle"
             }
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       },
-      "get": {
+      "get":  {
         "x-swagger-router-controller": "VehicleController",
-        "operationId": "getAllVehicles",
-        "summary": "Returns the complete list of vehicles",
-        "description": "Returns the complete list of all vehicles which the current user has the right to read",
-        "parameters": [
+        "operationId":                 "getAllVehicles",
+        "summary":                     "Returns the complete list of vehicles",
+        "description":                 "Returns the complete list of all vehicles which the current user has the right to read",
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The vehicles list is returned\n",
-            "type": "array",
-            "items": {
+            "type":        "array",
+            "items":       {
               "$ref": "#/definitions/Vehicle"
             }
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       }
     },
-    "/vehicle/vin/{vin}": {
+    "/vehicle/vin/{vin}":                               {
       "get": {
         "x-swagger-router-controller": "VehicleController",
-        "operationId": "getVehicleByVin",
-        "summary": "Returns the vehicle having the provided vin",
-        "description": "Returns the vehicle having the provided vin",
-        "parameters": [
+        "operationId":                 "getVehicleByVin",
+        "summary":                     "Returns the vehicle having the provided vin",
+        "description":                 "Returns the vehicle having the provided vin",
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           },
           {
-            "name": "vin",
-            "in": "path",
+            "name":        "vin",
+            "in":          "path",
             "description": "The vin of the vehicle",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The vehicles is returned\n",
-            "type": "array",
-            "items": {
+            "type":        "array",
+            "items":       {
               "$ref": "#/definitions/Vehicle"
             }
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       }
     },
-    "/vehicle/plateNumber/{plateNumber}": {
+    "/vehicle/plateNumber/{plateNumber}":               {
       "get": {
         "x-swagger-router-controller": "VehicleController",
-        "operationId": "getVehicleByPlateNumber",
-        "summary": "Returns the vehicle having the provided plateNumber",
-        "description": "Returns the vehicle having the provided plateNumber",
-        "parameters": [
+        "operationId":                 "getVehicleByPlateNumber",
+        "summary":                     "Returns the vehicle having the provided plateNumber",
+        "description":                 "Returns the vehicle having the provided plateNumber",
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           },
           {
-            "name": "plateNumber",
-            "in": "path",
+            "name":        "plateNumber",
+            "in":          "path",
             "description": "The plateNumber of the vehicle",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The vehicle is returned\n",
-            "type": "array",
-            "items": {
+            "type":        "array",
+            "items":       {
               "$ref": "#/definitions/Vehicle"
             }
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       }
     },
-    "/participant/": {
+    "/participant/":                                    {
       "post": {
         "x-swagger-router-controller": "ParticipantController",
-        "operationId": "addParticipant",
-        "summary": "Creates a new participant and issues an identity on the blockchain",
-        "description": "Creates a new participant and issues an identity on the blockchain, and a new user for the app server\n",
-        "consumes": [
+        "operationId":                 "addParticipant",
+        "summary":                     "Creates a new participant and issues an identity on the blockchain",
+        "description":                 "Creates a new participant and issues an identity on the blockchain, and a new user for the app server\n",
+        "consumes":                    [
           "application/json"
         ],
-        "parameters": [
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           },
           {
-            "name": "participant",
-            "in": "body",
+            "name":        "participant",
+            "in":          "body",
             "description": "The list of participants",
-            "required": true,
-            "schema": {
+            "required":    true,
+            "schema":      {
               "$ref": "#/definitions/Participant"
             }
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The participant(s) have been created and written into the blockchain\n",
-            "type": "array",
-            "items": {
+            "type":        "array",
+            "items":       {
               "$ref": "#/definitions/Vehicle"
             }
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       }
     },
-    "/participant/legalowner/admin/": {
+    "/participant/legalowner/admin/":                   {
       "get": {
         "x-swagger-router-controller": "ParticipantController",
-        "operationId": "getAllLegalOwnerAdmins",
-        "summary": "Returns the list of the legal owner admins",
-        "description": "Returns the list of the legal owner admins",
-        "parameters": [
+        "operationId":                 "getAllLegalOwnerAdmins",
+        "summary":                     "Returns the list of the legal owner admins",
+        "description":                 "Returns the list of the legal owner admins",
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The list of legal owner admins is returned\n",
-            "type": "array",
-            "items": {
+            "type":        "array",
+            "items":       {
               "$ref": "#/definitions/LegalOwnerAdmin"
             }
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       }
     },
-    "/participant/legalowner/admin/userID/{userID}": {
+    "/participant/legalowner/admin/userID/{userID}":    {
       "get": {
         "x-swagger-router-controller": "ParticipantController",
-        "operationId": "getLegalOwnerAdminByUserID",
-        "summary": "Returns the legal owner admin with the specified user ID",
-        "description": "Returns the legal owner admin with the specified user ID",
-        "parameters": [
+        "operationId":                 "getLegalOwnerAdminByUserID",
+        "summary":                     "Returns the legal owner admin with the specified user ID",
+        "description":                 "Returns the legal owner admin with the specified user ID",
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           },
           {
-            "name": "userID",
-            "in": "path",
+            "name":        "userID",
+            "in":          "path",
             "description": "The user ID",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The legal owner admin is returned\n",
-            "$ref": "#/definitions/LegalOwnerAdmin"
+            "$ref":        "#/definitions/LegalOwnerAdmin"
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
@@ -1233,532 +1233,532 @@
     "/participant/legalowner/admin/organization/{org}": {
       "get": {
         "x-swagger-router-controller": "ParticipantController",
-        "operationId": "getLegalOwnerAdminByOrg",
-        "summary": "Returns the list of legal owner admins who are part of the specified organization",
-        "description": "Returns the list of legal owner admins who are part of the specified organization",
-        "parameters": [
+        "operationId":                 "getLegalOwnerAdminByOrg",
+        "summary":                     "Returns the list of legal owner admins who are part of the specified organization",
+        "description":                 "Returns the list of legal owner admins who are part of the specified organization",
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           },
           {
-            "name": "org",
-            "in": "path",
+            "name":        "org",
+            "in":          "path",
             "description": "The organization id",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The legal owner admins are returned\n",
-            "type": "array",
-            "items": {
+            "type":        "array",
+            "items":       {
               "$ref": "#/definitions/LegalOwnerAdmin"
             }
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       }
     },
-    "/participant/compound/admin/": {
+    "/participant/compound/admin/":                     {
       "get": {
         "x-swagger-router-controller": "ParticipantController",
-        "operationId": "getAllCompoundAdmins",
-        "summary": "Returns the list of Compound admins",
-        "description": "Returns the list of Compound admins",
-        "parameters": [
+        "operationId":                 "getAllCompoundAdmins",
+        "summary":                     "Returns the list of Compound admins",
+        "description":                 "Returns the list of Compound admins",
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The list of Compound admins is returned\n",
-            "type": "array",
-            "items": {
+            "type":        "array",
+            "items":       {
               "$ref": "#/definitions/CompoundAdmin"
             }
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       }
     },
-    "/participant/compound/admin/userID/{userID}": {
+    "/participant/compound/admin/userID/{userID}":      {
       "get": {
         "x-swagger-router-controller": "ParticipantController",
-        "operationId": "getCompoundAdminByUserID",
-        "summary": "Returns the Compound admin with the specified user ID",
-        "description": "Returns the Compound admin with the specified user ID",
-        "parameters": [
+        "operationId":                 "getCompoundAdminByUserID",
+        "summary":                     "Returns the Compound admin with the specified user ID",
+        "description":                 "Returns the Compound admin with the specified user ID",
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           },
           {
-            "name": "userID",
-            "in": "path",
+            "name":        "userID",
+            "in":          "path",
             "description": "The user ID",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The legal owner admin is returned\n",
-            "$ref": "#/definitions/CompoundAdmin"
+            "$ref":        "#/definitions/CompoundAdmin"
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       }
     },
-    "/participant/compound/admin/organization/{org}": {
+    "/participant/compound/admin/organization/{org}":   {
       "get": {
         "x-swagger-router-controller": "ParticipantController",
-        "operationId": "getCompoundAdminByOrg",
-        "summary": "Returns the list of Compound admins who are part of the specified organization",
-        "description": "Returns the list of Compound admins who are part of the specified organization",
-        "parameters": [
+        "operationId":                 "getCompoundAdminByOrg",
+        "summary":                     "Returns the list of Compound admins who are part of the specified organization",
+        "description":                 "Returns the list of Compound admins who are part of the specified organization",
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           },
           {
-            "name": "org",
-            "in": "path",
+            "name":        "org",
+            "in":          "path",
             "description": "The organization id",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The compound admins are returned\n",
-            "type": "array",
-            "items": {
+            "type":        "array",
+            "items":       {
               "$ref": "#/definitions/CompoundAdmin"
             }
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       }
     },
-    "/participant/carrier/member/": {
+    "/participant/carrier/member/":                     {
       "get": {
         "x-swagger-router-controller": "ParticipantController",
-        "operationId": "getAllCarrierMembers",
-        "summary": "Returns the list of Carrier members",
-        "description": "Returns the list of Carrier members",
-        "parameters": [
+        "operationId":                 "getAllCarrierMembers",
+        "summary":                     "Returns the list of Carrier members",
+        "description":                 "Returns the list of Carrier members",
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The list of Carrier members is returned\n",
-            "type": "array",
-            "items": {
+            "type":        "array",
+            "items":       {
               "$ref": "#/definitions/CarrierMember"
             }
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       }
     },
-    "/participant/carrier/member/userID/{userID}": {
+    "/participant/carrier/member/userID/{userID}":      {
       "get": {
         "x-swagger-router-controller": "ParticipantController",
-        "operationId": "getCarrierMemberByUserID",
-        "summary": "Returns the Carrier member with the specified user ID",
-        "description": "Returns the Carrier member with the specified user ID",
-        "parameters": [
+        "operationId":                 "getCarrierMemberByUserID",
+        "summary":                     "Returns the Carrier member with the specified user ID",
+        "description":                 "Returns the Carrier member with the specified user ID",
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           },
           {
-            "name": "userID",
-            "in": "path",
+            "name":        "userID",
+            "in":          "path",
             "description": "The user ID",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The carrier member is returned\n",
-            "$ref": "#/definitions/CarrierMember"
+            "$ref":        "#/definitions/CarrierMember"
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       }
     },
-    "/participant/carrier/member/organization/{org}": {
+    "/participant/carrier/member/organization/{org}":   {
       "get": {
         "x-swagger-router-controller": "ParticipantController",
-        "operationId": "getCarrierMemberByOrg",
-        "summary": "Returns the list of Carrier members who are part of the specified organization",
-        "description": "Returns the list of Carrier members who are part of the specified organization",
-        "parameters": [
+        "operationId":                 "getCarrierMemberByOrg",
+        "summary":                     "Returns the list of Carrier members who are part of the specified organization",
+        "description":                 "Returns the list of Carrier members who are part of the specified organization",
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           },
           {
-            "name": "org",
-            "in": "path",
+            "name":        "org",
+            "in":          "path",
             "description": "The organization id",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The Carrier members are returned\n",
-            "type": "array",
-            "items": {
+            "type":        "array",
+            "items":       {
               "$ref": "#/definitions/CarrierMember"
             }
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       }
     },
-    "/participant/carrier/admin/": {
+    "/participant/carrier/admin/":                      {
       "get": {
         "x-swagger-router-controller": "ParticipantController",
-        "operationId": "getAllCarrierAdmins",
-        "summary": "Returns the list of Carrier admins",
-        "description": "Returns the list of Carrier admins",
-        "parameters": [
+        "operationId":                 "getAllCarrierAdmins",
+        "summary":                     "Returns the list of Carrier admins",
+        "description":                 "Returns the list of Carrier admins",
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The list of Carrier admins is returned\n",
-            "type": "array",
-            "items": {
+            "type":        "array",
+            "items":       {
               "$ref": "#/definitions/CarrierAdmin"
             }
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       }
     },
-    "/participant/carrier/admin/userID/{userID}": {
+    "/participant/carrier/admin/userID/{userID}":       {
       "get": {
         "x-swagger-router-controller": "ParticipantController",
-        "operationId": "getCarrierAdminByUserID",
-        "summary": "Returns the Carrier admin with the specified user ID",
-        "description": "Returns the Carrier admin with the specified user ID",
-        "parameters": [
+        "operationId":                 "getCarrierAdminByUserID",
+        "summary":                     "Returns the Carrier admin with the specified user ID",
+        "description":                 "Returns the Carrier admin with the specified user ID",
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           },
           {
-            "name": "userID",
-            "in": "path",
+            "name":        "userID",
+            "in":          "path",
             "description": "The user ID",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The carrier admin is returned\n",
-            "$ref": "#/definitions/CarrierAdmin"
+            "$ref":        "#/definitions/CarrierAdmin"
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       }
     },
-    "/participant/carrier/admin/organization/{org}": {
+    "/participant/carrier/admin/organization/{org}":    {
       "get": {
         "x-swagger-router-controller": "ParticipantController",
-        "operationId": "getCarrierAdminByOrg",
-        "summary": "Returns the list of Carrier admins who are part of the specified organization",
-        "description": "Returns the list of Carrier admins who are part of the specified organization",
-        "parameters": [
+        "operationId":                 "getCarrierAdminByOrg",
+        "summary":                     "Returns the list of Carrier admins who are part of the specified organization",
+        "description":                 "Returns the list of Carrier admins who are part of the specified organization",
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           },
           {
-            "name": "org",
-            "in": "path",
+            "name":        "org",
+            "in":          "path",
             "description": "The organization id",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The Carrier admins are returned\n",
-            "type": "array",
-            "items": {
+            "type":        "array",
+            "items":       {
               "$ref": "#/definitions/CarrierAdmin"
             }
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       }
     },
-    "/participant/recipient/admin/": {
+    "/participant/recipient/admin/":                    {
       "get": {
         "x-swagger-router-controller": "ParticipantController",
-        "operationId": "getAllRecipientAdmins",
-        "summary": "Returns the list of Recipient admins",
-        "description": "Returns the list of Recipient admins",
-        "parameters": [
+        "operationId":                 "getAllRecipientAdmins",
+        "summary":                     "Returns the list of Recipient admins",
+        "description":                 "Returns the list of Recipient admins",
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The list of Recipient admins is returned\n",
-            "type": "array",
-            "items": {
+            "type":        "array",
+            "items":       {
               "$ref": "#/definitions/RecipientAdmin"
             }
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       }
     },
-    "/participant/recipient/admin/userID/{userID}": {
+    "/participant/recipient/admin/userID/{userID}":     {
       "get": {
         "x-swagger-router-controller": "ParticipantController",
-        "operationId": "getRecipientAdminByUserID",
-        "summary": "Returns the Recipient admin with the specified user ID",
-        "description": "Returns the Recipient admin with the specified user ID",
-        "parameters": [
+        "operationId":                 "getRecipientAdminByUserID",
+        "summary":                     "Returns the Recipient admin with the specified user ID",
+        "description":                 "Returns the Recipient admin with the specified user ID",
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           },
           {
-            "name": "userID",
-            "in": "path",
+            "name":        "userID",
+            "in":          "path",
             "description": "The user ID",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The Recipient admin is returned\n",
-            "$ref": "#/definitions/RecipientAdmin"
+            "$ref":        "#/definitions/RecipientAdmin"
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       }
     },
-    "/participant/recipient/admin/organization/{org}": {
+    "/participant/recipient/admin/organization/{org}":  {
       "get": {
         "x-swagger-router-controller": "ParticipantController",
-        "operationId": "getRecipientAdminByOrg",
-        "summary": "Returns the list of Recipient admins who are part of the specified organization",
-        "description": "Returns the list of Recipient admins who are part of the specified organization",
-        "parameters": [
+        "operationId":                 "getRecipientAdminByOrg",
+        "summary":                     "Returns the list of Recipient admins who are part of the specified organization",
+        "description":                 "Returns the list of Recipient admins who are part of the specified organization",
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           },
           {
-            "name": "org",
-            "in": "path",
+            "name":        "org",
+            "in":          "path",
             "description": "The organization id",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The Recipient admins are returned\n",
-            "type": "array",
-            "items": {
+            "type":        "array",
+            "items":       {
               "$ref": "#/definitions/CarrierAdmin"
             }
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       }
     },
-    "/participant/recipient/member/": {
+    "/participant/recipient/member/":                   {
       "get": {
         "x-swagger-router-controller": "ParticipantController",
-        "operationId": "getAllRecipientMember",
-        "summary": "Returns the list of the Recipient members",
-        "description": "Returns the list of the Recipient members",
-        "parameters": [
+        "operationId":                 "getAllRecipientMember",
+        "summary":                     "Returns the list of the Recipient members",
+        "description":                 "Returns the list of the Recipient members",
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The list of Recipient members is returned\n",
-            "type": "array",
-            "items": {
+            "type":        "array",
+            "items":       {
               "$ref": "#/definitions/RecipientMember"
             }
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
         }
       }
     },
-    "/participant/recipient/member/userID/{userID}": {
+    "/participant/recipient/member/userID/{userID}":    {
       "get": {
         "x-swagger-router-controller": "ParticipantController",
-        "operationId": "getRecipientMemberByUserID",
-        "summary": "Returns the Recipient member with the specified user ID",
-        "description": "Returns the Recipient member with the specified user ID",
-        "parameters": [
+        "operationId":                 "getRecipientMemberByUserID",
+        "summary":                     "Returns the Recipient member with the specified user ID",
+        "description":                 "Returns the Recipient member with the specified user ID",
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           },
           {
-            "name": "userID",
-            "in": "path",
+            "name":        "userID",
+            "in":          "path",
             "description": "The user ID",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The Recipient admin is returned\n",
-            "$ref": "#/definitions/RecipientMember"
+            "$ref":        "#/definitions/RecipientMember"
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
@@ -1768,36 +1768,36 @@
     "/participant/recipient/member/organization/{org}": {
       "get": {
         "x-swagger-router-controller": "ParticipantController",
-        "operationId": "getRecipientMemberByOrg",
-        "summary": "Returns the list of Recipient members who are part of the specified organization",
-        "description": "Returns the list of Recipient members who are part of the specified organization",
-        "parameters": [
+        "operationId":                 "getRecipientMemberByOrg",
+        "summary":                     "Returns the list of Recipient members who are part of the specified organization",
+        "description":                 "Returns the list of Recipient members who are part of the specified organization",
+        "parameters":                  [
           {
-            "name": "x-access-token",
-            "in": "header",
+            "name":        "x-access-token",
+            "in":          "header",
             "description": "The authentication token",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           },
           {
-            "name": "org",
-            "in": "path",
+            "name":        "org",
+            "in":          "path",
             "description": "The organization id",
-            "required": true,
-            "type": "string"
+            "required":    true,
+            "type":        "string"
           }
         ],
-        "responses": {
-          "200": {
+        "responses":                   {
+          "200":     {
             "description": "The Recipient members are returned\n",
-            "type": "array",
-            "items": {
+            "type":        "array",
+            "items":       {
               "$ref": "#/definitions/CarrierMember"
             }
           },
           "default": {
             "description": "Unexpected error",
-            "schema": {
+            "schema":      {
               "$ref": "#/definitions/Error"
             }
           }
@@ -1805,137 +1805,137 @@
       }
     }
   },
-  "definitions": {
-    "Address": {
-      "type": "object",
+  "definitions":         {
+    "Address":          {
+      "type":       "object",
       "properties": {
-        "name": {
-          "type": "string",
+        "name":        {
+          "type":     "string",
           "required": true
         },
-        "street": {
-          "type": "string",
+        "street":      {
+          "type":     "string",
           "required": true
         },
         "houseNumber": {
-          "type": "string",
+          "type":     "string",
           "required": true
         },
-        "city": {
-          "type": "string",
+        "city":        {
+          "type":     "string",
           "required": true
         },
-        "zipCode": {
-          "type": "string",
+        "zipCode":     {
+          "type":     "string",
           "required": true
         },
-        "country": {
-          "type": "string",
+        "country":     {
+          "type":     "string",
           "required": true
         },
-        "latitude": {
-          "type": "number",
+        "latitude":    {
+          "type":     "number",
           "required": true
         },
-        "longitude": {
-          "type": "number",
+        "longitude":   {
+          "type":     "number",
           "required": true
         }
       }
     },
-    "Delivery": {
-      "type": "object",
+    "Delivery":         {
+      "type":       "object",
       "properties": {
         "address": {
-          "$ref": "#/definitions/Address",
+          "$ref":     "#/definitions/Address",
           "required": true
         },
-        "date": {
-          "type": "number",
+        "date":    {
+          "type":     "number",
           "required": false
         }
       }
     },
-    "Loading": {
-      "type": "object",
+    "Loading":          {
+      "type":       "object",
       "properties": {
         "address": {
-          "$ref": "#/definitions/Address",
+          "$ref":     "#/definitions/Address",
           "required": true
         },
-        "date": {
-          "type": "number",
+        "date":    {
+          "type":     "number",
           "required": true
         }
       }
     },
-    "Creation": {
-      "type": "object",
+    "Creation":         {
+      "type":       "object",
       "properties": {
         "address": {
-          "$ref": "#/definitions/Address",
+          "$ref":     "#/definitions/Address",
           "required": true
         },
-        "date": {
-          "type": "number",
+        "date":    {
+          "type":     "number",
           "required": true
         }
       }
     },
-    "Remark": {
-      "type": "object",
+    "Remark":           {
+      "type":       "object",
       "properties": {
-        "comments": {
-          "type": "string",
+        "comments":  {
+          "type":     "string",
           "required": true
         },
         "isDamaged": {
-          "type": "boolean",
+          "type":     "boolean",
           "required": false
         }
       }
     },
-    "Vehicle": {
-      "type": "object",
+    "Vehicle":          {
+      "type":       "object",
       "properties": {
-        "vin": {
-          "type": "string",
+        "vin":                 {
+          "type":     "string",
           "required": true
         },
-        "manufacturer": {
-          "type": "string",
+        "manufacturer":        {
+          "type":     "string",
           "required": true
         },
-        "model": {
-          "type": "string",
+        "model":               {
+          "type":     "string",
           "required": true
         },
-        "type": {
-          "type": "string",
+        "type":                {
+          "type":     "string",
           "required": true
         },
-        "ecmrs": {
-          "type": "array",
-          "items": {
+        "ecmrs":               {
+          "type":     "array",
+          "items":    {
             "type": "string"
           },
           "required": true
         },
-        "odoMeterReading": {
-          "type": "number",
+        "odoMeterReading":     {
+          "type":     "number",
           "required": true
         },
-        "plateNumber": {
-          "type": "string",
+        "plateNumber":         {
+          "type":     "string",
           "required": true
         },
         "registrationCountry": {
-          "type": "string",
+          "type":     "string",
           "required": false
         }
       }
     },
-    "ECMR_STATUS": {
+    "ECMR_STATUS":      {
       "type": "string",
       "enum": [
         "CREATED",
@@ -1945,513 +1945,513 @@
         "CONFIRMED_DELIVERED"
       ]
     },
-    "ECMR": {
-      "type": "object",
+    "ECMR":             {
+      "type":        "object",
       "description": "description",
-      "properties": {
-        "ecmrID": {
-          "type": "string",
+      "properties":  {
+        "ecmrID":                   {
+          "type":     "string",
           "required": true
         },
-        "status": {
-          "$ref": "#/definitions/ECMR_STATUS",
+        "status":                   {
+          "$ref":     "#/definitions/ECMR_STATUS",
           "required": true
         },
-        "creation": {
-          "$ref": "#/definitions/Creation",
+        "creation":                 {
+          "$ref":     "#/definitions/Creation",
           "required": true
         },
-        "loading": {
-          "$ref": "#/definitions/Loading",
+        "loading":                  {
+          "$ref":     "#/definitions/Loading",
           "required": true
         },
-        "delivery": {
-          "$ref": "#/definitions/Delivery",
+        "delivery":                 {
+          "$ref":     "#/definitions/Delivery",
           "required": true
         },
-        "owner": {
-          "type": "string",
+        "owner":                    {
+          "type":        "string",
           "description": "The id of the legal owner org",
-          "required": true
+          "required":    true
         },
-        "source": {
-          "type": "string",
+        "source":                   {
+          "type":        "string",
           "description": "The id of the compound org",
-          "required": true
+          "required":    true
         },
-        "transporter": {
-          "type": "string",
+        "transporter":              {
+          "type":        "string",
           "description": "The id of the transporter user",
-          "required": false
+          "required":    false
         },
-        "carrier": {
-          "type": "string",
+        "carrier":                  {
+          "type":        "string",
           "description": "The id of the carrier org",
-          "required": true
+          "required":    true
         },
-        "recipientOrg": {
-          "type": "string",
+        "recipientOrg":             {
+          "type":        "string",
           "description": "The id of the recipient org",
-          "required": true
+          "required":    true
         },
-        "recipient": {
-          "type": "string",
+        "recipient":                {
+          "type":        "string",
           "description": "The id of the recipient user",
-          "required": false
+          "required":    false
         },
-        "issueDate": {
-          "type": "number",
+        "issueDate":                {
+          "type":     "number",
           "required": true
         },
-        "issuedBy": {
-          "type": "string",
+        "issuedBy":                 {
+          "type":        "string",
           "description": "The id of the Legal Owner org who issued the ECMR",
+          "required":    true
+        },
+        "carrierComments":          {
+          "type":     "string",
           "required": true
         },
-        "carrierComments": {
-          "type": "string",
-          "required": true
-        },
-        "goods": {
-          "type": "array",
-          "items": {
+        "goods":                    {
+          "type":     "array",
+          "items":    {
             "$ref": "#/definitions/Good"
           },
           "required": true
         },
-        "legalOwnerInstructions": {
-          "type": "string",
+        "legalOwnerInstructions":   {
+          "type":     "string",
           "required": true
         },
-        "paymentInstructions": {
-          "type": "string",
+        "paymentInstructions":      {
+          "type":     "string",
           "required": true
         },
-        "payOnDelivery": {
-          "type": "string",
+        "payOnDelivery":            {
+          "type":     "string",
           "required": true
         },
-        "documents": {
-          "type": "string",
+        "documents":                {
+          "type":     "string",
           "required": false
         },
-        "compoundSignature": {
-          "$ref": "#/definitions/Signature",
+        "compoundSignature":        {
+          "$ref":     "#/definitions/Signature",
           "required": false
         },
-        "carrierLoadingSignature": {
-          "$ref": "#/definitions/Signature",
+        "carrierLoadingSignature":  {
+          "$ref":     "#/definitions/Signature",
           "required": false
         },
         "carrierDeliverySignature": {
-          "$ref": "#/definitions/Signature",
+          "$ref":     "#/definitions/Signature",
           "required": false
         },
-        "recipientSignature": {
-          "$ref": "#/definitions/Signature",
+        "recipientSignature":       {
+          "$ref":     "#/definitions/Signature",
           "required": false
         }
       }
     },
-    "LegalOwnerOrg": {
-      "type": "object",
+    "LegalOwnerOrg":    {
+      "type":       "object",
       "properties": {
         "entityID": {
-          "type": "string",
+          "type":     "string",
           "required": true
         },
-        "name": {
-          "type": "string",
+        "name":     {
+          "type":     "string",
           "required": true
         },
-        "address": {
-          "$ref": "#/definitions/Address",
+        "address":  {
+          "$ref":     "#/definitions/Address",
           "required": true
         }
       }
     },
-    "CompoundOrg": {
-      "type": "object",
+    "CompoundOrg":      {
+      "type":       "object",
       "properties": {
         "entityID": {
-          "type": "string",
+          "type":     "string",
           "required": true
         },
-        "name": {
-          "type": "string",
+        "name":     {
+          "type":     "string",
           "required": true
         },
-        "address": {
-          "$ref": "#/definitions/Address",
+        "address":  {
+          "$ref":     "#/definitions/Address",
           "required": true
         }
       }
     },
-    "CarrierOrg": {
-      "type": "object",
+    "CarrierOrg":       {
+      "type":       "object",
       "properties": {
         "entityID": {
-          "type": "string",
+          "type":     "string",
           "required": true
         },
-        "name": {
-          "type": "string",
+        "name":     {
+          "type":     "string",
           "required": true
         },
-        "address": {
-          "$ref": "#/definitions/Address",
+        "address":  {
+          "$ref":     "#/definitions/Address",
           "required": true
         }
       }
     },
-    "RecipientOrg": {
-      "type": "object",
+    "RecipientOrg":     {
+      "type":       "object",
       "properties": {
         "entityID": {
-          "type": "string",
+          "type":     "string",
           "required": true
         },
-        "name": {
-          "type": "string",
+        "name":     {
+          "type":     "string",
           "required": true
         },
-        "address": {
-          "$ref": "#/definitions/Address",
+        "address":  {
+          "$ref":     "#/definitions/Address",
           "required": true
         }
       }
     },
-    "Good": {
-      "type": "object",
+    "Good":             {
+      "type":       "object",
       "properties": {
-        "vehicle": {
-          "$ref": "#/definitions/Vehicle",
+        "vehicle":               {
+          "$ref":     "#/definitions/Vehicle",
           "required": true
         },
-        "carrierLoadingRemark": {
-          "$ref": "#/definitions/Remark",
+        "carrierLoadingRemark":  {
+          "$ref":     "#/definitions/Remark",
           "required": false
         },
-        "compoundRemark": {
-          "$ref": "#/definitions/Remark",
+        "compoundRemark":        {
+          "$ref":     "#/definitions/Remark",
           "required": false
         },
-        "recipientRemark": {
-          "$ref": "#/definitions/Remark",
+        "recipientRemark":       {
+          "$ref":     "#/definitions/Remark",
           "required": false
         },
         "carrierDeliveryRemark": {
-          "$ref": "#/definitions/Remark",
+          "$ref":     "#/definitions/Remark",
           "required": false
         },
-        "description": {
-          "type": "string",
+        "description":           {
+          "type":     "string",
           "required": false
         },
-        "weight": {
-          "type": "number",
+        "weight":                {
+          "type":     "number",
           "required": false
         }
       }
     },
-    "Participant": {
-      "type": "object",
+    "Participant":      {
+      "type":       "object",
       "properties": {
-        "$class": {
-          "type": "string",
+        "$class":    {
+          "type":     "string",
           "required": true
         },
-        "userID": {
-          "type": "string",
+        "userID":    {
+          "type":     "string",
           "required": true
         },
-        "userName": {
-          "type": "string",
+        "userName":  {
+          "type":     "string",
           "required": true
         },
         "firstName": {
-          "type": "string",
+          "type":     "string",
           "required": true
         },
-        "lastName": {
-          "type": "string",
+        "lastName":  {
+          "type":     "string",
           "required": true
         },
-        "address": {
-          "$ref": "#/definitions/Address",
+        "address":   {
+          "$ref":     "#/definitions/Address",
           "required": true
         },
-        "org": {
-          "type": "string",
+        "org":       {
+          "type":        "string",
           "description": "The id of the legal owner organization",
-          "required": true
+          "required":    true
         }
       }
     },
-    "LegalOwnerAdmin": {
-      "type": "object",
+    "LegalOwnerAdmin":  {
+      "type":       "object",
       "properties": {
-        "userID": {
-          "type": "string",
+        "userID":    {
+          "type":     "string",
           "required": true
         },
-        "userName": {
-          "type": "string",
+        "userName":  {
+          "type":     "string",
           "required": true
         },
         "firstName": {
-          "type": "string",
+          "type":     "string",
           "required": true
         },
-        "lastName": {
-          "type": "string",
+        "lastName":  {
+          "type":     "string",
           "required": true
         },
-        "address": {
-          "$ref": "#/definitions/Address",
+        "address":   {
+          "$ref":     "#/definitions/Address",
           "required": true
         },
-        "org": {
-          "type": "string",
+        "org":       {
+          "type":        "string",
           "description": "The id of the legal owner organization",
-          "required": true
+          "required":    true
         }
       }
     },
-    "CompoundAdmin": {
-      "type": "object",
+    "CompoundAdmin":    {
+      "type":       "object",
       "properties": {
-        "userID": {
-          "type": "string",
+        "userID":    {
+          "type":     "string",
           "required": true
         },
-        "userName": {
-          "type": "string",
+        "userName":  {
+          "type":     "string",
           "required": true
         },
         "firstName": {
-          "type": "string",
+          "type":     "string",
           "required": true
         },
-        "lastName": {
-          "type": "string",
+        "lastName":  {
+          "type":     "string",
           "required": true
         },
-        "address": {
-          "$ref": "#/definitions/Address",
+        "address":   {
+          "$ref":     "#/definitions/Address",
           "required": true
         },
-        "org": {
-          "type": "string",
+        "org":       {
+          "type":        "string",
           "description": "The id of the compound organization",
-          "required": true
+          "required":    true
         }
       }
     },
-    "CarrierAdmin": {
-      "type": "object",
+    "CarrierAdmin":     {
+      "type":       "object",
       "properties": {
-        "userID": {
-          "type": "string",
+        "userID":    {
+          "type":     "string",
           "required": true
         },
-        "userName": {
-          "type": "string",
+        "userName":  {
+          "type":     "string",
           "required": true
         },
         "firstName": {
-          "type": "string",
+          "type":     "string",
           "required": true
         },
-        "lastName": {
-          "type": "string",
+        "lastName":  {
+          "type":     "string",
           "required": true
         },
-        "address": {
-          "$ref": "#/definitions/Address",
+        "address":   {
+          "$ref":     "#/definitions/Address",
           "required": true
         },
-        "org": {
-          "type": "string",
+        "org":       {
+          "type":        "string",
           "description": "The id of the Carrier organization",
-          "required": true
+          "required":    true
         }
       }
     },
-    "CarrierMember": {
-      "type": "object",
+    "CarrierMember":    {
+      "type":       "object",
       "properties": {
-        "userID": {
-          "type": "string",
+        "userID":    {
+          "type":     "string",
           "required": true
         },
-        "userName": {
-          "type": "string",
+        "userName":  {
+          "type":     "string",
           "required": true
         },
         "firstName": {
-          "type": "string",
+          "type":     "string",
           "required": true
         },
-        "lastName": {
-          "type": "string",
+        "lastName":  {
+          "type":     "string",
           "required": true
         },
-        "address": {
-          "$ref": "#/definitions/Address",
+        "address":   {
+          "$ref":     "#/definitions/Address",
           "required": true
         },
-        "org": {
-          "type": "string",
+        "org":       {
+          "type":        "string",
           "description": "The id of the Carrier organization",
-          "required": true
+          "required":    true
         }
       }
     },
-    "RecipientAdmin": {
-      "type": "object",
+    "RecipientAdmin":   {
+      "type":       "object",
       "properties": {
-        "userID": {
-          "type": "string",
+        "userID":    {
+          "type":     "string",
           "required": true
         },
-        "userName": {
-          "type": "string",
+        "userName":  {
+          "type":     "string",
           "required": true
         },
         "firstName": {
-          "type": "string",
+          "type":     "string",
           "required": true
         },
-        "lastName": {
-          "type": "string",
+        "lastName":  {
+          "type":     "string",
           "required": true
         },
-        "address": {
-          "$ref": "#/definitions/Address",
+        "address":   {
+          "$ref":     "#/definitions/Address",
           "required": true
         },
-        "org": {
-          "type": "string",
+        "org":       {
+          "type":        "string",
           "description": "The id of the Recipient organization",
-          "required": true
+          "required":    true
         }
       }
     },
-    "RecipientMember": {
-      "type": "object",
+    "RecipientMember":  {
+      "type":       "object",
       "properties": {
-        "userID": {
-          "type": "string",
+        "userID":    {
+          "type":     "string",
           "required": true
         },
-        "userName": {
-          "type": "string",
+        "userName":  {
+          "type":     "string",
           "required": true
         },
         "firstName": {
-          "type": "string",
+          "type":     "string",
           "required": true
         },
-        "lastName": {
-          "type": "string",
+        "lastName":  {
+          "type":     "string",
           "required": true
         },
-        "address": {
-          "$ref": "#/definitions/Address",
+        "address":   {
+          "$ref":     "#/definitions/Address",
           "required": true
         },
-        "org": {
-          "type": "string",
+        "org":       {
+          "type":        "string",
           "description": "The id of the Recipient organization",
-          "required": true
+          "required":    true
         }
       }
     },
-    "Signature": {
-      "type": "object",
+    "Signature":        {
+      "type":       "object",
       "properties": {
-        "certificate": {
-          "type": "string",
+        "certificate":   {
+          "type":     "string",
           "required": true
         },
-        "latitude": {
-          "type": "number",
+        "latitude":      {
+          "type":     "number",
           "required": false
         },
-        "longitude": {
-          "type": "string",
+        "longitude":     {
+          "type":     "string",
           "required": true
         },
-        "ip": {
-          "type": "string",
+        "ip":            {
+          "type":     "string",
           "required": false
         },
-        "timestamp": {
-          "type": "number",
+        "timestamp":     {
+          "type":     "number",
           "required": true
         },
         "generalRemark": {
-          "$ref": "#/definitions/Remark",
+          "$ref":        "#/definitions/Remark",
           "description": "General remarks for the signature",
-          "required": true
+          "required":    true
         }
       }
     },
     "LoginCredentials": {
-      "type": "object",
+      "type":       "object",
       "properties": {
         "username": {
-          "type": "string",
+          "type":     "string",
           "required": true
         },
         "password": {
-          "type": "string",
+          "type":     "string",
           "required": true
         }
       }
     },
-    "LoginResponse": {
-      "type": "object",
+    "LoginResponse":    {
+      "type":       "object",
       "properties": {
         "success": {
-          "type": "boolean",
+          "type":     "boolean",
           "required": true
         },
-        "token": {
-          "type": "string",
+        "token":   {
+          "type":     "string",
           "required": true
         },
-        "user": {
-          "type": "object",
+        "user":    {
+          "type":       "object",
           "properties": {
-            "userID": {
-              "type": "string",
+            "userID":    {
+              "type":     "string",
               "required": true
             },
-            "username": {
-              "type": "string",
+            "username":  {
+              "type":     "string",
               "required": true
             },
             "userEmail": {
-              "type": "string",
+              "type":     "string",
               "required": true
             },
-            "role": {
-              "type": "string",
+            "role":      {
+              "type":     "string",
               "required": true
             }
           }
         }
       }
     },
-    "Error": {
-      "type": "object",
+    "Error":            {
+      "type":       "object",
       "properties": {
         "description": {
           "type": "string"
         },
-        "message": {
+        "message":     {
           "type": "string"
         }
       }

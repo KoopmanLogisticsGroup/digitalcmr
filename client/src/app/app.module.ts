@@ -36,13 +36,13 @@ import {NavbarService} from './services/navbar.service';
     SignOffModalComponent,
     FilterByPipe
   ],
-  imports     : [
+  imports:      [
     BrowserModule,
     FormsModule,
     HttpModule,
     routing
   ],
-  providers   : [
+  providers:    [
     appRoutingProviders,
     Configuration,
     AuthenticationService,
@@ -51,7 +51,7 @@ import {NavbarService} from './services/navbar.service';
     SearchService,
     NavbarService
   ],
-  bootstrap   : [AppComponent]
+  bootstrap:    [AppComponent]
 })
 export class AppModule {
 }
