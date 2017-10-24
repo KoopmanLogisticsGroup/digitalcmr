@@ -34,11 +34,11 @@ export class TestData {
       await this.addPrivateDataToDB();
     }
 
-    try {
-      await this.addEntities();
-    } catch (error) {
-      this.logger.error('Error adding entities', error);
-    }
+    // try {
+    //   await this.addEntities();
+    // } catch (error) {
+    //   this.logger.error('Error adding entities', error);
+    // }
 
     if (sharedData && Object.keys(sharedData).length > 1) {
       try {
@@ -51,46 +51,46 @@ export class TestData {
   }
 
   private async addSharedData(): Promise<any> {
-    // if (sharedData.organizations && sharedData.organizations.legalOwnerOrgs && sharedData.organizations.legalOwnerOrgs.length) {
-    //   this.logger.info('Adding Legal Owner Org');
-    //   try {
-    //     await this.addOrgs(sharedData.organizations.legalOwnerOrgs, 'legalOwnerOrg');
-    //   } catch (error) {
-    //     this.logger.error('Error adding Legal Owner Org', error);
-    //   }
-    // }
-    // if (sharedData.organizations && sharedData.organizations.compoundOrgs && sharedData.organizations.compoundOrgs.length) {
-    //   this.logger.info('Adding Compound Org');
-    //   try {
-    //     await this.addOrgs(sharedData.organizations.compoundOrgs, 'compoundOrg');
-    //   } catch (error) {
-    //     this.logger.error('Error adding Compound Org', error);
-    //   }
-    // }
-    // if (sharedData.organizations && sharedData.organizations.carrierOrgs && sharedData.organizations.carrierOrgs.length) {
-    //   this.logger.info('Adding Carrier Org');
-    //   try {
-    //     await this.addOrgs(sharedData.organizations.carrierOrgs, 'carrierOrg');
-    //   } catch (error) {
-    //     this.logger.error('Error adding Carrier Org', error);
-    //   }
-    // }
-    // if (sharedData.organizations && sharedData.organizations.recipientOrgs && sharedData.organizations.recipientOrgs.length) {
-    //   this.logger.info('Adding Recipient Org');
-    //   try {
-    //     await this.addOrgs(sharedData.organizations.recipientOrgs, 'recipientOrg');
-    //   } catch (error) {
-    //     this.logger.error('Error adding Recipient Org', error);
-    //   }
-    // }
-    // if (sharedData.vehicles && sharedData.vehicles.length) {
-    //   this.logger.info('Adding Vehicles');
-    //   try {
-    //     await this.addVehicles(sharedData.vehicles);
-    //   } catch (error) {
-    //     this.logger.error('Error adding Vehicles', error);
-    //   }
-    // }
+    if (sharedData.organizations && sharedData.organizations.legalOwnerOrgs && sharedData.organizations.legalOwnerOrgs.length) {
+      this.logger.info('Adding Legal Owner Org');
+      try {
+        await this.addOrgs(sharedData.organizations.legalOwnerOrgs, 'legalOwnerOrg');
+      } catch (error) {
+        this.logger.error('Error adding Legal Owner Org', error);
+      }
+    }
+    if (sharedData.organizations && sharedData.organizations.compoundOrgs && sharedData.organizations.compoundOrgs.length) {
+      this.logger.info('Adding Compound Org');
+      try {
+        await this.addOrgs(sharedData.organizations.compoundOrgs, 'compoundOrg');
+      } catch (error) {
+        this.logger.error('Error adding Compound Org', error);
+      }
+    }
+    if (sharedData.organizations && sharedData.organizations.carrierOrgs && sharedData.organizations.carrierOrgs.length) {
+      this.logger.info('Adding Carrier Org');
+      try {
+        await this.addOrgs(sharedData.organizations.carrierOrgs, 'carrierOrg');
+      } catch (error) {
+        this.logger.error('Error adding Carrier Org', error);
+      }
+    }
+    if (sharedData.organizations && sharedData.organizations.recipientOrgs && sharedData.organizations.recipientOrgs.length) {
+      this.logger.info('Adding Recipient Org');
+      try {
+        await this.addOrgs(sharedData.organizations.recipientOrgs, 'recipientOrg');
+      } catch (error) {
+        this.logger.error('Error adding Recipient Org', error);
+      }
+    }
+    if (sharedData.vehicles && sharedData.vehicles.length) {
+      this.logger.info('Adding Vehicles');
+      try {
+        await this.addVehicles(sharedData.vehicles);
+      } catch (error) {
+        this.logger.error('Error adding Vehicles', error);
+      }
+    }
     if (sharedData.ecmrs && sharedData.ecmrs.length) {
       this.logger.info('Adding Ecmrs');
       try {

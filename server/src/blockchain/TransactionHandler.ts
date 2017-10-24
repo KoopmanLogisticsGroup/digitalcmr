@@ -18,9 +18,13 @@ export class TransactionHandler {
     await this.businessNetworkHandler.connect(identity, connectionProfile);
     const factory: Factory = await this.businessNetworkHandler.getFactory();
 
-    const transaction = transactionCreator.create(factory, namespace, data);
+    const transaction = await transactionCreator.create(factory, namespace, data);
 
-    await this.businessNetworkHandler.submitTransaction(transaction);
+    try {
+      await this.businessNetworkHandler.submitTransaction(transaction);
+    } catch (error) {
+      throw error;
+    }
 
     return this.businessNetworkHandler.disconnect();
   }

@@ -21,7 +21,7 @@ export class EcmrBuilder {
 
     if (ecmr.compoundSignature) {
       validatedObject.compoundSignature             = BuilderUtils.createConcept(factory, namespace, 'Signature', ecmr.compoundSignature);
-      validatedObject.compoundSignature.certificate = BuilderUtils.createRelationship(factory, namespace, 'User', enrollmentID);
+      validatedObject.compoundSignature.certificate = BuilderUtils.createRelationship(factory, namespace, 'User', enrollmentID || ecmr.compoundSignature.certificate);
       if (ecmr.compoundSignature.generalRemark) {
         validatedObject.compoundSignature.generalRemark = BuilderUtils.createConcept(factory, namespace, 'Remark', ecmr.compoundSignature.generalRemark);
       }
@@ -37,7 +37,7 @@ export class EcmrBuilder {
     }
     if (ecmr.carrierLoadingSignature) {
       validatedObject.carrierLoadingSignature             = BuilderUtils.createConcept(factory, namespace, 'Signature', ecmr.carrierLoadingSignature);
-      validatedObject.carrierLoadingSignature.certificate = BuilderUtils.createRelationship(factory, namespace, 'User', enrollmentID);
+      validatedObject.carrierLoadingSignature.certificate = BuilderUtils.createRelationship(factory, namespace, 'User', enrollmentID || ecmr.carrierLoadingSignature.certificate);
       if (ecmr.carrierLoadingSignature.generalRemark) {
         validatedObject.carrierLoadingSignature.generalRemark = BuilderUtils.createConcept(factory, namespace, 'Remark', ecmr.carrierLoadingSignature.generalRemark);
       }
@@ -53,7 +53,7 @@ export class EcmrBuilder {
     }
     if (ecmr.carrierDeliverySignature) {
       validatedObject.carrierDeliverySignature             = BuilderUtils.createConcept(factory, namespace, 'Signature', ecmr.carrierDeliverySignature);
-      validatedObject.carrierDeliverySignature.certificate = BuilderUtils.createRelationship(factory, namespace, 'User', enrollmentID);
+      validatedObject.carrierDeliverySignature.certificate = BuilderUtils.createRelationship(factory, namespace, 'User', enrollmentID || ecmr.carrierDeliverySignature.certificate);
       if (ecmr.carrierDeliverySignature.generalRemark) {
         validatedObject.carrierDeliverySignature.generalRemark = BuilderUtils.createConcept(factory, namespace, 'Remark', ecmr.carrierDeliverySignature.generalRemark);
       }
@@ -69,7 +69,7 @@ export class EcmrBuilder {
     }
     if (ecmr.recipientSignature) {
       validatedObject.recipientSignature             = BuilderUtils.createConcept(factory, namespace, 'Signature', ecmr.recipientSignature);
-      validatedObject.recipientSignature.certificate = BuilderUtils.createRelationship(factory, namespace, 'User', enrollmentID);
+      validatedObject.recipientSignature.certificate = BuilderUtils.createRelationship(factory, namespace, 'User', enrollmentID || ecmr.recipientSignature.certificate);
       if (ecmr.recipientSignature.generalRemark) {
         validatedObject.recipientSignature.generalRemark = BuilderUtils.createConcept(factory, namespace, 'Remark', ecmr.recipientSignature.generalRemark);
       }
@@ -121,7 +121,7 @@ export class EcmrBuilder {
     let validatedObjects: any = [];
 
     for (const ecmr of ecmrs) {
-      validatedObjects.push(await this.buildECMR(factory, namespace, ecmr, enrollmentID, ip));
+      validatedObjects.push(this.buildECMR(factory, namespace, ecmr, enrollmentID, ip));
     }
 
     return validatedObjects;
