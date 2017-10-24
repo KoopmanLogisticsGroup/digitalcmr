@@ -26,18 +26,11 @@ function CreateECMR(tx) {
   // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.ECMR')
     .then(function (assetRegistry) {
-      var factory = getFactory();
-      var ecmrObj = factory.newResource('org.digitalcmr', 'ECMR', tx.ecmr.ecmrID);
-      Object.keys(tx.ecmr).forEach(function (key, index) {
-        ecmrObj[key] = tx.ecmr[key];
-      });
-      return assetRegistry.add(ecmrObj);
+      return assetRegistry.add(tx.ecmr);
     }).catch(function (error) {
-      console.log('An error occurred while saving the ECMR asset');
-      console.log(error);
-      return error;
+      console.log('An error occurred while saving the ECMR asset', error);
+      throw error;
     });
-
 }
 
 /**
@@ -54,25 +47,13 @@ function CreateECMRs(tx) {
   // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.ECMR')
     .then(function (assetRegistry) {
-      var factory = getFactory();
-      var ecmrArr = [];
-      for (var i = 0; i < tx.ecmrs.length; i++) {
-        var inputObj = tx.ecmrs[i];
-        var obj = factory.newResource('org.digitalcmr', 'ECMR', inputObj.ecmrID);
-        Object.keys(tx.ecmrs[i]).forEach(function (key, index) {
-          obj[key] = inputObj[key];
-        });
-        ecmrArr.push(obj);
-      }
-      return assetRegistry.addAll(ecmrArr).catch(function (error) {
-        console.log('An error occurred while addAll ecmr assets');
-        console.log(error);
-        return error;
+      return assetRegistry.addAll(tx.ecmrs).catch(function (error) {
+        console.log('An error occurred while addAll ecmr assets', error);
+        throw error;
       });
     }).catch(function (error) {
-      console.log('An error occurred while saving the ecmr assets');
-      console.log(error);
-      return error;
+      console.log('An error occurred while saving the ecmr assets', error);
+      throw error;
     });
 }
 
@@ -90,16 +71,13 @@ function CreateLegalOwnerOrg(tx) {
   // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.LegalOwnerOrg')
     .then(function (assetRegistry) {
-      var factory = getFactory();
-      var obj = factory.newResource('org.digitalcmr', 'LegalOwnerOrg', tx.legalOwnerOrg.entityID);
-      Object.keys(tx.legalOwnerOrg).forEach(function (key, index) {
-        obj[key] = tx.legalOwnerOrg[key];
+      return assetRegistry.add(tx.legalOwnerOrg).catch(function (error) {
+        console.log('An error occurred while adding all the assets in the registry: ' + error);
+        throw error;
       });
-      return assetRegistry.addAll([obj]);
     }).catch(function (error) {
-      console.log('An error occurred while saving the LegalOwnerOrg asset');
-      console.log(error);
-      return error;
+      console.log('An error occurred while saving the LegalOwnerOrg asset', error);
+      throw error;
     });
 
 }
@@ -118,16 +96,13 @@ function CreateCompoundOrg(tx) {
   // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.CompoundOrg')
     .then(function (assetRegistry) {
-      var factory = getFactory();
-      var obj = factory.newResource('org.digitalcmr', 'CompoundOrg', tx.compoundOrg.entityID);
-      Object.keys(tx.compoundOrg).forEach(function (key, index) {
-        obj[key] = tx.compoundOrg[key];
+      return assetRegistry.add(tx.compoundOrg).catch(function (error) {
+        console.log('An error occurred while adding all the assets in the registry: ' + error);
+        throw error;
       });
-      return assetRegistry.addAll([obj]);
     }).catch(function (error) {
-      console.log('An error occurred while saving the CompoundOrg asset');
-      console.log(error);
-      return error;
+      console.log('An error occurred while saving the CompoundOrg asset', error);
+      throw error;
     });
 
 }
@@ -146,16 +121,13 @@ function CreateCarrierOrg(tx) {
   // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.CarrierOrg')
     .then(function (assetRegistry) {
-      var factory = getFactory();
-      var obj = factory.newResource('org.digitalcmr', 'CarrierOrg', tx.carrierOrg.entityID);
-      Object.keys(tx.carrierOrg).forEach(function (key, index) {
-        obj[key] = tx.carrierOrg[key];
+      return assetRegistry.add(tx.carrierOrg).catch(function (error) {
+        console.log('An error occurred while adding all the assets in the registry: ' + error);
+        throw error;
       });
-      return assetRegistry.addAll([obj]);
     }).catch(function (error) {
-      console.log('An error occurred while saving the CarrierOrg asset');
-      console.log(error);
-      return error;
+      console.log('An error occurred while saving the CarrierOrg asset', error);
+      throw error;
     });
 
 }
@@ -174,18 +146,13 @@ function CreateRecipientOrg(tx) {
   // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.RecipientOrg')
     .then(function (assetRegistry) {
-      var factory = getFactory();
-      var obj = factory.newResource('org.digitalcmr', 'RecipientOrg', tx.recipientOrg.entityID);
-      Object.keys(tx.recipientOrg).forEach(function (key, index) {
-        obj[key] = tx.recipientOrg[key];
-      });
-      return assetRegistry.addAll([obj]).catch(function (error) {
+      return assetRegistry.add(tx.recipientOrg).catch(function (error) {
         console.log('An error occurred while adding all the assets in the registry: ' + error);
-        return error;
+        throw error;
       });
     }).catch(function (error) {
       console.log('An error occurred while saving the RecipientOrg asset: ' + error);
-      return error;
+      throw error;
     });
 
 }
@@ -204,23 +171,13 @@ function CreateVehicles(tx) {
   // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.Vehicle')
     .then(function (assetRegistry) {
-      var factory = getFactory();
-      var vehicleArr = [];
-      for (var i = 0; i < tx.vehicles.length; i++) {
-        var inputObj = tx.vehicles[i];
-        var obj = factory.newResource('org.digitalcmr', 'Vehicle', inputObj.vin);
-        Object.keys(tx.vehicles[i]).forEach(function (key, index) {
-          obj[key] = inputObj[key];
-        });
-        vehicleArr.push(obj);
-      }
-      return assetRegistry.addAll(vehicleArr).catch(function (error) {
+      return assetRegistry.addAll(tx.vehicles).catch(function (error) {
         console.log('An error occurred while addAll the Vehicle assets: ' + error);
-        return error;
+        throw error;
       });
     }).catch(function (error) {
       console.log('An error occurred while saving the Vehicle assets: ' + error);
-      return error;
+      throw error;
     });
 
 }

@@ -25,7 +25,7 @@ export class IdentityManager {
   public async addEntity(entity: Entity): Promise<any> {
     this.logger.info('Adding entity: ', entity.participant[entity.participant.participantID]);
 
-    await this.businessNetworkHandler.connectAsAdmin(IdentityManager.adminIdentity, IdentityManager.connectionProfile);
+    await this.businessNetworkHandler.connect(IdentityManager.adminIdentity, IdentityManager.connectionProfile);
     try {
       await this.addParticipant(entity.participant);
       this.logger.debug('Participant ' + entity.participant.$class + ' successfully added to Blockchain');

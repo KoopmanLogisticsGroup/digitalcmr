@@ -54,6 +54,6 @@ export class TransactionHandler {
 
     await this.businessNetworkHandler.disconnect();
 
-    return result;
+    return result.length > 1 ? result : result[0];
   }
 }

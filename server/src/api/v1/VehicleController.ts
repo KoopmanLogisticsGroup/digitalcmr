@@ -6,62 +6,48 @@ import {
   Req,
   UseAfter,
   UseInterceptor,
-  Param,
-  UseBefore,
-  Put
+  Param, UseBefore
 } from 'routing-controllers';
-import {Container} from 'typedi';
-import {ApiFactory} from '../../utils';
-import {ECMR, ECMRApi, QueryApi, Vehicle} from '../../sdk/api';
-import {ErrorHandlerMiddleware, ComposerInterceptor, TransactionHandler} from '../../middleware';
+import {ErrorHandlerMiddleware, ComposerInterceptor, UserAuthenticatorMiddleware} from '../../middleware';
 import {JSONWebToken} from '../../utils/authentication/JSONWebToken';
+import {TransactionHandler} from '../../blockchain/TransactionHandler';
+import {Identity} from '../../domain/Identity';
+import {Config} from '../../config/index';
+import {VehicleTransactor} from '../../domain/vehicles/VehicleTransactor';
 
 @JsonController('/vehicle')
+@UseBefore(UserAuthenticatorMiddleware)
 @UseInterceptor(ComposerInterceptor)
 @UseAfter(ErrorHandlerMiddleware)
 export class ECMRController {
-  private queryApi: QueryApi;
-  private api: ECMRApi;
-
-  public constructor(private _transactor: TransactionHandler) {
-    const apiFactory = Container.get(ApiFactory);
-    this.queryApi    = apiFactory.get(QueryApi);
-    this.api         = apiFactory.get(ECMRApi);
-    this._transactor = new TransactionHandler();
+  public constructor(private transactionHandler: TransactionHandler) {
   }
 
   @Get('/')
   public async getAllVehicles(@Req() request: any): Promise<any> {
-    let enrollmentID = new JSONWebToken(request).getUserID();
-    let secret       = new JSONWebToken(request).getSecret();
+    const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this._transactor.executeQuery('getAllVehicles', enrollmentID, secret);
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getAllVehicles');
   }
 
   @Get('/vin/:vin/')
   public async getVehicleByVin(@Param('vin') vin: string, @Req() request: any): Promise<any> {
-    let enrollmentID = new JSONWebToken(request).getUserID();
-    let secret       = new JSONWebToken(request).getSecret();
+    const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this._transactor.executeQuery('getVehicleByVin', enrollmentID, secret, {vin: vin});
-
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getVehicleByVin', {vin: vin});
   }
 
   @Get('/plateNumber/:plateNumber/')
   public async getVehicleByPlateNumber(@Param('plateNumber') plateNumber: string, @Req() request: any): Promise<any> {
-    let enrollmentID = new JSONWebToken(request).getUserID();
-    let secret       = new JSONWebToken(request).getSecret();
+    const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this._transactor.executeQuery('getVehicleByPlateNumber', enrollmentID, secret, {plateNumber: plateNumber});
-
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getVehicleByPlateNumber', {plateNumber: plateNumber});
   }
 
   @Post('/')
-  public async createVehicles(@Body() vehicles: Vehicle[], @Req() request: any): Promise<any> {
-    let enrollmentID = new JSONWebToken(request).getUserID();
-    let secret       = new JSONWebToken(request).getSecret();
+  public async createVehicles(@Body() vehicles: any[], @Req() request: any): Promise<any> {
+    const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this._transactor.put(vehicles, enrollmentID, secret, (factory, data) => this._transactor.createVehicles(factory, data, enrollmentID));
-
+    return await this.transactionHandler.create(identity, Config.settings.composer.profile, Config.settings.composer.namespace, vehicles, new VehicleTransactor());
   }
 }

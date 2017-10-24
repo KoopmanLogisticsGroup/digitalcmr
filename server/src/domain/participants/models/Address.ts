@@ -8,7 +8,6 @@ export class Address {
   public country: string;
   public latitude: string;
   public longitude: string;
-  public id: string;
 
   public constructor(address: any) {
     this.$class      = address.$class;
@@ -20,6 +19,5 @@ export class Address {
     this.country     = address.country;
     this.latitude    = address.latitude;
     this.longitude   = address.longitude;
-    this.id          = address.id;
   }
 }

@@ -7,177 +7,135 @@ import {
   UseAfter,
   UseInterceptor,
   Param,
-  UseBefore,
-  Put
+  UseBefore
 } from 'routing-controllers';
-import {Container} from 'typedi';
-import {ApiFactory} from '../../utils';
-import {LegalOwnerOrg, CompoundOrg, RecipientOrg, CarrierOrg, QueryApi} from '../../sdk/api';
-import {ErrorHandlerMiddleware, ComposerInterceptor, TransactionHandler} from '../../middleware';
+import {ErrorHandlerMiddleware, ComposerInterceptor, UserAuthenticatorMiddleware} from '../../middleware';
 import {JSONWebToken} from '../../utils/authentication/JSONWebToken';
+import {TransactionHandler} from '../../blockchain/TransactionHandler';
+import {Identity} from '../../domain/Identity';
+import {Config} from '../../config/index';
+import {LegalOwnerTransactor} from '../../domain/orgs/legalOwner/LegalOwnerTransactor';
+import {CompoundTransactor} from '../../domain/orgs/compound/CompoundTransactor';
+import {CarrierTransactor} from '../../domain/orgs/carrier/CarrierTransactor';
+import {RecipientTransactor} from '../../domain/orgs/recipient/RecipientTransactor';
 
 @JsonController('/organization')
+@UseBefore(UserAuthenticatorMiddleware)
 @UseInterceptor(ComposerInterceptor)
 @UseAfter(ErrorHandlerMiddleware)
 export class OrganizationController {
-  private queryApi: QueryApi;
-  private assetRegistry: string;
-
-  public constructor(private _transactor: TransactionHandler) {
-    const apiFactory   = Container.get(ApiFactory);
-    this.queryApi      = apiFactory.get(QueryApi);
-    this.assetRegistry = 'Entity';
-    this._transactor   = new TransactionHandler();
+  public constructor(private transactionHandler: TransactionHandler) {
   }
 
   @Get('/legalowner/')
   public async getAllLegalOwnerOrgs(@Req() request: any): Promise<any> {
-    let enrollmentID = new JSONWebToken(request).getUserID();
-    let secret       = new JSONWebToken(request).getSecret();
+    const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this._transactor.executeQuery('getAllLegalOwnerOrgs', enrollmentID, secret);
-
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getAllLegalOwnerOrgs');
   }
 
   @Get('/legalowner/entityID/:entityID')
   public async getLegalOwnerOrgByEntityID(@Param('entityID') entityID: string, @Req() request: any): Promise<any> {
-    let enrollmentID = new JSONWebToken(request).getUserID();
-    let secret       = new JSONWebToken(request).getSecret();
+    const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this._transactor.executeQuery('getLegalOwnerOrgByEntityID', enrollmentID, secret, {entityID: entityID});
-
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getLegalOwnerOrgByEntityID', {entityID: entityID});
   }
 
   @Get('/legalowner/name/:name')
   public async getLegalOwnerOrgByName(@Param('name') name: string, @Req() request: any): Promise<any> {
-    let enrollmentID = new JSONWebToken(request).getUserID();
-    let secret       = new JSONWebToken(request).getSecret();
+    const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this._transactor.executeQuery('getLegalOwnerOrgByName', enrollmentID, secret, {name: name});
-
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getLegalOwnerOrgByName', {name: name});
   }
 
   @Get('/compound/')
   public async getAllCompoundOrgs(@Req() request: any): Promise<any> {
-    let enrollmentID = new JSONWebToken(request).getUserID();
-    let secret       = new JSONWebToken(request).getSecret();
+    const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this._transactor.executeQuery('getAllCompoundOrgs', enrollmentID, secret);
-
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getAllCompoundOrgs');
   }
 
   @Get('/compound/entityID/:entityID')
   public async getCompoundOrgByEntityID(@Param('entityID') entityID: string, @Req() request: any): Promise<any> {
-    let enrollmentID = new JSONWebToken(request).getUserID();
-    let secret       = new JSONWebToken(request).getSecret();
+    const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this._transactor.executeQuery('getCompoundOrgByEntityID', enrollmentID, secret, {entityID: entityID});
-
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getCompoundOrgByEntityID', {entityID: entityID});
   }
 
   @Get('/compound/name/:name')
   public async getCompoundOrgByName(@Param('name') name: string, @Req() request: any): Promise<any> {
-    let enrollmentID = new JSONWebToken(request).getUserID();
-    let secret       = new JSONWebToken(request).getSecret();
+    const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this._transactor.executeQuery('getCompoundOrgByName', enrollmentID, secret, {name: name});
-
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getCompoundOrgByName', {name: name});
   }
 
   @Get('/carrier/')
   public async getAllCarrierOrgs(@Req() request: any): Promise<any> {
-    let enrollmentID = new JSONWebToken(request).getUserID();
-    let secret       = new JSONWebToken(request).getSecret();
+    const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this._transactor.executeQuery('getAllCarrierOrgs', enrollmentID, secret);
-
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getAllCarrierOrgs');
   }
 
   @Get('/carrier/entityID/:entityID')
   public async getCarrierOrgByEntityID(@Param('entityID') entityID: string, @Req() request: any): Promise<any> {
-    let enrollmentID = new JSONWebToken(request).getUserID();
-    let secret       = new JSONWebToken(request).getSecret();
+    const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this._transactor.executeQuery('getCarrierOrgByEntityID', enrollmentID, secret, {entityID: entityID});
-
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getCarrierOrgByEntityID', {entityID: entityID});
   }
 
   @Get('/carrier/name/:name')
   public async getCarrierOrgByName(@Param('name') name: string, @Req() request: any): Promise<any> {
-    let enrollmentID = new JSONWebToken(request).getUserID();
-    let secret       = new JSONWebToken(request).getSecret();
+    const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this._transactor.executeQuery('getCarrierOrgByName', enrollmentID, secret, {name: name});
-
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getCarrierOrgByName', {name: name});
   }
 
   @Get('/recipient/')
   public async getAllRecipientOrgs(@Req() request: any): Promise<any> {
-    let enrollmentID = new JSONWebToken(request).getUserID();
-    let secret       = new JSONWebToken(request).getSecret();
+    const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this._transactor.executeQuery('getAllRecipientOrgs', enrollmentID, secret);
-
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getAllRecipientOrgs');
   }
 
   @Get('/recipient/entityID/:entityID')
   public async getRecipientOrgByEntityID(@Param('entityID') entityID: string, @Req() request: any): Promise<any> {
-    let enrollmentID = new JSONWebToken(request).getUserID();
-    let secret       = new JSONWebToken(request).getSecret();
+    const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this._transactor.executeQuery('getRecipientOrgByEntityID', enrollmentID, secret, {entityID: entityID});
-
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getRecipientOrgByEntityID', {entityID: entityID});
   }
 
   @Get('/recipient/name/:name')
   public async getRecipientOrgByName(@Param('name') name: string, @Req() request: any): Promise<any> {
-    let enrollmentID = new JSONWebToken(request).getUserID();
-    let secret       = new JSONWebToken(request).getSecret();
+    const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this._transactor.executeQuery('getRecipientOrgByName', enrollmentID, secret, {name: name});
-
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getRecipientOrgByName', {name: name});
   }
 
   @Post('/legalowner/')
-  public async createLegalOwnerOrg(@Body() legalOwnerOrg: LegalOwnerOrg, @Req() request: any): Promise<any> {
-    let enrollmentID = new JSONWebToken(request).getUserID();
-    let secret       = new JSONWebToken(request).getSecret();
+  public async createLegalOwnerOrg(@Body() legalOwnerOrg: any, @Req() request: any): Promise<any> {
+    const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this._transactor.put(legalOwnerOrg, enrollmentID, secret, (factory, data) => this._transactor.createLegalOwnerOrg(factory, data, enrollmentID));
+    return await this.transactionHandler.create(identity, Config.settings.composer.profile, Config.settings.composer.namespace, legalOwnerOrg, new LegalOwnerTransactor());
   }
 
   @Post('/compound/')
-  public async createCompoundOrg(@Body() compoundOrg: CompoundOrg, @Req() request: any): Promise<any> {
-    let enrollmentID = new JSONWebToken(request).getUserID();
-    let secret       = new JSONWebToken(request).getSecret();
+  public async createCompoundOrg(@Body() compoundOrg: any, @Req() request: any): Promise<any> {
+    const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this._transactor.put(compoundOrg, enrollmentID, secret, (factory, data) => this._transactor.createCompoundOrg(factory, data, enrollmentID));
-
+    return await this.transactionHandler.create(identity, Config.settings.composer.profile, Config.settings.composer.namespace, compoundOrg, new CompoundTransactor());
   }
 
   @Post('/carrier/')
-  public async createCarrierOrg(@Body() carrierOrg: CarrierOrg, @Req() request: any): Promise<any> {
-    let enrollmentID = new JSONWebToken(request).getUserID();
-    let secret       = new JSONWebToken(request).getSecret();
+  public async createCarrierOrg(@Body() carrierOrg: any, @Req() request: any): Promise<any> {
+    const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this._transactor.put(carrierOrg, enrollmentID, secret, (factory, data) => this._transactor.createCarrierOrg(factory, data, enrollmentID));
-
+    return await this.transactionHandler.create(identity, Config.settings.composer.profile, Config.settings.composer.namespace, carrierOrg, new CarrierTransactor());
   }
 
   @Post('/recipient/')
-  public async createRecipientOrg(@Body() recipientOrg: RecipientOrg, @Req() request: any): Promise<any> {
-    let enrollmentID = new JSONWebToken(request).getUserID();
-    let secret       = new JSONWebToken(request).getSecret();
+  public async createRecipientOrg(@Body() recipientOrg: any, @Req() request: any): Promise<any> {
+    const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this._transactor.put(recipientOrg, enrollmentID, secret, (factory, data) => this._transactor.createRecipientOrg(factory, data, enrollmentID));
-
+    return await this.transactionHandler.create(identity, Config.settings.composer.profile, Config.settings.composer.namespace, recipientOrg, new RecipientTransactor());
   }
-
-  // @Put('/')
-  // public async update(@Body() ecmr: ECMR, @Req() request: any): Promise<any> {
-  //   let enrollmentID = new JSONWebToken(request).getUserID();
-  //   let secret       = new JSONWebToken(request).getSecret();
-  //   const ip         = request.ip;
-  //   return this._transactor.put(ecmr, enrollmentID, secret, (factory, data) => this._transactor.updateECMR(factory, data, enrollmentID, ip));
-  // }
 }

@@ -21,13 +21,16 @@ export class EcmrService {
   public getECMRByID(ecmrID: string) {
     return this._http
       .get(this.actionUrl + 'ecmrID/' + ecmrID, {headers: this.headers})
-      .map(res => res.json());
+      .map(res => res.json())
+      .catch(this.handleErrorObservable);
+
   }
 
   public getAllEcmrs() {
     return this._http
       .get(this.actionUrl, {headers: this.headers})
-      .map(res => res.json());
+      .map(res => res.json())
+      .catch(this.handleErrorObservable);
   }
 
   public updateEcmr(ecmr: any) {

@@ -5,7 +5,7 @@ import * as express from 'express';
 import * as cors from 'cors';
 import * as bodyParser from 'body-parser';
 import {LoggerInstance} from 'winston';
-import {ApiFactory, LoggerFactory} from './utils';
+import {LoggerFactory} from './utils';
 import {Config} from './config';
 import * as debug from 'debug';
 import {IDebugger} from 'debug';
@@ -31,7 +31,6 @@ class App {
 
     this.debug('dependency injection');
     useContainer(Container);
-    Container.set(ApiFactory, new ApiFactory(Config.settings.composer.url));
     Container.set(LoggerFactory, this.loggerFactory);
     Container.set(DataService, new DataService());
     Container.set(BusinessNetworkHandler, new BusinessNetworkHandler(new ComposerClient.BusinessNetworkConnection()));

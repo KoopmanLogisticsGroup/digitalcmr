@@ -6,7 +6,6 @@
         "$class":        "CompoundAdmin",
         "org":           "CompoundOrg#amsterdamcompound",
         "userID":        "willem@amsterdamcompound.org",
-        "password":      "passw0rd",
         "userName":      "willem",
         "firstName":     "willem",
         "lastName":      "compy",
@@ -19,8 +18,7 @@
           "zipCode":     "9867UG",
           "country":     "Netherlands",
           "latitude":    52.2443,
-          "longitude":   65.2323,
-          "id":          "id"
+          "longitude":   65.2323
         }
       },
       "identity":    {
@@ -40,7 +38,6 @@
         "$class":        "RecipientMember",
         "org":           "RecipientOrg#cardealer",
         "userID":        "rob@cardealer.org",
-        "password":      "passw0rd",
         "userName":      "rob",
         "firstName":     "Rob",
         "lastName":      "Carman",
@@ -53,8 +50,7 @@
           "zipCode":     "9442KO",
           "country":     "Netherlands",
           "latitude":    51.4443,
-          "longitude":   60.3323,
-          "id":          "id"
+          "longitude":   60.3323
         }
       },
       "identity":    {
@@ -74,7 +70,6 @@
         "$class":        "LegalOwnerAdmin",
         "org":           "LegalOwnerOrg#leaseplan",
         "userID":        "lapo@leaseplan.org",
-        "password":      "passw0rd",
         "userName":      "lapo",
         "firstName":     "lapo",
         "lastName":      "kelkann",
@@ -87,8 +82,7 @@
           "zipCode":     "9867RF",
           "country":     "Netherlands",
           "latitude":    57.2443,
-          "longitude":   62.2323,
-          "id":          "id"
+          "longitude":   62.2323
         }
       },
       "identity":    {
@@ -108,7 +102,6 @@
         "$class":        "CarrierMember",
         "org":           "CarrierOrg#koopman",
         "userID":        "harry@koopman.org",
-        "password":      "passw0rd",
         "userName":      "harry",
         "firstName":     "Harry",
         "lastName":      "Koppy",
@@ -121,8 +114,7 @@
           "zipCode":     "9712HX",
           "country":     "Netherlands",
           "latitude":    53.4443,
-          "longitude":   62.3323,
-          "id":          "id"
+          "longitude":   62.3323
         }
       },
       "identity":    {
@@ -142,7 +134,6 @@
         "$class":        "CarrierAdmin",
         "org":           "CarrierOrg#koopman",
         "userID":        "goslin@koopman.org",
-        "password":      "passw0rd",
         "userName":      "goslin",
         "firstName":     "Goslin",
         "lastName":      "Jackson",
@@ -155,8 +146,7 @@
           "zipCode":     "9712HX",
           "country":     "Netherlands",
           "latitude":    51.6443,
-          "longitude":   64.3323,
-          "id":          "id"
+          "longitude":   64.3323
         }
       },
       "identity":    {
@@ -176,7 +166,6 @@
         "$class":        "RecipientAdmin",
         "org":           "RecipientOrg#cardealer",
         "userID":        "clara@cardealer.org",
-        "password":      "passw0rd",
         "userName":      "clara",
         "firstName":     "Clara",
         "lastName":      "Petacci",
@@ -189,8 +178,7 @@
           "zipCode":     "94132OK",
           "country":     "Netherlands",
           "latitude":    51.84443,
-          "longitude":   60.43323,
-          "id":          "id"
+          "longitude":   60.43323
         }
       },
       "identity":    {

@@ -1,7 +1,6 @@
 import {Config} from '../config';
 import {BusinessNetworkConnection, ParticipantRegisty} from 'composer-client';
 import {BusinessNetworkDefinition} from 'composer-common';
-import {AdminConnection} from 'composer-admin';
 import {Identity} from '../domain/Identity';
 
 export class BusinessNetworkHandler {
@@ -13,17 +12,6 @@ export class BusinessNetworkHandler {
   public async connect(identity: Identity, connectionProfile: string): Promise<void> {
     try {
       this.businessNetworkDefinition = await this.businessNetworkConnection.connect(
-        connectionProfile, Config.settings.composer.network, identity.userID, identity.userSecret
-      );
-    } catch (error) {
-      console.log('Failed to connect. Error: ', error);
-    }
-  }
-
-  public async connectAsAdmin(identity: Identity, connectionProfile: string): Promise<void> {
-    try {
-      const adminConnection: AdminConnection = new AdminConnection();
-      this.businessNetworkDefinition         = await adminConnection.connect(
         connectionProfile, Config.settings.composer.network, identity.userID, identity.userSecret
       );
     } catch (error) {
@@ -44,7 +32,7 @@ export class BusinessNetworkHandler {
   }
 
   public getFactory(): Promise<any> {
-    return this.businessNetworkDefinition.getFactory();
+    return this.businessNetworkConnection.getBusinessNetwork().getFactory();
   }
 
   public submitTransaction(transaction: any): Promise<any> {

@@ -8,14 +8,25 @@ export class EcmrTransactor implements TransactionCreator {
   public constructor(private businessNetworkHandler: BusinessNetworkHandler) {
   }
 
-  public create(factory: Factory, namespace: string, data: any, enrollmentID: string, ip?: string): any {
-    const transaction = factory.newTransaction(namespace, 'CreateECMR');
-    return EcmrBuilder.buildECMR(factory, namespace, data, transaction, enrollmentID, ip);
+  public async create(factory: Factory, namespace: string, data: any, enrollmentID: string, ip?: string): Promise<any> {
+    let transaction: any;
+
+    if (Array.isArray(data)) {
+      transaction       = factory.newTransaction(namespace, 'CreateECMRs');
+      transaction.ecmrs = await EcmrBuilder.buildECMRs(factory, namespace, data, enrollmentID, ip);
+    } else {
+      transaction      = factory.newTransaction(namespace, 'CreateECMR');
+      transaction.ecmr = await EcmrBuilder.buildECMR(factory, namespace, data, enrollmentID, ip);
+    }
+
+    return transaction;
   }
 
   public update(factory: Factory, namespace: string, data: any, enrollmentID: string, ip?: any): any {
-    const transaction = factory.newTransaction(namespace, 'UpdateECMR');
-    return EcmrBuilder.buildECMR(factory, namespace, data, transaction, enrollmentID, ip);
+    let transaction  = factory.newTransaction(namespace, 'UpdateECMR');
+    transaction.ecmr = EcmrBuilder.buildECMR(factory, namespace, data, enrollmentID, ip);
+
+    return transaction;
   }
 
   public async getEcmrsByVin(identity: Identity, connectionProfile: string, vin: string): Promise<any> {
