@@ -22,21 +22,17 @@ export class EcmrService {
     return this._http
       .get(this.actionUrl + 'ecmrID/' + ecmrID, {headers: this.headers})
       .map(res => res.json())
-      .catch(this.handleErrorObservable);
-
   }
 
   public getAllEcmrs() {
     return this._http
       .get(this.actionUrl, {headers: this.headers})
       .map(res => res.json())
-      .catch(this.handleErrorObservable);
   }
 
   public updateEcmr(ecmr: any) {
     return this._http.put(this.actionUrl, ecmr, {headers: this.headers})
       .map(res => res.json())
-      .catch(this.handleErrorObservable);
   }
 
   private handleErrorObservable(error: Response | any) {

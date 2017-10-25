@@ -34,11 +34,11 @@ export class TestData {
       await this.addPrivateDataToDB();
     }
 
-    // try {
-    //   await this.addEntities();
-    // } catch (error) {
-    //   this.logger.error('Error adding entities', error);
-    // }
+    try {
+      await this.addEntities();
+    } catch (error) {
+      this.logger.error('Error adding entities', error);
+    }
 
     if (sharedData && Object.keys(sharedData).length > 1) {
       try {

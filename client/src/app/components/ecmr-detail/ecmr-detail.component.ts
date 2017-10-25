@@ -27,6 +27,7 @@ export class EcmrDetailComponent implements OnInit {
       .subscribe(params => {
         this.ecmrID = params['ecmrID'];
         this.ecmrService.getECMRByID(this.ecmrID).subscribe((ecmr: {}) => {
+          console.log(ecmr);
           this.ecmr     = ecmr;
           this.userRole = JSON.parse(localStorage.getItem('currentUser')).user.role;
           switch (this.ecmr.status) {
