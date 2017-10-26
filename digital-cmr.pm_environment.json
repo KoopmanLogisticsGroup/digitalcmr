@@ -1,0 +1,70 @@
+{
+  "id": "d65b837e-63a3-433c-6162-501b964b2d03",
+  "name": "digital-cmr",
+  "values": [
+    {
+      "enabled": true,
+      "key": "localhost",
+      "type": "text",
+      "value": "http://localhost"
+    },
+    {
+      "enabled": true,
+      "key": "clientPort",
+      "type": "text",
+      "value": ":8080"
+    },
+    {
+      "enabled": true,
+      "key": "serverPort",
+      "type": "text",
+      "value": ":3000"
+    },
+    {
+      "enabled": true,
+      "key": "compoundToken",
+      "type": "text",
+      "value": ""
+    },
+    {
+      "enabled": true,
+      "key": "legalOwnerToken",
+      "type": "text",
+      "value": ""
+    },
+    {
+      "enabled": true,
+      "key": "carrierAdminToken",
+      "type": "text",
+      "value": ""
+    },
+    {
+      "enabled": true,
+      "key": "recipientToken",
+      "type": "text",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvYkBjYXJkZWFsZXIub3JnIiwic2FsdCI6IjlhODIwM2VkMTNjNWVjZWFmNDM2YmQxMTc2ZDgxYTMyIiwiaGFzaCI6IjIwNjM2NjdmNTQzNGNlYjlmMTYwOTE0NDc5MjI3NjkwMGM4ZjI2NjdlMWE4NTNmNTBiMmVjZGFiYjEwYjg0MjViMTNmNjdmODhlMjQ2YjU4NmNhYzdiYWQzOGExNjY0ODk0MzI3YzFlOTUwNzg5NmM4NDIxY2QzY2EwY2UxNTc1IiwiZmlyc3ROYW1lIjoiUm9iIiwibGFzdE5hbWUiOiJDYXJtYW4iLCJyb2xlIjoiUmVjaXBpZW50TWVtYmVyIiwiaWRlbnRpdHkiOnsidXNlcklEIjoicm9iQGNhcmRlYWxlci5vcmciLCJ1c2VyU2VjcmV0Ijoic3RUeE1vSmVNQW10In0sImlhdCI6MTUwOTAyMzY1OSwiZXhwIjoxNTA5MTEwMDU5fQ.05E2cOprTxOpq-Hz6qx-qHB0bdpVlv-hTGVN_ENM0dQ"
+    },
+    {
+      "enabled": true,
+      "key": "ecmrID",
+      "type": "text",
+      "value": "A1234567890"
+    },
+    {
+      "enabled": true,
+      "key": "vinNumber",
+      "type": "text",
+      "value": "103726339N"
+    },
+    {
+      "enabled": true,
+      "key": "plateNumber",
+      "type": "text",
+      "value": "JV198RX"
+    }
+  ],
+  "timestamp": 1509023666138,
+  "_postman_variable_scope": "environment",
+  "_postman_exported_at": "2017-10-26T13:21:53.745Z",
+  "_postman_exported_using": "Postman/5.3.1"
+}
