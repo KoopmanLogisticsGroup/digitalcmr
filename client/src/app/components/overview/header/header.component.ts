@@ -9,7 +9,6 @@ import {NavbarService} from '../../../services/navbar.service';
   styleUrls:   ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  public currentView: string;
   public queryData: string;
 
   public constructor(private searchService: SearchService,
@@ -25,11 +24,7 @@ export class HeaderComponent implements OnInit {
   }
 
   public getUser() {
-    if (this.authenticationService.isAuthenticated()) {
-      const user = JSON.parse(localStorage.getItem('currentUser')).user.firstName;
-      return user;
-    }
-    return null;
+    return this.authenticationService.isAuthenticated() ? JSON.parse(localStorage.getItem('currentUser')).user.firstName : '';
   }
 
   public logout() {
@@ -37,7 +32,7 @@ export class HeaderComponent implements OnInit {
     this.authenticationService.logout();
   }
 
-  public setOverview(): void {
-    this.currentView = 'overview';
+  public showUserInfo(user): any {
+    return this.getUser() === user;
   }
 }

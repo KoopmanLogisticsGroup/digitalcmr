@@ -12,6 +12,20 @@ import * as GeoLib from 'geolib';
 export class SignOffModalComponent implements OnInit {
 
   @Input() ecmr: any;
+  public EcmrStatus = {
+    CREATED:             'CREATED',
+    LOADED:              'LOADED',
+    IN_TRANSIT:          'IN_TRANSIT',
+    DELIVERED:           'DELIVERED',
+    CONFIRMED_DELIVERED: 'CONFIRMED_DELIVERED'
+  };
+
+  public User = {
+    CompoundAdmin:   'CompoundAdmin',
+    CarrierMember:   'CarrierMember',
+    RecipientMember: 'RecipientMember',
+    LegalOwnerAdmin: 'LegalOwnerAdmin'
+  };
 
   public constructor(private ecmrService: EcmrService,
                      private _authenticationService: AuthenticationService) {
@@ -39,18 +53,12 @@ export class SignOffModalComponent implements OnInit {
     });
   }
 
-  public userRole(): string {
-    if (this._authenticationService.isAuthenticated()) {
-      const userRole = JSON.parse(localStorage.getItem('currentUser')).user.role;
-      return userRole;
-    }
-    return null;
+  public getUserRole(): string {
+    return this._authenticationService.isAuthenticated() ? JSON.parse(localStorage.getItem('currentUser')).user.role : '';
   }
 
   private simulateCoordinates() {
-
-    switch (this.userRole()) {
-
+    switch (this.getUserRole()) {
       case 'CompoundAdmin': {
         const start                           = {
           latitude:  this.ecmr.loading.address.latitude,
@@ -127,6 +135,8 @@ export class SignOffModalComponent implements OnInit {
 
     }
   }
+
+  public checkUser(activeUser, ecmrStatus): boolean {
+    return this.getUserRole() === activeUser && (this.ecmr ? this.ecmr.status === ecmrStatus : false);
+  }
 }
-
-

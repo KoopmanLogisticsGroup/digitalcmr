@@ -1,34 +1,37 @@
 <div id="modal-container" class="ui container">
-  <div id="signoff-modal" class="ui modal">
-    <i class="close icon" (click)="close()"></i>
-    <div class="header">SIGN OFF</div>
-    <div class="content">
-      <p>You are about to sign off the eCMR</p>
-      <form class="ui form">
-        <div class="field">
-          <label>General Remark</label>
-          <div *ngIf="userRole() === 'CompoundAdmin' && ecmr?.status === 'CREATED'">
-          <textarea *ngIf="ecmr" name="generalRemarks" [(ngModel)]="ecmr.compoundSignature.generalRemark.comments"
-                    placeholder="Enter your general remarks here..." maxlength="136"></textarea>
-          </div>
-          <div *ngIf="userRole() === 'CarrierMember' && ecmr?.status === 'LOADED'">
-          <textarea *ngIf="ecmr" name="generalRemarks" [(ngModel)]="ecmr.carrierLoadingSignature.generalRemark.comments"
-                    placeholder="Enter your general remarks here..." maxlength="136"></textarea>
-          </div>
-          <div *ngIf="userRole() === 'CarrierMember' && ecmr?.status === 'IN_TRANSIT'">
-          <textarea *ngIf="ecmr" name="generalRemarks"
-                    [(ngModel)]="ecmr.carrierDeliverySignature.generalRemark.comments"
-                    placeholder="Enter your general remarks here..." maxlength="136"></textarea>
-          </div>
-          <div *ngIf="userRole() === 'RecipientMember' && ecmr?.status === 'DELIVERED'">
-          <textarea *ngIf="ecmr" name="generalRemarks" [(ngModel)]="ecmr.recipientSignature.generalRemark.comments"
-                    placeholder="Enter your general remarks here..." maxlength="136"></textarea>
-          </div>
+    <div id="signoff-modal" class="ui modal">
+        <i class="close icon" (click)="close()"></i>
+        <div class="header">SIGN OFF</div>
+        <div class="content">
+            <p>You are about to sign off the eCMR</p>
+            <form class="ui form">
+                <div class="field">
+                    <label>General Remark</label>
+                    <div *ngIf="checkUser(User.CompoundAdmin, EcmrStatus.CREATED)">
+                        <textarea *ngIf="ecmr" name="generalRemarks"
+                                  [(ngModel)]="ecmr.compoundSignature.generalRemark.comments"
+                                  placeholder="Enter your general remarks here..." maxlength="136"></textarea>
+                    </div>
+                    <div *ngIf="checkUser(User.CarrierMember, EcmrStatus.LOADED)">
+                        <textarea *ngIf="ecmr" name="generalRemarks"
+                                  [(ngModel)]="ecmr.carrierLoadingSignature.generalRemark.comments"
+                                  placeholder="Enter your general remarks here..." maxlength="136"></textarea>
+                    </div>
+                    <div *ngIf="checkUser(User.CarrierMember, EcmrStatus.IN_TRANSIT)">
+                        <textarea *ngIf="ecmr" name="generalRemarks"
+                                  [(ngModel)]="ecmr.carrierDeliverySignature.generalRemark.comments"
+                                  placeholder="Enter your general remarks here..." maxlength="136"></textarea>
+                    </div>
+                    <div *ngIf="checkUser(User.RecipientMember, EcmrStatus.DELIVERED)">
+                        <textarea *ngIf="ecmr" name="generalRemarks"
+                                  [(ngModel)]="ecmr.recipientSignature.generalRemark.comments"
+                                  placeholder="Enter your general remarks here..." maxlength="136"></textarea>
+                    </div>
+                </div>
+                <button id="submitButton" class="circular ui float right button submitButton" (click)="onSubmit()"
+                        type="submit">CONFIRM
+                </button>
+            </form>
         </div>
-        <button id="submitButton" class="circular ui float right button submitButton" (click)="onSubmit()"
-                type="submit">CONFIRM
-        </button>
-      </form>
     </div>
-  </div>
 </div>

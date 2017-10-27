@@ -1,33 +1,33 @@
 <div class="ui container">
-  <div class="ui middle aligned login-box login-top-margin">
-    <p class="login-text-label">Login</p>
-    <div class="label">
-      <br>
-      <br>
+    <div class="ui middle aligned login-box login-top-margin">
+        <p class="login-text-label">Login</p>
+        <div class="label">
+            <br>
+            <br>
+        </div>
+        <br>
+        <br>
+        <div class="ui left icon input width-scale">
+            <input type="text" placeholder="Username" [(ngModel)]="username">
+            <img class="icon-username" src="../../../assets/icons/IconUsername.svg"/>
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class="ui left icon input width-scale">
+            <input type="password" placeholder="Password" [(ngModel)]="password" (keypress)="cleanError()">
+            <img class="icon-password" src="../../../assets/icons/icon-password.svg"/>
+        </div>
+        <br>
+        <button class="circular ui button login-label" (click)="login(username, password)">Login</button>
+        <div *ngIf="loading" class="ui active inverted dimmer">
+            <div class="ui text loader">Loading</div>
+        </div>
+        <div *ngIf="error" class="ui negative message">
+            <div class="header">
+                Oops! Something went wrong
+            </div>
+            <p>Username or password are not valid</p>
+        </div>
     </div>
-    <br>
-    <br>
-    <div class="ui left icon input width-scale">
-      <input type="text" placeholder="Username" [(ngModel)]="username">
-      <img class="icon-username" src="../../../assets/icons/IconUsername.svg"/>
-    </div>
-    <br>
-    <br>
-    <br>
-    <div class="ui left icon input width-scale">
-      <input type="password" placeholder="Password" [(ngModel)]="password" (keypress)="cleanError()">
-      <img class="icon-password" src="../../../assets/icons/icon-password.svg"/>
-    </div>
-    <br>
-    <button class="circular ui button login-label" (click)="login(username, password)">Login</button>
-    <div *ngIf="loading" class="ui active inverted dimmer">
-      <div class="ui text loader">Loading</div>
-    </div>
-    <div *ngIf="error" class="ui negative message">
-      <div class="header">
-        Oops! Something went wrong
-      </div>
-      <p>Username or password are not valid</p>
-    </div>
-  </div>
 </div>

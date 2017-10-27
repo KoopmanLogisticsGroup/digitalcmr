@@ -14,6 +14,20 @@ export class GoodsComponent implements OnInit {
   @Input() public ecmr: any;
   @Input() public selectedColumnIs: any;
   @Input() public selectedColumns: any;
+  public EcmrStatus = {
+    CREATED:             'CREATED',
+    LOADED:              'LOADED',
+    IN_TRANSIT:          'IN_TRANSIT',
+    DELIVERED:           'DELIVERED',
+    CONFIRMED_DELIVERED: 'CONFIRMED_DELIVERED'
+  };
+
+  public User = {
+    CompoundAdmin:   'CompoundAdmin',
+    CarrierMember:   'CarrierMember',
+    RecipientMember: 'RecipientMember',
+    LegalOwnerAdmin: 'LegalOwnerAdmin'
+  };
 
   public constructor(private _authenticationService: AuthenticationService) {
   }
@@ -37,22 +51,18 @@ export class GoodsComponent implements OnInit {
   public ngOnInit() {
   }
 
-  public userRole(): string {
-    if (this._authenticationService.isAuthenticated()) {
-      const userRole = JSON.parse(localStorage.getItem('currentUser')).user.role;
-      return userRole;
-    }
-    return null;
+  public getUserRole(): string {
+    return this._authenticationService.isAuthenticated() ? JSON.parse(localStorage.getItem('currentUser')).user.role : '';
   }
 
-  public enableButton() {
-    if (this.ecmr && this.ecmr.status === 'CREATED' && this.userRole() === 'CompoundAdmin') {
+  public enableButton(): boolean {
+    if (this.ecmr && this.ecmr.status === this.EcmrStatus.CREATED && this.getUserRole() === this.User.CompoundAdmin) {
       return true;
-    } else if (this.ecmr && this.ecmr.status === 'LOADED' && this.userRole() === 'CarrierMember') {
+    } else if (this.ecmr && this.ecmr.status === this.EcmrStatus.LOADED && this.getUserRole() === this.User.CarrierMember) {
       return true;
-    } else if (this.ecmr && this.ecmr.status === 'IN_TRANSIT' && this.userRole() === 'CarrierMember') {
+    } else if (this.ecmr && this.ecmr.status === this.EcmrStatus.IN_TRANSIT && this.getUserRole() === this.User.CarrierMember) {
       return true;
-    } else if (this.ecmr && this.ecmr.status === 'DELIVERED' && this.userRole() === 'RecipientMember') {
+    } else if (this.ecmr && this.ecmr.status === this.EcmrStatus.DELIVERED && this.getUserRole() === this.User.RecipientMember) {
       return true;
     }
   }
