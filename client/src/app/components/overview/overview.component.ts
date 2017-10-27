@@ -3,6 +3,7 @@ import {EcmrService} from '../../services/ecmr.service';
 import {AuthenticationService} from '../../services/authentication.service';
 import {SearchService} from '../../services/search.service';
 import {NavbarService} from '../../services/navbar.service';
+import {EcmrInterface} from '../../interfaces/ecmr.interface';
 
 @Component({
   selector:    'app-overview',
@@ -10,28 +11,30 @@ import {NavbarService} from '../../services/navbar.service';
   styleUrls:   ['./overview.component.scss'],
 })
 export class OverviewComponent implements OnInit {
-  public currentView = 'OPEN';
+  @Input() public ecmr: EcmrInterface;
 
-  @Input() public ecmr: any;
-
-  public searchBarData: any = '';
-  private ecmrs: any;
-  public ecmrsFiltered: any;
-  public filterEcmr: any    = 0;
+  public currentView: string;
+  public searchBarData: string;
+  public filterEcmr: number;
+  private ecmrs: EcmrInterface[];
+  public ecmrsFiltered: EcmrInterface[];
 
   public constructor(private ecmrService: EcmrService,
                      private searchService: SearchService,
                      private _authenticationService: AuthenticationService,
                      public nav: NavbarService) {
-    this.searchService.searchData$.subscribe((data) => {
+    // this.filterEcmr = 0;
+    this.searchService.searchData$.subscribe((data: string) => {
       this.searchBarData = data;
     });
-    this.searchService.filterEcmr$.subscribe((data) => {
+    this.searchService.filterEcmr$.subscribe((data: number) => {
       this.filterEcmr = data;
     });
+    this.currentView = 'OPEN';
+    this.searchBarData = '';
   }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.nav.show();
     this.ecmrService.getAllEcmrs().subscribe(response => {
       this.ecmrs         = response instanceof Array ? response : [];
@@ -60,7 +63,7 @@ export class OverviewComponent implements OnInit {
     }
   }
 
-  public setCurrentView(view: string): any {
+  public setCurrentView(view: string): void {
     this.currentView   = view;
     this.ecmrsFiltered = this.ecmrs.filter(ecmr => {
       if (this.currentView === 'OPEN' && ecmr.status === 'CREATED') {
@@ -75,13 +78,13 @@ export class OverviewComponent implements OnInit {
 
   public userRole(): string {
     if (this._authenticationService.isAuthenticated()) {
-      const userRole = JSON.parse(localStorage.getItem('currentUser')).user.role;
+      const userRole: string  = JSON.parse(localStorage.getItem('currentUser')).user.role;
       return userRole;
     }
     return null;
   }
 
-  public hasComments(ecmr: any) {
+  public hasComments(ecmr: EcmrInterface): boolean {
     return ecmr && ecmr.goods.filter(good => {
       if ((good.compoundRemark && good.compoundRemark.comments) ||
         (good.carrierLoadingRemark && good.carrierLoadingRemark.comments) ||
@@ -92,7 +95,7 @@ export class OverviewComponent implements OnInit {
     }).length > 0;
   }
 
-  public isDamaged(ecmr: any) {
+  public isDamaged(ecmr: EcmrInterface): boolean {
     return ecmr && ecmr.goods.filter(good => {
       if ((good.compoundRemark && good.compoundRemark.isDamaged) ||
         (good.carrierLoadingRemark && good.carrierLoadingRemark.isDamaged) ||
@@ -103,7 +106,7 @@ export class OverviewComponent implements OnInit {
     }).length > 0;
   }
 
-  public clearSearchBar() {
+  public clearSearchBar(): void {
     this.searchBarData = '';
   }
 }

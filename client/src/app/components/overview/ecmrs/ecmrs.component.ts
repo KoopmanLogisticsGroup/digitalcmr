@@ -11,6 +11,6 @@ export class EcmrsComponent implements OnInit {
   constructor() {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 }

@@ -1,9 +1,11 @@
+import {RemarkInterface} from '../interfaces/remark.interface';
+
 export class CarrierLoadingRemark {
 
   private _comments: string;
   private _isDamaged: boolean;
 
-  public constructor(remark: any) {
+  public constructor(remark: RemarkInterface) {
     this._comments  = remark.comments;
     this._isDamaged = remark.isDamaged;
   }
@@ -24,7 +26,7 @@ export class CarrierLoadingRemark {
     this._isDamaged = value;
   }
 
-  public toJSON(): any {
+  public toJSON(): object {
     return {
       'comments':  this.comments,
       'isDamaged': this.isDamaged

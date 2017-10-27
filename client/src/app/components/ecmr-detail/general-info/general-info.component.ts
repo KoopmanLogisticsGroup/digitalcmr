@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../../services/authentication.service';
+import {EcmrInterface} from '../../../interfaces/ecmr.interface';
 
 @Component({
   selector:    'app-general-info',
@@ -7,17 +8,17 @@ import {AuthenticationService} from '../../../services/authentication.service';
   styleUrls:   ['./general-info.component.scss']
 })
 export class GeneralInfoComponent implements OnInit {
-  @Input() public ecmr: any;
+  @Input() public ecmr: EcmrInterface;
   @Input() public selectedColumns: boolean[];
 
   public selectedImage: boolean[];
-  public selectedColumnIs: any;
+  public selectedColumnIs: number;
 
   public constructor(private _authenticationService: AuthenticationService) {
     this.selectedImage = [false, false, false, false];
   }
 
-  public selectColumn(number) {
+  public selectColumn(number: number): void {
     if (this.ecmr.status === 'DELIVERED' || this.ecmr.status === 'CONFIRMED_DELIVERED') {
       this.selectedImage.forEach((val, index) => {
         if (number === index) {
@@ -49,7 +50,7 @@ export class GeneralInfoComponent implements OnInit {
     return null;
   }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.defineSelectedColumn();
   }
 }

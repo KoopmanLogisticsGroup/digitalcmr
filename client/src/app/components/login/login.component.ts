@@ -9,20 +9,22 @@ import {AuthenticationService} from '../../services/authentication.service';
   styleUrls:   ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  public username = '';
-  public password = '';
-  public loading  = false;
-  public error    = false;
+  public username: string;
+  public password: string;
+  public loading = false;
+  public error = false;
 
   public constructor(private _router: Router,
                      private _authenticationService: AuthenticationService) {
+    this.username = '';
+    this.password = '';
   }
 
   public ngOnInit(): void {
     this._authenticationService.logout();
   }
 
-  public login(username: string, password: string) {
+  public login(username: string, password: string): void {
     this._authenticationService.login(username, password)
       .subscribe(result => {
         if (result) {

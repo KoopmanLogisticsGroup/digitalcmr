@@ -3,7 +3,6 @@ export class Ecmr {
   private _carrierComments: string;
 
   public constructor() {
-    ;
   }
 
   public get carrierComments(): string {
@@ -14,7 +13,7 @@ export class Ecmr {
     this._carrierComments = value;
   }
 
-  public toJSON(): any {
+  public toJSON(): {} {
     return {
       'carrierComments': this.carrierComments,
     };

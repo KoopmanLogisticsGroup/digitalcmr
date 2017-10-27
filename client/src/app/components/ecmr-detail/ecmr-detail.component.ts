@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {EcmrService} from '../../services/ecmr.service';
 import {ActivatedRoute} from '@angular/router';
 import {NavbarService} from '../../services/navbar.service';
+import {EcmrInterface} from '../../interfaces/ecmr.interface';
+import {SignatureInterface} from '../../interfaces/signature.interface';
 
 @Component({
   selector:    'app-ecmr-detail',
@@ -11,8 +13,8 @@ import {NavbarService} from '../../services/navbar.service';
 export class EcmrDetailComponent implements OnInit {
 
   public userRole: string;
-  public ecmrID: any;
-  public ecmr: any;
+  public ecmrID: string;
+  public ecmr: EcmrInterface;
   public selectedColumns: boolean[];
 
   public constructor(private route: ActivatedRoute,
@@ -21,13 +23,12 @@ export class EcmrDetailComponent implements OnInit {
     this.selectedColumns = [false, false, false, false];
   }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.nav.show();
     this.route.params
       .subscribe(params => {
         this.ecmrID = params['ecmrID'];
-        this.ecmrService.getECMRByID(this.ecmrID).subscribe((ecmr: {}) => {
-          console.log(ecmr);
+        this.ecmrService.getECMRByID(this.ecmrID).subscribe((ecmr: EcmrInterface) => {
           this.ecmr     = ecmr;
           this.userRole = JSON.parse(localStorage.getItem('currentUser')).user.role;
           switch (this.ecmr.status) {
@@ -58,24 +59,28 @@ export class EcmrDetailComponent implements OnInit {
           }
           this.instantiateRemarks();
           if (this.userRole === 'CompoundAdmin' && !this.ecmr.compoundSignature) {
-            this.ecmr.compoundSignature                        = {};
-            this.ecmr.compoundSignature.generalRemark          = {};
-            this.ecmr.compoundSignature.generalRemark.comments = '';
+            this.ecmr.compoundSignature = this.imitateSignature();
           } else if (this.userRole === 'CarrierMember' && this.ecmr.status === 'LOADED' && !this.ecmr.carrierDeliverySignature) {
-            this.ecmr.carrierLoadingSignature                        = {};
-            this.ecmr.carrierLoadingSignature.generalRemark          = {};
-            this.ecmr.carrierLoadingSignature.generalRemark.comments = '';
+            this.ecmr.carrierLoadingSignature = this.imitateSignature();
           } else if (this.userRole === 'CarrierMember' && this.ecmr.status === 'IN_TRANSIT' && !this.ecmr.carrierDeliverySignature) {
-            this.ecmr.carrierDeliverySignature                        = {};
-            this.ecmr.carrierDeliverySignature.generalRemark          = {};
-            this.ecmr.carrierDeliverySignature.generalRemark.comments = '';
+            this.ecmr.carrierDeliverySignature = this.imitateSignature();
           } else if (this.userRole === 'RecipientMember' && !this.ecmr.recipientSignature) {
-            this.ecmr.recipientSignature                        = {};
-            this.ecmr.recipientSignature.generalRemark          = {};
-            this.ecmr.recipientSignature.generalRemark.comments = '';
+            this.ecmr.recipientSignature = this.imitateSignature();
           }
         });
       });
+  }
+
+  private imitateSignature(): SignatureInterface {
+    return {
+      certificate: this.userRole,
+      latitude: 0,
+      longitude: 0,
+      generalRemark: {
+        isDamaged: false,
+        comments: ''
+      }
+    };
   }
 
   public instantiateRemarks(): void {

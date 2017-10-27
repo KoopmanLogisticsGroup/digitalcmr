@@ -5,36 +5,31 @@ import {SearchService} from '../services/search.service';
   name: 'filterBy'
 })
 export class FilterByPipe implements PipeTransform {
-
-  public resultFilter: any;
-
-  public constructor(private searchService: SearchService) {
+  public constructor() {
   }
 
-  public transform(array: any[], query: string): any[] {
-    if (!(array && array.length && (typeof query === 'string')) || query === '') {
-      return array;
+  public transform(arrayOfEcmrs: any[], query: string): any[] {
+    if (!(arrayOfEcmrs && arrayOfEcmrs.length && (typeof query === 'string')) || query === '') {
+      return arrayOfEcmrs;
     }
-    query          = query.toLocaleLowerCase();
-    const keys     = Object.keys(array[0]);
+    query = query.toLocaleLowerCase();
+    const ecmrProperties     = Object.keys(arrayOfEcmrs[0]);
     const filtered = new Set;
-    array.forEach(x => {
-      x.goods.filter(y => {
-        if (y.vehicle.vin.toString().toLocaleLowerCase().indexOf(query) !== -1) {
-          filtered.add(x);
-        } else if (y.vehicle.plateNumber.toString().toLocaleLowerCase().indexOf(query) !== -1) {
-          filtered.add(x);
+    arrayOfEcmrs.forEach(emcr => {
+      emcr.goods.filter(good => {
+        if (good.vehicle.vin.toString().toLocaleLowerCase().indexOf(query) !== -1) {
+          filtered.add(emcr);
+        } else if (good.vehicle.plateNumber.toString().toLocaleLowerCase().indexOf(query) !== -1) {
+          filtered.add(emcr);
         }
       });
-      keys.forEach(k => {
-        if (x[k] !== undefined && x[k].toString().toLocaleLowerCase().indexOf(query) !== -1) {
-          filtered.add(x);
+      ecmrProperties.forEach(property => {
+        if (emcr[property] !== undefined && emcr[property].toString().toLocaleLowerCase().indexOf(query) !== -1) {
+          filtered.add(emcr);
         }
       });
     });
-    this.resultFilter = Array.from(filtered);
-    this.resultFilter = this.resultFilter.length;
-    this.searchService.ecmrFilter(this.resultFilter);
+
     return Array.from(filtered);
   }
 }

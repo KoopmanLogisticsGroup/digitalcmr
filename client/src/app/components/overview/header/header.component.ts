@@ -17,22 +17,22 @@ export class HeaderComponent implements OnInit {
                      public nav: NavbarService) {
   }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
   }
 
-  public sendData(data: any) {
+  public sendData(data: {}): void {
     this.searchService.searchData(data);
   }
 
-  public getUser() {
+  public getUser(): string {
     if (this.authenticationService.isAuthenticated()) {
-      const user = JSON.parse(localStorage.getItem('currentUser')).user.firstName;
+      const user: string = JSON.parse(localStorage.getItem('currentUser')).user.firstName;
       return user;
     }
     return null;
   }
 
-  public logout() {
+  public logout(): void {
     location.reload();
     this.authenticationService.logout();
   }

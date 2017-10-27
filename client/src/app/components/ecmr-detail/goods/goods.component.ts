@@ -1,6 +1,7 @@
 import {Component, OnInit, Input, ViewChild} from '@angular/core';
 import {SignOffModalComponent} from '../sign-off-modal/sign-off-modal.component';
 import {AuthenticationService} from '../../../services/authentication.service';
+import {EcmrInterface} from '../../../interfaces/ecmr.interface';
 
 @Component({
   selector:    'app-goods',
@@ -11,9 +12,9 @@ export class GoodsComponent implements OnInit {
 
   @ViewChild(SignOffModalComponent) public signOffModal: SignOffModalComponent;
 
-  @Input() public ecmr: any;
-  @Input() public selectedColumnIs: any;
-  @Input() public selectedColumns: any;
+  @Input() public ecmr: EcmrInterface;
+  @Input() public selectedColumnIs: number;
+  @Input() public selectedColumns: number;
 
   public constructor(private _authenticationService: AuthenticationService) {
   }
@@ -22,7 +23,7 @@ export class GoodsComponent implements OnInit {
     this.signOffModal.open(this.ecmr);
   }
 
-  public selectColumn() {
+  public selectColumn(): number {
     if (this.selectedColumnIs === 0) {
       return 0;
     } else if (this.selectedColumnIs === 1) {
@@ -34,7 +35,7 @@ export class GoodsComponent implements OnInit {
     }
   }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
   }
 
   public userRole(): string {
@@ -45,7 +46,7 @@ export class GoodsComponent implements OnInit {
     return null;
   }
 
-  public enableButton() {
+  public enableButton(): boolean {
     if (this.ecmr && this.ecmr.status === 'CREATED' && this.userRole() === 'CompoundAdmin') {
       return true;
     } else if (this.ecmr && this.ecmr.status === 'LOADED' && this.userRole() === 'CarrierMember') {
