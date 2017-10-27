@@ -20,6 +20,10 @@ export class GeneralInfoComponent implements OnInit {
     CONFIRMED_DELIVERED: 'CONFIRMED_DELIVERED'
   };
 
+  public User = {
+    LegalOwnerAdmin: 'LegalOwnerAdmin'
+  }
+
   public constructor(private _authenticationService: AuthenticationService) {
     this.selectedImage = [false, false, false, false];
   }
@@ -57,7 +61,7 @@ export class GeneralInfoComponent implements OnInit {
   }
 
   public selectImage() {
-    if (this.selectedImage[0] || this.userRole() === 'LegalOwnerAdmin') {
+    if (this.selectedImage[0] || this.userRole() === this.User.LegalOwnerAdmin) {
       return 'selectedImg1';
     } else if (this.selectedImage[1]) {
       return 'selectedImg2';
