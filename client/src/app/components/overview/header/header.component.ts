@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../../services/authentication.service';
 import {SearchService} from '../../../services/search.service';
 import {NavbarService} from '../../../services/navbar.service';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector:    'app-header',
@@ -9,7 +10,6 @@ import {NavbarService} from '../../../services/navbar.service';
   styleUrls:   ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  public currentView: string;
   public queryData: string;
 
   public constructor(private searchService: SearchService,
@@ -20,14 +20,13 @@ export class HeaderComponent implements OnInit {
   public ngOnInit(): void {
   }
 
-  public sendData(data: {}): void {
+  public sendData(data: Observable<any>): void {
     this.searchService.searchData(data);
   }
 
-  public getUser(): string {
+  public getUser(): any {
     if (this.authenticationService.isAuthenticated()) {
-      const user: string = JSON.parse(localStorage.getItem('currentUser')).user.firstName;
-      return user;
+      return JSON.parse(localStorage.getItem('currentUser')).user;
     }
     return null;
   }
@@ -37,7 +36,15 @@ export class HeaderComponent implements OnInit {
     this.authenticationService.logout();
   }
 
-  public setOverview(): void {
-    this.currentView = 'overview';
+  public showUserInfo(firstname): boolean {
+    return this.getUser().firstName.toLowerCase() === firstname;
+  }
+
+  public showLogo(): string {
+    if (this.getUser().username.toLowerCase() === 'lapo@leaseplan.org') {
+      return 'logoLeaseplan';
+    } else if (this.getUser().username.toLowerCase() === 'rob@cardealer.org') {
+      return 'logoCarDealer';
+    }
   }
 }

@@ -22,152 +22,152 @@
         <td><b>{{good?.vehicle.plateNumber}}</b></td>
         <td>
           <div class="ui input">
-            <div *ngIf="userRole() === 'CompoundAdmin' && ecmr?.status === 'CREATED'">
-              <input name="remark-{{userRole()}}-{{i}}" placeholder="Add remark..."
+            <div *ngIf="getUserRole() === User.CompoundAdmin && ecmr?.status === EcmrStatus.CREATED">
+              <input name="remark-{{getUserRole()}}-{{i}}" placeholder="Add remark..."
                      [(ngModel)]="good?.compoundRemark.comments">
             </div>
             <div
-              *ngIf="userRole() === 'CarrierMember' && ecmr?.status === 'LOADED'; else showCompoundRemark">
-              <input name="remark-{{userRole()}}-{{i}}" placeholder="Add remark..."
+                    *ngIf="getUserRole() === User.CarrierMember && ecmr?.status === EcmrStatus.LOADED; else showCompoundRemark">
+              <input name="remark-{{getUserRole()}}-{{i}}" placeholder="Add remark..."
                      [(ngModel)]="good?.carrierLoadingRemark.comments">
             </div>
             <ng-template #showCompoundRemark>
               <div
-                *ngIf="userRole() !== 'CarrierMember' && userRole() !== 'LegalOwnerAdmin' && selectedColumns[1] === true && selectColumn() !== 1">
+                      *ngIf="getUserRole() !== User.CarrierMember && getUserRole() !== User.LegalOwnerAdmin && selectedColumns[1] === true && selectColumn() !== 1">
                 <ol>
-                  <li class="remarkListStyling" *ngIf="good?.compoundRemark.comments !== ''">
-                    <b class="remarkPerson" *ngIf="good?.compoundRemark.comments !== '' || null">{{ecmr?.compoundSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
-                    <p class="commentStyling">{{good?.compoundRemark.comments}}</p>
+                    <li class="remark_list_styling" *ngIf="good?.compoundRemark.comments !== ''">
+                        <b class="remark_person" *ngIf="good?.compoundRemark.comments !== '' || null">{{ecmr?.compoundSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
+                        <p class="comment_styling">{{good?.compoundRemark.comments}}</p>
                   </li>
                 </ol>
               </div>
             </ng-template>
             <div
-              *ngIf="userRole() === 'CarrierMember' && ecmr?.status === 'IN_TRANSIT'; else showCarrierLoadingRemark">
-              <input name="remark-{{userRole()}}-{{i}}" placeholder="Add remark..."
+                    *ngIf="getUserRole() === User.CarrierMember && ecmr?.status === EcmrStatus.IN_TRANSIT; else showCarrierLoadingRemark">
+              <input name="remark-{{getUserRole()}}-{{i}}" placeholder="Add remark..."
                      [(ngModel)]="good?.carrierDeliveryRemark.comments">
             </div>
             <ng-template #showCarrierLoadingRemark>
               <div
-                *ngIf="userRole() !== 'CarrierMember' && userRole() !== 'LegalOwnerAdmin' && selectedColumns[2] === true && selectColumn() !== 2">
+                      *ngIf="getUserRole() !== User.CarrierMember && getUserRole() !== User.LegalOwnerAdmin && selectedColumns[2] === true && selectColumn() !== 2">
                 <ol>
-                  <li class="remarkListStyling" *ngIf="good?.carrierLoadingRemark.comments !== ''">
-                    <b class="remarkPerson" *ngIf="good?.carrierLoadingRemark.comments !== '' || null">{{ecmr?.carrierLoadingSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
-                    <p class="commentStyling">{{good?.carrierLoadingRemark.comments}}</p>
+                    <li class="remark_list_styling" *ngIf="good?.carrierLoadingRemark.comments !== ''">
+                        <b class="remark_person" *ngIf="good?.carrierLoadingRemark.comments !== '' || null">{{ecmr?.carrierLoadingSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
+                        <p class="comment_styling">{{good?.carrierLoadingRemark.comments}}</p>
                   </li>
                 </ol>
               </div>
             </ng-template>
             <div
-              *ngIf="userRole() === 'RecipientMember' && ecmr?.status === 'DELIVERED' && selectedColumns[3] === true; else showCarrierDeliveryRemark">
-              <input name="remark-{{userRole()}}-{{i}}" placeholder="Add remark..."
+                    *ngIf="getUserRole() === User.RecipientMember && ecmr?.status === EcmrStatus.DELIVERED && selectedColumns[3] === true; else showCarrierDeliveryRemark">
+              <input name="remark-{{getUserRole()}}-{{i}}" placeholder="Add remark..."
                      [(ngModel)]="good?.recipientRemark.comments">
             </div>
             <ng-template #showCarrierDeliveryRemark>
               <div
-                *ngIf="userRole() !== 'CarrierMember' && userRole() !== 'RecipientMember' && userRole() !== 'LegalOwnerAdmin' && selectedColumns[3] === true && selectColumn() !== 3">
+                      *ngIf="getUserRole() !== User.CarrierMember && getUserRole() !== User.RecipientMember && getUserRole() !== User.LegalOwnerAdmin && selectedColumns[3] === true && selectColumn() !== 3">
                 <ol>
-                  <li class="remarkListStyling" *ngIf="good?.carrierDeliveryRemark.comments !== ''">
-                    <b class="remarkPerson" *ngIf="good?.carrierDeliveryRemark.comments !== '' || null">{{ecmr?.carrierDeliverySignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
-                    <p class="commentStyling">{{good?.carrierDeliveryRemark.comments}}</p>
+                    <li class="remark_list_styling" *ngIf="good?.carrierDeliveryRemark.comments !== ''">
+                        <b class="remark_person" *ngIf="good?.carrierDeliveryRemark.comments !== '' || null">{{ecmr?.carrierDeliverySignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
+                        <p class="comment_styling">{{good?.carrierDeliveryRemark.comments}}</p>
                   </li>
                 </ol>
               </div>
             </ng-template>
             <div *ngIf="selectColumn() === 0">
               <ol>
-                <li class="remarkListStyling" *ngIf="good?.compoundRemark.comments !== ''">
-                  <b class="remarkPerson"
+                  <li class="remark_list_styling" *ngIf="good?.compoundRemark.comments !== ''">
+                      <b class="remark_person"
                      *ngIf="good?.compoundRemark.comments !== '' || null">{{ecmr?.compoundSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
-                  <p class="commentStyling">{{good?.compoundRemark.comments}}</p></li>
+                      <p class="comment_styling">{{good?.compoundRemark.comments}}</p></li>
               </ol>
             </div>
             <div *ngIf="selectColumn() === 1">
               <ol>
-                <li class="remarkListStyling" *ngIf="good?.compoundRemark.comments !== ''">
-                  <b class="remarkPerson" *ngIf="good?.compoundRemark.comments !== '' || null">{{ecmr?.compoundSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
-                  <p class="commentStyling">{{good?.compoundRemark.comments}}</p>
+                  <li class="remark_list_styling" *ngIf="good?.compoundRemark.comments !== ''">
+                      <b class="remark_person" *ngIf="good?.compoundRemark.comments !== '' || null">{{ecmr?.compoundSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
+                      <p class="comment_styling">{{good?.compoundRemark.comments}}</p>
                 </li>
-                <li class="remarkListStyling" *ngIf="good?.carrierLoadingRemark.comments !== ''">
-                  <b class="remarkPerson" *ngIf="good?.carrierLoadingRemark.comments !== '' || null">{{ecmr?.carrierLoadingSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
-                  <p class="commentStyling">{{good?.carrierLoadingRemark.comments}}</p>
+                  <li class="remark_list_styling" *ngIf="good?.carrierLoadingRemark.comments !== ''">
+                      <b class="remark_person" *ngIf="good?.carrierLoadingRemark.comments !== '' || null">{{ecmr?.carrierLoadingSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
+                      <p class="comment_styling">{{good?.carrierLoadingRemark.comments}}</p>
                 </li>
               </ol>
             </div>
             <div *ngIf="selectColumn() === 2">
               <div class="firstItem"></div>
               <ol>
-                <li class="remarkListStyling" *ngIf="good?.compoundRemark.comments !== ''">
-                  <b class="remarkPerson" *ngIf="good?.compoundRemark.comments !== '' || null">{{ecmr?.compoundSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
-                  <p class="commentStyling">{{good?.compoundRemark.comments}}</p>
+                  <li class="remark_list_styling" *ngIf="good?.compoundRemark.comments !== ''">
+                      <b class="remark_person" *ngIf="good?.compoundRemark.comments !== '' || null">{{ecmr?.compoundSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
+                      <p class="comment_styling">{{good?.compoundRemark.comments}}</p>
                 </li>
-                <li class="remarkListStyling" *ngIf="good?.carrierLoadingRemark.comments !== ''">
-                  <b class="remarkPerson" *ngIf="good?.carrierLoadingRemark.comments !== '' || null">{{ecmr?.carrierLoadingSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
-                  <p class="commentStyling">{{good?.carrierLoadingRemark.comments}}</p>
+                  <li class="remark_list_styling" *ngIf="good?.carrierLoadingRemark.comments !== ''">
+                      <b class="remark_person" *ngIf="good?.carrierLoadingRemark.comments !== '' || null">{{ecmr?.carrierLoadingSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
+                      <p class="comment_styling">{{good?.carrierLoadingRemark.comments}}</p>
                 </li>
-                <li class="remarkListStyling" *ngIf="good?.carrierDeliveryRemark.comments !== ''">
-                  <b class="remarkPerson" *ngIf="good?.carrierDeliveryRemark.comments !== '' || null">{{ecmr?.carrierDeliverySignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
-                  <p class="commentStyling">{{good?.carrierDeliveryRemark.comments}}</p>
-                </li>
-              </ol>
-            </div>
-            <div *ngIf="selectColumn() === 3 && userRole() !== 'RecipientMember' && ecmr.status === 'DELIVERED'">
-              <ol>
-                <li class="remarkListStyling" *ngIf="good?.compoundRemark.comments !== ''">
-                  <b class="remarkPerson" *ngIf="good?.compoundRemark.comments !== '' || null">{{ecmr?.compoundSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
-                  <p class="commentStyling">{{good?.compoundRemark.comments}}</p>
-                </li>
-                <li class="remarkListStyling" *ngIf="good?.carrierLoadingRemark.comments !== ''">
-                  <b class="remarkPerson" *ngIf="good?.carrierLoadingRemark.comments !== '' || null">{{ecmr?.carrierLoadingSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
-                  <p class="commentStyling">{{good?.carrierLoadingRemark.comments}}</p>
-                </li>
-                <li class="remarkListStyling" *ngIf="good?.carrierDeliveryRemark.comments !== ''">
-                  <b class="remarkPerson" *ngIf="good?.carrierDeliveryRemark.comments !== '' || null">{{ecmr?.carrierDeliverySignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
-                  <p class="commentStyling">{{good?.carrierDeliveryRemark.comments}}</p>
-                </li>
-                <li class="remarkListStyling" *ngIf="good?.recipientRemark.comments !== ''">
-                  <b class="remarkPerson" *ngIf="good?.recipientRemark.comments !== '' || null">{{ecmr?.recipientSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
-                  <p class="commentStyling">{{good?.recipientRemark.comments}}</p>
+                  <li class="remark_list_styling" *ngIf="good?.carrierDeliveryRemark.comments !== ''">
+                      <b class="remark_person" *ngIf="good?.carrierDeliveryRemark.comments !== '' || null">{{ecmr?.carrierDeliverySignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
+                      <p class="comment_styling">{{good?.carrierDeliveryRemark.comments}}</p>
                 </li>
               </ol>
             </div>
-            <div *ngIf="selectColumn() === 3 && ecmr.status === 'CONFIRMED_DELIVERED'">
+            <div *ngIf="selectColumn() === 3 && getUserRole() !== User.RecipientMember && ecmr.status === EcmrStatus.DELIVERED">
               <ol>
-                <li class="remarkListStyling" *ngIf="good?.compoundRemark.comments !== ''">
-                  <b class="remarkPerson" *ngIf="good?.compoundRemark.comments !== '' || null">{{ecmr?.compoundSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
-                  <p class="commentStyling">{{good?.compoundRemark.comments}}</p>
+                  <li class="remark_list_styling" *ngIf="good?.compoundRemark.comments !== ''">
+                      <b class="remark_person" *ngIf="good?.compoundRemark.comments !== '' || null">{{ecmr?.compoundSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
+                      <p class="comment_styling">{{good?.compoundRemark.comments}}</p>
                 </li>
-                <li class="remarkListStyling" *ngIf="good?.carrierLoadingRemark.comments !== ''">
-                  <b class="remarkPerson" *ngIf="good?.carrierLoadingRemark.comments !== '' || null">{{ecmr?.carrierLoadingSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
-                  <p class="commentStyling">{{good?.carrierLoadingRemark.comments}}</p>
+                  <li class="remark_list_styling" *ngIf="good?.carrierLoadingRemark.comments !== ''">
+                      <b class="remark_person" *ngIf="good?.carrierLoadingRemark.comments !== '' || null">{{ecmr?.carrierLoadingSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
+                      <p class="comment_styling">{{good?.carrierLoadingRemark.comments}}</p>
                 </li>
-                <li class="remarkListStyling" *ngIf="good?.carrierDeliveryRemark.comments !== ''">
-                  <b class="remarkPerson" *ngIf="good?.carrierDeliveryRemark.comments !== '' || null">{{ecmr?.carrierDeliverySignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
-                  <p class="commentStyling">{{good?.carrierDeliveryRemark.comments}}</p>
+                  <li class="remark_list_styling" *ngIf="good?.carrierDeliveryRemark.comments !== ''">
+                      <b class="remark_person" *ngIf="good?.carrierDeliveryRemark.comments !== '' || null">{{ecmr?.carrierDeliverySignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
+                      <p class="comment_styling">{{good?.carrierDeliveryRemark.comments}}</p>
                 </li>
-                <li class="remarkListStyling" *ngIf="good?.recipientRemark.comments !== ''">
-                  <b class="remarkPerson" *ngIf="good?.recipientRemark.comments !== '' || null">{{ecmr?.recipientSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
-                  <p class="commentStyling">{{good?.recipientRemark.comments}}</p>
+                  <li class="remark_list_styling" *ngIf="good?.recipientRemark.comments !== ''">
+                      <b class="remark_person" *ngIf="good?.recipientRemark.comments !== '' || null">{{ecmr?.recipientSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
+                      <p class="comment_styling">{{good?.recipientRemark.comments}}</p>
                 </li>
               </ol>
             </div>
-            <div *ngIf="selectedColumns[3] === true && ecmr.status === 'CONFIRMED_DELIVERED' && selectColumn() !== 3">
+            <div *ngIf="selectColumn() === 3 && ecmr.status === EcmrStatus.CONFIRMED_DELIVERED">
               <ol>
-                <li class="remarkListStyling" *ngIf="good?.compoundRemark.comments !== ''">
-                  <b class="remarkPerson" *ngIf="good?.compoundRemark.comments !== '' || null">{{ecmr?.compoundSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
-                  <p class="commentStyling">{{good?.compoundRemark.comments}}</p>
+                  <li class="remark_list_styling" *ngIf="good?.compoundRemark.comments !== ''">
+                      <b class="remark_person" *ngIf="good?.compoundRemark.comments !== '' || null">{{ecmr?.compoundSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
+                      <p class="comment_styling">{{good?.compoundRemark.comments}}</p>
                 </li>
-                <li class="remarkListStyling" *ngIf="good?.carrierLoadingRemark.comments !== ''">
-                  <b class="remarkPerson" *ngIf="good?.carrierLoadingRemark.comments !== '' || null">{{ecmr?.carrierLoadingSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
-                  <p class="commentStyling">{{good?.carrierLoadingRemark.comments}}</p>
+                  <li class="remark_list_styling" *ngIf="good?.carrierLoadingRemark.comments !== ''">
+                      <b class="remark_person" *ngIf="good?.carrierLoadingRemark.comments !== '' || null">{{ecmr?.carrierLoadingSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
+                      <p class="comment_styling">{{good?.carrierLoadingRemark.comments}}</p>
                 </li>
-                <li class="remarkListStyling" *ngIf="good?.carrierDeliveryRemark.comments !== ''">
-                  <b class="remarkPerson" *ngIf="good?.carrierDeliveryRemark.comments !== '' || null">{{ecmr?.carrierDeliverySignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
-                  <p class="commentStyling">{{good?.carrierDeliveryRemark.comments}}</p>
+                  <li class="remark_list_styling" *ngIf="good?.carrierDeliveryRemark.comments !== ''">
+                      <b class="remark_person" *ngIf="good?.carrierDeliveryRemark.comments !== '' || null">{{ecmr?.carrierDeliverySignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
+                      <p class="comment_styling">{{good?.carrierDeliveryRemark.comments}}</p>
                 </li>
-                <li class="remarkListStyling" *ngIf="good?.recipientRemark.comments !== ''">
-                  <b class="remarkPerson" *ngIf="good?.recipientRemark.comments !== '' || null">{{ecmr?.recipientSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
-                  <p class="commentStyling">{{good?.recipientRemark.comments}}</p>
+                  <li class="remark_list_styling" *ngIf="good?.recipientRemark.comments !== ''">
+                      <b class="remark_person" *ngIf="good?.recipientRemark.comments !== '' || null">{{ecmr?.recipientSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
+                      <p class="comment_styling">{{good?.recipientRemark.comments}}</p>
+                </li>
+              </ol>
+            </div>
+            <div *ngIf="selectedColumns[3] === true && ecmr.status === EcmrStatus.CONFIRMED_DELIVERED && selectColumn() !== 3">
+              <ol>
+                  <li class="remark_list_styling" *ngIf="good?.compoundRemark.comments !== ''">
+                      <b class="remark_person" *ngIf="good?.compoundRemark.comments !== '' || null">{{ecmr?.compoundSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
+                      <p class="comment_styling">{{good?.compoundRemark.comments}}</p>
+                </li>
+                  <li class="remark_list_styling" *ngIf="good?.carrierLoadingRemark.comments !== ''">
+                      <b class="remark_person" *ngIf="good?.carrierLoadingRemark.comments !== '' || null">{{ecmr?.carrierLoadingSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
+                      <p class="comment_styling">{{good?.carrierLoadingRemark.comments}}</p>
+                </li>
+                  <li class="remark_list_styling" *ngIf="good?.carrierDeliveryRemark.comments !== ''">
+                      <b class="remark_person" *ngIf="good?.carrierDeliveryRemark.comments !== '' || null">{{ecmr?.carrierDeliverySignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
+                      <p class="comment_styling">{{good?.carrierDeliveryRemark.comments}}</p>
+                </li>
+                  <li class="remark_list_styling" *ngIf="good?.recipientRemark.comments !== ''">
+                      <b class="remark_person" *ngIf="good?.recipientRemark.comments !== '' || null">{{ecmr?.recipientSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
+                      <p class="comment_styling">{{good?.recipientRemark.comments}}</p>
                 </li>
               </ol>
             </div>
@@ -175,120 +175,120 @@
         </td>
         <td>
           <div class="ui checkbox">
-            <div *ngIf="userRole() === 'CompoundAdmin' && ecmr?.status === 'CREATED'; else showLegalRemark">
-              <input type="checkbox" name="remark-isDamaged-{{userRole()}}-{{i}}"
+            <div *ngIf="getUserRole() === User.CompoundAdmin && ecmr?.status === EcmrStatus.CREATED; else showLegalRemark">
+              <input type="checkbox" name="remark-isDamaged-{{getUserRole()}}-{{i}}"
                      [(ngModel)]="good?.compoundRemark.isDamaged">
               <label></label>
             </div>
             <div
-              *ngIf="userRole() === 'CarrierMember' && ecmr?.status === 'LOADED'; else showCompoundCheck">
-              <input type="checkbox" name="remark-isDamaged-{{userRole()}}-{{i}}"
+                    *ngIf="getUserRole() === User.CarrierMember && ecmr?.status === EcmrStatus.LOADED; else showCompoundCheck">
+              <input type="checkbox" name="remark-isDamaged-{{getUserRole()}}-{{i}}"
                      [(ngModel)]="good?.carrierLoadingRemark.isDamaged">
               <label></label>
             </div>
             <ng-template #showCompoundCheck>
               <div
-                *ngIf="userRole() !== 'CarrierMember' && userRole() !== 'LegalOwnerAdmin' && selectedColumns[1] === true && selectColumn() !== 1 && good?.compoundRemark.isDamaged === true">
-                <img class="checkIcon"/></div>
+                      *ngIf="getUserRole() !== User.CarrierMember && getUserRole() !== User.LegalOwnerAdmin && selectedColumns[1] === true && selectColumn() !== 1 && good?.compoundRemark.isDamaged === true">
+                  <img class="check_icon"/></div>
             </ng-template>
             <div
-              *ngIf="userRole() === 'CarrierMember' && ecmr?.status === 'IN_TRANSIT'; else showCarrierLoadingCheck">
-              <input type="checkbox" name="remark-isDamaged-{{userRole()}}-{{i}}"
+                    *ngIf="getUserRole() === User.CarrierMember && ecmr?.status === EcmrStatus.IN_TRANSIT; else showCarrierLoadingCheck">
+              <input type="checkbox" name="remark-isDamaged-{{getUserRole()}}-{{i}}"
                      [(ngModel)]="good?.carrierDeliveryRemark.isDamaged">
               <label></label>
             </div>
             <ng-template #showCarrierLoadingCheck>
               <div
-                *ngIf="userRole() !== 'CarrierMember' && userRole() !== 'LegalOwnerAdmin' && selectedColumns[2] === true && selectColumn() !== 2 && good?.carrierLoadingRemark.isDamaged === true">
-                <img class="checkIcon"/></div>
+                      *ngIf="getUserRole() !== User.CarrierMember && getUserRole() !== User.LegalOwnerAdmin && selectedColumns[2] === true && selectColumn() !== 2 && good?.carrierLoadingRemark.isDamaged === true">
+                  <img class="check_icon"/></div>
             </ng-template>
             <div
-              *ngIf="userRole() === 'RecipientMember' && ecmr?.status === 'DELIVERED' && selectedColumns[3] === true; else showCarrierDeliveryCheck">
-              <input type="checkbox" name="remark-isDamaged-{{userRole()}}-{{i}}"
+                    *ngIf="getUserRole() === User.RecipientMember && ecmr?.status === EcmrStatus.DELIVERED && selectedColumns[3] === true; else showCarrierDeliveryCheck">
+              <input type="checkbox" name="remark-isDamaged-{{getUserRole()}}-{{i}}"
                      [(ngModel)]="good?.recipientRemark.isDamaged">
               <label></label>
             </div>
             <ng-template #showCarrierDeliveryCheck>
               <div
-                *ngIf="userRole() !== 'CarrierMember' && userRole() !== 'LegalOwnerAdmin' && userRole() !== 'RecipientMember' && selectColumn() !== 3 && selectedColumns[3] === true && good?.carrierDeliveryRemark.isDamaged === true">
-                <img class="checkIcon"/></div>
+                      *ngIf="getUserRole() !== User.CarrierMember && getUserRole() !== User.LegalOwnerAdmin && getUserRole() !== User.RecipientMember && selectColumn() !== 3 && selectedColumns[3] === true && good?.carrierDeliveryRemark.isDamaged === true">
+                  <img class="check_icon"/></div>
             </ng-template>
             <div *ngIf="selectColumn() === 0">
-              <ol class="olAlignment">
-                <li class="remarkListStyling" *ngIf="good?.compoundRemark.comments !== ''">
-                  <div *ngIf="good?.compoundRemark.isDamaged === true"><img class="checkIcon"/></div>
+                <ol class="list_alignment">
+                    <li class="remark_list_styling" *ngIf="good?.compoundRemark.comments !== ''">
+                        <div *ngIf="good?.compoundRemark.isDamaged === true"><img class="check_icon"/></div>
                 </li>
               </ol>
             </div>
             <div *ngIf="selectColumn() === 1">
-              <ol class="olAlignment">
-                <li class="remarkListStyling" *ngIf="good?.compoundRemark.comments !== ''">
-                  <div *ngIf="good?.compoundRemark.isDamaged === true"><img class="checkIcon"/></div>
+                <ol class="list_alignment">
+                    <li class="remark_list_styling" *ngIf="good?.compoundRemark.comments !== ''">
+                        <div *ngIf="good?.compoundRemark.isDamaged === true"><img class="check_icon"/></div>
                 </li>
-                <li class="remarkListStyling" *ngIf="good?.carrierLoadingRemark.comments !== ''">
-                  <div *ngIf="good?.carrierLoadingRemark.isDamaged === true"><img class="checkIcon"/></div>
+                    <li class="remark_list_styling" *ngIf="good?.carrierLoadingRemark.comments !== ''">
+                        <div *ngIf="good?.carrierLoadingRemark.isDamaged === true"><img class="check_icon"/></div>
                 </li>
               </ol>
             </div>
             <div *ngIf="selectColumn() === 2">
-              <ol class="olAlignment">
-                <li class="remarkListStyling" *ngIf="good?.compoundRemark.comments !== ''">
-                  <div *ngIf="good?.compoundRemark.isDamaged === true"><img class="checkIcon"/></div>
+                <ol class="list_alignment">
+                    <li class="remark_list_styling" *ngIf="good?.compoundRemark.comments !== ''">
+                        <div *ngIf="good?.compoundRemark.isDamaged === true"><img class="check_icon"/></div>
                 </li>
-                <li class="remarkListStyling" *ngIf="good?.carrierLoadingRemark.comments !== ''">
-                  <div *ngIf="good?.carrierLoadingRemark.isDamaged === true"><img class="checkIcon"/></div>
+                    <li class="remark_list_styling" *ngIf="good?.carrierLoadingRemark.comments !== ''">
+                        <div *ngIf="good?.carrierLoadingRemark.isDamaged === true"><img class="check_icon"/></div>
                 </li>
-                <li class="remarkListStyling" *ngIf="good?.carrierDeliveryRemark.comments !== ''">
-                  <div *ngIf="good?.carrierDeliveryRemark.isDamaged === true"><img class="checkIcon"/></div>
-                </li>
-              </ol>
-            </div>
-            <div *ngIf="selectColumn() === 3 && userRole() !== 'RecipientMember' && ecmr.status === 'DELIVERED'">
-              <ol class="olAlignment">
-                <li class="remarkListStyling" *ngIf="good?.compoundRemark.comments !== ''">
-                  <div *ngIf="good?.compoundRemark.isDamaged === true"><img class="checkIcon"/></div>
-                </li>
-                <li class="remarkListStyling" *ngIf="good?.carrierLoadingRemark.comments !== ''">
-                  <div *ngIf="good?.carrierLoadingRemark.isDamaged === true"><img class="checkIcon"/></div>
-                </li>
-                <li class="remarkListStyling" *ngIf="good?.carrierDeliveryRemark.comments !== ''">
-                  <div *ngIf="good?.carrierDeliveryRemark.isDamaged === true"><img class="checkIcon"/></div>
-                </li>
-                <li class="remarkListStyling" *ngIf="good?.recipientRemark.comments !== ''">
-                  <div *ngIf="good?.recipientRemark.isDamaged === true"><img class="checkIcon"/></div>
+                    <li class="remark_list_styling" *ngIf="good?.carrierDeliveryRemark.comments !== ''">
+                        <div *ngIf="good?.carrierDeliveryRemark.isDamaged === true"><img class="check_icon"/></div>
                 </li>
               </ol>
             </div>
-            <div *ngIf="selectColumn() === 3 && ecmr.status === 'CONFIRMED_DELIVERED'">
-              <ol class="olAlignment">
-                <li class="remarkListStyling" *ngIf="good?.compoundRemark.comments !== ''">
-                  <div *ngIf="good?.compoundRemark.isDamaged === true"><img class="checkIcon"/></div>
+            <div *ngIf="selectColumn() === 3 && getUserRole() !== User.RecipientMember && ecmr.status === EcmrStatus.DELIVERED">
+                <ol class="list_alignment">
+                    <li class="remark_list_styling" *ngIf="good?.compoundRemark.comments !== ''">
+                        <div *ngIf="good?.compoundRemark.isDamaged === true"><img class="check_icon"/></div>
                 </li>
-                <li class="remarkListStyling" *ngIf="good?.carrierLoadingRemark.comments !== ''">
-                  <div *ngIf="good?.carrierLoadingRemark.isDamaged === true"><img class="checkIcon"/></div>
+                    <li class="remark_list_styling" *ngIf="good?.carrierLoadingRemark.comments !== ''">
+                        <div *ngIf="good?.carrierLoadingRemark.isDamaged === true"><img class="check_icon"/></div>
                 </li>
-                <li class="remarkListStyling" *ngIf="good?.carrierDeliveryRemark.comments !== ''">
-                  <div *ngIf="good?.carrierDeliveryRemark.isDamaged === true"><img class="checkIcon"/></div>
+                    <li class="remark_list_styling" *ngIf="good?.carrierDeliveryRemark.comments !== ''">
+                        <div *ngIf="good?.carrierDeliveryRemark.isDamaged === true"><img class="check_icon"/></div>
                 </li>
-                <li class="remarkListStyling" *ngIf="good?.recipientRemark.comments !== ''">
-                  <div *ngIf="good?.recipientRemark.isDamaged === true"><img class="checkIcon"/></div>
+                    <li class="remark_list_styling" *ngIf="good?.recipientRemark.comments !== ''">
+                        <div *ngIf="good?.recipientRemark.isDamaged === true"><img class="check_icon"/></div>
+                </li>
+              </ol>
+            </div>
+            <div *ngIf="selectColumn() === 3 && ecmr.status === EcmrStatus.CONFIRMED_DELIVERED">
+                <ol class="list_alignment">
+                    <li class="remark_list_styling" *ngIf="good?.compoundRemark.comments !== ''">
+                        <div *ngIf="good?.compoundRemark.isDamaged === true"><img class="check_icon"/></div>
+                </li>
+                    <li class="remark_list_styling" *ngIf="good?.carrierLoadingRemark.comments !== ''">
+                        <div *ngIf="good?.carrierLoadingRemark.isDamaged === true"><img class="check_icon"/></div>
+                </li>
+                    <li class="remark_list_styling" *ngIf="good?.carrierDeliveryRemark.comments !== ''">
+                        <div *ngIf="good?.carrierDeliveryRemark.isDamaged === true"><img class="check_icon"/></div>
+                </li>
+                    <li class="remark_list_styling" *ngIf="good?.recipientRemark.comments !== ''">
+                        <div *ngIf="good?.recipientRemark.isDamaged === true"><img class="check_icon"/></div>
                 </li>
               </ol>
             </div>
             <div
-              *ngIf="selectedColumns[3] === true && ecmr.status === 'CONFIRMED_DELIVERED' && good?.recipientRemark.isDamaged === true && selectColumn() !== 3">
-              <ol class="olAlignment">
-                <li class="remarkListStyling" *ngIf="good?.compoundRemark.comments !== ''">
-                  <div *ngIf="good?.compoundRemark.isDamaged === true"><img class="checkIcon"/></div>
+                    *ngIf="selectedColumns[3] === true && ecmr.status === EcmrStatus.CONFIRMED_DELIVERED && good?.recipientRemark.isDamaged === true && selectColumn() !== 3">
+                <ol class="list_alignment">
+                    <li class="remark_list_styling" *ngIf="good?.compoundRemark.comments !== ''">
+                        <div *ngIf="good?.compoundRemark.isDamaged === true"><img class="check_icon"/></div>
                 </li>
-                <li class="remarkListStyling" *ngIf="good?.carrierLoadingRemark.comments !== ''">
-                  <div *ngIf="good?.carrierLoadingRemark.isDamaged === true"><img class="checkIcon"/></div>
+                    <li class="remark_list_styling" *ngIf="good?.carrierLoadingRemark.comments !== ''">
+                        <div *ngIf="good?.carrierLoadingRemark.isDamaged === true"><img class="check_icon"/></div>
                 </li>
-                <li class="remarkListStyling" *ngIf="good?.carrierDeliveryRemark.comments !== ''">
-                  <div *ngIf="good?.carrierDeliveryRemark.isDamaged === true"><img class="checkIcon"/></div>
+                    <li class="remark_list_styling" *ngIf="good?.carrierDeliveryRemark.comments !== ''">
+                        <div *ngIf="good?.carrierDeliveryRemark.isDamaged === true"><img class="check_icon"/></div>
                 </li>
-                <li class="remarkListStyling" *ngIf="good?.recipientRemark.comments !== ''">
-                  <div *ngIf="good?.recipientRemark.isDamaged === true"><img class="checkIcon"/></div>
+                    <li class="remark_list_styling" *ngIf="good?.recipientRemark.comments !== ''">
+                        <div *ngIf="good?.recipientRemark.isDamaged === true"><img class="check_icon"/></div>
                 </li>
               </ol>
             </div>

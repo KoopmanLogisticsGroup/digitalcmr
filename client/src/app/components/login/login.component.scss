@@ -1,33 +1,14 @@
-.grey-bkg {
-  background-color: #f1f2f2;
-}
-
-.red-bar {
-  background-color: #e32526;
-  height:           75px;
-  width:            100%;
-  margin:           3.5% 0;
-}
-
-.fill-label {
-  margin:  0px;
-  padding: 0px;
-}
-
-.login-label {
+.login_label {
   background-color: #3A386E;
   color:            white;
   margin-right:     10%;
   margin-top:       12%;
   display:          block;
   float:            right;
-  font-family:      Roboto;
   text-transform:   uppercase;
-  display:          block;
-  float:            right;
 }
 
-.login-box {
+.login_box {
   width:            322px;
   height:           342px;
   margin:           8em auto;
@@ -54,7 +35,7 @@
   object-fit:       scale-down;
 }
 
-.icon-box {
+.box_icon {
   padding: 0px !important;
 }
 
@@ -71,7 +52,7 @@
   }
 }
 
-.login-text-label {
+.text_label_login {
   padding-top:  28px;
   padding-left: 30px;
   color:        #2f62a0;
@@ -80,18 +61,18 @@
   font-size:    20px;
 }
 
-.icon-username {
+.username_icon {
   position: absolute;
   top:      4px;
   left:     3px;
 }
 
-.icon-password {
+.password_icon {
   position: absolute;
   top:      8px;
   left:     10px;
 }
 
-.login-top-margin {
+.top_margin_login {
   margin-top: 22vh !important;
 }

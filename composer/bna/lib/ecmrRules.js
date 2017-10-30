@@ -19,14 +19,19 @@
  * @transaction
  */
 function CreateECMR(tx) {
-
-  console.log('Invoking function processor create CMR');
-  console.log(tx);
+  console.log('Invoking function: CreateECMR');
 
   // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.ECMR')
     .then(function (assetRegistry) {
-      return assetRegistry.add(tx.ecmr);
+      return assetRegistry.add(tx.ecmr)
+        .then(function () {
+          console.log('Asset added with success');
+        })
+        .catch(function (error) {
+          console.log('An error occurred while addAll ecmr assets', error);
+          throw error;
+        });
     }).catch(function (error) {
       console.log('An error occurred while saving the ECMR asset', error);
       throw error;
@@ -41,145 +46,23 @@ function CreateECMR(tx) {
  */
 function CreateECMRs(tx) {
 
-  console.log('Invoking function processor to create CMRs');
-  console.log(tx);
+  console.log('Invoking function: CreateECMRs');
 
   // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.ECMR')
     .then(function (assetRegistry) {
-      return assetRegistry.addAll(tx.ecmrs).catch(function (error) {
-        console.log('An error occurred while addAll ecmr assets', error);
-        throw error;
-      });
+      return assetRegistry.addAll(tx.ecmrs)
+        .then(function () {
+          console.log('Asset added with success');
+        })
+        .catch(function (error) {
+          console.log('An error occurred while addAll ecmr assets', error);
+          throw error;
+        });
     }).catch(function (error) {
       console.log('An error occurred while saving the ecmr assets', error);
       throw error;
     });
-}
-
-/**
- * Create Legal Owner org transaction processor function.
- * @param {org.digitalcmr.CreateLegalOwnerOrg} tx  - The CreateLegalOwnerOrg transaction
- * @return {Promise} Asset registry Promise
- * @transaction
- */
-function CreateLegalOwnerOrg(tx) {
-
-  console.log('Invoking function processor CreateLegalOwnerOrg');
-  console.log(tx);
-
-  // Get the asset registry for the asset.
-  return getAssetRegistry('org.digitalcmr.LegalOwnerOrg')
-    .then(function (assetRegistry) {
-      return assetRegistry.add(tx.legalOwnerOrg).catch(function (error) {
-        console.log('An error occurred while adding all the assets in the registry: ' + error);
-        throw error;
-      });
-    }).catch(function (error) {
-      console.log('An error occurred while saving the LegalOwnerOrg asset', error);
-      throw error;
-    });
-
-}
-
-/**
- * CreateCompoundOrg transaction processor function.
- * @param {org.digitalcmr.CreateCompoundOrg} tx  - The CreateCompoundOrg transaction
- * @return {Promise} Asset registry Promise
- * @transaction
- */
-function CreateCompoundOrg(tx) {
-
-  console.log('Invoking function processor create CompoundOrg');
-  console.log(tx);
-
-  // Get the asset registry for the asset.
-  return getAssetRegistry('org.digitalcmr.CompoundOrg')
-    .then(function (assetRegistry) {
-      return assetRegistry.add(tx.compoundOrg).catch(function (error) {
-        console.log('An error occurred while adding all the assets in the registry: ' + error);
-        throw error;
-      });
-    }).catch(function (error) {
-      console.log('An error occurred while saving the CompoundOrg asset', error);
-      throw error;
-    });
-
-}
-
-/**
- * Create CarrierOrg transaction processor function.
- * @param {org.digitalcmr.CreateCarrierOrg} tx  - The CreateCarrierOrg transaction
- * @return {Promise} Asset registry Promise
- * @transaction
- */
-function CreateCarrierOrg(tx) {
-
-  console.log('Invoking function processor create CarrierOrg');
-  console.log(tx);
-
-  // Get the asset registry for the asset.
-  return getAssetRegistry('org.digitalcmr.CarrierOrg')
-    .then(function (assetRegistry) {
-      return assetRegistry.add(tx.carrierOrg).catch(function (error) {
-        console.log('An error occurred while adding all the assets in the registry: ' + error);
-        throw error;
-      });
-    }).catch(function (error) {
-      console.log('An error occurred while saving the CarrierOrg asset', error);
-      throw error;
-    });
-
-}
-
-/**
- * Create RecipientOrg transaction processor function.
- * @param {org.digitalcmr.CreateRecipientOrg} tx  - The RecipientOrg transaction
- * @return {Promise} Asset registry Promise
- * @transaction
- */
-function CreateRecipientOrg(tx) {
-
-  console.log('Invoking function processor create RecipientOrg');
-  console.log(tx);
-
-  // Get the asset registry for the asset.
-  return getAssetRegistry('org.digitalcmr.RecipientOrg')
-    .then(function (assetRegistry) {
-      return assetRegistry.add(tx.recipientOrg).catch(function (error) {
-        console.log('An error occurred while adding all the assets in the registry: ' + error);
-        throw error;
-      });
-    }).catch(function (error) {
-      console.log('An error occurred while saving the RecipientOrg asset: ' + error);
-      throw error;
-    });
-
-}
-
-/**
- * Create RecipientOrg transaction processor function.
- * @param {org.digitalcmr.CreateVehicles} tx  - The CreateVehicles transaction
- * @return {Promise} Asset registry Promise
- * @transaction
- */
-function CreateVehicles(tx) {
-
-  console.log('Invoking function processor CreateVehicles');
-  console.log(tx);
-
-  // Get the asset registry for the asset.
-  return getAssetRegistry('org.digitalcmr.Vehicle')
-    .then(function (assetRegistry) {
-      return assetRegistry.addAll(tx.vehicles).catch(function (error) {
-        console.log('An error occurred while addAll the Vehicle assets: ' + error);
-        throw error;
-      });
-    }).catch(function (error) {
-      console.log('An error occurred while saving the Vehicle assets: ' + error);
-      throw error;
-    });
-
 }
 
 /**
@@ -294,40 +177,4 @@ function UpdateECMR(tx) {
           throw error;
         });
     });
-}
-
-/**
- * Create UpdateRegistrationCountry transaction processor function.
- * @param {org.digitalcmr.UpdateRegistrationCountry} tx  - Create registration country transaction
- * @return {Promise} Asset registry Promise
- * @transaction
- */
-function UpdateRegistrationCountry(tx) {
-
-  console.log('Invoking function processor to update RegistrationCountry');
-  console.log(tx);
-  console.log(tx.vin);
-
-  // Get the asset registry for the asset.
-  return getAssetRegistry('org.digitalcmr.Vehicle')
-    .then(function (assetRegistry) {
-      return assetRegistry.get(tx.vin).catch(function (error) {
-        console.log('[Update Vehicle] An error occurred while updating the registry asset: ' + error);
-        throw error;
-      });
-    })
-    .then(function (vehicle) {
-      vehicle.registrationCountry = tx.registrationCountry;
-
-      return getAssetRegistry('org.digitalcmr.Vehicle')
-        .then(function (assetRegistry) {
-          return assetRegistry.update(vehicle).catch(function (error) {
-            console.log('[Update Vehicle] An error occurred while updating the registry asset: ' + error);
-            throw error;
-          });
-        }).catch(function (error) {
-          console.log('[Update Vehicle] An error occurred while updating the Vehicle asset: ' + error);
-          throw error;
-        });
-    })
 }

@@ -16,6 +16,20 @@ export class EcmrDetailComponent implements OnInit {
   public ecmrID: string;
   public ecmr: EcmrInterface;
   public selectedColumns: boolean[];
+  public EcmrStatus = {
+    CREATED:             'CREATED',
+    LOADED:              'LOADED',
+    IN_TRANSIT:          'IN_TRANSIT',
+    DELIVERED:           'DELIVERED',
+    CONFIRMED_DELIVERED: 'CONFIRMED_DELIVERED'
+  };
+
+  public User = {
+    CompoundAdmin:   'CompoundAdmin',
+    CarrierMember:   'CarrierMember',
+    RecipientMember: 'RecipientMember',
+    LegalOwnerAdmin: 'LegalOwnerAdmin'
+  };
 
   public constructor(private route: ActivatedRoute,
                      private ecmrService: EcmrService,
@@ -32,39 +46,41 @@ export class EcmrDetailComponent implements OnInit {
           this.ecmr     = ecmr;
           this.userRole = JSON.parse(localStorage.getItem('currentUser')).user.role;
           switch (this.ecmr.status) {
-            case 'CREATED': {
+            case this.EcmrStatus.CREATED: {
               this.selectedColumns[0] = true;
               break;
             }
-            case 'LOADED': {
+            case this.EcmrStatus.LOADED: {
               this.selectedColumns[1] = true;
               break;
             }
-            case 'IN_TRANSIT': {
+            case this.EcmrStatus.IN_TRANSIT: {
               this.selectedColumns[2] = true;
               break;
             }
-            case 'DELIVERED': {
-              if (this.userRole === 'LegalOwnerAdmin') {
+            case this.EcmrStatus.DELIVERED: {
+              if (this.userRole === this.User.LegalOwnerAdmin) {
                 this.selectedColumns[0] = true;
                 break;
               }
               this.selectedColumns[3] = true;
               break;
             }
-            case 'CONFIRMED_DELIVERED': {
+            case this.EcmrStatus.CONFIRMED_DELIVERED: {
               this.selectedColumns[3] = true;
               break;
             }
           }
           this.instantiateRemarks();
-          if (this.userRole === 'CompoundAdmin' && !this.ecmr.compoundSignature) {
+          if (this.userRole === this.User.CompoundAdmin && !this.ecmr.compoundSignature) {
             this.ecmr.compoundSignature = this.imitateSignature();
-          } else if (this.userRole === 'CarrierMember' && this.ecmr.status === 'LOADED' && !this.ecmr.carrierDeliverySignature) {
+          } else if (this.userRole === this.User.CarrierMember && this.ecmr.status === this.EcmrStatus.LOADED
+            && !this.ecmr.carrierDeliverySignature) {
             this.ecmr.carrierLoadingSignature = this.imitateSignature();
-          } else if (this.userRole === 'CarrierMember' && this.ecmr.status === 'IN_TRANSIT' && !this.ecmr.carrierDeliverySignature) {
+          } else if (this.userRole === this.User.CarrierMember && this.ecmr.status === this.EcmrStatus.IN_TRANSIT
+            && !this.ecmr.carrierDeliverySignature) {
             this.ecmr.carrierDeliverySignature = this.imitateSignature();
-          } else if (this.userRole === 'RecipientMember' && !this.ecmr.recipientSignature) {
+          } else if (this.userRole === this.User.RecipientMember && !this.ecmr.recipientSignature) {
             this.ecmr.recipientSignature = this.imitateSignature();
           }
         });
