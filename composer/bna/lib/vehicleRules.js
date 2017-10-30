@@ -1,0 +1,74 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * Create RecipientOrg transaction processor function.
+ * @param {org.digitalcmr.CreateVehicles} tx  - The CreateVehicles transaction
+ * @return {Promise} Asset registry Promise
+ * @transaction
+ */
+function CreateVehicles(tx) {
+
+  console.log('Invoking function processor CreateVehicles');
+  console.log(tx);
+
+  // Get the asset registry for the asset.
+  return getAssetRegistry('org.digitalcmr.Vehicle')
+    .then(function (assetRegistry) {
+      return assetRegistry.addAll(tx.vehicles).catch(function (error) {
+        console.log('An error occurred while addAll the Vehicle assets: ' + error);
+        throw error;
+      });
+    }).catch(function (error) {
+      console.log('An error occurred while saving the Vehicle assets: ' + error);
+      throw error;
+    });
+
+}
+
+/**
+ * Create UpdateRegistrationCountry transaction processor function.
+ * @param {org.digitalcmr.UpdateRegistrationCountry} tx  - Create registration country transaction
+ * @return {Promise} Asset registry Promise
+ * @transaction
+ */
+function UpdateRegistrationCountry(tx) {
+
+  console.log('Invoking function processor to update RegistrationCountry');
+  console.log(tx);
+  console.log(tx.vin);
+
+  // Get the asset registry for the asset.
+  return getAssetRegistry('org.digitalcmr.Vehicle')
+    .then(function (assetRegistry) {
+      return assetRegistry.get(tx.vin).catch(function (error) {
+        console.log('[Update Vehicle] An error occurred while updating the registry asset: ' + error);
+        throw error;
+      });
+    })
+    .then(function (vehicle) {
+      vehicle.registrationCountry = tx.registrationCountry;
+
+      return getAssetRegistry('org.digitalcmr.Vehicle')
+        .then(function (assetRegistry) {
+          return assetRegistry.update(vehicle).catch(function (error) {
+            console.log('[Update Vehicle] An error occurred while updating the registry asset: ' + error);
+            throw error;
+          });
+        }).catch(function (error) {
+          console.log('[Update Vehicle] An error occurred while updating the Vehicle asset: ' + error);
+          throw error;
+        });
+    })
+}

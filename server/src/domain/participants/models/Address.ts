@@ -6,8 +6,8 @@ export class Address {
   public city: string;
   public zipCode: string;
   public country: string;
-  public latitude: string;
-  public longitude: string;
+  public latitude: number;
+  public longitude: number;
 
   public constructor(address: any) {
     this.$class      = address.$class;
