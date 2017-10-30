@@ -2,175 +2,184 @@
  * System ACL
  */
 
- rule SystemACL {
-   description:  "System ACL to permit all access"
-   participant: "org.hyperledger.composer.system.Participant"
-   operation: ALL
-   resource: "org.hyperledger.composer.system.**"
-   action: ALLOW
- }
+rule SystemACL {
+    description:  "System ACL to permit all access"
+    participant: "org.hyperledger.composer.system.Participant"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}
 
 rule EveryBodyCanReadVehicles {
-   description:  "Allow everybody to read vehicle data"
-   participant: "org.hyperledger.composer.system.Participant"
-   operation: READ
-   resource: "org.digitalcmr.Vehicle"
-   action: ALLOW
- }
+    description:  "Allow everybody to read vehicle data"
+    participant: "org.hyperledger.composer.system.Participant"
+    operation: READ
+    resource: "org.digitalcmr.Vehicle"
+    action: ALLOW
+}
 
 /**
  * Digital CMR permission list
  */
 
- /**
-  * Leaseplan permission list
-  */
-  rule LegalOwnerAdminCanReadAndCreateECMR {
-        description: "Allow Legal Owner Admin to CREATE an eCMR"
-        participant(p): "org.digitalcmr.LegalOwnerAdmin"
-        operation: READ, CREATE
-        resource(r): "org.digitalcmr.ECMR"
-        condition: (r.owner.getIdentifier() === p.org.getIdentifier())
-        action: ALLOW
-   }
+/**
+ * Leaseplan permission list
+ */
 
- rule LegalOwnerAdminCanCreateECMRCreateTransaction {
-      description: "Allow Legal Owner Admin to CREATE an eCMR create transaction"
-      participant: "org.digitalcmr.LegalOwnerAdmin"
-      operation: CREATE
-      resource: "org.digitalcmr.CreateECMR"
-      action: ALLOW
- }
+rule LegalOwnerAdminCanReadAndCreateECMR {
+    description: "Allow Legal Owner Admin to CREATE an eCMR"
+    participant(p): "org.digitalcmr.LegalOwnerAdmin"
+    operation: READ, CREATE
+    resource(r): "org.digitalcmr.ECMR"
+    condition: (r.owner.getIdentifier() === p.org.getIdentifier())
+    action: ALLOW
+}
 
- rule LegalOwnerAdminCanSubmitCreateECMR {
-     description: "Allow Legal Owner Admin to Submit a CREATE eCMR transaction for his organization"
-     participant: "org.digitalcmr.LegalOwnerAdmin"
-     operation: CREATE
-     resource: "org.digitalcmr.ECMR"
-     transaction: "org.digitalcmr.CreateECMR"
-     action: ALLOW
- }
+rule LegalOwnerAdminCanCreateECMRCreateTransaction {
+    description: "Allow Legal Owner Admin to CREATE an eCMR create transaction"
+    participant: "org.digitalcmr.LegalOwnerAdmin"
+    operation: CREATE
+    resource: "org.digitalcmr.CreateECMR"
+    action: ALLOW
+}
+
+rule LegalOwnerAdminCanSubmitCreateECMR {
+    description: "Allow Legal Owner Admin to Submit a CREATE eCMR transaction for his organization"
+    participant: "org.digitalcmr.LegalOwnerAdmin"
+    operation: CREATE
+    resource: "org.digitalcmr.ECMR"
+    transaction: "org.digitalcmr.CreateECMR"
+    action: ALLOW
+}
 
 /**
  * Compound permission list
  */
 
 rule CompoundAdminCanReadECMR {
-     description: "Allow Compound Admin to READ all eCMR where his org is a source"
-     participant(p): "org.digitalcmr.CompoundAdmin"
-     operation: READ
-     resource(r): "org.digitalcmr.ECMR"
-     condition: (r.source.getIdentifier() === p.org.getIdentifier())
-     action: ALLOW
- }
+    description: "Allow Compound Admin to READ all eCMR where his org is a source"
+    participant(p): "org.digitalcmr.CompoundAdmin"
+    operation: READ
+    resource(r): "org.digitalcmr.ECMR"
+    condition: (r.source.getIdentifier() === p.org.getIdentifier())
+    action: ALLOW
+}
 
- rule CompoundAdminCanCreateECMRUpdateTransaction {
-      description: "Allow Legal Owner Admin to CREATE an eCMR update transaction"
-      participant: "org.digitalcmr.CompoundAdmin"
-      operation: CREATE
-      resource: "org.digitalcmr.UpdateECMR"
-      action: ALLOW
- }
+rule CompoundAdminCanCreateECMRUpdateTransaction {
+    description: "Allow Legal Owner Admin to CREATE an eCMR update transaction"
+    participant: "org.digitalcmr.CompoundAdmin"
+    operation: CREATE
+    resource: "org.digitalcmr.UpdateECMR"
+    action: ALLOW
+}
 
- rule CompoundAdminCanSubmitUpdateECMR {
-     description: "Allow CompoundAdmin to Submit a Update eCMR transaction for his organization and status LOADED"
-     participant(p): "org.digitalcmr.CompoundAdmin"
-     operation: UPDATE
-     resource(r): "org.digitalcmr.ECMR"
-     transaction(tx): "org.digitalcmr.UpdateECMR"
-     condition: (r.source.getIdentifier() === p.org.getIdentifier() && r.status == 'CREATED' && tx.ecmr.status == "LOADED" && tx.ecmr.compoundSignature)
-     action: ALLOW
- }
-
-/**
-   * Carrier permission list
-   */
-
- rule CarrierAdminCanReadECMR {
-     description: "Allow Carrier Admin to READ all eCMR where his org is a carrier"
-     participant(p): "org.digitalcmr.CarrierAdmin"
-     operation: READ
-     resource(r): "org.digitalcmr.ECMR"
-     condition: (r.carrier.getIdentifier() === p.org.getIdentifier())
-     action: ALLOW
- }
-
- rule CarrierTransporterCanReadECMR {
-      description: "Allow Carrier Member to READ all his eCMR where he is a transporter"
-      participant(p): "org.digitalcmr.CarrierMember"
-      operation: READ
-      resource(ecmr): "org.digitalcmr.ECMR"
-      condition: (ecmr.carrier.getIdentifier() === p.org.getIdentifier() && ecmr.transporter.getIdentifier() === p.getIdentifier())
-      action: ALLOW
-  }
-
-  rule CarrierTransporterCreateECMRUpdateTransaction {
-        description: "Allow Transporter to CREATE an eCMR update transaction"
-        participant: "org.digitalcmr.CarrierMember"
-        operation: CREATE
-        resource: "org.digitalcmr.UpdateECMR"
-        action: ALLOW
-   }
-
-   rule CarrierTransporterCanSubmitUpdateECMRForLoading {
-       description: "Allow Transporter to Submit a Update eCMR transaction for his organization and status LOADED"
-       participant(p): "org.digitalcmr.CarrierMember"
-       operation: UPDATE
-       resource(r): "org.digitalcmr.ECMR"
-       transaction(tx): "org.digitalcmr.UpdateECMR"
-       condition: (r.transporter.getIdentifier() === p.getIdentifier() && r.status == 'LOADED' && tx.ecmr.status == "IN_TRANSIT" && tx.ecmr.carrierLoadingSignature)
-       action: ALLOW
-   }
-
-   rule CarrierTransporterCanSubmitUpdateECMRForDelivery {
-          description: "Allow Transporter to Submit a Update eCMR transaction for his organization and status LOADED"
-          participant(p): "org.digitalcmr.CarrierMember"
-          operation: UPDATE
-          resource(r): "org.digitalcmr.ECMR"
-          transaction(tx): "org.digitalcmr.UpdateECMR"
-          condition: (r.transporter.getIdentifier() === p.getIdentifier() && r.status == 'IN_TRANSIT' && tx.ecmr.status == "DELIVERED" && tx.ecmr.carrierDeliverySignature)
-          action: ALLOW
-      }
-
+rule CompoundAdminCanSubmitUpdateECMR {
+    description: "Allow CompoundAdmin to Submit an Update eCMR transaction for his organization and status LOADED"
+    participant(p): "org.digitalcmr.CompoundAdmin"
+    operation: UPDATE
+    resource(r): "org.digitalcmr.ECMR"
+    transaction(tx): "org.digitalcmr.UpdateECMR"
+    condition: (r.source.getIdentifier() === p.org.getIdentifier() && r.status == 'CREATED' && tx.ecmr.status == "LOADED" && tx.ecmr.compoundSignature)
+    action: ALLOW
+}
 
 /**
-   * Recipient permission list
-   */
+  * Carrier permission list
+  */
 
- rule RecipientAdminCanReadECMR {
-     description: "Allow Recipient Admin to READ all eCMR where his org is a recipient"
-     participant(p): "org.digitalcmr.RecipientAdmin"
-     operation: READ
-     resource(ecmr): "org.digitalcmr.ECMR"
-     condition: (ecmr.recipientOrg.getIdentifier() === p.org.getIdentifier())
-     action: ALLOW
- }
+rule CarrierAdminCanReadECMR {
+    description: "Allow Carrier Admin to READ all eCMR where his org is a carrier"
+    participant(p): "org.digitalcmr.CarrierAdmin"
+    operation: READ
+    resource(r): "org.digitalcmr.ECMR"
+    condition: (r.carrier.getIdentifier() === p.org.getIdentifier())
+    action: ALLOW
+}
 
- rule RecipientMemberCanReadHisECMR {
-      description: "Allow Recipient to READ his own eCMR (where he is a recipient)"
-      participant(p): "org.digitalcmr.RecipientMember"
-      operation: READ
-      resource(ecmr): "org.digitalcmr.ECMR"
-      condition: (ecmr.recipientOrg.getIdentifier() === p.org.getIdentifier() && ecmr.recipient.getIdentifier() === p.getIdentifier())
-      action: ALLOW
-  }
+rule CarrierMemberCanReadECMR {
+    description: "Allow Carrier Member to READ all eCMRs where he is a transporter and status is not Created"
+    participant(p): "org.digitalcmr.CarrierMember"
+    operation: READ
+    resource(ecmr): "org.digitalcmr.ECMR"
+    condition: (ecmr.carrier.getIdentifier() === p.org.getIdentifier() && ecmr.transporter.getIdentifier() === p.getIdentifier()
+    && ecmr.status != 'CREATED')
+    action: ALLOW
+}
 
-  rule RecipientMemberCanCreateECMRUpdateTransaction {
-          description: "Allow recipient member to CREATE an eCMR update transaction"
-          participant: "org.digitalcmr.RecipientMember"
-          operation: CREATE
-          resource: "org.digitalcmr.UpdateECMR"
-          action: ALLOW
-     }
+rule CarrierMemberCreateECMRUpdateTransaction {
+    description: "Allow Carrier Member to CREATE an eCMR update transaction"
+    participant: "org.digitalcmr.CarrierMember"
+    operation: CREATE
+    resource: "org.digitalcmr.UpdateECMR"
+    action: ALLOW
+}
 
-  rule recipientMemberCanSubmitUpdateECMRForConfirmed {
-        description: "Allow recipient to Submit a Update eCMR transaction for his organization and status LOADED"
-        participant(p): "org.digitalcmr.RecipientMember"
-        operation: UPDATE
-        resource(r): "org.digitalcmr.ECMR"
-        transaction(tx): "org.digitalcmr.UpdateECMR"
-        condition: (r.recipient.getIdentifier() === p.getIdentifier() && r.status == 'DELIVERED' && tx.ecmr.status == "CONFIRMED_DELIVERED" && tx.ecmr.recipientSignature)
-        action: ALLOW
-    }
+rule CarrierMemberCannotSubmitUpdateECMRForCreated {
+    description: "Prevent Carrier Member from submitting an Update eCMR transaction for his organization and for status CREATED"
+    participant(p): "org.digitalcmr.CarrierMember"
+    operation: UPDATE
+    resource(r): "org.digitalcmr.ECMR"
+    transaction(tx): "org.digitalcmr.UpdateECMR"
+    condition: (r.transporter.getIdentifier() === p.getIdentifier() && r.status == 'CREATED')
+    action: DENY
+}
 
+rule CarrierMemberCanSubmitUpdateECMRForLoading {
+    description: "Allow Carrier Member to Submit an Update eCMR transaction for his organization and status LOADED"
+    participant(p): "org.digitalcmr.CarrierMember"
+    operation: UPDATE
+    resource(r): "org.digitalcmr.ECMR"
+    transaction(tx): "org.digitalcmr.UpdateECMR"
+    condition: (r.transporter.getIdentifier() === p.getIdentifier() && r.status == 'LOADED' && tx.ecmr.status == "IN_TRANSIT" && tx.ecmr.carrierLoadingSignature)
+    action: ALLOW
+}
 
+rule CarrierMemberCanSubmitUpdateECMRForDelivery {
+    description: "Allow Carrier Member to Submit an Update eCMR transaction for his organization and status IN_TRANSIT"
+    participant(p): "org.digitalcmr.CarrierMember"
+    operation: UPDATE
+    resource(r): "org.digitalcmr.ECMR"
+    transaction(tx): "org.digitalcmr.UpdateECMR"
+    condition: (r.transporter.getIdentifier() === p.getIdentifier() && r.status == 'IN_TRANSIT' && tx.ecmr.status == "DELIVERED" && tx.ecmr.carrierDeliverySignature)
+    action: ALLOW
+}
+
+/**
+ * Recipient permission list
+ */
+
+rule RecipientAdminCanReadECMR {
+    description: "Allow Recipient Admin to READ all eCMR where his org is a recipient"
+    participant(p): "org.digitalcmr.RecipientAdmin"
+    operation: READ
+    resource(ecmr): "org.digitalcmr.ECMR"
+    condition: (ecmr.recipientOrg.getIdentifier() === p.org.getIdentifier())
+    action: ALLOW
+}
+
+rule RecipientMemberCanReadHisECMR {
+    description: "Allow Recipient to READ his own eCMR (where he is a recipient)"
+    participant(p): "org.digitalcmr.RecipientMember"
+    operation: READ
+    resource(ecmr): "org.digitalcmr.ECMR"
+    condition: (ecmr.recipientOrg.getIdentifier() === p.org.getIdentifier() && ecmr.recipient.getIdentifier() === p.getIdentifier())
+    action: ALLOW
+}
+
+rule RecipientMemberCanCreateECMRUpdateTransaction {
+    description: "Allow recipient member to CREATE an eCMR update transaction"
+    participant: "org.digitalcmr.RecipientMember"
+    operation: CREATE
+    resource: "org.digitalcmr.UpdateECMR"
+    action: ALLOW
+}
+
+rule recipientMemberCanSubmitUpdateECMRForConfirmed {
+    description: "Allow recipient to Submit an Update eCMR transaction for his organization and status LOADED"
+    participant(p): "org.digitalcmr.RecipientMember"
+    operation: UPDATE
+    resource(r): "org.digitalcmr.ECMR"
+    transaction(tx): "org.digitalcmr.UpdateECMR"
+    condition: (r.recipient.getIdentifier() === p.getIdentifier() && r.status == 'DELIVERED' && tx.ecmr.status == "CONFIRMED_DELIVERED" && tx.ecmr.recipientSignature)
+    action: ALLOW
+}

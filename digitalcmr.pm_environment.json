@@ -1,0 +1,70 @@
+{
+  "id": "d65b837e-63a3-433c-6162-501b964b2d03",
+  "name": "digital-cmr",
+  "values": [
+    {
+      "enabled": true,
+      "key": "localhost",
+      "type": "text",
+      "value": "http://localhost"
+    },
+    {
+      "enabled": true,
+      "key": "clientPort",
+      "type": "text",
+      "value": ":8080"
+    },
+    {
+      "enabled": true,
+      "key": "serverPort",
+      "type": "text",
+      "value": ":3000"
+    },
+    {
+      "enabled": true,
+      "key": "compoundToken",
+      "type": "text",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IndpbGxlbUBhbXN0ZXJkYW1jb21wb3VuZC5vcmciLCJzYWx0IjoiNDQ5YjhmODE3MDg3MDhmNTVhZTMyM2JkODdkYjA4MjEiLCJoYXNoIjoiZTJiOWZmYTdhYjg5OGVmM2MxYjQzMmY2ZWFhMDBlNzdhYzdjODlkOTkzMmU2OWQ3ZmQxN2EwZjZlYjI3MzVlNmI5NDZmNjNlZjFlNWUwM2E5ODY4YmQ5MzBkNTM0YzY1NjQ4Y2YzMTIyZTYyZGNkM2I5NjE4MTRhZDllZGU2YTAiLCJmaXJzdE5hbWUiOiJXaWxsZW0iLCJsYXN0TmFtZSI6IkNvbXB5Iiwicm9sZSI6IkNvbXBvdW5kQWRtaW4iLCJpZGVudGl0eSI6eyJ1c2VySUQiOiJ3aWxsZW1AYW1zdGVyZGFtY29tcG91bmQub3JnIiwidXNlclNlY3JldCI6IkNwRkhUdFBrVUtKdSJ9LCJpYXQiOjE1MDkzNTcxMzksImV4cCI6MTUwOTQ0MzUzOX0.6k6ZxTVlmN4dfWnQenEEnwnDWd3TK-bl_0FjIx62cvY"
+    },
+    {
+      "enabled": true,
+      "key": "legalOwnerToken",
+      "type": "text",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImxhcG9AbGVhc2VwbGFuLm9yZyIsInNhbHQiOiIwNjg5YzQzMTJkOTdhYjdhOTEwY2JjZTkyOTFlMzNlNCIsImhhc2giOiI5NzFiYTAzNmFlNjc3OWMwMjcxNDYwZTM3NDQzMzk5NTE4ZjM1NTM4YWM4NGRjYTE4NGU0MDdjMDk2NmMyOTFlODIzYzlhOTBkNjVmYWEwNjg4NDU5MWJmOGU1ZDJlZTY4YTQ5MDFmODNmYjQwNmRmZmVjNjgzYzFmODdkNDQyNyIsImZpcnN0TmFtZSI6IkxhcG8iLCJsYXN0TmFtZSI6IktlbGthbm4iLCJyb2xlIjoiTGVnYWxPd25lckFkbWluIiwiaWRlbnRpdHkiOnsidXNlcklEIjoibGFwb0BsZWFzZXBsYW4ub3JnIiwidXNlclNlY3JldCI6IkJxYm5MWXhTcGNjTyJ9LCJpYXQiOjE1MDkzNTcxMjgsImV4cCI6MTUwOTQ0MzUyOH0.WAckDuQ_cYvwUMwOeV3yqaztOPqRgjzk-sJzCYbEKvc"
+    },
+    {
+      "enabled": true,
+      "key": "carrierMemberToken",
+      "type": "text",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImhhcnJ5QGtvb3BtYW4ub3JnIiwic2FsdCI6ImJkOWY3ODkxMzU2NWVjZjEyMjk0MGNlMzY2MjVhMTQyIiwiaGFzaCI6IjE2NjNmNDMwMzJjNjdhODczOWYyM2FhMGZiNzBjMDI1OWViMjQ0NmJhNDM0N2ZjZWE0NTdlN2Y5YmQzMWE0MWU5MjcwZTBiNDc2MmYyMzRhYTYyZWRjZTFlZmZhZGE2NjcxZTgzMDc2NGFmMGIwNmIxMDFiOGRhYjIyODk1NDQzIiwiZmlyc3ROYW1lIjoiSGFycnkiLCJsYXN0TmFtZSI6IktvcHB5Iiwicm9sZSI6IkNhcnJpZXJNZW1iZXIiLCJpZGVudGl0eSI6eyJ1c2VySUQiOiJoYXJyeUBrb29wbWFuLm9yZyIsInVzZXJTZWNyZXQiOiJtbWpVUVlRdktTYm0ifSwiaWF0IjoxNTA5MzU3MTUwLCJleHAiOjE1MDk0NDM1NTB9.2uYoMYHjjFOyzivoEoNV0AL4JDDzvp21ChTdYAtcZ3M"
+    },
+    {
+      "enabled": true,
+      "key": "recipientToken",
+      "type": "text",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvYkBjYXJkZWFsZXIub3JnIiwic2FsdCI6ImJjYmYxOWI2NWNhNDc3Nzg1NWZmMDBiZmNlNTA1OWQ2IiwiaGFzaCI6IjdkZGVhYzkwMmE0ZWJiM2U1NzcxNWY0NzM3NjQxZjkyMGY3YmJlYWI1YmE2YmY0OGIxMTQzNzg5NTFhYzk3Yzk3Y2RjMDBmMDViZDBkODE5M2E5N2IyZWI1MzZjMWM3YjAxYjc4MGZkYThlNzY1YzhlNzlkNDRlNDNhMjAxYjEzIiwiZmlyc3ROYW1lIjoiUm9iIiwibGFzdE5hbWUiOiJDYXJtYW4iLCJyb2xlIjoiUmVjaXBpZW50TWVtYmVyIiwiaWRlbnRpdHkiOnsidXNlcklEIjoicm9iQGNhcmRlYWxlci5vcmciLCJ1c2VyU2VjcmV0IjoiT0ZpcFNsQmdZVFFjIn0sImlhdCI6MTUwOTM1NzE2NiwiZXhwIjoxNTA5NDQzNTY2fQ.MTiTWdMN7vIdpLN2TmmGt-pJ_9UtQ9laoJbetw4SbAA"
+    },
+    {
+      "enabled": true,
+      "key": "vinNumber",
+      "type": "text",
+      "value": "103726339N"
+    },
+    {
+      "enabled": true,
+      "key": "plateNumber",
+      "type": "text",
+      "value": "JV198RX"
+    },
+    {
+      "enabled": true,
+      "key": "status_CREATED",
+      "type": "text",
+      "value": "CREATED"
+    }
+  ],
+  "timestamp": 1509357178526,
+  "_postman_variable_scope": "environment",
+  "_postman_exported_at": "2017-10-30T10:04:39.222Z",
+  "_postman_exported_using": "Postman/5.3.1"
+}
