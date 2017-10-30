@@ -23,8 +23,8 @@ export class FilterByPipe implements PipeTransform {
           filtered.add(emcr);
         }
       });
-      ecmrProperties.forEach(property => {
-        if (emcr[property] !== undefined && emcr[property].toString().toLocaleLowerCase().indexOf(query) !== -1) {
+      ecmrProperties.forEach(ecmrProperty => {
+        if (emcr[ecmrProperty] !== undefined && emcr[ecmrProperty].toString().toLocaleLowerCase().indexOf(query) !== -1) {
           filtered.add(emcr);
         }
       });

@@ -17,11 +17,7 @@ export class SearchService {
     this.filterEcmr$ = this.filterEcmrSubject.asObservable();
   }
 
-  public searchData(data: any): void {
+  public searchData(data: Observable<any>): void {
     this.searchDataSubject.next(data);
-  }
-
-  public ecmrFilter(data: any): void {
-    this.filterEcmrSubject.next(data);
   }
 }

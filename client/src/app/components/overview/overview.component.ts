@@ -23,7 +23,6 @@ export class OverviewComponent implements OnInit {
                      private searchService: SearchService,
                      private _authenticationService: AuthenticationService,
                      public nav: NavbarService) {
-    // this.filterEcmr = 0;
     this.searchService.searchData$.subscribe((data: string) => {
       this.searchBarData = data;
     });
