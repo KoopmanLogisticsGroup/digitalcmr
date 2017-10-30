@@ -24,7 +24,10 @@ export class HeaderComponent implements OnInit {
   }
 
   public getUser() {
-    return this.authenticationService.isAuthenticated() ? JSON.parse(localStorage.getItem('currentUser')).user.firstName : '';
+    if (this.authenticationService.isAuthenticated()) {
+      return JSON.parse(localStorage.getItem('currentUser')).user;
+    }
+    return null;
   }
 
   public logout() {
@@ -32,7 +35,15 @@ export class HeaderComponent implements OnInit {
     this.authenticationService.logout();
   }
 
-  public showUserInfo(user): any {
-    return this.getUser() === user;
+  public showUserInfo(firstname): boolean {
+    return this.getUser().firstName.toLowerCase() === firstname;
+  }
+
+  public showLogo(): string {
+    if (this.getUser().username.toLowerCase() === 'lapo@leaseplan.org') {
+      return 'logoLeaseplan';
+    } else if (this.getUser().username.toLowerCase() === 'rob@cardealer.org') {
+      return 'logoCarDealer';
+    }
   }
 }
