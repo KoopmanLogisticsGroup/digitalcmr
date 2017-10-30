@@ -32,7 +32,7 @@ export class GeneralInfoComponent implements OnInit {
     this.defineSelectedColumn();
   }
 
-  public selectColumn(number) {
+  public selectColumn(number: number): void {
     if (this.ecmr.status === this.EcmrStatus.DELIVERED || this.ecmr.status === this.EcmrStatus.CONFIRMED_DELIVERED) {
       this.selectedImage.forEach((val, index) => {
         if (number === index) {
