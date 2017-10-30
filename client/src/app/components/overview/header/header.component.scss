@@ -8,7 +8,7 @@
     top:       50%;
     left:      11%;
     transform: translateY(-50%);
-    content:   url("../../../../assets/img/Koopman.jpg");
+    content: url("../../../../assets/img/koopman_logo.jpg");
   }
   .logoLeaseplan {
     position:  absolute;
@@ -17,7 +17,7 @@
     top:       50%;
     left:      11%;
     transform: translateY(-50%);
-    content:   url("../../../../assets/img/logo-leaseplan.svg");
+    content: url("../../../../assets/img/leaseplan_logo.svg");
   }
   .logoCarDealer {
     position:  absolute;
@@ -26,15 +26,15 @@
     top:       50%;
     left:      11%;
     transform: translateY(-50%);
-    content:   url("../../../../assets/img/icon-auto-seller.svg");
+    content: url("../../../../assets/img/auto_seller_logo.svg");
   }
   .logoutIcon {
     cursor:  pointer;
     width:   22px;
     height:  22px;
-    content: url("../../../../assets/icons/iconlogout.svg");
+    content: url("../../../../assets/icons/logout_icon_on.svg");
     &:hover {
-      content: url("../../../../assets/icons/icon-logout-off.svg");
+      content: url("../../../../assets/icons/logout_icon_off.svg");
     }
   }
   .logoutIcon:active {
@@ -66,7 +66,7 @@
   width:        1.2em;
   margin-right: 5%;
   color:        #3a3670;
-  content:      url("../../../../assets/icons/search.svg");
+  content: url("../../../../assets/icons/search_icon.svg");
   opacity:      1;
 }
 

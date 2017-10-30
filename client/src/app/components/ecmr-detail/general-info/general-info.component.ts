@@ -12,13 +12,28 @@ export class GeneralInfoComponent implements OnInit {
 
   public selectedImage: boolean[];
   public selectedColumnIs: any;
+  public EcmrStatus = {
+    CREATED:             'CREATED',
+    LOADED:              'LOADED',
+    IN_TRANSIT:          'IN_TRANSIT',
+    DELIVERED:           'DELIVERED',
+    CONFIRMED_DELIVERED: 'CONFIRMED_DELIVERED'
+  };
+
+  public User = {
+    LegalOwnerAdmin: 'LegalOwnerAdmin'
+  }
 
   public constructor(private _authenticationService: AuthenticationService) {
     this.selectedImage = [false, false, false, false];
   }
 
+  public ngOnInit() {
+    this.defineSelectedColumn();
+  }
+
   public selectColumn(number: number): void {
-    if (this.ecmr.status === 'DELIVERED' || this.ecmr.status === 'CONFIRMED_DELIVERED') {
+    if (this.ecmr.status === this.EcmrStatus.DELIVERED || this.ecmr.status === this.EcmrStatus.CONFIRMED_DELIVERED) {
       this.selectedImage.forEach((val, index) => {
         if (number === index) {
           this.selectedImage[index]   = true;
@@ -42,14 +57,18 @@ export class GeneralInfoComponent implements OnInit {
   }
 
   public userRole(): string {
-    if (this._authenticationService.isAuthenticated()) {
-      const userRole = JSON.parse(localStorage.getItem('currentUser')).user.role;
-      return userRole;
-    }
-    return null;
+    return this._authenticationService.isAuthenticated() ? JSON.parse(localStorage.getItem('currentUser')).user.role : '';
   }
 
-  public ngOnInit() {
-    this.defineSelectedColumn();
+  public selectImage() {
+    if (this.selectedImage[0] || this.userRole() === this.User.LegalOwnerAdmin) {
+      return 'selectedImg1';
+    } else if (this.selectedImage[1]) {
+      return 'selectedImg2';
+    } else if (this.selectedImage[2]) {
+      return 'selectedImg3';
+    } else if (this.selectedImage[3]) {
+      return 'selectedImg4';
+    }
   }
 }

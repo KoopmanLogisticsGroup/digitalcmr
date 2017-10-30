@@ -14,7 +14,6 @@ import {AuthenticationService} from './services/authentication.service';
 import {EcmrService} from './services/ecmr.service';
 import {HeaderComponent} from './components/overview/header/header.component';
 import {OverviewComponent} from './components/overview/overview.component';
-import {EcmrsComponent} from './components/overview/ecmrs/ecmrs.component';
 import {EcmrDetailComponent} from './components/ecmr-detail/ecmr-detail.component';
 import {GeneralInfoComponent} from './components/ecmr-detail/general-info/general-info.component';
 import {GoodsComponent} from './components/ecmr-detail/goods/goods.component';
@@ -29,7 +28,6 @@ import {NavbarService} from './services/navbar.service';
     LoginComponent,
     HeaderComponent,
     OverviewComponent,
-    EcmrsComponent,
     EcmrDetailComponent,
     GeneralInfoComponent,
     GoodsComponent,

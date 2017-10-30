@@ -18,6 +18,26 @@ export class OverviewComponent implements OnInit {
   private ecmrs: any;
   public ecmrsFiltered: any;
   public filterEcmr: any    = 0;
+  public EcmrStatus         = {
+    CREATED:             'CREATED',
+    LOADED:              'LOADED',
+    IN_TRANSIT:          'IN_TRANSIT',
+    DELIVERED:           'DELIVERED',
+    CONFIRMED_DELIVERED: 'CONFIRMED_DELIVERED'
+  };
+
+  public User = {
+    CompoundAdmin:   'CompoundAdmin',
+    CarrierMember:   'CarrierMember',
+    RecipientMember: 'RecipientMember',
+    LegalOwnerAdmin: 'LegalOwnerAdmin'
+  };
+
+  public viewStatus = {
+    OPEN:        'OPEN',
+    IN_PROGRESS: 'IN_PROGRESS',
+    COMPLETED:   'COMPLETED'
+  }
 
   public constructor(private ecmrService: EcmrService,
                      private searchService: SearchService,
@@ -35,25 +55,27 @@ export class OverviewComponent implements OnInit {
     this.nav.show();
     this.ecmrService.getAllEcmrs().subscribe(response => {
       this.ecmrs         = response instanceof Array ? response : [];
-      this.ecmrsFiltered = this.ecmrs.filter(ecmr => ecmr.status.toUpperCase() === 'CREATED');
+      this.ecmrsFiltered = this.ecmrs.filter(ecmr => ecmr.status.toUpperCase() === this.EcmrStatus.CREATED);
       this.firstView();
     });
   }
 
   private firstView(): void {
-    if (this.userRole() === 'amsterdamcompound') {
-      this.currentView = 'OPEN';
-    } else if (this.userRole() === 'CarrierMember' || this.userRole() === 'RecipientMember') {
-      this.currentView   = 'IN_PROGRESS';
+    if (this.getUserRole() === 'amsterdamcompound') {
+      this.currentView = this.viewStatus.OPEN;
+    } else if (this.getUserRole() === this.User.CarrierMember || this.getUserRole() === this.User.RecipientMember) {
+      this.currentView   = this.viewStatus.IN_PROGRESS;
       this.ecmrsFiltered = this.ecmrs.filter(ecmr => {
-        if (this.currentView === 'IN_PROGRESS' && (ecmr.status === 'LOADED' || ecmr.status === 'IN_TRANSIT')) {
+        if (this.currentView === this.viewStatus.IN_PROGRESS && (ecmr.status === this.EcmrStatus.LOADED
+            || ecmr.status === this.EcmrStatus.IN_TRANSIT)) {
           return ecmr;
         }
       });
-    } else if (this.userRole() === 'LegalOwnerAdmin') {
-      this.currentView   = 'COMPLETED';
+    } else if (this.getUserRole() === this.User.LegalOwnerAdmin) {
+      this.currentView   = this.viewStatus.COMPLETED;
       this.ecmrsFiltered = this.ecmrs.filter(ecmr => {
-        if (this.currentView === 'COMPLETED' && (ecmr.status === 'DELIVERED' || ecmr.status === 'CONFIRMED_DELIVERED')) {
+        if (this.currentView === this.viewStatus.COMPLETED && (ecmr.status === this.EcmrStatus.DELIVERED ||
+            ecmr.status === this.EcmrStatus.CONFIRMED_DELIVERED)) {
           return ecmr;
         }
       });
@@ -63,22 +85,20 @@ export class OverviewComponent implements OnInit {
   public setCurrentView(view: string): any {
     this.currentView   = view;
     this.ecmrsFiltered = this.ecmrs.filter(ecmr => {
-      if (this.currentView === 'OPEN' && ecmr.status === 'CREATED') {
+      if (this.currentView === this.viewStatus.OPEN && ecmr.status === this.EcmrStatus.CREATED) {
         return ecmr;
-      } else if (this.currentView === 'IN_PROGRESS' && (ecmr.status === 'LOADED' || ecmr.status === 'IN_TRANSIT')) {
+      } else if (this.currentView === this.viewStatus.IN_PROGRESS && (ecmr.status === this.EcmrStatus.LOADED ||
+          ecmr.status === this.EcmrStatus.IN_TRANSIT)) {
         return ecmr;
-      } else if (this.currentView === 'COMPLETED' && (ecmr.status === 'DELIVERED' || ecmr.status === 'CONFIRMED_DELIVERED')) {
+      } else if (this.currentView === this.viewStatus.COMPLETED && (ecmr.status === this.EcmrStatus.DELIVERED ||
+          ecmr.status === this.EcmrStatus.CONFIRMED_DELIVERED)) {
         return ecmr;
       }
     });
   }
 
-  public userRole(): string {
-    if (this._authenticationService.isAuthenticated()) {
-      const userRole = JSON.parse(localStorage.getItem('currentUser')).user.role;
-      return userRole;
-    }
-    return null;
+  public getUserRole(): string {
+    return this._authenticationService.isAuthenticated() ? JSON.parse(localStorage.getItem('currentUser')).user.role : '';
   }
 
   public hasComments(ecmr: any) {
@@ -103,7 +123,21 @@ export class OverviewComponent implements OnInit {
     }).length > 0;
   }
 
-  public clearSearchBar() {
+  public clearSearchBar(): void {
     this.searchBarData = '';
+  }
+
+  public returnStatus(ecmr: any): string {
+    if (ecmr && ecmr.status === this.EcmrStatus.CREATED) {
+      return 'open-status';
+    } else if (ecmr && ecmr.status === this.EcmrStatus.LOADED) {
+      return 'awaiting-status';
+    } else if (ecmr && ecmr.status === this.EcmrStatus.IN_TRANSIT) {
+      return 'transit-status';
+    } else if (ecmr && ecmr.status === this.EcmrStatus.DELIVERED) {
+      return 'completed-status';
+    } else if (ecmr && ecmr.status === this.EcmrStatus.CONFIRMED_DELIVERED) {
+      return 'confirmed-status';
+    }
   }
 }
