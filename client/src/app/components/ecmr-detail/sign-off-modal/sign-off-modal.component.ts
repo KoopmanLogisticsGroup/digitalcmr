@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {EcmrService} from '../../../services/ecmr.service';
 import {AuthenticationService} from '../../../services/authentication.service';
+import {EcmrInterface} from '../../../interfaces/ecmr.interface';
 import * as GeoLib from 'geolib';
 
 @Component({
@@ -11,7 +12,7 @@ import * as GeoLib from 'geolib';
 
 export class SignOffModalComponent implements OnInit {
 
-  @Input() ecmr: any;
+  @Input() ecmr: EcmrInterface;
   public EcmrStatus = {
     CREATED:             'CREATED',
     LOADED:              'LOADED',
@@ -31,10 +32,10 @@ export class SignOffModalComponent implements OnInit {
                      private _authenticationService: AuthenticationService) {
   }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
   }
 
-  public open(ecmr: any): void {
+  public open(ecmr: EcmrInterface): void {
     this.ecmr = ecmr;
     $('#signoff-modal.ui.modal').modal('show');
     $('#signoff-modal.ui.modal').parent().css({'background-color': 'rgba(0,0,0,0.7)'});
@@ -45,7 +46,7 @@ export class SignOffModalComponent implements OnInit {
     $('#signoff-modal.ui.modal').modal('hide');
   }
 
-  public onSubmit() {
+  public onSubmit(): void {
     $('#submitButton').addClass('basic loading');
     this.ecmrService.updateEcmr(this.ecmr).subscribe(result => {
       $('#signoff-modal.ui.modal').modal('hide');
@@ -57,7 +58,7 @@ export class SignOffModalComponent implements OnInit {
     return this._authenticationService.isAuthenticated() ? JSON.parse(localStorage.getItem('currentUser')).user.role : '';
   }
 
-  private simulateCoordinates() {
+  private simulateCoordinates(): void {
     switch (this.getUserRole()) {
       case 'CompoundAdmin': {
         const start                           = {

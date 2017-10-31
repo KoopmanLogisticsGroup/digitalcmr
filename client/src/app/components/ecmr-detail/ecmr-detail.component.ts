@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {EcmrService} from '../../services/ecmr.service';
 import {ActivatedRoute} from '@angular/router';
 import {NavbarService} from '../../services/navbar.service';
+import {EcmrInterface} from '../../interfaces/ecmr.interface';
+import {SignatureInterface} from '../../interfaces/signature.interface';
+import {RemarkInterface} from '../../interfaces/remark.interface';
 
 @Component({
   selector:    'app-ecmr-detail',
@@ -11,8 +14,8 @@ import {NavbarService} from '../../services/navbar.service';
 export class EcmrDetailComponent implements OnInit {
 
   public userRole: string;
-  public ecmrID: any;
-  public ecmr: any;
+  public ecmrID: string;
+  public ecmr: EcmrInterface;
   public selectedColumns: boolean[];
   public EcmrStatus = {
     CREATED:             'CREATED',
@@ -35,13 +38,12 @@ export class EcmrDetailComponent implements OnInit {
     this.selectedColumns = [false, false, false, false];
   }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.nav.show();
     this.route.params
       .subscribe(params => {
         this.ecmrID = params['ecmrID'];
-        this.ecmrService.getECMRByID(this.ecmrID).subscribe((ecmr: {}) => {
-          console.log(ecmr);
+        this.ecmrService.getECMRByID(this.ecmrID).subscribe((ecmr: EcmrInterface) => {
           this.ecmr     = ecmr;
           this.userRole = JSON.parse(localStorage.getItem('currentUser')).user.role;
           switch (this.ecmr.status) {
@@ -72,26 +74,31 @@ export class EcmrDetailComponent implements OnInit {
           }
           this.instantiateRemarks();
           if (this.userRole === this.User.CompoundAdmin && !this.ecmr.compoundSignature) {
-            this.ecmr.compoundSignature                        = {};
-            this.ecmr.compoundSignature.generalRemark          = {};
-            this.ecmr.compoundSignature.generalRemark.comments = '';
+            this.ecmr.compoundSignature = this.placeEmptySignature();
           } else if (this.userRole === this.User.CarrierMember && this.ecmr.status === this.EcmrStatus.LOADED
             && !this.ecmr.carrierDeliverySignature) {
-            this.ecmr.carrierLoadingSignature                        = {};
-            this.ecmr.carrierLoadingSignature.generalRemark          = {};
-            this.ecmr.carrierLoadingSignature.generalRemark.comments = '';
+            this.ecmr.carrierLoadingSignature = this.placeEmptySignature();
           } else if (this.userRole === this.User.CarrierMember && this.ecmr.status === this.EcmrStatus.IN_TRANSIT
             && !this.ecmr.carrierDeliverySignature) {
-            this.ecmr.carrierDeliverySignature                        = {};
-            this.ecmr.carrierDeliverySignature.generalRemark          = {};
-            this.ecmr.carrierDeliverySignature.generalRemark.comments = '';
+            this.ecmr.carrierDeliverySignature = this.placeEmptySignature();
           } else if (this.userRole === this.User.RecipientMember && !this.ecmr.recipientSignature) {
-            this.ecmr.recipientSignature                        = {};
-            this.ecmr.recipientSignature.generalRemark          = {};
-            this.ecmr.recipientSignature.generalRemark.comments = '';
+            this.ecmr.recipientSignature = this.placeEmptySignature();
           }
         });
       });
+  }
+
+  private placeEmptySignature(): SignatureInterface {
+    return <SignatureInterface> {
+      longitude:     0,
+      latitude:      0,
+      certificate:   this.userRole,
+      timestamp:     0,
+      generalRemark: {
+        comments:  '',
+        isDamaged: false
+      }
+    }
   }
 
   public instantiateRemarks(): void {
