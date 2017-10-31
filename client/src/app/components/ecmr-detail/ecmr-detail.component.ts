@@ -4,6 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {NavbarService} from '../../services/navbar.service';
 import {EcmrInterface} from '../../interfaces/ecmr.interface';
 import {SignatureInterface} from '../../interfaces/signature.interface';
+import {RemarkInterface} from '../../interfaces/remark.interface';
 
 @Component({
   selector:    'app-ecmr-detail',
@@ -73,30 +74,31 @@ export class EcmrDetailComponent implements OnInit {
           }
           this.instantiateRemarks();
           if (this.userRole === this.User.CompoundAdmin && !this.ecmr.compoundSignature) {
-            this.ecmr.compoundSignature = this.imitateSignature();
+            this.ecmr.compoundSignature = this.placeEmptySignature();
           } else if (this.userRole === this.User.CarrierMember && this.ecmr.status === this.EcmrStatus.LOADED
             && !this.ecmr.carrierDeliverySignature) {
-            this.ecmr.carrierLoadingSignature = this.imitateSignature();
+            this.ecmr.carrierLoadingSignature = this.placeEmptySignature();
           } else if (this.userRole === this.User.CarrierMember && this.ecmr.status === this.EcmrStatus.IN_TRANSIT
             && !this.ecmr.carrierDeliverySignature) {
-            this.ecmr.carrierDeliverySignature = this.imitateSignature();
+            this.ecmr.carrierDeliverySignature = this.placeEmptySignature();
           } else if (this.userRole === this.User.RecipientMember && !this.ecmr.recipientSignature) {
-            this.ecmr.recipientSignature = this.imitateSignature();
+            this.ecmr.recipientSignature = this.placeEmptySignature();
           }
         });
       });
   }
 
-  private imitateSignature(): SignatureInterface {
-    return {
-      certificate: this.userRole,
-      latitude: 0,
-      longitude: 0,
+  private placeEmptySignature(): SignatureInterface {
+    return <SignatureInterface> {
+      longitude:     0,
+      latitude:      0,
+      certificate:   this.userRole,
+      timestamp:     0,
       generalRemark: {
-        isDamaged: false,
-        comments: ''
+        comments:  '',
+        isDamaged: false
       }
-    };
+    }
   }
 
   public instantiateRemarks(): void {

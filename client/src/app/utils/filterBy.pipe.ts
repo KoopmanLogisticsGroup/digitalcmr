@@ -8,14 +8,14 @@ export class FilterByPipe implements PipeTransform {
   public constructor() {
   }
 
-  public transform(arrayOfEcmrs: any[], query: string): any[] {
-    if (!(arrayOfEcmrs && arrayOfEcmrs.length && (typeof query === 'string')) || query === '') {
-      return arrayOfEcmrs;
+  public transform(ecmrs: any[], query: string): any[] {
+    if (!(ecmrs && ecmrs.length && (typeof query === 'string')) || query === '') {
+      return ecmrs;
     }
     query = query.toLocaleLowerCase();
-    const ecmrProperties     = Object.keys(arrayOfEcmrs[0]);
+    const ecmrProperties     = Object.keys(ecmrs[0]);
     const filtered = new Set;
-    arrayOfEcmrs.forEach(emcr => {
+    ecmrs.forEach(emcr => {
       emcr.goods.filter(good => {
         if (good.vehicle.vin.toString().toLocaleLowerCase().indexOf(query) !== -1) {
           filtered.add(emcr);
