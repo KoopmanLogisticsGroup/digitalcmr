@@ -69,3 +69,4 @@ dist/
 composer/bna/*.bna
 config/credentials
 out/
+package-lock.json
