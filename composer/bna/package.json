@@ -5,18 +5,18 @@
   "scripts":              {
     "prepublish": "mkdirp ./dist && composer archive create --sourceType dir --sourceName . -a ./dist/digital-cmr-network.bna",
     "pretest":    "npm run lint",
-    "lint":       "eslint .",
+    "lint":       "./node_modules/.bin/eslint .",
     "postlint":   "npm run licchk",
     "licchk":     "license-check",
     "postlicchk": "npm run doc",
     "doc":        "jsdoc --pedantic --recurse -c jsdoc.conf",
-    "test-inner": "mocha --recursive && cucumber-js",
+    "test-inner": "./node_modules/.bin/mocha --recursive && ./node_modules/.bin/cucumber-js",
     "test-cover": "nyc npm run test-inner",
     "test":       "npm run test-inner"
   },
   "repository":           {
     "type": "git",
-    "url": "https://github.com/hyperledger/composer-sample-networks.git"
+    "url":  "https://github.com/hyperledger/composer-sample-networks.git"
   },
   "keywords":             [
     "sample",
@@ -44,34 +44,34 @@
     "nyc":                         "11.1.0"
   },
   "license-check-config": {
-    "src": [
+    "src":      [
       "**/*.js",
       "!./coverage/**/*",
       "!./node_modules/**/*",
       "!./out/**/*",
       "!./scripts/**/*"
     ],
-    "path": "header.txt",
+    "path":     "header.txt",
     "blocking": true,
-    "logInfo": false,
+    "logInfo":  false,
     "logError": true
   },
   "nyc":                  {
-    "exclude": [
+    "exclude":        [
       "coverage/**",
       "features/**",
       "out/**",
       "test/**"
     ],
-    "reporter": [
+    "reporter":       [
       "text-summary",
       "html"
     ],
-    "all": true,
+    "all":            true,
     "check-coverage": true,
-    "statements": 100,
-    "branches": 100,
-    "functions": 100,
-    "lines": 100
+    "statements":     100,
+    "branches":       100,
+    "functions":      100,
+    "lines":          100
   }
 }

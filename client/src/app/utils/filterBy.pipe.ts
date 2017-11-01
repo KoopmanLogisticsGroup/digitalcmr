@@ -12,9 +12,9 @@ export class FilterByPipe implements PipeTransform {
     if (!(ecmrs && ecmrs.length && (typeof query === 'string')) || query === '') {
       return ecmrs;
     }
-    query = query.toLocaleLowerCase();
-    const ecmrProperties     = Object.keys(ecmrs[0]);
-    const filtered = new Set;
+    query                = query.toLocaleLowerCase();
+    const ecmrProperties = Object.keys(ecmrs[0]);
+    const filtered       = new Set;
     ecmrs.forEach(emcr => {
       emcr.goods.filter(good => {
         if (good.vehicle.vin.toString().toLocaleLowerCase().indexOf(query) !== -1) {

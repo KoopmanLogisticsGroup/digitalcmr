@@ -17,9 +17,9 @@ export class AuthenticationService {
                      private _configuration: Configuration) {
     this.actionUrl = `${_configuration.apiHost}${_configuration.apiPrefix}login`;
     // set token if saved in local storage
-    this.token = this.getToken();
+    this.token     = this.getToken();
     this.TOKEN_KEY = 'token';
-    this.USER_KEY = 'currentUser';
+    this.USER_KEY  = 'currentUser';
   }
 
   public login(username: string, password: string): Observable<any> {
