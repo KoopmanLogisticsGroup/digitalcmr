@@ -18,8 +18,8 @@ export class LoginComponent implements OnInit {
                      private _authenticationService: AuthenticationService) {
     this.username = '';
     this.password = '';
-    this.loading = false;
-    this.error = false;
+    this.loading  = false;
+    this.error    = false;
   }
 
   public ngOnInit(): void {

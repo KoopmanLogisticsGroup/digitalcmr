@@ -49,7 +49,7 @@ export class OverviewComponent implements OnInit {
     this.searchService.filterEcmr$.subscribe((data: number) => {
       this.filterEcmr = data;
     });
-    this.currentView = this.viewStatus.OPEN;
+    this.currentView   = this.viewStatus.OPEN;
     this.searchBarData = '';
   }
 
