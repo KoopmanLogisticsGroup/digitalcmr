@@ -1,5 +1,4 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {SearchService} from '../services/search.service';
 
 @Pipe({
   name: 'filterBy'
@@ -29,7 +28,6 @@ export class FilterByPipe implements PipeTransform {
         }
       });
     });
-
     return Array.from(filtered);
   }
 }

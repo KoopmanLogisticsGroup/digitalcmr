@@ -192,6 +192,14 @@ concept Signature {
  * Transactions
  */
 
+transaction CreateTransportOrder {
+  o TransportOrder transportOrder
+}
+
+transaction CreateTransportOrders {
+  o TransportOrder[] transportOrders
+}
+
 transaction CreateECMR {
   o ECMR ecmr
 }

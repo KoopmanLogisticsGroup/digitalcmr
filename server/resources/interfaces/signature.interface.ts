@@ -5,5 +5,5 @@ export interface SignatureInterface {
   latitude: number;
   certificate: string;
   timestamp: number;
-  generalRemark: RemarkInterface;
+  generalRemark:  RemarkInterface;
 }

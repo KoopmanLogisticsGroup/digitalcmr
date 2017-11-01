@@ -2,13 +2,14 @@ import {RemarkInterface} from './remark.interface';
 import {VehicleInterface} from './vehicle.interface';
 import {CancellationInterface} from './cancellation.interface';
 
-export interface GoodsInterface {
+export interface GoodInterface {
   refObject: VehicleInterface;
   compoundRemark: RemarkInterface;
   carrierLoadingRemark: RemarkInterface;
   carrierDeliveryRemark: RemarkInterface;
   recipientRemark: RemarkInterface;
   description: string;
+  vehicle: VehicleInterface;
   weight: number;
   loadingStartDate: number;
   loadingEndDate: number;

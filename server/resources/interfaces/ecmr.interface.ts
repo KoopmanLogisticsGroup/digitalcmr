@@ -1,6 +1,6 @@
 import {LoadingInterface} from './loading.interface';
 import {SignatureInterface} from './signature.interface';
-import {GoodsInterface} from './goods.interface';
+import {GoodInterface} from './good.interface';
 import {RemarkInterface} from './remark.interface';
 import {UserBlockchainInterface} from './user.blockchain.interface';
 import {AddressInterface} from './address.interface';
@@ -41,5 +41,5 @@ export interface EcmrInterface {
   generalRemark: RemarkInterface;
   carrierDeliverySignature: SignatureInterface;
   recipientSignature: SignatureInterface;
-  goods: GoodsInterface[];
+  goods: GoodInterface[];
 }
