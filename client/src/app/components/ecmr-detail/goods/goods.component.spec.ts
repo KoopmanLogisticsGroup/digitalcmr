@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { GoodsComponent } from './goods.component';
+import {GoodsComponent} from './goods.component';
 
 describe('GoodsComponent', () => {
   let component: GoodsComponent;
@@ -8,13 +8,13 @@ describe('GoodsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GoodsComponent ]
-    })
-    .compileComponents();
+        declarations: [GoodsComponent]
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GoodsComponent);
+    fixture   = TestBed.createComponent(GoodsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

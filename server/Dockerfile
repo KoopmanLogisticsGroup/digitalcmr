@@ -4,19 +4,8 @@ FROM node:6.11.2
 RUN mkdir -p /usr/src/app/
 WORKDIR /usr/src/app
 
-# Grunt
-RUN npm install -g grunt --loglevel error
-
-# Make sure to build with --build-arg NPM_TOKEN="${NPM_TOKEN)"
-ARG NPM_TOKEN
-COPY .npmrc /root/.npmrc
-COPY package.json package-lock.json ./
+COPY package.json package.json
 RUN npm install --loglevel error
 RUN npm cache clean
-RUN rm -f /root/.npmrc
 
 COPY . .
-
-COPY ./resources/connectionProfiles /root/.composer-connection-profiles
-
-RUN grunt build

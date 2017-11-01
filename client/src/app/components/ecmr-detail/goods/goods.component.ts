@@ -1,28 +1,43 @@
 import {Component, OnInit, Input, ViewChild} from '@angular/core';
 import {SignOffModalComponent} from '../sign-off-modal/sign-off-modal.component';
 import {AuthenticationService} from '../../../services/authentication.service';
+import {EcmrInterface} from '../../../interfaces/ecmr.interface';
 
 @Component({
-  selector   : 'app-goods',
+  selector:    'app-goods',
   templateUrl: './goods.component.html',
-  styleUrls  : ['./goods.component.scss']
+  styleUrls:   ['./goods.component.scss']
 })
 export class GoodsComponent implements OnInit {
 
   @ViewChild(SignOffModalComponent) public signOffModal: SignOffModalComponent;
 
-  @Input() public ecmr: any;
-  @Input() public selectedColumnIs: any;
-  @Input() public selectedColumns: any;
+  @Input() public ecmr: EcmrInterface;
+  @Input() public selectedColumnIs: number;
+  @Input() public selectedColumns: number;
+  public EcmrStatus = {
+    CREATED:             'CREATED',
+    LOADED:              'LOADED',
+    IN_TRANSIT:          'IN_TRANSIT',
+    DELIVERED:           'DELIVERED',
+    CONFIRMED_DELIVERED: 'CONFIRMED_DELIVERED'
+  };
 
-  public constructor(private _authenticationService: AuthenticationService) {
+  public User = {
+    CompoundAdmin:   'CompoundAdmin',
+    CarrierMember:   'CarrierMember',
+    RecipientMember: 'RecipientMember',
+    LegalOwnerAdmin: 'LegalOwnerAdmin'
+  };
+
+  public constructor(private authenticationService: AuthenticationService) {
   }
 
   public openModal(): void {
     this.signOffModal.open(this.ecmr);
   }
 
-  public selectColumn() {
+  public selectColumn(): number {
     if (this.selectedColumnIs === 0) {
       return 0;
     } else if (this.selectedColumnIs === 1) {
@@ -34,25 +49,21 @@ export class GoodsComponent implements OnInit {
     }
   }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
   }
 
-  public userRole(): string {
-    if (this._authenticationService.isAuthenticated()) {
-      const userRole = JSON.parse(localStorage.getItem('currentUser')).user.role;
-      return userRole;
-    }
-    return null;
+  public getUserRole(): string {
+    return this.authenticationService.isAuthenticated() ? JSON.parse(localStorage.getItem('currentUser')).user.role : '';
   }
 
-  public enableButton() {
-    if (this.ecmr && this.ecmr.status === 'CREATED' && this.userRole() === 'CompoundAdmin') {
+  public enableButton(): boolean {
+    if (this.ecmr && this.ecmr.status === this.EcmrStatus.CREATED && this.getUserRole() === this.User.CompoundAdmin) {
       return true;
-    } else if (this.ecmr && this.ecmr.status === 'LOADED' && this.userRole() === 'CarrierMember') {
+    } else if (this.ecmr && this.ecmr.status === this.EcmrStatus.LOADED && this.getUserRole() === this.User.CarrierMember) {
       return true;
-    } else if (this.ecmr && this.ecmr.status === 'IN_TRANSIT' && this.userRole() === 'CarrierMember') {
+    } else if (this.ecmr && this.ecmr.status === this.EcmrStatus.IN_TRANSIT && this.getUserRole() === this.User.CarrierMember) {
       return true;
-    } else if (this.ecmr && this.ecmr.status === 'DELIVERED' && this.userRole() === 'RecipientMember') {
+    } else if (this.ecmr && this.ecmr.status === this.EcmrStatus.DELIVERED && this.getUserRole() === this.User.RecipientMember) {
       return true;
     }
   }

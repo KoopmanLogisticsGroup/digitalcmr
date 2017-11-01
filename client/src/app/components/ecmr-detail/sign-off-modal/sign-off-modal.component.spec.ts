@@ -14,7 +14,7 @@ describe('SignOffModalComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SignOffModalComponent);
+    fixture   = TestBed.createComponent(SignOffModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

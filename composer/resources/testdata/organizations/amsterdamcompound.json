@@ -1,20 +1,20 @@
 {
-  "$class": "org.digitalcmr.CreateCompoundOrg",
+  "$class":      "org.digitalcmr.CreateCompoundOrg",
   "compoundOrg": {
-    "$class": "org.digitalcmr.CompoundOrg",
+    "$class":   "org.digitalcmr.CompoundOrg",
     "entityID": "amsterdamcompound",
-    "name": "Amsterdam Compound",
-    "address": {
-      "$class": "org.digitalcmr.Address",
-      "name": "Amsterdam Compound",
-      "street": "compenstraat",
+    "name":     "Amsterdam Compound",
+    "address":  {
+      "$class":      "org.digitalcmr.Address",
+      "name":        "Amsterdam Compound",
+      "street":      "compenstraat",
       "houseNumber": "21",
-      "city": "Assen",
-      "zipCode": "9976ZH",
-      "country": "Netherlands",
-      "latitude": 43.1927,
-      "longitude": 23.3249,
-      "id": "string"
+      "city":        "Assen",
+      "zipCode":     "9976ZH",
+      "country":     "Netherlands",
+      "latitude":    43.1927,
+      "longitude":   23.3249,
+      "id":          "string"
     }
   }
 }

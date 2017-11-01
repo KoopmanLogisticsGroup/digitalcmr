@@ -4,30 +4,34 @@ import {Router} from '@angular/router';
 import {AuthenticationService} from '../../services/authentication.service';
 
 @Component({
-  selector   : 'app-login',
+  selector:    'app-login',
   templateUrl: './login.component.html',
-  styleUrls  : ['./login.component.scss']
+  styleUrls:   ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  public username = '';
-  public password = '';
-  public loading  = false;
-  public error    = false;
+  public username: string;
+  public password: string;
+  public loading: boolean;
+  public error: boolean;
 
-  public constructor(private _router: Router,
-                     private _authenticationService: AuthenticationService) {
+  public constructor(private router: Router,
+                     private authenticationService: AuthenticationService) {
+    this.username = '';
+    this.password = '';
+    this.loading = false;
+    this.error = false;
   }
 
   public ngOnInit(): void {
-    this._authenticationService.logout();
+    this.authenticationService.logout();
   }
 
-  public login(username: string, password: string) {
-    this._authenticationService.login(username, password)
+  public login(username: string, password: string): void {
+    this.authenticationService.login(username, password)
       .subscribe(result => {
         if (result) {
           this.error = false;
-          this._router.navigate(['./overview']);
+          this.router.navigate(['./overview']);
         } else {
           this.error = true;
         }

@@ -3,7 +3,9 @@ export interface DBSource {
 
   get(resourceID: string): Promise<any>;
 
-  update(resource: any): Promise<any>;
+  all(): Promise<any>;
+
+  update(resourceID: string, resource: any): Promise<any>;
 
   delete(resourceID: string): Promise<any>;
 }

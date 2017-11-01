@@ -5,12 +5,20 @@ export class NavbarService {
 
   visible: boolean;
 
-  constructor() { this.visible = false; }
+  constructor() {
+    this.visible = false;
+  }
 
-  hide() { this.visible = false; }
+  hide(): void {
+    this.visible = false;
+  }
 
-  show() { this.visible = true; }
+  show(): void {
+    this.visible = true;
+  }
 
-  toggle() { this.visible = !this.visible; }
+  toggle(): void {
+    this.visible = !this.visible;
+  }
 
 }

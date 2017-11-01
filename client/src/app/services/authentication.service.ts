@@ -9,15 +9,17 @@ import {Observable} from 'rxjs/Observable';
 export class AuthenticationService {
   public actionUrl: string;
   public token: string;
-  private TOKEN_KEY = 'token';
-  private USER_KEY  = 'currentUser';
-  public user: any;
+  private TOKEN_KEY: string;
+  private USER_KEY: string;
+  public user: string;
 
   public constructor(private _http: Http,
                      private _configuration: Configuration) {
     this.actionUrl = `${_configuration.apiHost}${_configuration.apiPrefix}login`;
     // set token if saved in local storage
-    this.token     = this.getToken();
+    this.token = this.getToken();
+    this.TOKEN_KEY = 'token';
+    this.USER_KEY = 'currentUser';
   }
 
   public login(username: string, password: string): Observable<any> {
@@ -27,8 +29,8 @@ export class AuthenticationService {
           return false;
         }
 
-        const user  = response.json().user;
-        const token = response.json().token;
+        const user: string  = response.json().user;
+        const token: string = response.json().token;
         if (!token) {
           return false; // Login unsuccessful if there's no token in the response
         }
@@ -50,7 +52,7 @@ export class AuthenticationService {
   }
 
   public createAuthorizationHeader(): Headers {
-    const headers = new Headers();
+    const headers: Headers = new Headers();
     headers.append('x-access-token', this.getToken());
     headers.append('Content-Type', 'application/json');
     return headers;

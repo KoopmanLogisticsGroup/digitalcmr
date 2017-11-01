@@ -1,20 +1,17 @@
-import {Middleware, MiddlewareInterface} from 'routing-controllers';
 import {Config} from '../config';
 import * as jwt from 'jsonwebtoken';
-import {JSONWebToken} from '../utils/auth/JSONWebToken';
-import {AuthenticationResponse} from '../utils/auth/ClientAuthenticator';
+import {JSONWebToken} from '../utils/authentication/JSONWebToken';
+import {AuthenticationResponse} from '../utils/authentication/ClientAuthenticator';
 
-@Middleware()
-export class UserAuthenticatorMiddleware implements MiddlewareInterface {
-  public use(request: any, response: any, next?: (err?: any) => any): any {
-    response.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, x-access-token');
-
+export class UserAuthenticatorMiddleware {
+  public use(request: any, response: any, next: (err?: any) => any): any {
     let token = JSONWebToken.getTokenFromRequest(request);
+
     if (!token) {
       return this.failAuthentication(response, 'No token provided.');
     }
 
-    jwt.verify(token, Config.settings.secret, (err: any, decoded: any) => {
+    jwt.verify(token, Config.settings.serverSecret, (err: any, decoded: any) => {
       if (err) {
         return this.failAuthentication(response, 'Failed to authenticate token.');
       }

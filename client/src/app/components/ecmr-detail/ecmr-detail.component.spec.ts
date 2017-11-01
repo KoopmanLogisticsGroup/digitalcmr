@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { EcmrDetailComponent } from './ecmr-detail.component';
+import {EcmrDetailComponent} from './ecmr-detail.component';
 
 describe('EcmrDetailComponent', () => {
   let component: EcmrDetailComponent;
@@ -8,13 +8,13 @@ describe('EcmrDetailComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EcmrDetailComponent ]
-    })
-    .compileComponents();
+        declarations: [EcmrDetailComponent]
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EcmrDetailComponent);
+    fixture   = TestBed.createComponent(EcmrDetailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

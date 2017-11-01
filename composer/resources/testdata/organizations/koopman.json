@@ -1,20 +1,20 @@
 {
-  "$class": "org.digitalcmr.CreateCarrierOrg",
+  "$class":     "org.digitalcmr.CreateCarrierOrg",
   "carrierOrg": {
-    "$class": "org.digitalcmr.CarrierOrg",
+    "$class":   "org.digitalcmr.CarrierOrg",
     "entityID": "koopman",
-    "name": "Koopman",
-    "address": {
-      "$class": "org.digitalcmr.Address",
-      "name": "Amsterdam Compound",
-      "street": "koopmanstraat",
+    "name":     "Koopman",
+    "address":  {
+      "$class":      "org.digitalcmr.Address",
+      "name":        "Amsterdam Compound",
+      "street":      "koopmanstraat",
       "houseNumber": "213",
-      "city": "Groningen",
-      "zipCode": "4976ZH",
-      "country": "Netherlands",
-      "latitude": 53.1927,
-      "longitude": 53.3249,
-      "id": "string"
+      "city":        "Groningen",
+      "zipCode":     "4976ZH",
+      "country":     "Netherlands",
+      "latitude":    53.1927,
+      "longitude":   53.3249,
+      "id":          "string"
     }
   }
 }

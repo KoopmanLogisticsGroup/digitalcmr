@@ -1,59 +1,69 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {EcmrService} from '../../../services/ecmr.service';
 import {AuthenticationService} from '../../../services/authentication.service';
+import {EcmrInterface} from '../../../interfaces/ecmr.interface';
 import * as GeoLib from 'geolib';
 
 @Component({
-  selector   : 'app-sign-off-modal',
+  selector:    'app-sign-off-modal',
   templateUrl: './sign-off-modal.component.html',
-  styleUrls  : ['./sign-off-modal.component.scss']
+  styleUrls:   ['./sign-off-modal.component.scss']
 })
 
 export class SignOffModalComponent implements OnInit {
 
-  @Input() ecmr: any;
+  @Input() ecmr: EcmrInterface;
+  public EcmrStatus = {
+    CREATED:             'CREATED',
+    LOADED:              'LOADED',
+    IN_TRANSIT:          'IN_TRANSIT',
+    DELIVERED:           'DELIVERED',
+    CONFIRMED_DELIVERED: 'CONFIRMED_DELIVERED'
+  };
+
+  public User = {
+    CompoundAdmin:   'CompoundAdmin',
+    CarrierMember:   'CarrierMember',
+    RecipientMember: 'RecipientMember',
+    LegalOwnerAdmin: 'LegalOwnerAdmin'
+  };
 
   public constructor(private ecmrService: EcmrService,
-                     private _authenticationService: AuthenticationService) {
+                     private authenticationService: AuthenticationService) {
   }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
   }
 
-  public open(ecmr: any): void {
+  public open(ecmr: EcmrInterface): void {
     this.ecmr = ecmr;
-    $('#signoff-modal.ui.modal').modal('show');
-    $('#signoff-modal.ui.modal').parent().css({'background-color': 'rgba(0,0,0,0.7)'});
+    $('#signoff_modal.ui.modal').modal('show');
+    $('#signoff_modal.ui.modal').parent().css({'background-color': 'rgba(0,0,0,0.7)'});
     this.simulateCoordinates();
   }
 
   public close(): void {
-    $('#signoff-modal.ui.modal').modal('hide');
+    $('#signoff_modal.ui.modal').modal('hide');
   }
 
-  public onSubmit() {
+  public onSubmit(): void {
     $('#submitButton').addClass('basic loading');
     this.ecmrService.updateEcmr(this.ecmr).subscribe(result => {
-      $('#signoff-modal.ui.modal').modal('hide');
+      $('#signoff_modal.ui.modal').modal('hide');
+      $('#signoff_modal.ui.modal').modal('hide');
       location.reload();
     });
   }
 
-  public userRole(): string {
-    if (this._authenticationService.isAuthenticated()) {
-      const userRole = JSON.parse(localStorage.getItem('currentUser')).user.role;
-      return userRole;
-    }
-    return null;
+  public getUserRole(): string {
+    return this.authenticationService.isAuthenticated() ? JSON.parse(localStorage.getItem('currentUser')).user.role : '';
   }
 
-  private simulateCoordinates() {
-
-    switch (this.userRole()) {
-
-      case 'CompoundAdmin': {
+  private simulateCoordinates(): void {
+    switch (this.getUserRole()) {
+      case this.User.CompoundAdmin: {
         const start                           = {
-          latitude : this.ecmr.loading.address.latitude,
+          latitude:  this.ecmr.loading.address.latitude,
           longitude: this.ecmr.loading.address.longitude
         };
         const signaturePoint                  = GeoLib.computeDestinationPoint(
@@ -67,11 +77,11 @@ export class SignOffModalComponent implements OnInit {
         break;
       }
 
-      case 'CarrierMember': {
+      case this.User.CarrierMember: {
 
-        if (this.ecmr.status === 'LOADED') {
+        if (this.ecmr.status === this.EcmrStatus.LOADED) {
           const start          = {
-            latitude : this.ecmr.loading.address.latitude,
+            latitude:  this.ecmr.loading.address.latitude,
             longitude: this.ecmr.loading.address.longitude
           };
           const signaturePoint = GeoLib.computeDestinationPoint(
@@ -85,9 +95,9 @@ export class SignOffModalComponent implements OnInit {
           this.ecmr.carrierLoadingSignature.longitude = signaturePoint.longitude;
         }
 
-        if (this.ecmr.status === 'IN_TRANSIT') {
+        if (this.ecmr.status === this.EcmrStatus.IN_TRANSIT) {
           const start          = {
-            latitude : this.ecmr.delivery.address.latitude,
+            latitude:  this.ecmr.delivery.address.latitude,
             longitude: this.ecmr.delivery.address.longitude
           };
           const signaturePoint = GeoLib.computeDestinationPoint(
@@ -104,9 +114,9 @@ export class SignOffModalComponent implements OnInit {
         break;
       }
 
-      case 'RecipientMember': {
+      case this.User.RecipientMember: {
         const start          = {
-          latitude : this.ecmr.delivery.address.latitude,
+          latitude:  this.ecmr.delivery.address.latitude,
           longitude: this.ecmr.delivery.address.longitude
         };
         const signaturePoint = GeoLib.computeDestinationPoint(
@@ -127,6 +137,8 @@ export class SignOffModalComponent implements OnInit {
 
     }
   }
+
+  public checkUser(activeUser, ecmrStatus): boolean {
+    return this.getUserRole() === activeUser && (this.ecmr ? this.ecmr.status === ecmrStatus : false);
+  }
 }
-
-
