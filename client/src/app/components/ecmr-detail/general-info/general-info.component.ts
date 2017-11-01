@@ -25,13 +25,13 @@ export class GeneralInfoComponent implements OnInit {
     LegalOwnerAdmin: 'LegalOwnerAdmin'
   };
 
-  public constructor(private _authenticationService: AuthenticationService) {
+  public constructor(private authenticationService: AuthenticationService) {
     this.selectedImage = [false, false, false, false];
   }
 
   public ngOnInit(): void {
     this.defineSelectedColumn();
-  };
+  }
 
   public selectColumn(number: number): void {
     if (this.ecmr.status === this.EcmrStatus.DELIVERED || this.ecmr.status === this.EcmrStatus.CONFIRMED_DELIVERED) {
@@ -44,10 +44,9 @@ export class GeneralInfoComponent implements OnInit {
           this.selectedImage[index]   = false;
           this.selectedColumns[index] = false;
         }
-      });
+      })
     }
-    ;
-  };
+  }
 
   public defineSelectedColumn(): void {
     this.selectedColumns.forEach((val, index) => {
@@ -55,11 +54,11 @@ export class GeneralInfoComponent implements OnInit {
         this.selectedImage[index]   = true;
         this.selectedColumns[index] = true;
       }
-    });
+    })
   }
 
   public userRole(): string {
-    return this._authenticationService.isAuthenticated() ? JSON.parse(localStorage.getItem('currentUser')).user.role : '';
+    return this.authenticationService.isAuthenticated() ? JSON.parse(localStorage.getItem('currentUser')).user.role : '';
   }
 
   public selectImage() {
@@ -72,5 +71,5 @@ export class GeneralInfoComponent implements OnInit {
     } else if (this.selectedImage[3]) {
       return 'selectedImg4';
     }
-  };
+  }
 }
