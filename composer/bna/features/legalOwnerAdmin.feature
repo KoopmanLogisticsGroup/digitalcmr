@@ -64,7 +64,7 @@ Feature: digital-cmr-network
         """
     Then I should get an error matching /does not have .* access to resource/
 
-  Scenario: I should get an error when I try to add a duplicate asset of type TransportOrder
+  Scenario: Lapo should get an error when I try to add a duplicate asset of type TransportOrder
     When I use the identity Lapo
     Given I have added the following asset of type org.digitalcmr.TransportOrder
       """
@@ -76,7 +76,7 @@ Feature: digital-cmr-network
       """
     Then I should get an error
 
-  Scenario: I should get an error when I try to update a non-existent asset of type TransportOrder
+  Scenario: Lapo should get an error when I try to update a non-existent asset of type TransportOrder
     When I use the identity Lapo
     And I update the following asset of type org.digitalcmr.TransportOrder
       """
