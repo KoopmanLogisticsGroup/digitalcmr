@@ -29,7 +29,7 @@ export class SignOffModalComponent implements OnInit {
   };
 
   public constructor(private ecmrService: EcmrService,
-                     private _authenticationService: AuthenticationService) {
+                     private authenticationService: AuthenticationService) {
   }
 
   public ngOnInit(): void {
@@ -37,30 +37,31 @@ export class SignOffModalComponent implements OnInit {
 
   public open(ecmr: EcmrInterface): void {
     this.ecmr = ecmr;
-    $('#signoff-modal.ui.modal').modal('show');
-    $('#signoff-modal.ui.modal').parent().css({'background-color': 'rgba(0,0,0,0.7)'});
+    $('#signoff_modal.ui.modal').modal('show');
+    $('#signoff_modal.ui.modal').parent().css({'background-color': 'rgba(0,0,0,0.7)'});
     this.simulateCoordinates();
   }
 
   public close(): void {
-    $('#signoff-modal.ui.modal').modal('hide');
+    $('#signoff_modal.ui.modal').modal('hide');
   }
 
   public onSubmit(): void {
     $('#submitButton').addClass('basic loading');
     this.ecmrService.updateEcmr(this.ecmr).subscribe(result => {
-      $('#signoff-modal.ui.modal').modal('hide');
+      $('#signoff_modal.ui.modal').modal('hide');
+      $('#signoff_modal.ui.modal').modal('hide');
       location.reload();
     });
   }
 
   public getUserRole(): string {
-    return this._authenticationService.isAuthenticated() ? JSON.parse(localStorage.getItem('currentUser')).user.role : '';
+    return this.authenticationService.isAuthenticated() ? JSON.parse(localStorage.getItem('currentUser')).user.role : '';
   }
 
   private simulateCoordinates(): void {
     switch (this.getUserRole()) {
-      case 'CompoundAdmin': {
+      case this.User.CompoundAdmin: {
         const start                           = {
           latitude:  this.ecmr.loading.address.latitude,
           longitude: this.ecmr.loading.address.longitude
@@ -76,9 +77,9 @@ export class SignOffModalComponent implements OnInit {
         break;
       }
 
-      case 'CarrierMember': {
+      case this.User.CarrierMember: {
 
-        if (this.ecmr.status === 'LOADED') {
+        if (this.ecmr.status === this.EcmrStatus.LOADED) {
           const start          = {
             latitude:  this.ecmr.loading.address.latitude,
             longitude: this.ecmr.loading.address.longitude
@@ -94,7 +95,7 @@ export class SignOffModalComponent implements OnInit {
           this.ecmr.carrierLoadingSignature.longitude = signaturePoint.longitude;
         }
 
-        if (this.ecmr.status === 'IN_TRANSIT') {
+        if (this.ecmr.status === this.EcmrStatus.IN_TRANSIT) {
           const start          = {
             latitude:  this.ecmr.delivery.address.latitude,
             longitude: this.ecmr.delivery.address.longitude
@@ -113,7 +114,7 @@ export class SignOffModalComponent implements OnInit {
         break;
       }
 
-      case 'RecipientMember': {
+      case this.User.RecipientMember: {
         const start          = {
           latitude:  this.ecmr.delivery.address.latitude,
           longitude: this.ecmr.delivery.address.longitude

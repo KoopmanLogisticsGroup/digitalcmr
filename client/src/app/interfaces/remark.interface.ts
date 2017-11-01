@@ -1,4 +1,4 @@
 export interface RemarkInterface {
-  comments: string,
-  isDamaged: boolean
+  comments: string;
+  isDamaged: boolean;
 }
