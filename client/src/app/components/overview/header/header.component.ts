@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../../services/authentication.service';
 import {SearchService} from '../../../services/search.service';
 import {NavbarService} from '../../../services/navbar.service';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector:    'app-header',
@@ -16,21 +17,21 @@ export class HeaderComponent implements OnInit {
                      public nav: NavbarService) {
   }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
   }
 
-  public sendData(data: any) {
+  public sendData(data: Observable<any>): void {
     this.searchService.searchData(data);
   }
 
-  public getUser() {
+  public getUser(): any {
     if (this.authenticationService.isAuthenticated()) {
       return JSON.parse(localStorage.getItem('currentUser')).user;
     }
     return null;
   }
 
-  public logout() {
+  public logout(): void {
     location.reload();
     this.authenticationService.logout();
   }

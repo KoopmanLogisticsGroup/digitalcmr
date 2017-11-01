@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../../services/authentication.service';
+import {EcmrInterface} from '../../../interfaces/ecmr.interface';
 
 @Component({
   selector:    'app-general-info',
@@ -7,11 +8,11 @@ import {AuthenticationService} from '../../../services/authentication.service';
   styleUrls:   ['./general-info.component.scss']
 })
 export class GeneralInfoComponent implements OnInit {
-  @Input() public ecmr: any;
+  @Input() public ecmr: EcmrInterface;
   @Input() public selectedColumns: boolean[];
 
   public selectedImage: boolean[];
-  public selectedColumnIs: any;
+  public selectedColumnIs: number;
   public EcmrStatus = {
     CREATED:             'CREATED',
     LOADED:              'LOADED',
@@ -22,15 +23,15 @@ export class GeneralInfoComponent implements OnInit {
 
   public User = {
     LegalOwnerAdmin: 'LegalOwnerAdmin'
-  }
+  };
 
   public constructor(private _authenticationService: AuthenticationService) {
     this.selectedImage = [false, false, false, false];
   }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.defineSelectedColumn();
-  }
+  };
 
   public selectColumn(number: number): void {
     if (this.ecmr.status === this.EcmrStatus.DELIVERED || this.ecmr.status === this.EcmrStatus.CONFIRMED_DELIVERED) {
@@ -45,7 +46,8 @@ export class GeneralInfoComponent implements OnInit {
         }
       });
     }
-  }
+    ;
+  };
 
   public defineSelectedColumn(): void {
     this.selectedColumns.forEach((val, index) => {
@@ -70,5 +72,5 @@ export class GeneralInfoComponent implements OnInit {
     } else if (this.selectedImage[3]) {
       return 'selectedImg4';
     }
-  }
+  };
 }

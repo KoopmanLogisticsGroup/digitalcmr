@@ -5,21 +5,19 @@ import {Subject} from 'rxjs/Subject';
 @Injectable()
 export class SearchService {
   searchData$: Observable<any>;
-  private searchDataSubject = new Subject<any>();
+  private searchDataSubject: Subject<any>;
 
   filterEcmr$: Observable<any>;
-  private filterEcmrSubject = new Subject<any>();
+  private filterEcmrSubject: Subject<any>;
 
   constructor() {
+    this.searchDataSubject = new Subject();
+    this.filterEcmrSubject = new Subject();
     this.searchData$ = this.searchDataSubject.asObservable();
     this.filterEcmr$ = this.filterEcmrSubject.asObservable();
   }
 
-  public searchData(data) {
+  public searchData(data: Observable<any>): void {
     this.searchDataSubject.next(data);
-  }
-
-  public ecmrFilter(data) {
-    this.filterEcmrSubject.next(data);
   }
 }
