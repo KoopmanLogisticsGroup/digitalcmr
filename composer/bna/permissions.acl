@@ -35,15 +35,6 @@ rule LegalOwnerAdminCanReadTransportOrder {
     action: ALLOW
 }
 
-rule LegalOwnerAdminCanCreateTransportOrder {
-    description: "Allow Legal Owner Admin to CREATE a Transport Order"
-    participant(p): "org.digitalcmr.LegalOwnerAdmin"
-    operation: CREATE
-    resource(r): "org.digitalcmr.TransportOrder"
-    condition: (r.owner.getIdentifier() === p.org.getIdentifier())
-    action: ALLOW
-}
-
 rule LegalOwnerAdminCanReadAndCreateECMR {
     description: "Allow Legal Owner Admin to CREATE and READ an eCMR"
     participant(p): "org.digitalcmr.LegalOwnerAdmin"
