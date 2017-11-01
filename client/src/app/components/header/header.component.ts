@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthenticationService} from '../../../services/authentication.service';
-import {SearchService} from '../../../services/search.service';
-import {NavbarService} from '../../../services/navbar.service';
+import {AuthenticationService} from '../../services/authentication.service';
+import {SearchService} from '../../services/search.service';
+import {NavbarService} from '../../services/navbar.service';
 import {Observable} from 'rxjs/Observable';
 
 @Component({
@@ -11,6 +11,7 @@ import {Observable} from 'rxjs/Observable';
 })
 export class HeaderComponent implements OnInit {
   public queryData: string;
+  public user: any;
 
   public constructor(private searchService: SearchService,
                      private authenticationService: AuthenticationService,
@@ -25,10 +26,7 @@ export class HeaderComponent implements OnInit {
   }
 
   public getUser(): any {
-    if (this.authenticationService.isAuthenticated()) {
-      return JSON.parse(localStorage.getItem('currentUser')).user;
-    }
-    return null;
+    return this.authenticationService.isAuthenticated() ? JSON.parse(localStorage.getItem('currentUser')).user : null;
   }
 
   public logout(): void {
@@ -36,14 +34,14 @@ export class HeaderComponent implements OnInit {
     this.authenticationService.logout();
   }
 
-  public showUserInfo(firstname): boolean {
-    return this.getUser().firstName.toLowerCase() === firstname;
+  public showUserInfo(firstName: string): boolean {
+    return this.getUser() && this.getUser().firstName.toLowerCase() === firstName;
   }
 
   public showLogo(): string {
-    if (this.getUser().username.toLowerCase() === 'lapo@leaseplan.org') {
+    if (this.getUser() && this.getUser().username.toLowerCase() === 'lapo@leaseplan.org') {
       return 'logoLeaseplan';
-    } else if (this.getUser().username.toLowerCase() === 'rob@cardealer.org') {
+    } else if (this.getUser() && this.getUser().username.toLowerCase() === 'rob@cardealer.org') {
       return 'logoCarDealer';
     }
   }

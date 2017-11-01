@@ -5,7 +5,6 @@ import 'rxjs/add/operator/map';
 import {Configuration} from '../app.constants';
 import {AuthenticationService} from './authentication.service';
 import {Observable} from 'rxjs/Observable';
-import {EcmrInterface} from '../interfaces/ecmr.interface';
 import {ErrorObservable} from 'rxjs/observable/ErrorObservable';
 
 @Injectable()

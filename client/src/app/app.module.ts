@@ -12,7 +12,7 @@ import {LoginComponent} from './components/login/login.component';
 
 import {AuthenticationService} from './services/authentication.service';
 import {EcmrService} from './services/ecmr.service';
-import {HeaderComponent} from './components/overview/header/header.component';
+import {HeaderComponent} from './components/header/header.component';
 import {OverviewComponent} from './components/overview/overview.component';
 import {EcmrDetailComponent} from './components/ecmr-detail/ecmr-detail.component';
 import {GeneralInfoComponent} from './components/ecmr-detail/general-info/general-info.component';

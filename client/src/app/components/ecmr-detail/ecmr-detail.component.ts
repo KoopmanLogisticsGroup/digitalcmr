@@ -92,7 +92,7 @@ export class EcmrDetailComponent implements OnInit {
     return <SignatureInterface> {
       longitude:     0,
       latitude:      0,
-      certificate:   this.userRole,
+      certificate:   null,
       timestamp:     0,
       generalRemark: {
         comments:  '',

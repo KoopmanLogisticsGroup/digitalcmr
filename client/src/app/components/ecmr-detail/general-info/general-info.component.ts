@@ -31,7 +31,7 @@ export class GeneralInfoComponent implements OnInit {
 
   public ngOnInit(): void {
     this.defineSelectedColumn();
-  };
+  }
 
   public selectColumn(number: number): void {
     if (this.ecmr.status === this.EcmrStatus.DELIVERED || this.ecmr.status === this.EcmrStatus.CONFIRMED_DELIVERED) {
@@ -44,10 +44,9 @@ export class GeneralInfoComponent implements OnInit {
           this.selectedImage[index]   = false;
           this.selectedColumns[index] = false;
         }
-      });
+      })
     }
-    ;
-  };
+  }
 
   public defineSelectedColumn(): void {
     this.selectedColumns.forEach((val, index) => {
@@ -55,7 +54,7 @@ export class GeneralInfoComponent implements OnInit {
         this.selectedImage[index]   = true;
         this.selectedColumns[index] = true;
       }
-    });
+    })
   }
 
   public userRole(): string {
@@ -72,5 +71,5 @@ export class GeneralInfoComponent implements OnInit {
     } else if (this.selectedImage[3]) {
       return 'selectedImg4';
     }
-  };
+  }
 }
