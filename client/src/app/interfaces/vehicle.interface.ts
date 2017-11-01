@@ -1,7 +1,10 @@
 export interface VehicleInterface {
   vin: string;
   manufacturer: string;
-  ECMRs: string;
+  model: string;
+  type: string;
+  ecmrs: string[];
   odoMeterReading: number;
   plateNumber: string;
+  registrationCountry?: string;
 }

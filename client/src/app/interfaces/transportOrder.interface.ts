@@ -1,13 +1,13 @@
 import {AddressInterface} from './address.interface';
-import {UserBlockchainInterface} from './user.blockchain.interface';
+import {GoodInterface} from './good.interface';
 
 export interface TransportOrderInterface {
   orderID: string;
   loadingAddress: AddressInterface;
   deliveryAddress: AddressInterface;
-  carrier: UserBlockchainInterface;
-  compound: UserBlockchainInterface;
-  goods: UserBlockchainInterface;
+  carrier: string;
+  source: string;
+  goods: GoodInterface;
   status: string;
   issueDate: number;
   ecmrs: string[];

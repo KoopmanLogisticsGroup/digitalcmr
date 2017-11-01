@@ -30,7 +30,7 @@ export class GoodsComponent implements OnInit {
     LegalOwnerAdmin: 'LegalOwnerAdmin'
   };
 
-  public constructor(private _authenticationService: AuthenticationService) {
+  public constructor(private authenticationService: AuthenticationService) {
   }
 
   public openModal(): void {
@@ -53,7 +53,7 @@ export class GoodsComponent implements OnInit {
   }
 
   public getUserRole(): string {
-    return this._authenticationService.isAuthenticated() ? JSON.parse(localStorage.getItem('currentUser')).user.role : '';
+    return this.authenticationService.isAuthenticated() ? JSON.parse(localStorage.getItem('currentUser')).user.role : '';
   }
 
   public enableButton(): boolean {

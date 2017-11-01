@@ -1,6 +1,6 @@
 export interface UserBlockchainInterface {
   userID: string;
-  username: string;
+  userName: string;
   firstName: string;
   lastName: string;
   org: string;

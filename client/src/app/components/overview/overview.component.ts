@@ -41,7 +41,7 @@ export class OverviewComponent implements OnInit {
 
   public constructor(private ecmrService: EcmrService,
                      private searchService: SearchService,
-                     private _authenticationService: AuthenticationService,
+                     private authenticationService: AuthenticationService,
                      public nav: NavbarService) {
     this.searchService.searchData$.subscribe((data: string) => {
       this.searchBarData = data;
@@ -100,7 +100,7 @@ export class OverviewComponent implements OnInit {
   }
 
   public getUserRole(): string {
-    return this._authenticationService.isAuthenticated() ? JSON.parse(localStorage.getItem('currentUser')).user.role : '';
+    return this.authenticationService.isAuthenticated() ? JSON.parse(localStorage.getItem('currentUser')).user.role : '';
   }
 
   public hasComments(ecmr: EcmrInterface): boolean {

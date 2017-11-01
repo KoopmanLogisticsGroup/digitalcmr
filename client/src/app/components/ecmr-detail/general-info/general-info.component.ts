@@ -25,7 +25,7 @@ export class GeneralInfoComponent implements OnInit {
     LegalOwnerAdmin: 'LegalOwnerAdmin'
   };
 
-  public constructor(private _authenticationService: AuthenticationService) {
+  public constructor(private authenticationService: AuthenticationService) {
     this.selectedImage = [false, false, false, false];
   }
 
@@ -58,7 +58,7 @@ export class GeneralInfoComponent implements OnInit {
   }
 
   public userRole(): string {
-    return this._authenticationService.isAuthenticated() ? JSON.parse(localStorage.getItem('currentUser')).user.role : '';
+    return this.authenticationService.isAuthenticated() ? JSON.parse(localStorage.getItem('currentUser')).user.role : '';
   }
 
   public selectImage() {

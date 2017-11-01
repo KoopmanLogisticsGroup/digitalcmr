@@ -14,8 +14,8 @@ export class LoginComponent implements OnInit {
   public loading: boolean;
   public error: boolean;
 
-  public constructor(private _router: Router,
-                     private _authenticationService: AuthenticationService) {
+  public constructor(private router: Router,
+                     private authenticationService: AuthenticationService) {
     this.username = '';
     this.password = '';
     this.loading = false;
@@ -23,15 +23,15 @@ export class LoginComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this._authenticationService.logout();
+    this.authenticationService.logout();
   }
 
   public login(username: string, password: string): void {
-    this._authenticationService.login(username, password)
+    this.authenticationService.login(username, password)
       .subscribe(result => {
         if (result) {
           this.error = false;
-          this._router.navigate(['./overview']);
+          this.router.navigate(['./overview']);
         } else {
           this.error = true;
         }
