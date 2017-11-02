@@ -26,8 +26,17 @@ rule EveryBodyCanReadVehicles {
  * Leaseplan permission list
  */
 
+rule LegalOwnerAdminCanReadTransportOrder {
+    description: "Allow Legal Owner Admin to READ a Transport Order"
+    participant(p): "org.digitalcmr.LegalOwnerAdmin"
+    operation: READ
+    resource(r): "org.digitalcmr.TransportOrder"
+    condition: (r.owner.getIdentifier() === p.org.getIdentifier())
+    action: ALLOW
+}
+
 rule LegalOwnerAdminCanReadAndCreateECMR {
-    description: "Allow Legal Owner Admin to CREATE an eCMR"
+    description: "Allow Legal Owner Admin to CREATE and READ an eCMR"
     participant(p): "org.digitalcmr.LegalOwnerAdmin"
     operation: READ, CREATE
     resource(r): "org.digitalcmr.ECMR"

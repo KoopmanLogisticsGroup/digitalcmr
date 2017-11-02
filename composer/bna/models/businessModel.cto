@@ -5,33 +5,55 @@
 namespace org.digitalcmr
 
 /**
- * Assets eCMR and Vehicle
+ * Assets TransportOrder, ECMR and Vehicle
  */
 
-asset ECMR identified by ecmrID {
-  o String ecmrID
-  o ECMR_STATUS status
-  o Creation creation
+asset TransportOrder identified by orderID {
+  o String orderID
   o Loading loading
   o Delivery delivery
   --> LegalOwnerOrg owner
   --> CompoundOrg source
-  --> CarrierMember transporter optional
   --> CarrierOrg carrier
-  --> RecipientOrg recipientOrg
-  --> RecipientMember recipient optional
+  o Good[] goods
+  o OrderStatus status
+  o Integer issueDate
+  --> ECMR[] ecmrs
+  o String orderRef
+  o Cancellation cancellation optional
+}
+
+asset ECMR identified by ecmrID {
+  o String ecmrID
+  o String agreementTerms
+  o String agreementTermsSec
+  o String legalOwnerRef
+  o String carrierRef
+  o String recipientRef
   o Integer issueDate
   --> Entity issuedBy
+  --> LegalOwnerOrg owner
+  --> CompoundOrg source
+  --> CarrierOrg carrier
+  --> RecipientOrg recipientOrg
   o String carrierComments
+  o Loading loading
+  o Delivery delivery
+  o String[] documents optional
   o Good[] goods
   o String legalOwnerInstructions
   o String paymentInstructions
+  o Creation creation
   o String payOnDelivery
-  o String[] documents optional
   o Signature compoundSignature optional
   o Signature carrierLoadingSignature optional
   o Signature carrierDeliverySignature optional
   o Signature recipientSignature optional
+  o ECMR_STATUS status
+  o String orderID
+  o Cancellation cancellation optional
+  --> CarrierMember transporter optional
+  --> RecipientMember recipient optional
 }
 
 abstract asset Entity identified by entityID {
@@ -76,27 +98,27 @@ abstract participant User identified by userID {
 }
 
 participant LegalOwnerAdmin extends User {
-   --> LegalOwnerOrg org
+  --> LegalOwnerOrg org
 }
 
 participant CompoundAdmin extends User {
-   --> CompoundOrg org
+  --> CompoundOrg org
 }
 
 participant CarrierAdmin extends User {
-   --> CarrierOrg org
+  --> CarrierOrg org
 }
 
 participant CarrierMember extends User {
-   --> CarrierOrg org
+  --> CarrierOrg org
 }
 
 participant RecipientAdmin extends User {
-   --> RecipientOrg org
+  --> RecipientOrg org
 }
 
 participant RecipientMember extends User {
-   --> RecipientOrg org
+  --> RecipientOrg org
 }
 
 /**
@@ -116,17 +138,25 @@ concept Address {
 
 concept Delivery {
   o Address address
-  o Integer date optional
+  o Integer expectedDate optional
+  o Integer actualDate optional
 }
 
 concept Loading {
   o Address address
-  o Integer date
+  o Integer expectedDate optional
+  o Integer actualDate optional
 }
 
 concept Creation {
   o Address address
   o Integer date
+}
+
+concept Cancellation {
+  --> Entity cancelledBy
+  o Integer date
+  o String reason
 }
 
 concept Good {
@@ -137,6 +167,11 @@ concept Good {
   o Remark carrierDeliveryRemark optional
   o String description optional
   o Double weight optional
+  o Integer loadingStartDate
+  o Integer loadingEndDate
+  o Integer deliveryStartDate
+  o Integer deliveryEndDate
+  o Cancellation cancellation optional
 }
 
 concept Remark {
@@ -195,18 +230,21 @@ transaction UpdateRegistrationCountry {
 }
 
 /**
- * Events
- */
-
-
-
-/**
  * Enums
  */
+
 enum ECMR_STATUS {
-    o CREATED
-    o LOADED
-    o IN_TRANSIT
-    o DELIVERED
-    o CONFIRMED_DELIVERED
+  o CREATED
+  o LOADED
+  o IN_TRANSIT
+  o DELIVERED
+  o CONFIRMED_DELIVERED
+  o CANCELLED
+}
+
+enum OrderStatus {
+  o OPEN
+  o IN_PROGRESS
+  o COMPLETED
+  o CANCELLED
 }
