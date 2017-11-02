@@ -22,12 +22,12 @@
         <td><b>{{good?.vehicle.plateNumber}}</b></td>
         <td>
           <div class="ui input">
-            <div *ngIf="getUserRole() === User.CompoundAdmin && ecmr?.status === EcmrStatus.CREATED">
+            <div *ngIf="getUserRole() === User.CompoundAdmin && ecmr?.status === EcmrStatus.Created">
               <input name="remark-{{getUserRole()}}-{{i}}" placeholder="Add remark..."
                      [(ngModel)]="good?.compoundRemark.comments">
             </div>
             <div
-                    *ngIf="getUserRole() === User.CarrierMember && ecmr?.status === EcmrStatus.LOADED; else showCompoundRemark">
+                    *ngIf="getUserRole() === User.CarrierMember && ecmr?.status === EcmrStatus.Loaded; else showCompoundRemark">
               <input name="remark-{{getUserRole()}}-{{i}}" placeholder="Add remark..."
                      [(ngModel)]="good?.carrierLoadingRemark.comments">
             </div>
@@ -43,7 +43,7 @@
               </div>
             </ng-template>
             <div
-                    *ngIf="getUserRole() === User.CarrierMember && ecmr?.status === EcmrStatus.IN_TRANSIT; else showCarrierLoadingRemark">
+                    *ngIf="getUserRole() === User.CarrierMember && ecmr?.status === EcmrStatus.InTransit; else showCarrierLoadingRemark">
               <input name="remark-{{getUserRole()}}-{{i}}" placeholder="Add remark..."
                      [(ngModel)]="good?.carrierDeliveryRemark.comments">
             </div>
@@ -59,7 +59,7 @@
               </div>
             </ng-template>
             <div
-                    *ngIf="getUserRole() === User.RecipientMember && ecmr?.status === EcmrStatus.DELIVERED && selectedColumns[3] === true; else showCarrierDeliveryRemark">
+                    *ngIf="getUserRole() === User.RecipientMember && ecmr?.status === EcmrStatus.De && selectedColumns[3] === true; else showCarrierDeliveryRemark">
               <input name="remark-{{getUserRole()}}-{{i}}" placeholder="Add remark..."
                      [(ngModel)]="good?.recipientRemark.comments">
             </div>
@@ -111,7 +111,7 @@
                 </li>
               </ol>
             </div>
-            <div *ngIf="selectColumn() === 3 && getUserRole() !== User.RecipientMember && ecmr.status === EcmrStatus.DELIVERED">
+            <div *ngIf="selectColumn() === 3 && getUserRole() !== User.RecipientMember && ecmr.status === EcmrStatus.Delivered">
               <ol>
                   <li class="remark_list_styling" *ngIf="good?.compoundRemark.comments !== ''">
                       <b class="remark_person" *ngIf="good?.compoundRemark.comments !== '' || null">{{ecmr?.compoundSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
@@ -131,7 +131,7 @@
                 </li>
               </ol>
             </div>
-            <div *ngIf="selectColumn() === 3 && ecmr.status === EcmrStatus.CONFIRMED_DELIVERED">
+            <div *ngIf="selectColumn() === 3 && ecmr.status === EcmrStatus.ConfirmedDelivered">
               <ol>
                   <li class="remark_list_styling" *ngIf="good?.compoundRemark.comments !== ''">
                       <b class="remark_person" *ngIf="good?.compoundRemark.comments !== '' || null">{{ecmr?.compoundSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
@@ -151,7 +151,7 @@
                 </li>
               </ol>
             </div>
-            <div *ngIf="selectedColumns[3] === true && ecmr.status === EcmrStatus.CONFIRMED_DELIVERED && selectColumn() !== 3">
+            <div *ngIf="selectedColumns[3] === true && ecmr.status === EcmrStatus.ConfirmedDelivered && selectColumn() !== 3">
               <ol>
                   <li class="remark_list_styling" *ngIf="good?.compoundRemark.comments !== ''">
                       <b class="remark_person" *ngIf="good?.compoundRemark.comments !== '' || null">{{ecmr?.compoundSignature?.certificate?.split('#')[1].split('@')[0]}}:</b>
@@ -175,13 +175,13 @@
         </td>
         <td>
           <div class="ui checkbox">
-            <div *ngIf="getUserRole() === User.CompoundAdmin && ecmr?.status === EcmrStatus.CREATED; else showLegalRemark">
+            <div *ngIf="getUserRole() === User.CompoundAdmin && ecmr?.status === EcmrStatus.Created; else showLegalRemark">
               <input type="checkbox" name="remark-isDamaged-{{getUserRole()}}-{{i}}"
                      [(ngModel)]="good?.compoundRemark.isDamaged">
               <label></label>
             </div>
             <div
-                    *ngIf="getUserRole() === User.CarrierMember && ecmr?.status === EcmrStatus.LOADED; else showCompoundCheck">
+                    *ngIf="getUserRole() === User.CarrierMember && ecmr?.status === EcmrStatus.Loaded; else showCompoundCheck">
               <input type="checkbox" name="remark-isDamaged-{{getUserRole()}}-{{i}}"
                      [(ngModel)]="good?.carrierLoadingRemark.isDamaged">
               <label></label>
@@ -192,7 +192,7 @@
                   <img class="check_icon"/></div>
             </ng-template>
             <div
-                    *ngIf="getUserRole() === User.CarrierMember && ecmr?.status === EcmrStatus.IN_TRANSIT; else showCarrierLoadingCheck">
+                    *ngIf="getUserRole() === User.CarrierMember && ecmr?.status === EcmrStatus.InTransit; else showCarrierLoadingCheck">
               <input type="checkbox" name="remark-isDamaged-{{getUserRole()}}-{{i}}"
                      [(ngModel)]="good?.carrierDeliveryRemark.isDamaged">
               <label></label>
@@ -203,7 +203,7 @@
                   <img class="check_icon"/></div>
             </ng-template>
             <div
-                    *ngIf="getUserRole() === User.RecipientMember && ecmr?.status === EcmrStatus.DELIVERED && selectedColumns[3] === true; else showCarrierDeliveryCheck">
+                    *ngIf="getUserRole() === User.RecipientMember && ecmr?.status === EcmrStatus.Delivered && selectedColumns[3] === true; else showCarrierDeliveryCheck">
               <input type="checkbox" name="remark-isDamaged-{{getUserRole()}}-{{i}}"
                      [(ngModel)]="good?.recipientRemark.isDamaged">
               <label></label>
@@ -243,7 +243,7 @@
                 </li>
               </ol>
             </div>
-            <div *ngIf="selectColumn() === 3 && getUserRole() !== User.RecipientMember && ecmr.status === EcmrStatus.DELIVERED">
+            <div *ngIf="selectColumn() === 3 && getUserRole() !== User.RecipientMember && ecmr.status === EcmrStatus.Delivered">
                 <ol class="list_alignment">
                     <li class="remark_list_styling" *ngIf="good?.compoundRemark.comments !== ''">
                         <div *ngIf="good?.compoundRemark.isDamaged === true"><img class="check_icon"/></div>
@@ -259,7 +259,7 @@
                 </li>
               </ol>
             </div>
-            <div *ngIf="selectColumn() === 3 && ecmr.status === EcmrStatus.CONFIRMED_DELIVERED">
+            <div *ngIf="selectColumn() === 3 && ecmr.status === EcmrStatus.ConfirmedDelivered">
                 <ol class="list_alignment">
                     <li class="remark_list_styling" *ngIf="good?.compoundRemark.comments !== ''">
                         <div *ngIf="good?.compoundRemark.isDamaged === true"><img class="check_icon"/></div>
@@ -276,7 +276,7 @@
               </ol>
             </div>
             <div
-                    *ngIf="selectedColumns[3] === true && ecmr.status === EcmrStatus.CONFIRMED_DELIVERED && good?.recipientRemark.isDamaged === true && selectColumn() !== 3">
+                    *ngIf="selectedColumns[3] === true && ecmr.status === EcmrStatus.ConfirmedDelivered && good?.recipientRemark.isDamaged === true && selectColumn() !== 3">
                 <ol class="list_alignment">
                     <li class="remark_list_styling" *ngIf="good?.compoundRemark.comments !== ''">
                         <div *ngIf="good?.compoundRemark.isDamaged === true"><img class="check_icon"/></div>

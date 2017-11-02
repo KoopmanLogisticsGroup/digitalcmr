@@ -18,11 +18,11 @@ export class EcmrDetailComponent implements OnInit {
   public ecmr: Ecmr;
   public selectedColumns: boolean[];
   public EcmrStatus = {
-    CREATED:             'CREATED',
-    LOADED:              'LOADED',
-    IN_TRANSIT:          'IN_TRANSIT',
-    DELIVERED:           'DELIVERED',
-    CONFIRMED_DELIVERED: 'CONFIRMED_DELIVERED'
+    Created:            'CREATED',
+    Loaded:             'LOADED',
+    InTransit:          'IN_TRANSIT',
+    Delivered:          'DELIVERED',
+    ConfirmedDelivered: 'CONFIRMED_DELIVERED'
   };
 
   public User = {
@@ -47,19 +47,19 @@ export class EcmrDetailComponent implements OnInit {
           this.ecmr     = ecmr;
           this.userRole = JSON.parse(localStorage.getItem('currentUser')).user.role;
           switch (this.ecmr.status) {
-            case this.EcmrStatus.CREATED: {
+            case this.EcmrStatus.Created: {
               this.selectedColumns[0] = true;
               break;
             }
-            case this.EcmrStatus.LOADED: {
+            case this.EcmrStatus.Loaded: {
               this.selectedColumns[1] = true;
               break;
             }
-            case this.EcmrStatus.IN_TRANSIT: {
+            case this.EcmrStatus.InTransit: {
               this.selectedColumns[2] = true;
               break;
             }
-            case this.EcmrStatus.DELIVERED: {
+            case this.EcmrStatus.Delivered: {
               if (this.userRole === this.User.LegalOwnerAdmin) {
                 this.selectedColumns[0] = true;
                 break;
@@ -67,7 +67,7 @@ export class EcmrDetailComponent implements OnInit {
               this.selectedColumns[3] = true;
               break;
             }
-            case this.EcmrStatus.CONFIRMED_DELIVERED: {
+            case this.EcmrStatus.ConfirmedDelivered: {
               this.selectedColumns[3] = true;
               break;
             }
@@ -75,10 +75,10 @@ export class EcmrDetailComponent implements OnInit {
           this.instantiateRemarks();
           if (this.userRole === this.User.CompoundAdmin && !this.ecmr.compoundSignature) {
             this.ecmr.compoundSignature = this.placeEmptySignature();
-          } else if (this.userRole === this.User.CarrierMember && this.ecmr.status === this.EcmrStatus.LOADED
+          } else if (this.userRole === this.User.CarrierMember && this.ecmr.status === this.EcmrStatus.Loaded
             && !this.ecmr.carrierDeliverySignature) {
             this.ecmr.carrierLoadingSignature = this.placeEmptySignature();
-          } else if (this.userRole === this.User.CarrierMember && this.ecmr.status === this.EcmrStatus.IN_TRANSIT
+          } else if (this.userRole === this.User.CarrierMember && this.ecmr.status === this.EcmrStatus.InTransit
             && !this.ecmr.carrierDeliverySignature) {
             this.ecmr.carrierDeliverySignature = this.placeEmptySignature();
           } else if (this.userRole === this.User.RecipientMember && !this.ecmr.recipientSignature) {

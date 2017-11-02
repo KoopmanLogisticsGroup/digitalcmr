@@ -1,13 +1,11 @@
 import {
   Body,
-  Get,
   JsonController,
   Post,
   Req,
   UseAfter,
   UseInterceptor,
-  Param,
-  Put, UseBefore
+  UseBefore
 } from 'routing-controllers';
 
 import {ErrorHandlerMiddleware, ComposerInterceptor, UserAuthenticatorMiddleware} from '../../middleware';
@@ -16,8 +14,6 @@ import {TransactionHandler} from '../../blockchain/TransactionHandler';
 import {Identity} from '../../domain/Identity';
 import {Config} from '../../config/index';
 import {Request} from 'express';
-import {BusinessNetworkHandler} from '../../blockchain/BusinessNetworkHandler';
-import {Container} from 'typedi';
 import {TransportOrderTransactor} from '../../domain/transportOrder/TransportOrderTransactor';
 import {TransportOrder} from '../../../resources/interfaces/transportOrder.interface';
 
@@ -25,7 +21,7 @@ import {TransportOrder} from '../../../resources/interfaces/transportOrder.inter
 @UseBefore(UserAuthenticatorMiddleware)
 @UseInterceptor(ComposerInterceptor)
 @UseAfter(ErrorHandlerMiddleware)
-export class ECMRController {
+export class TransportOrderController {
   public constructor(private transactionHandler: TransactionHandler) {
   }
 

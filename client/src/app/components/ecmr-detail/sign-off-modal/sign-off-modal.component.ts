@@ -14,11 +14,11 @@ export class SignOffModalComponent implements OnInit {
 
   @Input() ecmr: Ecmr;
   public EcmrStatus = {
-    CREATED:             'CREATED',
-    LOADED:              'LOADED',
-    IN_TRANSIT:          'IN_TRANSIT',
-    DELIVERED:           'DELIVERED',
-    CONFIRMED_DELIVERED: 'CONFIRMED_DELIVERED'
+    Created:             'CREATED',
+    Loaded:              'LOADED',
+    InTransit:           'IN_TRANSIT',
+    Delivered:           'DELIVERED',
+    ConfirmedDelivered: 'CONFIRMED_DELIVERED'
   };
 
   public User = {
@@ -79,7 +79,7 @@ export class SignOffModalComponent implements OnInit {
 
       case this.User.CarrierMember: {
 
-        if (this.ecmr.status === this.EcmrStatus.LOADED) {
+        if (this.ecmr.status === this.EcmrStatus.Loaded) {
           const start          = {
             latitude:  this.ecmr.loading.address.latitude,
             longitude: this.ecmr.loading.address.longitude
@@ -95,7 +95,7 @@ export class SignOffModalComponent implements OnInit {
           this.ecmr.carrierLoadingSignature.longitude = signaturePoint.longitude;
         }
 
-        if (this.ecmr.status === this.EcmrStatus.IN_TRANSIT) {
+        if (this.ecmr.status === this.EcmrStatus.InTransit) {
           const start          = {
             latitude:  this.ecmr.delivery.address.latitude,
             longitude: this.ecmr.delivery.address.longitude

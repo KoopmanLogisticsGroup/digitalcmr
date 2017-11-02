@@ -70,11 +70,11 @@
                                                           *ngIf="isDamaged(ecmr)"/></td>
                         <td><span [ngClass]="returnStatus(ecmr && ecmr)">
 
-                          {{ecmr?.status === EcmrStatus.CREATED ? 'New CMR' :
-                            ecmr?.status === EcmrStatus.LOADED ? 'Awaiting Carrier' :
-                            ecmr?.status === EcmrStatus.IN_TRANSIT ? 'In Transit' :
-                            ecmr?.status === EcmrStatus.DELIVERED ? 'Delivered' :
-                            ecmr?.status === EcmrStatus.CONFIRMED_DELIVERED ? 'Completed' : ecmr?.status}}
+                          {{ecmr?.status === EcmrStatus.Created ? 'New CMR' :
+                            ecmr?.status === EcmrStatus.Loaded ? 'Awaiting Carrier' :
+                            ecmr?.status === EcmrStatus.InTransit ? 'In Transit' :
+                            ecmr?.status === EcmrStatus.Delivered ? 'Delivered' :
+                            ecmr?.status === EcmrStatus.ConfirmedDelivered ? 'Completed' : ecmr?.status}}
                         </span></td>
                         <td>
                             <img class="view_more" routerLink="/ecmr/{{ecmr.ecmrID}}"/>

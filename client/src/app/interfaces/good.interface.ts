@@ -14,5 +14,5 @@ export interface Good {
   loadingEndDate: number;
   deliveryStartDate: number;
   deliveryEndDate: number;
-  cancellation: Cancellation;
+  cancellation?: Cancellation;
 }
