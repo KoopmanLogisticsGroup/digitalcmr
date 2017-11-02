@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../../services/authentication.service';
-import {EcmrInterface} from '../../../interfaces/ecmr.interface';
+import {Ecmr} from '../../../interfaces/ecmr.interface';
 
 @Component({
   selector:    'app-general-info',
@@ -8,7 +8,7 @@ import {EcmrInterface} from '../../../interfaces/ecmr.interface';
   styleUrls:   ['./general-info.component.scss']
 })
 export class GeneralInfoComponent implements OnInit {
-  @Input() public ecmr: EcmrInterface;
+  @Input() public ecmr: Ecmr;
   @Input() public selectedColumns: boolean[];
 
   public selectedImage: boolean[];

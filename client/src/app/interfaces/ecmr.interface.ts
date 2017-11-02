@@ -1,12 +1,14 @@
-import {LocationInterface} from './location.interface';
-import {SignatureInterface} from './signature.interface';
-import {AddressInterface} from './address.interface';
-import {GoodInterface} from './good.interface';
+import {Signature} from './signature.interface';
+import {Creation} from './creation.interface';
+import {Good} from './good.interface';
+import {Cancellation} from './cancellation.interface';
+import {Loading} from './loading.interface';
 
-export interface EcmrInterface {
+export interface Ecmr {
   ecmrID: string;
+  agreementTerms: string;
+  agreementTermsSec: string;
   legalOwnerRef: string;
-  compoundRef: string;
   carrierRef: string;
   recipientRef: string;
   issuedDate: number;
@@ -14,25 +16,24 @@ export interface EcmrInterface {
   owner: string;
   source: string;
   carrier: string;
-  recipient?: string;
-  transporter?: string;
-  carrierComments: string;
-  deliveryAddress: AddressInterface;
-  deliveryDate: number;
-  loadingAddress: AddressInterface;
-  loadingDate: number;
+  recipientOrg: string;
+  carrierComments: String;
+  creation: Creation;
+  loading: Loading;
+  delivery: Loading;
   documents?: string[]
+  goods: Good[];
   legalOwnerInstructions: string;
   paymentInstructions: string;
-  creation: LocationInterface
   payOnDelivery: string;
+  compoundSignature?: Signature;
+  carrierLoadingSignature?: Signature;
+  carrierDeliverySignature?: Signature;
+  recipientSignature?: Signature;
   status: string;
-  loading: LocationInterface;
-  compoundSignature?: SignatureInterface;
-  carrierLoadingSignature?: SignatureInterface;
-  delivery: LocationInterface;
-  carrierDeliverySignature?: SignatureInterface;
-  recipientSignature?: SignatureInterface;
-  goods: GoodInterface[];
+  orderID: string;
+  cancellation?: Cancellation;
+  transporter?: string;
+  recipient?: string;
 }
 

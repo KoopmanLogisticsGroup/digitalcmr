@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {EcmrService} from '../../../services/ecmr.service';
 import {AuthenticationService} from '../../../services/authentication.service';
-import {EcmrInterface} from '../../../interfaces/ecmr.interface';
+import {Ecmr} from '../../../interfaces/ecmr.interface';
 import * as GeoLib from 'geolib';
 
 @Component({
@@ -12,7 +12,7 @@ import * as GeoLib from 'geolib';
 
 export class SignOffModalComponent implements OnInit {
 
-  @Input() ecmr: EcmrInterface;
+  @Input() ecmr: Ecmr;
   public EcmrStatus = {
     CREATED:             'CREATED',
     LOADED:              'LOADED',
@@ -35,7 +35,7 @@ export class SignOffModalComponent implements OnInit {
   public ngOnInit(): void {
   }
 
-  public open(ecmr: EcmrInterface): void {
+  public open(ecmr: Ecmr): void {
     this.ecmr = ecmr;
     $('#signoff_modal.ui.modal').modal('show');
     $('#signoff_modal.ui.modal').parent().css({'background-color': 'rgba(0,0,0,0.7)'});

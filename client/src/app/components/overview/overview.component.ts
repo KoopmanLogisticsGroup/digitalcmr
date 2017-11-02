@@ -3,7 +3,7 @@ import {EcmrService} from '../../services/ecmr.service';
 import {AuthenticationService} from '../../services/authentication.service';
 import {SearchService} from '../../services/search.service';
 import {NavbarService} from '../../services/navbar.service';
-import {EcmrInterface} from '../../interfaces/ecmr.interface';
+import {Ecmr} from '../../interfaces/ecmr.interface';
 
 @Component({
   selector:    'app-overview',
@@ -11,13 +11,13 @@ import {EcmrInterface} from '../../interfaces/ecmr.interface';
   styleUrls:   ['./overview.component.scss'],
 })
 export class OverviewComponent implements OnInit {
-  @Input() public ecmr: EcmrInterface;
+  @Input() public ecmr: Ecmr;
 
   public currentView: string;
   public searchBarData: string;
   public filterEcmr: number;
-  private ecmrs: EcmrInterface[];
-  public ecmrsFiltered: EcmrInterface[];
+  private ecmrs: Ecmr[];
+  public ecmrsFiltered: Ecmr[];
   public EcmrStatus = {
     CREATED:             'CREATED',
     LOADED:              'LOADED',
@@ -34,9 +34,9 @@ export class OverviewComponent implements OnInit {
   };
 
   public viewStatus = {
-    OPEN:        'OPEN',
-    IN_PROGRESS: 'IN_PROGRESS',
-    COMPLETED:   'COMPLETED'
+    OPEN:        'Open',
+    IN_PROGRESS: 'InProgress',
+    COMPLETED:   'Completed'
   };
 
   public constructor(private ecmrService: EcmrService,
@@ -103,7 +103,7 @@ export class OverviewComponent implements OnInit {
     return this.authenticationService.isAuthenticated() ? JSON.parse(localStorage.getItem('currentUser')).user.role : '';
   }
 
-  public hasComments(ecmr: EcmrInterface): boolean {
+  public hasComments(ecmr: Ecmr): boolean {
     return ecmr && ecmr.goods.filter(good => {
       if ((good.compoundRemark && good.compoundRemark.comments) ||
         (good.carrierLoadingRemark && good.carrierLoadingRemark.comments) ||
@@ -114,7 +114,7 @@ export class OverviewComponent implements OnInit {
     }).length > 0;
   }
 
-  public isDamaged(ecmr: EcmrInterface): boolean {
+  public isDamaged(ecmr: Ecmr): boolean {
     return ecmr && ecmr.goods.filter(good => {
       if ((good.compoundRemark && good.compoundRemark.isDamaged) ||
         (good.carrierLoadingRemark && good.carrierLoadingRemark.isDamaged) ||

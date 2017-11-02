@@ -29,18 +29,27 @@ rule EveryBodyCanReadVehicles {
 rule LegalOwnerAdminCanReadTransportOrder {
     description: "Allow Legal Owner Admin to READ a Transport Order"
     participant(p): "org.digitalcmr.LegalOwnerAdmin"
-    operation: READ, CREATE
+    operation: READ
     resource(r): "org.digitalcmr.TransportOrder"
     condition: (r.owner.getIdentifier() === p.org.getIdentifier())
     action: ALLOW
 }
 
-rule LegalOwnerAdminCanCreateTransportOrder {
-    description: "Allow Legal Owner Admin to CREATE a Transport Order"
+rule LegalOwnerAdminCanCreateTransactionCreateTransportOrder {
+    description: "Allow LegalOwnerAdmin to CREATE a CreateTransportOrder transaction"
     participant: "org.digitalcmr.LegalOwnerAdmin"
     operation: CREATE
     resource: "org.digitalcmr.CreateTransportOrder"
     action: ALLOW
+}
+
+rule LegalOwnerAdminCanSubmitTransactionCreateTransportOrder {
+  description: "Allow LegalOwnerAdmin to CREATE a TransportOrder using the CreateTransportOrder transaction"
+  participant: "org.digitalcmr.LegalOwnerAdmin"
+  operation: CREATE
+  resource: "org.digitalcmr.TransportOrder"
+  transaction: "org.digitalcmr.CreateTransportOrder"
+  action: ALLOW
 }
 
 rule LegalOwnerAdminCanReadAndCreateECMR {

@@ -1,7 +1,7 @@
 import {Component, OnInit, Input, ViewChild} from '@angular/core';
 import {SignOffModalComponent} from '../sign-off-modal/sign-off-modal.component';
 import {AuthenticationService} from '../../../services/authentication.service';
-import {EcmrInterface} from '../../../interfaces/ecmr.interface';
+import {Ecmr} from '../../../interfaces/ecmr.interface';
 
 @Component({
   selector:    'app-goods',
@@ -12,7 +12,7 @@ export class GoodsComponent implements OnInit {
 
   @ViewChild(SignOffModalComponent) public signOffModal: SignOffModalComponent;
 
-  @Input() public ecmr: EcmrInterface;
+  @Input() public ecmr: Ecmr;
   @Input() public selectedColumnIs: number;
   @Input() public selectedColumns: number;
   public EcmrStatus = {

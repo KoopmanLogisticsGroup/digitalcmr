@@ -19,7 +19,7 @@ import {Request} from 'express';
 import {BusinessNetworkHandler} from '../../blockchain/BusinessNetworkHandler';
 import {Container} from 'typedi';
 import {TransportOrderTransactor} from '../../domain/transportOrder/TransportOrderTransactor';
-import {TransportOrderInterface} from '../../../resources/interfaces/transportOrder.interface';
+import {TransportOrder} from '../../../resources/interfaces/transportOrder.interface';
 
 @JsonController('/transportOrder')
 @UseBefore(UserAuthenticatorMiddleware)
@@ -30,7 +30,7 @@ export class ECMRController {
   }
 
   @Post('/')
-  public async create(@Body() transportOrder: TransportOrderInterface, @Req() request: Request): Promise<any> {
+  public async create(@Body() transportOrder: TransportOrder, @Req() request: Request): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
     return await this.transactionHandler.create(identity, Config.settings.composer.profile, Config.settings.composer.namespace, transportOrder, new TransportOrderTransactor());
   }

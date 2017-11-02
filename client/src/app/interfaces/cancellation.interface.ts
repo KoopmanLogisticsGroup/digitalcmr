@@ -1,7 +1,6 @@
-import {UserBlockchainInterface} from './user.blockchain.interface';
-
-export interface CancellationInterface {
-  cancelledBy: UserBlockchainInterface;
+export interface Cancellation {
+  cancelledBy: string;
   date: number;
   reason: string;
 }
+

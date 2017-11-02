@@ -2,9 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {EcmrService} from '../../services/ecmr.service';
 import {ActivatedRoute} from '@angular/router';
 import {NavbarService} from '../../services/navbar.service';
-import {EcmrInterface} from '../../interfaces/ecmr.interface';
-import {SignatureInterface} from '../../interfaces/signature.interface';
-import {RemarkInterface} from '../../interfaces/remark.interface';
+import {Ecmr} from '../../interfaces/ecmr.interface';
+import {Signature} from '../../interfaces/signature.interface';
+import {Remark} from '../../interfaces/remark.interface';
 
 @Component({
   selector:    'app-ecmr-detail',
@@ -15,7 +15,7 @@ export class EcmrDetailComponent implements OnInit {
 
   public userRole: string;
   public ecmrID: string;
-  public ecmr: EcmrInterface;
+  public ecmr: Ecmr;
   public selectedColumns: boolean[];
   public EcmrStatus = {
     CREATED:             'CREATED',
@@ -43,7 +43,7 @@ export class EcmrDetailComponent implements OnInit {
     this.route.params
       .subscribe(params => {
         this.ecmrID = params['ecmrID'];
-        this.ecmrService.getECMRByID(this.ecmrID).subscribe((ecmr: EcmrInterface) => {
+        this.ecmrService.getECMRByID(this.ecmrID).subscribe((ecmr: Ecmr) => {
           this.ecmr     = ecmr;
           this.userRole = JSON.parse(localStorage.getItem('currentUser')).user.role;
           switch (this.ecmr.status) {
@@ -88,8 +88,8 @@ export class EcmrDetailComponent implements OnInit {
       });
   }
 
-  private placeEmptySignature(): SignatureInterface {
-    return <SignatureInterface> {
+  private placeEmptySignature(): Signature {
+    return <Signature> {
       longitude:     0,
       latitude:      0,
       certificate:   null,
