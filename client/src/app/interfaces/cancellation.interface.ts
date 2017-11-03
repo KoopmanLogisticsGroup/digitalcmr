@@ -3,4 +3,3 @@ export interface Cancellation {
   date: number;
   reason: string;
 }
-
