@@ -5,34 +5,28 @@ import 'rxjs/add/operator/map';
 import {Configuration} from '../app.constants';
 import {AuthenticationService} from './authentication.service';
 import {Observable} from 'rxjs/Observable';
-import {ErrorObservable} from 'rxjs/observable/ErrorObservable';
 
 @Injectable()
-export class EcmrService {
+export class TransportOrderService {
   private actionUrl: string;
   private headers: Headers;
 
   public constructor(private _http: Http,
                      private _configuration: Configuration,
                      private _authenticationService: AuthenticationService) {
-    this.actionUrl = `${_configuration.apiHost}${_configuration.apiPrefix}ECMR/`;
+    this.actionUrl = `${_configuration.apiHost}${_configuration.apiPrefix}transportOrder/`;
     this.headers   = _authenticationService.createAuthorizationHeader();
   }
 
-  public getECMRByID(ecmrID: string): Observable<any> {
+  public getTransportOrderByOrderID(orderID: string): Observable<any> {
     return this._http
-      .get(this.actionUrl + 'ecmrID/' + ecmrID, {headers: this.headers})
+      .get(this.actionUrl + 'orderID/' + orderID, {headers: this.headers})
       .map(res => res.json())
   }
 
-  public getAllEcmrs(): Observable<any> {
+  public getAllTransportOrders(): Observable<any> {
     return this._http
       .get(this.actionUrl, {headers: this.headers})
-      .map(res => res.json())
-  }
-
-  public updateEcmr(ecmr: any): Observable<any> {
-    return this._http.put(this.actionUrl, ecmr, {headers: this.headers})
       .map(res => res.json())
   }
 }

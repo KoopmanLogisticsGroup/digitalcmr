@@ -21,6 +21,7 @@ import {SignOffModalComponent} from './components/ecmr-detail/sign-off-modal/sig
 import {FilterByPipe} from '../../src/app/utils/filterBy.pipe';
 import {SearchService} from './services/search.service';
 import {NavbarService} from './services/navbar.service';
+import {TransportOrderService} from './services/transportorder.service';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import {NavbarService} from './services/navbar.service';
     AuthGuard,
     EcmrService,
     SearchService,
-    NavbarService
+    NavbarService,
+    TransportOrderService
   ],
   bootstrap:    [AppComponent]
 })

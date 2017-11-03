@@ -4,6 +4,8 @@ import {AuthenticationService} from '../../services/authentication.service';
 import {SearchService} from '../../services/search.service';
 import {NavbarService} from '../../services/navbar.service';
 import {Ecmr} from '../../interfaces/ecmr.interface';
+import {TransportOrder} from '../../interfaces/transportOrder.interface';
+import {TransportOrderService} from '../../services/transportorder.service';
 
 @Component({
   selector:    'app-overview',
@@ -17,6 +19,7 @@ export class OverviewComponent implements OnInit {
   public searchBarData: string;
   public filterEcmr: number;
   private ecmrs: Ecmr[];
+  private transportOrders: TransportOrder[];
   public ecmrsFiltered: Ecmr[];
   public EcmrStatus = {
     Created:            'CREATED',
@@ -40,6 +43,7 @@ export class OverviewComponent implements OnInit {
   };
 
   public constructor(private ecmrService: EcmrService,
+                     private transportOrderService: TransportOrderService,
                      private searchService: SearchService,
                      private authenticationService: AuthenticationService,
                      public nav: NavbarService) {
@@ -59,6 +63,10 @@ export class OverviewComponent implements OnInit {
       this.ecmrs         = response instanceof Array ? response : [];
       this.ecmrsFiltered = this.ecmrs.filter(ecmr => ecmr.status.toUpperCase() === this.EcmrStatus.Created);
       this.firstView();
+
+      this.transportOrderService.getAllTransportOrders().subscribe((transportOrder: TransportOrder[]) => {
+        this.transportOrders = transportOrder instanceof Array ? transportOrder : [];
+      });
     });
   }
 
