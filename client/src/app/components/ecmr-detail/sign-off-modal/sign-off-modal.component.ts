@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {EcmrService} from '../../../services/ecmr.service';
 import {AuthenticationService} from '../../../services/authentication.service';
-import {EcmrInterface} from '../../../interfaces/ecmr.interface';
+import {Ecmr} from '../../../interfaces/ecmr.interface';
 import * as GeoLib from 'geolib';
 
 @Component({
@@ -12,13 +12,13 @@ import * as GeoLib from 'geolib';
 
 export class SignOffModalComponent implements OnInit {
 
-  @Input() ecmr: EcmrInterface;
+  @Input() ecmr: Ecmr;
   public EcmrStatus = {
-    CREATED:             'CREATED',
-    LOADED:              'LOADED',
-    IN_TRANSIT:          'IN_TRANSIT',
-    DELIVERED:           'DELIVERED',
-    CONFIRMED_DELIVERED: 'CONFIRMED_DELIVERED'
+    Created:             'CREATED',
+    Loaded:              'LOADED',
+    InTransit:           'IN_TRANSIT',
+    Delivered:           'DELIVERED',
+    ConfirmedDelivered: 'CONFIRMED_DELIVERED'
   };
 
   public User = {
@@ -35,7 +35,7 @@ export class SignOffModalComponent implements OnInit {
   public ngOnInit(): void {
   }
 
-  public open(ecmr: EcmrInterface): void {
+  public open(ecmr: Ecmr): void {
     this.ecmr = ecmr;
     $('#signoff_modal.ui.modal').modal('show');
     $('#signoff_modal.ui.modal').parent().css({'background-color': 'rgba(0,0,0,0.7)'});
@@ -79,7 +79,7 @@ export class SignOffModalComponent implements OnInit {
 
       case this.User.CarrierMember: {
 
-        if (this.ecmr.status === this.EcmrStatus.LOADED) {
+        if (this.ecmr.status === this.EcmrStatus.Loaded) {
           const start          = {
             latitude:  this.ecmr.loading.address.latitude,
             longitude: this.ecmr.loading.address.longitude
@@ -95,7 +95,7 @@ export class SignOffModalComponent implements OnInit {
           this.ecmr.carrierLoadingSignature.longitude = signaturePoint.longitude;
         }
 
-        if (this.ecmr.status === this.EcmrStatus.IN_TRANSIT) {
+        if (this.ecmr.status === this.EcmrStatus.InTransit) {
           const start          = {
             latitude:  this.ecmr.delivery.address.latitude,
             longitude: this.ecmr.delivery.address.longitude

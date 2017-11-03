@@ -12,6 +12,9 @@ import {JSONWebToken} from '../../utils/authentication/JSONWebToken';
 import {TransactionHandler} from '../../blockchain/TransactionHandler';
 import {Identity} from '../../domain/Identity';
 import {Config} from '../../config/index';
+import {Request} from 'express';
+import {TransportOrderTransactor} from '../../domain/transportOrder/TransportOrderTransactor';
+import {TransportOrder} from '../../../resources/interfaces/transportOrder.interface';
 
 @JsonController('/transportOrder')
 @UseBefore(UserAuthenticatorMiddleware)
@@ -33,5 +36,10 @@ export class TransportOrderController {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
     return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getTransportOrderById', {id: orderID});
+
+    @Post('/')
+  public async create(@Body() transportOrder: TransportOrder, @Req() request: Request): Promise<any> {
+    const identity: Identity = new JSONWebToken(request).getIdentity();
+    return await this.transactionHandler.create(identity, Config.settings.composer.profile, Config.settings.composer.namespace, transportOrder, new TransportOrderTransactor());
   }
 }

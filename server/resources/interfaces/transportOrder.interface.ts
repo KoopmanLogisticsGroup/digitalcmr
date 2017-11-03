@@ -1,7 +1,7 @@
 import {Good} from './good.interface';
 import {Loading} from './loading.interface';
-import {Delivery} from './delivery.interface';
 import {Cancellation} from './cancellation.interface';
+import {Delivery} from './delivery.interface';
 
 export interface TransportOrder {
   orderID: string;
