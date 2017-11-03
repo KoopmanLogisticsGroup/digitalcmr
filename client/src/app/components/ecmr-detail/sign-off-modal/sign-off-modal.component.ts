@@ -14,10 +14,10 @@ export class SignOffModalComponent implements OnInit {
 
   @Input() ecmr: Ecmr;
   public EcmrStatus = {
-    Created:             'CREATED',
-    Loaded:              'LOADED',
-    InTransit:           'IN_TRANSIT',
-    Delivered:           'DELIVERED',
+    Created:            'CREATED',
+    Loaded:             'LOADED',
+    InTransit:          'IN_TRANSIT',
+    Delivered:          'DELIVERED',
     ConfirmedDelivered: 'CONFIRMED_DELIVERED'
   };
 

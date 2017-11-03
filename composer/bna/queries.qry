@@ -11,6 +11,13 @@ query getTransportOrderById {
           WHERE (orderID == _$id)
 }
 
+query getTransportOrdersByStatus {
+  description: "Select all Transport Orders based on their status"
+  statement:
+      SELECT org.digitalcmr.TransportOrder
+          WHERE (status == _$status)
+}
+
 query getAllEcmrs {
   description: "Get all ECMRs (user has permission to)"
   statement:
