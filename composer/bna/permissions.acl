@@ -54,10 +54,11 @@ rule LegalOwnerAdminCanCreateECMRCreateTransaction {
 
 rule LegalOwnerAdminCanSubmitCreateECMR {
     description: "Allow Legal Owner Admin to Submit a CREATE eCMR transaction for his organization"
-    participant: "org.digitalcmr.LegalOwnerAdmin"
+    participant(p): "org.digitalcmr.LegalOwnerAdmin"
     operation: CREATE
-    resource: "org.digitalcmr.ECMR"
+    resource(r): "org.digitalcmr.ECMR"
     transaction: "org.digitalcmr.CreateECMR"
+    condition: (r.owner.getIdentifier() === p.org.getIdentifier())
     action: ALLOW
 }
 
@@ -71,15 +72,6 @@ rule CompoundAdminCanReadECMR {
     operation: READ
     resource(r): "org.digitalcmr.ECMR"
     condition: (r.source.getIdentifier() === p.org.getIdentifier())
-    action: ALLOW
-}
-
-rule CompoundAdminCanUpdateECMR {
-    description: "Allow Compound Admin to UPDATE all eCMR where his org is a source and status is CREATED"
-    participant(p): "org.digitalcmr.CompoundAdmin"
-    operation: UPDATE
-    resource(r): "org.digitalcmr.ECMR"
-    condition: ((r.source.getIdentifier() === p.org.getIdentifier()) && r.status == 'CREATED')
     action: ALLOW
 }
 
@@ -121,16 +113,6 @@ rule CarrierMemberCanReadECMR {
     resource(ecmr): "org.digitalcmr.ECMR"
     condition: (ecmr.carrier.getIdentifier() === p.org.getIdentifier() && ecmr.transporter.getIdentifier() === p.getIdentifier()
     && ecmr.status != 'CREATED')
-    action: ALLOW
-}
-
-rule CarrierMemberCanUpdateECMR {
-    description: "Allow Carrier Member to UPDATE all eCMRs where he is a transporter and status is LOADED or IN_TRANSIT"
-    participant(p): "org.digitalcmr.CarrierMember"
-    operation: UPDATE
-    resource(ecmr): "org.digitalcmr.ECMR"
-    condition: (ecmr.carrier.getIdentifier() === p.org.getIdentifier() && ecmr.transporter.getIdentifier() === p.getIdentifier()
-    && (ecmr.status == 'LOADED' || ecmr.status == 'IN_TRANSIT'))
     action: ALLOW
 }
 
@@ -191,15 +173,6 @@ rule RecipientMemberCanReadHisECMR {
     operation: READ
     resource(ecmr): "org.digitalcmr.ECMR"
     condition: (ecmr.recipientOrg.getIdentifier() === p.org.getIdentifier() && ecmr.recipient.getIdentifier() === p.getIdentifier())
-    action: ALLOW
-}
-
-rule RecipientMemberCanUpdateHisECMR {
-    description: "Allow Recipient to UPDATE his own eCMR (where he is a recipient) where status is DELIVERED"
-    participant(p): "org.digitalcmr.RecipientMember"
-    operation: UPDATE
-    resource(ecmr): "org.digitalcmr.ECMR"
-    condition: (ecmr.recipientOrg.getIdentifier() === p.org.getIdentifier() && ecmr.recipient.getIdentifier() === p.getIdentifier() && ecmr.status == 'DELIVERED')
     action: ALLOW
 }
 
