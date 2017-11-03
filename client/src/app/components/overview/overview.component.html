@@ -21,14 +21,14 @@
         <div *ngIf="searchBarData === ''">
             <div class="ui pointing secondary menu">
                 <div *ngIf="(getUserRole() === User.CompoundAdmin)">
-                    <a class="item" data-tab="first" (click)="setCurrentView(viewStatus.OPEN)"
-                       [ngClass]="{'active' : currentView === viewStatus.OPEN ? true : false}">OPEN</a></div>
-                <a class="item" data-tab="second" (click)="setCurrentView(viewStatus.IN_PROGRESS)"
-                   *ngIf="getUserRole() === User.CompoundAdmin || getUserRole() === User.CarrierMember || getUserRole() === User.RecipientMember"
-                   [ngClass]="{'active' : currentView === viewStatus.IN_PROGRESS ? true : false}">IN PROGRESS</a>
-                <a class="item" data-tab="third" (click)="setCurrentView(viewStatus.COMPLETED)"
-                   *ngIf="getUserRole() === User.CompoundAdmin || getUserRole() === User.LegalOwnerAdmin || getUserRole() === User.CarrierMember || getUserRole() === User.RecipientMember"
-                   [ngClass]="{'active' : currentView === viewStatus.COMPLETED ? true : false}">COMPLETED</a>
+                  <a class="item" data-tab="first" (click)="setCurrentView(viewStatus.Open)"
+                     [ngClass]="{'active' : currentView === viewStatus.Open ? true : false}">OPEN</a></div>
+              <a class="item" data-tab="second" (click)="setCurrentView(viewStatus.InProgress)"
+                 *ngIf="getUserRole() === User.CompoundAdmin || getUserRole() === User.CarrierMember || getUserRole() === User.RecipientMember"
+                 [ngClass]="{'active' : currentView === viewStatus.InProgress ? true : false}">IN PROGRESS</a>
+              <a class="item" data-tab="third" (click)="setCurrentView(viewStatus.Completed)"
+                 *ngIf="getUserRole() === User.CompoundAdmin || getUserRole() === User.LegalOwnerAdmin || getUserRole() === User.CarrierMember || getUserRole() === User.RecipientMember"
+                 [ngClass]="{'active' : currentView === viewStatus.Completed ? true : false}">COMPLETED</a>
             </div>
         </div>
         <div class="ui active tab grid" data-tab="first">
