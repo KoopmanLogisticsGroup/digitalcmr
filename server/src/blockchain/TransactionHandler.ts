@@ -14,7 +14,8 @@ export class TransactionHandler {
     return this.businessNetworkHandler.disconnect();
   }
 
-  public async create(identity: Identity, connectionProfile: string, namespace: string, data: any, transactionCreator: TransactionCreator): Promise<void> {
+  public async create(identity: Identity, connectionProfile: string, namespace: string, data: any,
+                      transactionCreator: TransactionCreator): Promise<void> {
     await this.businessNetworkHandler.connect(identity, connectionProfile);
     const factory: Factory = await this.businessNetworkHandler.getFactory();
 
@@ -29,7 +30,8 @@ export class TransactionHandler {
     return this.businessNetworkHandler.disconnect();
   }
 
-  public async update(identity: Identity, connectionProfile: string, namespace: string, resource: any, resourceID: string, transactionCreator: TransactionCreator): Promise<void> {
+  public async update(identity: Identity, connectionProfile: string, namespace: string, resource: any,
+                      resourceID: string, transactionCreator: TransactionCreator): Promise<void> {
     await this.businessNetworkHandler.connect(identity, connectionProfile);
     const factory: Factory = await this.businessNetworkHandler.getFactory();
 

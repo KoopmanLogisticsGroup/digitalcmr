@@ -12,7 +12,7 @@
     "tslint":    "node_modules/.bin/tslint",
     "start":     "nodemon server.js",
     "test":      "mocha -r ts-node/register test/*.ts",
-    "e2e":       "mocha --timeout 15000 -r ts-node/register test/e2e/test.ts",
+    "e2e":       "mocha --timeout 15000 -r ts-node/register test/e2e/*.ts",
     "test-unit": "mocha -r ts-node/register test/unit/**/*.ts",
     "lint":      "tslint --fix -c tslint.json -e 'src/sdk/**' 'src/**/*.ts'"
   },

@@ -126,32 +126,32 @@ describe('As a Legal Owner, Lapo, ', () => {
     }
 
     function buildTransportOrder(transportOrderID) {
-     let transportOrder = factory.newResource(namespace, 'TransportOrder', transportOrderID);
-     transportOrder.loading = factory.newConcept(namespace, 'Loading');
-     transportOrder.loading.address = buildAddress();
-     transportOrder.loading.actualDate = 0;
-     transportOrder.delivery = factory.newConcept(namespace, 'Delivery');
-     transportOrder.delivery.address = buildAddress();
-     transportOrder.delivery.actualDate = 0;
-     transportOrder.owner = factory.newRelationship(namespace, 'LegalOwnerOrg', 'lapo@leaseplan.org');
-     transportOrder.source = factory.newRelationship(namespace, 'CompoundOrg', 'amsterdamcompound');
-     transportOrder.carrier = factory.newRelationship(namespace, 'CarrierOrg', 'koopman');
-     transportOrder.goods = [];
-     transportOrder.goods[0] = factory.newConcept(namespace, 'Good');
-     transportOrder.goods[0].description = 'Car 1';
-     transportOrder.goods[0].vehicle = buildVehicle('213123123123ASDSAD');
-     transportOrder.goods[0].description = 'Car 1';
-     transportOrder.goods[0].loadingStartDate = 0;
-     transportOrder.goods[0].loadingEndDate = 0;
-     transportOrder.goods[0].deliveryStartDate = 0;
-     transportOrder.goods[0].deliveryEndDate = 0;
-     transportOrder.issueDate = 0;
-     transportOrder.ecmrs = [];
-     transportOrder.status = 'OPEN';
-     transportOrder.ecmrs[0] = factory.newRelationship(namespace, 'ECMR', buildECMR('ecmr12345'));
-     transportOrder.orderRef = 'order1';
+      let transportOrder = factory.newResource(namespace, 'TransportOrder', transportOrderID);
+      transportOrder.loading = factory.newConcept(namespace, 'Loading');
+      transportOrder.loading.address = buildAddress();
+      transportOrder.loading.actualDate = 0;
+      transportOrder.delivery = factory.newConcept(namespace, 'Delivery');
+      transportOrder.delivery.address = buildAddress();
+      transportOrder.delivery.actualDate = 0;
+      transportOrder.owner = factory.newRelationship(namespace, 'LegalOwnerOrg', 'lapo@leaseplan.org');
+      transportOrder.source = factory.newRelationship(namespace, 'CompoundOrg', 'amsterdamcompound');
+      transportOrder.carrier = factory.newRelationship(namespace, 'CarrierOrg', 'koopman');
+      transportOrder.goods = [];
+      transportOrder.goods[0] = factory.newConcept(namespace, 'Good');
+      transportOrder.goods[0].description = 'Car 1';
+      transportOrder.goods[0].vehicle = buildVehicle('213123123123ASDSAD');
+      transportOrder.goods[0].description = 'Car 1';
+      transportOrder.goods[0].loadingStartDate = 0;
+      transportOrder.goods[0].loadingEndDate = 0;
+      transportOrder.goods[0].deliveryStartDate = 0;
+      transportOrder.goods[0].deliveryEndDate = 0;
+      transportOrder.issueDate = 0;
+      transportOrder.ecmrs = [];
+      transportOrder.status = 'OPEN';
+      transportOrder.ecmrs[0] = factory.newRelationship(namespace, 'ECMR', buildECMR('ecmr12345'));
+      transportOrder.orderRef = 'order1';
 
-     return transportOrder;
+      return transportOrder;
     }
 
     /**

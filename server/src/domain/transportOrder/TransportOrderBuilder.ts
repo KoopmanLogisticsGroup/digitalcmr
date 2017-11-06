@@ -4,7 +4,7 @@ import {TransportOrder} from '../../../resources/interfaces/transportOrder.inter
 
 export class TransportOrderBuilder {
   public static buildTransportOrder(factory: Factory, namespace: string, transportOrder: TransportOrder): TransportOrder {
-    let validatedObject              = BuilderUtils.createResource(factory, namespace, 'TransportOrder', transportOrder);
+    const validatedObject            = BuilderUtils.createResource(factory, namespace, 'TransportOrder', transportOrder);
     validatedObject.loading          = BuilderUtils.createConcept(factory, namespace, 'Loading', transportOrder.loading);
     validatedObject.loading.address  = BuilderUtils.createConcept(factory, namespace, 'Address', transportOrder.loading.address);
     validatedObject.delivery         = BuilderUtils.createConcept(factory, namespace, 'Loading', transportOrder.delivery);
@@ -26,7 +26,7 @@ export class TransportOrderBuilder {
   }
 
   public static async buildTransportOrders(factory: Factory, namespace: string, transportOrders: TransportOrder[]): Promise<any> {
-    let validatedObjects: any = [];
+    const validatedObjects: any = [];
 
     for (const transportOrder of transportOrders) {
       validatedObjects.push(this.buildTransportOrder(factory, namespace, transportOrder));
