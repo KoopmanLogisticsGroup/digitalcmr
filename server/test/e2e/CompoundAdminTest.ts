@@ -16,15 +16,15 @@ const ok = (res) => {
 
 const buildECMR = (ecmrID: string) => {
   return {
-    'ecmrID':            ecmrID,
-    'status':            'CREATED',
-    'agreementTerms':    'agreement terms',
-    'agreementTermsSec': 'sec agreement terms',
-    'legalOwnerRef':     'ASD213123S',
-    'carrierRef':        'H2238723VASD',
-    'recipientRef':      'SDADHGA21312312',
-    'orderID':           'ASDASDA123123',
-    'creation':          {
+    'ecmrID':                 ecmrID,
+    'status':                 'CREATED',
+    'agreementTerms':         'agreement terms',
+    'agreementTermsSec':      'sec agreement terms',
+    'legalOwnerRef':          'ASD213123S',
+    'carrierRef':             'H2238723VASD',
+    'recipientRef':           'SDADHGA21312312',
+    'orderID':                'ASDASDA123123',
+    'creation':               {
       'address': {
         'name':        'Amsterdam Compound',
         'street':      'compenstraat',
@@ -113,7 +113,11 @@ const buildECMR = (ecmrID: string) => {
     ],
     'legalOwnerInstructions': 'string',
     'paymentInstructions':    'string',
-    'payOnDelivery':          'string'
+    'payOnDelivery':          'string',
+    'compoundSignature':      {
+      'certificate': 'willem@amsterdamcompound.org',
+      'timestamp':   0
+    }
   }
 };
 
@@ -196,11 +200,12 @@ const buildTransportOrder = () => {
   }
 };
 
-describe('An legal owner admin can', () => {
+
+describe('An Compound Admin can', () => {
 
   it('can login a legal owner', (done) => {
     const loginParams = {
-      'username': 'lapo@leaseplan.org',
+      'username': 'willem@amsterdamcompound.org',
       'password': 'passw0rd'
     };
 
@@ -221,138 +226,97 @@ describe('An legal owner admin can', () => {
       });
   });
 
-  it('create a transport order', (done) => {
+  it('can not create an transport order', (done) => {
+    const transportOrder = buildTransportOrder();
     server
-      .post('/api/v1/transportOrder/')
+      .post('/api/v1/transportOrder')
       .set('x-access-token', token)
-      .send(buildTransportOrder())
-      .expect(ok)
-      .expect('Content-Type', /json/)
-      .expect(200)
-      .end((err: Error) => {
-        if (err) {
-          console.log(err.stack);
-          return done(err);
-        }
-        done(err);
-      });
-  });
-
-  it('Can not create a transport order for other legal owner org', (done) => {
-    const wrongTransportOrder = buildTransportOrder();
-    wrongTransportOrder.owner = 'notLeaseplan';
-    server
-      .post('/api/v1/transportOrder/')
-      .set('x-access-token', token)
-      .send(wrongTransportOrder)
-      .expect('Content-Type', /json/)
+      .send(transportOrder)
       .expect(500)
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
-          return done(err);
         }
         done(err);
       });
   });
 
-  it('can create an eCMR when he is the owner', (done) => {
+  it('can read ECMRs where his org is the source', (done) => {
+    server
+      .get('/api/v1/ECMR')
+      .set('x-access-token', token)
+      .expect(ok)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+        }
+        res.body.length.should.be.greaterThan(0, 'no eCMRs were found.');
+        done(err);
+      });
+  });
+
+  it('can not create an ECMR', (done) => {
     const ecmr = buildECMR('ecmr1');
     server
       .post('/api/v1/ECMR')
       .set('x-access-token', token)
       .send(ecmr)
       .expect('Content-Type', /json/)
-      .expect(ok)
-      .end((err: Error) => {
-        if (err) {
-          console.log(err.stack);
-          return done(err);
-        }
-        done(err);
-      });
-  });
-
-  it('can not create an eCMR when he is not the owner', (done) => {
-    const ecmr = buildECMR('ecmrNotWorking');
-    ecmr.owner = 'notLeaseplan';
-    server
-      .post('/api/v1/ECMR')
-      .set('x-access-token', token)
-      .send(ecmr)
-      .expect('Content-Type', /json/)
       .expect(500)
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
-          return done(err);
         }
         done(err);
       });
   });
 
-  it('can read all ECMRs by his organisation', (done) => {
+  it('Can not update an ECMR when his org and status is IN_TRANSIT', (done) => {
+    const updateEcmr  = buildECMR('ecmr1');
+    updateEcmr.status = 'IN_TRANSIT';
     server
-      .get('/api/v1/ECMR')
+      .put('/api/v1/ECMR')
       .set('x-access-token', token)
-      .expect('Content-Type', /json/)
-      .expect(200)
-      .end((err: Error, res) => {
+      .send(updateEcmr)
+      .expect(500)
+      .end((err: Error) => {
         if (err) {
-          console.log(err.stack);
-          return done(err);
+          console.log(err.stack)
         }
-        res.body.length.should.be.greaterThan(0, 'No eCMRs found');
         done(err);
       })
   });
-//
-// it('get a legal owner by id', (done) => {
-//   server
-//     .get('/api/v1/legalowners/' + legalOwner.userID)
-//     .set('legalOwnerID', legalOwner.userID)
-//     .expect(ok)
-//     .expect('Content-Type', /json/)
-//     .end((err, res) => {
-//       res.body.userID.should.be.equal(legalOwner.userID);
-//       done(err);
-//     });
-// });
-//
-// it('update a legal owner by id', (done) => {
-//   legalOwner.firstName = 'george';
-//   server
-//     .put('/api/v1/legalowners')
-//     .send(legalOwner)
-//     .expect(ok)
-//     .expect('Content-Type', /json/)
-//     .end((err: Error, res) => {
-//       if (err) {
-//         console.log(err.stack);
-//         return done(err);
-//       }
-//       res.body.$Class.should.equal('org.digitalcmr.LegalOwner', 'No legalOwner returned');
-//       res.body.userID.should.equal(legalOwner.userID);
-//       res.body.firstName.should.equal('george');
-//       done(err);
-//     });
-// });
-//
-// it('delete a legal owner by id', (done) => {
-//   server
-//     .delete('/api/v1/legalowners/' + legalOwner.userID)
-//     .set('legalOwnerID', legalOwner.userID)
-//     .expect(ok)
-//     .expect('Content-Type', /json/)
-//     .end((err: Error, res) => {
-//       if (err) {
-//         console.log(err.stack);
-//         return done(err);
-//       }
-//       done(err);
-//     });
-// });
 
-})
-;
+  it('Can not update an ECMR when his org is not the source', (done) => {
+    const updateEcmr  = buildECMR('ecmr1');
+    updateEcmr.source = 'notAmsterdamCompound';
+    server
+      .put('/api/v1/ECMR')
+      .set('x-access-token', token)
+      .send(updateEcmr)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack)
+        }
+        done(err);
+      })
+  });
 
+  it('Can update an ECMR when his org and status is LOADED ', (done) => {
+    const updateEcmr  = buildECMR('ecmr1');
+    updateEcmr.status = 'LOADED';
+
+    server
+      .put('/api/v1/ECMR')
+      .set('x-access-token', token)
+      .send(updateEcmr)
+      .expect(ok)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack)
+        }
+        done(err);
+      })
+  });
+});
