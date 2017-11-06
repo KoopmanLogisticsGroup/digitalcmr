@@ -1,12 +1,18 @@
-import {RemarkInterface} from './remark.interface';
-import {VehicleInterface} from './vehicle.interface';
+import {Remark} from './remark.interface';
+import {Vehicle} from './vehicle.interface';
+import {Cancellation} from './cancellation.interface';
 
-export interface GoodInterface {
-  vehicle: VehicleInterface;
-  compoundRemark: RemarkInterface;
-  carrierLoadingRemark: RemarkInterface;
-  carrierDeliveryRemark: RemarkInterface;
-  recipientRemark: RemarkInterface;
-  description: string;
-  weight: number;
+export interface Good {
+  vehicle: Vehicle;
+  compoundRemark?: Remark;
+  carrierLoadingRemark?: Remark;
+  carrierDeliveryRemark?: Remark;
+  recipientRemark?: Remark;
+  description?: string;
+  weight?: number;
+  loadingStartDate: number;
+  loadingEndDate: number;
+  deliveryStartDate: number;
+  deliveryEndDate: number;
+  cancellation?: Cancellation;
 }

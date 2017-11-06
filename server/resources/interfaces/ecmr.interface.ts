@@ -1,45 +1,40 @@
-import {LoadingInterface} from './loading.interface';
-import {SignatureInterface} from './signature.interface';
-import {GoodInterface} from './good.interface';
-import {RemarkInterface} from './remark.interface';
-import {UserBlockchainInterface} from './user.blockchain.interface';
-import {AddressInterface} from './address.interface';
-import {CancellationInterface} from './cancellation.interface';
+import {Signature} from './signature.interface';
+import {Creation} from './creation.interface';
+import {Good} from './good.interface';
+import {Cancellation} from './cancellation.interface';
+import {Loading} from './loading.interface';
+import {Delivery} from './delivery.interface';
 
-export interface EcmrInterface {
+export interface Ecmr {
   ecmrID: string;
-  orderID: string;
   agreementTerms: string;
+  agreementTermsSec: string;
   legalOwnerRef: string;
-  compoundRef: string;
   carrierRef: string;
-  RecipientRef: string;
+  recipientRef: string;
   issuedDate: number;
-  issuedBy: UserBlockchainInterface;
-  legalOwner: UserBlockchainInterface;
-  compound: UserBlockchainInterface;
-  carrier: UserBlockchainInterface;
-  recipient: UserBlockchainInterface;
-  carrierComments: RemarkInterface;
-  deliveryAddress: AddressInterface;
-  deliveryDate: number;
-  loadingAddress: AddressInterface;
-  loadingDate: number;
-  documents: string[]
+  issuedBy: string;
+  owner: string;
+  source: string;
+  carrier: string;
+  recipientOrg: string;
+  carrierComments: String;
+  creation: Creation;
+  loading: Loading;
+  delivery: Delivery;
+  documents?: string[];
+  goods: Good[];
   legalOwnerInstructions: string;
   paymentInstructions: string;
-  creationAddress: AddressInterface;
-  creationDate: number;
   payOnDelivery: string;
+  compoundSignature?: Signature;
+  carrierLoadingSignature?: Signature;
+  carrierDeliverySignature?: Signature;
+  recipientSignature?: Signature;
   status: string;
-  owner: string;
-  cancellation: CancellationInterface;
-  loading: LoadingInterface;
-  compoundSignature: SignatureInterface;
-  carrierLoadingSignature: SignatureInterface;
-  delivery: LoadingInterface;
-  generalRemark: RemarkInterface;
-  carrierDeliverySignature: SignatureInterface;
-  recipientSignature: SignatureInterface;
-  goods: GoodInterface[];
+  orderID: string;
+  cancellation?: Cancellation;
+  transporter?: string;
+  recipient?: string;
 }
+

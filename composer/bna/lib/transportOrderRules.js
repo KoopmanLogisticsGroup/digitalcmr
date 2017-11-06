@@ -33,33 +33,33 @@ function CreateTransportOrder(tx) {
           throw error;
         })
     }).catch(function (error) {
-      console.log('An error occurred while saving the transport order asset', error);
+      console.log('An error occurred while retrieving the asset registry', error);
       throw error;
     })
 }
 
 /**
- * Create transport order transaction processor function.
+ * Create transport orders transaction processor function.
  * @param {org.digitalcmr.CreateTransportOrders} tx - The create transport orders transaction
  * @return {Promise} Asset registry Promise
  * @transaction
  */
 function CreateTransportOrders(tx) {
-  console.log('Invoking function: CreateTransportOrder');
+  console.log('Invoking function: CreateTransportOrders');
 
   // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.TransportOrder')
     .then(function (assetRegistry) {
       return assetRegistry.addAll(tx.transportOrders)
         .then(function () {
-          console.log('Asset added with success');
+          console.log('Assets added with success');
         })
         .catch(function (error) {
           console.log('An error occurred while addAll transport orders assets', error);
           throw error;
         })
     }).catch(function (error) {
-      console.log('An error occurred while saving the transport orders assets', error);
+      console.log('An error occurred while retrieving the asset registry', error);
       throw error;
     })
 }

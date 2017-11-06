@@ -1,4 +1,4 @@
-export interface RemarkInterface {
+export interface Remark {
   comments: string;
-  isDamaged: boolean;
+  isDamaged?: boolean;
 }

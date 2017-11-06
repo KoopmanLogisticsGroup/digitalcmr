@@ -1,9 +1,10 @@
-import {RemarkInterface} from './remark.interface';
+import {Remark} from './remark.interface';
 
-export interface SignatureInterface {
-  longitude: number;
-  latitude: number;
+export interface Signature {
+  longitude?: number;
+  latitude?: number;
   certificate: string;
   timestamp: number;
-  generalRemark:  RemarkInterface;
+  ip?: string;
+  generalRemark?: Remark;
 }

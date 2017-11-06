@@ -1,6 +1,6 @@
 import {Address} from './address.interface';
 
-export interface Loading {
+export interface Delivery {
   address: Address;
   expectedDate?: number;
   actualDate?: number;

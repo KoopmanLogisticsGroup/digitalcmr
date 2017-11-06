@@ -1,15 +1,19 @@
-import {AddressInterface} from './address.interface';
-import {GoodInterface} from './good.interface';
+import {Good} from './good.interface';
+import {Loading} from './loading.interface';
+import {Delivery} from './delivery.interface';
+import {Cancellation} from './cancellation.interface';
 
-export interface TransportOrderInterface {
+export interface TransportOrder {
   orderID: string;
-  loadingAddress: AddressInterface;
-  deliveryAddress: AddressInterface;
-  carrier: string;
+  loading: Loading;
+  delivery: Delivery;
+  owner: string;
   source: string;
-  goods: GoodInterface;
+  carrier: string;
+  goods: Good[];
   status: string;
   issueDate: number;
   ecmrs: string[];
   orderRef: string;
+  cancellation?: Cancellation;
 }

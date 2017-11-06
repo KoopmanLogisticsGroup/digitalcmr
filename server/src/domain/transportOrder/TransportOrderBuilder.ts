@@ -1,10 +1,9 @@
 import {BuilderUtils} from '../../blockchain/BuilderUtils';
 import {Factory} from 'composer-common';
-import {TransportOrderInterface} from '../../../resources/interfaces/transportOrder.interface';
-import {EcmrInterface} from '../../../resources/interfaces/ecmr.interface';
+import {TransportOrder} from '../../../resources/interfaces/transportOrder.interface';
 
 export class TransportOrderBuilder {
-  public static buildTransportOrder(factory: Factory, namespace: string, transportOrder: TransportOrderInterface): TransportOrderInterface {
+  public static buildTransportOrder(factory: Factory, namespace: string, transportOrder: TransportOrder): TransportOrder {
     let validatedObject              = BuilderUtils.createResource(factory, namespace, 'TransportOrder', transportOrder);
     validatedObject.loading          = BuilderUtils.createConcept(factory, namespace, 'Loading', transportOrder.loading);
     validatedObject.loading.address  = BuilderUtils.createConcept(factory, namespace, 'Address', transportOrder.loading.address);
@@ -23,10 +22,10 @@ export class TransportOrderBuilder {
       validatedObject.goods[i]         = BuilderUtils.createConcept(factory, namespace, 'Good', transportOrder.goods[i]);
       validatedObject.goods[i].vehicle = BuilderUtils.createResource(factory, namespace, 'Vehicle', transportOrder.goods[i].vehicle);
     }
-    return <TransportOrderInterface> validatedObject;
+    return <TransportOrder> validatedObject;
   }
 
-  public static async buildTransportOrders(factory: Factory, namespace: string, transportOrders: TransportOrderInterface[]): Promise<any> {
+  public static async buildTransportOrders(factory: Factory, namespace: string, transportOrders: TransportOrder[]): Promise<any> {
     let validatedObjects: any = [];
 
     for (const transportOrder of transportOrders) {
