@@ -54,10 +54,11 @@ rule LegalOwnerAdminCanCreateECMRCreateTransaction {
 
 rule LegalOwnerAdminCanSubmitCreateECMR {
     description: "Allow Legal Owner Admin to Submit a CREATE eCMR transaction for his organization"
-    participant: "org.digitalcmr.LegalOwnerAdmin"
+    participant(p): "org.digitalcmr.LegalOwnerAdmin"
     operation: CREATE
-    resource: "org.digitalcmr.ECMR"
+    resource(r): "org.digitalcmr.ECMR"
     transaction: "org.digitalcmr.CreateECMR"
+    condition: (r.owner.getIdentifier() === p.org.getIdentifier())
     action: ALLOW
 }
 
