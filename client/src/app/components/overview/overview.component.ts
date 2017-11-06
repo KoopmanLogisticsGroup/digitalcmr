@@ -64,7 +64,7 @@ export class OverviewComponent implements OnInit {
       this.ecmrsFiltered = this.ecmrs.filter(ecmr => ecmr.status.toUpperCase() === this.EcmrStatus.Created);
       this.firstView();
 
-      this.transportOrderService.getAllTransportOrders().subscribe((transportOrder: TransportOrder[]) => {
+      this.transportOrderService.getAllTransportOrders().subscribe((transportOrder: TransportOrder) => {
         this.transportOrders = transportOrder instanceof Array ? transportOrder : [];
       });
     });
