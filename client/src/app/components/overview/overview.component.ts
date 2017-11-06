@@ -19,10 +19,10 @@ export class OverviewComponent implements OnInit {
   private ecmrs: Ecmr[];
   public ecmrsFiltered: Ecmr[];
   public EcmrStatus = {
-    Created:             'CREATED',
-    Loaded:              'LOADED',
-    InTransit:           'IN_TRANSIT',
-    Delivered:           'DELIVERED',
+    Created:            'CREATED',
+    Loaded:             'LOADED',
+    InTransit:          'IN_TRANSIT',
+    Delivered:          'DELIVERED',
     ConfirmedDelivered: 'CONFIRMED_DELIVERED'
   };
 
@@ -34,9 +34,9 @@ export class OverviewComponent implements OnInit {
   };
 
   public viewStatus = {
-    Open:        'OPEN',
+    Open:       'OPEN',
     InProgress: 'IN_PROGRESS',
-    Completed:   'COMPLETED'
+    Completed:  'COMPLETED'
   };
 
   public constructor(private ecmrService: EcmrService,

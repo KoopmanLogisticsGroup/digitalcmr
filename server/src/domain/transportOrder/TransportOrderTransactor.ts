@@ -23,5 +23,4 @@ export class TransportOrderTransactor implements TransactionCreator {
 
     return transaction;
   }
-
 }

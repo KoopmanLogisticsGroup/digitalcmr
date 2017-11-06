@@ -16,10 +16,10 @@ export class GoodsComponent implements OnInit {
   @Input() public selectedColumnIs: number;
   @Input() public selectedColumns: number;
   public EcmrStatus = {
-    Created:             'CREATED',
-    Loaded:              'LOADED',
-    InTransit:           'IN_TRANSIT',
-    Delivered:           'DELIVERED',
+    Created:            'CREATED',
+    Loaded:             'LOADED',
+    InTransit:          'IN_TRANSIT',
+    Delivered:          'DELIVERED',
     ConfirmedDelivered: 'CONFIRMED_DELIVERED'
   };
 
