@@ -35,6 +35,23 @@ rule LegalOwnerAdminCanReadTransportOrder {
     action: ALLOW
 }
 
+rule LegalOwnerAdminCanCreateTransactionCreateTransportOrder {
+    description: "Allow LegalOwnerAdmin to CREATE a CreateTransportOrder transaction"
+    participant: "org.digitalcmr.LegalOwnerAdmin"
+    operation: CREATE
+    resource: "org.digitalcmr.CreateTransportOrder"
+    action: ALLOW
+}
+
+rule LegalOwnerAdminCanSubmitTransactionCreateTransportOrder {
+  description: "Allow LegalOwnerAdmin to CREATE a TransportOrder using the CreateTransportOrder transaction"
+  participant: "org.digitalcmr.LegalOwnerAdmin"
+  operation: CREATE
+  resource: "org.digitalcmr.TransportOrder"
+  transaction: "org.digitalcmr.CreateTransportOrder"
+  action: ALLOW
+}
+
 rule LegalOwnerAdminCanReadAndCreateECMR {
     description: "Allow Legal Owner Admin to CREATE and READ an eCMR"
     participant(p): "org.digitalcmr.LegalOwnerAdmin"
