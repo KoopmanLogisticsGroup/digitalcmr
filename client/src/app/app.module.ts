@@ -22,6 +22,8 @@ import {FilterByPipe} from '../../src/app/utils/filterBy.pipe';
 import {SearchService} from './services/search.service';
 import {NavbarService} from './services/navbar.service';
 import {TransportOrderService} from './services/transportorder.service';
+import {TransportorderDetailComponent} from './components/transportorder-detail/transportorder-detail.component';
+import {TransportorderGoodsComponent} from './components/transportorder-detail/transportorder-goods/transportorder-goods.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import {TransportOrderService} from './services/transportorder.service';
     GeneralInfoComponent,
     GoodsComponent,
     SignOffModalComponent,
-    FilterByPipe
+    FilterByPipe,
+    TransportorderDetailComponent,
+    TransportorderGoodsComponent
   ],
   imports:      [
     BrowserModule,

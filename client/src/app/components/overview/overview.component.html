@@ -1,74 +1,75 @@
-<div class="ui container">
-  <div class="row top_margin_content">
-    <div class="table-title">
-      <div *ngIf="searchBarData === '' || null; else searchResults">E-CMR Overview</div>
-      <ng-template #searchResults>
-        Search Results
-        <img class="close_results" (click)="clearSearchBar()">
-      </ng-template>
+<div class="ui container top_margin_content">
+  <div *ngIf="getUserRole() !== User.LegalOwnerAdmin; else transportOrderOverview">
+    <div class="row">
+      <div class="table_title">
+        <div *ngIf="searchBarData === '' || null; else searchResults">E-CMR Overview</div>
+        <ng-template #searchResults>
+          Search Results
+          <img class="close_results" (click)="clearSearchBar()">
+        </ng-template>
+      </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="ui pointing secondary menu" *ngIf="searchBarData !== ''">
-      <div [hidden]="(filterEcmr < 1 && searchBarData)">
-        <div class="results_top">Showing
-          <span *ngIf="searchBarData === ''; else showFilteredResults">{{ecmrsFiltered?.length}}</span>
-          <ng-template #showFilteredResults>{{filterEcmr}}</ng-template>
-          of {{ecmrsFiltered?.length}} Results
+    <div class="row">
+      <div class="ui pointing secondary menu" *ngIf="searchBarData !== ''">
+        <div [hidden]="(filterEcmr < 1 && searchBarData)">
+          <div class="results_top">Showing
+            <span *ngIf="searchBarData === ''; else showFilteredResults">{{ecmrsFiltered?.length}}</span>
+            <ng-template #showFilteredResults>{{filterEcmr}}</ng-template>
+            of {{ecmrsFiltered?.length}} Results
+          </div>
         </div>
       </div>
-    </div>
-    <div *ngIf="searchBarData === ''">
-      <div class="ui pointing secondary menu">
-        <div *ngIf="(getUserRole() === User.CompoundAdmin)">
-          <a class="item" data-tab="first" (click)="setCurrentView(viewStatus.Open)"
-             [ngClass]="{'active' : currentView === viewStatus.Open ? true : false}">OPEN</a></div>
-        <a class="item" data-tab="second" (click)="setCurrentView(viewStatus.InProgress)"
-           *ngIf="getUserRole() === User.CompoundAdmin || getUserRole() === User.CarrierMember || getUserRole() === User.RecipientMember"
-           [ngClass]="{'active' : currentView === viewStatus.InProgress ? true : false}">IN PROGRESS</a>
-        <a class="item" data-tab="third" (click)="setCurrentView(viewStatus.Completed)"
-           *ngIf="getUserRole() === User.CompoundAdmin || getUserRole() === User.LegalOwnerAdmin || getUserRole() === User.CarrierMember || getUserRole() === User.RecipientMember"
-           [ngClass]="{'active' : currentView === viewStatus.Completed ? true : false}">COMPLETED</a>
+      <div *ngIf="searchBarData === ''">
+        <div class="ui pointing secondary menu">
+          <div *ngIf="(getUserRole() === User.CompoundAdmin)">
+            <a class="item" data-tab="first" (click)="setCurrentView(viewStatus.Open)"
+               [ngClass]="{'active' : currentView === viewStatus.Open ? true : false}">OPEN</a></div>
+          <a class="item" data-tab="second" (click)="setCurrentView(viewStatus.InProgress)"
+             *ngIf="getUserRole() === User.CompoundAdmin || getUserRole() === User.CarrierMember || getUserRole() === User.RecipientMember"
+             [ngClass]="{'active' : currentView === viewStatus.InProgress ? true : false}">IN PROGRESS</a>
+          <a class="item" data-tab="third" (click)="setCurrentView(viewStatus.Completed)"
+             *ngIf="getUserRole() === User.CompoundAdmin || getUserRole() === User.LegalOwnerAdmin || getUserRole() === User.CarrierMember || getUserRole() === User.RecipientMember"
+             [ngClass]="{'active' : currentView === viewStatus.Completed ? true : false}">COMPLETED</a>
+        </div>
       </div>
-    </div>
-    <div class="ui active tab grid" data-tab="first">
-      <div class="row">
-        <table class="ui unstackable table spacing_table">
-          <div [hidden]="(filterEcmr < 1 && searchBarData)">
-            <thead class="table-header">
-            <th></th>
-            <th>Date</th>
-            <th>CMR Nr.</th>
-            <th>Pick up location</th>
-            <th>Destination</th>
-            <th>Number of Goods</th>
-            <th>Carrier</th>
-            <th>Recipient</th>
-            <th>Remark</th>
-            <th>Damage Remark</th>
-            <th>Status</th>
-            <th></th>
-            </thead>
-          </div>
-          <tbody>
-          <tr *ngFor="let ecmr of ecmrsFiltered | filterBy: searchBarData" class="table-row">
-            <td></td>
-            <td>{{ecmr?.creation?.date | date:"dd-MM-yyyy"}}</td>
-            <td>{{ecmr?.ecmrID}}</td>
-            <td>{{ecmr?.loading?.address.city}}</td>
-            <td>{{ecmr?.delivery?.address.city}}</td>
-            <td>
-              <div class="center_content">{{ecmr?.goods.length}}</div>
-            </td>
-            <td>{{ecmr?.carrier?.split('#')[1] }}</td>
-            <td>{{ecmr?.recipient?.split('#')[1].split('@')[0]}}</td>
-            <td class="responsive_image">
-              <img class="centered_content comment_icon"
-                   *ngIf="hasComments(ecmr)"/>
-            </td>
-            <td class="responsive_image"><img class="centered_content exclamation_mark_icon"
-                                              *ngIf="isDamaged(ecmr)"/></td>
-            <td><span [ngClass]="returnStatus(ecmr && ecmr)">
+      <div class="ui active tab grid" data-tab="first">
+        <div class="row">
+          <table class="ui unstackable table spacing_table">
+            <div [hidden]="(filterEcmr < 1 && searchBarData)">
+              <thead class="table_header">
+              <th></th>
+              <th>Date</th>
+              <th>CMR Nr.</th>
+              <th>Pick up location</th>
+              <th>Destination</th>
+              <th>Number of Goods</th>
+              <th>Carrier</th>
+              <th>Recipient</th>
+              <th>Remark</th>
+              <th>Damage Remark</th>
+              <th>Status</th>
+              <th></th>
+              </thead>
+            </div>
+            <tbody>
+            <tr *ngFor="let ecmr of ecmrsFiltered | filterBy: searchBarData" class="table_row">
+              <td></td>
+              <td>{{ecmr?.creation?.date | date:"dd-MM-yyyy"}}</td>
+              <td>{{ecmr?.ecmrID}}</td>
+              <td>{{ecmr?.loading?.address.city}}</td>
+              <td>{{ecmr?.delivery?.address.city}}</td>
+              <td>
+                <div class="center_content">{{ecmr?.goods.length}}</div>
+              </td>
+              <td>{{ecmr?.carrier?.split('#')[1] }}</td>
+              <td>{{ecmr?.recipient?.split('#')[1].split('@')[0]}}</td>
+              <td class="responsive_image">
+                <img class="centered_content comment_icon"
+                     *ngIf="hasComments(ecmr)"/>
+              </td>
+              <td class="responsive_image"><img class="centered_content exclamation_mark_icon"
+                                                *ngIf="isDamaged(ecmr)"/></td>
+              <td><span [ngClass]="returnStatus(ecmr && ecmr)">
 
                           {{ecmr?.status === EcmrStatus.Created ? 'New CMR' :
                             ecmr?.status === EcmrStatus.Loaded ? 'Awaiting Carrier' :
@@ -76,28 +77,29 @@
                             ecmr?.status === EcmrStatus.Delivered ? 'Delivered' :
                             ecmr?.status === EcmrStatus.ConfirmedDelivered ? 'Completed' : ecmr?.status}}
                         </span></td>
-            <td>
-              <img class="view_more" routerLink="/ecmr/{{ecmr.ecmrID}}"/>
-            </td>
-          </tr>
-          </tbody>
-        </table>
+              <td>
+                <img class="view_more" routerLink="/ecmr/{{ecmr.ecmrID}}"/>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <img class="no_results" *ngIf="filterEcmr < 1 && searchBarData !== ''">
+        <p *ngIf="filterEcmr < 1 && searchBarData !== ''" class="no_results_text">NO RESULTS FOUND</p>
       </div>
-      <img class="no_results" *ngIf="filterEcmr < 1 && searchBarData !== ''">
-      <p *ngIf="filterEcmr < 1 && searchBarData !== ''" class="no_results_text">NO RESULTS FOUND</p>
-    </div>
-    <div class="show_results" *ngIf="searchBarData === ''">Showing
-      <span *ngIf="searchBarData === ''; else showFilteredResults">{{ecmrsFiltered?.length}}</span>
-      <ng-template #showFilteredResults>{{filterEcmr}}</ng-template>
-      of {{ecmrsFiltered?.length}} Results
+      <div class="show_results" *ngIf="searchBarData === ''">Showing
+        <span *ngIf="searchBarData === ''; else showFilteredResults">{{ecmrsFiltered?.length}}</span>
+        <ng-template #showFilteredResults>{{filterEcmr}}</ng-template>
+        of {{ecmrsFiltered?.length}} Results
+      </div>
     </div>
   </div>
-  <h1>Transport Order Overview</h1>
+  <ng-template #transportOrderOverview>
+    <div class="table_title">Transport Orders</div>
   <div class="ui active tab grid" data-tab="first">
     <div class="row">
       <table class="ui unstackable table spacing_table">
-        <div [hidden]="(filterEcmr < 1 && searchBarData)">
-          <thead class="table-header">
+        <thead class="table_header">
           <th></th>
           <th>ORDER NR</th>
           <th>CREATED ON</th>
@@ -107,21 +109,17 @@
           <th>DELIVERY WINDOW</th>
           <th></th>
           </thead>
-        </div>
         <tbody>
-        <tr *ngFor="let transportOrder of transportOrders" class="table-row">
+        <tr *ngFor="let transportOrder of transportOrders" class="table_row">
           <td></td>
           <td>{{transportOrder?.orderID}}</td>
-          <td>{{transportOrder?.orderID}}</td>
-          <td>{{transportOrder?.orderID}}</td>
-          <td>{{transportOrder?.orderID}}</td>
+          <td>{{transportOrder?.issueDate | date:"dd-MM-yyyy"}}</td>
+          <td>{{transportOrder?.goods?.length}}</td>
+          <td>{{transportOrder?.carrier?.split('#')[1]}}</td>
+          <td>{{transportOrder?.loading?.actualDate | date:"dd-MM-yyyy"}}</td>
+          <td>{{transportOrder?.delivery?.actualDate | date:"dd-MM-yyyy"}}</td>
           <td>
-            <div class="center_content">{{transportOrder?.orderID}}</div>
-          </td>
-          <td>{{transportOrder?.orderID}}</td>
-          <td>{{transportOrder?.orderID}}</td>
-          <td>
-            <img class="view_more" routerLink="/ecmr/{{transportOrder.orderID}}"/>
+            <img class="view_more" routerLink="/transportorder/{{transportOrder.orderID}}"/>
           </td>
         </tr>
         </tbody>
@@ -130,8 +128,5 @@
     <img class="no_results" *ngIf="filterEcmr < 1 && searchBarData !== ''">
     <p *ngIf="filterEcmr < 1 && searchBarData !== ''" class="no_results_text">NO RESULTS FOUND</p>
   </div>
-  <div>
-    {{transportOrder?.orderID}}
-    {{transportOrder?.status}}
-  </div>
+  </ng-template>
 </div>

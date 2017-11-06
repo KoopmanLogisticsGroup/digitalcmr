@@ -59,15 +59,17 @@ export class OverviewComponent implements OnInit {
 
   public ngOnInit(): void {
     this.nav.show();
-    this.ecmrService.getAllEcmrs().subscribe(response => {
-      this.ecmrs         = response instanceof Array ? response : [];
-      this.ecmrsFiltered = this.ecmrs.filter(ecmr => ecmr.status.toUpperCase() === this.EcmrStatus.Created);
-      this.firstView();
-
-      this.transportOrderService.getAllTransportOrders().subscribe((transportOrder: TransportOrder) => {
+    if (this.getUserRole() !== this.User.LegalOwnerAdmin) {
+      this.ecmrService.getAllEcmrs().subscribe(response => {
+        this.ecmrs         = response instanceof Array ? response : [];
+        this.ecmrsFiltered = this.ecmrs.filter(ecmr => ecmr.status.toUpperCase() === this.EcmrStatus.Created);
+        this.firstView();
+      });
+    } else {
+      this.transportOrderService.getAllTransportOrders().subscribe(transportOrder => {
         this.transportOrders = transportOrder instanceof Array ? transportOrder : [];
       });
-    });
+    }
   }
 
   private firstView(): void {

@@ -1,5 +1,5 @@
 .spacing_table {
-  border-spacing: 0 8px; /* this is the ultimate fix */
+  border-spacing: 0 8px;
   th {
     text-align:    left;
     border-bottom: none;
@@ -32,13 +32,10 @@
     table-layout: fixed;
     width:        100%;
     tr {
-      box-shadow:                 0 2px 4px #e3e3e3;
-      border-top-left-radius:     1.0em;
-      border-top-right-radius:    1.0em;
-      border-bottom-left-radius:  1.0em;
-      border-bottom-right-radius: 1.0em;
-      background-color:           #FFFFFF;
-      height:                     60px;
+      box-shadow:       0 2px 4px #e3e3e3;
+      border-radius:    1.0em;
+      background-color: #FFFFFF;
+      height:           60px;
 
       td {
         text-transform: capitalize;
@@ -127,13 +124,13 @@
       }
     }
   }
-  .table-header {
+  .table_header {
     font-size:      1vw;
     line-height:    1.2vw;
-    vertical-align: top;
+    vertical-align: bottom;
     text-align:     left;
   }
-  .table-row {
+  .table_row {
     font-size:   0.9vw;
     line-height: 1.0vw;
     white-space: nowrap;
@@ -143,7 +140,7 @@
   }
 }
 
-.table-title {
+.table_title {
   color:         #32649e;
   font-size:     1.6vw;
   margin-bottom: 3%;
