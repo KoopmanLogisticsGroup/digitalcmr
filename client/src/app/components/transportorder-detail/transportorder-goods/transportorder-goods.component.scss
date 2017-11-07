@@ -1,12 +1,3 @@
-.checkbox {
-  .invisible {
-    display: none;
-  }
-  .check_icon {
-    content: url("../../../../assets/icons/check_icon.svg");
-  }
-}
-
 .padded.table {
   border:     0px;
   box-shadow: 0 2px 4px #e3e3e3;
@@ -45,18 +36,6 @@
   }
 }
 
-.sign-off {
-  background-color: #3A386E;
-  color:            white;
-  margin:           15px 0;
-  display:          block;
-  float:            right;
-  font-weight:      normal;
-  &.disabled-button {
-    display: none;
-  }
-}
-
 .titles {
   color:         #424244;
   margin-left:   3%;
@@ -71,4 +50,8 @@
 
 ol {
   -webkit-padding-start: 0;
+}
+
+.generate_ecmr_button {
+  margin-bottom: 2%;
 }
