@@ -18,7 +18,7 @@ export class AuthController {
 
   @Post('/login')
   public async login(@Body() loginParams: LoginParams): Promise<AuthenticationResponse> {
-    let clientAuthenticator = new ClientAuthenticator(
+    const clientAuthenticator = new ClientAuthenticator(
       this.logger,
       loginParams.username,
       loginParams.password,

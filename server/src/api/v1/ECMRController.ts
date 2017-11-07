@@ -66,7 +66,8 @@ export class ECMRController {
   public async create(@Body() ecmr: any, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.create(identity, Config.settings.composer.profile, Config.settings.composer.namespace, ecmr, new EcmrTransactor(Container.get(BusinessNetworkHandler)));
+    return await this.transactionHandler.create(identity, Config.settings.composer.profile, Config.settings.composer.namespace,
+      ecmr, new EcmrTransactor(Container.get(BusinessNetworkHandler)));
   }
 
   @Put('/')
@@ -74,6 +75,7 @@ export class ECMRController {
     const identity: Identity = new JSONWebToken(request).getIdentity();
     const ip                 = request.ip;
 
-    return await this.transactionHandler.update(identity, Config.settings.composer.profile, Config.settings.composer.namespace, ecmr, ecmr.ecmrID, new EcmrTransactor(Container.get(BusinessNetworkHandler)));
+    return await this.transactionHandler.update(identity, Config.settings.composer.profile, Config.settings.composer.namespace,
+      ecmr, ecmr.ecmrID, new EcmrTransactor(Container.get(BusinessNetworkHandler)));
   }
 }
