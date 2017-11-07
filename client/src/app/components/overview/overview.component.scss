@@ -122,6 +122,21 @@
         outline: none;
         border:  none;
       }
+      .view_more_order {
+        width:         100%;
+        height:        100%;
+        content:       url("../../../assets/icons/view_more_button.svg");
+        padding-right: 10%;
+        margin-left:   -15%;
+      }
+      .view_more_order:hover {
+        content: url("../../../assets/icons/view_more_button_hover.svg");
+        cursor:  pointer;
+      }
+      .view_more_order:active {
+        outline: none;
+        border:  none;
+      }
     }
   }
   .table_header {
