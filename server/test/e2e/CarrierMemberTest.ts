@@ -2,8 +2,8 @@ import * as supertest from 'supertest';
 import '../../node_modules/mocha';
 import * as chai from 'chai';
 import * as http from 'http';
-import {TransportOrder} from '../../resources/interfaces/transportOrder.interface';
 import {Ecmr} from '../../resources/interfaces/ecmr.interface';
+import {TransportOrder} from '../../resources/interfaces/transportOrder.interface';
 
 const server = supertest.agent('http://localhost:8080');
 const should = chai.should();
@@ -21,6 +21,7 @@ const buildECMR = (ecmrID: string): Ecmr => {
   return <Ecmr>{
     ecmrID:                 ecmrID,
     status:                 'CREATED',
+    issuedDate:             1502402400000,
     agreementTerms:         'agreement terms here',
     agreementTermsSec:      'agreement terms sec',
     legalOwnerRef:          'ASD213123S',
@@ -197,11 +198,11 @@ const buildTransportOrder = (): TransportOrder => {
 };
 
 
-describe('An Compound Admin can', () => {
+describe('An Carrier member can', () => {
 
-  it('login as a compound admin', (done) => {
+  it('login as a carrier member', (done) => {
     const loginParams = {
-      'username': 'willem@amsterdamcompound.org',
+      'username': 'harry@koopman.org',
       'password': 'passw0rd'
     };
 
@@ -222,9 +223,9 @@ describe('An Compound Admin can', () => {
       });
   });
 
-  it('get specific ECMRs', (done) => {
+  it('get a specific ECMR', (done) => {
     server
-      .get('/api/v1/ECMR/ecmrID/A1234567890')
+      .get('/api/v1/ECMR/ecmrID/D1234567890')
       .set('x-access-token', token)
       .expect(ok)
       .end((err: Error, res) => {
@@ -236,7 +237,65 @@ describe('An Compound Admin can', () => {
         done(err);
       });
   });
-  it('not create an transport order', (done) => {
+
+  it('can not create an eCMR', (done) => {
+    const ecmr = buildECMR('ecmr1');
+    server
+      .post('/api/v1/ECMR')
+      .set('x-access-token', token)
+      .send(ecmr)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+        }
+        done(err);
+      });
+  });
+
+  it('can read ECMRs where his org is the carrier', (done) => {
+    server
+      .get('/api/v1/ECMR')
+      .set('x-access-token', token)
+      .expect(ok)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+        }
+        res.body.length.should.be.greaterThan(0, 'no eCMRs were found.');
+        done(err);
+      });
+  });
+
+  it('can not read an eCMR where his org is not the carrier', (done) => {
+    server
+      .get('/api/v1/ECMR/ecmrID/H1234567890')
+      .set('x-access-token', token)
+      .expect(200)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+        }
+        res.body.should.equal(200);
+        done(err);
+      });
+  });
+
+  it('can not read an eCMR where the status is created', (done) => {
+    server
+      .get('/api/v1/ECMR/ecmrID/B1234567890')
+      .set('x-access-token', token)
+      .expect(200)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+        }
+        res.body.should.equal(200);
+        done(err);
+      });
+  });
+
+  it('can not create a transport order', (done) => {
     const transportOrder = buildTransportOrder();
     server
       .post('/api/v1/transportOrder')
@@ -251,41 +310,11 @@ describe('An Compound Admin can', () => {
       });
   });
 
-  it('read ECMRs where his org is the source', (done) => {
+  it('can not submit an update transaction for an eCMR with status created', (done) => {
     server
-      .get('/api/v1/ECMR')
+      .put('/api/v1/ECMR')
       .set('x-access-token', token)
-      .expect(ok)
-      .end((err: Error, res) => {
-        if (err) {
-          console.log(err.stack);
-        }
-        res.body.length.should.be.greaterThan(0, 'no eCMRs were found.');
-        done(err);
-      });
-  });
-
-  it('not read an eCMR where his org is not the source', (done) => {
-    server
-      .get('/api/v1/ECMR/ecmrID/H1234567890')
-      .set('x-access-token', token)
-      .expect(200)
-      .end((err: Error, res) => {
-        if (err) {
-          console.log(err.stack);
-        }
-        res.body.should.equal(200);
-        done(err);
-      });
-  });
-
-  it('not create an ECMR', (done) => {
-    const ecmr = buildECMR('ecmr1');
-    server
-      .post('/api/v1/ECMR')
-      .set('x-access-token', token)
-      .send(ecmr)
-      .expect('Content-Type', /json/)
+      .send(buildECMR('ecmr1234'))
       .expect(500)
       .end((err: Error) => {
         if (err) {
@@ -295,11 +324,26 @@ describe('An Compound Admin can', () => {
       });
   });
 
-  it('submit an update status from CREATED to LOADED', (done) => {
-    updateEcmr.status            = 'LOADED';
-    updateEcmr.compoundSignature = {
-      certificate: 'willem@amsterdamcompound.org',
-      timestamp:   0
+  it('can not submit an update transaction for a different transport org', (done) => {
+    const wrongOrgEcmr   = buildECMR('D1234567890');
+    wrongOrgEcmr.carrier = 'notKoopman';
+    server
+      .put('/api/v1/ECMR')
+      .set('x-access-token', token)
+      .send(updateEcmr)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+        }
+        done(err);
+      });
+  });
+
+  it('submit an update status from LOADED to IN_TRANSIT', (done) => {
+    updateEcmr.status                  = 'IN_TRANSIT';
+    updateEcmr.carrierLoadingSignature = {
+      certificate: 'harry@koopman.org', timestamp: 0
     };
     server
       .put('/api/v1/ECMR')
@@ -314,34 +358,52 @@ describe('An Compound Admin can', () => {
       });
   });
 
-  it('not update an ECMR for his org and status is IN_TRANSIT', (done) => {
-    updateEcmr.status = 'IN_TRANSIT';
+  it('submit an update status from IN_TRANSIT to DELIVERED', (done) => {
+    updateEcmr.status                   = 'DELIVERED';
+    updateEcmr.carrierDeliverySignature = {
+      certificate: 'harry@koopman.org', timestamp: 0
+    };
     server
       .put('/api/v1/ECMR')
       .set('x-access-token', token)
       .send(updateEcmr)
-      .expect(500)
+      .expect(200)
       .end((err: Error) => {
         if (err) {
-          console.log(err.stack)
+          console.log(err.stack);
         }
         done(err);
-      })
+      });
   });
-
-  it('not update an ECMR when his org is not the source', (done) => {
-    updateEcmr.source = 'rotterdamCompound';
-    server
-      .put('/api/v1/ECMR')
-      .set('x-access-token', token)
-      .send(updateEcmr)
-      .expect(500)
-      .end((err: Error) => {
-        if (err) {
-          console.log(err.stack)
-        }
-        done(err);
-      })
-  });
-})
-;
+  // it('can  submit an update transaction for his org and status from LOADED to IN_TRANSIT', (done) => {
+  //   updateEcmr.status  = 'IN_TRANSIT';
+  //   updateEcmr.carrierLoadingSignature = {'certificate': 'harry@koopman.org', 'timestamp': 0 };
+  //   server
+  //     .put('/api/v1/ECMR')
+  //     .set('x-access-token', token)
+  //     .send(updateEcmr)
+  //     .expect(200)
+  //     .end((err: Error) => {
+  //       if (err) {
+  //         console.log(err.stack);
+  //       }
+  //       done(err);
+  //     });
+  // });
+  //
+  // it('can  submit an update transaction for his org and status from IN_TANSIT to DELIVERED', (done) => {
+  //   updateEcmr.status = 'DELIVERED';
+  //   updateEcmr.carrierDeliverySignature = {'certificate': 'harry@koopman.org', 'timestamp': 0 };
+  //   server
+  //     .put('/api/v1/ECMR')
+  //     .set('x-access-token', token)
+  //     .send(updateEcmr)
+  //     .expect(200)
+  //     .end((err: Error) => {
+  //       if (err) {
+  //         console.log(err.stack);
+  //       }
+  //       done(err);
+  //     });
+  // });
+});

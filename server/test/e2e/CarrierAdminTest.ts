@@ -2,25 +2,19 @@ import * as supertest from 'supertest';
 import '../../node_modules/mocha';
 import * as chai from 'chai';
 import * as http from 'http';
+import {Ecmr} from '../../../client/src/app/interfaces/ecmr.interface';
 import {TransportOrder} from '../../resources/interfaces/transportOrder.interface';
-import {Ecmr} from '../../resources/interfaces/ecmr.interface';
 
 const server = supertest.agent('http://localhost:8080');
 const should = chai.should();
 let token: string;
 let updateEcmr: Ecmr;
 
-const ok = (res) => {
-  if (res.status !== 200) {
-    const status = http.STATUS_CODES[res.status];
-    return new Error(`Expected 200, got ${res.status} ${status} with message: ${res.body.message}`);
-  }
-};
-
 const buildECMR = (ecmrID: string): Ecmr => {
   return <Ecmr>{
     ecmrID:                 ecmrID,
-    status:                 'CREATED',
+    status:                 'IN_TRANSIT',
+    issuedDate:             1502402400000,
     agreementTerms:         'agreement terms here',
     agreementTermsSec:      'agreement terms sec',
     legalOwnerRef:          'ASD213123S',
@@ -196,12 +190,19 @@ const buildTransportOrder = (): TransportOrder => {
   }
 };
 
+const ok = (res) => {
+  if (res.status !== 200) {
+    const status = http.STATUS_CODES[res.status];
+    return new Error(`Expected 200, got ${res.status} ${status} with message: ${res.body.message}`);
+  }
+};
 
-describe('An Compound Admin can', () => {
 
-  it('login as a compound admin', (done) => {
+describe('An Carrier admin can', () => {
+
+  it('login as a carrier admin', (done) => {
     const loginParams = {
-      'username': 'willem@amsterdamcompound.org',
+      'username': 'goslin@koopman.org',
       'password': 'passw0rd'
     };
 
@@ -222,7 +223,7 @@ describe('An Compound Admin can', () => {
       });
   });
 
-  it('get specific ECMRs', (done) => {
+  it('get a specific ECMR', (done) => {
     server
       .get('/api/v1/ECMR/ecmrID/A1234567890')
       .set('x-access-token', token)
@@ -236,22 +237,8 @@ describe('An Compound Admin can', () => {
         done(err);
       });
   });
-  it('not create an transport order', (done) => {
-    const transportOrder = buildTransportOrder();
-    server
-      .post('/api/v1/transportOrder')
-      .set('x-access-token', token)
-      .send(transportOrder)
-      .expect(500)
-      .end((err: Error) => {
-        if (err) {
-          console.log(err.stack);
-        }
-        done(err);
-      });
-  });
 
-  it('read ECMRs where his org is the source', (done) => {
+  it('read ECMRs where his org is the transporter and status is not created', (done) => {
     server
       .get('/api/v1/ECMR')
       .set('x-access-token', token)
@@ -279,13 +266,12 @@ describe('An Compound Admin can', () => {
       });
   });
 
-  it('not create an ECMR', (done) => {
+  it('not create an eCMR', (done) => {
     const ecmr = buildECMR('ecmr1');
     server
       .post('/api/v1/ECMR')
       .set('x-access-token', token)
       .send(ecmr)
-      .expect('Content-Type', /json/)
       .expect(500)
       .end((err: Error) => {
         if (err) {
@@ -295,17 +281,13 @@ describe('An Compound Admin can', () => {
       });
   });
 
-  it('submit an update status from CREATED to LOADED', (done) => {
-    updateEcmr.status            = 'LOADED';
-    updateEcmr.compoundSignature = {
-      certificate: 'willem@amsterdamcompound.org',
-      timestamp:   0
-    };
+  it('not create a transport order', (done) => {
+    const transportOrder = buildTransportOrder();
     server
-      .put('/api/v1/ECMR')
+      .post('/api/v1/transportOrder')
       .set('x-access-token', token)
-      .send(updateEcmr)
-      .expect(200)
+      .send(transportOrder)
+      .expect(500)
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
@@ -314,7 +296,7 @@ describe('An Compound Admin can', () => {
       });
   });
 
-  it('not update an ECMR for his org and status is IN_TRANSIT', (done) => {
+  it('not submit an update status from LOADED to IN_TRANSIT', (done) => {
     updateEcmr.status = 'IN_TRANSIT';
     server
       .put('/api/v1/ECMR')
@@ -323,14 +305,14 @@ describe('An Compound Admin can', () => {
       .expect(500)
       .end((err: Error) => {
         if (err) {
-          console.log(err.stack)
+          console.log(err.stack);
         }
         done(err);
-      })
+      });
   });
 
-  it('not update an ECMR when his org is not the source', (done) => {
-    updateEcmr.source = 'rotterdamCompound';
+  it('not submit an update status from IN_TRANSIT to DELIVERED', (done) => {
+    updateEcmr.status = 'DELIVERED';
     server
       .put('/api/v1/ECMR')
       .set('x-access-token', token)
@@ -338,10 +320,9 @@ describe('An Compound Admin can', () => {
       .expect(500)
       .end((err: Error) => {
         if (err) {
-          console.log(err.stack)
+          console.log(err.stack);
         }
         done(err);
-      })
+      });
   });
-})
-;
+});

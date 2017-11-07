@@ -2,6 +2,8 @@ import * as supertest from 'supertest';
 import '../../node_modules/mocha';
 import * as chai from 'chai';
 import * as http from 'http';
+import {TransportOrder} from '../../resources/interfaces/transportOrder.interface';
+import {Ecmr} from '../../resources/interfaces/ecmr.interface';
 
 const server = supertest.agent('http://localhost:8080');
 const should = chai.should();
@@ -14,191 +16,189 @@ const ok = (res) => {
   }
 };
 
-const buildECMR = (ecmrID: string) => {
-  return {
-    'ecmrID':            ecmrID,
-    'status':            'CREATED',
-    'agreementTerms':    'agreement terms',
-    'agreementTermsSec': 'sec agreement terms',
-    'legalOwnerRef':     'ASD213123S',
-    'carrierRef':        'H2238723VASD',
-    'recipientRef':      'SDADHGA21312312',
-    'orderID':           'ASDASDA123123',
-    'creation':          {
-      'address': {
-        'name':        'Amsterdam Compound',
-        'street':      'compenstraat',
-        'houseNumber': '21',
-        'city':        'Assen',
-        'zipCode':     '9976ZH',
-        'country':     'Netherlands',
-        'latitude':    43.1927,
-        'longitude':   23.3249
+const buildECMR = (ecmrID: string): Ecmr => {
+  return <Ecmr>{
+    ecmrID:                 ecmrID,
+    status:                 'CREATED',
+    issueDate:              1502402400000,
+    agreementTerms:         'agreement terms here',
+    agreementTermsSec:      'agreement terms sec',
+    legalOwnerRef:          'ASD213123S',
+    carrierRef:             'H2238723VASD',
+    recipientRef:           'SDADHGA21312312',
+    orderID:                'AAAA123456',
+    creation:               {
+      address: {
+        name:        'Amsterdam Compound',
+        street:      'compenstraat',
+        houseNumber: '21',
+        city:        'Assen',
+        zipCode:     '9976ZH',
+        country:     'Netherlands',
+        latitude:    51.917153,
+        longitude:   4.474623
       },
-      'date':    1502402400000
+      date:    1502402400000
     },
-    'loading':                {
-      'address':    {
-        'name':        'Amsterdam Compound',
-        'street':      'compenstraat',
-        'houseNumber': '21',
-        'city':        'Amsterdam Zuid',
-        'zipCode':     '9976ZH',
-        'country':     'Netherlands',
-        'latitude':    43.1927,
-        'longitude':   23.3249
+    loading:                {
+      address:    {
+        name:        'Amsterdam Compound',
+        street:      'compenstraat',
+        houseNumber: '21',
+        city:        'Amsterdam',
+        zipCode:     '9976ZH',
+        country:     'Netherlands',
+        latitude:    52.377698,
+        longitude:   4.896555
       },
-      'actualDate': 1502402400000
+      actualDate: 1502402400000
     },
-    'delivery':               {
-      'address':    {
-        'name':        'Rob Carman',
-        'street':      'autostraat',
-        'houseNumber': '12',
-        'city':        'Rotterdam',
-        'zipCode':     '9442KO',
-        'country':     'Netherlands',
-        'latitude':    51.4443,
-        'longitude':   60.3323
+    delivery:               {
+      address:    {
+        name:        'Rob Carman',
+        street:      'autostraat',
+        houseNumber: '12',
+        city:        'Rotterdam',
+        zipCode:     '9442KO',
+        country:     'Netherlands',
+        latitude:    51.917153,
+        longitude:   4.474623
       },
-      'actualDate': 1502488800000
+      actualDate: 1502488800000
     },
-    'owner':                  'leaseplan',
-    'source':                 'amsterdamcompound',
-    'transporter':            'harry@koopman.org',
-    'carrier':                'koopman',
-    'recipientOrg':           'cardealer',
-    'recipient':              'rob@cardealer.org',
-    'issueDate':              0,
-    'issuedBy':               'koopman',
-    'carrierComments':        'No comments',
-    'documents':              [
+    owner:                  'leaseplan',
+    source:                 'amsterdamcompound',
+    transporter:            'harry@koopman.org',
+    carrier:                'koopman',
+    recipientOrg:           'cardealer',
+    recipient:              'rob@cardealer.org',
+    issuedBy:               'koopman',
+    carrierComments:        'No comments',
+    documents:              [
       'doc1'
     ],
-    'goods':                  [
+    goods:                  [
       {
-        'vehicle':           {
-          'vin':             '183726339N',
-          'manufacturer':    'Audi',
-          'model':           'A1',
-          'type':            'sportback',
-          'ecmrs':           [],
-          'odoMeterReading': 0,
-          'plateNumber':     'AV198RX'
+        vehicle:           {
+          vin:             '183726339N',
+          manufacturer:    'Audi',
+          model:           'A1',
+          type:            'sportback',
+          ecmrs:           [],
+          odoMeterReading: 0,
+          plateNumber:     'AV198RX'
         },
-        'description':       'vehicle',
-        'weight':            1500,
-        'loadingStartDate':  1502834400000,
-        'loadingEndDate':    1502834400000,
-        'deliveryStartDate': 1502834400000,
-        'deliveryEndDate':   1502834400000
+        description:       'vehicle',
+        weight:            1500,
+        loadingStartDate:  1502834400000,
+        loadingEndDate:    1502834400000,
+        deliveryStartDate: 1502834400000,
+        deliveryEndDate:   1502834400000
       },
       {
-        'vehicle':           {
-          'vin':             '736182CHD28172',
-          'manufacturer':    'Mercedes',
-          'model':           'SLK',
-          'type':            'Station',
-          'ecmrs':           [],
-          'odoMeterReading': 0,
-          'plateNumber':     'I827YE'
+        vehicle:           {
+          vin:             '736182CHD28172',
+          manufacturer:    'Mercedes',
+          model:           'SLK',
+          type:            'Station',
+          ecmrs:           [],
+          odoMeterReading: 0,
+          plateNumber:     'I827YE'
         },
-        'description':       'vehicle',
-        'weight':            1800,
-        'loadingStartDate':  1502834400000,
-        'loadingEndDate':    1502834400000,
-        'deliveryStartDate': 1502834400000,
-        'deliveryEndDate':   1502834400000
+        description:       'vehicle',
+        weight:            1800,
+        loadingStartDate:  1502834400000,
+        loadingEndDate:    1502834400000,
+        deliveryStartDate: 1502834400000,
+        deliveryEndDate:   1502834400000
       }
     ],
-    'legalOwnerInstructions': 'string',
-    'paymentInstructions':    'string',
-    'payOnDelivery':          'string'
+    legalOwnerInstructions: 'string',
+    paymentInstructions:    'string',
+    payOnDelivery:          'string'
+  }
+
+};
+
+const buildTransportOrder = (): TransportOrder => {
+  return <TransportOrder> {
+    orderID:   Math.random().toString(36).substring(7),
+    loading:   {
+      actualDate: 1502834400000,
+      address:    {
+        name:        'loading address',
+        street:      'een straat',
+        houseNumber: '41',
+        city:        'Groningen',
+        zipCode:     '7811 HC',
+        country:     'netherlands',
+        longitude:   124,
+        latitude:    123
+      }
+    },
+    delivery:  {
+      actualDate: 1502834400000,
+      address:    {
+        name:        'delivery adress',
+        street:      'een straat',
+        houseNumber: '41',
+        city:        'Groningen',
+        zipCode:     '7811 HC',
+        country:     'netherlands',
+        longitude:   124,
+        latitude:    123
+      }
+    },
+    carrier:   'koopman',
+    source:    'amsterdamcompound',
+    goods:     [
+      {
+        vehicle:           {
+          vin:             '183726339N',
+          manufacturer:    'Audi',
+          model:           'A1',
+          type:            'sportback',
+          ecmrs:           [],
+          odoMeterReading: 0,
+          plateNumber:     'AV198RX'
+        },
+        description:       'vehicle',
+        weight:            1500,
+        loadingStartDate:  1502834400000,
+        loadingEndDate:    1502834400000,
+        deliveryStartDate: 1502834400000,
+        deliveryEndDate:   1502834400000
+      },
+      {
+        vehicle:           {
+          vin:             '736182CHD28172',
+          manufacturer:    'Mercedes',
+          model:           'SLK',
+          type:            'Station',
+          ecmrs:           [],
+          odoMeterReading: 0,
+          plateNumber:     'I827YE'
+        },
+        description:       'vehicle',
+        weight:            1800,
+        loadingStartDate:  1502834400000,
+        loadingEndDate:    1502834400000,
+        deliveryStartDate: 1502834400000,
+        deliveryEndDate:   1502834400000
+      }
+    ],
+    status:    'OPEN',
+    issueDate: 1502834400000,
+    ecmrs:     [],
+    orderRef:  'ref',
+    owner:     'leaseplan'
   }
 };
 
-const buildTransportOrder = () => {
-  return {
-    'orderID':   Math.random().toString(36).substring(7),
-    'loading':   {
-      'actualDate': 1502834400000,
-      'address':    {
-        'name':        'loading address',
-        'street':      'een straat',
-        'houseNumber': '41',
-        'city':        'Groningen',
-        'zipCode':     '7811 HC',
-        'country':     'netherlands',
-        'longitude':   124,
-        'latitude':    123
-      }
-    },
-    'delivery':  {
-      'actualDate': 1502834400000,
-      'address':    {
-        'name':        'delivery adress',
-        'street':      'een straat',
-        'houseNumber': '41',
-        'city':        'Groningen',
-        'zipCode':     '7811 HC',
-        'country':     'netherlands',
-        'longitude':   124,
-        'latitude':    123
-      }
-    },
-    'carrier':   'koopman',
-    'source':    'amsterdamcompound',
-    'goods':     [
-      {
-        '$class':            'org.digitalcmr.Good',
-        'vehicle':           {
-          '$class':          'org.digitalcmr.Vehicle',
-          'vin':             '183726339N',
-          'manufacturer':    'Audi',
-          'model':           'A1',
-          'type':            'sportback',
-          'ecmrs':           [],
-          'odoMeterReading': 0,
-          'plateNumber':     'AV198RX'
-        },
-        'description':       'vehicle',
-        'weight':            1500,
-        'loadingStartDate':  1502834400000,
-        'loadingEndDate':    1502834400000,
-        'deliveryStartDate': 1502834400000,
-        'deliveryEndDate':   1502834400000
-      },
-      {
-        '$class':            'org.digitalcmr.Good',
-        'vehicle':           {
-          '$class':          'org.digitalcmr.Vehicle',
-          'vin':             '736182CHD28172',
-          'manufacturer':    'Mercedes',
-          'model':           'SLK',
-          'type':            'Station',
-          'ecmrs':           [],
-          'odoMeterReading': 0,
-          'plateNumber':     'I827YE'
-        },
-        'description':       'vehicle',
-        'weight':            1800,
-        'loadingStartDate':  1502834400000,
-        'loadingEndDate':    1502834400000,
-        'deliveryStartDate': 1502834400000,
-        'deliveryEndDate':   1502834400000
-      }
-    ],
-    'status':    'OPEN',
-    'issueDate': 1502834400000,
-    'ecmrs':     [],
-    'orderRef':  'ref',
-    'owner':     'leaseplan'
-  }
-};
 
 describe('An legal owner admin can', () => {
 
-  it('can login a legal owner', (done) => {
+  it('login as a legal owner admin', (done) => {
     const loginParams = {
       'username': 'lapo@leaseplan.org',
       'password': 'passw0rd'
@@ -238,7 +238,7 @@ describe('An legal owner admin can', () => {
       });
   });
 
-  it('Can not create a transport order for other legal owner org', (done) => {
+  it('not create a transport order for an other legal owner org', (done) => {
     const wrongTransportOrder = buildTransportOrder();
     wrongTransportOrder.owner = 'notLeaseplan';
     server
@@ -256,7 +256,7 @@ describe('An legal owner admin can', () => {
       });
   });
 
-  it('can create an eCMR when he is the owner', (done) => {
+  it('create an ECMR when he is the owner', (done) => {
     const ecmr = buildECMR('ecmr1');
     server
       .post('/api/v1/ECMR')
@@ -273,7 +273,7 @@ describe('An legal owner admin can', () => {
       });
   });
 
-  it('can not create an eCMR when he is not the owner', (done) => {
+  it('not create an ECMR when he is not the owner', (done) => {
     const ecmr = buildECMR('ecmrNotWorking');
     ecmr.owner = 'notLeaseplan';
     server
@@ -291,7 +291,7 @@ describe('An legal owner admin can', () => {
       });
   });
 
-  it('can read all ECMRs by his organisation', (done) => {
+  it('read all ECMRs for his organisation', (done) => {
     server
       .get('/api/v1/ECMR')
       .set('x-access-token', token)
@@ -305,6 +305,20 @@ describe('An legal owner admin can', () => {
         res.body.length.should.be.greaterThan(0, 'No eCMRs found');
         done(err);
       })
+  });
+
+  it('not read ECMRs when is org is not the legal owner', (done) => {
+    server
+      .get('/api/v1/ECMR/ecmrID/H1234567890')
+      .set('x-access-token', token)
+      .expect(200)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+        }
+        res.body.should.equal(200);
+        done(err);
+      });
   });
 //
 // it('get a legal owner by id', (done) => {
