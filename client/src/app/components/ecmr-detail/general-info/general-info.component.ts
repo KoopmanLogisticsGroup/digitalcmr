@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../../services/authentication.service';
-import {EcmrInterface} from '../../../interfaces/ecmr.interface';
+import {Ecmr} from '../../../interfaces/ecmr.interface';
 
 @Component({
   selector:    'app-general-info',
@@ -8,20 +8,23 @@ import {EcmrInterface} from '../../../interfaces/ecmr.interface';
   styleUrls:   ['./general-info.component.scss']
 })
 export class GeneralInfoComponent implements OnInit {
-  @Input() public ecmr: EcmrInterface;
+  @Input() public ecmr: Ecmr;
   @Input() public selectedColumns: boolean[];
 
   public selectedImage: boolean[];
   public selectedColumnIs: number;
   public EcmrStatus = {
-    CREATED:             'CREATED',
-    LOADED:              'LOADED',
-    IN_TRANSIT:          'IN_TRANSIT',
-    DELIVERED:           'DELIVERED',
-    CONFIRMED_DELIVERED: 'CONFIRMED_DELIVERED'
+    Created:            'CREATED',
+    Loaded:             'LOADED',
+    InTransit:          'IN_TRANSIT',
+    Delivered:          'DELIVERED',
+    ConfirmedDelivered: 'CONFIRMED_DELIVERED'
   };
 
   public User = {
+    CompoundAdmin:   'CompoundAdmin',
+    CarrierMember:   'CarrierMember',
+    RecipientMember: 'RecipientMember',
     LegalOwnerAdmin: 'LegalOwnerAdmin'
   };
 
@@ -34,7 +37,7 @@ export class GeneralInfoComponent implements OnInit {
   }
 
   public selectColumn(number: number): void {
-    if (this.ecmr.status === this.EcmrStatus.DELIVERED || this.ecmr.status === this.EcmrStatus.CONFIRMED_DELIVERED) {
+    if (this.ecmr.status === this.EcmrStatus.Delivered || this.ecmr.status === this.EcmrStatus.ConfirmedDelivered) {
       this.selectedImage.forEach((val, index) => {
         if (number === index) {
           this.selectedImage[index]   = true;

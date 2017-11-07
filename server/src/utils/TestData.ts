@@ -16,6 +16,8 @@ import {VehicleTransactor} from '../domain/vehicles/VehicleTransactor';
 import {EcmrTransactor} from '../domain/ecmrs/EcmrTransactor';
 import {BusinessNetworkHandler} from '../blockchain/BusinessNetworkHandler';
 import {IdentityManager} from '../blockchain/IdentityManager';
+import {TransportOrder} from '../../resources/interfaces/transportOrder.interface';
+import {TransportOrderTransactor} from '../domain/transportOrder/TransportOrderTransactor';
 
 export class TestData {
   private logger: LoggerInstance         = Container.get(LoggerFactory).get('TestData');
@@ -99,6 +101,14 @@ export class TestData {
         this.logger.error('Error adding Ecmrs', error);
       }
     }
+    if (sharedData.transportOrders && sharedData.transportOrders.length) {
+      this.logger.info('Adding Transport Orders');
+      try {
+        await this.addTransportOrders(sharedData.transportOrders);
+      } catch (error) {
+        this.logger.error('Error adding Transport Orders', error);
+      }
+    }
   }
 
   private async addEntities(): Promise<any> {
@@ -150,6 +160,10 @@ export class TestData {
 
   private async addEcmrs(ecmrs: any[]): Promise<any> {
     return this.transactionHandler.create(TestData.adminIdentity, Config.settings.composer.profile, Config.settings.composer.namespace, ecmrs, new EcmrTransactor(Container.get(BusinessNetworkHandler)));
+  }
+
+  private async addTransportOrders(transportOrders: TransportOrder[]): Promise<any> {
+    return this.transactionHandler.create(TestData.adminIdentity, Config.settings.composer.profile, Config.settings.composer.namespace, transportOrders, new TransportOrderTransactor());
   }
 
   // private async addParticipants(): Promise<any> {

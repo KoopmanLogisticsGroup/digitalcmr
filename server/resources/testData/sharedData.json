@@ -1,5 +1,5 @@
 {
-  "entities":      [
+  "entities":        [
     {
       "participant": {
         "participantID": "userID",
@@ -193,7 +193,7 @@
       }
     }
   ],
-  "organizations": {
+  "organizations":   {
     "legalOwnerOrgs": [
       {
         "$class":   "org.digitalcmr.LegalOwnerOrg",
@@ -267,7 +267,7 @@
       }
     ]
   },
-  "vehicles":      [
+  "vehicles":        [
     {
       "$class":          "org.digitalcmr.Vehicle",
       "vin":             "183726339N",
@@ -399,7 +399,7 @@
       "plateNumber":     "JV198RX"
     }
   ],
-  "ecmrs":         [
+  "ecmrs":           [
     {
       "$class":                 "org.digitalcmr.ECMR",
       "ecmrID":                 "A1234567890",
@@ -1201,6 +1201,91 @@
         "certificate": "harry@koopman.org",
         "timestamp":   0
       }
+    }
+  ],
+  "transportOrders": [
+    {
+      "$class":  "org.digitalcmr.TransportOrder",
+      "orderID":   "12345567890",
+      "loading":   {
+        "actualDate": 1502834400000,
+        "expectedDate": 1502835400000,
+        "address":    {
+          "$class": "org.digitalcmr.Address",
+          "name":        "loading address",
+          "street":      "een straat",
+          "houseNumber": "41",
+          "city":        "Groningen",
+          "zipCode":     "7811 HC",
+          "country":     "netherlands",
+          "longitude":   124,
+          "latitude":    123
+        }
+      },
+      "delivery":  {
+        "$class":  "org.digitalcmr.Delivery",
+        "actualDate": 1502834400000,
+        "expectedDate": 1502835400000,
+        "address":    {
+          "$class": "org.digitalcmr.Address",
+          "name":        "delivery adress",
+          "street":      "een straat",
+          "houseNumber": "41",
+          "city":        "Groningen",
+          "zipCode":     "7811 HC",
+          "country":     "netherlands",
+          "longitude":   124,
+          "latitude":    123
+        }
+      },
+      "owner":     "leaseplan",
+      "source":    "amsterdamcompound",
+      "carrier":   "koopman",
+      "goods":     [
+        {
+          "$class":            "org.digitalcmr.Good",
+          "vehicle":           {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "183726339N",
+            "manufacturer":    "Audi",
+            "model":           "A1",
+            "type":            "sportback",
+            "ecmrs":           [],
+            "odoMeterReading": 0,
+            "plateNumber":     "AV198RX"
+          },
+          "description":       "vehicle",
+          "weight":            1500,
+          "loadingStartDate":  1502834400000,
+          "loadingEndDate":    1502834400000,
+          "deliveryStartDate": 1502834400000,
+          "deliveryEndDate":   1502834400000
+        },
+        {
+          "$class":            "org.digitalcmr.Good",
+          "vehicle":           {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "736182CHD28172",
+            "manufacturer":    "Mercedes",
+            "model":           "SLK",
+            "type":            "Station",
+            "ecmrs":           [],
+            "odoMeterReading": 0,
+            "plateNumber":     "I827YE"
+          },
+          "description":       "vehicle",
+          "weight":            1800,
+          "loadingStartDate":  1502834400000,
+          "loadingEndDate":    1502834400000,
+          "deliveryStartDate": 1502834400000,
+          "deliveryEndDate":   1502834400000
+        }
+      ],
+      "status":    "OPEN",
+      "issueDate": 1502834400000,
+      "ecmrs":     [],
+      "orderRef":  "ref"
+
     }
   ]
 }

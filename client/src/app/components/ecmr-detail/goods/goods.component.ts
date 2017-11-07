@@ -1,7 +1,7 @@
 import {Component, OnInit, Input, ViewChild} from '@angular/core';
 import {SignOffModalComponent} from '../sign-off-modal/sign-off-modal.component';
 import {AuthenticationService} from '../../../services/authentication.service';
-import {EcmrInterface} from '../../../interfaces/ecmr.interface';
+import {Ecmr} from '../../../interfaces/ecmr.interface';
 
 @Component({
   selector:    'app-goods',
@@ -12,15 +12,15 @@ export class GoodsComponent implements OnInit {
 
   @ViewChild(SignOffModalComponent) public signOffModal: SignOffModalComponent;
 
-  @Input() public ecmr: EcmrInterface;
+  @Input() public ecmr: Ecmr;
   @Input() public selectedColumnIs: number;
   @Input() public selectedColumns: number;
   public EcmrStatus = {
-    CREATED:             'CREATED',
-    LOADED:              'LOADED',
-    IN_TRANSIT:          'IN_TRANSIT',
-    DELIVERED:           'DELIVERED',
-    CONFIRMED_DELIVERED: 'CONFIRMED_DELIVERED'
+    Created:            'CREATED',
+    Loaded:             'LOADED',
+    InTransit:          'IN_TRANSIT',
+    Delivered:          'DELIVERED',
+    ConfirmedDelivered: 'CONFIRMED_DELIVERED'
   };
 
   public User = {
@@ -29,6 +29,7 @@ export class GoodsComponent implements OnInit {
     RecipientMember: 'RecipientMember',
     LegalOwnerAdmin: 'LegalOwnerAdmin'
   };
+
 
   public constructor(private authenticationService: AuthenticationService) {
   }
@@ -57,13 +58,13 @@ export class GoodsComponent implements OnInit {
   }
 
   public enableButton(): boolean {
-    if (this.ecmr && this.ecmr.status === this.EcmrStatus.CREATED && this.getUserRole() === this.User.CompoundAdmin) {
+    if (this.ecmr && this.ecmr.status === this.EcmrStatus.Created && this.getUserRole() === this.User.CompoundAdmin) {
       return true;
-    } else if (this.ecmr && this.ecmr.status === this.EcmrStatus.LOADED && this.getUserRole() === this.User.CarrierMember) {
+    } else if (this.ecmr && this.ecmr.status === this.EcmrStatus.Loaded && this.getUserRole() === this.User.CarrierMember) {
       return true;
-    } else if (this.ecmr && this.ecmr.status === this.EcmrStatus.IN_TRANSIT && this.getUserRole() === this.User.CarrierMember) {
+    } else if (this.ecmr && this.ecmr.status === this.EcmrStatus.InTransit && this.getUserRole() === this.User.CarrierMember) {
       return true;
-    } else if (this.ecmr && this.ecmr.status === this.EcmrStatus.DELIVERED && this.getUserRole() === this.User.RecipientMember) {
+    } else if (this.ecmr && this.ecmr.status === this.EcmrStatus.Delivered && this.getUserRole() === this.User.RecipientMember) {
       return true;
     }
   }
