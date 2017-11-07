@@ -6,11 +6,11 @@
                 <form name="searchBox" class="searchBox">
                     <div class="ui search" *ngIf="nav.visible">
                         <div class="ui icon input">
-                          <input class="prompt" name="query" [(ngModelw)]="queryData" type="text"
-                                 placeholder="Search for ID, VIN or License Plate" onfocus="this.placeholder = ''"
-                                 onblur="this.placeholder = 'Search for ID, VIN or License Plate'"
-                                 (ngModelChange)="sendData(queryData)"
-                                 (keyup)="0">
+                            <input class="prompt" name="query" [(ngModel)]="queryData" type="text"
+                                   placeholder="Search for ID, VIN or License Plate" onfocus="this.placeholder = ''"
+                                   onblur="this.placeholder = 'Search for ID, VIN or License Plate'"
+                                   (ngModelChange)="sendData(queryData)"
+                                   (keyup)="0">
                             <i class="search icon"></i>
                         </div>
                         <div class="results">
