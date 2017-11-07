@@ -260,12 +260,12 @@ describe('An Compound Admin can', () => {
         if (err) {
           console.log(err.stack);
         }
-        res.body.length.should.be.greaterThan(0, 'no eCMRs were found.');
+        res.body.length.should.be.greaterThan(0, 'no ECMRs were found.');
         done(err);
       });
   });
 
-  it('not read an eCMR where his org is not the source', (done) => {
+  it('not read an ECMR where his org is not the source', (done) => {
     server
       .get('/api/v1/ECMR/ecmrID/H1234567890')
       .set('x-access-token', token)

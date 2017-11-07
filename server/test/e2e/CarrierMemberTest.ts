@@ -238,7 +238,7 @@ describe('An Carrier member can', () => {
       });
   });
 
-  it('can not create an eCMR', (done) => {
+  it('can not create an ECMR', (done) => {
     const ecmr = buildECMR('ecmr1');
     server
       .post('/api/v1/ECMR')
@@ -262,12 +262,12 @@ describe('An Carrier member can', () => {
         if (err) {
           console.log(err.stack);
         }
-        res.body.length.should.be.greaterThan(0, 'no eCMRs were found.');
+        res.body.length.should.be.greaterThan(0, 'no ECMRs were found.');
         done(err);
       });
   });
 
-  it('can not read an eCMR where his org is not the carrier', (done) => {
+  it('can not read an ECMR where his org is not the carrier', (done) => {
     server
       .get('/api/v1/ECMR/ecmrID/H1234567890')
       .set('x-access-token', token)
@@ -281,7 +281,7 @@ describe('An Carrier member can', () => {
       });
   });
 
-  it('can not read an eCMR where the status is created', (done) => {
+  it('can not read an ECMR where the status is created', (done) => {
     server
       .get('/api/v1/ECMR/ecmrID/B1234567890')
       .set('x-access-token', token)
@@ -310,7 +310,7 @@ describe('An Carrier member can', () => {
       });
   });
 
-  it('can not submit an update transaction for an eCMR with status created', (done) => {
+  it('can not submit an update transaction for an ECMR with status created', (done) => {
     server
       .put('/api/v1/ECMR')
       .set('x-access-token', token)

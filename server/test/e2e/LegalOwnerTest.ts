@@ -302,7 +302,7 @@ describe('An legal owner admin can', () => {
           console.log(err.stack);
           return done(err);
         }
-        res.body.length.should.be.greaterThan(0, 'No eCMRs found');
+        res.body.length.should.be.greaterThan(0, 'No ECMRs found');
         done(err);
       })
   });

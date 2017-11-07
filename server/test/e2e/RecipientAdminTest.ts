@@ -246,7 +246,7 @@ describe('An Recipient Admin can', () => {
         if (err) {
           console.log(err.stack);
         }
-        res.body.length.should.be.greaterThan(0, 'no eCMRs were found.');
+        res.body.length.should.be.greaterThan(0, 'no ECMRs were found.');
         done(err);
       });
   });
