@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {TransportOrder} from '../../../interfaces/transportOrder.interface';
-import {AuthenticationService} from '../../../services/authentication.service';
+import {ActivatedRoute} from '@angular/router';
+import {TransportOrderService} from '../../../services/transportorder.service';
 
 @Component({
   selector:    'app-transportorder-goods',
@@ -9,14 +10,25 @@ import {AuthenticationService} from '../../../services/authentication.service';
 })
 export class TransportorderGoodsComponent implements OnInit {
   @Input() public transportOrder: TransportOrder;
+  private orderID: string;
 
-  constructor(private authenticationService: AuthenticationService) {
+  constructor(private route: ActivatedRoute,
+              private transportOrderService: TransportOrderService) {
   }
 
   ngOnInit() {
+    this.route.params
+      .subscribe(params => {
+        this.orderID = params['orderID'];
+        this.transportOrderService.getTransportOrderByOrderID(this.orderID).subscribe((transportOrder: TransportOrder) => {
+          this.transportOrder = transportOrder;
+        });
+      });
   }
 
-  public getUserRole(): string {
-    return this.authenticationService.isAuthenticated() ? JSON.parse(localStorage.getItem('currentUser')).user.role : '';
+  public convertToEcmr() {
+    // this.transportOrderService.generateECMR(this.transportOrder);
+    // todo add modal
+    console.log('Nothing happens, yet.')
   }
 }

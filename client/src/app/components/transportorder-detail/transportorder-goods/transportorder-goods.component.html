@@ -1,7 +1,7 @@
 <div class="row titles">
   <div class="column">Order {{transportOrder?.orderID}}</div>
 </div>
-<button class="ui green button right floated">Generate eCMR</button>
+<button class="ui green button right floated" (click)="convertToEcmr()">Generate eCMR</button>
 <div class="row titles">LINE ITEMS</div>
 <div class="row">
   <form>

@@ -66,8 +66,11 @@ export class OverviewComponent implements OnInit {
         this.firstView();
       });
     } else {
-      this.transportOrderService.getAllTransportOrders().subscribe(transportOrder => {
-        this.transportOrders = transportOrder instanceof Array ? transportOrder : [];
+      this.transportOrderService.getAllTransportOrders().subscribe(transportOrders => {
+        this.transportOrders = transportOrders instanceof Array ? transportOrders : [];
+        if (this.transportOrders === []) {
+          return this.transportOrders.push(transportOrders);
+        }
       });
     }
   }
