@@ -116,8 +116,7 @@ const buildECMR = (ecmrID: string): Ecmr => {
     legalOwnerInstructions: 'string',
     paymentInstructions:    'string',
     payOnDelivery:          'string'
-  }
-
+  };
 };
 
 const buildTransportOrder = (): TransportOrder => {
@@ -192,12 +191,10 @@ const buildTransportOrder = (): TransportOrder => {
     ecmrs:     [],
     orderRef:  'ref',
     owner:     'leaseplan'
-  }
+  };
 };
 
-
-describe('An legal owner admin can', () => {
-
+describe('A legal owner admin can', () => {
   it('login as a legal owner admin', (done) => {
     const loginParams = {
       'username': 'lapo@leaseplan.org',
@@ -217,41 +214,6 @@ describe('An legal owner admin can', () => {
         }
         should.exist(res.body.token);
         token = res.body.token;
-        done(err);
-      });
-  });
-
-  it('create a transport order', (done) => {
-    server
-      .post('/api/v1/transportOrder/')
-      .set('x-access-token', token)
-      .send(buildTransportOrder())
-      .expect(ok)
-      .expect('Content-Type', /json/)
-      .expect(200)
-      .end((err: Error) => {
-        if (err) {
-          console.log(err.stack);
-          return done(err);
-        }
-        done(err);
-      });
-  });
-
-  it('not create a transport order for an other legal owner org', (done) => {
-    const wrongTransportOrder = buildTransportOrder();
-    wrongTransportOrder.owner = 'notLeaseplan';
-    server
-      .post('/api/v1/transportOrder/')
-      .set('x-access-token', token)
-      .send(wrongTransportOrder)
-      .expect('Content-Type', /json/)
-      .expect(500)
-      .end((err: Error) => {
-        if (err) {
-          console.log(err.stack);
-          return done(err);
-        }
         done(err);
       });
   });
@@ -304,7 +266,7 @@ describe('An legal owner admin can', () => {
         }
         res.body.length.should.be.greaterThan(0, 'No ECMRs found');
         done(err);
-      })
+      });
   });
 
   it('not read ECMRs when is org is not the legal owner', (done) => {
@@ -317,6 +279,41 @@ describe('An legal owner admin can', () => {
           console.log(err.stack);
         }
         res.body.should.equal(200);
+        done(err);
+      });
+  });
+
+  it('create a transport order', (done) => {
+    server
+      .post('/api/v1/transportOrder/')
+      .set('x-access-token', token)
+      .send(buildTransportOrder())
+      .expect(ok)
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
+  it('not create a transport order for another legal owner org', (done) => {
+    const wrongTransportOrder = buildTransportOrder();
+    wrongTransportOrder.owner = 'notLeaseplan';
+    server
+      .post('/api/v1/transportOrder/')
+      .set('x-access-token', token)
+      .send(wrongTransportOrder)
+      .expect('Content-Type', /json/)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+          return done(err);
+        }
         done(err);
       });
   });
@@ -367,6 +364,4 @@ describe('An legal owner admin can', () => {
 //     });
 // });
 
-})
-;
-
+});

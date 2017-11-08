@@ -118,8 +118,7 @@ const buildECMR = (ecmrID: string): Ecmr => {
     legalOwnerInstructions: 'string',
     paymentInstructions:    'string',
     payOnDelivery:          'string'
-  }
-
+  };
 };
 
 const buildTransportOrder = (): TransportOrder => {
@@ -194,12 +193,10 @@ const buildTransportOrder = (): TransportOrder => {
     ecmrs:     [],
     orderRef:  'ref',
     owner:     'leaseplan'
-  }
+  };
 };
 
-
-describe('An Carrier member can', () => {
-
+describe('A Carrier member can', () => {
   it('login as a carrier member', (done) => {
     const loginParams = {
       'username': 'harry@koopman.org',
@@ -223,7 +220,7 @@ describe('An Carrier member can', () => {
       });
   });
 
-  it('get a specific ECMR', (done) => {
+  it('get a specific ECMR by ecmrID', (done) => {
     server
       .get('/api/v1/ECMR/ecmrID/D1234567890')
       .set('x-access-token', token)
@@ -295,21 +292,6 @@ describe('An Carrier member can', () => {
       });
   });
 
-  it('can not create a transport order', (done) => {
-    const transportOrder = buildTransportOrder();
-    server
-      .post('/api/v1/transportOrder')
-      .set('x-access-token', token)
-      .send(transportOrder)
-      .expect(500)
-      .end((err: Error) => {
-        if (err) {
-          console.log(err.stack);
-        }
-        done(err);
-      });
-  });
-
   it('can not submit an update transaction for an ECMR with status created', (done) => {
     server
       .put('/api/v1/ECMR')
@@ -368,6 +350,21 @@ describe('An Carrier member can', () => {
       .set('x-access-token', token)
       .send(updateEcmr)
       .expect(200)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+        }
+        done(err);
+      });
+  });
+
+  it('can not create a transport order', (done) => {
+    const transportOrder = buildTransportOrder();
+    server
+      .post('/api/v1/transportOrder')
+      .set('x-access-token', token)
+      .send(transportOrder)
+      .expect(500)
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
