@@ -38,7 +38,7 @@ export class ECMRController {
   public async getEcmrByEcmrID(@Param('ecmrID') ecmrID: string, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getEcmrById', {id: ecmrID});
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getEcmrById', {ecmrID: ecmrID});
   }
 
   @Get('/status/:ecmrStatus')

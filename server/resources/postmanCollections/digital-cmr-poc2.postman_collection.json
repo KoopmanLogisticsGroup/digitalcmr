@@ -1,14 +1,14 @@
 {
 	"info": {
-		"name": "digital-cmr-poc2",
-		"_postman_id": "0103e299-e739-2c91-ba41-f549b17c0c18",
+		"name":        "digital-cmr-poc2",
+		"_postman_id": "83b1065d-5d18-f91e-2252-34faf8bb3d2f",
 		"description": "",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema":      "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Legal Owner Admin - Login",
-			"event": [
+			"name":     "Legal Owner Admin - Login",
+			"event":    [
 				{
 					"listen": "test",
 					"script": {
@@ -25,20 +25,20 @@
 					}
 				}
 			],
-			"request": {
+			"request":  {
 				"method": "POST",
 				"header": [
 					{
-						"key": "Content-Type",
+						"key":   "Content-Type",
 						"value": "application/json"
 					}
 				],
-				"body": {
+				"body":   {
 					"mode": "raw",
-					"raw": "{\n  \"username\" : \"lapo@leaseplan.org\",\n  \"password\" : \"passw0rd\"\n}"
+					"raw":  "{\n  \"username\" : \"lapo@leaseplan.org\",\n  \"password\" : \"passw0rd\"\n}"
 				},
-				"url": {
-					"raw": "{{localhost}}{{clientPort}}/api/v1/login",
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/login",
 					"host": [
 						"{{localhost}}{{clientPort}}"
 					],
@@ -52,8 +52,8 @@
 			"response": []
 		},
 		{
-			"name": "Legal Owner - Cannot Create  vehicle",
-			"event": [
+			"name":     "Legal Owner - Cannot Create  vehicle",
+			"event":    [
 				{
 					"listen": "test",
 					"script": {
@@ -64,24 +64,24 @@
 					}
 				}
 			],
-			"request": {
+			"request":  {
 				"method": "POST",
 				"header": [
 					{
-						"key": "Content-Type",
+						"key":   "Content-Type",
 						"value": "application/json"
 					},
 					{
-						"key": "x-access-token",
+						"key":   "x-access-token",
 						"value": "{{legalOwnerToken}}"
 					}
 				],
-				"body": {
+				"body":   {
 					"mode": "raw",
-					"raw": "[\n\t{\n\t\"$class\": \"org.digitalcmr.Vehicle\",\n    \"vin\": \"231213123312\",\n    \"manufacturer\": \"Audi\",\n    \"model\": \"A8\",\n    \"type\": \"sportback\",\n    \"ecmrs\": [\n    \t\t\t\"resource:org.digitalcmr.ECMR#A1234567890\",\n                \"resource:org.digitalcmr.ECMR#B1234567890\"\n             ],\n    \"odoMeterReading\": 0,\n    \"plateNumber\": \"AA123B\"\n\t}\n]\n"
+					"raw":  "[\n\t{\n\t\"$class\": \"org.digitalcmr.Vehicle\",\n    \"vin\": \"231213123312\",\n    \"manufacturer\": \"Audi\",\n    \"model\": \"A8\",\n    \"type\": \"sportback\",\n    \"ecmrs\": [\n    \t\t\t\"resource:org.digitalcmr.ECMR#A1234567890\",\n                \"resource:org.digitalcmr.ECMR#B1234567890\"\n             ],\n    \"odoMeterReading\": 0,\n    \"plateNumber\": \"AA123B\"\n\t}\n]\n"
 				},
-				"url": {
-					"raw": "{{localhost}}{{clientPort}}/api/v1/vehicle/",
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/vehicle/",
 					"host": [
 						"{{localhost}}{{clientPort}}"
 					],
@@ -96,8 +96,8 @@
 			"response": []
 		},
 		{
-			"name": "Legal Owner - Create ECMR",
-			"event": [
+			"name":     "Legal Owner - Create ECMR",
+			"event":    [
 				{
 					"listen": "test",
 					"script": {
@@ -112,24 +112,24 @@
 					}
 				}
 			],
-			"request": {
+			"request":  {
 				"method": "POST",
 				"header": [
 					{
-						"key": "Content-Type",
+						"key":   "Content-Type",
 						"value": "application/json"
 					},
 					{
-						"key": "x-access-token",
+						"key":   "x-access-token",
 						"value": "{{legalOwnerToken}}"
 					}
 				],
-				"body": {
+				"body":   {
 					"mode": "raw",
-					"raw": "{\n      \"ecmrID\": \"BUUEW23727327\",\n      \"status\": \"CREATED\",\n      \"agreementTerms\" : \"agreement terms\",\n      \"agreementTermsSec\": \"sec agreement terms\",\n      \"legalOwnerRef\" : \"ASD213123S\",\n      \"carrierRef\": \"H2238723VASD\",\n      \"recipientRef\": \"SDADHGA21312312\",\n      \"orderID\": \"ASDASDA123123\",\n      \"creation\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Assen\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"date\": 1502402400000\n      },\n      \"loading\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Amsterdam Zuid\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"actualDate\": 1502402400000\n      },\n      \"delivery\": {\n        \"address\": {\n          \"name\": \"Rob Carman\",\n          \"street\": \"autostraat\",\n          \"houseNumber\": \"12\",\n          \"city\": \"Rotterdam\",\n          \"zipCode\": \"9442KO\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 51.4443,\n          \"longitude\": 60.3323\n        },\n        \"actualDate\": 1502488800000\n      },\n      \"owner\": \"leaseplan\",\n      \"source\": \"amsterdamcompound\",\n      \"transporter\": \"harry@koopman.org\",\n      \"carrier\": \"koopman\",\n      \"recipientOrg\": \"cardealer\",\n      \"recipient\": \"rob@cardealer.org\",\n      \"issueDate\": 0,\n      \"issuedBy\": \"koopman\",\n      \"carrierComments\": \"No comments\",\n      \"documents\": [\n        \"doc1\"\n      ],\n      \"goods\": [\n        {\n          \"vehicle\": {\n            \"vin\": \"183726339N\",\n            \"manufacturer\": \"Audi\",\n            \"model\": \"A1\",\n            \"type\": \"sportback\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"AV198RX\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1500,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        },\n        {\n          \"vehicle\": {\n            \"vin\": \"736182CHD28172\",\n            \"manufacturer\": \"Mercedes\",\n            \"model\": \"SLK\",\n            \"type\": \"Station\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"I827YE\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1800,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        }\n      ],\n      \"legalOwnerInstructions\": \"string\",\n      \"paymentInstructions\": \"string\",\n      \"payOnDelivery\": \"string\"\n    }"
+					"raw":  "{\n      \"ecmrID\": \"BUUEW23727327\",\n      \"status\": \"CREATED\",\n      \"agreementTerms\" : \"agreement terms\",\n      \"agreementTermsSec\": \"sec agreement terms\",\n      \"legalOwnerRef\" : \"ASD213123S\",\n      \"carrierRef\": \"H2238723VASD\",\n      \"recipientRef\": \"SDADHGA21312312\",\n      \"orderID\": \"ASDASDA123123\",\n      \"creation\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Assen\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"date\": 1502402400000\n      },\n      \"loading\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Amsterdam Zuid\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"actualDate\": 1502402400000\n      },\n      \"delivery\": {\n        \"address\": {\n          \"name\": \"Rob Carman\",\n          \"street\": \"autostraat\",\n          \"houseNumber\": \"12\",\n          \"city\": \"Rotterdam\",\n          \"zipCode\": \"9442KO\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 51.4443,\n          \"longitude\": 60.3323\n        },\n        \"actualDate\": 1502488800000\n      },\n      \"owner\": \"leaseplan\",\n      \"source\": \"amsterdamcompound\",\n      \"transporter\": \"harry@koopman.org\",\n      \"carrier\": \"koopman\",\n      \"recipientOrg\": \"cardealer\",\n      \"recipient\": \"rob@cardealer.org\",\n      \"issueDate\": 0,\n      \"issuedBy\": \"koopman\",\n      \"carrierComments\": \"No comments\",\n      \"documents\": [\n        \"doc1\"\n      ],\n      \"goods\": [\n        {\n          \"vehicle\": {\n            \"vin\": \"183726339N\",\n            \"manufacturer\": \"Audi\",\n            \"model\": \"A1\",\n            \"type\": \"sportback\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"AV198RX\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1500,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        },\n        {\n          \"vehicle\": {\n            \"vin\": \"736182CHD28172\",\n            \"manufacturer\": \"Mercedes\",\n            \"model\": \"SLK\",\n            \"type\": \"Station\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"I827YE\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1800,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        }\n      ],\n      \"legalOwnerInstructions\": \"string\",\n      \"paymentInstructions\": \"string\",\n      \"payOnDelivery\": \"string\"\n    }"
 				},
-				"url": {
-					"raw": "{{localhost}}{{clientPort}}/api/v1/ECMR/",
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/ECMR/",
 					"host": [
 						"{{localhost}}{{clientPort}}"
 					],
@@ -144,8 +144,8 @@
 			"response": []
 		},
 		{
-			"name": "Legal Owner - Create Transport Order ",
-			"event": [
+			"name":     "Legal Owner - Create Transport Order ",
+			"event":    [
 				{
 					"listen": "test",
 					"script": {
@@ -156,24 +156,24 @@
 					}
 				}
 			],
-			"request": {
-				"method": "POST",
-				"header": [
+			"request":  {
+				"method":      "POST",
+				"header":      [
 					{
-						"key": "x-access-token",
+						"key":   "x-access-token",
 						"value": "{{legalOwnerToken}}"
 					},
 					{
-						"key": "Content-Type",
+						"key":   "Content-Type",
 						"value": "application/json"
 					}
 				],
-				"body": {
+				"body":        {
 					"mode": "raw",
-					"raw": "    {\n      \"orderID\":   \"821389123621836\",\n      \"loading\":   {\n        \"actualDate\":              1502834400000,\n        \"address\":           {\n          \"name\":        \"loading address\",\n          \"street\":      \"een straat\",\n          \"houseNumber\": \"41\",\n          \"city\":        \"Groningen\",\n          \"zipCode\":     \"7811 HC\",\n          \"country\":     \"netherlands\",\n          \"longitude\":   124,\n          \"latitude\":    123\n        }\n      },\n      \"delivery\":  {\n        \"actualDate\":    1502834400000,\n        \"address\": {\n          \"name\":        \"delivery adress\",\n          \"street\":      \"een straat\",\n          \"houseNumber\": \"41\",\n          \"city\":        \"Groningen\",\n          \"zipCode\":     \"7811 HC\",\n          \"country\":     \"netherlands\",\n          \"longitude\":   124,\n          \"latitude\":    123\n        }\n      },\n      \"carrier\":   \"koopman\",\n      \"source\":    \"amsterdamcompound\",\n      \"goods\":     [\n        {\n          \"$class\":            \"org.digitalcmr.Good\",\n          \"vehicle\":           {\n            \"$class\":          \"org.digitalcmr.Vehicle\",\n            \"vin\":             \"183726339N\",\n            \"manufacturer\":    \"Audi\",\n            \"model\":           \"A1\",\n            \"type\":            \"sportback\",\n            \"ecmrs\":           [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\":     \"AV198RX\"\n          },\n          \"description\":       \"vehicle\",\n          \"weight\":            1500,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        },\n        {\n          \"$class\":            \"org.digitalcmr.Good\",\n          \"vehicle\":           {\n            \"$class\":          \"org.digitalcmr.Vehicle\",\n            \"vin\":             \"736182CHD28172\",\n            \"manufacturer\":    \"Mercedes\",\n            \"model\":           \"SLK\",\n            \"type\":            \"Station\",\n            \"ecmrs\":           [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\":     \"I827YE\"\n          },\n          \"description\":       \"vehicle\",\n          \"weight\":            1800,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        }\n      ],\n      \"status\":    \"OPEN\",\n      \"issueDate\": 1502834400000,\n      \"ecmrs\":     [],\n      \"orderRef\":  \"ref\",\n      \"owner\":     \"leaseplan\"\n    }"
+					"raw":  "    {\n      \"orderID\":   \"821389123621836\",\n      \"loading\":   {\n        \"actualDate\":              1502834400000,\n        \"address\":           {\n          \"name\":        \"loading address\",\n          \"street\":      \"een straat\",\n          \"houseNumber\": \"41\",\n          \"city\":        \"Groningen\",\n          \"zipCode\":     \"7811 HC\",\n          \"country\":     \"netherlands\",\n          \"longitude\":   124,\n          \"latitude\":    123\n        }\n      },\n      \"delivery\":  {\n        \"actualDate\":    1502834400000,\n        \"address\": {\n          \"name\":        \"delivery adress\",\n          \"street\":      \"een straat\",\n          \"houseNumber\": \"41\",\n          \"city\":        \"Groningen\",\n          \"zipCode\":     \"7811 HC\",\n          \"country\":     \"netherlands\",\n          \"longitude\":   124,\n          \"latitude\":    123\n        }\n      },\n      \"carrier\":   \"koopman\",\n      \"source\":    \"amsterdamcompound\",\n      \"goods\":     [\n        {\n          \"$class\":            \"org.digitalcmr.Good\",\n          \"vehicle\":           {\n            \"$class\":          \"org.digitalcmr.Vehicle\",\n            \"vin\":             \"183726339N\",\n            \"manufacturer\":    \"Audi\",\n            \"model\":           \"A1\",\n            \"type\":            \"sportback\",\n            \"ecmrs\":           [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\":     \"AV198RX\"\n          },\n          \"description\":       \"vehicle\",\n          \"weight\":            1500,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        },\n        {\n          \"$class\":            \"org.digitalcmr.Good\",\n          \"vehicle\":           {\n            \"$class\":          \"org.digitalcmr.Vehicle\",\n            \"vin\":             \"736182CHD28172\",\n            \"manufacturer\":    \"Mercedes\",\n            \"model\":           \"SLK\",\n            \"type\":            \"Station\",\n            \"ecmrs\":           [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\":     \"I827YE\"\n          },\n          \"description\":       \"vehicle\",\n          \"weight\":            1800,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        }\n      ],\n      \"status\":    \"OPEN\",\n      \"issueDate\": 1502834400000,\n      \"ecmrs\":     [],\n      \"orderRef\":  \"ref\",\n      \"owner\":     \"leaseplan\"\n    }"
 				},
-				"url": {
-					"raw": "{{localhost}}{{clientPort}}/api/v1/TransportOrder/",
+				"url":         {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/TransportOrder/",
 					"host": [
 						"{{localhost}}{{clientPort}}"
 					],
@@ -189,8 +189,8 @@
 			"response": []
 		},
 		{
-			"name": "Legal Owner - GET ECMR",
-			"event": [
+			"name":     "Legal Owner - GET ECMR",
+			"event":    [
 				{
 					"listen": "test",
 					"script": {
@@ -206,20 +206,20 @@
 					}
 				}
 			],
-			"request": {
+			"request":  {
 				"method": "GET",
 				"header": [
 					{
-						"key": "x-access-token",
+						"key":   "x-access-token",
 						"value": "{{legalOwnerToken}}"
 					}
 				],
-				"body": {
+				"body":   {
 					"mode": "raw",
-					"raw": ""
+					"raw":  ""
 				},
-				"url": {
-					"raw": "{{localhost}}{{clientPort}}/api/v1/ECMR/",
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/ECMR/",
 					"host": [
 						"{{localhost}}{{clientPort}}"
 					],
@@ -234,8 +234,8 @@
 			"response": []
 		},
 		{
-			"name": "Legal Owner - GET ECMR by ID",
-			"event": [
+			"name":     "Legal Owner - GET ECMR by ID",
+			"event":    [
 				{
 					"listen": "test",
 					"script": {
@@ -252,20 +252,20 @@
 					}
 				}
 			],
-			"request": {
+			"request":  {
 				"method": "GET",
 				"header": [
 					{
-						"key": "x-access-token",
+						"key":   "x-access-token",
 						"value": "{{legalOwnerToken}}"
 					}
 				],
-				"body": {
+				"body":   {
 					"mode": "raw",
-					"raw": ""
+					"raw":  ""
 				},
-				"url": {
-					"raw": "{{localhost}}{{clientPort}}/api/v1/ECMR/ecmrID/A1234567890",
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/ECMR/ecmrID/A1234567890",
 					"host": [
 						"{{localhost}}{{clientPort}}"
 					],
@@ -281,8 +281,145 @@
 			"response": []
 		},
 		{
-			"name": "Legal Owner - Get all Vehicles",
-			"event": [
+			"name":     "Legal Owner - GET TransportOrder",
+			"event":    [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"if (jsonData.length > 0) {",
+							"    tests[\"is of type TransportOrder\"] = (jsonData[0].orderID !== null && jsonData[0].orderID !== undefined);",
+							"}"
+						]
+					}
+				}
+			],
+			"request":  {
+				"method": "GET",
+				"header": [
+					{
+						"key":   "x-access-token",
+						"value": "{{legalOwnerToken}}"
+					}
+				],
+				"body":   {
+					"mode": "raw",
+					"raw":  ""
+				},
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/transportOrder/",
+					"host": [
+						"{{localhost}}{{clientPort}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"transportOrder",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name":     "Legal Owner - GET TransportOrder by ID",
+			"event":    [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"if (jsonData.length > 0) {",
+							"    tests[\"is of type TransportOrder\"] = (jsonData[0].orderID !== null && jsonData[0].orderID !== undefined);",
+							"}"
+						]
+					}
+				}
+			],
+			"request":  {
+				"method": "GET",
+				"header": [
+					{
+						"key":   "x-access-token",
+						"value": "{{legalOwnerToken}}"
+					}
+				],
+				"body":   {
+					"mode": "raw",
+					"raw":  ""
+				},
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/transportOrder/orderID/12345567890",
+					"host": [
+						"{{localhost}}{{clientPort}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"transportOrder",
+						"orderID",
+						"12345567890"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name":     "Legal Owner - GET TransportOrder by status",
+			"event":    [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"if (jsonData.length > 0) {",
+							"    tests[\"is of type TransportOrder\"] = (jsonData[0].orderID !== null && jsonData[0].orderID !== undefined);",
+							"}"
+						]
+					}
+				}
+			],
+			"request":  {
+				"method": "GET",
+				"header": [
+					{
+						"key":   "x-access-token",
+						"value": "{{legalOwnerToken}}"
+					}
+				],
+				"body":   {
+					"mode": "raw",
+					"raw":  ""
+				},
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/transportOrder/status/OPEN",
+					"host": [
+						"{{localhost}}{{clientPort}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"transportOrder",
+						"status",
+						"OPEN"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name":     "Legal Owner - Get all Vehicles",
+			"event":    [
 				{
 					"listen": "test",
 					"script": {
@@ -299,24 +436,24 @@
 					}
 				}
 			],
-			"request": {
+			"request":  {
 				"method": "GET",
 				"header": [
 					{
-						"key": "Content-Type",
+						"key":   "Content-Type",
 						"value": "application/json"
 					},
 					{
-						"key": "x-access-token",
+						"key":   "x-access-token",
 						"value": "{{legalOwnerToken}}"
 					}
 				],
-				"body": {
+				"body":   {
 					"mode": "raw",
-					"raw": ""
+					"raw":  ""
 				},
-				"url": {
-					"raw": "{{localhost}}{{clientPort}}/api/v1/vehicle/",
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/vehicle/",
 					"host": [
 						"{{localhost}}{{clientPort}}"
 					],
@@ -331,8 +468,8 @@
 			"response": []
 		},
 		{
-			"name": "Legal Owner - Get Vehicle by VIN",
-			"event": [
+			"name":     "Legal Owner - Get Vehicle by VIN",
+			"event":    [
 				{
 					"listen": "test",
 					"script": {
@@ -348,24 +485,24 @@
 					}
 				}
 			],
-			"request": {
+			"request":  {
 				"method": "GET",
 				"header": [
 					{
-						"key": "Content-Type",
+						"key":   "Content-Type",
 						"value": "application/json"
 					},
 					{
-						"key": "x-access-token",
+						"key":   "x-access-token",
 						"value": "{{legalOwnerToken}}"
 					}
 				],
-				"body": {
+				"body":   {
 					"mode": "raw",
-					"raw": ""
+					"raw":  ""
 				},
-				"url": {
-					"raw": "{{localhost}}{{clientPort}}/api/v1/vehicle/vin/{{vinNumber}}",
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/vehicle/vin/{{vinNumber}}",
 					"host": [
 						"{{localhost}}{{clientPort}}"
 					],
@@ -381,8 +518,8 @@
 			"response": []
 		},
 		{
-			"name": "Legal Owner - Get Vehicle by platenumber",
-			"event": [
+			"name":     "Legal Owner - Get Vehicle by platenumber",
+			"event":    [
 				{
 					"listen": "test",
 					"script": {
@@ -398,24 +535,24 @@
 					}
 				}
 			],
-			"request": {
+			"request":  {
 				"method": "GET",
 				"header": [
 					{
-						"key": "Content-Type",
+						"key":   "Content-Type",
 						"value": "application/json"
 					},
 					{
-						"key": "x-access-token",
+						"key":   "x-access-token",
 						"value": "{{legalOwnerToken}}"
 					}
 				],
-				"body": {
+				"body":   {
 					"mode": "raw",
-					"raw": ""
+					"raw":  ""
 				},
-				"url": {
-					"raw": "{{localhost}}{{clientPort}}/api/v1/vehicle/platenumber/{{plateNumber}}",
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/vehicle/platenumber/{{plateNumber}}",
 					"host": [
 						"{{localhost}}{{clientPort}}"
 					],
@@ -431,8 +568,8 @@
 			"response": []
 		},
 		{
-			"name": "Compound Admin - Login",
-			"event": [
+			"name":     "Compound Admin - Login",
+			"event":    [
 				{
 					"listen": "test",
 					"script": {
@@ -449,20 +586,20 @@
 					}
 				}
 			],
-			"request": {
+			"request":  {
 				"method": "POST",
 				"header": [
 					{
-						"key": "Content-Type",
+						"key":   "Content-Type",
 						"value": "application/json"
 					}
 				],
-				"body": {
+				"body":   {
 					"mode": "raw",
-					"raw": "{\n  \"username\" : \"willem@amsterdamcompound.org\",\n  \"password\" : \"passw0rd\"\n}"
+					"raw":  "{\n  \"username\" : \"willem@amsterdamcompound.org\",\n  \"password\" : \"passw0rd\"\n}"
 				},
-				"url": {
-					"raw": "{{localhost}}{{clientPort}}/api/v1/login",
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/login",
 					"host": [
 						"{{localhost}}{{clientPort}}"
 					],
@@ -476,8 +613,8 @@
 			"response": []
 		},
 		{
-			"name": "Compound - Cannot create ECMR",
-			"event": [
+			"name":     "Compound - Cannot create ECMR",
+			"event":    [
 				{
 					"listen": "test",
 					"script": {
@@ -492,24 +629,24 @@
 					}
 				}
 			],
-			"request": {
+			"request":  {
 				"method": "POST",
 				"header": [
 					{
-						"key": "Content-Type",
+						"key":   "Content-Type",
 						"value": "application/json"
 					},
 					{
-						"key": "x-access-token",
+						"key":   "x-access-token",
 						"value": "{{compoundToken}}"
 					}
 				],
-				"body": {
+				"body":   {
 					"mode": "raw",
-					"raw": "{\n      \"ecmrID\": \"BUUEW23727327\",\n      \"status\": \"CREATED\",\n      \"creation\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Assen\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"date\": 1502402400000\n      },\n      \"loading\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Amsterdam Zuid\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"date\": 1502402400000\n      },\n      \"delivery\": {\n        \"address\": {\n          \"name\": \"Rob Carman\",\n          \"street\": \"autostraat\",\n          \"houseNumber\": \"12\",\n          \"city\": \"Rotterdam\",\n          \"zipCode\": \"9442KO\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 51.4443,\n          \"longitude\": 60.3323\n        },\n        \"date\": 1502488800000\n      },\n      \"owner\": \"leaseplan\",\n      \"source\": \"amsterdamcompound\",\n      \"transporter\": \"james@koopman.org\",\n      \"carrier\": \"asdf\",\n      \"recipientOrg\": \"cardealer\",\n      \"recipient\": \"rob@cardealer.org\",\n      \"issueDate\": 0,\n      \"issuedBy\": \"koopman\",\n      \"carrierComments\": \"No comments\",\n      \"documents\": [\n        \"doc1\"\n      ],\n      \"goods\": [\n        {\n          \"vehicle\": {\n            \"vin\": \"183726339N\",\n            \"manufacturer\": \"Audi\",\n            \"model\": \"A1\",\n            \"type\": \"sportback\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"AV198RX\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1500\n        },\n        {\n          \"vehicle\": {\n            \"vin\": \"736182CHD28172\",\n            \"manufacturer\": \"Mercedes\",\n            \"model\": \"SLK\",\n            \"type\": \"Station\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"I827YE\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1800\n        }\n      ],\n      \"legalOwnerInstructions\": \"string\",\n      \"paymentInstructions\": \"string\",\n      \"payOnDelivery\": \"string\"\n    }"
+					"raw":  "{\n      \"ecmrID\": \"BUUEW23727327\",\n      \"status\": \"CREATED\",\n      \"creation\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Assen\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"date\": 1502402400000\n      },\n      \"loading\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Amsterdam Zuid\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"date\": 1502402400000\n      },\n      \"delivery\": {\n        \"address\": {\n          \"name\": \"Rob Carman\",\n          \"street\": \"autostraat\",\n          \"houseNumber\": \"12\",\n          \"city\": \"Rotterdam\",\n          \"zipCode\": \"9442KO\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 51.4443,\n          \"longitude\": 60.3323\n        },\n        \"date\": 1502488800000\n      },\n      \"owner\": \"leaseplan\",\n      \"source\": \"amsterdamcompound\",\n      \"transporter\": \"james@koopman.org\",\n      \"carrier\": \"asdf\",\n      \"recipientOrg\": \"cardealer\",\n      \"recipient\": \"rob@cardealer.org\",\n      \"issueDate\": 0,\n      \"issuedBy\": \"koopman\",\n      \"carrierComments\": \"No comments\",\n      \"documents\": [\n        \"doc1\"\n      ],\n      \"goods\": [\n        {\n          \"vehicle\": {\n            \"vin\": \"183726339N\",\n            \"manufacturer\": \"Audi\",\n            \"model\": \"A1\",\n            \"type\": \"sportback\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"AV198RX\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1500\n        },\n        {\n          \"vehicle\": {\n            \"vin\": \"736182CHD28172\",\n            \"manufacturer\": \"Mercedes\",\n            \"model\": \"SLK\",\n            \"type\": \"Station\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"I827YE\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1800\n        }\n      ],\n      \"legalOwnerInstructions\": \"string\",\n      \"paymentInstructions\": \"string\",\n      \"payOnDelivery\": \"string\"\n    }"
 				},
-				"url": {
-					"raw": "{{localhost}}{{clientPort}}/api/v1/ECMR/",
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/ECMR/",
 					"host": [
 						"{{localhost}}{{clientPort}}"
 					],
@@ -524,8 +661,8 @@
 			"response": []
 		},
 		{
-			"name": "Compound - Cannot create Transport Order",
-			"event": [
+			"name":     "Compound - Cannot create Transport Order",
+			"event":    [
 				{
 					"listen": "test",
 					"script": {
@@ -536,24 +673,24 @@
 					}
 				}
 			],
-			"request": {
+			"request":  {
 				"method": "POST",
 				"header": [
 					{
-						"key": "x-access-token",
+						"key":   "x-access-token",
 						"value": "{{compoundToken}}"
 					},
 					{
-						"key": "Content-Type",
+						"key":   "Content-Type",
 						"value": "application/json"
 					}
 				],
-				"body": {
+				"body":   {
 					"mode": "raw",
-					"raw": "    {\n      \"orderID\":   \"821389123621836\",\n      \"loading\":   {\n        \"actualDate\":              1502834400000,\n        \"address\":           {\n          \"name\":        \"loading address\",\n          \"street\":      \"een straat\",\n          \"houseNumber\": \"41\",\n          \"city\":        \"Groningen\",\n          \"zipCode\":     \"7811 HC\",\n          \"country\":     \"netherlands\",\n          \"longitude\":   124,\n          \"latitude\":    123\n        }\n      },\n      \"delivery\":  {\n        \"actualDate\":    1502834400000,\n        \"address\": {\n          \"name\":        \"delivery adress\",\n          \"street\":      \"een straat\",\n          \"houseNumber\": \"41\",\n          \"city\":        \"Groningen\",\n          \"zipCode\":     \"7811 HC\",\n          \"country\":     \"netherlands\",\n          \"longitude\":   124,\n          \"latitude\":    123\n        }\n      },\n      \"carrier\":   \"koopman\",\n      \"source\":    \"amsterdamcompound\",\n      \"goods\":     [\n        {\n          \"$class\":            \"org.digitalcmr.Good\",\n          \"vehicle\":           {\n            \"$class\":          \"org.digitalcmr.Vehicle\",\n            \"vin\":             \"183726339N\",\n            \"manufacturer\":    \"Audi\",\n            \"model\":           \"A1\",\n            \"type\":            \"sportback\",\n            \"ecmrs\":           [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\":     \"AV198RX\"\n          },\n          \"description\":       \"vehicle\",\n          \"weight\":            1500,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        },\n        {\n          \"$class\":            \"org.digitalcmr.Good\",\n          \"vehicle\":           {\n            \"$class\":          \"org.digitalcmr.Vehicle\",\n            \"vin\":             \"736182CHD28172\",\n            \"manufacturer\":    \"Mercedes\",\n            \"model\":           \"SLK\",\n            \"type\":            \"Station\",\n            \"ecmrs\":           [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\":     \"I827YE\"\n          },\n          \"description\":       \"vehicle\",\n          \"weight\":            1800,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        }\n      ],\n      \"status\":    \"OPEN\",\n      \"issueDate\": 1502834400000,\n      \"ecmrs\":     [],\n      \"orderRef\":  \"ref\",\n      \"owner\":     \"leaseplan\"\n    }"
+					"raw":  "    {\n      \"orderID\":   \"821389123621836\",\n      \"loading\":   {\n        \"actualDate\":              1502834400000,\n        \"address\":           {\n          \"name\":        \"loading address\",\n          \"street\":      \"een straat\",\n          \"houseNumber\": \"41\",\n          \"city\":        \"Groningen\",\n          \"zipCode\":     \"7811 HC\",\n          \"country\":     \"netherlands\",\n          \"longitude\":   124,\n          \"latitude\":    123\n        }\n      },\n      \"delivery\":  {\n        \"actualDate\":    1502834400000,\n        \"address\": {\n          \"name\":        \"delivery adress\",\n          \"street\":      \"een straat\",\n          \"houseNumber\": \"41\",\n          \"city\":        \"Groningen\",\n          \"zipCode\":     \"7811 HC\",\n          \"country\":     \"netherlands\",\n          \"longitude\":   124,\n          \"latitude\":    123\n        }\n      },\n      \"carrier\":   \"koopman\",\n      \"source\":    \"amsterdamcompound\",\n      \"goods\":     [\n        {\n          \"$class\":            \"org.digitalcmr.Good\",\n          \"vehicle\":           {\n            \"$class\":          \"org.digitalcmr.Vehicle\",\n            \"vin\":             \"183726339N\",\n            \"manufacturer\":    \"Audi\",\n            \"model\":           \"A1\",\n            \"type\":            \"sportback\",\n            \"ecmrs\":           [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\":     \"AV198RX\"\n          },\n          \"description\":       \"vehicle\",\n          \"weight\":            1500,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        },\n        {\n          \"$class\":            \"org.digitalcmr.Good\",\n          \"vehicle\":           {\n            \"$class\":          \"org.digitalcmr.Vehicle\",\n            \"vin\":             \"736182CHD28172\",\n            \"manufacturer\":    \"Mercedes\",\n            \"model\":           \"SLK\",\n            \"type\":            \"Station\",\n            \"ecmrs\":           [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\":     \"I827YE\"\n          },\n          \"description\":       \"vehicle\",\n          \"weight\":            1800,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        }\n      ],\n      \"status\":    \"OPEN\",\n      \"issueDate\": 1502834400000,\n      \"ecmrs\":     [],\n      \"orderRef\":  \"ref\",\n      \"owner\":     \"leaseplan\"\n    }"
 				},
-				"url": {
-					"raw": "{{localhost}}{{clientPort}}/api/v1/TransportOrder/",
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/TransportOrder/",
 					"host": [
 						"{{localhost}}{{clientPort}}"
 					],
@@ -563,14 +700,13 @@
 						"TransportOrder",
 						""
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "Compound - GET ECMR",
-			"event": [
+			"name":     "Compound - GET ECMR",
+			"event":    [
 				{
 					"listen": "test",
 					"script": {
@@ -586,20 +722,20 @@
 					}
 				}
 			],
-			"request": {
+			"request":  {
 				"method": "GET",
 				"header": [
 					{
-						"key": "x-access-token",
+						"key":   "x-access-token",
 						"value": "{{compoundToken}}"
 					}
 				],
-				"body": {
+				"body":   {
 					"mode": "raw",
-					"raw": ""
+					"raw":  ""
 				},
-				"url": {
-					"raw": "{{localhost}}{{clientPort}}/api/v1/ECMR/",
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/ECMR/",
 					"host": [
 						"{{localhost}}{{clientPort}}"
 					],
@@ -614,8 +750,8 @@
 			"response": []
 		},
 		{
-			"name": "Compound - GET ECMR by ID",
-			"event": [
+			"name":     "Compound - GET ECMR by ID",
+			"event":    [
 				{
 					"listen": "test",
 					"script": {
@@ -631,20 +767,20 @@
 					}
 				}
 			],
-			"request": {
+			"request":  {
 				"method": "GET",
 				"header": [
 					{
-						"key": "x-access-token",
+						"key":   "x-access-token",
 						"value": "{{compoundToken}}"
 					}
 				],
-				"body": {
+				"body":   {
 					"mode": "raw",
-					"raw": ""
+					"raw":  ""
 				},
-				"url": {
-					"raw": "{{localhost}}{{clientPort}}/api/v1/ECMR/ecmrID/A1234567890",
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/ECMR/ecmrID/A1234567890",
 					"host": [
 						"{{localhost}}{{clientPort}}"
 					],
@@ -660,8 +796,8 @@
 			"response": []
 		},
 		{
-			"name": "Compound - GET ECMR by STATUS",
-			"event": [
+			"name":     "Compound - GET ECMR by STATUS",
+			"event":    [
 				{
 					"listen": "test",
 					"script": {
@@ -678,25 +814,25 @@
 					}
 				}
 			],
-			"request": {
+			"request":  {
 				"method": "GET",
 				"header": [
 					{
-						"key": "x-access-token",
+						"key":   "x-access-token",
 						"value": "{{compoundToken}}"
 					},
 					{
-						"key": "",
-						"value": "",
+						"key":      "",
+						"value":    "",
 						"disabled": true
 					}
 				],
-				"body": {
+				"body":   {
 					"mode": "raw",
-					"raw": ""
+					"raw":  ""
 				},
-				"url": {
-					"raw": "{{localhost}}{{clientPort}}/api/v1/ECMR/status/{{status_CREATED}}",
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/ECMR/status/{{status_CREATED}}",
 					"host": [
 						"{{localhost}}{{clientPort}}"
 					],
@@ -712,8 +848,53 @@
 			"response": []
 		},
 		{
-			"name": "Compound - GET all Vehicles",
-			"event": [
+			"name":     "Compound Admin - Cannot GET TransportOrder",
+			"event":    [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"if (jsonData === 200) {",
+							"    tests[\"is not able to get Transport Order\"] = (jsonData === 200);",
+							"}"
+						]
+					}
+				}
+			],
+			"request":  {
+				"method": "GET",
+				"header": [
+					{
+						"key":   "x-access-token",
+						"value": "{{compoundToken}}"
+					}
+				],
+				"body":   {
+					"mode": "raw",
+					"raw":  ""
+				},
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/transportOrder/",
+					"host": [
+						"{{localhost}}{{clientPort}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"transportOrder",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name":     "Compound - GET all Vehicles",
+			"event":    [
 				{
 					"listen": "test",
 					"script": {
@@ -730,24 +911,24 @@
 					}
 				}
 			],
-			"request": {
+			"request":  {
 				"method": "GET",
 				"header": [
 					{
-						"key": "Content-Type",
+						"key":   "Content-Type",
 						"value": "application/json"
 					},
 					{
-						"key": "x-access-token",
+						"key":   "x-access-token",
 						"value": "{{compoundToken}}"
 					}
 				],
-				"body": {
+				"body":   {
 					"mode": "raw",
-					"raw": ""
+					"raw":  ""
 				},
-				"url": {
-					"raw": "{{localhost}}{{clientPort}}/api/v1/vehicle/",
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/vehicle/",
 					"host": [
 						"{{localhost}}{{clientPort}}"
 					],
@@ -762,8 +943,8 @@
 			"response": []
 		},
 		{
-			"name": "Compound - Get Vehicle by VIN",
-			"event": [
+			"name":     "Compound - Get Vehicle by VIN",
+			"event":    [
 				{
 					"listen": "test",
 					"script": {
@@ -779,24 +960,24 @@
 					}
 				}
 			],
-			"request": {
+			"request":  {
 				"method": "GET",
 				"header": [
 					{
-						"key": "Content-Type",
+						"key":   "Content-Type",
 						"value": "application/json"
 					},
 					{
-						"key": "x-access-token",
+						"key":   "x-access-token",
 						"value": "{{compoundToken}}"
 					}
 				],
-				"body": {
+				"body":   {
 					"mode": "raw",
-					"raw": ""
+					"raw":  ""
 				},
-				"url": {
-					"raw": "{{localhost}}{{clientPort}}/api/v1/vehicle/vin/{{vinNumber}}",
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/vehicle/vin/{{vinNumber}}",
 					"host": [
 						"{{localhost}}{{clientPort}}"
 					],
@@ -812,8 +993,8 @@
 			"response": []
 		},
 		{
-			"name": "Compound - Update ECMR status to LOADED",
-			"event": [
+			"name":     "Compound - Update ECMR status to LOADED",
+			"event":    [
 				{
 					"listen": "test",
 					"script": {
@@ -824,24 +1005,24 @@
 					}
 				}
 			],
-			"request": {
+			"request":  {
 				"method": "PUT",
 				"header": [
 					{
-						"key": "Content-Type",
+						"key":   "Content-Type",
 						"value": "application/json"
 					},
 					{
-						"key": "x-access-token",
+						"key":   "x-access-token",
 						"value": "{{compoundToken}}"
 					}
 				],
-				"body": {
+				"body":   {
 					"mode": "raw",
-					"raw": "{\n      \"ecmrID\": \"BUUEW23727327\",\n      \"status\": \"LOADED\",\n      \"agreementTerms\" : \"agreement terms\",\n      \"agreementTermsSec\": \"sec agreement terms\",\n      \"legalOwnerRef\" : \"leaseplan\",\n      \"carrierRef\": \"koopman\",\n      \"recipientRef\": \"SDADHGA21312312\",\n      \"orderID\": \"ASDASDA123123\",\n      \"creation\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Assen\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"date\": 1502402400000\n      },\n      \"loading\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Amsterdam Zuid\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"actualDate\": 1502402400000\n      },\n      \"delivery\": {\n        \"address\": {\n          \"name\": \"Rob Carman\",\n          \"street\": \"autostraat\",\n          \"houseNumber\": \"12\",\n          \"city\": \"Rotterdam\",\n          \"zipCode\": \"9442KO\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 51.4443,\n          \"longitude\": 60.3323\n        },\n        \"actualDate\": 1502488800000\n      },\n      \"owner\": \"leaseplan\",\n      \"source\": \"amsterdamcompound\",\n      \"transporter\": \"harry@koopman.org\",\n      \"carrier\": \"koopman\",\n      \"recipientOrg\": \"cardealer\",\n      \"recipient\": \"rob@cardealer.org\",\n      \"issueDate\": 0,\n      \"issuedBy\": \"koopman\",\n      \"carrierComments\": \"No comments\",\n      \"documents\": [\n        \"doc1\"\n      ],\n      \"goods\": [\n        {\n          \"vehicle\": {\n            \"vin\": \"183726339N\",\n            \"manufacturer\": \"Audi\",\n            \"model\": \"A1\",\n            \"type\": \"sportback\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"AV198RX\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1500,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        },\n        {\n          \"vehicle\": {\n            \"vin\": \"736182CHD28172\",\n            \"manufacturer\": \"Mercedes\",\n            \"model\": \"SLK\",\n            \"type\": \"Station\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"I827YE\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1800,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        }\n      ],\n      \"legalOwnerInstructions\": \"string\",\n      \"paymentInstructions\": \"string\",\n      \"payOnDelivery\": \"string\",\n      \"compoundSignature\": {\n      \t\"certificate\": \"willem@amsterdamcompound.org\",\n      \t\"timestamp\": 0\n      }\n    }"
+					"raw":  "{\n      \"ecmrID\": \"BUUEW23727327\",\n      \"status\": \"LOADED\",\n      \"agreementTerms\" : \"agreement terms\",\n      \"agreementTermsSec\": \"sec agreement terms\",\n      \"legalOwnerRef\" : \"leaseplan\",\n      \"carrierRef\": \"koopman\",\n      \"recipientRef\": \"SDADHGA21312312\",\n      \"orderID\": \"ASDASDA123123\",\n      \"creation\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Assen\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"date\": 1502402400000\n      },\n      \"loading\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Amsterdam Zuid\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"actualDate\": 1502402400000\n      },\n      \"delivery\": {\n        \"address\": {\n          \"name\": \"Rob Carman\",\n          \"street\": \"autostraat\",\n          \"houseNumber\": \"12\",\n          \"city\": \"Rotterdam\",\n          \"zipCode\": \"9442KO\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 51.4443,\n          \"longitude\": 60.3323\n        },\n        \"actualDate\": 1502488800000\n      },\n      \"owner\": \"leaseplan\",\n      \"source\": \"amsterdamcompound\",\n      \"transporter\": \"harry@koopman.org\",\n      \"carrier\": \"koopman\",\n      \"recipientOrg\": \"cardealer\",\n      \"recipient\": \"rob@cardealer.org\",\n      \"issueDate\": 0,\n      \"issuedBy\": \"koopman\",\n      \"carrierComments\": \"No comments\",\n      \"documents\": [\n        \"doc1\"\n      ],\n      \"goods\": [\n        {\n          \"vehicle\": {\n            \"vin\": \"183726339N\",\n            \"manufacturer\": \"Audi\",\n            \"model\": \"A1\",\n            \"type\": \"sportback\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"AV198RX\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1500,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        },\n        {\n          \"vehicle\": {\n            \"vin\": \"736182CHD28172\",\n            \"manufacturer\": \"Mercedes\",\n            \"model\": \"SLK\",\n            \"type\": \"Station\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"I827YE\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1800,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        }\n      ],\n      \"legalOwnerInstructions\": \"string\",\n      \"paymentInstructions\": \"string\",\n      \"payOnDelivery\": \"string\",\n      \"compoundSignature\": {\n      \t\"certificate\": \"willem@amsterdamcompound.org\",\n      \t\"timestamp\": 0\n      }\n    }"
 				},
-				"url": {
-					"raw": "{{localhost}}{{clientPort}}/api/v1/ECMR/",
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/ECMR/",
 					"host": [
 						"{{localhost}}{{clientPort}}"
 					],
@@ -856,8 +1037,8 @@
 			"response": []
 		},
 		{
-			"name": "Carrier Member - Login",
-			"event": [
+			"name":     "Carrier Member - Login",
+			"event":    [
 				{
 					"listen": "test",
 					"script": {
@@ -874,20 +1055,20 @@
 					}
 				}
 			],
-			"request": {
+			"request":  {
 				"method": "POST",
 				"header": [
 					{
-						"key": "Content-Type",
+						"key":   "Content-Type",
 						"value": "application/json"
 					}
 				],
-				"body": {
+				"body":   {
 					"mode": "raw",
-					"raw": "{\n  \"username\" : \"harry@koopman.org\",\n  \"password\" : \"passw0rd\"\n}"
+					"raw":  "{\n  \"username\" : \"harry@koopman.org\",\n  \"password\" : \"passw0rd\"\n}"
 				},
-				"url": {
-					"raw": "{{localhost}}{{clientPort}}/api/v1/login",
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/login",
 					"host": [
 						"{{localhost}}{{clientPort}}"
 					],
@@ -901,8 +1082,8 @@
 			"response": []
 		},
 		{
-			"name": "Carrier Member - Cannot create ECMR",
-			"event": [
+			"name":     "Carrier Member - Cannot create ECMR",
+			"event":    [
 				{
 					"listen": "test",
 					"script": {
@@ -917,24 +1098,24 @@
 					}
 				}
 			],
-			"request": {
+			"request":  {
 				"method": "POST",
 				"header": [
 					{
-						"key": "Content-Type",
+						"key":   "Content-Type",
 						"value": "application/json"
 					},
 					{
-						"key": "x-access-token",
+						"key":   "x-access-token",
 						"value": "{{carrierMemberToken}}"
 					}
 				],
-				"body": {
+				"body":   {
 					"mode": "raw",
-					"raw": "{\n      \"ecmrID\": \"BUUEW23727327\",\n      \"status\": \"CREATED\",\n      \"creation\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Assen\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"date\": 1502402400000\n      },\n      \"loading\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Amsterdam Zuid\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"date\": 1502402400000\n      },\n      \"delivery\": {\n        \"address\": {\n          \"name\": \"Rob Carman\",\n          \"street\": \"autostraat\",\n          \"houseNumber\": \"12\",\n          \"city\": \"Rotterdam\",\n          \"zipCode\": \"9442KO\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 51.4443,\n          \"longitude\": 60.3323\n        },\n        \"date\": 1502488800000\n      },\n      \"owner\": \"leaseplan\",\n      \"source\": \"amsterdamcompound\",\n      \"transporter\": \"james@koopman.org\",\n      \"carrier\": \"asdf\",\n      \"recipientOrg\": \"cardealer\",\n      \"recipient\": \"rob@cardealer.org\",\n      \"issueDate\": 0,\n      \"issuedBy\": \"koopman\",\n      \"carrierComments\": \"No comments\",\n      \"documents\": [\n        \"doc1\"\n      ],\n      \"goods\": [\n        {\n          \"vehicle\": {\n            \"vin\": \"183726339N\",\n            \"manufacturer\": \"Audi\",\n            \"model\": \"A1\",\n            \"type\": \"sportback\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"AV198RX\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1500\n        },\n        {\n          \"vehicle\": {\n            \"vin\": \"736182CHD28172\",\n            \"manufacturer\": \"Mercedes\",\n            \"model\": \"SLK\",\n            \"type\": \"Station\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"I827YE\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1800\n        }\n      ],\n      \"legalOwnerInstructions\": \"string\",\n      \"paymentInstructions\": \"string\",\n      \"payOnDelivery\": \"string\"\n    }"
+					"raw":  "{\n      \"ecmrID\": \"BUUEW23727327\",\n      \"status\": \"CREATED\",\n      \"creation\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Assen\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"date\": 1502402400000\n      },\n      \"loading\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Amsterdam Zuid\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"date\": 1502402400000\n      },\n      \"delivery\": {\n        \"address\": {\n          \"name\": \"Rob Carman\",\n          \"street\": \"autostraat\",\n          \"houseNumber\": \"12\",\n          \"city\": \"Rotterdam\",\n          \"zipCode\": \"9442KO\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 51.4443,\n          \"longitude\": 60.3323\n        },\n        \"date\": 1502488800000\n      },\n      \"owner\": \"leaseplan\",\n      \"source\": \"amsterdamcompound\",\n      \"transporter\": \"james@koopman.org\",\n      \"carrier\": \"asdf\",\n      \"recipientOrg\": \"cardealer\",\n      \"recipient\": \"rob@cardealer.org\",\n      \"issueDate\": 0,\n      \"issuedBy\": \"koopman\",\n      \"carrierComments\": \"No comments\",\n      \"documents\": [\n        \"doc1\"\n      ],\n      \"goods\": [\n        {\n          \"vehicle\": {\n            \"vin\": \"183726339N\",\n            \"manufacturer\": \"Audi\",\n            \"model\": \"A1\",\n            \"type\": \"sportback\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"AV198RX\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1500\n        },\n        {\n          \"vehicle\": {\n            \"vin\": \"736182CHD28172\",\n            \"manufacturer\": \"Mercedes\",\n            \"model\": \"SLK\",\n            \"type\": \"Station\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"I827YE\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1800\n        }\n      ],\n      \"legalOwnerInstructions\": \"string\",\n      \"paymentInstructions\": \"string\",\n      \"payOnDelivery\": \"string\"\n    }"
 				},
-				"url": {
-					"raw": "{{localhost}}{{clientPort}}/api/v1/ECMR/",
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/ECMR/",
 					"host": [
 						"{{localhost}}{{clientPort}}"
 					],
@@ -949,8 +1130,8 @@
 			"response": []
 		},
 		{
-			"name": "Carrier Member - Cannot create Transport Order",
-			"event": [
+			"name":     "Carrier Member - Cannot create Transport Order",
+			"event":    [
 				{
 					"listen": "test",
 					"script": {
@@ -961,24 +1142,24 @@
 					}
 				}
 			],
-			"request": {
+			"request":  {
 				"method": "POST",
 				"header": [
 					{
-						"key": "x-access-token",
+						"key":   "x-access-token",
 						"value": "{{carrierMemberToken}}"
 					},
 					{
-						"key": "Content-Type",
+						"key":   "Content-Type",
 						"value": "application/json"
 					}
 				],
-				"body": {
+				"body":   {
 					"mode": "raw",
-					"raw": "    {\n      \"orderID\":   \"821389123621836\",\n      \"loading\":   {\n        \"actualDate\":              1502834400000,\n        \"address\":           {\n          \"name\":        \"loading address\",\n          \"street\":      \"een straat\",\n          \"houseNumber\": \"41\",\n          \"city\":        \"Groningen\",\n          \"zipCode\":     \"7811 HC\",\n          \"country\":     \"netherlands\",\n          \"longitude\":   124,\n          \"latitude\":    123\n        }\n      },\n      \"delivery\":  {\n        \"actualDate\":    1502834400000,\n        \"address\": {\n          \"name\":        \"delivery adress\",\n          \"street\":      \"een straat\",\n          \"houseNumber\": \"41\",\n          \"city\":        \"Groningen\",\n          \"zipCode\":     \"7811 HC\",\n          \"country\":     \"netherlands\",\n          \"longitude\":   124,\n          \"latitude\":    123\n        }\n      },\n      \"carrier\":   \"koopman\",\n      \"source\":    \"amsterdamcompound\",\n      \"goods\":     [\n        {\n          \"$class\":            \"org.digitalcmr.Good\",\n          \"vehicle\":           {\n            \"$class\":          \"org.digitalcmr.Vehicle\",\n            \"vin\":             \"183726339N\",\n            \"manufacturer\":    \"Audi\",\n            \"model\":           \"A1\",\n            \"type\":            \"sportback\",\n            \"ecmrs\":           [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\":     \"AV198RX\"\n          },\n          \"description\":       \"vehicle\",\n          \"weight\":            1500,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        },\n        {\n          \"$class\":            \"org.digitalcmr.Good\",\n          \"vehicle\":           {\n            \"$class\":          \"org.digitalcmr.Vehicle\",\n            \"vin\":             \"736182CHD28172\",\n            \"manufacturer\":    \"Mercedes\",\n            \"model\":           \"SLK\",\n            \"type\":            \"Station\",\n            \"ecmrs\":           [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\":     \"I827YE\"\n          },\n          \"description\":       \"vehicle\",\n          \"weight\":            1800,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        }\n      ],\n      \"status\":    \"OPEN\",\n      \"issueDate\": 1502834400000,\n      \"ecmrs\":     [],\n      \"orderRef\":  \"ref\",\n      \"owner\":     \"leaseplan\"\n    }"
+					"raw":  "    {\n      \"orderID\":   \"821389123621836\",\n      \"loading\":   {\n        \"actualDate\":              1502834400000,\n        \"address\":           {\n          \"name\":        \"loading address\",\n          \"street\":      \"een straat\",\n          \"houseNumber\": \"41\",\n          \"city\":        \"Groningen\",\n          \"zipCode\":     \"7811 HC\",\n          \"country\":     \"netherlands\",\n          \"longitude\":   124,\n          \"latitude\":    123\n        }\n      },\n      \"delivery\":  {\n        \"actualDate\":    1502834400000,\n        \"address\": {\n          \"name\":        \"delivery adress\",\n          \"street\":      \"een straat\",\n          \"houseNumber\": \"41\",\n          \"city\":        \"Groningen\",\n          \"zipCode\":     \"7811 HC\",\n          \"country\":     \"netherlands\",\n          \"longitude\":   124,\n          \"latitude\":    123\n        }\n      },\n      \"carrier\":   \"koopman\",\n      \"source\":    \"amsterdamcompound\",\n      \"goods\":     [\n        {\n          \"$class\":            \"org.digitalcmr.Good\",\n          \"vehicle\":           {\n            \"$class\":          \"org.digitalcmr.Vehicle\",\n            \"vin\":             \"183726339N\",\n            \"manufacturer\":    \"Audi\",\n            \"model\":           \"A1\",\n            \"type\":            \"sportback\",\n            \"ecmrs\":           [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\":     \"AV198RX\"\n          },\n          \"description\":       \"vehicle\",\n          \"weight\":            1500,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        },\n        {\n          \"$class\":            \"org.digitalcmr.Good\",\n          \"vehicle\":           {\n            \"$class\":          \"org.digitalcmr.Vehicle\",\n            \"vin\":             \"736182CHD28172\",\n            \"manufacturer\":    \"Mercedes\",\n            \"model\":           \"SLK\",\n            \"type\":            \"Station\",\n            \"ecmrs\":           [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\":     \"I827YE\"\n          },\n          \"description\":       \"vehicle\",\n          \"weight\":            1800,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        }\n      ],\n      \"status\":    \"OPEN\",\n      \"issueDate\": 1502834400000,\n      \"ecmrs\":     [],\n      \"orderRef\":  \"ref\",\n      \"owner\":     \"leaseplan\"\n    }"
 				},
-				"url": {
-					"raw": "{{localhost}}{{clientPort}}/api/v1/TransportOrder/",
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/TransportOrder/",
 					"host": [
 						"{{localhost}}{{clientPort}}"
 					],
@@ -988,14 +1169,13 @@
 						"TransportOrder",
 						""
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "Carrier - GET ECMR",
-			"event": [
+			"name":     "Carrier - GET ECMR",
+			"event":    [
 				{
 					"listen": "test",
 					"script": {
@@ -1011,20 +1191,20 @@
 					}
 				}
 			],
-			"request": {
+			"request":  {
 				"method": "GET",
 				"header": [
 					{
-						"key": "x-access-token",
+						"key":   "x-access-token",
 						"value": "{{carrierMemberToken}}"
 					}
 				],
-				"body": {
+				"body":   {
 					"mode": "raw",
-					"raw": ""
+					"raw":  ""
 				},
-				"url": {
-					"raw": "{{localhost}}{{clientPort}}/api/v1/ECMR/",
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/ECMR/",
 					"host": [
 						"{{localhost}}{{clientPort}}"
 					],
@@ -1039,8 +1219,8 @@
 			"response": []
 		},
 		{
-			"name": "Carrier - GET ECMR by ID",
-			"event": [
+			"name":     "Carrier - GET ECMR by ID",
+			"event":    [
 				{
 					"listen": "test",
 					"script": {
@@ -1056,17 +1236,20 @@
 					}
 				}
 			],
-			"request": {
+			"request":  {
 				"method": "GET",
 				"header": [
 					{
-						"key": "x-access-token",
+						"key":   "x-access-token",
 						"value": "{{carrierMemberToken}}"
 					}
 				],
-				"body": {},
-				"url": {
-					"raw": "{{localhost}}{{clientPort}}/api/v1/ECMR/ecmrID/BUUEW23727327",
+				"body":   {
+					"mode": "raw",
+					"raw":  ""
+				},
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/ECMR/ecmrID/BUUEW23727327",
 					"host": [
 						"{{localhost}}{{clientPort}}"
 					],
@@ -1082,8 +1265,8 @@
 			"response": []
 		},
 		{
-			"name": "Carrier Member - is not able to GET ECMR when status is CREATED",
-			"event": [
+			"name":     "Carrier Member - is not able to GET ECMR when status is CREATED",
+			"event":    [
 				{
 					"listen": "test",
 					"script": {
@@ -1099,25 +1282,25 @@
 					}
 				}
 			],
-			"request": {
+			"request":  {
 				"method": "GET",
 				"header": [
 					{
-						"key": "x-access-token",
+						"key":   "x-access-token",
 						"value": "{{carrierMemberToken}}"
 					},
 					{
-						"key": "",
-						"value": "",
+						"key":      "",
+						"value":    "",
 						"disabled": true
 					}
 				],
-				"body": {
+				"body":   {
 					"mode": "raw",
-					"raw": ""
+					"raw":  ""
 				},
-				"url": {
-					"raw": "{{localhost}}{{clientPort}}/api/v1/ECMR/status/{{status_CREATED}}",
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/ECMR/status/{{status_CREATED}}",
 					"host": [
 						"{{localhost}}{{clientPort}}"
 					],
@@ -1133,8 +1316,56 @@
 			"response": []
 		},
 		{
-			"name": "Carrier - Get all Vehicles",
-			"event": [
+			"name":     "Carrier Member - Cannot GET TransportOrder",
+			"event":    [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"if (jsonData === 200) {",
+							"    tests[\"is not able to get status by CREATED\"] = (jsonData === 200);",
+							"}tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"if (jsonData === 200) {",
+							"    tests[\"is not able to get Transport Order\"] = (jsonData === 200);",
+							"}"
+						]
+					}
+				}
+			],
+			"request":  {
+				"method": "GET",
+				"header": [
+					{
+						"key":   "x-access-token",
+						"value": "{{carrierMemberToken}}"
+					}
+				],
+				"body":   {
+					"mode": "raw",
+					"raw":  ""
+				},
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/transportOrder/",
+					"host": [
+						"{{localhost}}{{clientPort}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"transportOrder",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name":     "Carrier - Get all Vehicles",
+			"event":    [
 				{
 					"listen": "test",
 					"script": {
@@ -1151,24 +1382,24 @@
 					}
 				}
 			],
-			"request": {
+			"request":  {
 				"method": "GET",
 				"header": [
 					{
-						"key": "Content-Type",
+						"key":   "Content-Type",
 						"value": "application/json"
 					},
 					{
-						"key": "x-access-token",
+						"key":   "x-access-token",
 						"value": "{{carrierMemberToken}}"
 					}
 				],
-				"body": {
+				"body":   {
 					"mode": "raw",
-					"raw": ""
+					"raw":  ""
 				},
-				"url": {
-					"raw": "{{localhost}}{{clientPort}}/api/v1/vehicle/",
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/vehicle/",
 					"host": [
 						"{{localhost}}{{clientPort}}"
 					],
@@ -1183,8 +1414,8 @@
 			"response": []
 		},
 		{
-			"name": "Carrier - Get Vehicle by VIN",
-			"event": [
+			"name":     "Carrier - Get Vehicle by VIN",
+			"event":    [
 				{
 					"listen": "test",
 					"script": {
@@ -1200,24 +1431,24 @@
 					}
 				}
 			],
-			"request": {
+			"request":  {
 				"method": "GET",
 				"header": [
 					{
-						"key": "Content-Type",
+						"key":   "Content-Type",
 						"value": "application/json"
 					},
 					{
-						"key": "x-access-token",
+						"key":   "x-access-token",
 						"value": "{{carrierMemberToken}}"
 					}
 				],
-				"body": {
+				"body":   {
 					"mode": "raw",
-					"raw": ""
+					"raw":  ""
 				},
-				"url": {
-					"raw": "{{localhost}}{{clientPort}}/api/v1/vehicle/vin/{{vinNumber}}",
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/vehicle/vin/{{vinNumber}}",
 					"host": [
 						"{{localhost}}{{clientPort}}"
 					],
@@ -1233,8 +1464,8 @@
 			"response": []
 		},
 		{
-			"name": "Carrier - Update ECMR status to IN_TRANSIT",
-			"event": [
+			"name":     "Carrier - Update ECMR status to IN_TRANSIT",
+			"event":    [
 				{
 					"listen": "test",
 					"script": {
@@ -1245,24 +1476,24 @@
 					}
 				}
 			],
-			"request": {
-				"method": "PUT",
-				"header": [
+			"request":  {
+				"method":      "PUT",
+				"header":      [
 					{
-						"key": "Content-Type",
+						"key":   "Content-Type",
 						"value": "application/json"
 					},
 					{
-						"key": "x-access-token",
+						"key":   "x-access-token",
 						"value": "{{carrierMemberToken}}"
 					}
 				],
-				"body": {
+				"body":        {
 					"mode": "raw",
-					"raw": "{\n      \"ecmrID\": \"BUUEW23727327\",\n      \"status\": \"IN_TRANSIT\",\n      \"agreementTerms\" : \"agreement terms\",\n      \"agreementTermsSec\": \"sec agreement terms\",\n      \"legalOwnerRef\" : \"leaseplan\",\n      \"carrierRef\": \"koopman\",\n      \"recipientRef\": \"SDADHGA21312312\",\n      \"orderID\": \"ASDASDA123123\",\n      \"creation\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Assen\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"date\": 1502402400000\n      },\n      \"loading\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Amsterdam Zuid\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"actualDate\": 1502402400000\n      },\n      \"delivery\": {\n        \"address\": {\n          \"name\": \"Rob Carman\",\n          \"street\": \"autostraat\",\n          \"houseNumber\": \"12\",\n          \"city\": \"Rotterdam\",\n          \"zipCode\": \"9442KO\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 51.4443,\n          \"longitude\": 60.3323\n        },\n        \"actualDate\": 1502488800000\n      },\n      \"owner\": \"leaseplan\",\n      \"source\": \"amsterdamcompound\",\n      \"transporter\": \"harry@koopman.org\",\n      \"carrier\": \"koopman\",\n      \"recipientOrg\": \"cardealer\",\n      \"recipient\": \"rob@cardealer.org\",\n      \"issueDate\": 0,\n      \"issuedBy\": \"koopman\",\n      \"carrierComments\": \"No comments\",\n      \"documents\": [\n        \"doc1\"\n      ],\n      \"goods\": [\n        {\n          \"vehicle\": {\n            \"vin\": \"183726339N\",\n            \"manufacturer\": \"Audi\",\n            \"model\": \"A1\",\n            \"type\": \"sportback\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"AV198RX\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1500,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        },\n        {\n          \"vehicle\": {\n            \"vin\": \"736182CHD28172\",\n            \"manufacturer\": \"Mercedes\",\n            \"model\": \"SLK\",\n            \"type\": \"Station\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"I827YE\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1800,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        }\n      ],\n      \"legalOwnerInstructions\": \"string\",\n      \"paymentInstructions\": \"string\",\n      \"payOnDelivery\": \"string\",\n      \"compoundSignature\": {\n      \t\"certificate\": \"willem@amsterdamcompound.org\",\n      \t\"timestamp\": 0\n      },\n\t  \"carrierLoadingSignature\": {\n      \t\"certificate\": \"harry@koopman.org\",\n      \t\"timestamp\": 0\n      }\n    }"
+					"raw":  "{\n      \"ecmrID\": \"BUUEW23727327\",\n      \"status\": \"IN_TRANSIT\",\n      \"agreementTerms\" : \"agreement terms\",\n      \"agreementTermsSec\": \"sec agreement terms\",\n      \"legalOwnerRef\" : \"leaseplan\",\n      \"carrierRef\": \"koopman\",\n      \"recipientRef\": \"SDADHGA21312312\",\n      \"orderID\": \"ASDASDA123123\",\n      \"creation\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Assen\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"date\": 1502402400000\n      },\n      \"loading\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Amsterdam Zuid\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"actualDate\": 1502402400000\n      },\n      \"delivery\": {\n        \"address\": {\n          \"name\": \"Rob Carman\",\n          \"street\": \"autostraat\",\n          \"houseNumber\": \"12\",\n          \"city\": \"Rotterdam\",\n          \"zipCode\": \"9442KO\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 51.4443,\n          \"longitude\": 60.3323\n        },\n        \"actualDate\": 1502488800000\n      },\n      \"owner\": \"leaseplan\",\n      \"source\": \"amsterdamcompound\",\n      \"transporter\": \"harry@koopman.org\",\n      \"carrier\": \"koopman\",\n      \"recipientOrg\": \"cardealer\",\n      \"recipient\": \"rob@cardealer.org\",\n      \"issueDate\": 0,\n      \"issuedBy\": \"koopman\",\n      \"carrierComments\": \"No comments\",\n      \"documents\": [\n        \"doc1\"\n      ],\n      \"goods\": [\n        {\n          \"vehicle\": {\n            \"vin\": \"183726339N\",\n            \"manufacturer\": \"Audi\",\n            \"model\": \"A1\",\n            \"type\": \"sportback\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"AV198RX\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1500,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        },\n        {\n          \"vehicle\": {\n            \"vin\": \"736182CHD28172\",\n            \"manufacturer\": \"Mercedes\",\n            \"model\": \"SLK\",\n            \"type\": \"Station\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"I827YE\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1800,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        }\n      ],\n      \"legalOwnerInstructions\": \"string\",\n      \"paymentInstructions\": \"string\",\n      \"payOnDelivery\": \"string\",\n      \"compoundSignature\": {\n      \t\"certificate\": \"willem@amsterdamcompound.org\",\n      \t\"timestamp\": 0\n      },\n\t  \"carrierLoadingSignature\": {\n      \t\"certificate\": \"harry@koopman.org\",\n      \t\"timestamp\": 0\n      }\n    }"
 				},
-				"url": {
-					"raw": "{{localhost}}{{clientPort}}/api/v1/ECMR/",
+				"url":         {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/ECMR/",
 					"host": [
 						"{{localhost}}{{clientPort}}"
 					],
@@ -1278,8 +1509,8 @@
 			"response": []
 		},
 		{
-			"name": "Carrier - Update ECMR status to Delivered",
-			"event": [
+			"name":     "Carrier - Update ECMR status to Delivered",
+			"event":    [
 				{
 					"listen": "test",
 					"script": {
@@ -1290,24 +1521,24 @@
 					}
 				}
 			],
-			"request": {
+			"request":  {
 				"method": "PUT",
 				"header": [
 					{
-						"key": "Content-Type",
+						"key":   "Content-Type",
 						"value": "application/json"
 					},
 					{
-						"key": "x-access-token",
+						"key":   "x-access-token",
 						"value": "{{carrierMemberToken}}"
 					}
 				],
-				"body": {
+				"body":   {
 					"mode": "raw",
-					"raw": "{\n      \"ecmrID\": \"BUUEW23727327\",\n      \"status\": \"DELIVERED\",\n      \"agreementTerms\" : \"agreement terms\",\n      \"agreementTermsSec\": \"sec agreement terms\",\n      \"legalOwnerRef\" : \"leaseplan\",\n      \"carrierRef\": \"koopman\",\n      \"recipientRef\": \"SDADHGA21312312\",\n      \"orderID\": \"ASDASDA123123\",\n      \"creation\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Assen\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"date\": 1502402400000\n      },\n      \"loading\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Amsterdam Zuid\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"actualDate\": 1502402400000\n      },\n      \"delivery\": {\n        \"address\": {\n          \"name\": \"Rob Carman\",\n          \"street\": \"autostraat\",\n          \"houseNumber\": \"12\",\n          \"city\": \"Rotterdam\",\n          \"zipCode\": \"9442KO\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 51.4443,\n          \"longitude\": 60.3323\n        },\n        \"actualDate\": 1502488800000\n      },\n      \"owner\": \"leaseplan\",\n      \"source\": \"amsterdamcompound\",\n      \"transporter\": \"harry@koopman.org\",\n      \"carrier\": \"koopman\",\n      \"recipientOrg\": \"cardealer\",\n      \"recipient\": \"rob@cardealer.org\",\n      \"issueDate\": 0,\n      \"issuedBy\": \"koopman\",\n      \"carrierComments\": \"No comments\",\n      \"documents\": [\n        \"doc1\"\n      ],\n      \"goods\": [\n        {\n          \"vehicle\": {\n            \"vin\": \"183726339N\",\n            \"manufacturer\": \"Audi\",\n            \"model\": \"A1\",\n            \"type\": \"sportback\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"AV198RX\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1500,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        },\n        {\n          \"vehicle\": {\n            \"vin\": \"736182CHD28172\",\n            \"manufacturer\": \"Mercedes\",\n            \"model\": \"SLK\",\n            \"type\": \"Station\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"I827YE\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1800,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        }\n      ],\n      \"legalOwnerInstructions\": \"string\",\n      \"paymentInstructions\": \"string\",\n      \"payOnDelivery\": \"string\",\n      \"compoundSignature\": {\n      \t\"certificate\": \"willem@amsterdamcompound.org\",\n      \t\"timestamp\": 0\n      },\n\t  \"carrierLoadingSignature\": {\n      \t\"certificate\": \"harry@koopman.org\",\n      \t\"timestamp\": 0\n      },\n\t  \"carrierDeliverySignature\": {\n      \t\"certificate\": \"harry@koopman.org\",\n      \t\"timestamp\": 0\n      }\n    }"
+					"raw":  "{\n      \"ecmrID\": \"BUUEW23727327\",\n      \"status\": \"DELIVERED\",\n      \"agreementTerms\" : \"agreement terms\",\n      \"agreementTermsSec\": \"sec agreement terms\",\n      \"legalOwnerRef\" : \"leaseplan\",\n      \"carrierRef\": \"koopman\",\n      \"recipientRef\": \"SDADHGA21312312\",\n      \"orderID\": \"ASDASDA123123\",\n      \"creation\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Assen\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"date\": 1502402400000\n      },\n      \"loading\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Amsterdam Zuid\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"actualDate\": 1502402400000\n      },\n      \"delivery\": {\n        \"address\": {\n          \"name\": \"Rob Carman\",\n          \"street\": \"autostraat\",\n          \"houseNumber\": \"12\",\n          \"city\": \"Rotterdam\",\n          \"zipCode\": \"9442KO\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 51.4443,\n          \"longitude\": 60.3323\n        },\n        \"actualDate\": 1502488800000\n      },\n      \"owner\": \"leaseplan\",\n      \"source\": \"amsterdamcompound\",\n      \"transporter\": \"harry@koopman.org\",\n      \"carrier\": \"koopman\",\n      \"recipientOrg\": \"cardealer\",\n      \"recipient\": \"rob@cardealer.org\",\n      \"issueDate\": 0,\n      \"issuedBy\": \"koopman\",\n      \"carrierComments\": \"No comments\",\n      \"documents\": [\n        \"doc1\"\n      ],\n      \"goods\": [\n        {\n          \"vehicle\": {\n            \"vin\": \"183726339N\",\n            \"manufacturer\": \"Audi\",\n            \"model\": \"A1\",\n            \"type\": \"sportback\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"AV198RX\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1500,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        },\n        {\n          \"vehicle\": {\n            \"vin\": \"736182CHD28172\",\n            \"manufacturer\": \"Mercedes\",\n            \"model\": \"SLK\",\n            \"type\": \"Station\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"I827YE\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1800,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        }\n      ],\n      \"legalOwnerInstructions\": \"string\",\n      \"paymentInstructions\": \"string\",\n      \"payOnDelivery\": \"string\",\n      \"compoundSignature\": {\n      \t\"certificate\": \"willem@amsterdamcompound.org\",\n      \t\"timestamp\": 0\n      },\n\t  \"carrierLoadingSignature\": {\n      \t\"certificate\": \"harry@koopman.org\",\n      \t\"timestamp\": 0\n      },\n\t  \"carrierDeliverySignature\": {\n      \t\"certificate\": \"harry@koopman.org\",\n      \t\"timestamp\": 0\n      }\n    }"
 				},
-				"url": {
-					"raw": "{{localhost}}{{clientPort}}/api/v1/ECMR/",
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/ECMR/",
 					"host": [
 						"{{localhost}}{{clientPort}}"
 					],
@@ -1322,8 +1553,8 @@
 			"response": []
 		},
 		{
-			"name": "Recipient Admin - Login",
-			"event": [
+			"name":     "Recipient Admin - Login",
+			"event":    [
 				{
 					"listen": "test",
 					"script": {
@@ -1341,20 +1572,20 @@
 					}
 				}
 			],
-			"request": {
+			"request":  {
 				"method": "POST",
 				"header": [
 					{
-						"key": "Content-Type",
+						"key":   "Content-Type",
 						"value": "application/json"
 					}
 				],
-				"body": {
+				"body":   {
 					"mode": "raw",
-					"raw": "{\n  \"username\" : \"rob@cardealer.org\",\n  \"password\" : \"passw0rd\"\n}"
+					"raw":  "{\n  \"username\" : \"rob@cardealer.org\",\n  \"password\" : \"passw0rd\"\n}"
 				},
-				"url": {
-					"raw": "{{localhost}}{{clientPort}}/api/v1/login",
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/login",
 					"host": [
 						"{{localhost}}{{clientPort}}"
 					],
@@ -1368,8 +1599,8 @@
 			"response": []
 		},
 		{
-			"name": "Recipient - Cannot create ECMR",
-			"event": [
+			"name":     "Recipient - Cannot create ECMR",
+			"event":    [
 				{
 					"listen": "test",
 					"script": {
@@ -1384,24 +1615,24 @@
 					}
 				}
 			],
-			"request": {
+			"request":  {
 				"method": "POST",
 				"header": [
 					{
-						"key": "Content-Type",
+						"key":   "Content-Type",
 						"value": "application/json"
 					},
 					{
-						"key": "x-access-token",
+						"key":   "x-access-token",
 						"value": "{{recipientToken}}"
 					}
 				],
-				"body": {
+				"body":   {
 					"mode": "raw",
-					"raw": "{\n      \"ecmrID\": \"BUUEW23727327\",\n      \"status\": \"CREATED\",\n      \"creation\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Assen\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"date\": 1502402400000\n      },\n      \"loading\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Amsterdam Zuid\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"date\": 1502402400000\n      },\n      \"delivery\": {\n        \"address\": {\n          \"name\": \"Rob Carman\",\n          \"street\": \"autostraat\",\n          \"houseNumber\": \"12\",\n          \"city\": \"Rotterdam\",\n          \"zipCode\": \"9442KO\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 51.4443,\n          \"longitude\": 60.3323\n        },\n        \"date\": 1502488800000\n      },\n      \"owner\": \"leaseplan\",\n      \"source\": \"amsterdamcompound\",\n      \"transporter\": \"james@koopman.org\",\n      \"carrier\": \"asdf\",\n      \"recipientOrg\": \"cardealer\",\n      \"recipient\": \"rob@cardealer.org\",\n      \"issueDate\": 0,\n      \"issuedBy\": \"koopman\",\n      \"carrierComments\": \"No comments\",\n      \"documents\": [\n        \"doc1\"\n      ],\n      \"goods\": [\n        {\n          \"vehicle\": {\n            \"vin\": \"183726339N\",\n            \"manufacturer\": \"Audi\",\n            \"model\": \"A1\",\n            \"type\": \"sportback\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"AV198RX\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1500\n        },\n        {\n          \"vehicle\": {\n            \"vin\": \"736182CHD28172\",\n            \"manufacturer\": \"Mercedes\",\n            \"model\": \"SLK\",\n            \"type\": \"Station\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"I827YE\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1800\n        }\n      ],\n      \"legalOwnerInstructions\": \"string\",\n      \"paymentInstructions\": \"string\",\n      \"payOnDelivery\": \"string\"\n    }"
+					"raw":  "{\n      \"ecmrID\": \"BUUEW23727327\",\n      \"status\": \"CREATED\",\n      \"creation\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Assen\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"date\": 1502402400000\n      },\n      \"loading\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Amsterdam Zuid\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"date\": 1502402400000\n      },\n      \"delivery\": {\n        \"address\": {\n          \"name\": \"Rob Carman\",\n          \"street\": \"autostraat\",\n          \"houseNumber\": \"12\",\n          \"city\": \"Rotterdam\",\n          \"zipCode\": \"9442KO\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 51.4443,\n          \"longitude\": 60.3323\n        },\n        \"date\": 1502488800000\n      },\n      \"owner\": \"leaseplan\",\n      \"source\": \"amsterdamcompound\",\n      \"transporter\": \"james@koopman.org\",\n      \"carrier\": \"asdf\",\n      \"recipientOrg\": \"cardealer\",\n      \"recipient\": \"rob@cardealer.org\",\n      \"issueDate\": 0,\n      \"issuedBy\": \"koopman\",\n      \"carrierComments\": \"No comments\",\n      \"documents\": [\n        \"doc1\"\n      ],\n      \"goods\": [\n        {\n          \"vehicle\": {\n            \"vin\": \"183726339N\",\n            \"manufacturer\": \"Audi\",\n            \"model\": \"A1\",\n            \"type\": \"sportback\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"AV198RX\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1500\n        },\n        {\n          \"vehicle\": {\n            \"vin\": \"736182CHD28172\",\n            \"manufacturer\": \"Mercedes\",\n            \"model\": \"SLK\",\n            \"type\": \"Station\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"I827YE\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1800\n        }\n      ],\n      \"legalOwnerInstructions\": \"string\",\n      \"paymentInstructions\": \"string\",\n      \"payOnDelivery\": \"string\"\n    }"
 				},
-				"url": {
-					"raw": "{{localhost}}{{clientPort}}/api/v1/ECMR/",
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/ECMR/",
 					"host": [
 						"{{localhost}}{{clientPort}}"
 					],
@@ -1416,8 +1647,8 @@
 			"response": []
 		},
 		{
-			"name": "Recipient - Cannot create an Transport Order",
-			"event": [
+			"name":     "Recipient - Cannot create an Transport Order",
+			"event":    [
 				{
 					"listen": "test",
 					"script": {
@@ -1428,24 +1659,24 @@
 					}
 				}
 			],
-			"request": {
+			"request":  {
 				"method": "POST",
 				"header": [
 					{
-						"key": "Content-Type",
+						"key":   "Content-Type",
 						"value": "application/json"
 					},
 					{
-						"key": "x-access-token",
+						"key":   "x-access-token",
 						"value": "{{recipientToken}}"
 					}
 				],
-				"body": {
+				"body":   {
 					"mode": "raw",
-					"raw": "    {\n      \"orderID\":   \"821389123621836\",\n      \"loading\":   {\n        \"actualDate\":              1502834400000,\n        \"address\":           {\n          \"name\":        \"loading address\",\n          \"street\":      \"een straat\",\n          \"houseNumber\": \"41\",\n          \"city\":        \"Groningen\",\n          \"zipCode\":     \"7811 HC\",\n          \"country\":     \"netherlands\",\n          \"longitude\":   124,\n          \"latitude\":    123\n        }\n      },\n      \"delivery\":  {\n        \"actualDate\":    1502834400000,\n        \"address\": {\n          \"name\":        \"delivery adress\",\n          \"street\":      \"een straat\",\n          \"houseNumber\": \"41\",\n          \"city\":        \"Groningen\",\n          \"zipCode\":     \"7811 HC\",\n          \"country\":     \"netherlands\",\n          \"longitude\":   124,\n          \"latitude\":    123\n        }\n      },\n      \"carrier\":   \"koopman\",\n      \"source\":    \"amsterdamcompound\",\n      \"goods\":     [\n        {\n          \"$class\":            \"org.digitalcmr.Good\",\n          \"vehicle\":           {\n            \"$class\":          \"org.digitalcmr.Vehicle\",\n            \"vin\":             \"183726339N\",\n            \"manufacturer\":    \"Audi\",\n            \"model\":           \"A1\",\n            \"type\":            \"sportback\",\n            \"ecmrs\":           [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\":     \"AV198RX\"\n          },\n          \"description\":       \"vehicle\",\n          \"weight\":            1500,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        },\n        {\n          \"$class\":            \"org.digitalcmr.Good\",\n          \"vehicle\":           {\n            \"$class\":          \"org.digitalcmr.Vehicle\",\n            \"vin\":             \"736182CHD28172\",\n            \"manufacturer\":    \"Mercedes\",\n            \"model\":           \"SLK\",\n            \"type\":            \"Station\",\n            \"ecmrs\":           [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\":     \"I827YE\"\n          },\n          \"description\":       \"vehicle\",\n          \"weight\":            1800,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        }\n      ],\n      \"status\":    \"OPEN\",\n      \"issueDate\": 1502834400000,\n      \"ecmrs\":     [],\n      \"orderRef\":  \"ref\",\n      \"owner\":     \"leaseplan\"\n    }"
+					"raw":  "    {\n      \"orderID\":   \"821389123621836\",\n      \"loading\":   {\n        \"actualDate\":              1502834400000,\n        \"address\":           {\n          \"name\":        \"loading address\",\n          \"street\":      \"een straat\",\n          \"houseNumber\": \"41\",\n          \"city\":        \"Groningen\",\n          \"zipCode\":     \"7811 HC\",\n          \"country\":     \"netherlands\",\n          \"longitude\":   124,\n          \"latitude\":    123\n        }\n      },\n      \"delivery\":  {\n        \"actualDate\":    1502834400000,\n        \"address\": {\n          \"name\":        \"delivery adress\",\n          \"street\":      \"een straat\",\n          \"houseNumber\": \"41\",\n          \"city\":        \"Groningen\",\n          \"zipCode\":     \"7811 HC\",\n          \"country\":     \"netherlands\",\n          \"longitude\":   124,\n          \"latitude\":    123\n        }\n      },\n      \"carrier\":   \"koopman\",\n      \"source\":    \"amsterdamcompound\",\n      \"goods\":     [\n        {\n          \"$class\":            \"org.digitalcmr.Good\",\n          \"vehicle\":           {\n            \"$class\":          \"org.digitalcmr.Vehicle\",\n            \"vin\":             \"183726339N\",\n            \"manufacturer\":    \"Audi\",\n            \"model\":           \"A1\",\n            \"type\":            \"sportback\",\n            \"ecmrs\":           [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\":     \"AV198RX\"\n          },\n          \"description\":       \"vehicle\",\n          \"weight\":            1500,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        },\n        {\n          \"$class\":            \"org.digitalcmr.Good\",\n          \"vehicle\":           {\n            \"$class\":          \"org.digitalcmr.Vehicle\",\n            \"vin\":             \"736182CHD28172\",\n            \"manufacturer\":    \"Mercedes\",\n            \"model\":           \"SLK\",\n            \"type\":            \"Station\",\n            \"ecmrs\":           [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\":     \"I827YE\"\n          },\n          \"description\":       \"vehicle\",\n          \"weight\":            1800,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        }\n      ],\n      \"status\":    \"OPEN\",\n      \"issueDate\": 1502834400000,\n      \"ecmrs\":     [],\n      \"orderRef\":  \"ref\",\n      \"owner\":     \"leaseplan\"\n    }"
 				},
-				"url": {
-					"raw": "{{localhost}}{{clientPort}}/api/v1/TransportOrder/",
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/TransportOrder/",
 					"host": [
 						"{{localhost}}{{clientPort}}"
 					],
@@ -1455,14 +1686,13 @@
 						"TransportOrder",
 						""
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "Recipient - GET ECMR",
-			"event": [
+			"name":     "Recipient - GET ECMR",
+			"event":    [
 				{
 					"listen": "test",
 					"script": {
@@ -1478,20 +1708,20 @@
 					}
 				}
 			],
-			"request": {
+			"request":  {
 				"method": "GET",
 				"header": [
 					{
-						"key": "x-access-token",
+						"key":   "x-access-token",
 						"value": "{{recipientToken}}"
 					}
 				],
-				"body": {
+				"body":   {
 					"mode": "raw",
-					"raw": ""
+					"raw":  ""
 				},
-				"url": {
-					"raw": "{{localhost}}{{clientPort}}/api/v1/ECMR/",
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/ECMR/",
 					"host": [
 						"{{localhost}}{{clientPort}}"
 					],
@@ -1506,8 +1736,8 @@
 			"response": []
 		},
 		{
-			"name": "Recipient - GET ECMR by ID",
-			"event": [
+			"name":     "Recipient - GET ECMR by ID",
+			"event":    [
 				{
 					"listen": "test",
 					"script": {
@@ -1524,20 +1754,20 @@
 					}
 				}
 			],
-			"request": {
+			"request":  {
 				"method": "GET",
 				"header": [
 					{
-						"key": "x-access-token",
+						"key":   "x-access-token",
 						"value": "{{recipientToken}}"
 					}
 				],
-				"body": {
+				"body":   {
 					"mode": "raw",
-					"raw": ""
+					"raw":  ""
 				},
-				"url": {
-					"raw": "{{localhost}}{{clientPort}}/api/v1/ECMR/ecmrID/A1234567890",
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/ECMR/ecmrID/A1234567890",
 					"host": [
 						"{{localhost}}{{clientPort}}"
 					],
@@ -1553,8 +1783,53 @@
 			"response": []
 		},
 		{
-			"name": "Recipient - Get all Vehicles",
-			"event": [
+			"name":     "Recipient - Cannot GET TransportOrder",
+			"event":    [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"if (jsonData === 200) {",
+							"    tests[\"is not able to get Transport Order\"] = (jsonData === 200);",
+							"}"
+						]
+					}
+				}
+			],
+			"request":  {
+				"method": "GET",
+				"header": [
+					{
+						"key":   "x-access-token",
+						"value": "{{recipientToken}}"
+					}
+				],
+				"body":   {
+					"mode": "raw",
+					"raw":  ""
+				},
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/transportOrder/",
+					"host": [
+						"{{localhost}}{{clientPort}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"transportOrder",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name":     "Recipient - Get all Vehicles",
+			"event":    [
 				{
 					"listen": "test",
 					"script": {
@@ -1571,24 +1846,24 @@
 					}
 				}
 			],
-			"request": {
+			"request":  {
 				"method": "GET",
 				"header": [
 					{
-						"key": "Content-Type",
+						"key":   "Content-Type",
 						"value": "application/json"
 					},
 					{
-						"key": "x-access-token",
+						"key":   "x-access-token",
 						"value": "{{recipientToken}}"
 					}
 				],
-				"body": {
+				"body":   {
 					"mode": "raw",
-					"raw": ""
+					"raw":  ""
 				},
-				"url": {
-					"raw": "{{localhost}}{{clientPort}}/api/v1/vehicle/",
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/vehicle/",
 					"host": [
 						"{{localhost}}{{clientPort}}"
 					],
@@ -1603,8 +1878,8 @@
 			"response": []
 		},
 		{
-			"name": "Recipient - Get Vehicle by VIN",
-			"event": [
+			"name":     "Recipient - Get Vehicle by VIN",
+			"event":    [
 				{
 					"listen": "test",
 					"script": {
@@ -1620,24 +1895,24 @@
 					}
 				}
 			],
-			"request": {
+			"request":  {
 				"method": "GET",
 				"header": [
 					{
-						"key": "Content-Type",
+						"key":   "Content-Type",
 						"value": "application/json"
 					},
 					{
-						"key": "x-access-token",
+						"key":   "x-access-token",
 						"value": "{{recipientToken}}"
 					}
 				],
-				"body": {
+				"body":   {
 					"mode": "raw",
-					"raw": ""
+					"raw":  ""
 				},
-				"url": {
-					"raw": "{{localhost}}{{clientPort}}/api/v1/vehicle/vin/{{vinNumber}}",
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/vehicle/vin/{{vinNumber}}",
 					"host": [
 						"{{localhost}}{{clientPort}}"
 					],
@@ -1653,8 +1928,8 @@
 			"response": []
 		},
 		{
-			"name": "Recipient - Update ECMR status to confirmed_delivered",
-			"event": [
+			"name":     "Recipient - Update ECMR status to confirmed_delivered",
+			"event":    [
 				{
 					"listen": "test",
 					"script": {
@@ -1665,24 +1940,24 @@
 					}
 				}
 			],
-			"request": {
+			"request":  {
 				"method": "PUT",
 				"header": [
 					{
-						"key": "Content-Type",
+						"key":   "Content-Type",
 						"value": "application/json"
 					},
 					{
-						"key": "x-access-token",
+						"key":   "x-access-token",
 						"value": "{{recipientToken}}"
 					}
 				],
-				"body": {
+				"body":   {
 					"mode": "raw",
-					"raw": "{\n      \"ecmrID\": \"BUUEW23727327\",\n      \"status\": \"CONFIRMED_DELIVERED\",\n      \"agreementTerms\" : \"agreement terms\",\n      \"agreementTermsSec\": \"sec agreement terms\",\n      \"legalOwnerRef\" : \"leaseplan\",\n      \"carrierRef\": \"koopman\",\n      \"recipientRef\": \"SDADHGA21312312\",\n      \"orderID\": \"ASDASDA123123\",\n      \"creation\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Assen\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"date\": 1502402400000\n      },\n      \"loading\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Amsterdam Zuid\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"actualDate\": 1502402400000\n      },\n      \"delivery\": {\n        \"address\": {\n          \"name\": \"Rob Carman\",\n          \"street\": \"autostraat\",\n          \"houseNumber\": \"12\",\n          \"city\": \"Rotterdam\",\n          \"zipCode\": \"9442KO\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 51.4443,\n          \"longitude\": 60.3323\n        },\n        \"actualDate\": 1502488800000\n      },\n      \"owner\": \"leaseplan\",\n      \"source\": \"amsterdamcompound\",\n      \"transporter\": \"harry@koopman.org\",\n      \"carrier\": \"koopman\",\n      \"recipientOrg\": \"cardealer\",\n      \"recipient\": \"rob@cardealer.org\",\n      \"issueDate\": 0,\n      \"issuedBy\": \"koopman\",\n      \"carrierComments\": \"No comments\",\n      \"documents\": [\n        \"doc1\"\n      ],\n      \"goods\": [\n        {\n          \"vehicle\": {\n            \"vin\": \"183726339N\",\n            \"manufacturer\": \"Audi\",\n            \"model\": \"A1\",\n            \"type\": \"sportback\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"AV198RX\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1500,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        },\n        {\n          \"vehicle\": {\n            \"vin\": \"736182CHD28172\",\n            \"manufacturer\": \"Mercedes\",\n            \"model\": \"SLK\",\n            \"type\": \"Station\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"I827YE\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1800,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        }\n      ],\n      \"legalOwnerInstructions\": \"string\",\n      \"paymentInstructions\": \"string\",\n      \"payOnDelivery\": \"string\",\n      \"compoundSignature\": {\n      \t\"certificate\": \"willem@amsterdamcompound.org\",\n      \t\"timestamp\": 0\n      },\n\t  \"carrierLoadingSignature\": {\n      \t\"certificate\": \"harry@koopman.org\",\n      \t\"timestamp\": 0\n      },\n\t  \"carrierDeliverySignature\": {\n      \t\"certificate\": \"harry@koopman.org\",\n      \t\"timestamp\": 0\n      },\n\t  \"recipientSignature\": {\n      \t\"certificate\": \"rob@cardealer.org\",\n      \t\"timestamp\": 0\n      }\n    }"
+					"raw":  "{\n      \"ecmrID\": \"BUUEW23727327\",\n      \"status\": \"CONFIRMED_DELIVERED\",\n      \"agreementTerms\" : \"agreement terms\",\n      \"agreementTermsSec\": \"sec agreement terms\",\n      \"legalOwnerRef\" : \"leaseplan\",\n      \"carrierRef\": \"koopman\",\n      \"recipientRef\": \"SDADHGA21312312\",\n      \"orderID\": \"ASDASDA123123\",\n      \"creation\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Assen\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"date\": 1502402400000\n      },\n      \"loading\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Amsterdam Zuid\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"actualDate\": 1502402400000\n      },\n      \"delivery\": {\n        \"address\": {\n          \"name\": \"Rob Carman\",\n          \"street\": \"autostraat\",\n          \"houseNumber\": \"12\",\n          \"city\": \"Rotterdam\",\n          \"zipCode\": \"9442KO\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 51.4443,\n          \"longitude\": 60.3323\n        },\n        \"actualDate\": 1502488800000\n      },\n      \"owner\": \"leaseplan\",\n      \"source\": \"amsterdamcompound\",\n      \"transporter\": \"harry@koopman.org\",\n      \"carrier\": \"koopman\",\n      \"recipientOrg\": \"cardealer\",\n      \"recipient\": \"rob@cardealer.org\",\n      \"issueDate\": 0,\n      \"issuedBy\": \"koopman\",\n      \"carrierComments\": \"No comments\",\n      \"documents\": [\n        \"doc1\"\n      ],\n      \"goods\": [\n        {\n          \"vehicle\": {\n            \"vin\": \"183726339N\",\n            \"manufacturer\": \"Audi\",\n            \"model\": \"A1\",\n            \"type\": \"sportback\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"AV198RX\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1500,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        },\n        {\n          \"vehicle\": {\n            \"vin\": \"736182CHD28172\",\n            \"manufacturer\": \"Mercedes\",\n            \"model\": \"SLK\",\n            \"type\": \"Station\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"I827YE\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1800,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        }\n      ],\n      \"legalOwnerInstructions\": \"string\",\n      \"paymentInstructions\": \"string\",\n      \"payOnDelivery\": \"string\",\n      \"compoundSignature\": {\n      \t\"certificate\": \"willem@amsterdamcompound.org\",\n      \t\"timestamp\": 0\n      },\n\t  \"carrierLoadingSignature\": {\n      \t\"certificate\": \"harry@koopman.org\",\n      \t\"timestamp\": 0\n      },\n\t  \"carrierDeliverySignature\": {\n      \t\"certificate\": \"harry@koopman.org\",\n      \t\"timestamp\": 0\n      },\n\t  \"recipientSignature\": {\n      \t\"certificate\": \"rob@cardealer.org\",\n      \t\"timestamp\": 0\n      }\n    }"
 				},
-				"url": {
-					"raw": "{{localhost}}{{clientPort}}/api/v1/ECMR/",
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/ECMR/",
 					"host": [
 						"{{localhost}}{{clientPort}}"
 					],
@@ -1697,25 +1972,25 @@
 			"response": []
 		},
 		{
-			"name": "GET Compound",
-			"request": {
+			"name":     "GET Compound",
+			"request":  {
 				"method": "GET",
 				"header": [
 					{
-						"key": "Content-Type",
+						"key":   "Content-Type",
 						"value": "application/json"
 					},
 					{
-						"key": "x-access-token",
+						"key":   "x-access-token",
 						"value": "{{legalOwnerToken}}"
 					}
 				],
-				"body": {
+				"body":   {
 					"mode": "raw",
-					"raw": ""
+					"raw":  ""
 				},
-				"url": {
-					"raw": "{{localhost}}{{clientPort}}/api/v1/organization/compound/",
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/organization/compound/",
 					"host": [
 						"{{localhost}}{{clientPort}}"
 					],
@@ -1731,8 +2006,8 @@
 			"response": []
 		},
 		{
-			"name": "GET Legal Owner",
-			"event": [
+			"name":     "GET Legal Owner",
+			"event":    [
 				{
 					"listen": "test",
 					"script": {
@@ -1743,24 +2018,24 @@
 					}
 				}
 			],
-			"request": {
+			"request":  {
 				"method": "GET",
 				"header": [
 					{
-						"key": "Content-Type",
+						"key":   "Content-Type",
 						"value": "application/json"
 					},
 					{
-						"key": "x-access-token",
+						"key":   "x-access-token",
 						"value": "{{legalOwnerToken}}"
 					}
 				],
-				"body": {
+				"body":   {
 					"mode": "raw",
-					"raw": ""
+					"raw":  ""
 				},
-				"url": {
-					"raw": "{{localhost}}{{clientPort}}/api/v1/participant/legalowner/admin/",
+				"url":    {
+					"raw":  "{{localhost}}{{clientPort}}/api/v1/participant/legalowner/admin/",
 					"host": [
 						"{{localhost}}{{clientPort}}"
 					],
