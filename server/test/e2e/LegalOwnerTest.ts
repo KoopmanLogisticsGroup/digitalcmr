@@ -116,7 +116,7 @@ const buildECMR = (ecmrID: string): Ecmr => {
     legalOwnerInstructions: 'string',
     paymentInstructions:    'string',
     payOnDelivery:          'string'
-  }
+  };
 
 };
 
@@ -192,12 +192,10 @@ const buildTransportOrder = (): TransportOrder => {
     ecmrs:     [],
     orderRef:  'ref',
     owner:     'leaseplan'
-  }
+  };
 };
 
-
 describe('An legal owner admin can', () => {
-
   it('login as a legal owner admin', (done) => {
     const loginParams = {
       'username': 'lapo@leaseplan.org',
@@ -304,7 +302,7 @@ describe('An legal owner admin can', () => {
         }
         res.body.length.should.be.greaterThan(0, 'No ECMRs found');
         done(err);
-      })
+      });
   });
 
   it('not read ECMRs when is org is not the legal owner', (done) => {
@@ -367,6 +365,4 @@ describe('An legal owner admin can', () => {
 //     });
 // });
 
-})
-;
-
+});
