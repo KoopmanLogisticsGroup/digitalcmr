@@ -8,7 +8,7 @@ query getTransportOrderById {
   description: "Get Transport Orders (user has permission to)"
   statement:
       SELECT org.digitalcmr.TransportOrder
-          WHERE (orderID == _$id)
+          WHERE (orderID == _$orderID)
 }
 
 query getTransportOrdersByStatus {
@@ -28,7 +28,7 @@ query getEcmrById {
   description: "Get ECMR by ID"
   statement:
       SELECT org.digitalcmr.ECMR
-          WHERE (ecmrID == _$id)
+          WHERE (ecmrID == _$ecmrID)
 }
 
 query getEcmrsByStatus {

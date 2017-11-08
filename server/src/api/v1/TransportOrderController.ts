@@ -35,7 +35,7 @@ export class TransportOrderController {
   public async getTransportOrderByOrderID(@Param('orderID') orderID: string, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getTransportOrderById', {id: orderID});
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getTransportOrderById', {orderID: orderID});
   }
 
   @Get('/status/:orderStatus')
