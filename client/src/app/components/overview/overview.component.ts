@@ -20,6 +20,7 @@ export class OverviewComponent implements OnInit {
   public filterEcmr: number;
   private ecmrs: Ecmr[];
   private transportOrders: TransportOrder[];
+  private transportOrderFilter: TransportOrder[];
   public ecmrsFiltered: Ecmr[];
   public EcmrStatus = {
     Created:            'CREATED',
@@ -38,6 +39,7 @@ export class OverviewComponent implements OnInit {
 
   public viewStatus = {
     Open:       'OPEN',
+    New:        'NEW',
     InProgress: 'IN_PROGRESS',
     Completed:  'COMPLETED'
   };
@@ -59,22 +61,18 @@ export class OverviewComponent implements OnInit {
 
   public ngOnInit(): void {
     this.nav.show();
-    if (this.getUserRole() !== this.User.LegalOwnerAdmin) {
-      this.ecmrService.getAllEcmrs().subscribe(response => {
-        this.ecmrs         = response instanceof Array ? response : [];
-        this.ecmrsFiltered = this.ecmrs.filter(ecmr => ecmr.status.toUpperCase() === this.EcmrStatus.Created);
-        this.firstView();
-      });
-    } else {
       this.transportOrderService.getAllTransportOrders().subscribe(transportOrders => {
         if (transportOrders instanceof Array === true) {
-          this.transportOrders = transportOrders instanceof Array ? transportOrders : [];
+          this.transportOrders      = transportOrders instanceof Array ? transportOrders : [];
+          this.transportOrderFilter = this.transportOrders.filter(transportOrder => transportOrder.status.toUpperCase() === 'NEW');
+          this.firstView();
         } else {
           this.transportOrders = [];
-          this.transportOrders.push(transportOrders)
+          this.transportOrders.push(transportOrders);
+          this.transportOrderFilter = this.transportOrders.filter(transportOrder => transportOrder.status.toUpperCase() === 'NEW');
+          this.firstView();
         }
       });
-    }
   }
 
   private firstView(): void {
@@ -89,11 +87,10 @@ export class OverviewComponent implements OnInit {
         }
       });
     } else if (this.getUserRole() === this.User.LegalOwnerAdmin) {
-      this.currentView   = this.viewStatus.Completed;
-      this.ecmrsFiltered = this.ecmrs.filter(ecmr => {
-        if (this.currentView === this.viewStatus.Completed && (ecmr.status === this.EcmrStatus.Delivered ||
-            ecmr.status === this.EcmrStatus.ConfirmedDelivered)) {
-          return ecmr;
+      this.currentView          = this.viewStatus.New;
+      this.transportOrderFilter = this.transportOrders.filter(transportOrder => {
+        if (this.currentView === this.viewStatus.New && transportOrder.status === 'OPEN') {
+          return transportOrder;
         }
       });
     }
@@ -110,6 +107,19 @@ export class OverviewComponent implements OnInit {
       } else if (this.currentView === this.viewStatus.Completed && (ecmr.status === this.EcmrStatus.Delivered ||
           ecmr.status === this.EcmrStatus.ConfirmedDelivered)) {
         return ecmr;
+      }
+    });
+  }
+
+  public setTransportOrderView(view: string): void {
+    this.currentView          = view;
+    this.transportOrderFilter = this.transportOrders.filter(transportOrder => {
+      if (this.currentView === this.viewStatus.New && transportOrder.status === 'OPEN') {
+        return transportOrder;
+      } else if (this.currentView === this.viewStatus.InProgress && (transportOrder.status === 'IN_PROGRESS')) {
+        return transportOrder;
+      } else if (this.currentView === this.viewStatus.Completed && (transportOrder.status === 'COMPLETED')) {
+        return transportOrder;
       }
     });
   }
@@ -146,15 +156,15 @@ export class OverviewComponent implements OnInit {
 
   public returnStatus(ecmr: any): string {
     if (ecmr && ecmr.status === this.EcmrStatus.Created) {
-      return 'open-status';
+      return 'open_status';
     } else if (ecmr && ecmr.status === this.EcmrStatus.Loaded) {
-      return 'awaiting-status';
+      return 'awaiting_status';
     } else if (ecmr && ecmr.status === this.EcmrStatus.InTransit) {
-      return 'transit-status';
+      return 'transit_status';
     } else if (ecmr && ecmr.status === this.EcmrStatus.Delivered) {
-      return 'completed-status';
+      return 'completed_status';
     } else if (ecmr && ecmr.status === this.EcmrStatus.ConfirmedDelivered) {
-      return 'confirmed-status';
+      return 'confirmed_status';
     }
   }
 }

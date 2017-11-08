@@ -24,6 +24,7 @@ import {NavbarService} from './services/navbar.service';
 import {TransportOrderService} from './services/transportorder.service';
 import {TransportorderDetailComponent} from './components/transportorder-detail/transportorder-detail.component';
 import {TransportorderGoodsComponent} from './components/transportorder-detail/transportorder-goods/transportorder-goods.component';
+import {EcmrOverviewComponent} from './components/overview/ecmr-overview/ecmr-overview.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import {TransportorderGoodsComponent} from './components/transportorder-detail/t
     SignOffModalComponent,
     FilterByPipe,
     TransportorderDetailComponent,
-    TransportorderGoodsComponent
+    TransportorderGoodsComponent,
+    EcmrOverviewComponent
   ],
   imports:      [
     BrowserModule,

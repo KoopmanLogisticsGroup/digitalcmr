@@ -52,7 +52,7 @@
               </thead>
             </div>
             <tbody>
-            <tr *ngFor="let ecmr of ecmrsFiltered | filterBy: searchBarData" class="table-row">
+            <tr *ngFor="let ecmr of ecmrsFiltered | filterBy: searchBarData" class="table_row">
               <td></td>
               <td>{{ecmr?.creation?.date | date:"dd-MM-yyyy"}}</td>
               <td>{{ecmr?.ecmrID}}</td>
@@ -96,6 +96,14 @@
   </div>
   <ng-template #transportOrderOverview>
     <div class="table_title">Transport Orders</div>
+    <div class="ui pointing secondary menu">
+      <a class="item" data-tab="first" (click)="setTransportOrderView(viewStatus.New)"
+         [ngClass]="{'active' : currentView === viewStatus.New ? true : false}">NEW</a>
+      <a class="item" data-tab="second" (click)="setTransportOrderView(viewStatus.InProgress)"
+         [ngClass]="{'active' : currentView === viewStatus.InProgress ? true : false}">IN PROGRESS</a>
+      <a class="item" data-tab="third" (click)="setTransportOrderView(viewStatus.Completed)"
+         [ngClass]="{'active' : currentView === viewStatus.Completed ? true : false}">COMPLETED</a>
+    </div>
     <div class="ui active tab grid" data-tab="first">
       <div class="row">
         <table class="ui unstackable table spacing_table">
@@ -110,7 +118,7 @@
           <th></th>
           </thead>
           <tbody>
-          <tr *ngFor="let transportOrder of transportOrders" class="table_row">
+          <tr *ngFor="let transportOrder of transportOrderFilter" class="table_row">
             <td></td>
             <td>{{transportOrder?.orderID}}</td>
             <td>{{transportOrder?.issueDate | date:"dd-MM-yyyy"}}</td>

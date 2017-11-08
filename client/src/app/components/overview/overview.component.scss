@@ -3,6 +3,7 @@
   th {
     text-align:    left;
     border-bottom: none;
+    background:    transparent;
   }
   th:first-child {
     width: 20px;
@@ -69,14 +70,14 @@
           height: 1.2vw;
         }
       }
-      .open-status {
+      .open_status {
         background-color: rgba(41, 135, 205, 0.2);
         color:            #2987cd;
         border-radius:    4px;
         padding:          6px;
         margin-left:      -10%;
       }
-      .awaiting-status {
+      .awaiting_status {
         width:            120px;
         height:           28px;
         border-radius:    4px;
@@ -86,21 +87,21 @@
         word-wrap:        break-word;
         margin-left:      -30%;
       }
-      .transit-status {
+      .transit_status {
         background-color: rgba(124, 93, 192, 0.2);
         color:            #7c5dc0;
         border-radius:    4px;
         padding:          6px;
         margin-left:      -10%;
       }
-      .completed-status {
+      .completed_status {
         background-color: rgba(38, 161, 167, 0.2);
         color:            #26a1a7;
         border-radius:    4px;
         padding:          6px;
         margin-left:      -10%;
       }
-      .confirmed-status {
+      .confirmed_status {
         background-color: rgba(45, 184, 75, 0.2);
         color:            #2db84b;
         border-radius:    4px;
@@ -110,7 +111,7 @@
       .view_more {
         width:         120%;
         height:        120%;
-        content: url("../../../assets/icons/view_more_button.svg");
+        content:       url("../../../assets/icons/view_more_button.svg");
         padding-right: 10%;
         margin-left:   -15%;
       }
@@ -142,7 +143,7 @@
   .table_header {
     font-size:      1vw;
     line-height:    1.2vw;
-    vertical-align: bottom;
+    vertical-align: top;
     text-align:     left;
   }
   .table_row {
@@ -161,7 +162,7 @@
   margin-bottom: 3%;
   .close_results {
     float:      right;
-    content: url("../../../assets/icons/close_results.svg");
+    content:    url("../../../assets/icons/close_results.svg");
     cursor:     pointer;
     margin-top: 2%;
   }
@@ -205,7 +206,7 @@
   .no_results {
     margin-left: 50%;
     transform:   translateX(-50%);
-    content: url("../../../assets/img/no_results_image.svg");
+    content:     url("../../../assets/img/no_results_image.svg");
   }
   .no_results_text {
     text-align: center;

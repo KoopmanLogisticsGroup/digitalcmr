@@ -25,10 +25,4 @@ export class TransportorderGoodsComponent implements OnInit {
         });
       });
   }
-
-  public convertToEcmr() {
-    // this.transportOrderService.generateECMR(this.transportOrder);
-    // todo add modal
-    console.log('Nothing happens, yet.')
-  }
 }
