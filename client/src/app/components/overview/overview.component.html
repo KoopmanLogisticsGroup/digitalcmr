@@ -1,7 +1,15 @@
 <div class="ui container">
   <app-ecmr-overview *ngIf="ecmrOverview"></app-ecmr-overview>
   <app-transportorder-overview *ngIf="transportOrderOverview"></app-transportorder-overview>
-  <div class="ui button right floated" (click)="changeToECMR()" *ngIf="getUserRole() === User.LegalOwnerAdmin">Change to
-    ECMR
+  <div *ngIf="getUserRole() === User.LegalOwnerAdmin && transportOrderOverview; else showOrderView">
+    <div class="ui button right floated" (click)="changeToECMR()" *ngIf="getUserRole() === User.LegalOwnerAdmin">
+      ECMR VIEW
+    </div>
   </div>
+  <ng-template #showOrderView>
+    <div class="ui button right floated" (click)="changeToOrder()" *ngIf="getUserRole() === User.LegalOwnerAdmin">
+      Transport Order VIEW
+    </div>
+  </ng-template>
+
 </div>

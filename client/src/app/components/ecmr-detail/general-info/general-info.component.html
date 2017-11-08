@@ -11,7 +11,7 @@
 <img class="progress_bar"
      *ngIf="ecmr?.status === EcmrStatus.Delivered || ecmr?.status === EcmrStatus.ConfirmedDelivered"
      src="../../../../assets/img/progress-indicator-04.svg"
-     [ngClass]="selectImage()"/>
+     [ngClass]="{'selectedImg1' : selectedImage[0] || getUserRole() === User.LegalOwnerAdmin, 'selectedImg2' : selectedImage[1], 'selectedImg3' : selectedImage[2], 'selectedImg4' : selectedImage[3]}"/>
 <div class="row titles">GENERAL INFORMATION</div>
 <div class="ui four column padded doubling unstackable grid general_info">
   <div class="column" [ngClass]="{'completed': ecmr?.status === EcmrStatus.Delivered || ecmr?.status === EcmrStatus.ConfirmedDelivered, 'active': selectedColumns[0],

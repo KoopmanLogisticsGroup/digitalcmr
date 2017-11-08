@@ -35,6 +35,11 @@ export class OverviewComponent implements OnInit {
     this.transportOrderOverview = false;
   }
 
+  public changeToOrder() {
+    this.ecmrOverview           = false;
+    this.transportOrderOverview = true;
+  }
+
   public getUserRole(): string {
     return this.authenticationService.isAuthenticated() ? JSON.parse(localStorage.getItem('currentUser')).user.role : '';
   }

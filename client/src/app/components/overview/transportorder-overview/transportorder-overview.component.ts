@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {NavbarService} from '../../../services/navbar.service';
-import {AuthenticationService} from '../../../services/authentication.service';
 import {SearchService} from '../../../services/search.service';
 import {TransportOrderService} from '../../../services/transportorder.service';
 import {TransportOrder} from '../../../interfaces/transportOrder.interface';
