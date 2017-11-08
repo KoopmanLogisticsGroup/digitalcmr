@@ -1,11 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {EcmrService} from '../../services/ecmr.service';
+import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../services/authentication.service';
-import {SearchService} from '../../services/search.service';
-import {NavbarService} from '../../services/navbar.service';
-import {Ecmr} from '../../interfaces/ecmr.interface';
-import {TransportOrder} from '../../interfaces/transportOrder.interface';
-import {TransportOrderService} from '../../services/transportorder.service';
 
 @Component({
   selector:    'app-overview',
@@ -13,22 +7,8 @@ import {TransportOrderService} from '../../services/transportorder.service';
   styleUrls:   ['./overview.component.scss'],
 })
 export class OverviewComponent implements OnInit {
-  @Input() public ecmr: Ecmr;
-
-  public currentView: string;
-  public searchBarData: string;
-  public filterEcmr: number;
-  private ecmrs: Ecmr[];
-  private transportOrders: TransportOrder[];
-  private transportOrderFilter: TransportOrder[];
-  public ecmrsFiltered: Ecmr[];
-  public EcmrStatus = {
-    Created:            'CREATED',
-    Loaded:             'LOADED',
-    InTransit:          'IN_TRANSIT',
-    Delivered:          'DELIVERED',
-    ConfirmedDelivered: 'CONFIRMED_DELIVERED'
-  };
+  public ecmrOverview           = false;
+  public transportOrderOverview = false;
 
   public User = {
     CompoundAdmin:   'CompoundAdmin',
@@ -37,134 +17,25 @@ export class OverviewComponent implements OnInit {
     LegalOwnerAdmin: 'LegalOwnerAdmin'
   };
 
-  public viewStatus = {
-    Open:       'OPEN',
-    New:        'NEW',
-    InProgress: 'IN_PROGRESS',
-    Completed:  'COMPLETED'
-  };
-
-  public constructor(private ecmrService: EcmrService,
-                     private transportOrderService: TransportOrderService,
-                     private searchService: SearchService,
-                     private authenticationService: AuthenticationService,
-                     public nav: NavbarService) {
-    this.searchService.searchData$.subscribe((data: string) => {
-      this.searchBarData = data;
-    });
-    this.searchService.filterEcmr$.subscribe((data: number) => {
-      this.filterEcmr = data;
-    });
-    this.currentView   = this.viewStatus.Open;
-    this.searchBarData = '';
+  public constructor(private authenticationService: AuthenticationService) {
   }
 
   public ngOnInit(): void {
-    this.nav.show();
-      this.transportOrderService.getAllTransportOrders().subscribe(transportOrders => {
-        if (transportOrders instanceof Array === true) {
-          this.transportOrders      = transportOrders instanceof Array ? transportOrders : [];
-          this.transportOrderFilter = this.transportOrders.filter(transportOrder => transportOrder.status.toUpperCase() === 'NEW');
-          this.firstView();
-        } else {
-          this.transportOrders = [];
-          this.transportOrders.push(transportOrders);
-          this.transportOrderFilter = this.transportOrders.filter(transportOrder => transportOrder.status.toUpperCase() === 'NEW');
-          this.firstView();
-        }
-      });
-  }
-
-  private firstView(): void {
-    if (this.getUserRole() === 'amsterdamcompound') {
-      this.currentView = this.viewStatus.Open;
-    } else if (this.getUserRole() === this.User.CarrierMember || this.getUserRole() === this.User.RecipientMember) {
-      this.currentView   = this.viewStatus.InProgress;
-      this.ecmrsFiltered = this.ecmrs.filter(ecmr => {
-        if (this.currentView === this.viewStatus.InProgress && (ecmr.status === this.EcmrStatus.Loaded
-            || ecmr.status === this.EcmrStatus.InTransit)) {
-          return ecmr;
-        }
-      });
-    } else if (this.getUserRole() === this.User.LegalOwnerAdmin) {
-      this.currentView          = this.viewStatus.New;
-      this.transportOrderFilter = this.transportOrders.filter(transportOrder => {
-        if (this.currentView === this.viewStatus.New && transportOrder.status === 'OPEN') {
-          return transportOrder;
-        }
-      });
+    if (this.getUserRole() === this.User.LegalOwnerAdmin) {
+      this.ecmrOverview           = false;
+      this.transportOrderOverview = true;
+    } else {
+      this.ecmrOverview           = true;
+      this.transportOrderOverview = false;
     }
   }
 
-  public setCurrentView(view: string): void {
-    this.currentView   = view;
-    this.ecmrsFiltered = this.ecmrs.filter(ecmr => {
-      if (this.currentView === this.viewStatus.Open && ecmr.status === this.EcmrStatus.Created) {
-        return ecmr;
-      } else if (this.currentView === this.viewStatus.InProgress && (ecmr.status === this.EcmrStatus.Loaded ||
-          ecmr.status === this.EcmrStatus.InTransit)) {
-        return ecmr;
-      } else if (this.currentView === this.viewStatus.Completed && (ecmr.status === this.EcmrStatus.Delivered ||
-          ecmr.status === this.EcmrStatus.ConfirmedDelivered)) {
-        return ecmr;
-      }
-    });
-  }
-
-  public setTransportOrderView(view: string): void {
-    this.currentView          = view;
-    this.transportOrderFilter = this.transportOrders.filter(transportOrder => {
-      if (this.currentView === this.viewStatus.New && transportOrder.status === 'OPEN') {
-        return transportOrder;
-      } else if (this.currentView === this.viewStatus.InProgress && (transportOrder.status === 'IN_PROGRESS')) {
-        return transportOrder;
-      } else if (this.currentView === this.viewStatus.Completed && (transportOrder.status === 'COMPLETED')) {
-        return transportOrder;
-      }
-    });
+  public changeToECMR() {
+    this.ecmrOverview           = true;
+    this.transportOrderOverview = false;
   }
 
   public getUserRole(): string {
     return this.authenticationService.isAuthenticated() ? JSON.parse(localStorage.getItem('currentUser')).user.role : '';
-  }
-
-  public hasComments(ecmr: Ecmr): boolean {
-    return ecmr && ecmr.goods.filter(good => {
-      if ((good.compoundRemark && good.compoundRemark.comments) ||
-        (good.carrierLoadingRemark && good.carrierLoadingRemark.comments) ||
-        (good.carrierDeliveryRemark && good.carrierDeliveryRemark.comments) ||
-        (good.recipientRemark && good.recipientRemark.comments)) {
-        return good;
-      }
-    }).length > 0;
-  }
-
-  public isDamaged(ecmr: Ecmr): boolean {
-    return ecmr && ecmr.goods.filter(good => {
-      if ((good.compoundRemark && good.compoundRemark.isDamaged) ||
-        (good.carrierLoadingRemark && good.carrierLoadingRemark.isDamaged) ||
-        (good.carrierDeliveryRemark && good.carrierDeliveryRemark.isDamaged) ||
-        (good.recipientRemark && good.recipientRemark.isDamaged)) {
-        return good;
-      }
-    }).length > 0;
-  }
-
-  public clearSearchBar(): void {
-    this.searchBarData = '';
-  }
-
-  public returnStatus(ecmr: any): string {
-    if (ecmr && ecmr.status === this.EcmrStatus.Created) {
-      return 'open_status';
-    } else if (ecmr && ecmr.status === this.EcmrStatus.Loaded) {
-      return 'awaiting_status';
-    } else if (ecmr && ecmr.status === this.EcmrStatus.InTransit) {
-      return 'transit_status';
-    } else if (ecmr && ecmr.status === this.EcmrStatus.Delivered) {
-      return 'completed_status';
-    } else if (ecmr && ecmr.status === this.EcmrStatus.ConfirmedDelivered) {
-      return 'confirmed_status';
-    }
   }
 }

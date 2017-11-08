@@ -25,6 +25,7 @@ import {TransportOrderService} from './services/transportorder.service';
 import {TransportorderDetailComponent} from './components/transportorder-detail/transportorder-detail.component';
 import {TransportorderGoodsComponent} from './components/transportorder-detail/transportorder-goods/transportorder-goods.component';
 import {EcmrOverviewComponent} from './components/overview/ecmr-overview/ecmr-overview.component';
+import {TransportorderOverviewComponent} from './components/overview/transportorder-overview/transportorder-overview.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import {EcmrOverviewComponent} from './components/overview/ecmr-overview/ecmr-ov
     FilterByPipe,
     TransportorderDetailComponent,
     TransportorderGoodsComponent,
-    EcmrOverviewComponent
+    EcmrOverviewComponent,
+    TransportorderOverviewComponent
   ],
   imports:      [
     BrowserModule,
