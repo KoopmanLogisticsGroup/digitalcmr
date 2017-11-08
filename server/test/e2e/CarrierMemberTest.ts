@@ -196,7 +196,7 @@ const buildTransportOrder = (): TransportOrder => {
   };
 };
 
-describe('An Carrier member can', () => {
+describe('A Carrier member can', () => {
   it('login as a carrier member', (done) => {
     const loginParams = {
       'username': 'harry@koopman.org',
@@ -220,7 +220,7 @@ describe('An Carrier member can', () => {
       });
   });
 
-  it('get a specific ECMR based on ecmrID', (done) => {
+  it('get a specific ECMR by ecmrID', (done) => {
     server
       .get('/api/v1/ECMR/ecmrID/D1234567890')
       .set('x-access-token', token)
@@ -245,7 +245,7 @@ describe('An Carrier member can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
-          done(err);
+          return done(err);
         }
         done(err);
       });
@@ -281,7 +281,7 @@ describe('An Carrier member can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
-          done(err);
+          return done(err);
         }
         res.body.should.equal(200);
         done(err);
@@ -296,25 +296,9 @@ describe('An Carrier member can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
-          done(err);
+          return done(err);
         }
         res.body.should.equal(200);
-        done(err);
-      });
-  });
-
-  it('can not create a transport order', (done) => {
-    const transportOrder = buildTransportOrder();
-    server
-      .post('/api/v1/transportOrder')
-      .set('x-access-token', token)
-      .send(transportOrder)
-      .expect(500)
-      .end((err: Error) => {
-        if (err) {
-          console.log(err.stack);
-          done(err);
-        }
         done(err);
       });
   });
@@ -328,7 +312,6 @@ describe('An Carrier member can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
-          done(err);
         }
         done(err);
       });
@@ -345,7 +328,7 @@ describe('An Carrier member can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
-          done(err);
+          return done(err);
         }
         done(err);
       });
@@ -364,7 +347,7 @@ describe('An Carrier member can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
-          done(err);
+          return done(err);
         }
         done(err);
       });
@@ -491,6 +474,21 @@ describe('An Carrier member can', () => {
           res.body.status.should.equal('CONFIRMED_DELIVERED');
         } else {
           res.body.should.equal(200);
+        }
+        done(err);
+      });
+  });
+
+  it('can not create a transport order', (done) => {
+    const transportOrder = buildTransportOrder();
+    server
+      .post('/api/v1/transportOrder')
+      .set('x-access-token', token)
+      .send(transportOrder)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
         }
         done(err);
       });

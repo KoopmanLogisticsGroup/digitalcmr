@@ -196,7 +196,7 @@ const ok = (res) => {
   }
 };
 
-describe('An Carrier admin can', () => {
+describe('A Carrier admin can', () => {
   it('login as a carrier admin', (done) => {
     const loginParams = {
       'username': 'goslin@koopman.org',
@@ -220,7 +220,7 @@ describe('An Carrier admin can', () => {
       });
   });
 
-  it('get a specific ECMR', (done) => {
+  it('get a specific ECMR by ecmrID', (done) => {
     server
       .get('/api/v1/ECMR/ecmrID/A1234567890')
       .set('x-access-token', token)
@@ -235,7 +235,7 @@ describe('An Carrier admin can', () => {
       });
   });
 
-  it('read ECMRs where his org is the transporter and status', (done) => {
+  it('read ECMRs where his org is the transporter and status is not created', (done) => {
     server
       .get('/api/v1/ECMR')
       .set('x-access-token', token)
@@ -243,7 +243,7 @@ describe('An Carrier admin can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
-          done(err);
+          return done(err);
         }
         if (res.body instanceof Array) {
           res.body.length.should.be.greaterThan(0, 'No ECMRs were found for carrier org');
@@ -265,7 +265,7 @@ describe('An Carrier admin can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
-          done(err);
+          return done(err);
         }
         res.body.should.equal(200);
         done(err);
@@ -282,23 +282,7 @@ describe('An Carrier admin can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
-          done(err);
-        }
-        done(err);
-      });
-  });
-
-  it('not create a transport order', (done) => {
-    const transportOrder = buildTransportOrder();
-    server
-      .post('/api/v1/transportOrder')
-      .set('x-access-token', token)
-      .send(transportOrder)
-      .expect(500)
-      .end((err: Error) => {
-        if (err) {
-          console.log(err.stack);
-          done(err);
+          return done(err);
         }
         done(err);
       });
@@ -314,7 +298,7 @@ describe('An Carrier admin can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
-          done(err);
+          return done(err);
         }
         done(err);
       });
@@ -330,7 +314,23 @@ describe('An Carrier admin can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
-          done(err);
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
+  it('not create a transport order', (done) => {
+    const transportOrder = buildTransportOrder();
+    server
+      .post('/api/v1/transportOrder')
+      .set('x-access-token', token)
+      .send(transportOrder)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+          return done(err);
         }
         done(err);
       });

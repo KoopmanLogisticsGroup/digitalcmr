@@ -117,8 +117,7 @@ const buildECMR = (ecmrID: string): Ecmr => {
     legalOwnerInstructions: 'string',
     paymentInstructions:    'string',
     payOnDelivery:          'string'
-  }
-
+  };
 };
 
 const buildTransportOrder = (): TransportOrder => {
@@ -193,12 +192,10 @@ const buildTransportOrder = (): TransportOrder => {
     ecmrs:     [],
     orderRef:  'ref',
     owner:     'leaseplan'
-  }
+  };
 };
 
-
 describe('An Recipient member can', () => {
-
   it('login as a recipient member', (done) => {
     const loginParams = {
       'username': 'rob@cardealer.org',
@@ -265,21 +262,6 @@ describe('An Recipient member can', () => {
       });
   });
 
-  it('not create a transport order', (done) => {
-    const transportOrder = buildTransportOrder();
-    server
-      .post('/api/v1/transportOrder')
-      .set('x-access-token', token)
-      .send(transportOrder)
-      .expect(500)
-      .end((err: Error) => {
-        if (err) {
-          console.log(err.stack);
-        }
-        done(err);
-      });
-  });
-
   it('not create an ECMR', (done) => {
     const transportOrder = buildECMR('ecmrRecipient');
     server
@@ -319,6 +301,21 @@ describe('An Recipient member can', () => {
       .put('/api/v1/ECMR')
       .set('x-access-token', token)
       .send(updateECMR)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+        }
+        done(err);
+      });
+  });
+
+  it('not create a transport order', (done) => {
+    const transportOrder = buildTransportOrder();
+    server
+      .post('/api/v1/transportOrder')
+      .set('x-access-token', token)
+      .send(transportOrder)
       .expect(500)
       .end((err: Error) => {
         if (err) {

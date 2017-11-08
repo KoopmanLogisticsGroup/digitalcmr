@@ -195,7 +195,7 @@ const buildTransportOrder = (): TransportOrder => {
   };
 };
 
-describe('An Compound Admin can', () => {
+describe('A Compound Admin can', () => {
   it('login as a compound admin', (done) => {
     const loginParams = {
       'username': 'willem@amsterdamcompound.org',
@@ -219,7 +219,7 @@ describe('An Compound Admin can', () => {
       });
   });
 
-  it('get specific ECMRs', (done) => {
+  it('get specific ECMRs by ecmrID', (done) => {
     server
       .get('/api/v1/ECMR/ecmrID/A1234567890')
       .set('x-access-token', token)
@@ -230,20 +230,6 @@ describe('An Compound Admin can', () => {
           return done(err);
         }
         updateEcmr = res.body;
-        done(err);
-      });
-  });
-  it('not create an transport order', (done) => {
-    const transportOrder = buildTransportOrder();
-    server
-      .post('/api/v1/transportOrder')
-      .set('x-access-token', token)
-      .send(transportOrder)
-      .expect(500)
-      .end((err: Error) => {
-        if (err) {
-          console.log(err.stack);
-        }
         done(err);
       });
   });
@@ -497,6 +483,21 @@ describe('An Compound Admin can', () => {
           done(err);
         }
         res.body.plateNumber.should.equal('AV198RX');
+        done(err);
+      });
+  });
+
+  it('not create a transport order', (done) => {
+    const transportOrder = buildTransportOrder();
+    server
+      .post('/api/v1/transportOrder')
+      .set('x-access-token', token)
+      .send(transportOrder)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+        }
         done(err);
       });
   });
