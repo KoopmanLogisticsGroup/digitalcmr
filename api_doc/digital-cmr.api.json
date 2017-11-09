@@ -1,9 +1,9 @@
 {
   "swagger":             "2.0",
   "info":                {
-    "title":       "Digital ECMR APIs",
-    "description": "APIs for managing the digital ECMR",
-    "version":     "1.0.0"
+    "title":       "Digital CMR APIs",
+    "description": "APIs for managing the digital CMR",
+    "version":     "1.0.1"
   },
   "host":                "169.51.10.201:31001",
   "schemes":             [
@@ -19,7 +19,7 @@
     "application/json"
   ],
   "paths":               {
-    "/login":                                           {
+    "/login":                               {
       "post": {
         "x-swagger-router-controller": "AuthController",
         "operationId":                 "login",
@@ -55,7 +55,164 @@
         }
       }
     },
-    "/ECMR/":                                           {
+    "/transportOrder/":                     {
+      "post": {
+        "x-swagger-router-controller": "TransportOrderController",
+        "operationId":                 "create",
+        "summary":                     "Creates a new Transport Order",
+        "description":                 "Creates a new Transport Order and saves it on the blockchain, if the user has the right permissions.\n",
+        "consumes":                    [
+          "application/json"
+        ],
+        "parameters":                  [
+          {
+            "name":        "x-access-token",
+            "in":          "header",
+            "description": "The authentication token",
+            "required":    true,
+            "type":        "string"
+          },
+          {
+            "name":        "transportOrder",
+            "in":          "body",
+            "description": "The transportOrder object",
+            "required":    true,
+            "schema":      {
+              "$ref": "#/definitions/transportOrder"
+            }
+          }
+        ],
+        "responses":                   {
+          "200":     {
+            "description": "The Transport Order has been created and written into the blockchain\n",
+            "schema":      {
+              "$ref": "#/definitions/transportOrder"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema":      {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get":  {
+        "x-swagger-router-controller": "TransportOrderController",
+        "operationId":                 "getAllTransportOrders",
+        "summary":                     "Returns the complete list of the Transport Orders",
+        "description":                 "Returns the complete list of the Transport Orders current user has the right to read",
+        "parameters":                  [
+          {
+            "name":        "x-access-token",
+            "in":          "header",
+            "description": "The authentication token",
+            "required":    true,
+            "type":        "string"
+          }
+        ],
+        "responses":                   {
+          "200":     {
+            "description": "The list of the Transport Orders is returned\n",
+            "schema":      {
+              "type":  "array",
+              "items": {
+                "$ref": "#/definitions/transportOrder"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema":      {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/transportOrder/orderID/{orderID}":    {
+      "get": {
+        "x-swagger-router-controller": "TransportOrderController",
+        "operationId":                 "getTransportOrderByOrderID",
+        "summary":                     "Returns the Transport Order selected by ID",
+        "description":                 "Returns the Transport Order selected by ID",
+        "parameters":                  [
+          {
+            "name":        "x-access-token",
+            "in":          "header",
+            "description": "The authentication token",
+            "required":    true,
+            "type":        "string"
+          },
+          {
+            "name":        "orderID",
+            "type":        "string",
+            "in":          "path",
+            "description": "The unique orderID of the Transport Order",
+            "required":    "true"
+          }
+        ],
+        "responses":                   {
+          "200":     {
+            "description": "The list contains the Transport Order, or is empty if no Transport Order with the provided orderID exists or if the user does not have permission to read the Transport Order\n",
+            "schema":      {
+              "type":  "array",
+              "items": {
+                "$ref": "#/definitions/transportOrder"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema":      {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/transportOrder/status/{orderStatus}": {
+      "get": {
+        "x-swagger-router-controller": "TransportOrderController",
+        "operationId":                 "getAllTransportOrdersByStatus",
+        "summary":                     "Returns the Transport Order selected by status",
+        "description":                 "Returns the Transport Order selected by status",
+        "parameters":                  [
+          {
+            "name":        "x-access-token",
+            "in":          "header",
+            "description": "The authentication token",
+            "required":    true,
+            "type":        "string"
+          },
+          {
+            "name":        "status",
+            "in":          "path",
+            "type":        "string",
+            "description": "The status of the Transport Order",
+            "required":    "true"
+          }
+        ],
+        "responses":                   {
+          "200":     {
+            "description": "The list contains the Transport Order(s) by status, or is empty if no Transport Order with the provided status exists or if the user does not have permission to read the Transport Order\n",
+            "schema":      {
+              "type":  "array",
+              "items": {
+                "$ref": "#/definitions/transportOrder"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema":      {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/ECMR/":                               {
       "post": {
         "x-swagger-router-controller": "ECMRController",
         "operationId":                 "create",
