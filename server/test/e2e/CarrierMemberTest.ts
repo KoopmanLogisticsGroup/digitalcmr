@@ -220,6 +220,32 @@ describe('A Carrier member can', () => {
       });
   });
 
+  it('get the ECMRs linked to a vin', (done) => {
+    server
+      .get('/api/v1/ECMR/vehicle/vin/183726339N')
+      .set('x-access-token', token)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
+  it('get the ECMRs linked to a lpate number', (done) => {
+    server
+      .get('/api/v1/ECMR/vehicle/plateNumber/AV198RX')
+      .set('x-access-token', token)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
   it('get a specific ECMR by ecmrID', (done) => {
     server
       .get('/api/v1/ECMR/ecmrID/D1234567890')

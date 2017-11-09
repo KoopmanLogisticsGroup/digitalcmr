@@ -1300,10 +1300,10 @@
       "$class":   "org.digitalcmr.TransportOrder",
       "orderID":  "12345567890",
       "loading":  {
-        "actualDate": 1502834400000,
+        "actualDate":   1502834400000,
         "expectedDate": 1502835400000,
-        "address":    {
-          "$class": "org.digitalcmr.Address",
+        "address":      {
+          "$class":      "org.digitalcmr.Address",
           "name":        "loading address",
           "street":      "een straat",
           "houseNumber": "41",
@@ -1315,11 +1315,11 @@
         }
       },
       "delivery": {
-        "$class":  "org.digitalcmr.Delivery",
-        "actualDate": 1502834400000,
+        "$class":       "org.digitalcmr.Delivery",
+        "actualDate":   1502834400000,
         "expectedDate": 1502835400000,
-        "address":    {
-          "$class": "org.digitalcmr.Address",
+        "address":      {
+          "$class":      "org.digitalcmr.Address",
           "name":        "delivery adress",
           "street":      "een straat",
           "houseNumber": "41",
@@ -1330,9 +1330,9 @@
           "latitude":    123
         }
       },
-      "owner":    "notLeaseplan",
-      "source":   "notAmsterdamcompound",
-      "carrier":  "notKoopman",
+      "owner":    "leaseplan",
+      "source":   "amsterdamcompound",
+      "carrier":  "koopman",
       "goods":    [
         {
           "$class":            "org.digitalcmr.Good",
@@ -1377,7 +1377,6 @@
       "issueDate": 1502834400000,
       "ecmrs":     [],
       "orderRef":  "ref"
-
     }
   ]
 }
