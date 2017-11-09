@@ -220,6 +220,32 @@ describe('A Carrier member can', () => {
       });
   });
 
+  it('get the ECMRs linked to a vin', (done) => {
+    server
+      .get('/api/v1/ECMR/vehicle/vin/183726339N')
+      .set('x-access-token', token)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
+  it('get the ECMRs linked to a lpate number', (done) => {
+    server
+      .get('/api/v1/ECMR/vehicle/plateNumber/AV198RX')
+      .set('x-access-token', token)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
   it('get a specific ECMR by ecmrID', (done) => {
     server
       .get('/api/v1/ECMR/ecmrID/D1234567890')
@@ -372,35 +398,35 @@ describe('A Carrier member can', () => {
         done(err);
       });
   });
-  // it('can  submit an update transaction for his org and status from LOADED to IN_TRANSIT', (done) => {
-  //   updateEcmr.status  = 'IN_TRANSIT';
-  //   updateEcmr.carrierLoadingSignature = {'certificate': 'harry@koopman.org', 'timestamp': 0 };
-  //   server
-  //     .put('/api/v1/ECMR')
-  //     .set('x-access-token', token)
-  //     .send(updateEcmr)
-  //     .expect(200)
-  //     .end((err: Error) => {
-  //       if (err) {
-  //         console.log(err.stack);
-  //       }
-  //       done(err);
-  //     });
-  // });
-  //
-  // it('can  submit an update transaction for his org and status from IN_TANSIT to DELIVERED', (done) => {
-  //   updateEcmr.status = 'DELIVERED';
-  //   updateEcmr.carrierDeliverySignature = {'certificate': 'harry@koopman.org', 'timestamp': 0 };
-  //   server
-  //     .put('/api/v1/ECMR')
-  //     .set('x-access-token', token)
-  //     .send(updateEcmr)
-  //     .expect(200)
-  //     .end((err: Error) => {
-  //       if (err) {
-  //         console.log(err.stack);
-  //       }
-  //       done(err);
-  //     });
-  // });
+  it('can  submit an update transaction for his org and status from LOADED to IN_TRANSIT', (done) => {
+    updateEcmr.status                  = 'IN_TRANSIT';
+    updateEcmr.carrierLoadingSignature = {'certificate': 'harry@koopman.org', 'timestamp': 0};
+    server
+      .put('/api/v1/ECMR')
+      .set('x-access-token', token)
+      .send(updateEcmr)
+      .expect(200)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+        }
+        done(err);
+      });
+  });
+
+  it('can  submit an update transaction for his org and status from IN_TANSIT to DELIVERED', (done) => {
+    updateEcmr.status                   = 'DELIVERED';
+    updateEcmr.carrierDeliverySignature = {'certificate': 'harry@koopman.org', 'timestamp': 0};
+    server
+      .put('/api/v1/ECMR')
+      .set('x-access-token', token)
+      .send(updateEcmr)
+      .expect(200)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+        }
+        done(err);
+      });
+  });
 });
