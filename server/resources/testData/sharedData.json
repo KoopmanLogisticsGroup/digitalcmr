@@ -17,7 +17,7 @@
           "city":        "Amsterdam",
           "zipCode":     "9867UG",
           "country":     "Netherlands",
-          "latitude":    52.2443,
+          "latitude":    52.2443,xw
           "longitude":   65.2323
         }
       },
@@ -1297,13 +1297,13 @@
   ],
   "transportOrders": [
     {
-      "$class":   "org.digitalcmr.TransportOrder",
-      "orderID":  "12345567890",
-      "loading":  {
-        "actualDate": 1502834400000,
+      "$class":    "org.digitalcmr.TransportOrder",
+      "orderID":   "12345567890",
+      "loading":   {
+        "actualDate":   1502834400000,
         "expectedDate": 1502835400000,
-        "address":    {
-          "$class": "org.digitalcmr.Address",
+        "address":      {
+          "$class":      "org.digitalcmr.Address",
           "name":        "loading address",
           "street":      "een straat",
           "houseNumber": "41",
@@ -1314,12 +1314,12 @@
           "latitude":    123
         }
       },
-      "delivery": {
-        "$class":  "org.digitalcmr.Delivery",
-        "actualDate": 1502834400000,
+      "delivery":  {
+        "$class":       "org.digitalcmr.Delivery",
+        "actualDate":   1502834400000,
         "expectedDate": 1502835400000,
-        "address":    {
-          "$class": "org.digitalcmr.Address",
+        "address":      {
+          "$class":      "org.digitalcmr.Address",
           "name":        "delivery adress",
           "street":      "een straat",
           "houseNumber": "41",
@@ -1330,10 +1330,10 @@
           "latitude":    123
         }
       },
-      "owner":    "notLeaseplan",
-      "source":   "notAmsterdamcompound",
-      "carrier":  "notKoopman",
-      "goods":    [
+      "owner":     "leaseplan",
+      "source":    "amsterdamcompound",
+      "carrier":   "koopman",
+      "goods":     [
         {
           "$class":            "org.digitalcmr.Good",
           "vehicle":           {
@@ -1377,7 +1377,6 @@
       "issueDate": 1502834400000,
       "ecmrs":     [],
       "orderRef":  "ref"
-
     }
   ]
 }
