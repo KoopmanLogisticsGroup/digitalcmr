@@ -17,7 +17,7 @@
           "city":        "Amsterdam",
           "zipCode":     "9867UG",
           "country":     "Netherlands",
-          "latitude":    52.2443,xw
+          "latitude":    52.2443,
           "longitude":   65.2323
         }
       },
@@ -1297,9 +1297,9 @@
   ],
   "transportOrders": [
     {
-      "$class":    "org.digitalcmr.TransportOrder",
-      "orderID":   "12345567890",
-      "loading":   {
+      "$class":   "org.digitalcmr.TransportOrder",
+      "orderID":  "12345567890",
+      "loading":  {
         "actualDate":   1502834400000,
         "expectedDate": 1502835400000,
         "address":      {
@@ -1314,7 +1314,7 @@
           "latitude":    123
         }
       },
-      "delivery":  {
+      "delivery": {
         "$class":       "org.digitalcmr.Delivery",
         "actualDate":   1502834400000,
         "expectedDate": 1502835400000,
@@ -1330,10 +1330,10 @@
           "latitude":    123
         }
       },
-      "owner":     "leaseplan",
-      "source":    "amsterdamcompound",
-      "carrier":   "koopman",
-      "goods":     [
+      "owner":    "leaseplan",
+      "source":   "amsterdamcompound",
+      "carrier":  "koopman",
+      "goods":    [
         {
           "$class":            "org.digitalcmr.Good",
           "vehicle":           {
