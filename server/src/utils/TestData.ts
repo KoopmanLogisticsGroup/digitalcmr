@@ -159,7 +159,7 @@ export class TestData {
   }
 
   private async addEcmrs(ecmrs: any[]): Promise<any> {
-    return this.transactionHandler.create(TestData.adminIdentity, Config.settings.composer.profile, Config.settings.composer.namespace, ecmrs, new EcmrTransactor(Container.get(BusinessNetworkHandler)));
+    return this.transactionHandler.create(TestData.adminIdentity, Config.settings.composer.profile, Config.settings.composer.namespace, ecmrs, new EcmrTransactor());
   }
 
   private async addTransportOrders(transportOrders: TransportOrder[]): Promise<any> {
