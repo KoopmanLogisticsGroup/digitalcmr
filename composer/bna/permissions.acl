@@ -45,10 +45,11 @@ rule LegalOwnerAdminCanCreateTransactionCreateTransportOrder {
 
 rule LegalOwnerAdminCanSubmitTransactionCreateTransportOrder {
   description: "Allow LegalOwnerAdmin to CREATE a TransportOrder using the CreateTransportOrder transaction"
-  participant: "org.digitalcmr.LegalOwnerAdmin"
+  participant(p): "org.digitalcmr.LegalOwnerAdmin"
   operation: CREATE
-  resource: "org.digitalcmr.TransportOrder"
+  resource(r): "org.digitalcmr.TransportOrder"
   transaction: "org.digitalcmr.CreateTransportOrder"
+  condition: (r.owner.getIdentifier() === p.org.getIdentifier())
   action: ALLOW
 }
 
