@@ -9,7 +9,7 @@ spec:
   restartPolicy: "Always"
   containers:
   - name: couchdb-private
-    image: couchdb
+    image: couchdb:1.7.0
     imagePullPolicy: Always
 
 ---
@@ -23,7 +23,7 @@ spec:
   restartPolicy: "Always"
   containers:
   - name: app-server
-    image: registry.eu-gb.bluemix.net/apps/digitalcmr_server
+    image: registry.eu-gb.bluemix.net/koopman/digitalcmr_server
     imagePullPolicy: Always
     imagePullSecrets:
     - name: bluemix-uk-registry
@@ -47,7 +47,7 @@ spec:
   restartPolicy: "Always"
   containers:
   - name: app-client
-    image: registry.eu-gb.bluemix.net/apps/digitalcmr_client
+    image: registry.eu-gb.bluemix.net/koopman/digitalcmr_client
     imagePullPolicy: Always
     imagePullSecrets:
     - name: bluemix-uk-registry
@@ -64,7 +64,7 @@ spec:
   restartPolicy: "Always"
   containers:
   - name: api-doc
-    image: registry.eu-gb.bluemix.net/apps/digitalcmr_api_doc
+    image: registry.eu-gb.bluemix.net/koopman/digitalcmr_api_doc
     imagePullPolicy: Always
     imagePullSecrets:
     - name: bluemix-uk-registry
