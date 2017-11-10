@@ -5,12 +5,15 @@ First follow this guide to set up a k8s (kubernetes) cluster on Bluemix:
 
 1. [Develop in a cloud sandbox IBM Blockchain Platform](https://ibm-blockchain.github.io/)
 
+Note: The API used in the guide are for US. If you want to set up a cluster in any other location you need to specify the right API address.
+
+e.g. For UK: **api.eu-gb.bluemix.net**
 2. Stop at section: **Simple Install**
 
 ## Deploy the blockchain network
 1. Navigate to the `scripts` sub-directory:
 ```bash
-cd cs-offerings/scripts
+cd cs-offerings/free/scripts
 ```
 2. Run the script to use couchdb as worldstate db for peers:
 ```bash
@@ -41,14 +44,16 @@ cd api_doc
 docker build -t digitalcmr_api_doc .
 ```
 ### Tag and push the images to Bluemix
-1. Tag your images as follows
+1. First set up a private Docker registry on your current organization if you do not have yet.
+[Bluemix Containers - Registry Getting Started](https://console.bluemix.net/containers-kubernetes/home/registryGettingStarted)
+2. Tag your images as follows
 ```bash
 docker tag digitalcmr_client registry.eu-gb.bluemix.net/YOUR_SPACE_REGISTRY/digitalcmr_client
 docker tag digitalcmr_server registry.eu-gb.bluemix.net/YOUR_SPACE_REGISTRY/digitalcmr_server
 docker tag digitalcmr_api_doc registry.eu-gb.bluemix.net/YOUR_SPACE_REGISTRY/digitalcmr_api_doc
 ```
 **Your Bluemix space has a specific limit of images/GBs, therefore we can avoid to push the private-db image and instead using the one from the official docker hub registry**
-2. Push all the images to your Bluemix private registry
+3. Push all the images to your Bluemix private registry
 ```bash
 docker push registry.eu-gb.bluemix.net/YOUR_SPACE_REGISTRY/digitalcmr_client
 docker push registry.eu-gb.bluemix.net/YOUR_SPACE_REGISTRY/digitalcmr_server
@@ -70,7 +75,7 @@ Your `.bna` will be under the `./composer/bna/dist` folder. Check it contains al
 ### Create the k8s pods for the app
 1. Navigate to the `create` sub-directory:
 ```bash
-cd cs-offerings/scripts/create
+cd cs-offerings/free/scripts/create
 ```
 2. Run the script to create all the app services and pods
 ```bash
@@ -83,7 +88,7 @@ You should now add the initial data needed to your application (including blockc
 ## Run the Composer-Rest-Server
 1. Navigate to the `create` sub-directory:
 ```bash
-cd cs-offerings/scripts/create
+cd cs-offerings/free/scripts/create
 ```
 2. Run the script to create all the app services and pods
 ```bash
@@ -96,7 +101,7 @@ cd cs-offerings/scripts/create
 You can easily clean up all the k8s environment anytime using the `delete_all` script
 1. Navigate to the `scripts` sub-directory:
 ```bash
-cd cs-offerings/scripts
+cd cs-offerings/free/scripts
 ```
 2. Run the script to create all the app services and pods
 ```bash
