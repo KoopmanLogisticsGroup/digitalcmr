@@ -212,7 +212,6 @@ describe('A legal owner admin can', () => {
           console.log(err.stack);
           return done(err);
         }
-        console.log('hey');
         should.exist(res.body.token);
         token = res.body.token;
         done(err);
