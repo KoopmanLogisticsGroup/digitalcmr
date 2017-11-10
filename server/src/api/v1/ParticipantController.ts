@@ -34,7 +34,8 @@ export class OrganizationController {
   public async getLegalOwnerAdminByUserID(@Param('userID') userID: string, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getLegalOwnerAdminByUserID', {userID: userID});
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getLegalOwnerAdminByUserID',
+      {userID: userID});
   }
 
   @Get('/legalowner/admin/organization/:org')
@@ -55,7 +56,8 @@ export class OrganizationController {
   public async getCompoundAdminByUserID(@Param('userID') userID: string, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getCompoundAdminByUserID', {userID: userID});
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getCompoundAdminByUserID',
+      {userID: userID});
   }
 
   @Get('/compound/admin/organization/:org')
@@ -76,7 +78,8 @@ export class OrganizationController {
   public async getCarrierAdminByUserID(@Param('userID') userID: string, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getCarrierAdminByUserID', {userID: userID});
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getCarrierAdminByUserID',
+      {userID: userID});
   }
 
   @Get('/carrier/admin/organization/:org')
@@ -97,7 +100,8 @@ export class OrganizationController {
   public async getCarrierMemberByUserID(@Param('userID') userID: string, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getCarrierMemberByUserID', {userID: userID});
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getCarrierMemberByUserID',
+      {userID: userID});
   }
 
   @Get('/carrier/member/organization/:org')
@@ -118,7 +122,8 @@ export class OrganizationController {
   public async getRecipientAdminByUserID(@Param('userID') userID: string, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getRecipientAdminByUserID', {userID: userID});
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getRecipientAdminByUserID',
+      {userID: userID});
   }
 
   @Get('/recipient/admin/organization/:org')
@@ -139,7 +144,8 @@ export class OrganizationController {
   public async getRecipientMemberByUserID(@Param('userID') userID: string, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getRecipientMemberByUserID', {userID: userID});
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getRecipientMemberByUserID',
+      {userID: userID});
   }
 
   @Get('/recipient/member/organization/:org')

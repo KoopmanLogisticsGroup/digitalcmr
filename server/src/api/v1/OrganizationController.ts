@@ -38,7 +38,8 @@ export class OrganizationController {
   public async getLegalOwnerOrgByEntityID(@Param('entityID') entityID: string, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getLegalOwnerOrgByEntityID', {entityID: entityID});
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getLegalOwnerOrgByEntityID',
+      {entityID: entityID});
   }
 
   @Get('/legalowner/name/:name')
@@ -59,7 +60,8 @@ export class OrganizationController {
   public async getCompoundOrgByEntityID(@Param('entityID') entityID: string, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getCompoundOrgByEntityID', {entityID: entityID});
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getCompoundOrgByEntityID',
+      {entityID: entityID});
   }
 
   @Get('/compound/name/:name')
@@ -80,7 +82,8 @@ export class OrganizationController {
   public async getCarrierOrgByEntityID(@Param('entityID') entityID: string, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getCarrierOrgByEntityID', {entityID: entityID});
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getCarrierOrgByEntityID',
+      {entityID: entityID});
   }
 
   @Get('/carrier/name/:name')
@@ -101,7 +104,8 @@ export class OrganizationController {
   public async getRecipientOrgByEntityID(@Param('entityID') entityID: string, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getRecipientOrgByEntityID', {entityID: entityID});
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getRecipientOrgByEntityID',
+      {entityID: entityID});
   }
 
   @Get('/recipient/name/:name')
@@ -115,27 +119,31 @@ export class OrganizationController {
   public async createLegalOwnerOrg(@Body() legalOwnerOrg: any, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.create(identity, Config.settings.composer.profile, Config.settings.composer.namespace, legalOwnerOrg, new LegalOwnerTransactor());
+    return await this.transactionHandler.create(identity, Config.settings.composer.profile, Config.settings.composer.namespace,
+      legalOwnerOrg, new LegalOwnerTransactor());
   }
 
   @Post('/compound/')
   public async createCompoundOrg(@Body() compoundOrg: any, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.create(identity, Config.settings.composer.profile, Config.settings.composer.namespace, compoundOrg, new CompoundTransactor());
+    return await this.transactionHandler.create(identity, Config.settings.composer.profile, Config.settings.composer.namespace,
+      compoundOrg, new CompoundTransactor());
   }
 
   @Post('/carrier/')
   public async createCarrierOrg(@Body() carrierOrg: any, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.create(identity, Config.settings.composer.profile, Config.settings.composer.namespace, carrierOrg, new CarrierTransactor());
+    return await this.transactionHandler.create(identity, Config.settings.composer.profile, Config.settings.composer.namespace,
+      carrierOrg, new CarrierTransactor());
   }
 
   @Post('/recipient/')
   public async createRecipientOrg(@Body() recipientOrg: any, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.create(identity, Config.settings.composer.profile, Config.settings.composer.namespace, recipientOrg, new RecipientTransactor());
+    return await this.transactionHandler.create(identity, Config.settings.composer.profile, Config.settings.composer.namespace,
+      recipientOrg, new RecipientTransactor());
   }
 }

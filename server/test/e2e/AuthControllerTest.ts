@@ -17,9 +17,9 @@ const ok = (res) => {
 };
 
 describe('An AuthController', () => {
-  it('can login a legal owner', (done) => {
-    let loginParams = {
-      'username': 'willem@compoundamsterdam.org',
+  it('can login a compound admin', (done) => {
+    const loginParams = {
+      'username': 'willem@amsterdamcompound.org',
       'password': 'passw0rd'
     };
 

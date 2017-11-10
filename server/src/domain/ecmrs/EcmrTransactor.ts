@@ -1,13 +1,10 @@
 import {Identity} from '../Identity';
-import {BusinessNetworkHandler} from '../../blockchain/BusinessNetworkHandler';
 import {TransactionCreator} from '../../blockchain/TransactionCreator';
 import {Factory} from 'composer-common';
 import {EcmrBuilder} from './EcmrBuilder';
+import {TransactionHandler} from '../../blockchain/TransactionHandler';
 
 export class EcmrTransactor implements TransactionCreator {
-  public constructor(private businessNetworkHandler: BusinessNetworkHandler) {
-  }
-
   public async create(factory: Factory, namespace: string, data: any, enrollmentID: string, ip?: string): Promise<any> {
     let transaction: any;
 
@@ -29,59 +26,44 @@ export class EcmrTransactor implements TransactionCreator {
     return transaction;
   }
 
-  public async getEcmrsByVin(identity: Identity, connectionProfile: string, vin: string): Promise<any> {
-    await this.businessNetworkHandler.connect(identity, connectionProfile);
-
-    // get vehicle by vin
-    const vehicles = await this.businessNetworkHandler.query('getVehicleByVin', {vin: vin});
-    let result     = {body: []};
+  // TODO improve function
+  public async getEcmrsByVin(transactionHandler: TransactionHandler, identity: Identity, connectionProfile: string, vin: string): Promise<any> {
+    let vehicles      = await transactionHandler.executeQuery(identity, connectionProfile, 'getVehicleByVin', {vin: vin});
+    let result: any[] = [];
     if (vehicles.length === 0) {
-      this.businessNetworkHandler.disconnect().then(() => {
-        return result;
-      });
+      return result;
     } else {
-      let promises: Promise<any>[] = [];
-      for (let ecmr of vehicles[0].ecmrs) {
+      for (let ecmr of vehicles.ecmrs) {
         // get all the ecmrs contained in the vehicle
-        promises.push(this.businessNetworkHandler.query('getEcmrById', {id: ecmr.$identifier}).then((assets) => {
-          if (assets.length > 0) {
-            result = assets;
+        const ecmrID = ecmr.split('#')[1];
+        await transactionHandler.executeQuery(identity, connectionProfile, 'getEcmrById', {ecmrID: ecmrID}).then((assets) => {
+          if (assets instanceof Object) {
+            result.push(assets);
           }
-        }));
+        });
       }
-
-      const values = await Promise.all(promises);
-      await this.businessNetworkHandler.disconnect();
-
-      return values;
+      return {body: result};
     }
   }
 
-  public async getEcmrsByPlateNumber(identity: Identity, connectionProfile: string, plateNumber: string): Promise<any> {
-    await this.businessNetworkHandler.connect(identity, connectionProfile);
-
+  // TODO improve function
+  public async getEcmrsByPlateNumber(transactionHandler: TransactionHandler, identity: Identity, connectionProfile: string, plateNumber: string): Promise<any> {
     // get vehicle by vin
-    const vehicles = await this.businessNetworkHandler.query('getVehicleByPlateNumber', {plateNumber: plateNumber});
-    let result     = {body: []};
+    const vehicles    = await transactionHandler.executeQuery(identity, connectionProfile, 'getVehicleByPlateNumber', {plateNumber: plateNumber});
+    let result: any[] = [];
     if (vehicles.length === 0) {
-      this.businessNetworkHandler.disconnect().then(() => {
-        return result;
-      });
+      return result;
     } else {
-      let promises: Promise<any>[] = [];
-      for (let ecmr of vehicles[0].ecmrs) {
+      for (let ecmr of vehicles.ecmrs) {
+        const ecmrID = ecmr.split('#')[1];
         // get all the ecmrs contained in the vehicle
-        promises.push(this.businessNetworkHandler.query('getEcmrById', {id: ecmr.$identifier}).then((assets) => {
-          if (assets.length > 0) {
-            result = assets;
+        await transactionHandler.executeQuery(identity, connectionProfile, 'getEcmrById', {ecmrID: ecmrID}).then((assets) => {
+          if (assets instanceof Object) {
+            result.push(assets);
           }
-        }));
+        });
       }
-
-      const values = Promise.all(promises);
-      await this.businessNetworkHandler.disconnect();
-
-      return values;
+      return {body: result};
     }
   }
 }
