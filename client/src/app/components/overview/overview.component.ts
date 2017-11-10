@@ -7,8 +7,8 @@ import {AuthenticationService} from '../../services/authentication.service';
   styleUrls:   ['./overview.component.scss'],
 })
 export class OverviewComponent implements OnInit {
-  public ecmrOverview           = false;
-  public transportOrderOverview = false;
+  public ecmrOverview: boolean;
+  public transportOrderOverview: boolean;
 
   public User = {
     CompoundAdmin:   'CompoundAdmin',
@@ -30,12 +30,12 @@ export class OverviewComponent implements OnInit {
     }
   }
 
-  public changeToECMR() {
+  public changeToECMR(): void {
     this.ecmrOverview           = true;
     this.transportOrderOverview = false;
   }
 
-  public changeToOrder() {
+  public changeToOrder(): void {
     this.ecmrOverview           = false;
     this.transportOrderOverview = true;
   }

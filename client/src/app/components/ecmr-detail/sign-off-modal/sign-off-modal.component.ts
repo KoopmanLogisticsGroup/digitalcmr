@@ -11,8 +11,8 @@ import * as GeoLib from 'geolib';
 })
 
 export class SignOffModalComponent implements OnInit {
-
   @Input() ecmr: Ecmr;
+
   public EcmrStatus = {
     Created:            'CREATED',
     Loaded:             'LOADED',

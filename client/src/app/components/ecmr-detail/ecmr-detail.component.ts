@@ -4,7 +4,6 @@ import {ActivatedRoute} from '@angular/router';
 import {NavbarService} from '../../services/navbar.service';
 import {Ecmr} from '../../interfaces/ecmr.interface';
 import {Signature} from '../../interfaces/signature.interface';
-import {Remark} from '../../interfaces/remark.interface';
 
 @Component({
   selector:    'app-ecmr-detail',

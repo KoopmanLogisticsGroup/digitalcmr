@@ -13,11 +13,11 @@ export class TransportorderDetailComponent implements OnInit {
   private orderID: string;
   public transportOrder: TransportOrder;
 
-  constructor(private route: ActivatedRoute,
-              private transportOrderService: TransportOrderService) {
+  public constructor(private route: ActivatedRoute,
+                     private transportOrderService: TransportOrderService) {
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.route.params
       .subscribe(params => {
         this.orderID = params['orderID'];

@@ -13,6 +13,7 @@ export class GeneralInfoComponent implements OnInit {
 
   public selectedImage: boolean[];
   public selectedColumnIs: number;
+
   public EcmrStatus = {
     Created:            'CREATED',
     Loaded:             'LOADED',

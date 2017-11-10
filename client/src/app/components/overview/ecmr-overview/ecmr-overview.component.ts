@@ -18,6 +18,7 @@ export class EcmrOverviewComponent implements OnInit {
   public searchBarData: string;
   public filterEcmr: number;
   public ecmrsFiltered: Ecmr[];
+
   public EcmrStatus = {
     Created:            'CREATED',
     Loaded:             'LOADED',
@@ -40,10 +41,10 @@ export class EcmrOverviewComponent implements OnInit {
     Completed:  'COMPLETED'
   };
 
-  constructor(private ecmrService: EcmrService,
-              private authenticationService: AuthenticationService,
-              private searchService: SearchService,
-              public nav: NavbarService) {
+  public constructor(private ecmrService: EcmrService,
+                     private authenticationService: AuthenticationService,
+                     private searchService: SearchService,
+                     public nav: NavbarService) {
     this.searchService.searchData$.subscribe((data: string) => {
       this.searchBarData = data;
     });
@@ -54,7 +55,7 @@ export class EcmrOverviewComponent implements OnInit {
     this.searchBarData = '';
   }
 
-  async ngOnInit(): Promise<void> {
+  public ngOnInit(): void {
     this.nav.show();
     this.ecmrService.getAllEcmrs().subscribe(response => {
       this.ecmrs         = response instanceof Array ? response : [];
@@ -92,13 +93,11 @@ export class EcmrOverviewComponent implements OnInit {
   public setCurrentView(view: string): void {
     this.currentView   = view;
     this.ecmrsFiltered = this.ecmrs.filter(ecmr => {
-      if (this.currentView === this.viewStatus.Open && ecmr.status === this.EcmrStatus.Created) {
-        return ecmr;
-      } else if (this.currentView === this.viewStatus.InProgress && (ecmr.status === this.EcmrStatus.Loaded ||
-          ecmr.status === this.EcmrStatus.InTransit)) {
-        return ecmr;
-      } else if (this.currentView === this.viewStatus.Completed && (ecmr.status === this.EcmrStatus.Delivered ||
-          ecmr.status === this.EcmrStatus.ConfirmedDelivered)) {
+      if ((this.currentView === this.viewStatus.Open && ecmr.status === this.EcmrStatus.Created) ||
+        (this.currentView === this.viewStatus.InProgress && (ecmr.status === this.EcmrStatus.Loaded ||
+          ecmr.status === this.EcmrStatus.InTransit) ||
+          (this.currentView === this.viewStatus.Completed && (ecmr.status === this.EcmrStatus.Delivered ||
+            ecmr.status === this.EcmrStatus.ConfirmedDelivered)))) {
         return ecmr;
       }
     });

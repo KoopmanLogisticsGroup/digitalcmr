@@ -1,9 +1,11 @@
 .spacing_table {
   border-spacing: 0 8px;
   th {
-    text-align:    left;
-    border-bottom: none;
-    background:    transparent;
+    text-align:     left;
+    border-bottom:  none;
+    background:     transparent;
+    vertical-align: top;
+    font-size:      12px;
   }
   th:first-child {
     width: 20px;

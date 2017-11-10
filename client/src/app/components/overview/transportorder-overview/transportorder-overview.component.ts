@@ -19,6 +19,7 @@ export class TransportorderOverviewComponent implements OnInit {
   public filterEcmr: number;
   public transportOrders: TransportOrder[];
   public transportOrderFilter: TransportOrder[];
+
   public TransportOrderStatus = {
     Open:       'OPEN',
     InProgress: 'IN_PROGRESS',
@@ -52,21 +53,13 @@ export class TransportorderOverviewComponent implements OnInit {
     this.searchBarData = '';
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.nav.show();
     this.transportOrderService.getAllTransportOrders().subscribe(transportOrders => {
-      if (transportOrders instanceof Array === true) {
-        this.transportOrders      = transportOrders instanceof Array ? transportOrders : [];
-        this.transportOrderFilter = this.transportOrders.filter(transportOrder =>
-          transportOrder.status.toUpperCase() === this.viewStatus.New);
-        this.firstView();
-      } else {
-        this.transportOrders = [];
-        this.transportOrders.push(transportOrders);
-        this.transportOrderFilter = this.transportOrders.filter(transportOrder =>
-          transportOrder.status.toUpperCase() === this.viewStatus.New);
-        this.firstView();
-      }
+      this.transportOrders      = transportOrders instanceof Array ? transportOrders : [transportOrders];
+      this.transportOrderFilter = this.transportOrders.filter(transportOrder =>
+        transportOrder.status.toUpperCase() === this.viewStatus.New);
+      this.firstView();
     });
   }
 
@@ -82,11 +75,9 @@ export class TransportorderOverviewComponent implements OnInit {
   public setTransportOrderView(view: string): void {
     this.currentView          = view;
     this.transportOrderFilter = this.transportOrders.filter(transportOrder => {
-      if (this.currentView === this.viewStatus.New && transportOrder.status === this.TransportOrderStatus.Open) {
-        return transportOrder;
-      } else if (this.currentView === this.viewStatus.InProgress && (transportOrder.status === this.TransportOrderStatus.InProgress)) {
-        return transportOrder;
-      } else if (this.currentView === this.viewStatus.Completed && (transportOrder.status === this.TransportOrderStatus.Completed)) {
+      if ((this.currentView === this.viewStatus.New && transportOrder.status === this.TransportOrderStatus.Open) ||
+        (this.currentView === this.viewStatus.InProgress && transportOrder.status === this.TransportOrderStatus.InProgress) ||
+        (this.currentView === this.viewStatus.Completed && transportOrder.status === this.TransportOrderStatus.Completed)) {
         return transportOrder;
       }
     });
