@@ -271,6 +271,7 @@ describe('A Carrier member can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+          return done(err);
         }
         done(err);
       });
@@ -284,8 +285,16 @@ describe('A Carrier member can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+          return done(err);
         }
-        res.body.length.should.be.greaterThan(0, 'no ECMRs were found.');
+        if (res.body instanceof Array) {
+          res.body.length.should.be.greaterThan(0, 'No ECMRs for kooopman were found.');
+          res.body[0].carrier.should.equal('resource:org.digitalcmr.CarrierOrg#koopman');
+        } else if (res.body instanceof Object) {
+          res.body.carrier.should.equal('resource:org.digitalcmr.CarrierOrg#koopman');
+        } else {
+          res.body.should.equal(200);
+        }
         done(err);
       });
   });
@@ -298,6 +307,7 @@ describe('A Carrier member can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+          return done(err);
         }
         res.body.should.equal(200);
         done(err);
@@ -312,6 +322,7 @@ describe('A Carrier member can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+          return done(err);
         }
         res.body.should.equal(200);
         done(err);
@@ -343,6 +354,7 @@ describe('A Carrier member can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+          return done(err);
         }
         done(err);
       });
@@ -361,6 +373,7 @@ describe('A Carrier member can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+          return done(err);
         }
         done(err);
       });
@@ -384,6 +397,114 @@ describe('A Carrier member can', () => {
       });
   });
 
+  it('get ecmr by status CREATED', (done) => {
+    server
+      .get('/api/v1/ECMR/status/CREATED')
+      .set('x-access-token', token)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+          done(err);
+        }
+        if (res.body instanceof Array) {
+          res.body.length.should.be.greaterThan(0, 'No CREATED ECMRs were found.');
+          res.body[0].status.should.equal('CREATED');
+        } else if (res.body instanceof Object) {
+          res.body.status.should.equal('LOADED');
+        } else {
+          res.body.should.equal(200);
+        }
+        done(err);
+      });
+  });
+
+  it('get ecmr by status LOADED', (done) => {
+    server
+      .get('/api/v1/ECMR/status/LOADED')
+      .set('x-access-token', token)
+      .end((err: Error, res) => {
+          if (err) {
+            console.log(err.stack);
+            done(err);
+          }
+          if (res.body instanceof Array) {
+            res.body.length.should.be.greaterThan(0, 'No LOADED ECMRs were found.');
+            res.body[0].status.should.equal('LOADED');
+          } else if (res.body instanceof Object) {
+            res.body.status.should.equal('LOADED');
+          } else {
+            res.body.should.equal(200);
+          }
+          done(err);
+        }
+      );
+  });
+
+  it('get ecmr by status IN_TRANSIT', (done) => {
+    server
+      .get('/api/v1/ECMR/status/IN_TRANSIT')
+      .set('x-access-token', token)
+      .end((err: Error, res) => {
+          if (err) {
+            console.log(err.stack);
+            done(err);
+          }
+          if (res.body instanceof Array) {
+            res.body.length.should.be.greaterThan(0, 'No IN_TRANSIT ECMRs were found.');
+            res.body[0].status.should.equal('IN_TRANSIT');
+          } else if (res.body instanceof Object) {
+            res.body.status.should.equal('LOADED');
+          } else {
+            res.body.should.equal(200);
+          }
+          done(err);
+        }
+      );
+  });
+
+  it('get ecmr by status DELIVERED', (done) => {
+    server
+      .get('/api/v1/ECMR/status/DELIVERED')
+      .set('x-access-token', token)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+          done(err);
+        }
+        if (res.body instanceof Array) {
+          res.body.length.should.be.greaterThan(0, 'No DELIVERED ECMRs were found.');
+          res.body[0].status.should.equal('DELIVERED');
+        } else if (res.body instanceof Object) {
+          console.log(res.body);
+          res.body.status.should.equal('DELIVERED');
+        } else {
+          res.body.should.equal(200);
+        }
+        done(err);
+      });
+  });
+
+  it('get ecmr by status CONFIRMED_DELIVERED', (done) => {
+    server
+      .get('/api/v1/ECMR/status/CONFIRMED_DELIVERED')
+      .set('x-access-token', token)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+          done(err);
+        }
+        if (res.body instanceof Array) {
+          res.body.length.should.be.greaterThan(0, 'No CONFIRMED_DELIVERED ECMRs were found.');
+          res.body[0].should.equal('CONFIRMED_DELIVERED');
+        } else if (res.body instanceof Object) {
+          res.body.status.should.equal('CONFIRMED_DELIVERED');
+        } else {
+          res.body.should.equal(200);
+        }
+        done(err);
+      });
+  });
+
   it('can not create a transport order', (done) => {
     const transportOrder = buildTransportOrder();
     server
@@ -398,4 +519,87 @@ describe('A Carrier member can', () => {
         done(err);
       });
   });
+
+  it('get all vehicles', (done) => {
+    server
+      .get('/api/v1/vehicle')
+      .set('x-access-token', token)
+      .expect(ok)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+          done(err);
+        }
+        if (res.body instanceof Array) {
+          //res.body.length.should.be.greaterThan(0, 'No CONFIRMED_DELIVERED ECMRs were found.');
+          should.exist(res.body[0].plateNumber);
+        } else if (res.body instanceof Object) {
+          should.exist(res.body.plateNumber);
+        } else {
+          res.body.should.equal(200);
+        }
+        done(err);
+      });
+  });
+
+  it('get a specific vehicle based on vin', (done) => {
+    server
+      .get('/api/v1/vehicle/vin/183726339N')
+      .set('x-access-token', token)
+      .expect(ok)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+          done(err);
+        }
+        res.body.vin.should.equal('183726339N');
+        done(err);
+      });
+  });
+
+  it('get a specific vehicle based on license plate', (done) => {
+    server
+      .get('/api/v1/vehicle/plateNumber/AV198RX')
+      .set('x-access-token', token)
+      .expect(ok)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+          done(err);
+        }
+        res.body.plateNumber.should.equal('AV198RX');
+        done(err);
+      });
+  });
+  // it('can  submit an update transaction for his org and status from LOADED to IN_TRANSIT', (done) => {
+  //   updateEcmr.status  = 'IN_TRANSIT';
+  //   updateEcmr.carrierLoadingSignature = {'certificate': 'harry@koopman.org', 'timestamp': 0 };
+  //   server
+  //     .put('/api/v1/ECMR')
+  //     .set('x-access-token', token)
+  //     .send(updateEcmr)
+  //     .expect(200)
+  //     .end((err: Error) => {
+  //       if (err) {
+  //         console.log(err.stack);
+  //       }
+  //       done(err);
+  //     });
+  // });
+  //
+  // it('can  submit an update transaction for his org and status from IN_TANSIT to DELIVERED', (done) => {
+  //   updateEcmr.status = 'DELIVERED';
+  //   updateEcmr.carrierDeliverySignature = {'certificate': 'harry@koopman.org', 'timestamp': 0 };
+  //   server
+  //     .put('/api/v1/ECMR')
+  //     .set('x-access-token', token)
+  //     .send(updateEcmr)
+  //     .expect(200)
+  //     .end((err: Error) => {
+  //       if (err) {
+  //         console.log(err.stack);
+  //       }
+  //       done(err);
+  //     });
+  // });
 });

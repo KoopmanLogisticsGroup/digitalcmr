@@ -55,7 +55,6 @@ export class EcmrTransactor implements TransactionCreator {
       return result;
     } else {
       for (let ecmr of vehicles.ecmrs) {
-        console.log(ecmr);
         const ecmrID = ecmr.split('#')[1];
         // get all the ecmrs contained in the vehicle
         await transactionHandler.executeQuery(identity, connectionProfile, 'getEcmrById', {ecmrID: ecmrID}).then((assets) => {
