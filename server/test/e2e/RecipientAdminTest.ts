@@ -197,7 +197,7 @@ const buildTransportOrder = (): TransportOrder => {
 };
 
 describe('A Recipient Admin can', () => {
-  it('login as a recipient admin', (done) => {
+  before((done) => {
     const loginParams = {
       'username': 'clara@cardealer.org',
       'password': 'passw0rd'

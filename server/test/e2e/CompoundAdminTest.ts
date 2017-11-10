@@ -196,7 +196,7 @@ const buildTransportOrder = (): TransportOrder => {
 };
 
 describe('A Compound Admin can', () => {
-  it('login as a compound admin', (done) => {
+  before((done) => {
     const loginParams = {
       'username': 'willem@amsterdamcompound.org',
       'password': 'passw0rd'

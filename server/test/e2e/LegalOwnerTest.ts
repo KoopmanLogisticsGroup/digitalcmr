@@ -196,12 +196,11 @@ const buildTransportOrder = (): TransportOrder => {
 };
 
 describe('A legal owner admin can', () => {
-  it('login as a legal owner admin', (done) => {
+  before((done) => {
     const loginParams = {
       'username': 'lapo@leaseplan.org',
       'password': 'passw0rd'
     };
-
     server
       .post('/api/v1/login')
       .send(loginParams)
@@ -213,6 +212,7 @@ describe('A legal owner admin can', () => {
           console.log(err.stack);
           return done(err);
         }
+        console.log('hey');
         should.exist(res.body.token);
         token = res.body.token;
         done(err);

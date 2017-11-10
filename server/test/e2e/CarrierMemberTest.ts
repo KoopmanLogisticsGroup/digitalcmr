@@ -197,7 +197,7 @@ const buildTransportOrder = (): TransportOrder => {
 };
 
 describe('A Carrier member can', () => {
-  it('login as a carrier member', (done) => {
+  before((done) => {
     const loginParams = {
       'username': 'harry@koopman.org',
       'password': 'passw0rd'

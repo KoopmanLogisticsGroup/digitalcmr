@@ -197,7 +197,7 @@ const ok = (res) => {
 };
 
 describe('A Carrier admin can', () => {
-  it('login as a carrier admin', (done) => {
+  before((done) => {
     const loginParams = {
       'username': 'goslin@koopman.org',
       'password': 'passw0rd'
