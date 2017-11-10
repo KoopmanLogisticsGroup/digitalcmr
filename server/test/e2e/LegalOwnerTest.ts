@@ -8,7 +8,7 @@ import {Address} from '../../resources/interfaces/address.interface';
 
 const server = supertest.agent('http://localhost:8080');
 const should = chai.should();
-let transportOrder;
+let transportOrder: TransportOrder;
 let token: string;
 let updateEcmr: Ecmr;
 
@@ -19,10 +19,6 @@ const ok = (res) => {
   }
 };
 
-/**
- * Build Address asset
- * @return {Promise} A promise that will be resolved when completed.
- */
 const buildAddress = (): Address => {
   return <Address> {
     name:        'name',
@@ -121,7 +117,7 @@ describe('A legal owner admin can', () => {
       });
   });
 
-  it('create an ECMR when he is the owner', (done) => {
+  it('create an ECMR where his org is the owner', (done) => {
     const ecmr = buildECMR('ecmr1');
     server
       .post('/api/v1/ECMR')
@@ -309,7 +305,7 @@ describe('A legal owner admin can', () => {
       });
   });
 
-  it('get all transport orders', (done) => {
+  it('get all transport orders where his org is the owner', (done) => {
     server
       .get('/api/v1/transportOrder')
       .set('x-access-token', token)

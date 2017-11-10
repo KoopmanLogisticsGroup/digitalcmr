@@ -18,10 +18,6 @@ const ok = (res) => {
   }
 };
 
-/**
- * Build Address asset
- * @return {Promise} A promise that will be resolved when completed.
- */
 const buildAddress = (): Address => {
   return <Address> {
     name:        'name',
@@ -241,7 +237,7 @@ describe('A Recipient Admin can', () => {
       });
   });
 
-  it('not update an ECMR from DELIVERED to CONFIRMED DELIVERED', (done) => {
+  it('not update an ECMR from DELIVERED to CONFIRMED_DELIVERED', (done) => {
     const transportOrder  = buildECMR('F1234567890');
     transportOrder.status = 'CONFIRMED_DELIVERED';
     server

@@ -18,10 +18,6 @@ const ok = (res) => {
   }
 };
 
-/**
- * Build Address asset
- * @return {Promise} A promise that will be resolved when completed.
- */
 const buildAddress = (): Address => {
   return <Address> {
     name:        'name',

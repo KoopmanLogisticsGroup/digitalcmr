@@ -11,10 +11,6 @@ const should = chai.should();
 let token: string;
 let updateEcmr: Ecmr;
 
-/**
- * Build Address asset
- * @return {Promise} A promise that will be resolved when completed.
- */
 const buildAddress = (): Address => {
   return <Address> {
     name:        'name',
@@ -69,7 +65,7 @@ const buildECMR = (ecmrID: string): Ecmr => {
 
 const buildTransportOrder = (): TransportOrder => {
   return <TransportOrder> {
-    orderID:   String(new Date()),
+    orderID:   new Date().getTime().toString(),
     loading:   {
       actualDate: 1502834400000,
       address:    buildAddress(),
