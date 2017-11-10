@@ -31,7 +31,7 @@ const buildAddress = (): Address => {
     latitude:    0
   };
 };
-
+//TODO when an ADMIN has been created make sure to replace ecmrID by new Date().getTime().toString() for all participants
 const buildECMR = (ecmrID: string): Ecmr => {
   return <Ecmr>{
     ecmrID:                 ecmrID,
