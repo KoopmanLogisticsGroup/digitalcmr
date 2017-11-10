@@ -4,17 +4,35 @@ import * as chai from 'chai';
 import * as http from 'http';
 import {Ecmr} from '../../../client/src/app/interfaces/ecmr.interface';
 import {TransportOrder} from '../../resources/interfaces/transportOrder.interface';
+import {Address} from '../../resources/interfaces/address.interface';
 
 const server = supertest.agent('http://localhost:8080');
 const should = chai.should();
 let token: string;
 let updateEcmr: Ecmr;
 
+/**
+ * Build Address asset
+ * @return {Promise} A promise that will be resolved when completed.
+ */
+const buildAddress = (): Address => {
+  return <Address> {
+    name:        'name',
+    street:      'street',
+    houseNumber: 'housenumber',
+    city:        'city',
+    zipCode:     'zipcode',
+    country:     'country',
+    longitude:   0,
+    latitude:    0
+  };
+};
+
 const buildECMR = (ecmrID: string): Ecmr => {
   return <Ecmr>{
     ecmrID:                 ecmrID,
-    status:                 'IN_TRANSIT',
-    issuedDate:             1502402400000,
+    status:                 'CREATED',
+    issueDate:              1502402400000,
     agreementTerms:         'agreement terms here',
     agreementTermsSec:      'agreement terms sec',
     legalOwnerRef:          'ASD213123S',
@@ -22,42 +40,15 @@ const buildECMR = (ecmrID: string): Ecmr => {
     recipientRef:           'SDADHGA21312312',
     orderID:                'AAAA123456',
     creation:               {
-      address: {
-        name:        'Amsterdam Compound',
-        street:      'compenstraat',
-        houseNumber: '21',
-        city:        'Assen',
-        zipCode:     '9976ZH',
-        country:     'Netherlands',
-        latitude:    51.917153,
-        longitude:   4.474623
-      },
+      address: buildAddress(),
       date:    1502402400000
     },
     loading:                {
-      address:    {
-        name:        'Amsterdam Compound',
-        street:      'compenstraat',
-        houseNumber: '21',
-        city:        'Amsterdam',
-        zipCode:     '9976ZH',
-        country:     'Netherlands',
-        latitude:    52.377698,
-        longitude:   4.896555
-      },
+      address:    buildAddress(),
       actualDate: 1502402400000
     },
     delivery:               {
-      address:    {
-        name:        'Rob Carman',
-        street:      'autostraat',
-        houseNumber: '12',
-        city:        'Rotterdam',
-        zipCode:     '9442KO',
-        country:     'Netherlands',
-        latitude:    51.917153,
-        longitude:   4.474623
-      },
+      address:    buildAddress(),
       actualDate: 1502488800000
     },
     owner:                  'leaseplan',
@@ -66,48 +57,10 @@ const buildECMR = (ecmrID: string): Ecmr => {
     carrier:                'koopman',
     recipientOrg:           'cardealer',
     recipient:              'rob@cardealer.org',
-    issueDate:              0,
     issuedBy:               'koopman',
     carrierComments:        'No comments',
-    documents:              [
-      'doc1'
-    ],
-    goods:                  [
-      {
-        vehicle:           {
-          vin:             '183726339N',
-          manufacturer:    'Audi',
-          model:           'A1',
-          type:            'sportback',
-          ecmrs:           [],
-          odoMeterReading: 0,
-          plateNumber:     'AV198RX'
-        },
-        description:       'vehicle',
-        weight:            1500,
-        loadingStartDate:  1502834400000,
-        loadingEndDate:    1502834400000,
-        deliveryStartDate: 1502834400000,
-        deliveryEndDate:   1502834400000
-      },
-      {
-        vehicle:           {
-          vin:             '736182CHD28172',
-          manufacturer:    'Mercedes',
-          model:           'SLK',
-          type:            'Station',
-          ecmrs:           [],
-          odoMeterReading: 0,
-          plateNumber:     'I827YE'
-        },
-        description:       'vehicle',
-        weight:            1800,
-        loadingStartDate:  1502834400000,
-        loadingEndDate:    1502834400000,
-        deliveryStartDate: 1502834400000,
-        deliveryEndDate:   1502834400000
-      }
-    ],
+    documents:              [],
+    goods:                  [],
     legalOwnerInstructions: 'string',
     paymentInstructions:    'string',
     payOnDelivery:          'string'
@@ -116,71 +69,18 @@ const buildECMR = (ecmrID: string): Ecmr => {
 
 const buildTransportOrder = (): TransportOrder => {
   return <TransportOrder> {
-    orderID:   Math.random().toString(36).substring(7),
+    orderID:   String(new Date()),
     loading:   {
       actualDate: 1502834400000,
-      address:    {
-        name:        'loading address',
-        street:      'een straat',
-        houseNumber: '41',
-        city:        'Groningen',
-        zipCode:     '7811 HC',
-        country:     'netherlands',
-        longitude:   124,
-        latitude:    123
-      }
+      address:    buildAddress(),
     },
     delivery:  {
       actualDate: 1502834400000,
-      address:    {
-        name:        'delivery adress',
-        street:      'een straat',
-        houseNumber: '41',
-        city:        'Groningen',
-        zipCode:     '7811 HC',
-        country:     'netherlands',
-        longitude:   124,
-        latitude:    123
-      }
+      address:    buildAddress(),
     },
     carrier:   'koopman',
     source:    'amsterdamcompound',
-    goods:     [
-      {
-        vehicle:           {
-          vin:             '183726339N',
-          manufacturer:    'Audi',
-          model:           'A1',
-          type:            'sportback',
-          ecmrs:           [],
-          odoMeterReading: 0,
-          plateNumber:     'AV198RX'
-        },
-        description:       'vehicle',
-        weight:            1500,
-        loadingStartDate:  1502834400000,
-        loadingEndDate:    1502834400000,
-        deliveryStartDate: 1502834400000,
-        deliveryEndDate:   1502834400000
-      },
-      {
-        vehicle:           {
-          vin:             '736182CHD28172',
-          manufacturer:    'Mercedes',
-          model:           'SLK',
-          type:            'Station',
-          ecmrs:           [],
-          odoMeterReading: 0,
-          plateNumber:     'I827YE'
-        },
-        description:       'vehicle',
-        weight:            1800,
-        loadingStartDate:  1502834400000,
-        loadingEndDate:    1502834400000,
-        deliveryStartDate: 1502834400000,
-        deliveryEndDate:   1502834400000
-      }
-    ],
+    goods:     [],
     status:    'OPEN',
     issueDate: 1502834400000,
     ecmrs:     [],

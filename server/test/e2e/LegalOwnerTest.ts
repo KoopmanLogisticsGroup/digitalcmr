@@ -4,9 +4,11 @@ import * as chai from 'chai';
 import * as http from 'http';
 import {TransportOrder} from '../../resources/interfaces/transportOrder.interface';
 import {Ecmr} from '../../resources/interfaces/ecmr.interface';
+import {Address} from '../../resources/interfaces/address.interface';
 
 const server = supertest.agent('http://localhost:8080');
 const should = chai.should();
+let transportOrder;
 let token: string;
 let updateEcmr: Ecmr;
 
@@ -15,6 +17,23 @@ const ok = (res) => {
     const status = http.STATUS_CODES[res.status];
     return new Error(`Expected 200, got ${res.status} ${status} with message: ${res.body.message}`);
   }
+};
+
+/**
+ * Build Address asset
+ * @return {Promise} A promise that will be resolved when completed.
+ */
+const buildAddress = (): Address => {
+  return <Address> {
+    name:        'name',
+    street:      'street',
+    houseNumber: 'housenumber',
+    city:        'city',
+    zipCode:     'zipcode',
+    country:     'country',
+    longitude:   0,
+    latitude:    0
+  };
 };
 
 const buildECMR = (ecmrID: string): Ecmr => {
@@ -29,42 +48,15 @@ const buildECMR = (ecmrID: string): Ecmr => {
     recipientRef:           'SDADHGA21312312',
     orderID:                'AAAA123456',
     creation:               {
-      address: {
-        name:        'Amsterdam Compound',
-        street:      'compenstraat',
-        houseNumber: '21',
-        city:        'Assen',
-        zipCode:     '9976ZH',
-        country:     'Netherlands',
-        latitude:    51.917153,
-        longitude:   4.474623
-      },
+      address: buildAddress(),
       date:    1502402400000
     },
     loading:                {
-      address:    {
-        name:        'Amsterdam Compound',
-        street:      'compenstraat',
-        houseNumber: '21',
-        city:        'Amsterdam',
-        zipCode:     '9976ZH',
-        country:     'Netherlands',
-        latitude:    52.377698,
-        longitude:   4.896555
-      },
+      address:    buildAddress(),
       actualDate: 1502402400000
     },
     delivery:               {
-      address:    {
-        name:        'Rob Carman',
-        street:      'autostraat',
-        houseNumber: '12',
-        city:        'Rotterdam',
-        zipCode:     '9442KO',
-        country:     'Netherlands',
-        latitude:    51.917153,
-        longitude:   4.474623
-      },
+      address:    buildAddress(),
       actualDate: 1502488800000
     },
     owner:                  'leaseplan',
@@ -75,45 +67,8 @@ const buildECMR = (ecmrID: string): Ecmr => {
     recipient:              'rob@cardealer.org',
     issuedBy:               'koopman',
     carrierComments:        'No comments',
-    documents:              [
-      'doc1'
-    ],
-    goods:                  [
-      {
-        vehicle:           {
-          vin:             '183726339N',
-          manufacturer:    'Audi',
-          model:           'A1',
-          type:            'sportback',
-          ecmrs:           [],
-          odoMeterReading: 0,
-          plateNumber:     'AV198RX'
-        },
-        description:       'vehicle',
-        weight:            1500,
-        loadingStartDate:  1502834400000,
-        loadingEndDate:    1502834400000,
-        deliveryStartDate: 1502834400000,
-        deliveryEndDate:   1502834400000
-      },
-      {
-        vehicle:           {
-          vin:             '736182CHD28172',
-          manufacturer:    'Mercedes',
-          model:           'SLK',
-          type:            'Station',
-          ecmrs:           [],
-          odoMeterReading: 0,
-          plateNumber:     'I827YE'
-        },
-        description:       'vehicle',
-        weight:            1800,
-        loadingStartDate:  1502834400000,
-        loadingEndDate:    1502834400000,
-        deliveryStartDate: 1502834400000,
-        deliveryEndDate:   1502834400000
-      }
-    ],
+    documents:              [],
+    goods:                  [],
     legalOwnerInstructions: 'string',
     paymentInstructions:    'string',
     payOnDelivery:          'string'
@@ -122,71 +77,18 @@ const buildECMR = (ecmrID: string): Ecmr => {
 
 const buildTransportOrder = (): TransportOrder => {
   return <TransportOrder> {
-    orderID:   Math.random().toString(36).substring(7),
+    orderID:   String(new Date()),
     loading:   {
       actualDate: 1502834400000,
-      address:    {
-        name:        'loading address',
-        street:      'een straat',
-        houseNumber: '41',
-        city:        'Groningen',
-        zipCode:     '7811 HC',
-        country:     'netherlands',
-        longitude:   124,
-        latitude:    123
-      }
+      address:    buildAddress(),
     },
     delivery:  {
       actualDate: 1502834400000,
-      address:    {
-        name:        'delivery adress',
-        street:      'een straat',
-        houseNumber: '41',
-        city:        'Groningen',
-        zipCode:     '7811 HC',
-        country:     'netherlands',
-        longitude:   124,
-        latitude:    123
-      }
+      address:    buildAddress(),
     },
     carrier:   'koopman',
     source:    'amsterdamcompound',
-    goods:     [
-      {
-        vehicle:           {
-          vin:             '183726339N',
-          manufacturer:    'Audi',
-          model:           'A1',
-          type:            'sportback',
-          ecmrs:           [],
-          odoMeterReading: 0,
-          plateNumber:     'AV198RX'
-        },
-        description:       'vehicle',
-        weight:            1500,
-        loadingStartDate:  1502834400000,
-        loadingEndDate:    1502834400000,
-        deliveryStartDate: 1502834400000,
-        deliveryEndDate:   1502834400000
-      },
-      {
-        vehicle:           {
-          vin:             '736182CHD28172',
-          manufacturer:    'Mercedes',
-          model:           'SLK',
-          type:            'Station',
-          ecmrs:           [],
-          odoMeterReading: 0,
-          plateNumber:     'I827YE'
-        },
-        description:       'vehicle',
-        weight:            1800,
-        loadingStartDate:  1502834400000,
-        loadingEndDate:    1502834400000,
-        deliveryStartDate: 1502834400000,
-        deliveryEndDate:   1502834400000
-      }
-    ],
+    goods:     [],
     status:    'OPEN',
     issueDate: 1502834400000,
     ecmrs:     [],
@@ -197,6 +99,7 @@ const buildTransportOrder = (): TransportOrder => {
 
 describe('A legal owner admin can', () => {
   before((done) => {
+    transportOrder    = buildTransportOrder();
     const loginParams = {
       'username': 'lapo@leaseplan.org',
       'password': 'passw0rd'
@@ -393,7 +296,7 @@ describe('A legal owner admin can', () => {
     server
       .post('/api/v1/transportOrder/')
       .set('x-access-token', token)
-      .send(buildTransportOrder())
+      .send(transportOrder)
       .expect(ok)
       .expect('Content-Type', /json/)
       .expect(200)
@@ -402,6 +305,37 @@ describe('A legal owner admin can', () => {
           console.log(err.stack);
           return done(err);
         }
+        done(err);
+      });
+  });
+
+  it('get all transport orders', (done) => {
+    server
+      .get('/api/v1/transportOrder')
+      .set('x-access-token', token)
+      .expect(ok)
+      .expect('Content-Type', /json/)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+        }
+        should.exist(res.body.orderID === transportOrder.orderID);
+        done(err);
+      });
+  });
+
+  it('get a specific transport order based on ID', (done) => {
+    server
+      .get(`/api/v1/transportOrder/orderID/${transportOrder.orderID}`)
+      .set('x-access-token', token)
+      .expect(ok)
+      .expect('Content-Type', /json/)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+          return done(err);
+        }
+        should.exist(res.body.orderID === transportOrder.orderID);
         done(err);
       });
   });
