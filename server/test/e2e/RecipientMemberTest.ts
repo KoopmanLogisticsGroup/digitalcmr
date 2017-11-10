@@ -8,6 +8,7 @@ import {Ecmr} from '../../resources/interfaces/ecmr.interface';
 const server = supertest.agent('http://localhost:8080');
 const should = chai.should();
 let token: string;
+let updateEcmr: Ecmr;
 
 const ok = (res) => {
   if (res.status !== 200) {
@@ -234,6 +235,36 @@ describe('An Recipient member can', () => {
       });
   });
 
+  it('get an ECMR by ecmrID', (done) => {
+    server
+      .get('/api/v1/ECMR/ecmrID/D1234567890')
+      .set('x-access-token', token)
+      .expect(ok)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+          return done(err);
+        }
+        updateEcmr = res.body;
+        done(err);
+      });
+  });
+
+  it('get an ECMR by status', (done) => {
+    server
+      .get('/api/v1/ECMR/status/DELIVERED')
+      .set('x-access-token', token)
+      .expect(ok)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+          return done(err);
+        }
+        should.exist(res.body.find(ecmr => ecmr.status === 'DELIVERED'));
+        done(err);
+      });
+  });
+
   it('read ECMRs where his org is the recipient', (done) => {
     server
       .get('/api/v1/ECMR')
@@ -262,6 +293,37 @@ describe('An Recipient member can', () => {
       });
   });
 
+  it('get all ECMRs containing a vehicle with the provided vin', (done) => {
+    server
+      .get('/api/v1/ECMR/vehicle/vin/183726339N')
+      .set('x-access-token', token)
+      .expect(ok)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+          return done(err);
+        }
+        should.exist(res.body.find(ecmr => ecmr.ecmrID === 'A1234567890'));
+        should.exist(res.body.find(ecmr => ecmr.ecmrID === 'B1234567890'));
+        done(err);
+      });
+  });
+
+  it('get all ECMRs containing a vehicle with the plate number', (done) => {
+    server
+      .get('/api/v1/ECMR/vehicle/plateNumber/AV198RX')
+      .set('x-access-token', token)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+          return done(err);
+        }
+        should.exist(res.body.find(ecmr => ecmr.ecmrID === 'A1234567890'));
+        should.exist(res.body.find(ecmr => ecmr.ecmrID === 'B1234567890'));
+        done(err);
+      });
+  });
+
   it('not create an ECMR', (done) => {
     const transportOrder = buildECMR('ecmrRecipient');
     server
@@ -277,7 +339,7 @@ describe('An Recipient member can', () => {
       });
   });
 
-  it('not update an ECMR from DELIVERED to Confirmed Delivered when is org is not recipient', (done) => {
+  it('not update an ECMR from DELIVERED to Confirmed Delivered when his org is not recipient', (done) => {
     const updateECMR     = buildECMR('F1234567890');
     updateECMR.status    = 'CONFIRMED_DELIVERED';
     updateECMR.recipient = 'notCarDealer';
@@ -294,7 +356,7 @@ describe('An Recipient member can', () => {
       });
   });
 
-  it('update an ECMR from DELIVERED to Confirmed Delivered', (done) => {
+  it('update an ECMR from DELIVERED to CONFIRMED DELIVERED', (done) => {
     const updateECMR  = buildECMR('ecmr1');
     updateECMR.status = 'CONFIRMED_DELIVERED';
     server
@@ -306,6 +368,51 @@ describe('An Recipient member can', () => {
         if (err) {
           console.log(err.stack);
         }
+        done(err);
+      });
+  });
+
+  it('get all vehicles', (done) => {
+    server
+      .get('/api/v1/vehicle/')
+      .set('x-access-token', token)
+      .expect(ok)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+          return done(err);
+        }
+        res.body.length.should.be.greaterThan(0);
+        done(err);
+      });
+  });
+
+  it('get vehicle by vin', (done) => {
+    server
+      .get('/api/v1/vehicle/vin/183726339N')
+      .set('x-access-token', token)
+      .expect(ok)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+          return done(err);
+        }
+        res.body.vin.should.equal('183726339N');
+        done(err);
+      });
+  });
+
+  it('get vehicle by plateNumber', (done) => {
+    server
+      .get('/api/v1/vehicle/plateNumber/AV198RX')
+      .set('x-access-token', token)
+      .expect(ok)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+          return done(err);
+        }
+        res.body.plateNumber.should.equal('AV198RX');
         done(err);
       });
   });

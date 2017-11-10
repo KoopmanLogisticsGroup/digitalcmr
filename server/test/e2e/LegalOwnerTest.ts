@@ -8,6 +8,7 @@ import {Ecmr} from '../../resources/interfaces/ecmr.interface';
 const server = supertest.agent('http://localhost:8080');
 const should = chai.should();
 let token: string;
+let updateEcmr: Ecmr;
 
 const ok = (res) => {
   if (res.status !== 200) {
@@ -269,6 +270,36 @@ describe('A legal owner admin can', () => {
       });
   });
 
+  it('get an ECMR by ecmrID', (done) => {
+    server
+      .get('/api/v1/ECMR/ecmrID/D1234567890')
+      .set('x-access-token', token)
+      .expect(ok)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+          return done(err);
+        }
+        updateEcmr = res.body;
+        done(err);
+      });
+  });
+
+  it('get an ECMR by status', (done) => {
+    server
+      .get('/api/v1/ECMR/status/CREATED')
+      .set('x-access-token', token)
+      .expect(ok)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+          return done(err);
+        }
+        should.exist(res.body.find(ecmr => ecmr.status === 'CREATED'));
+        done(err);
+      });
+  });
+
   it('not read ECMRs when is org is not the legal owner', (done) => {
     server
       .get('/api/v1/ECMR/ecmrID/H1234567890')
@@ -279,6 +310,82 @@ describe('A legal owner admin can', () => {
           console.log(err.stack);
         }
         res.body.should.equal(200);
+        done(err);
+      });
+  });
+
+  it('get all ECMRs containing a vehicle with the provided vin', (done) => {
+    server
+      .get('/api/v1/ECMR/vehicle/vin/183726339N')
+      .set('x-access-token', token)
+      .expect(ok)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+          return done(err);
+        }
+        should.exist(res.body.find(ecmr => ecmr.ecmrID === 'A1234567890'));
+        should.exist(res.body.find(ecmr => ecmr.ecmrID === 'B1234567890'));
+        done(err);
+      });
+  });
+
+  it('get all ECMRs containing a vehicle with the plate number', (done) => {
+    server
+      .get('/api/v1/ECMR/vehicle/plateNumber/AV198RX')
+      .set('x-access-token', token)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+          return done(err);
+        }
+        should.exist(res.body.find(ecmr => ecmr.ecmrID === 'A1234567890'));
+        should.exist(res.body.find(ecmr => ecmr.ecmrID === 'B1234567890'));
+        done(err);
+      });
+  });
+
+  it('get all vehicles', (done) => {
+    server
+      .get('/api/v1/vehicle/')
+      .set('x-access-token', token)
+      .expect(ok)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+          return done(err);
+        }
+        res.body.length.should.be.greaterThan(0);
+        done(err);
+      });
+  });
+
+  it('get vehicle by vin', (done) => {
+    server
+      .get('/api/v1/vehicle/vin/183726339N')
+      .set('x-access-token', token)
+      .expect(ok)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+          return done(err);
+        }
+        res.body.vin.should.equal('183726339N');
+        done(err);
+      });
+  });
+
+  it('get vehicle by plateNumber', (done) => {
+    server
+      .get('/api/v1/vehicle/plateNumber/AV198RX')
+      .set('x-access-token', token)
+      .expect(ok)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+          return done(err);
+        }
+        res.body.plateNumber.should.equal('AV198RX');
         done(err);
       });
   });
@@ -317,51 +424,4 @@ describe('A legal owner admin can', () => {
         done(err);
       });
   });
-//
-// it('get a legal owner by id', (done) => {
-//   server
-//     .get('/api/v1/legalowners/' + legalOwner.userID)
-//     .set('legalOwnerID', legalOwner.userID)
-//     .expect(ok)
-//     .expect('Content-Type', /json/)
-//     .end((err, res) => {
-//       res.body.userID.should.be.equal(legalOwner.userID);
-//       done(err);
-//     });
-// });
-//
-// it('update a legal owner by id', (done) => {
-//   legalOwner.firstName = 'george';
-//   server
-//     .put('/api/v1/legalowners')
-//     .send(legalOwner)
-//     .expect(ok)
-//     .expect('Content-Type', /json/)
-//     .end((err: Error, res) => {
-//       if (err) {
-//         console.log(err.stack);
-//         return done(err);
-//       }
-//       res.body.$Class.should.equal('org.digitalcmr.LegalOwner', 'No legalOwner returned');
-//       res.body.userID.should.equal(legalOwner.userID);
-//       res.body.firstName.should.equal('george');
-//       done(err);
-//     });
-// });
-//
-// it('delete a legal owner by id', (done) => {
-//   server
-//     .delete('/api/v1/legalowners/' + legalOwner.userID)
-//     .set('legalOwnerID', legalOwner.userID)
-//     .expect(ok)
-//     .expect('Content-Type', /json/)
-//     .end((err: Error, res) => {
-//       if (err) {
-//         console.log(err.stack);
-//         return done(err);
-//       }
-//       done(err);
-//     });
-// });
-
 });
