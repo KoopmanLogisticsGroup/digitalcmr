@@ -1,4 +1,4 @@
-.designMenu {
+.design_menu {
   position: relative;
   height:   70px;
   .logo {
@@ -56,7 +56,7 @@
 }
 
 @media (max-width: 640px) {
-  #welcomeMsg {
+  #welcome_message {
     display: none;
   }
 }
@@ -80,4 +80,8 @@
 
 .ui .icon input:focus {
   border: solid 1px #2f62a0;
+}
+
+.searchbartest {
+  width: 200%;
 }

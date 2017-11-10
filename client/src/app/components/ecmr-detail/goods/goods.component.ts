@@ -9,12 +9,11 @@ import {Ecmr} from '../../../interfaces/ecmr.interface';
   styleUrls:   ['./goods.component.scss']
 })
 export class GoodsComponent implements OnInit {
-
   @ViewChild(SignOffModalComponent) public signOffModal: SignOffModalComponent;
-
   @Input() public ecmr: Ecmr;
   @Input() public selectedColumnIs: number;
   @Input() public selectedColumns: number;
+
   public EcmrStatus = {
     Created:            'CREATED',
     Loaded:             'LOADED',

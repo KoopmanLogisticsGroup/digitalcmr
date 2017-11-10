@@ -13,6 +13,7 @@ export class GeneralInfoComponent implements OnInit {
 
   public selectedImage: boolean[];
   public selectedColumnIs: number;
+
   public EcmrStatus = {
     Created:            'CREATED',
     Loaded:             'LOADED',
@@ -60,19 +61,7 @@ export class GeneralInfoComponent implements OnInit {
     })
   }
 
-  public userRole(): string {
+  public getUserRole(): string {
     return this.authenticationService.isAuthenticated() ? JSON.parse(localStorage.getItem('currentUser')).user.role : '';
-  }
-
-  public selectImage() {
-    if (this.selectedImage[0] || this.userRole() === this.User.LegalOwnerAdmin) {
-      return 'selectedImg1';
-    } else if (this.selectedImage[1]) {
-      return 'selectedImg2';
-    } else if (this.selectedImage[2]) {
-      return 'selectedImg3';
-    } else if (this.selectedImage[3]) {
-      return 'selectedImg4';
-    }
   }
 }

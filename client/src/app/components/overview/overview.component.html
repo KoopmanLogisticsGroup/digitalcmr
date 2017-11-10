@@ -1,95 +1,14 @@
 <div class="ui container">
-    <div class="row top_margin_content">
-        <div class="table-title">
-            <div *ngIf="searchBarData === '' || null; else searchResults">E-CMR Overview</div>
-            <ng-template #searchResults>
-                Search Results
-                <img class="close_results" (click)="clearSearchBar()">
-            </ng-template>
-        </div>
+  <app-ecmr-overview *ngIf="ecmrOverview"></app-ecmr-overview>
+  <app-transportorder-overview *ngIf="transportOrderOverview"></app-transportorder-overview>
+  <div *ngIf="getUserRole() === User.LegalOwnerAdmin && transportOrderOverview; else showOrderView">
+    <div class="ui button right floated" (click)="changeToECMR()" *ngIf="getUserRole() === User.LegalOwnerAdmin">
+      ECMR VIEW
     </div>
-    <div class="row">
-        <div class="ui pointing secondary menu" *ngIf="searchBarData !== ''">
-            <div [hidden]="(filterEcmr < 1 && searchBarData)">
-                <div class="results_top">Showing
-                    <span *ngIf="searchBarData === ''; else showFilteredResults">{{ecmrsFiltered?.length}}</span>
-                    <ng-template #showFilteredResults>{{filterEcmr}}</ng-template>
-                    of {{ecmrsFiltered?.length}} Results
-                </div>
-            </div>
-        </div>
-        <div *ngIf="searchBarData === ''">
-            <div class="ui pointing secondary menu">
-                <div *ngIf="(getUserRole() === User.CompoundAdmin)">
-                  <a class="item" data-tab="first" (click)="setCurrentView(viewStatus.Open)"
-                     [ngClass]="{'active' : currentView === viewStatus.Open ? true : false}">OPEN</a></div>
-              <a class="item" data-tab="second" (click)="setCurrentView(viewStatus.InProgress)"
-                 *ngIf="getUserRole() === User.CompoundAdmin || getUserRole() === User.CarrierMember || getUserRole() === User.RecipientMember"
-                 [ngClass]="{'active' : currentView === viewStatus.InProgress ? true : false}">IN PROGRESS</a>
-              <a class="item" data-tab="third" (click)="setCurrentView(viewStatus.Completed)"
-                 *ngIf="getUserRole() === User.CompoundAdmin || getUserRole() === User.LegalOwnerAdmin || getUserRole() === User.CarrierMember || getUserRole() === User.RecipientMember"
-                 [ngClass]="{'active' : currentView === viewStatus.Completed ? true : false}">COMPLETED</a>
-            </div>
-        </div>
-        <div class="ui active tab grid" data-tab="first">
-            <div class="row">
-                <table class="ui unstackable table spacing_table">
-                    <div [hidden]="(filterEcmr < 1 && searchBarData)">
-                        <thead class="table-header">
-                        <th></th>
-                        <th>Date</th>
-                        <th>CMR Nr.</th>
-                        <th>Pick up location</th>
-                        <th>Destination</th>
-                        <th>Number of Goods</th>
-                        <th>Carrier</th>
-                        <th>Recipient</th>
-                        <th>Remark</th>
-                        <th>Damage Remark</th>
-                        <th>Status</th>
-                        <th></th>
-                        </thead>
-                    </div>
-                    <tbody>
-                    <tr *ngFor="let ecmr of ecmrsFiltered | filterBy: searchBarData" class="table-row">
-                        <td></td>
-                        <td>{{ecmr?.creation?.date | date:"dd-MM-yyyy"}}</td>
-                        <td>{{ecmr?.ecmrID}}</td>
-                        <td>{{ecmr?.loading?.address.city}}</td>
-                        <td>{{ecmr?.delivery?.address.city}}</td>
-                        <td>
-                            <div class="center_content">{{ecmr?.goods.length}}</div>
-                        </td>
-                        <td>{{ecmr?.carrier?.split('#')[1] }}</td>
-                        <td>{{ecmr?.recipient?.split('#')[1].split('@')[0]}}</td>
-                        <td class="responsive_image">
-                            <img class="centered_content comment_icon"
-                                 *ngIf="hasComments(ecmr)"/>
-                        </td>
-                        <td class="responsive_image"><img class="centered_content exclamation_mark_icon"
-                                                          *ngIf="isDamaged(ecmr)"/></td>
-                        <td><span [ngClass]="returnStatus(ecmr && ecmr)">
-
-                          {{ecmr?.status === EcmrStatus.Created ? 'New CMR' :
-                            ecmr?.status === EcmrStatus.Loaded ? 'Awaiting Carrier' :
-                            ecmr?.status === EcmrStatus.InTransit ? 'In Transit' :
-                            ecmr?.status === EcmrStatus.Delivered ? 'Delivered' :
-                            ecmr?.status === EcmrStatus.ConfirmedDelivered ? 'Completed' : ecmr?.status}}
-                        </span></td>
-                        <td>
-                            <img class="view_more" routerLink="/ecmr/{{ecmr.ecmrID}}"/>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-            <img class="no_results" *ngIf="filterEcmr < 1 && searchBarData !== ''">
-            <p *ngIf="filterEcmr < 1 && searchBarData !== ''" class="no_results_text">NO RESULTS FOUND</p>
-        </div>
-        <div class="show_results" *ngIf="searchBarData === ''">Showing
-            <span *ngIf="searchBarData === ''; else showFilteredResults">{{ecmrsFiltered?.length}}</span>
-            <ng-template #showFilteredResults>{{filterEcmr}}</ng-template>
-            of {{ecmrsFiltered?.length}} Results
-        </div>
+  </div>
+  <ng-template #showOrderView>
+    <div class="ui button right floated" (click)="changeToOrder()" *ngIf="getUserRole() === User.LegalOwnerAdmin">
+      Transport Order VIEW
     </div>
+  </ng-template>
 </div>
