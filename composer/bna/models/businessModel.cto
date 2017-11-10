@@ -233,7 +233,7 @@ transaction UpdateECMR {
 }
 
 transaction UpdateRegistrationCountry {
-  o String vin
+  --> Vehicle vehicle
   o String registrationCountry
 }
 
