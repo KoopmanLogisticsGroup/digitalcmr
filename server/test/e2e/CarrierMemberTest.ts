@@ -289,7 +289,7 @@ describe('A Carrier member can', () => {
         }
         if (res.body instanceof Array) {
           res.body.length.should.be.greaterThan(0, 'No ECMRs for kooopman were found.');
-          res.body[0].carrier.should.equal('resource:org.digitalcmr.CarrierOrg#koopman');
+          should.exist(res.body.find(ecmr => ecmr.carrier === 'resource:org.digitalcmr.CarrierOrg#koopman'));
         } else if (res.body instanceof Object) {
           res.body.carrier.should.equal('resource:org.digitalcmr.CarrierOrg#koopman');
         } else {
@@ -408,7 +408,7 @@ describe('A Carrier member can', () => {
         }
         if (res.body instanceof Array) {
           res.body.length.should.be.greaterThan(0, 'No CREATED ECMRs were found.');
-          res.body[0].status.should.equal('CREATED');
+          should.exist(res.body.find(ecmr => ecmr.status === 'CREATED'));
         } else if (res.body instanceof Object) {
           res.body.status.should.equal('LOADED');
         } else {
@@ -429,7 +429,7 @@ describe('A Carrier member can', () => {
           }
           if (res.body instanceof Array) {
             res.body.length.should.be.greaterThan(0, 'No LOADED ECMRs were found.');
-            res.body[0].status.should.equal('LOADED');
+            should.exist(res.body.find(ecmr => ecmr.status === 'LOADED'));
           } else if (res.body instanceof Object) {
             res.body.status.should.equal('LOADED');
           } else {
@@ -451,7 +451,7 @@ describe('A Carrier member can', () => {
           }
           if (res.body instanceof Array) {
             res.body.length.should.be.greaterThan(0, 'No IN_TRANSIT ECMRs were found.');
-            res.body[0].status.should.equal('IN_TRANSIT');
+            should.exist(res.body.find(ecmr => ecmr.status === 'IN_TRANSIT'));
           } else if (res.body instanceof Object) {
             res.body.status.should.equal('LOADED');
           } else {
@@ -473,7 +473,7 @@ describe('A Carrier member can', () => {
         }
         if (res.body instanceof Array) {
           res.body.length.should.be.greaterThan(0, 'No DELIVERED ECMRs were found.');
-          res.body[0].status.should.equal('DELIVERED');
+          should.exist(res.body.find(ecmr => ecmr.status === 'DELIVERED'));
         } else if (res.body instanceof Object) {
           console.log(res.body);
           res.body.status.should.equal('DELIVERED');
@@ -495,7 +495,7 @@ describe('A Carrier member can', () => {
         }
         if (res.body instanceof Array) {
           res.body.length.should.be.greaterThan(0, 'No CONFIRMED_DELIVERED ECMRs were found.');
-          res.body[0].should.equal('CONFIRMED_DELIVERED');
+          should.exist(res.body.find(ecmr => ecmr.status === 'CONFIRMED_DELIVERED'));
         } else if (res.body instanceof Object) {
           res.body.status.should.equal('CONFIRMED_DELIVERED');
         } else {
