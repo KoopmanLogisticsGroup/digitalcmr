@@ -41,13 +41,15 @@ export class ECMRController {
   public async getVehicleByPlateNumber(@Param('plateNumber') plateNumber: string, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getVehicleByPlateNumber', {plateNumber: plateNumber});
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getVehicleByPlateNumber',
+      {plateNumber: plateNumber});
   }
 
   @Post('/')
   public async createVehicles(@Body() vehicles: any[], @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.create(identity, Config.settings.composer.profile, Config.settings.composer.namespace, vehicles, new VehicleTransactor());
+    return await this.transactionHandler.create(identity, Config.settings.composer.profile, Config.settings.composer.namespace, vehicles,
+      new VehicleTransactor());
   }
 }

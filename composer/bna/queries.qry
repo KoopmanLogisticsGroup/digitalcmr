@@ -1,5 +1,25 @@
+query getAllTransportOrders {
+  description: "Get all Transport Orders (user has permission to)"
+  statement:
+      SELECT org.digitalcmr.TransportOrder
+}
+
+query getTransportOrderById {
+  description: "Get Transport Orders (user has permission to)"
+  statement:
+      SELECT org.digitalcmr.TransportOrder
+          WHERE (orderID == _$orderID)
+}
+
+query getTransportOrdersByStatus {
+  description: "Select all Transport Orders based on their status"
+  statement:
+      SELECT org.digitalcmr.TransportOrder
+          WHERE (status == _$status)
+}
+
 query getAllEcmrs {
-  description: "Select all ECMRs (user has permission to)"
+  description: "Get all ECMRs (user has permission to)"
   statement:
       SELECT org.digitalcmr.ECMR
 }
@@ -8,7 +28,7 @@ query getEcmrById {
   description: "Get ECMR by ID"
   statement:
       SELECT org.digitalcmr.ECMR
-          WHERE (ecmrID == _$id)
+          WHERE (ecmrID == _$ecmrID)
 }
 
 query getEcmrsByStatus {

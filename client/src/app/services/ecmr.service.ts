@@ -35,8 +35,4 @@ export class EcmrService {
     return this._http.put(this.actionUrl, ecmr, {headers: this.headers})
       .map(res => res.json())
   }
-
-  private handleErrorObservable(error: Response | any): ErrorObservable {
-    return Observable.throw(error.message || error);
-  }
 }

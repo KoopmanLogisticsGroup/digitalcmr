@@ -7,15 +7,7 @@ export class TransactionHandler {
   public constructor(private businessNetworkHandler: BusinessNetworkHandler) {
   }
 
-  public async testConnection(identity: Identity, connectionProfile: string): Promise<void> {
-    await this.businessNetworkHandler.connect(identity, connectionProfile);
-    await this.businessNetworkHandler.ping();
-
-    return this.businessNetworkHandler.disconnect();
-  }
-
-  public async create(identity: Identity, connectionProfile: string, namespace: string, data: any,
-                      transactionCreator: TransactionCreator): Promise<void> {
+  public async create(identity: Identity, connectionProfile: string, namespace: string, data: any, transactionCreator: TransactionCreator): Promise<void> {
     await this.businessNetworkHandler.connect(identity, connectionProfile);
     const factory: Factory = await this.businessNetworkHandler.getFactory();
 

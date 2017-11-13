@@ -21,6 +21,11 @@ import {SignOffModalComponent} from './components/ecmr-detail/sign-off-modal/sig
 import {FilterByPipe} from '../../src/app/utils/filterBy.pipe';
 import {SearchService} from './services/search.service';
 import {NavbarService} from './services/navbar.service';
+import {TransportOrderService} from './services/transportorder.service';
+import {TransportorderDetailComponent} from './components/transportorder-detail/transportorder-detail.component';
+import {TransportorderGoodsComponent} from './components/transportorder-detail/transportorder-goods/transportorder-goods.component';
+import {EcmrOverviewComponent} from './components/overview/ecmr-overview/ecmr-overview.component';
+import {TransportorderOverviewComponent} from './components/overview/transportorder-overview/transportorder-overview.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +37,11 @@ import {NavbarService} from './services/navbar.service';
     GeneralInfoComponent,
     GoodsComponent,
     SignOffModalComponent,
-    FilterByPipe
+    FilterByPipe,
+    TransportorderDetailComponent,
+    TransportorderGoodsComponent,
+    EcmrOverviewComponent,
+    TransportorderOverviewComponent
   ],
   imports:      [
     BrowserModule,
@@ -47,7 +56,8 @@ import {NavbarService} from './services/navbar.service';
     AuthGuard,
     EcmrService,
     SearchService,
-    NavbarService
+    NavbarService,
+    TransportOrderService
   ],
   bootstrap:    [AppComponent]
 })

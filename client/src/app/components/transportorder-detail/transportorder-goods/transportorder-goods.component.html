@@ -1,0 +1,31 @@
+<div class="row titles">
+  <div class="column">Order {{transportOrder?.orderID}}</div>
+</div>
+<div class="row">
+  <form>
+    <table class="ui padded unstackable structured table">
+      <thead>
+      <tr>
+        <th>VIN</th>
+        <th>License Plate</th>
+        <th>Description</th>
+        <th>Weight</th>
+        <th>ODO Meter</th>
+        <th>PICK UP</th>
+        <th>DELIVERY</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let good of transportOrder?.goods">
+        <td>{{good?.vehicle?.vin}}</td>
+        <td>{{good?.vehicle?.plateNumber}}</td>
+        <td>{{good?.description}} kg</td>
+        <td>{{good?.weight}}</td>
+        <td>{{good?.vehicle?.odoMeterReading}}</td>
+        <td>{{transportOrder?.loading?.address?.city}}</td>
+        <td>{{transportOrder?.delivery?.address?.city}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </form>
+</div>

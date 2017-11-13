@@ -32,6 +32,6 @@ services:
 
   private-db:
     container_name: private-db
-    image: couchdb
+    image: couchdb:1.7.0
     ports:
       - "5985:5984"

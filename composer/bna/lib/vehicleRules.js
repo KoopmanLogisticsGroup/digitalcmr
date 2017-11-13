@@ -43,26 +43,17 @@ function CreateVehicles(tx) {
  * @return {Promise} Asset registry Promise
  * @transaction
  */
-function UpdateRegistrationCountry(tx) {
+function updateRegistrationCountry(tx) {
 
   console.log('Invoking function processor to update RegistrationCountry');
   console.log(tx);
-  console.log(tx.vin);
+  console.log(tx.vehicle);
 
   // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.Vehicle')
     .then(function (assetRegistry) {
-      return assetRegistry.get(tx.vin).catch(function (error) {
-        console.log('[Update Vehicle] An error occurred while updating the registry asset: ' + error);
-        throw error;
-      });
-    })
-    .then(function (vehicle) {
-      vehicle.registrationCountry = tx.registrationCountry;
-
-      return getAssetRegistry('org.digitalcmr.Vehicle')
-        .then(function (assetRegistry) {
-          return assetRegistry.update(vehicle).catch(function (error) {
+      tx.vehicle.registrationCountry = tx.registrationCountry;
+      return assetRegistry.update(tx.vehicle).catch(function (error) {
             console.log('[Update Vehicle] An error occurred while updating the registry asset: ' + error);
             throw error;
           });
@@ -70,5 +61,5 @@ function UpdateRegistrationCountry(tx) {
           console.log('[Update Vehicle] An error occurred while updating the Vehicle asset: ' + error);
           throw error;
         });
-    })
+  // })
 }

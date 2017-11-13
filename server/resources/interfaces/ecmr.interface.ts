@@ -12,7 +12,7 @@ export interface Ecmr {
   legalOwnerRef: string;
   carrierRef: string;
   recipientRef: string;
-  issuedDate: number;
+  issueDate: number;
   issuedBy: string;
   owner: string;
   source: string;
