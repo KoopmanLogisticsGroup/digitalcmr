@@ -2,10 +2,15 @@ import * as supertest from 'supertest';
 import '../../node_modules/mocha';
 import * as chai from 'chai';
 import * as http from 'http';
+import {TransportOrder} from '../../resources/interfaces/transportOrder.interface';
+import {Ecmr} from '../../resources/interfaces/ecmr.interface';
+import {Address} from '../../resources/interfaces/address.interface';
 
 const server = supertest.agent('http://localhost:8080');
 const should = chai.should();
+let transportOrder: TransportOrder;
 let token: string;
+let updateEcmr: Ecmr;
 
 const ok = (res) => {
   if (res.status !== 200) {
@@ -14,93 +19,87 @@ const ok = (res) => {
   }
 };
 
-const transportOrder = () => {
-  return {
-    'orderID':   Math.random().toString(36).substring(7),
-    'loading':   {
-      'actualDate': 1502834400000,
-      'address':    {
-        'name':        'loading address',
-        'street':      'een straat',
-        'houseNumber': '41',
-        'city':        'Groningen',
-        'zipCode':     '7811 HC',
-        'country':     'netherlands',
-        'longitude':   124,
-        'latitude':    123
-      }
+const buildAddress = (): Address => {
+  return <Address> {
+    name:        'name',
+    street:      'street',
+    houseNumber: 'housenumber',
+    city:        'city',
+    zipCode:     'zipcode',
+    country:     'country',
+    longitude:   0,
+    latitude:    0
+  };
+};
+//TODO when an ADMIN has been created make sure to replace ecmrID by new Date().getTime().toString() for all participants
+const buildECMR    = (ecmrID: string): Ecmr => {
+  return <Ecmr>{
+    ecmrID:                 ecmrID,
+    status:                 'CREATED',
+    issueDate:              1502402400000,
+    agreementTerms:         'agreement terms here',
+    agreementTermsSec:      'agreement terms sec',
+    legalOwnerRef:          'ASD213123S',
+    carrierRef:             'H2238723VASD',
+    recipientRef:           'SDADHGA21312312',
+    orderID:                'AAAA123456',
+    creation:               {
+      address: buildAddress(),
+      date:    1502402400000
     },
-    'delivery':  {
-      'actualDate': 1502834400000,
-      'address':    {
-        'name':        'delivery adress',
-        'street':      'een straat',
-        'houseNumber': '41',
-        'city':        'Groningen',
-        'zipCode':     '7811 HC',
-        'country':     'netherlands',
-        'longitude':   124,
-        'latitude':    123
-      }
+    loading:                {
+      address:    buildAddress(),
+      actualDate: 1502402400000
     },
-    'carrier':   'koopman',
-    'source':    'amsterdamcompound',
-    'goods':     [
-      {
-        '$class':            'org.digitalcmr.Good',
-        'vehicle':           {
-          '$class':          'org.digitalcmr.Vehicle',
-          'vin':             '183726339N',
-          'manufacturer':    'Audi',
-          'model':           'A1',
-          'type':            'sportback',
-          'ecmrs':           [],
-          'odoMeterReading': 0,
-          'plateNumber':     'AV198RX'
-        },
-        'description':       'vehicle',
-        'weight':            1500,
-        'loadingStartDate':  1502834400000,
-        'loadingEndDate':    1502834400000,
-        'deliveryStartDate': 1502834400000,
-        'deliveryEndDate':   1502834400000
-      },
-      {
-        '$class':            'org.digitalcmr.Good',
-        'vehicle':           {
-          '$class':          'org.digitalcmr.Vehicle',
-          'vin':             '736182CHD28172',
-          'manufacturer':    'Mercedes',
-          'model':           'SLK',
-          'type':            'Station',
-          'ecmrs':           [],
-          'odoMeterReading': 0,
-          'plateNumber':     'I827YE'
-        },
-        'description':       'vehicle',
-        'weight':            1800,
-        'loadingStartDate':  1502834400000,
-        'loadingEndDate':    1502834400000,
-        'deliveryStartDate': 1502834400000,
-        'deliveryEndDate':   1502834400000
-      }
-    ],
-    'status':    'OPEN',
-    'issueDate': 1502834400000,
-    'ecmrs':     [],
-    'orderRef':  'ref',
-    'owner':     'leaseplan'
-  }
+    delivery:               {
+      address:    buildAddress(),
+      actualDate: 1502488800000
+    },
+    owner:                  'leaseplan',
+    source:                 'amsterdamcompound',
+    transporter:            'harry@koopman.org',
+    carrier:                'koopman',
+    recipientOrg:           'cardealer',
+    recipient:              'rob@cardealer.org',
+    issuedBy:               'koopman',
+    carrierComments:        'No comments',
+    documents:              [],
+    goods:                  [],
+    legalOwnerInstructions: 'string',
+    paymentInstructions:    'string',
+    payOnDelivery:          'string'
+  };
 };
 
-describe('An admin can', () => {
+const buildTransportOrder = (): TransportOrder => {
+  return <TransportOrder> {
+    orderID:   String(new Date()),
+    loading:   {
+      actualDate: 1502834400000,
+      address:    buildAddress(),
+    },
+    delivery:  {
+      actualDate: 1502834400000,
+      address:    buildAddress(),
+    },
+    carrier:   'koopman',
+    source:    'amsterdamcompound',
+    goods:     [],
+    status:    'OPEN',
+    issueDate: 1502834400000,
+    ecmrs:     [],
+    orderRef:  'ref',
+    owner:     'leaseplan'
+  };
+};
 
-  it('can login a legal owner', (done) => {
+describe('A legal owner admin can', () => {
+  before((done) => {
+    transportOrder    = buildTransportOrder();
     const loginParams = {
       'username': 'lapo@leaseplan.org',
       'password': 'passw0rd'
     };
-
     server
       .post('/api/v1/login')
       .send(loginParams)
@@ -118,11 +117,182 @@ describe('An admin can', () => {
       });
   });
 
+  it('create an ECMR where his org is the owner', (done) => {
+    const ecmr = buildECMR('ecmr1');
+    server
+      .post('/api/v1/ECMR')
+      .set('x-access-token', token)
+      .send(ecmr)
+      .expect('Content-Type', /json/)
+      .expect(ok)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
+  it('not create an ECMR when he is not the owner', (done) => {
+    const ecmr = buildECMR('ecmrNotWorking');
+    ecmr.owner = 'notLeaseplan';
+    server
+      .post('/api/v1/ECMR')
+      .set('x-access-token', token)
+      .send(ecmr)
+      .expect('Content-Type', /json/)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
+  it('read all ECMRs for his organisation', (done) => {
+    server
+      .get('/api/v1/ECMR')
+      .set('x-access-token', token)
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+          return done(err);
+        }
+        res.body.length.should.be.greaterThan(0, 'No ECMRs found');
+        done(err);
+      });
+  });
+
+  it('get an ECMR by ecmrID', (done) => {
+    server
+      .get('/api/v1/ECMR/ecmrID/D1234567890')
+      .set('x-access-token', token)
+      .expect(ok)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+          return done(err);
+        }
+        updateEcmr = res.body;
+        done(err);
+      });
+  });
+
+  it('get an ECMR by status', (done) => {
+    server
+      .get('/api/v1/ECMR/status/CREATED')
+      .set('x-access-token', token)
+      .expect(ok)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+          return done(err);
+        }
+        should.exist(res.body.find(ecmr => ecmr.status === 'CREATED'));
+        done(err);
+      });
+  });
+
+  it('not read ECMRs when is org is not the legal owner', (done) => {
+    server
+      .get('/api/v1/ECMR/ecmrID/H1234567890')
+      .set('x-access-token', token)
+      .expect(200)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+        }
+        res.body.should.equal(200);
+        done(err);
+      });
+  });
+
+  it('get all ECMRs containing a vehicle with the provided vin', (done) => {
+    server
+      .get('/api/v1/ECMR/vehicle/vin/183726339N')
+      .set('x-access-token', token)
+      .expect(ok)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+          return done(err);
+        }
+        should.exist(res.body.find(ecmr => ecmr.ecmrID === 'A1234567890'));
+        should.exist(res.body.find(ecmr => ecmr.ecmrID === 'B1234567890'));
+        done(err);
+      });
+  });
+
+  it('get all ECMRs containing a vehicle with the plate number', (done) => {
+    server
+      .get('/api/v1/ECMR/vehicle/plateNumber/AV198RX')
+      .set('x-access-token', token)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+          return done(err);
+        }
+        should.exist(res.body.find(ecmr => ecmr.ecmrID === 'A1234567890'));
+        should.exist(res.body.find(ecmr => ecmr.ecmrID === 'B1234567890'));
+        done(err);
+      });
+  });
+
+  it('get all vehicles', (done) => {
+    server
+      .get('/api/v1/vehicle/')
+      .set('x-access-token', token)
+      .expect(ok)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+          return done(err);
+        }
+        res.body.length.should.be.greaterThan(0);
+        done(err);
+      });
+  });
+
+  it('get vehicle by vin', (done) => {
+    server
+      .get('/api/v1/vehicle/vin/183726339N')
+      .set('x-access-token', token)
+      .expect(ok)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+          return done(err);
+        }
+        res.body.vin.should.equal('183726339N');
+        done(err);
+      });
+  });
+
+  it('get vehicle by plateNumber', (done) => {
+    server
+      .get('/api/v1/vehicle/plateNumber/AV198RX')
+      .set('x-access-token', token)
+      .expect(ok)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+          return done(err);
+        }
+        res.body.plateNumber.should.equal('AV198RX');
+        done(err);
+      });
+  });
+
   it('create a transport order', (done) => {
     server
       .post('/api/v1/transportOrder/')
       .set('x-access-token', token)
-      .send(transportOrder())
+      .send(transportOrder)
       .expect(ok)
       .expect('Content-Type', /json/)
       .expect(200)
@@ -135,13 +305,44 @@ describe('An admin can', () => {
       });
   });
 
-  it('Cant create a transport order for other legal owner org', (done) => {
-    const to = transportOrder();
-    to.owner = 'notLeaseplan';
+  it('get all transport orders where his org is the owner', (done) => {
+    server
+      .get('/api/v1/transportOrder')
+      .set('x-access-token', token)
+      .expect(ok)
+      .expect('Content-Type', /json/)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+        }
+        should.exist(res.body.orderID === transportOrder.orderID);
+        done(err);
+      });
+  });
+
+  it('get a specific transport order based on ID', (done) => {
+    server
+      .get(`/api/v1/transportOrder/orderID/${transportOrder.orderID}`)
+      .set('x-access-token', token)
+      .expect(ok)
+      .expect('Content-Type', /json/)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+          return done(err);
+        }
+        should.exist(res.body.orderID === transportOrder.orderID);
+        done(err);
+      });
+  });
+
+  it('not create a transport order for another legal owner org', (done) => {
+    const wrongTransportOrder = buildTransportOrder();
+    wrongTransportOrder.owner = 'notLeaseplan';
     server
       .post('/api/v1/transportOrder/')
       .set('x-access-token', token)
-      .send(to)
+      .send(wrongTransportOrder)
       .expect('Content-Type', /json/)
       .expect(500)
       .end((err: Error) => {
@@ -152,53 +353,4 @@ describe('An admin can', () => {
         done(err);
       });
   });
-//
-// it('get a legal owner by id', (done) => {
-//   server
-//     .get('/api/v1/legalowners/' + legalOwner.userID)
-//     .set('legalOwnerID', legalOwner.userID)
-//     .expect(ok)
-//     .expect('Content-Type', /json/)
-//     .end((err, res) => {
-//       res.body.userID.should.be.equal(legalOwner.userID);
-//       done(err);
-//     });
-// });
-//
-// it('update a legal owner by id', (done) => {
-//   legalOwner.firstName = 'george';
-//   server
-//     .put('/api/v1/legalowners')
-//     .send(legalOwner)
-//     .expect(ok)
-//     .expect('Content-Type', /json/)
-//     .end((err: Error, res) => {
-//       if (err) {
-//         console.log(err.stack);
-//         return done(err);
-//       }
-//       res.body.$Class.should.equal('org.digitalcmr.LegalOwner', 'No legalOwner returned');
-//       res.body.userID.should.equal(legalOwner.userID);
-//       res.body.firstName.should.equal('george');
-//       done(err);
-//     });
-// });
-//
-// it('delete a legal owner by id', (done) => {
-//   server
-//     .delete('/api/v1/legalowners/' + legalOwner.userID)
-//     .set('legalOwnerID', legalOwner.userID)
-//     .expect(ok)
-//     .expect('Content-Type', /json/)
-//     .end((err: Error, res) => {
-//       if (err) {
-//         console.log(err.stack);
-//         return done(err);
-//       }
-//       done(err);
-//     });
-// });
-
-})
-;
-
+});
