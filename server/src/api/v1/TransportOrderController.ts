@@ -15,13 +15,17 @@ import {Config} from '../../config/index';
 import {Request} from 'express';
 import {TransportOrderTransactor} from '../../domain/transportOrder/TransportOrderTransactor';
 import {TransportOrder} from '../../../resources/interfaces/transportOrder.interface';
+import {EcmrTransactor} from '../../domain/ecmrs/EcmrTransactor';
+import {Ecmr} from '../../../resources/interfaces/ecmr.interface';
+import {CreateEcmrFromTransportOrder} from '../../utils/transportOrder/CreateEcmrFromTransportOrder';
 
 @JsonController('/transportOrder')
 @UseBefore(UserAuthenticatorMiddleware)
 @UseInterceptor(ComposerInterceptor)
 @UseAfter(ErrorHandlerMiddleware)
 export class TransportOrderController {
-  public constructor(private transactionHandler: TransactionHandler) {
+  public constructor(private transactionHandler: TransactionHandler,
+                     private _createEcmrFromTransportOrder: CreateEcmrFromTransportOrder) {
   }
 
   @Get('/')
@@ -50,5 +54,13 @@ export class TransportOrderController {
     const identity: Identity = new JSONWebToken(request).getIdentity();
     return await this.transactionHandler.create(identity, Config.settings.composer.profile, Config.settings.composer.namespace,
       transportOrder, new TransportOrderTransactor());
+  }
+
+  @Post('/createECMRFromTransportOrder')
+  public async createEcmrFromTransportOrder(@Body() transportOrder: any, @Req() request: Request): Promise<any> {
+    const identity: Identity = new JSONWebToken(request).getIdentity();
+    console.log(this._createEcmrFromTransportOrder.ecmrFromTransportOrder(transportOrder));
+
+    return await this.transactionHandler.create(identity, Config.settings.composer.profile, Config.settings.composer.namespace, this._createEcmrFromTransportOrder.ecmrFromTransportOrder(transportOrder), new EcmrTransactor());
   }
 }
