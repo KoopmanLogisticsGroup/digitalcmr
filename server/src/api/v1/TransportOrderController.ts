@@ -59,19 +59,11 @@ export class TransportOrderController {
       transportOrder, new TransportOrderTransactor());
   }
 
-  // @Post('/createECMRFromTransportOrder')
-  // public async createEcmrFromTransportOrder(@Body() transportOrder: any, @Req() request: Request): Promise<any> {
-  //   const identity: Identity = new JSONWebToken(request).getIdentity();
-  //   await this.transactionHandler.update(identity, Config.settings.composer.profile, Config.settings.composer.namespace, transportOrder, transportOrder.orderID, new TransportOrderTransactor());
-  //
-  //   return await this.transactionHandler.create(identity, Config.settings.composer.profile, Config.settings.composer.namespace, this._createEcmrFromTransportOrder.ecmrFromTransportOrder(transportOrder), new EcmrTransactor());
-  // }
-
   @Post('/createECMRFromTransportOrder')
   public async createEcmrFromTransportOrder(@Body() transportOrder: any, @Req() request: Request): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transportOrderTransactor.createECMRFromTransportOrder(identity, Config.settings.composer.profile, Config.settings.composer.namespace, this._createEcmrFromTransportOrder.ecmrFromTransportOrder(transportOrder), transportOrder, transportOrder.orderID, this.transactionHandler);
+    return await this.transportOrderTransactor.createECMRFromTransportOrder(identity, Config.settings.composer.profile, Config.settings.composer.namespace, this._createEcmrFromTransportOrder.ecmrFromTransportOrder(transportOrder), transportOrder, this.transactionHandler);
   }
 
   @Put('/')

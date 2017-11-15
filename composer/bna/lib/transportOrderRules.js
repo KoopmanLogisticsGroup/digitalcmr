@@ -85,7 +85,12 @@ function UpdateTransportOrder(tx) {
         });
     })
     .then(function (transportOrder) {
+      //Updates the status of a TransportOrder when an ECMR is created
       transportOrder.status = tx.transportOrder.status;
+
+      //Adds the created ECMR resource to the array of ECMRs by checking if orderIDs are corresponding
+      transportOrder.ecmrs = tx.transportOrder.ecmrs;
+
       return getAssetRegistry('org.digitalcmr.TransportOrder')
         .then(function (assetRegistry) {
           return assetRegistry.update(transportOrder)

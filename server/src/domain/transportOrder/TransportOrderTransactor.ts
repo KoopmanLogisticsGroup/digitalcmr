@@ -3,8 +3,8 @@ import {Factory} from 'composer-common';
 import {TransportOrderBuilder} from './TransportOrderBuilder';
 import {Identity} from '../Identity';
 import {EcmrTransactor} from '../ecmrs/EcmrTransactor';
-import {Config} from '../../config/index';
 import {TransactionHandler} from '../../blockchain/TransactionHandler';
+import {TransportOrder} from '../../../resources/interfaces/transportOrder.interface';
 
 export class TransportOrderTransactor implements TransactionCreator {
   public async create(factory: Factory, namespace: string, data: any, enrollmentID: string): Promise<any> {
@@ -12,10 +12,10 @@ export class TransportOrderTransactor implements TransactionCreator {
 
     if (Array.isArray(data)) {
       transaction                 = factory.newTransaction(namespace, 'CreateTransportOrders');
-      transaction.transportOrders = await TransportOrderBuilder.buildTransportOrders(factory, namespace, data, enrollmentID);
+      transaction.transportOrders = await TransportOrderBuilder.buildTransportOrders(factory, namespace, data);
     } else {
       transaction                = factory.newTransaction(namespace, 'CreateTransportOrder');
-      transaction.transportOrder = await  TransportOrderBuilder.buildTransportOrder(factory, namespace, data, enrollmentID);
+      transaction.transportOrder = await  TransportOrderBuilder.buildTransportOrder(factory, namespace, data);
     }
 
     return transaction;
@@ -23,13 +23,15 @@ export class TransportOrderTransactor implements TransactionCreator {
 
   public update(factory: Factory, namespace: string, data: any, enrollmentID: string): Promise<any> {
     let transaction            = factory.newTransaction(namespace, 'UpdateTransportOrder');
-    transaction.transportOrder = TransportOrderBuilder.buildTransportOrder(factory, namespace, data, enrollmentID);
+    transaction.transportOrder = TransportOrderBuilder.buildTransportOrder(factory, namespace, data);
 
     return transaction;
   }
 
-  public async createECMRFromTransportOrder(identity: Identity, connectionProfile: string, namespace: string, ecmrFromTransportOrder: any, resource: any, resourceID: any, transactionHandler: TransactionHandler): Promise<any> {
+  public async createECMRFromTransportOrder(identity: Identity, connectionProfile: string, namespace: string, ecmrFromTransportOrder: any, transportOrder: TransportOrder, transactionHandler: TransactionHandler): Promise<any> {
     await transactionHandler.create(identity, connectionProfile, namespace, ecmrFromTransportOrder, new EcmrTransactor());
-    return await transactionHandler.update(identity, connectionProfile, namespace, resource, resourceID, new TransportOrderTransactor());
+    transportOrder.ecmrs.push(ecmrFromTransportOrder.ecmrID);
+
+    return await transactionHandler.update(identity, connectionProfile, namespace, transportOrder, transportOrder.orderID, new TransportOrderTransactor());
   }
 }
