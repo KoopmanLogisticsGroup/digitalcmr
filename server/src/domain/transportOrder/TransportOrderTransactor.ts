@@ -26,7 +26,7 @@ export class TransportOrderTransactor implements TransactionCreator {
     return transaction;
   }
 
-  public static async updatePickupWindow(transactionHandler: TransactionHandler, identity: Identity, connectionProfile: string, namespace: string, orderID: string, vin: string, pickupWindow: any): Promise<any> {
+  public async updatePickupWindow(transactionHandler: TransactionHandler, identity: Identity, connectionProfile: string, namespace: string, orderID: string, vin: string, pickupWindow: any): Promise<any> {
     let transportOrder = await transactionHandler.executeQuery(identity, connectionProfile, 'getTransportOrderById', {orderID: orderID});
     for (let goodIndex = 0; goodIndex < transportOrder.goods.length; goodIndex++) {
       let good = transportOrder.goods[goodIndex];
