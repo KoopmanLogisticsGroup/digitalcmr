@@ -15,10 +15,7 @@ import {Config} from '../../config/index';
 import {Request} from 'express';
 import {TransportOrderTransactor} from '../../domain/transportOrder/TransportOrderTransactor';
 import {TransportOrder} from '../../../resources/interfaces/transportOrder.interface';
-import {EcmrTransactor} from '../../domain/ecmrs/EcmrTransactor';
-import {Ecmr} from '../../../resources/interfaces/ecmr.interface';
 import {CreateEcmrFromTransportOrder} from '../../utils/transportOrder/CreateEcmrFromTransportOrder';
-import {BusinessNetworkHandler} from '../../blockchain/BusinessNetworkHandler';
 
 @JsonController('/transportOrder')
 @UseBefore(UserAuthenticatorMiddleware)
@@ -27,8 +24,7 @@ import {BusinessNetworkHandler} from '../../blockchain/BusinessNetworkHandler';
 export class TransportOrderController {
   public constructor(private transactionHandler: TransactionHandler,
                      private _createEcmrFromTransportOrder: CreateEcmrFromTransportOrder,
-                     private transportOrderTransactor: TransportOrderTransactor,
-                     private businessNetworkHandler: BusinessNetworkHandler) {
+                     private transportOrderTransactor: TransportOrderTransactor) {
   }
 
   @Get('/')
