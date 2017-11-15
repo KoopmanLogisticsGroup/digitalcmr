@@ -2,10 +2,8 @@ import {TransportOrder} from '../../../resources/interfaces/transportOrder.inter
 
 export class CreateEcmrFromTransportOrder {
   public ecmrFromTransportOrder(transportOrder: TransportOrder): any {
-    let currentTime        = new Date();
-    let timeInMilliseconds = currentTime.getTime();
     return {
-      'ecmrID':            timeInMilliseconds.toString(),
+      'ecmrID':            String(new Date().getTime()),
       'status':            'CREATED',
       'agreementTerms':    'agreement terms here',
       'agreementTermsSec': 'agreement terms sec',

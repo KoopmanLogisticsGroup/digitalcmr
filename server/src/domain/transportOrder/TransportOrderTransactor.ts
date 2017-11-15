@@ -7,7 +7,7 @@ import {TransactionHandler} from '../../blockchain/TransactionHandler';
 import {TransportOrder} from '../../../resources/interfaces/transportOrder.interface';
 
 export class TransportOrderTransactor implements TransactionCreator {
-  public async create(factory: Factory, namespace: string, data: any, enrollmentID: string): Promise<any> {
+  public async create(factory: Factory, namespace: string, data: any): Promise<any> {
     let transaction: any;
 
     if (Array.isArray(data)) {
@@ -21,7 +21,7 @@ export class TransportOrderTransactor implements TransactionCreator {
     return transaction;
   }
 
-  public update(factory: Factory, namespace: string, data: any, enrollmentID: string): Promise<any> {
+  public update(factory: Factory, namespace: string, data: any): Promise<any> {
     let transaction            = factory.newTransaction(namespace, 'UpdateTransportOrder');
     transaction.transportOrder = TransportOrderBuilder.buildTransportOrder(factory, namespace, data);
 
