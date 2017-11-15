@@ -2,16 +2,18 @@ import {TransportOrder} from '../../../resources/interfaces/transportOrder.inter
 
 export class CreateEcmrFromTransportOrder {
   public ecmrFromTransportOrder(transportOrder: TransportOrder): any {
+    let currentTime        = new Date();
+    let timeInMilliseconds = currentTime.getTime();
     return {
-      'ecmrID':                 'AA2131313',
-      'status':                 'CREATED',
-      'agreementTerms':         'agreement terms here',
-      'agreementTermsSec':      'agreement terms sec',
-      'legalOwnerRef':          'ref',
-      'carrierRef':             'H2238723VASD',
-      'recipientRef':           'SDADHGA21312312',
-      'orderID':                transportOrder.orderID,
-      'creation':               {
+      'ecmrID':            timeInMilliseconds.toString(),
+      'status':            'CREATED',
+      'agreementTerms':    'agreement terms here',
+      'agreementTermsSec': 'agreement terms sec',
+      'legalOwnerRef':     'ref',
+      'carrierRef':        'H2238723VASD',
+      'recipientRef':      'SDADHGA21312312',
+      'orderID':           transportOrder.orderID,
+      'creation':          {
         '$class':  'org.digitalcmr.Creation',
         'address': {
           '$class':      'org.digitalcmr.Address',

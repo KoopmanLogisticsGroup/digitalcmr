@@ -3,7 +3,7 @@ import {Factory} from 'composer-common';
 import {TransportOrder} from '../../../resources/interfaces/transportOrder.interface';
 
 export class TransportOrderBuilder {
-  public static buildTransportOrder(factory: Factory, namespace: string, transportOrder: TransportOrder): TransportOrder {
+  public static buildTransportOrder(factory: Factory, namespace: string, transportOrder: TransportOrder, enrollmentID: string): TransportOrder {
     let validatedObject              = BuilderUtils.createResource(factory, namespace, 'TransportOrder', transportOrder);
     validatedObject.loading          = BuilderUtils.createConcept(factory, namespace, 'Loading', transportOrder.loading);
     validatedObject.loading.address  = BuilderUtils.createConcept(factory, namespace, 'Address', transportOrder.loading.address);
@@ -22,14 +22,15 @@ export class TransportOrderBuilder {
       validatedObject.goods[i]         = BuilderUtils.createConcept(factory, namespace, 'Good', transportOrder.goods[i]);
       validatedObject.goods[i].vehicle = BuilderUtils.createResource(factory, namespace, 'Vehicle', transportOrder.goods[i].vehicle);
     }
+
     return <TransportOrder> validatedObject;
   }
 
-  public static async buildTransportOrders(factory: Factory, namespace: string, transportOrders: TransportOrder[]): Promise<any> {
+  public static async buildTransportOrders(factory: Factory, namespace: string, transportOrders: TransportOrder[], enrollmentID: string): Promise<any> {
     let validatedObjects: any = [];
 
     for (const transportOrder of transportOrders) {
-      validatedObjects.push(this.buildTransportOrder(factory, namespace, transportOrder));
+      validatedObjects.push(this.buildTransportOrder(factory, namespace, transportOrder, enrollmentID));
     }
 
     return validatedObjects;

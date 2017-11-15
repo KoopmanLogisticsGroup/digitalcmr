@@ -26,7 +26,7 @@ export class TransactionHandler {
     await this.businessNetworkHandler.connect(identity, connectionProfile);
     const factory: Factory = await this.businessNetworkHandler.getFactory();
 
-    const transaction = transactionCreator.update(factory, namespace, resource, resourceID);
+    const transaction = await transactionCreator.update(factory, namespace, resource, resourceID);
 
     await this.businessNetworkHandler.submitTransaction(transaction);
 

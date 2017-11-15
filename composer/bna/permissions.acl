@@ -124,6 +124,15 @@ rule CarrierAdminCanReadECMR {
     action: ALLOW
 }
 
+rule CarrierPlannerCanReadECMR {
+    description: "Allow Carrier Admin to READ all eCMR where his org is a carrier"
+    participant(p): "org.digitalcmr.CarrierPlanner"
+    operation: READ
+    resource(r): "org.digitalcmr.ECMR"
+    condition: (r.carrier.getIdentifier() === p.org.getIdentifier())
+    action: ALLOW
+}
+
 rule CarrierPlannerCanReadTransportOrder {
     description: "Allow Carrier Planner to READ a Transport Order"
     participant(p): "org.digitalcmr.CarrierPlanner"
@@ -157,6 +166,24 @@ rule CarrierPlannerCanSubmitCreateECMR {
     resource(r): "org.digitalcmr.ECMR"
     transaction: "org.digitalcmr.CreateECMR"
     condition: (r.carrier.getIdentifier() === p.org.getIdentifier())
+    action: ALLOW
+}
+
+rule CarrierPlannerCanCreateTransportOrderUpdateTransaction {
+    description: "Allow the Carrier planner to CREATE a transport order UPDATE transaction"
+    participant: "org.digitalcmr.CarrierPlanner"
+    operation: CREATE
+    resource: "org.digitalcmr.UpdateTransportOrder"
+    action: ALLOW
+}
+
+rule CarrierPlannerCanSubmitUpdateTransportOrderForOpen {
+    description: "Allow Carrier Planner to submit an Update TransportOrder transaction for his organization and for status OPEN when new status is IN_PROGRESS"
+    participant(p): "org.digitalcmr.CarrierPlanner"
+    operation: UPDATE
+    resource(r): "org.digitalcmr.TransportOrder"
+    transaction(tx): "org.digitalcmr.UpdateTransportOrder"
+    condition: (r.carrier.getIdentifier() === p.org.getIdentifier() && r.status == 'OPEN' && tx.transportOrder.status == 'IN_PROGRESS')
     action: ALLOW
 }
 
