@@ -5,7 +5,7 @@ import {
   UseAfter,
   UseInterceptor,
   Param,
-  UseBefore, Post, Body
+  UseBefore, Post, Body, Put
 } from 'routing-controllers';
 import {ErrorHandlerMiddleware, ComposerInterceptor, UserAuthenticatorMiddleware} from '../../middleware';
 import {JSONWebToken} from '../../utils/authentication/JSONWebToken';
@@ -21,7 +21,8 @@ import {TransportOrder} from '../../../resources/interfaces/transportOrder.inter
 @UseInterceptor(ComposerInterceptor)
 @UseAfter(ErrorHandlerMiddleware)
 export class TransportOrderController {
-  public constructor(private transactionHandler: TransactionHandler) {
+  public constructor(private transactionHandler: TransactionHandler,
+                     private transportOrderTransactor: TransportOrderTransactor) {
   }
 
   @Get('/')
@@ -50,5 +51,11 @@ export class TransportOrderController {
     const identity: Identity = new JSONWebToken(request).getIdentity();
     return await this.transactionHandler.create(identity, Config.settings.composer.profile, Config.settings.composer.namespace,
       transportOrder, new TransportOrderTransactor());
+  }
+
+  @Put('/orderID/:orderID/vin/:vin')
+  public async updatePickupWindow(@Param('orderID') orderID: string, @Param('vin') vin: string, @Body() pickupWindow: any, @Req() request: any): Promise<any> {
+    const identity: Identity = new JSONWebToken(request).getIdentity();
+    return await this.transportOrderTransactor.updatePickupWindow(this.transactionHandler, identity, Config.settings.composer.profile, Config.settings.composer.namespace, orderID, vin, pickupWindow);
   }
 }

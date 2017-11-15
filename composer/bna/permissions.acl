@@ -124,6 +124,33 @@ rule CarrierAdminCanReadECMR {
     action: ALLOW
 }
 
+rule CarrierPlannerCanReadTransportOrder {
+    description: "Allow CarrierPlanner to READ a Transport Order"
+    participant(p): "org.digitalcmr.CarrierPlanner"
+    operation: READ
+    resource(r): "org.digitalcmr.TransportOrder"
+    condition: (r.carrier.getIdentifier() === p.org.getIdentifier())
+    action: ALLOW
+}
+
+rule CarrierPlannerCanCreateTransactionUpdateTransportOrder {
+    description: "Allow LegalOwnerAdmin to CREATE a CreateTransportOrder transaction"
+    participant: "org.digitalcmr.CarrierPlanner"
+    operation: CREATE
+    resource: "org.digitalcmr.UpdateTransportOrder"
+    action: ALLOW
+}
+
+rule CarrierPlannerCanSubmitTransactionUpdateTransportOrder {
+  description: "Allow CarrierPlanner to CREATE a TransportOrder using the CreateTransportOrder transaction"
+  participant(p): "org.digitalcmr.CarrierPlanner"
+  operation: UPDATE
+  resource(r): "org.digitalcmr.TransportOrder"
+  transaction: "org.digitalcmr.UpdateTransportOrder"
+  condition: (r.carrier.getIdentifier() === p.org.getIdentifier())
+  action: ALLOW
+}
+
 rule CarrierMemberCanReadECMR {
     description: "Allow Carrier Member to READ all eCMRs where he is a transporter and status is not Created"
     participant(p): "org.digitalcmr.CarrierMember"

@@ -109,6 +109,10 @@ participant CarrierAdmin extends User {
   --> CarrierOrg org
 }
 
+participant CarrierPlanner extends User {
+  --> CarrierOrg org
+}
+
 participant CarrierMember extends User {
   --> CarrierOrg org
 }
@@ -198,6 +202,10 @@ transaction CreateTransportOrder {
 
 transaction CreateTransportOrders {
   o TransportOrder[] transportOrders
+}
+
+transaction UpdateTransportOrder {
+  o TransportOrder transportOrder
 }
 
 transaction CreateECMR {
