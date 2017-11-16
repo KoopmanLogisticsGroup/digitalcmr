@@ -19,11 +19,19 @@
       <tr *ngFor="let good of transportOrder?.goods">
         <td>{{good?.vehicle?.vin}}</td>
         <td>{{good?.vehicle?.plateNumber}}</td>
-        <td>{{good?.description}} kg</td>
-        <td>{{good?.weight}}</td>
+        <td>{{good?.description}}</td>
+        <td>{{good?.weight}} kg</td>
         <td>{{good?.vehicle?.odoMeterReading}}</td>
-        <td>{{transportOrder?.loading?.address?.city}}</td>
-        <td>{{transportOrder?.delivery?.address?.city}}</td>
+        <td class="loadingWindow">
+          <span>{{transportOrder?.loading?.address?.city}}</span>
+          <span> {{good?.loadingStartDate}}</span>
+          <span> {{good?.loadingEndDate}}</span>
+        </td>
+        <td class="loadingWindow">
+          <span>{{transportOrder?.loading?.address?.city}}</span>
+          <span> {{good?.loadingStartDate}}</span>
+          <span> {{good?.loadingEndDate}}</span>
+        </td>
       </tr>
       </tbody>
     </table>

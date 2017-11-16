@@ -1,5 +1,5 @@
 .padded.table {
-  border:     0px;
+  border:     0;
   box-shadow: 0 2px 4px #e3e3e3;
   th {
     background-color: #FFFFFF;
@@ -12,6 +12,9 @@
   tr > th {
     color:       #2f62a0;
     font-weight: bold;
+  }
+  td {
+    vertical-align: top;
   }
   .remark_box {
     width:         192px;
@@ -50,4 +53,22 @@
 
 ol {
   -webkit-padding-start: 0;
+}
+
+.ui.padded.unstackable.structured.table {
+}
+
+.loadingWindow {
+  span {
+    display: block;
+
+    &:nth-child(4n+2) {
+      padding-top: 15px;
+    }
+
+    &:nth-child(4n+3) {
+      padding-bottom: 15px;
+    }
+
+  }
 }

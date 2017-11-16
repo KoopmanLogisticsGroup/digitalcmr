@@ -18,12 +18,10 @@ export class TransportorderDetailComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.route.params
-      .subscribe(params => {
-        this.orderID = params['orderID'];
-        this.transportOrderService.getTransportOrderByOrderID(this.orderID).subscribe((transportOrder: TransportOrder) => {
-          this.transportOrder = transportOrder;
-        });
+    this.orderID = this.route.snapshot.paramMap.get('orderID');
+    this.transportOrderService.getTransportOrderByOrderID(this.orderID)
+      .subscribe((transportOrder: TransportOrder) => {
+        this.transportOrder = transportOrder;
       });
   }
 }
