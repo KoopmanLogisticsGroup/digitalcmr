@@ -46,6 +46,13 @@ export class ECMRController {
     return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getEcmrsByStatus', {status: ecmrStatus});
   }
 
+  @Get('/orderID/:orderID')
+  public async getAllEcmrsByOrderID(@Param('orderID') orderID: string, @Req() request: any): Promise<any> {
+    const identity: Identity = new JSONWebToken(request).getIdentity();
+
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getEcmrsByOrderID', {orderID: orderID});
+  }
+
   @Get('/vehicle/vin/:vin')
   public async getAllEcmrsFromVehicleByVin(@Param('vin') vin: string, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();

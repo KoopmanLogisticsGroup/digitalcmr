@@ -525,16 +525,16 @@
       "payOnDelivery":          "string"
     },
     {
-      "$class":                 "org.digitalcmr.ECMR",
-      "ecmrID":                 "B1234567890",
-      "status":                 "CREATED",
-      "agreementTerms":         "agreement terms here",
-      "agreementTermsSec":      "agreement terms sec",
-      "legalOwnerRef":          "ASD213123S",
-      "carrierRef":             "H2238723VASD",
-      "recipientRef":           "SDADHGA21312312",
-      "orderID":                "AAAA123456",
-      "creation":               {
+      "$class":            "org.digitalcmr.ECMR",
+      "ecmrID":            "B1234567890",
+      "status":            "CREATED",
+      "agreementTerms":    "agreement terms here",
+      "agreementTermsSec": "agreement terms sec",
+      "legalOwnerRef":     "ASD213123S",
+      "carrierRef":        "H2238723VASD",
+      "recipientRef":      "SDADHGA21312312",
+      "orderID":           "12345567890",
+      "creation":          {
         "$class":  "org.digitalcmr.Creation",
         "address": {
           "$class":      "org.digitalcmr.Address",
@@ -1329,9 +1329,9 @@
   ],
   "transportOrders": [
     {
-      "$class":   "org.digitalcmr.TransportOrder",
-      "orderID":  "12345567890",
-      "loading":  {
+      "$class":    "org.digitalcmr.TransportOrder",
+      "orderID":   "12345567890",
+      "loading":   {
         "actualDate":   1502834400000,
         "expectedDate": 1502835400000,
         "address":      {
@@ -1346,7 +1346,7 @@
           "latitude":    123
         }
       },
-      "delivery": {
+      "delivery":  {
         "$class":       "org.digitalcmr.Delivery",
         "actualDate":   1502834400000,
         "expectedDate": 1502835400000,
@@ -1362,10 +1362,10 @@
           "latitude":    123
         }
       },
-      "owner":    "leaseplan",
-      "source":   "amsterdamcompound",
-      "carrier":  "koopman",
-      "goods":    [
+      "owner":     "leaseplan",
+      "source":    "amsterdamcompound",
+      "carrier":   "koopman",
+      "goods":     [
         {
           "$class":            "org.digitalcmr.Good",
           "vehicle":           {
@@ -1374,7 +1374,9 @@
             "manufacturer":    "Audi",
             "model":           "A1",
             "type":            "sportback",
-            "ecmrs":           [],
+            "ecmrs":           [
+              "B1234567890"
+            ],
             "odoMeterReading": 0,
             "plateNumber":     "AV198RX"
           },
@@ -1393,7 +1395,9 @@
             "manufacturer":    "Mercedes",
             "model":           "SLK",
             "type":            "Station",
-            "ecmrs":           [],
+            "ecmrs":           [
+              "B1234567890"
+            ],
             "odoMeterReading": 0,
             "plateNumber":     "I827YE"
           },
@@ -1407,7 +1411,9 @@
       ],
       "status":    "OPEN",
       "issueDate": 1502834400000,
-      "ecmrs":     [],
+      "ecmrs":     [
+        "B1234567890"
+      ],
       "orderRef":  "ref"
     }
   ]

@@ -15,12 +15,16 @@ export class TransportOrderBuilder {
     validatedObject.carrier = BuilderUtils.createRelationship(factory, namespace, 'CarrierOrg', transportOrder.carrier);
 
     for (let i = 0; i < transportOrder.ecmrs.length; i++) {
+      console.log(transportOrder.ecmrs[i]);
       validatedObject.ecmrs[i] = BuilderUtils.createRelationship(factory, namespace, 'ECMR', transportOrder.ecmrs[i]);
     }
 
     for (let i = 0; i < transportOrder.goods.length; i++) {
       validatedObject.goods[i]         = BuilderUtils.createConcept(factory, namespace, 'Good', transportOrder.goods[i]);
       validatedObject.goods[i].vehicle = BuilderUtils.createResource(factory, namespace, 'Vehicle', transportOrder.goods[i].vehicle);
+      for (let ecmrIndex = 0; ecmrIndex < transportOrder.goods[i].vehicle.ecmrs.length; ecmrIndex++) {
+        validatedObject.goods[i].vehicle.ecmrs[ecmrIndex] = BuilderUtils.createRelationship(factory, namespace, 'ECMR', transportOrder.goods[i].vehicle.ecmrs[ecmrIndex]);
+      }
     }
     return <TransportOrder> validatedObject;
   }
