@@ -124,44 +124,35 @@ rule CarrierAdminCanReadECMR {
     action: ALLOW
 }
 
-rule CarrierPlannerCanReadECMR {
-    description: "Allow Carrier Admin to READ all eCMR where his org is a carrier"
-    participant(p): "org.digitalcmr.CarrierPlanner"
-    operation: READ
-    resource(r): "org.digitalcmr.ECMR"
-    condition: (r.carrier.getIdentifier() === p.org.getIdentifier())
-    action: ALLOW
-}
-
-rule CarrierPlannerCanReadTransportOrder {
-    description: "Allow Carrier Planner to READ a Transport Order"
-    participant(p): "org.digitalcmr.CarrierPlanner"
+rule CarrierAdminCanReadTransportOrder {
+    description: "Allow Carrier Admin to READ a Transport Order"
+    participant(p): "org.digitalcmr.CarrierAdmin"
     operation: READ
     resource(r): "org.digitalcmr.TransportOrder"
     condition: (r.carrier.getIdentifier() === p.org.getIdentifier())
     action: ALLOW
 }
 
-rule CarrierPlannerCanCreateECMR {
-    description: "Allow Carrier Planner to CREATE an eCMR"
-    participant(p): "org.digitalcmr.CarrierPlanner"
+rule CarrierAdminCanCreateECMR {
+    description: "Allow Carrier Admin to CREATE an eCMR"
+    participant(p): "org.digitalcmr.CarrierAdmin"
     operation: CREATE
     resource(r): "org.digitalcmr.ECMR"
     condition: (r.carrier.getIdentifier() === p.org.getIdentifier())
     action: ALLOW
 }
 
-rule CarrierPlannerCanCreateECMRCreateTransaction {
-    description: "Allow Carrier Planner to CREATE an eCMR create transaction"
-    participant: "org.digitalcmr.CarrierPlanner"
+rule CarrierAdminCanCreateECMRCreateTransaction {
+    description: "Allow Carrier Admin to CREATE an eCMR create transaction"
+    participant: "org.digitalcmr.CarrierAdmin"
     operation: CREATE
     resource: "org.digitalcmr.CreateECMR"
     action: ALLOW
 }
 
-rule CarrierPlannerCanSubmitCreateECMR {
+rule CarrierAdminCanSubmitCreateECMR {
     description: "Allow Carrier Planner to Submit a CREATE eCMR transaction for his organization"
-    participant(p): "org.digitalcmr.CarrierPlanner"
+    participant(p): "org.digitalcmr.CarrierAdmin"
     operation: CREATE
     resource(r): "org.digitalcmr.ECMR"
     transaction: "org.digitalcmr.CreateECMR"
@@ -169,17 +160,17 @@ rule CarrierPlannerCanSubmitCreateECMR {
     action: ALLOW
 }
 
-rule CarrierPlannerCanCreateECMRsCreateTransaction {
-    description: "Allow Carrier Planner to CREATE an eCMR array create transaction"
-    participant: "org.digitalcmr.CarrierPlanner"
+rule CarrierAdminCanCreateECMRsCreateTransaction {
+    description: "Allow Carrier Admin to CREATE an eCMR array create transaction"
+    participant: "org.digitalcmr.CarrierAdmin"
     operation: CREATE
     resource: "org.digitalcmr.CreateECMRs"
     action: ALLOW
 }
 
-rule CarrierPlannerCanSubmitCreateECMRs {
-    description: "Allow Carrier Planner to Submit a CREATE eCMR array transaction for his organization"
-    participant(p): "org.digitalcmr.CarrierPlanner"
+rule CarrierAdminCanSubmitCreateECMRs {
+    description: "Allow Carrier Admin to Submit a CREATE eCMR array transaction for his organization"
+    participant(p): "org.digitalcmr.CarrierAdmin"
     operation: CREATE
     resource(r): "org.digitalcmr.ECMR"
     transaction: "org.digitalcmr.CreateECMRs"
@@ -187,17 +178,17 @@ rule CarrierPlannerCanSubmitCreateECMRs {
     action: ALLOW
 }
 
-rule CarrierPlannerCanCreateTransportOrderUpdateTransaction {
-    description: "Allow the Carrier planner to CREATE a transport order UPDATE transaction"
-    participant: "org.digitalcmr.CarrierPlanner"
+rule CarrierAdminCanCreateTransportOrderUpdateTransaction {
+    description: "Allow the Carrier Admin to CREATE a transport order UPDATE transaction"
+    participant: "org.digitalcmr.CarrierAdmin"
     operation: CREATE
     resource: "org.digitalcmr.UpdateTransportOrder"
     action: ALLOW
 }
 
-rule CarrierPlannerCanSubmitUpdateTransportOrderForOpen {
-    description: "Allow Carrier Planner to submit an Update TransportOrder transaction for his organization and for status OPEN when new status is IN_PROGRESS"
-    participant(p): "org.digitalcmr.CarrierPlanner"
+rule CarrierAdminCanSubmitUpdateTransportOrderForOpen {
+    description: "Allow Carrier Admin to submit an Update TransportOrder transaction for his organization and for status OPEN when new status is IN_PROGRESS"
+    participant(p): "org.digitalcmr.CarrierAdmin"
     operation: UPDATE
     resource(r): "org.digitalcmr.TransportOrder"
     transaction(tx): "org.digitalcmr.UpdateTransportOrder"

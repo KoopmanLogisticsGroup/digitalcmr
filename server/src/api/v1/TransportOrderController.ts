@@ -15,7 +15,6 @@ import {Config} from '../../config/index';
 import {Request} from 'express';
 import {TransportOrderTransactor} from '../../domain/transportOrder/TransportOrderTransactor';
 import {TransportOrder} from '../../../resources/interfaces/transportOrder.interface';
-import {CreateEcmrFromTransportOrder} from '../../utils/transportOrder/CreateEcmrFromTransportOrder';
 
 @JsonController('/transportOrder')
 @UseBefore(UserAuthenticatorMiddleware)

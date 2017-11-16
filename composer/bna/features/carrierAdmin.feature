@@ -11,15 +11,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-Feature: CarrierPlanner feature test
+Feature: CarrierAdmin feature test
 
   Background:
     Given I have deployed the business network definition ..
-    And I have added the following participants of type org.digitalcmr.CarrierPlanner
+    And I have added the following participants of type org.digitalcmr.CarrierAdmin
     """
-    {"$class":"org.digitalcmr.CarrierPlanner", "userID": "pete@koopman.org", "userName": "pete", "firstName": "Pete", "lastName": "compy", "address": {"$class": "org.digitalcmr.Address", "name": "pete compy", "street": "compenstraat", "houseNumber": "18", "city": "Amsterdam", "zipCode": "9867UG", "country": "Netherlands", "latitude": 52.2443, "longitude": 65.2323, "id":"id"},"org":"koopman"}
+    {"$class":"org.digitalcmr.CarrierAdmin", "userID": "pete@koopman.org", "userName": "pete", "firstName": "Pete", "lastName": "compy", "address": {"$class": "org.digitalcmr.Address", "name": "pete compy", "street": "compenstraat", "houseNumber": "18", "city": "Amsterdam", "zipCode": "9867UG", "country": "Netherlands", "latitude": 52.2443, "longitude": 65.2323, "id":"id"},"org":"koopman"}
     """
-    And I have issued the participant org.digitalcmr.CarrierPlanner#pete@koopman.org with the identity Pete
+    And I have issued the participant org.digitalcmr.CarrierAdmin#pete@koopman.org with the identity Pete
     And I have added the following assets of type org.digitalcmr.TransportOrder
     """
     [
@@ -109,5 +109,3 @@ Feature: CarrierPlanner feature test
         { "$class": "org.digitalcmr.UpdateTransportOrder", "transportOrder": {"orderID": "G12345567890", "loading": { "actualDate": 1502834400000, "expectedDate": 1502835400000, "address": { "$class": "org.digitalcmr.Address", "name": "loading address", "street": "een straat", "houseNumber": "41", "city": "Groningen", "zipCode": "7811 HC", "country": "netherlands", "longitude": 124, "latitude": 123 } }, "delivery": { "$class": "org.digitalcmr.Delivery", "actualDate": 1502834400000, "expectedDate": 1502835400000, "address": { "$class": "org.digitalcmr.Address", "name": "delivery adress", "street": "een straat", "houseNumber": "41", "city": "Groningen", "zipCode": "7811 HC", "country": "netherlands", "longitude": 124, "latitude": 123 } }, "owner": "leaseplan", "source": "amsterdamcompound", "carrier": "koopman", "goods": [ { "$class": "org.digitalcmr.Good", "vehicle": { "$class": "org.digitalcmr.Vehicle", "vin": "183726339N", "manufacturer": "Audi", "model": "A1", "type": "sportback", "ecmrs": [], "odoMeterReading": 0, "plateNumber": "AV198RX" }, "description": "vehicle", "weight": 1500, "loadingStartDate": 1502834400000, "loadingEndDate": 1502834400000, "deliveryStartDate": 1502834400000, "deliveryEndDate": 1502834400000 }, { "$class": "org.digitalcmr.Good", "vehicle": { "$class": "org.digitalcmr.Vehicle", "vin": "736182CHD28172", "manufacturer": "Mercedes", "model": "SLK", "type": "Station", "ecmrs": [], "odoMeterReading": 0, "plateNumber": "I827YE" }, "description": "vehicle", "weight": 1800, "loadingStartDate": 1502834400000, "loadingEndDate": 1502834400000, "deliveryStartDate": 1502834400000, "deliveryEndDate": 1502834400000 } ], "status": "COMPLETED", "issueDate": 1502834400000, "ecmrs": [], "orderRef": "ref" }}
       """
     Then I should get an error matching /does not have 'UPDATE' access to resource/
-
-    ## Todo should not be able to directly update TransportOrder
