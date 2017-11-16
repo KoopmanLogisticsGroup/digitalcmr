@@ -109,10 +109,6 @@ participant CarrierAdmin extends User {
   --> CarrierOrg org
 }
 
-participant CarrierPlanner extends User {
-  --> CarrierOrg org
-}
-
 participant CarrierMember extends User {
   --> CarrierOrg org
 }
