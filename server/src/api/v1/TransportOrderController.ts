@@ -22,9 +22,7 @@ import {CreateEcmrFromTransportOrder} from '../../utils/transportOrder/CreateEcm
 @UseInterceptor(ComposerInterceptor)
 @UseAfter(ErrorHandlerMiddleware)
 export class TransportOrderController {
-  public constructor(private transactionHandler: TransactionHandler,
-                     private _createEcmrFromTransportOrder: CreateEcmrFromTransportOrder,
-                     private transportOrderTransactor: TransportOrderTransactor) {
+  public constructor(private transactionHandler: TransactionHandler) {
   }
 
   @Get('/')
@@ -53,13 +51,6 @@ export class TransportOrderController {
     const identity: Identity = new JSONWebToken(request).getIdentity();
     return await this.transactionHandler.create(identity, Config.settings.composer.profile, Config.settings.composer.namespace,
       transportOrder, new TransportOrderTransactor());
-  }
-
-  @Post('/createECMRFromTransportOrder')
-  public async createEcmrFromTransportOrder(@Body() transportOrder: any, @Req() request: Request): Promise<any> {
-    const identity: Identity = new JSONWebToken(request).getIdentity();
-
-    return await this.transportOrderTransactor.createECMRFromTransportOrder(identity, Config.settings.composer.profile, Config.settings.composer.namespace, this._createEcmrFromTransportOrder.ecmrFromTransportOrder(transportOrder), transportOrder, this.transactionHandler);
   }
 
   @Put('/')

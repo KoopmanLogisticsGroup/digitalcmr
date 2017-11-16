@@ -68,6 +68,13 @@ export class ECMRController {
     return await this.transactionHandler.create(identity, Config.settings.composer.profile, Config.settings.composer.namespace, ecmr, new EcmrTransactor());
   }
 
+  @Post('/createECMRFromTransportOrder')
+  public async createECMRFromTransportOrder(@Body() ecmrs: any, @Req() request: any): Promise<any> {
+    const identity: Identity = new JSONWebToken(request).getIdentity();
+
+    return await this.ecmrTransactor.createEcmrFromTransportOrder(identity, Config.settings.composer.profile, Config.settings.composer.namespace, ecmrs, this.transactionHandler);
+  }
+
   @Put('/')
   public async update(@Body() ecmr: Ecmr, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
