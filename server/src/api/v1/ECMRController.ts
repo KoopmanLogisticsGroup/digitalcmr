@@ -15,6 +15,7 @@ import {TransactionHandler} from '../../blockchain/TransactionHandler';
 import {Identity} from '../../domain/Identity';
 import {Config} from '../../config/index';
 import {EcmrTransactor} from '../../domain/ecmrs/EcmrTransactor';
+import {Ecmr} from '../../../resources/interfaces/ecmr.interface';
 
 @JsonController('/ECMR')
 @UseBefore(UserAuthenticatorMiddleware)
@@ -68,10 +69,9 @@ export class ECMRController {
   }
 
   @Put('/')
-  public async update(@Body() ecmr: any, @Req() request: any): Promise<any> {
+  public async update(@Body() ecmr: Ecmr, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
-    const ip                 = request.ip;
 
-    return await this.transactionHandler.update(identity, Config.settings.composer.profile, Config.settings.composer.namespace, ecmr, ecmr.ecmrID, new EcmrTransactor());
+    return await this.ecmrTransactor.updateECMRAndTransportOrder(identity, Config.settings.composer.profile, Config.settings.composer.namespace, ecmr, this.transactionHandler);
   }
 }

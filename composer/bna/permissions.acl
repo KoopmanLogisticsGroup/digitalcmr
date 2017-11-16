@@ -235,6 +235,33 @@ rule CarrierMemberCanSubmitUpdateECMRForDelivery {
     action: ALLOW
 }
 
+rule CarrierMemberCanCreateTransportOrderUpdateTransaction {
+    description: "Allow the Carrier Member to CREATE a transport order UPDATE transaction"
+    participant: "org.digitalcmr.CarrierMember"
+    operation: CREATE
+    resource: "org.digitalcmr.UpdateTransportOrder"
+    action: ALLOW
+}
+
+rule CarrierMemberCanSubmitUpdateTransportOrderForInProgress {
+    description: "Allow Carrier Member to submit an Update TransportOrder transaction for his organization and for status IN_PROGRESS when new status is COMPLETED"
+    participant(p): "org.digitalcmr.CarrierMember"
+    operation: UPDATE
+    resource(r): "org.digitalcmr.TransportOrder"
+    transaction(tx): "org.digitalcmr.UpdateTransportOrder"
+    condition: (r.carrier.getIdentifier() === p.org.getIdentifier() && r.status == 'IN_PROGRESS' && tx.transportOrder.status == "COMPLETED")
+    action: ALLOW
+}
+
+rule CarrierMemberCanReadTransportOrder {
+    description: "Allow Carrier Member to READ a Transport Order"
+    participant(p): "org.digitalcmr.CarrierMember"
+    operation: READ
+    resource(r): "org.digitalcmr.TransportOrder"
+    condition: (r.carrier.getIdentifier() === p.org.getIdentifier())
+    action: ALLOW
+}
+
 /**
  * Recipient permission list
  */

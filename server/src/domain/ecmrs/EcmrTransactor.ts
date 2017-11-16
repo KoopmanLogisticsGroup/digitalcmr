@@ -3,6 +3,8 @@ import {TransactionCreator} from '../../blockchain/TransactionCreator';
 import {Factory} from 'composer-common';
 import {EcmrBuilder} from './EcmrBuilder';
 import {TransactionHandler} from '../../blockchain/TransactionHandler';
+import {TransportOrderTransactor} from '../transportOrder/TransportOrderTransactor';
+import {Ecmr} from '../../../resources/interfaces/ecmr.interface';
 
 export class EcmrTransactor implements TransactionCreator {
   public async create(factory: Factory, namespace: string, data: any, enrollmentID: string, ip?: string): Promise<any> {
@@ -24,6 +26,17 @@ export class EcmrTransactor implements TransactionCreator {
     transaction.ecmr = EcmrBuilder.buildECMR(factory, namespace, data, enrollmentID, ip);
 
     return transaction;
+  }
+
+  public async updateECMRAndTransportOrder(identity: Identity, connectionProfile: string, namespace: string, ecmr: Ecmr, transactionHandler: TransactionHandler): Promise<any> {
+    if (ecmr.status === 'DELIVERED') {
+      let orderID           = ecmr.orderID;
+      let transportOrder    = await transactionHandler.executeQuery(identity, connectionProfile, 'getTransportOrderById', {orderID: orderID});
+      transportOrder.status = 'COMPLETED';
+      await transactionHandler.update(identity, connectionProfile, namespace, transportOrder, transportOrder.orderID, new TransportOrderTransactor());
+    }
+
+    return await transactionHandler.update(identity, connectionProfile, namespace, ecmr, ecmr.ecmrID, new EcmrTransactor());
   }
 
   // TODO improve function
