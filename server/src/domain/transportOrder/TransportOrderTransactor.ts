@@ -30,7 +30,9 @@ export class TransportOrderTransactor implements TransactionCreator {
 
   public async createECMRFromTransportOrder(identity: Identity, connectionProfile: string, namespace: string, ecmrFromTransportOrder: any, transportOrder: TransportOrder, transactionHandler: TransactionHandler): Promise<any> {
     await transactionHandler.create(identity, connectionProfile, namespace, ecmrFromTransportOrder, new EcmrTransactor());
-    transportOrder.ecmrs.push(ecmrFromTransportOrder.ecmrID);
+    for (const ecmr of ecmrFromTransportOrder) {
+      transportOrder.ecmrs.push(ecmr.ecmrID);
+    }
 
     return await transactionHandler.update(identity, connectionProfile, namespace, transportOrder, transportOrder.orderID, new TransportOrderTransactor());
   }
