@@ -65,6 +65,37 @@ function CreateTransportOrders(tx) {
 }
 
 /**
+ *  Update DateWindow transport order transaction processor function
+ *  @param {org.digitalcmr.UpdateTransportOrder} tx - The update transport order transaction
+ *  @return {Promise} Asset registry Promise
+ *  @transaction
+ */
+function UpdateTransportOrderPickUpDateWindow(tx) {
+  console.log('Invoking function processor to update DateWindow');
+  console.log(tx);
+  console.log(tx.order);
+  console.log(tx.vin);
+  console.log(tx.dateWindow);
+
+  return getAssetRegistry('org.digitalcmr.TransportOrder')
+    .then(function (assetRegistry) {
+      for (var goodIndex = 0; goodIndex < tx.order.goods.length; goodIndex ++ ) {
+        if (tx.order.goods[goodIndex].vehicle.vin === tx.vin) {
+          transportOrder.order.goods[goodIndex].pickUpDateWindow = tx.dateWindow;
+        }
+      }
+      return assetRegistry.update(transportOrder).catch(function (error) {
+        console.log('[Update TransporOrder pickupwindow] An error occurred while updating the registry asset: ' + error);
+        throw error;
+      });
+    }).catch(function (error) {
+      console.log('[Update TransporOrder pickupwindow] An error occurred while retrieving the asset registry: ' + error);
+      throw error;
+    });
+}
+
+
+/**
  *  Update transport order transaction processor function
  *  @param {org.digitalcmr.UpdateTransportOrder} tx - The update transport order transaction
  *  @return {Promise} Asset registry Promise

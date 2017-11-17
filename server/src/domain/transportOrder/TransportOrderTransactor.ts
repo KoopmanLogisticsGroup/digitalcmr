@@ -38,4 +38,24 @@ export class TransportOrderTransactor implements TransactionCreator {
     }
     return await transactionHandler.update(identity, connectionProfile, namespace, transportOrder, transportOrder.orderID, new TransportOrderTransactor());
   }
+
+  public updateTransportOrderPickupWindow(factory: Factory, namespace: string, transportOrder: any, pickupWindow: any, vin: any): Promise<any> {
+    let transaction            = factory.newTransaction(namespace, 'UpdatePickupWindow');
+    transaction.transportOrder = TransportOrderBuilder.buildTransportOrder(factory, namespace, transportOrder);
+    transaction.pickupWindow   = pickupWindow;
+    transaction.vin            = vin;
+
+    return transaction;
+  }
 }
+// public async updatePickupWindow(identity: Identity, connectionProfile: string, namespace: string, transportOrderID: string, vin: string, pickupWindow: DateWindow, transactionCreator: TransactionCreator): Promise<void> {
+//   await this.businessNetworkHandler.connect(identity, connectionProfile);
+// const factory: Factory = await this.businessNetworkHandler.getFactory();
+//
+// const transportOrder = await this.executeQuery(identity, connectionProfile, 'getTransportOrderById', {orderID: transportOrderID});
+// const transaction    = transactionCreator.updateTransportOrderPickupWindow(factory, namespace, transportOrder, vin, pickupWindow);
+//
+// await this.businessNetworkHandler.submitTransaction(transaction);
+//
+// return this.businessNetworkHandler.disconnect();
+// }

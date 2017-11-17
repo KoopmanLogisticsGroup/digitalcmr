@@ -501,8 +501,8 @@
       ],
       "goods":                  [
         {
-          "$class":            "org.digitalcmr.Good",
-          "vehicle":           {
+          "$class":         "org.digitalcmr.Good",
+          "vehicle":        {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "2131231414CN",
             "manufacturer":    "BMW",
@@ -512,12 +512,18 @@
             "odoMeterReading": 0,
             "plateNumber":     "O291RX"
           },
-          "description":       "vehicle",
-          "weight":            1900,
-          "loadingStartDate":  1502834400000,
-          "loadingEndDate":    1502834400000,
-          "deliveryStartDate": 1502834400000,
-          "deliveryEndDate":   1502834400000
+          "description":    "vehicle",
+          "weight":         1900,
+          "pickupWindow":   {
+            "$class":          "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow": {
+            "$class":          "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          }
         }
       ],
       "legalOwnerInstructions": "string",
@@ -606,10 +612,16 @@
           },
           "description":       "vehicle",
           "weight":            1500,
-          "loadingStartDate":  1502834400000,
-          "loadingEndDate":    1502834400000,
-          "deliveryStartDate": 1502834400000,
-          "deliveryEndDate":   1502834400000
+          "pickupWindow":   {
+            "$class":          "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow": {
+            "$class":          "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          }
         },
         {
           "$class":            "org.digitalcmr.Good",
@@ -625,10 +637,16 @@
           },
           "description":       "vehicle",
           "weight":            1800,
-          "loadingStartDate":  1502834400000,
-          "loadingEndDate":    1502834400000,
-          "deliveryStartDate": 1502834400000,
-          "deliveryEndDate":   1502834400000
+          "pickupWindow":   {
+            "$class":          "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow": {
+            "$class":          "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          }
         }
       ],
       "legalOwnerInstructions": "string",
@@ -717,10 +735,16 @@
           },
           "description":       "vehicle",
           "weight":            1500,
-          "loadingStartDate":  1502834400000,
-          "loadingEndDate":    1502834400000,
-          "deliveryStartDate": 1502834400000,
-          "deliveryEndDate":   1502834400000
+          "pickupWindow":   {
+            "$class":          "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow": {
+            "$class":          "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          }
         }
       ],
       "legalOwnerInstructions":   "string",
@@ -821,10 +845,16 @@
           },
           "description":       "vehicle",
           "weight":            1500,
-          "loadingStartDate":  1502834400000,
-          "loadingEndDate":    1502834400000,
-          "deliveryStartDate": 1502834400000,
-          "deliveryEndDate":   1502834400000
+          "pickupWindow":   {
+            "$class":          "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow": {
+            "$class":          "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          }
         }
       ],
       "legalOwnerInstructions": "string",
@@ -917,10 +947,16 @@
           },
           "description":       "vehicle",
           "weight":            1500,
-          "loadingStartDate":  1502834400000,
-          "loadingEndDate":    1502834400000,
-          "deliveryStartDate": 1502834400000,
-          "deliveryEndDate":   1502834400000
+          "pickupWindow":   {
+            "$class":          "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow": {
+            "$class":          "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          }
         },
         {
           "$class":            "org.digitalcmr.Good",
@@ -936,10 +972,16 @@
           },
           "description":       "vehicle",
           "weight":            1500,
-          "loadingStartDate":  1502834400000,
-          "loadingEndDate":    1502834400000,
-          "deliveryStartDate": 1502834400000,
-          "deliveryEndDate":   1502834400000
+          "pickupWindow":   {
+            "$class":          "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow": {
+            "$class":          "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          }
         }
       ],
       "legalOwnerInstructions":  "string",
@@ -1036,10 +1078,16 @@
           },
           "description":       "vehicle",
           "weight":            1500,
-          "loadingStartDate":  1502834400000,
-          "loadingEndDate":    1502834400000,
-          "deliveryStartDate": 1502834400000,
-          "deliveryEndDate":   1502834400000
+          "pickupWindow":   {
+            "$class":          "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow": {
+            "$class":          "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          }
         },
         {
           "$class":            "org.digitalcmr.Good",
@@ -1055,10 +1103,16 @@
           },
           "description":       "vehicle",
           "weight":            1500,
-          "loadingStartDate":  1502834400000,
-          "loadingEndDate":    1502834400000,
-          "deliveryStartDate": 1502834400000,
-          "deliveryEndDate":   1502834400000
+          "pickupWindow":   {
+            "$class":          "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow": {
+            "$class":          "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          }
         },
         {
           "$class":            "org.digitalcmr.Good",
@@ -1074,10 +1128,16 @@
           },
           "description":       "vehicle",
           "weight":            1500,
-          "loadingStartDate":  1502834400000,
-          "loadingEndDate":    1502834400000,
-          "deliveryStartDate": 1502834400000,
-          "deliveryEndDate":   1502834400000
+          "pickupWindow":   {
+            "$class":          "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow": {
+            "$class":          "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          }
         },
         {
           "$class":            "org.digitalcmr.Good",
@@ -1093,10 +1153,16 @@
           },
           "description":       "vehicle",
           "weight":            1500,
-          "loadingStartDate":  1502834400000,
-          "loadingEndDate":    1502834400000,
-          "deliveryStartDate": 1502834400000,
-          "deliveryEndDate":   1502834400000
+          "pickupWindow":   {
+            "$class":          "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow": {
+            "$class":          "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          }
         }
       ],
       "legalOwnerInstructions":   "string",
@@ -1197,10 +1263,16 @@
           },
           "description":       "vehicle",
           "weight":            1500,
-          "loadingStartDate":  1502834400000,
-          "loadingEndDate":    1502834400000,
-          "deliveryStartDate": 1502834400000,
-          "deliveryEndDate":   1502834400000
+          "pickupWindow":   {
+            "$class":          "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow": {
+            "$class":          "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          }
         },
         {
           "$class":            "org.digitalcmr.Good",
@@ -1216,10 +1288,16 @@
           },
           "description":       "vehicle",
           "weight":            1800,
-          "loadingStartDate":  1502834400000,
-          "loadingEndDate":    1502834400000,
-          "deliveryStartDate": 1502834400000,
-          "deliveryEndDate":   1502834400000
+          "pickupWindow":   {
+            "$class":          "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow": {
+            "$class":          "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          }
         }
       ],
       "legalOwnerInstructions":  "string",
@@ -1316,10 +1394,16 @@
           },
           "description":       "vehicle",
           "weight":            1900,
-          "loadingStartDate":  1502834400000,
-          "loadingEndDate":    1502834400000,
-          "deliveryStartDate": 1502834400000,
-          "deliveryEndDate":   1502834400000
+          "pickupWindow":   {
+            "$class":          "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow": {
+            "$class":          "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          }
         }
       ],
       "legalOwnerInstructions": "string",
@@ -1329,9 +1413,9 @@
   ],
   "transportOrders": [
     {
-      "$class":   "org.digitalcmr.TransportOrder",
-      "orderID":  "12345567890",
-      "loading":  {
+      "$class":    "org.digitalcmr.TransportOrder",
+      "orderID":   "12345567890",
+      "loading":   {
         "actualDate":   1502834400000,
         "expectedDate": 1502835400000,
         "address":      {
@@ -1346,7 +1430,7 @@
           "latitude":    123
         }
       },
-      "delivery": {
+      "delivery":  {
         "$class":       "org.digitalcmr.Delivery",
         "actualDate":   1502834400000,
         "expectedDate": 1502835400000,
@@ -1362,10 +1446,10 @@
           "latitude":    123
         }
       },
-      "owner":    "leaseplan",
-      "source":   "amsterdamcompound",
-      "carrier":  "koopman",
-      "goods":    [
+      "owner":     "leaseplan",
+      "source":    "amsterdamcompound",
+      "carrier":   "koopman",
+      "goods":     [
         {
           "$class":            "org.digitalcmr.Good",
           "vehicle":           {
@@ -1380,10 +1464,16 @@
           },
           "description":       "vehicle",
           "weight":            1500,
-          "loadingStartDate":  1502834400000,
-          "loadingEndDate":    1502834400000,
-          "deliveryStartDate": 1502834400000,
-          "deliveryEndDate":   1502834400000
+          "pickupWindow":   {
+            "$class":          "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow": {
+            "$class":          "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          }
         },
         {
           "$class":            "org.digitalcmr.Good",
@@ -1399,10 +1489,16 @@
           },
           "description":       "vehicle",
           "weight":            1800,
-          "loadingStartDate":  1502834400000,
-          "loadingEndDate":    1502834400000,
-          "deliveryStartDate": 1502834400000,
-          "deliveryEndDate":   1502834400000
+          "pickupWindow":   {
+            "$class":          "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow": {
+            "$class":          "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          }
         }
       ],
       "status":    "OPEN",
