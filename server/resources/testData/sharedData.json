@@ -133,30 +133,30 @@
         "participantID": "userID",
         "$class":        "CarrierAdmin",
         "org":           "CarrierOrg#koopman",
-        "userID":        "goslin@koopman.org",
-        "userName":      "goslin",
-        "firstName":     "Goslin",
-        "lastName":      "Jackson",
+        "userID":        "pete@koopman.org",
+        "userName":      "pete",
+        "firstName":     "Pete",
+        "lastName":      "Koppy",
         "address":       {
           "$class":      "Address",
-          "name":        "Goslin Jackson",
-          "street":      "jackiestraat",
-          "houseNumber": "71",
+          "name":        "Pete Koppy",
+          "street":      "koppenstraat",
+          "houseNumber": "43",
           "city":        "Groningen",
           "zipCode":     "9712HX",
           "country":     "Netherlands",
-          "latitude":    51.6443,
-          "longitude":   64.3323
+          "latitude":    43.4443,
+          "longitude":   72.3323
         }
       },
       "identity":    {
-        "userID": "goslin@koopman.org"
+        "userID": "pete@koopman.org"
       },
       "userApp":     {
-        "username":  "goslin@koopman.org",
+        "username":  "pete@koopman.org",
         "password":  "passw0rd",
-        "firstName": "Goslin",
-        "lastName":  "Jackson",
+        "firstName": "Pete",
+        "lastName":  "Koppy",
         "role":      "CarrierAdmin"
       }
     },
