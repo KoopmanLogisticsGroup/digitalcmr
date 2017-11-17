@@ -232,6 +232,10 @@ transaction UpdateECMR {
   o ECMR ecmr
 }
 
+transaction UpdateTransportOrder {
+  o TransportOrder transportOrder
+}
+
 transaction UpdateRegistrationCountry {
   --> Vehicle vehicle
   o String registrationCountry

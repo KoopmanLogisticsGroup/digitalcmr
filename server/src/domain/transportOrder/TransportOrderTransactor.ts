@@ -18,7 +18,7 @@ export class TransportOrderTransactor implements TransactionCreator {
   }
 
   public async update(factory: Factory, namespace: string, data: any): Promise<any> {
-    let transaction            = factory.newTransaction(namespace, 'UpdateTransportOrders');
+    let transaction            = factory.newTransaction(namespace, 'UpdateTransportOrder');
     transaction.transportOrder = TransportOrderBuilder.buildTransportOrder(factory, namespace, data);
 
     return transaction;

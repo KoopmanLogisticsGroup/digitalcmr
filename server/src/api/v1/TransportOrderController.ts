@@ -5,7 +5,7 @@ import {
   UseAfter,
   UseInterceptor,
   Param,
-  UseBefore, Post, Body
+  UseBefore, Post, Body, Put
 } from 'routing-controllers';
 import {ErrorHandlerMiddleware, ComposerInterceptor, UserAuthenticatorMiddleware} from '../../middleware';
 import {JSONWebToken} from '../../utils/authentication/JSONWebToken';
@@ -50,5 +50,12 @@ export class TransportOrderController {
     const identity: Identity = new JSONWebToken(request).getIdentity();
     return await this.transactionHandler.create(identity, Config.settings.composer.profile, Config.settings.composer.namespace,
       transportOrder, new TransportOrderTransactor());
+  }
+
+  @Put('/cancelTransportOrder')
+  public async update(@Body() transportOrder: TransportOrder, @Req() request: any): Promise<any> {
+    const identity: Identity = new JSONWebToken(request).getIdentity();
+
+    return await this.transactionHandler.update(identity, Config.settings.composer.profile, Config.settings.composer.namespace, transportOrder, transportOrder.orderID, new TransportOrderTransactor());
   }
 }
