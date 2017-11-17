@@ -636,16 +636,16 @@
       "payOnDelivery":          "string"
     },
     {
-      "$class":                   "org.digitalcmr.ECMR",
-      "ecmrID":                   "C1234567890",
-      "status":                   "DELIVERED",
-      "agreementTerms":           "agreement terms here",
-      "agreementTermsSec":        "agreement terms sec",
-      "legalOwnerRef":            "ASD213123S",
-      "carrierRef":               "H2238723VASD",
-      "recipientRef":             "SDADHGA21312312",
-      "orderID":                  "AAAA123456",
-      "creation":                 {
+      "$class":            "org.digitalcmr.ECMR",
+      "ecmrID":            "C1234567890",
+      "status":            "DELIVERED",
+      "agreementTerms":    "agreement terms here",
+      "agreementTermsSec": "agreement terms sec",
+      "legalOwnerRef":     "ASD213123S",
+      "carrierRef":        "H2238723VASD",
+      "recipientRef":      "SDADHGA21312312",
+      "orderID":           "12345567890",
+      "creation":          {
         "$class":  "org.digitalcmr.Creation",
         "address": {
           "$class":      "org.digitalcmr.Address",
@@ -1375,7 +1375,7 @@
             "model":           "A1",
             "type":            "sportback",
             "ecmrs":           [
-              "B1234567890"
+              "C1234567890"
             ],
             "odoMeterReading": 0,
             "plateNumber":     "AV198RX"
@@ -1412,7 +1412,8 @@
       "status":    "OPEN",
       "issueDate": 1502834400000,
       "ecmrs":     [
-        "B1234567890"
+        "B1234567890",
+        "C1234567890"
       ],
       "orderRef":  "ref"
     }

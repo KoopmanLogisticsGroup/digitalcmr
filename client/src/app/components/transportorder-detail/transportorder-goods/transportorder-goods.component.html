@@ -26,11 +26,25 @@
           <span>{{transportOrder?.loading?.address?.city}}</span>
           <span> {{good?.loadingStartDate}}</span>
           <span> {{good?.loadingEndDate}}</span>
+          <div *ngFor="let ecmr of ecmrs">
+            <div *ngFor="let ecmrGood of ecmr?.goods">
+              <div *ngIf="good?.vehicle?.vin == ecmrGood?.vehicle?.vin">
+                <span> {{ecmr?.carrierLoadingSignature?.timestamp}} </span>
+              </div>
+            </div>
+          </div>
         </td>
         <td class="loadingWindow">
           <span>{{transportOrder?.loading?.address?.city}}</span>
           <span> {{good?.loadingStartDate}}</span>
           <span> {{good?.loadingEndDate}}</span>
+          <div *ngFor="let ecmr of ecmrs">
+            <div *ngFor="let ecmrGood of ecmr?.goods">
+              <div *ngIf="good?.vehicle?.vin == ecmrGood?.vehicle?.vin">
+                <span>{{ecmr?.carrierDeliverySignature?.timestamp}}</span>
+              </div>
+            </div>
+          </div>
         </td>
       </tr>
       </tbody>

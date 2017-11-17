@@ -14,6 +14,7 @@ export class TransportorderDetailComponent implements OnInit {
 
   private orderID: string;
   public transportOrder: TransportOrder;
+  public ecmrs: Ecmr[];
 
   public constructor(private route: ActivatedRoute,
                      private transportOrderService: TransportOrderService,
@@ -26,8 +27,12 @@ export class TransportorderDetailComponent implements OnInit {
       .subscribe((transportOrder: TransportOrder) => {
         this.transportOrder = transportOrder;
         this.ecmrService.getEcmrsByTransportOrderID(this.orderID)
-          .subscribe((ecmr: Ecmr) => {
-            if (ecmr.carrierLoadingSignature.timestamp) {
+          .subscribe((ecmrs: Ecmr[]) => {
+            if (ecmrs instanceof Array) {
+              this.ecmrs = ecmrs;
+            } else {
+              this.ecmrs = [];
+              this.ecmrs.push(ecmrs);
             }
           });
       });
