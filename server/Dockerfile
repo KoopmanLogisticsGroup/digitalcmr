@@ -9,3 +9,5 @@ RUN npm install --loglevel error
 RUN npm cache clean
 
 COPY . .
+
+COPY resources/connectionProfiles /root/.composer-connection-profiles

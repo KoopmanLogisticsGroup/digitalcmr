@@ -36,7 +36,7 @@ export class Config {
       return this.combinedSettings;
     }
 
-    console.log('process.env.NODE_ENV', process.env.NODE_ENV);
+    debug(this.NAMESPACE)('process.env.NODE_ENV', process.env.NODE_ENV);
     const defaultSettings = DefaultConfig.settings;
     let envSettings: Settings;
     switch (process.env.NODE_ENV) {
