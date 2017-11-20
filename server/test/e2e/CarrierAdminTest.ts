@@ -3,8 +3,8 @@ import '../../node_modules/mocha';
 import * as chai from 'chai';
 import * as http from 'http';
 import {Ecmr} from '../../../client/src/app/interfaces/ecmr.interface';
-import {TransportOrder} from '../../resources/interfaces/transportOrder.interface';
-import {Address} from '../../resources/interfaces/address.interface';
+import {TransportOrder} from '../../src/interfaces/transportOrder.interface';
+import {Address} from '../../src/interfaces/address.interface';
 
 const server = supertest.agent('http://localhost:8080');
 const should = chai.should();
@@ -95,7 +95,7 @@ const ok = (res) => {
 describe('A Carrier admin can', () => {
   before((done) => {
     const loginParams = {
-      'username': 'goslin@koopman.org',
+      'username': 'pete@koopman.org',
       'password': 'passw0rd'
     };
 
@@ -193,7 +193,7 @@ describe('A Carrier admin can', () => {
           console.log(err.stack);
           return done(err);
         }
-        res.body.should.equal(200);
+        res.body.length.should.equal(0);
         done(err);
       });
   });
@@ -364,13 +364,8 @@ describe('A Carrier admin can', () => {
           console.log(err.stack);
           done(err);
         }
-        if (res.body instanceof Array) {
-          should.exist(res.body[0].plateNumber);
-        } else if (res.body instanceof Object) {
-          should.exist(res.body.plateNumber);
-        } else {
-          res.body.should.equal(200);
-        }
+        should.exist(res.body);
+        res.body.length.should.be.greaterThan(0);
         done(err);
       });
   });
@@ -400,6 +395,7 @@ describe('A Carrier admin can', () => {
           console.log(err.stack);
           done(err);
         }
+        should.exist(res.body);
         res.body.plateNumber.should.equal('AV198RX');
         done(err);
       });
