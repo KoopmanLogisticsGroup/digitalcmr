@@ -9,7 +9,7 @@ export class VehicleTransactor implements TransactionCreator {
 
     if (transactionName === Transaction.CreateVehicle) {
       transaction.vehicle = VehicleBuilder.buildCreateVehicle(factory, namespace, resources);
-    } else if (transactionName === Transaction.CreateVehicle) {
+    } else if (transactionName === Transaction.CreateVehicles) {
       transaction.vehicles = VehicleBuilder.buildCreateVehicles(factory, namespace, resources);
     }
 
