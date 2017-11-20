@@ -4,7 +4,7 @@ export class ProductionConfig {
   public static get settings(): Settings {
     return {
       composer:     {
-        url:       'http://169.51.10.201:31090/api',
+        url:       'http://159.8.76.83:31090/api',
         profile:   'production',
         network:   'digital-cmr-network',
         channel:   'channel1',
@@ -12,9 +12,9 @@ export class ProductionConfig {
       },
       host:         process.env.VCAP_HOST || process.env.HOST || '',
       port:         process.env.VCAP_PORT || process.env.PORT || '',
-      serverSecret: '',
+      serverSecret: 'sUp4hS3cr37kE9c0D3',
       privateDB:    {
-        host: 'private-db',
+        host: 'couchdb-private',
         port: '5984'
       }
     };
