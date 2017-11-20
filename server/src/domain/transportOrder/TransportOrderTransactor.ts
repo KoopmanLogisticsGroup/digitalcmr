@@ -8,7 +8,7 @@ export class TransportOrderTransactor implements TransactionCreator {
     let transaction = factory.newTransaction(namespace, transactionName);
 
     if (transactionName === Transaction.CreateTransportOrder) {
-      transaction.transportOrders = await TransportOrderBuilder.buildTransportOrder(factory, namespace, data);
+      transaction.transportOrder = await TransportOrderBuilder.buildTransportOrder(factory, namespace, data);
     } else if (transactionName === Transaction.CreateTransportOrders) {
       transaction.transportOrders = await TransportOrderBuilder.buildTransportOrders(factory, namespace, data);
     }
