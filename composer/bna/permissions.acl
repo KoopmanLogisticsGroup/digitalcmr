@@ -192,7 +192,7 @@ rule CarrierAdminCanSubmitUpdateTransportOrderForOpen {
     operation: UPDATE
     resource(r): "org.digitalcmr.TransportOrder"
     transaction(tx): "org.digitalcmr.UpdateTransportOrder"
-    condition: (r.carrier.getIdentifier() === p.org.getIdentifier() && r.status == 'OPEN' && tx.transportOrder.status == 'IN_PROGRESS')
+    condition: (r.carrier.getIdentifier() === p.org.getIdentifier() && r.status == 'OPEN')
     action: ALLOW
 }
 
@@ -258,7 +258,7 @@ rule CarrierMemberCanSubmitUpdateTransportOrderForInProgress {
     operation: UPDATE
     resource(r): "org.digitalcmr.TransportOrder"
     transaction(tx): "org.digitalcmr.UpdateTransportOrder"
-    condition: (r.carrier.getIdentifier() === p.org.getIdentifier() && r.status == 'IN_PROGRESS' && tx.transportOrder.status == "COMPLETED")
+    condition: (r.carrier.getIdentifier() === p.org.getIdentifier() && r.status == 'IN_PROGRESS')
     action: ALLOW
 }
 

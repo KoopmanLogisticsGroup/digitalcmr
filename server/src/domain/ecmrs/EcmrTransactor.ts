@@ -30,23 +30,19 @@ export class EcmrTransactor implements TransactionCreator {
 
   public async createEcmrFromTransportOrder(identity: Identity, connectionProfile: string, namespace: string, ecmrs: any, transactionHandler: TransactionHandler): Promise<any> {
     await transactionHandler.create(identity, connectionProfile, namespace, ecmrs, new EcmrTransactor());
-
     let orderID           = ecmrs[0].orderID;
     let transportOrder    = await transactionHandler.executeQuery(identity, connectionProfile, 'getTransportOrderById', {orderID: orderID});
-    transportOrder.status = 'IN_PROGRESS';
 
     for (const ecmr of ecmrs) {
       transportOrder.ecmrs.push(ecmr.ecmrID);
     }
-
-    return await transactionHandler.update(identity, connectionProfile, namespace, transportOrder, transportOrder.orderID, new TransportOrderTransactor());
+    return await transactionHandler.update(identity, connectionProfile, namespace, ecmrs, transportOrder.orderID, new TransportOrderTransactor());
   }
 
   public async updateECMRAndTransportOrder(identity: Identity, connectionProfile: string, namespace: string, ecmr: Ecmr, transactionHandler: TransactionHandler): Promise<any> {
     if (ecmr.status === 'DELIVERED') {
       let orderID           = ecmr.orderID;
       let transportOrder    = await transactionHandler.executeQuery(identity, connectionProfile, 'getTransportOrderById', {orderID: orderID});
-      transportOrder.status = 'COMPLETED';
       await transactionHandler.update(identity, connectionProfile, namespace, transportOrder, transportOrder.orderID, new TransportOrderTransactor());
     }
 

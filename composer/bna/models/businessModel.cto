@@ -201,7 +201,8 @@ transaction CreateTransportOrders {
 }
 
 transaction UpdateTransportOrder {
-  o TransportOrder transportOrder
+  --> TransportOrder transportOrder
+  --> ECMR[] ecmrs
 }
 
 transaction CreateECMR {

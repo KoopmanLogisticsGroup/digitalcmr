@@ -66,41 +66,57 @@ function CreateTransportOrders(tx) {
 
 /**
  * UpdateTransportOrder transaction processor function.
- * @param {org.digitalcmr.UpdateTransportOrder} tx  - The UpdateTransportOrder transaction
+ * @param {org.digitalcmr.UpdateTransportOrder} tx  - UpdateTransportOrder status to IN_PROGRESS transaction
  * @return {Promise} Asset registry Promise
  * @transaction
  */
-function UpdateTransportOrder(tx) {
-
+function UpdateTransportOrderStatusToInProgress(tx) {
   console.log('Invoking function processor to set update TransportOrder');
   console.log('orderID: ' + tx.transportOrder.orderID);
 
   // Get the asset registry for the asset.
+  // Updates the status of a TransportOrder when an ECMR is created
+  tx.transportOrder.status = transportOrderStatus.InProgress;
+
+  // Adds the created ECMR resource to the array of ECMRs by checking if orderIDs are corresponding
+  tx.transportOrder.ecmrs = tx.ecmrs;
+
   return getAssetRegistry('org.digitalcmr.TransportOrder')
     .then(function (assetRegistry) {
-      return assetRegistry.get(tx.transportOrder.orderID)
+      return assetRegistry.update(tx.transportOrder)
         .catch(function (error) {
           console.log('[Update TransportOrder] An error occurred while updating the registry asset: ' + error);
           throw error;
         });
-    })
-    .then(function (transportOrder) {
-      //Updates the status of a TransportOrder when an ECMR is created
-      transportOrder.status = tx.transportOrder.status;
+    }).catch(function (error) {
+      console.log('[Update TransportOrder] An error occurred while updating the TransportOrder asset: ' + error);
+      throw error;
+    });
+}
 
-      //Adds the created ECMR resource to the array of ECMRs by checking if orderIDs are corresponding
-      transportOrder.ecmrs = tx.transportOrder.ecmrs;
+/**
+ * UpdateTransportOrder transaction processor function.
+ * @param {org.digitalcmr.UpdateTransportOrder} tx  - UpdateTransportOrder status to COMPLETED transaction
+ * @return {Promise} Asset registry Promise
+ * @transaction
+ */
+function UpdateTransportOrderStatusToCompleted(tx) {
+  console.log('Invoking function processor to set update TransportOrder');
+  console.log('orderID: ' + tx.transportOrder.orderID);
 
-      return getAssetRegistry('org.digitalcmr.TransportOrder')
-        .then(function (assetRegistry) {
-          return assetRegistry.update(transportOrder)
-            .catch(function (error) {
-              console.log('[Update TransportOrder] An error occurred while updating the registry asset: ' + error);
-              throw error;
-            });
-        }).catch(function (error) {
-          console.log('[Update TransportOrder] An error occurred while updating the TransportOrder asset: ' + error);
+  // Get the asset registry for the asset.
+  // Updates the status of a TransportOrder when an ECMR is created
+  tx.transportOrder.status = transportOrderStatus.Completed;
+
+  return getAssetRegistry('org.digitalcmr.TransportOrder')
+    .then(function (assetRegistry) {
+      return assetRegistry.update(tx.transportOrder)
+        .catch(function (error) {
+          console.log('[Update TransportOrder] An error occurred while updating the registry asset: ' + error);
           throw error;
         });
+    }).catch(function (error) {
+      console.log('[Update TransportOrder] An error occurred while updating the TransportOrder asset: ' + error);
+      throw error;
     });
 }
