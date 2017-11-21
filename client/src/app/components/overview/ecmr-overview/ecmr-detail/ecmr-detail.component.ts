@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {EcmrService} from '../../services/ecmr.service';
+import {EcmrService} from '../../../../services/ecmr.service';
 import {ActivatedRoute} from '@angular/router';
-import {NavbarService} from '../../services/navbar.service';
-import {Ecmr} from '../../interfaces/ecmr.interface';
-import {Signature} from '../../interfaces/signature.interface';
+import {NavbarService} from '../../../../services/navbar.service';
+import {Ecmr} from '../../../../interfaces/ecmr.interface';
+import {Signature} from '../../../../interfaces/signature.interface';
 
 @Component({
   selector:    'app-ecmr-detail',

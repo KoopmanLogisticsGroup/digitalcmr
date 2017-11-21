@@ -2,9 +2,9 @@ import * as supertest from 'supertest';
 import '../../node_modules/mocha';
 import * as chai from 'chai';
 import * as http from 'http';
-import {Ecmr} from '../../resources/interfaces/ecmr.interface';
-import {TransportOrder} from '../../resources/interfaces/transportOrder.interface';
-import {Address} from '../../resources/interfaces/address.interface';
+import {Ecmr} from '../../src/interfaces/ecmr.interface';
+import {TransportOrder} from '../../src/interfaces/transportOrder.interface';
+import {Address} from '../../src/interfaces/address.interface';
 
 const server = supertest.agent('http://localhost:8080');
 const should = chai.should();
@@ -156,7 +156,7 @@ describe('A Carrier member can', () => {
       });
   });
 
-  it('can not create an ECMR', (done) => {
+  it('not create an ECMR', (done) => {
     const ecmr = buildECMR('ecmr1');
     server
       .post('/api/v1/ECMR')
@@ -172,7 +172,7 @@ describe('A Carrier member can', () => {
       });
   });
 
-  it('can read ECMRs where his org is the carrier', (done) => {
+  it('read ECMRs where his org is the carrier', (done) => {
     server
       .get('/api/v1/ECMR')
       .set('x-access-token', token)
@@ -194,7 +194,7 @@ describe('A Carrier member can', () => {
       });
   });
 
-  it('can not read an ECMR where his org is not the carrier', (done) => {
+  it('not read an ECMR where his org is not the carrier', (done) => {
     server
       .get('/api/v1/ECMR/ecmrID/H1234567890')
       .set('x-access-token', token)
@@ -204,12 +204,12 @@ describe('A Carrier member can', () => {
           console.log(err.stack);
           return done(err);
         }
-        res.body.should.equal(200);
+        res.body.length.should.equal(0);
         done(err);
       });
   });
 
-  it('can not read an ECMR where the status is created', (done) => {
+  it('not read an ECMR where the status is created', (done) => {
     server
       .get('/api/v1/ECMR/ecmrID/B1234567890')
       .set('x-access-token', token)
@@ -219,12 +219,12 @@ describe('A Carrier member can', () => {
           console.log(err.stack);
           return done(err);
         }
-        res.body.should.equal(200);
+        res.body.length.should.equal(0);
         done(err);
       });
   });
 
-  it('can not submit an update transaction for an ECMR with status created', (done) => {
+  it('not submit an update transaction for an ECMR with status created', (done) => {
     server
       .put('/api/v1/ECMR')
       .set('x-access-token', token)
@@ -238,7 +238,7 @@ describe('A Carrier member can', () => {
       });
   });
 
-  it('can not submit an update transaction for a different transport org', (done) => {
+  it('not submit an update transaction for a different transport org', (done) => {
     const wrongOrgEcmr   = buildECMR('D1234567890');
     wrongOrgEcmr.carrier = 'notKoopman';
     server
