@@ -6,32 +6,24 @@ import {QueryReturnType, TransactionHandler} from '../../blockchain/TransactionH
 import {Transaction} from '../../blockchain/Transactions';
 import {TransportOrderTransactor} from '../transportOrder/TransportOrderTransactor';
 import {Ecmr} from '../../interfaces/ecmr.interface';
+import {Config} from '../../config/index';
 
 export class EcmrTransactor implements TransactionCreator {
   public async invoke(factory: Factory, namespace: string, transactionName: string, data: any, enrollmentID: string, ip?: string): Promise<any> {
     let transaction = factory.newTransaction(namespace, transactionName);
+    console.log(transactionName);
 
     if (transactionName === Transaction.CreateEcmr) {
-      transaction.ecmr = await EcmrBuilder.buildECMR(factory, namespace, data, enrollmentID, ip);
+      transaction.ecmr           = await EcmrBuilder.buildECMR(factory, namespace, data, enrollmentID, ip);
+      transaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', data[0].orderID);
     } else if (transactionName === Transaction.CreateEcmrs) {
-      transaction.ecmrs = await EcmrBuilder.buildECMRs(factory, namespace, data, enrollmentID, ip);
+      transaction.ecmrs          = await EcmrBuilder.buildECMRs(factory, namespace, data, enrollmentID, ip);
+      transaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', data[0].orderID);
     } else if (transactionName === Transaction.UpdateEcmr) {
       transaction.ecmr = EcmrBuilder.buildECMR(factory, namespace, data, enrollmentID, ip);
     }
 
     return transaction;
-  }
-
-  public async createEcmrFromTransportOrder(identity: Identity, connectionProfile: string, namespace: string, ecmrs: Ecmr[], transactionHandler: TransactionHandler): Promise<any> {
-    await transactionHandler.invoke(identity, connectionProfile, namespace, Transaction.CreateEcmrs, ecmrs, new EcmrTransactor());
-    let orderID        = ecmrs[0].orderID;
-    let transportOrder = await transactionHandler.executeQuery(identity, connectionProfile, QueryReturnType.Single, 'getTransportOrderById', {orderID: orderID});
-
-    for (const ecmr of ecmrs) {
-      transportOrder.ecmrs.push(ecmr.ecmrID);
-    }
-
-    return await transactionHandler.invoke(identity, connectionProfile, namespace, Transaction.UpdateTransportOrder, ecmrs, new TransportOrderTransactor());
   }
 
   public async updateECMRAndTransportOrder(identity: Identity, connectionProfile: string, namespace: string, ecmr: Ecmr, transactionHandler: TransactionHandler): Promise<any> {

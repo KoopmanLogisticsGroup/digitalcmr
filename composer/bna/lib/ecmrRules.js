@@ -45,7 +45,6 @@ function CreateECMR(tx) {
  * @transaction
  */
 function CreateECMRs(tx) {
-
   console.log('Invoking function: CreateECMRs');
 
   // Get the asset registry for the asset.
@@ -53,14 +52,15 @@ function CreateECMRs(tx) {
     .then(function (assetRegistry) {
       return assetRegistry.addAll(tx.ecmrs)
         .then(function () {
-          console.log('Asset added with success');
+          console.log('ECMRs added with success');
+          UpdateTransportOrderToInProgress(tx);
         })
         .catch(function (error) {
-          console.log('An error occurred while addAll ecmr assets', error);
+          console.log('An error occurred while addAll ECMRs', error);
           throw error;
         });
     }).catch(function (error) {
-      console.log('An error occurred while saving the ecmr assets', error);
+      console.log('An error occurred while getting the asset registery', error);
       throw error;
     });
 }

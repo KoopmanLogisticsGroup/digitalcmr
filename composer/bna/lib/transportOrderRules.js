@@ -64,13 +64,7 @@ function CreateTransportOrders(tx) {
     })
 }
 
-/**
- * UpdateTransportOrder transaction processor function.
- * @param {org.digitalcmr.UpdateTransportOrder} tx  - UpdateTransportOrder status to IN_PROGRESS transaction
- * @return {Promise} Asset registry Promise
- * @transaction
- */
-function UpdateTransportOrder(tx) {
+function UpdateTransportOrderToInProgress(tx) {
   console.log('Invoking function processor to set update TransportOrder');
   console.log('orderID: ' + tx.transportOrder.orderID);
 

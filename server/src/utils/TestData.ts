@@ -94,20 +94,20 @@ export class TestData {
         this.logger.error('Error adding Vehicles', error);
       }
     }
-    if (sharedData.ecmrs && sharedData.ecmrs.length) {
-      this.logger.info('Adding Ecmrs');
-      try {
-        await this.addEcmrs(sharedData.ecmrs);
-      } catch (error) {
-        this.logger.error('Error adding Ecmrs', error);
-      }
-    }
     if (sharedData.transportOrders && sharedData.transportOrders.length) {
       this.logger.info('Adding Transport Orders');
       try {
         await this.addTransportOrders(sharedData.transportOrders);
       } catch (error) {
         this.logger.error('Error adding Transport Orders', error);
+      }
+    }
+    if (sharedData.ecmrs && sharedData.ecmrs.length) {
+      this.logger.info('Adding Ecmrs');
+      try {
+        await this.addEcmrs(sharedData.ecmrs);
+      } catch (error) {
+        this.logger.error('Error adding Ecmrs', error);
       }
     }
   }

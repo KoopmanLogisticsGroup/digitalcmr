@@ -63,17 +63,10 @@ export class ECMRController {
   }
 
   @Post('/')
-  public async create(@Body() ecmr: Ecmr, @Req() request: any): Promise<any> {
+  public async create(@Body() ecmrs: Ecmr, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateEcmr, ecmr, new EcmrTransactor());
-  }
-
-  @Post('/createECMRFromTransportOrder')
-  public async createECMRFromTransportOrder(@Body() ecmrs: Ecmr[], @Req() request: any): Promise<any> {
-    const identity: Identity = new JSONWebToken(request).getIdentity();
-
-    return await this.ecmrTransactor.createEcmrFromTransportOrder(identity, Config.settings.composer.profile, Config.settings.composer.namespace, ecmrs, this.transactionHandler);
+    return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateEcmrs, ecmrs, new EcmrTransactor());
   }
 
   @Put('/')

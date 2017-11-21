@@ -178,20 +178,11 @@ rule CarrierAdminCanSubmitCreateECMRs {
     action: ALLOW
 }
 
-rule CarrierAdminCanCreateTransportOrderUpdateTransaction {
-    description: "Allow the Carrier Admin to CREATE a transport order UPDATE transaction"
-    participant: "org.digitalcmr.CarrierAdmin"
-    operation: CREATE
-    resource: "org.digitalcmr.UpdateTransportOrder"
-    action: ALLOW
-}
-
 rule CarrierAdminCanSubmitUpdateTransportOrderForOpen {
     description: "Allow Carrier Admin to submit an Update TransportOrder transaction for his organization and for status OPEN when new status is IN_PROGRESS"
     participant(p): "org.digitalcmr.CarrierAdmin"
     operation: UPDATE
     resource(r): "org.digitalcmr.TransportOrder"
-    transaction(tx): "org.digitalcmr.UpdateTransportOrder"
     condition: (r.carrier.getIdentifier() === p.org.getIdentifier() && r.status == 'OPEN')
     action: ALLOW
 }

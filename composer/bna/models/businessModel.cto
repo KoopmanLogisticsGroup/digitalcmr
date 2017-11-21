@@ -200,11 +200,6 @@ transaction CreateTransportOrders {
   o TransportOrder[] transportOrders
 }
 
-transaction UpdateTransportOrder {
-  --> TransportOrder transportOrder
-  --> ECMR[] ecmrs
-}
-
 transaction UpdateTransportOrderStatusToCompleted {
   --> TransportOrder transportOrder
 }
@@ -234,6 +229,7 @@ transaction CreateVehicles {
 }
 
 transaction CreateECMRs {
+  --> TransportOrder transportOrder
   o ECMR[] ecmrs
 }
 
