@@ -79,7 +79,7 @@ function UpdateTransportOrderPickupWindow(tx) {
 
   return getAssetRegistry('org.digitalcmr.TransportOrder')
     .then(function (assetRegistry) {
-      for (var goodIndex = 0; goodIndex < tx.transportOrder.goods.length; goodIndex ++ ) {
+      for (var goodIndex = 0; goodIndex < tx.transportOrder.goods.length; goodIndex++) {
         if (tx.transportOrder.goods[goodIndex].vehicle.vin === tx.vin) {
           tx.transportOrder.goods[goodIndex].pickupWindow = tx.dateWindow;
         }
