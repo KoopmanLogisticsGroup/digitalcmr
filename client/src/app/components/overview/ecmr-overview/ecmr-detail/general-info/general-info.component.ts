@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {AuthenticationService} from '../../../services/authentication.service';
-import {Ecmr} from '../../../interfaces/ecmr.interface';
+import {AuthenticationService} from '../../../../../services/authentication.service';
+import {Ecmr} from '../../../../../interfaces/ecmr.interface';
 
 @Component({
   selector:    'app-general-info',

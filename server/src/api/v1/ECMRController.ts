@@ -11,10 +11,12 @@ import {
 } from 'routing-controllers';
 import {ErrorHandlerMiddleware, ComposerInterceptor, UserAuthenticatorMiddleware} from '../../middleware';
 import {JSONWebToken} from '../../utils/authentication/JSONWebToken';
-import {TransactionHandler} from '../../blockchain/TransactionHandler';
+import {QueryReturnType, TransactionHandler} from '../../blockchain/TransactionHandler';
 import {Identity} from '../../domain/Identity';
 import {Config} from '../../config/index';
 import {EcmrTransactor} from '../../domain/ecmrs/EcmrTransactor';
+import {Transaction} from '../../blockchain/Transactions';
+import {Ecmr} from '../../interfaces/ecmr.interface';
 
 @JsonController('/ECMR')
 @UseBefore(UserAuthenticatorMiddleware)
@@ -29,21 +31,21 @@ export class ECMRController {
   public async getAllEcmrs(@Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getAllEcmrs');
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Multiple, 'getAllEcmrs');
   }
 
   @Get('/ecmrID/:ecmrID')
   public async getEcmrByEcmrID(@Param('ecmrID') ecmrID: string, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getEcmrById', {ecmrID: ecmrID});
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Single, 'getEcmrById', {ecmrID: ecmrID});
   }
 
   @Get('/status/:ecmrStatus')
   public async getAllEcmrsByStatus(@Param('ecmrStatus') ecmrStatus: string, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getEcmrsByStatus', {status: ecmrStatus});
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Multiple, 'getEcmrsByStatus', {status: ecmrStatus});
   }
 
   @Get('/vehicle/vin/:vin')
@@ -61,17 +63,17 @@ export class ECMRController {
   }
 
   @Post('/')
-  public async create(@Body() ecmr: any, @Req() request: any): Promise<any> {
+  public async create(@Body() ecmr: Ecmr, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.create(identity, Config.settings.composer.profile, Config.settings.composer.namespace, ecmr, new EcmrTransactor());
+    return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateEcmr, ecmr, new EcmrTransactor());
   }
 
   @Put('/')
-  public async update(@Body() ecmr: any, @Req() request: any): Promise<any> {
+  public async update(@Body() ecmr: Ecmr, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
     const ip                 = request.ip;
 
-    return await this.transactionHandler.update(identity, Config.settings.composer.profile, Config.settings.composer.namespace, ecmr, ecmr.ecmrID, new EcmrTransactor());
+    return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateEcmr, ecmr.ecmrID, new EcmrTransactor());
   }
 }
