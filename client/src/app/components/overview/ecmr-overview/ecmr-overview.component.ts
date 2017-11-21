@@ -57,8 +57,8 @@ export class EcmrOverviewComponent implements OnInit {
 
   public ngOnInit(): void {
     this.nav.show();
-    this.ecmrService.getAllEcmrs().subscribe(response => {
-      this.ecmrs         = response instanceof Array ? response : [];
+    this.ecmrService.getAllEcmrs().subscribe((ecmrs: Ecmr[]) => {
+      this.ecmrs         = ecmrs;
       this.ecmrsFiltered = this.ecmrs.filter(ecmr => ecmr.status.toUpperCase() === this.EcmrStatus.Created);
       this.firstView();
     });

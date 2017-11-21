@@ -37,4 +37,3 @@ export interface Ecmr {
   transporter?: string;
   recipient?: string;
 }
-

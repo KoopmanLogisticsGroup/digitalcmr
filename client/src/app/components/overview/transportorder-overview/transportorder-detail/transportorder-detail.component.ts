@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {TransportOrder} from '../../interfaces/transportOrder.interface';
-import {TransportOrderService} from '../../services/transportorder.service';
+import {TransportOrder} from '../../../../interfaces/transportOrder.interface';
+import {TransportOrderService} from '../../../../services/transportorder.service';
 
 @Component({
   selector:    'app-transportorder-detail',
