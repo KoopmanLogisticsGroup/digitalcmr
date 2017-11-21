@@ -133,8 +133,6 @@ rule CarrierPlannerCanReadTransportOrders {
   action: ALLOW
 }
 
-
-
 rule CarrierMemberCanReadECMR {
     description: "Allow Carrier Member to READ all eCMRs where he is a transporter and status is not Created"
     participant(p): "org.digitalcmr.CarrierMember"
