@@ -20,7 +20,6 @@ export class TransportOrderTransactor implements TransactionCreator {
       }
     } else if (transactionName === Transaction.UpdateTransportOrderStatusToCompleted) {
       transaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', data.orderID);
-      console.log(transaction);
     }
 
     return transaction;

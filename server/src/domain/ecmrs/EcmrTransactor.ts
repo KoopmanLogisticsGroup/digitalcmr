@@ -11,7 +11,6 @@ import {Config} from '../../config/index';
 export class EcmrTransactor implements TransactionCreator {
   public async invoke(factory: Factory, namespace: string, transactionName: string, data: any, enrollmentID: string, ip?: string): Promise<any> {
     let transaction = factory.newTransaction(namespace, transactionName);
-    console.log(transactionName);
 
     if (transactionName === Transaction.CreateEcmr) {
       transaction.ecmr           = await EcmrBuilder.buildECMR(factory, namespace, data, enrollmentID, ip);
