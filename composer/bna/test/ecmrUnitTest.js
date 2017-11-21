@@ -183,7 +183,7 @@ describe('Admin of the network', () => {
         factory = businessNetworkConnection.getBusinessNetwork().getFactory();
 
         // Create the CarrierMember
-        const carrierMember = factory.newResource(namespace, 'CarrierMember', userIDs.harry);
+        const carrierMember = factory.newResource(namespace, 'CarrierMember', userIDs.Harry);
         carrierMember.userName = 'harry';
         carrierMember.firstName = 'harry';
         carrierMember.lastName = 'Koppy';
@@ -207,19 +207,19 @@ describe('Admin of the network', () => {
 
         let ecmr = buildECMR('ecmr2');
         ecmr.status = ecmrStatus.Loaded;
-        ecmr.compoundSignature = buildSignature(userIDs.willem);
+        ecmr.compoundSignature = buildSignature(userIDs.Willem);
         ecmrList.push(ecmr);
 
         ecmr = buildECMR('ecmr3');
         ecmr.status = ecmrStatus.InTransit;
-        ecmr.compoundSignature = buildSignature(userIDs.willem);
-        ecmr.carrierLoadingSignature = buildSignature(userIDs.harry);
+        ecmr.compoundSignature = buildSignature(userIDs.Willem);
+        ecmr.carrierLoadingSignature = buildSignature(userIDs.Harry);
         ecmrList.push(ecmr);
 
         ecmr = buildECMR('ecmr4');
-        ecmr.compoundSignature = buildSignature(userIDs.willem);
-        ecmr.carrierLoadingSignature = buildSignature(userIDs.harry);
-        ecmr.carrierDeliverySignature = buildSignature(userIDs.harry);
+        ecmr.compoundSignature = buildSignature(userIDs.Willem);
+        ecmr.carrierLoadingSignature = buildSignature(userIDs.Harry);
+        ecmr.carrierDeliverySignature = buildSignature(userIDs.Harry);
         ecmr.status = ecmrStatus.Delivered;
         ecmrList.push(ecmr);
 
@@ -228,13 +228,13 @@ describe('Admin of the network', () => {
         ecmrList.push(ecmr);
 
         ecmr = buildECMR('ecmr6');
-        ecmr.compoundSignature = buildSignature(userIDs.willem);
+        ecmr.compoundSignature = buildSignature(userIDs.Willem);
         ecmr.status = ecmrStatus.InTransit;
         ecmrList.push(ecmr);
 
         ecmr = buildECMR('ecmr7');
-        ecmr.compoundSignature = buildSignature(userIDs.willem);
-        ecmr.carrierLoadingSignature = buildSignature(userIDs.harry);
+        ecmr.compoundSignature = buildSignature(userIDs.Willem);
+        ecmr.carrierLoadingSignature = buildSignature(userIDs.Harry);
         ecmr.status = ecmrStatus.Delivered;
         ecmrList.push(ecmr);
 
@@ -288,7 +288,7 @@ describe('Admin of the network', () => {
     let updateTransaction = factory.newTransaction(namespace, 'UpdateECMR');
     updateTransaction.ecmr = buildECMR('ecmr2');
     updateTransaction.ecmr.status = ecmrStatus.Loaded;
-    updateTransaction.ecmr.compoundSignature = buildSignature(userIDs.willem);
+    updateTransaction.ecmr.compoundSignature = buildSignature(userIDs.Willem);
 
     return businessNetworkConnection.submitTransaction(updateTransaction)
       .then(() => {
@@ -306,8 +306,8 @@ describe('Admin of the network', () => {
     let updateTransaction = factory.newTransaction(namespace, 'UpdateECMR');
     updateTransaction.ecmr = buildECMR('ecmr2');
     updateTransaction.ecmr.status = ecmrStatus.InTransit;
-    updateTransaction.ecmr.compoundSignature = buildSignature(userIDs.willem);
-    updateTransaction.ecmr.carrierLoadingSignature = buildSignature(userIDs.harry);
+    updateTransaction.ecmr.compoundSignature = buildSignature(userIDs.Willem);
+    updateTransaction.ecmr.carrierLoadingSignature = buildSignature(userIDs.Harry);
 
     return businessNetworkConnection.submitTransaction(updateTransaction)
       .then(() => {
@@ -335,7 +335,7 @@ describe('Admin of the network', () => {
     let updateTransaction = factory.newTransaction(namespace, 'UpdateECMR');
     updateTransaction.ecmr = buildECMR('ecmr3');
     updateTransaction.ecmr.status = ecmrStatus.Delivered;
-    updateTransaction.ecmr.carrierDeliverySignature = buildSignature(userIDs.harry);
+    updateTransaction.ecmr.carrierDeliverySignature = buildSignature(userIDs.Harry);
 
     return businessNetworkConnection.submitTransaction(updateTransaction)
       .then(() => {
@@ -353,7 +353,7 @@ describe('Admin of the network', () => {
     let updateTransaction = factory.newTransaction(namespace, 'UpdateECMR');
     updateTransaction.ecmr = buildECMR('ecmr4');
     updateTransaction.ecmr.status = ecmrStatus.ConfirmedDelivered;
-    updateTransaction.ecmr.recipientSignature = buildSignature(userIDs.rob);
+    updateTransaction.ecmr.recipientSignature = buildSignature(userIDs.Rob);
 
     return businessNetworkConnection.submitTransaction(updateTransaction)
       .then(() => {
