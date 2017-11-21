@@ -72,10 +72,6 @@ function CreateTransportOrders(tx) {
  */
 function UpdateTransportOrderPickupWindow(tx) {
   console.log('Invoking function processor to update DateWindow');
-  console.log(tx);
-  console.log(tx.transportOrder);
-  console.log(tx.vin);
-  console.log(tx.dateWindow);
 
   return getAssetRegistry('org.digitalcmr.TransportOrder')
     .then(function (assetRegistry) {

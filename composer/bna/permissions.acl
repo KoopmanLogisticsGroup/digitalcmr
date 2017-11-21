@@ -27,7 +27,7 @@ rule EveryBodyCanReadVehicles {
  */
 
 rule LegalOwnerAdminCanReadTransportOrder {
-    description: "Allow Legal Owner Admin to READ a Transport Order"
+    description: "Allow Legal Owner Admin to READ a TransportOrder"
     participant(p): "org.digitalcmr.LegalOwnerAdmin"
     operation: READ
     resource(r): "org.digitalcmr.TransportOrder"
@@ -54,7 +54,7 @@ rule LegalOwnerAdminCanSubmitTransactionCreateTransportOrder {
 }
 
 rule LegalOwnerAdminCanCreateTransactionUpdateTransportOrderPickupWindow {
-  description: "Allow LegalOwnerAdmin to create a transaction to update the pickup window of a transport order"
+  description: "Allow LegalOwnerAdmin to create a transaction to update the pickup window of a TransportOrder"
   participant: "org.digitalcmr.LegalOwnerAdmin"
   operation: CREATE
   resource: "org.digitalcmr.UpdateTransportOrderPickupWindow"
@@ -62,7 +62,7 @@ rule LegalOwnerAdminCanCreateTransactionUpdateTransportOrderPickupWindow {
 }
 
 rule LegalOwnerAdminCanSubmitTransactionUpdateTransportOrderPickupWindow {
-  description: "Allow LegalOwnerAdmin to submit an UpdateTransportOrderPickupWindow transaction"
+  description: "Allow LegalOwnerAdmin to submit an UpdateTransportOrderPickupWindow transaction to UPDATE a TransportOrder"
   participant(p): "org.digitalcmr.LegalOwnerAdmin"
   operation: UPDATE
   resource(r): "org.digitalcmr.TransportOrder"
@@ -143,7 +143,7 @@ rule CarrierAdminCanReadECMR {
 }
 
 rule CarrierAdminCanReadTransportOrder {
-    description: "Allow CarrierAdmin to READ a Transport Order"
+    description: "Allow CarrierAdmin to READ a TransportOrder"
     participant(p): "org.digitalcmr.CarrierAdmin"
     operation: READ
     resource(r): "org.digitalcmr.TransportOrder"
