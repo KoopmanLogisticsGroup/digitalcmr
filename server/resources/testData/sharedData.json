@@ -165,30 +165,30 @@
         "participantID": "userID",
         "$class":        "CarrierAdmin",
         "org":           "CarrierOrg#koopman",
-        "userID":        "goslin@koopman.org",
-        "userName":      "goslin",
-        "firstName":     "Goslin",
-        "lastName":      "Jackson",
+        "userID":        "pete@koopman.org",
+        "userName":      "pete",
+        "firstName":     "Pete",
+        "lastName":      "Koppy",
         "address":       {
           "$class":      "Address",
-          "name":        "Goslin Jackson",
-          "street":      "jackiestraat",
-          "houseNumber": "71",
+          "name":        "Pete Koppy",
+          "street":      "koppenstraat",
+          "houseNumber": "43",
           "city":        "Groningen",
           "zipCode":     "9712HX",
           "country":     "Netherlands",
-          "latitude":    51.6443,
-          "longitude":   64.3323
+          "latitude":    43.4443,
+          "longitude":   72.3323
         }
       },
       "identity":    {
-        "userID": "goslin@koopman.org"
+        "userID": "pete@koopman.org"
       },
       "userApp":     {
-        "username":  "goslin@koopman.org",
+        "username":  "pete@koopman.org",
         "password":  "passw0rd",
-        "firstName": "Goslin",
-        "lastName":  "Jackson",
+        "firstName": "Pete",
+        "lastName":  "Koppy",
         "role":      "CarrierAdmin"
       }
     },
@@ -1409,6 +1409,171 @@
       "legalOwnerInstructions": "string",
       "paymentInstructions":    "string",
       "payOnDelivery":          "string"
+    },
+    {
+      "$class":                   "org.digitalcmr.ECMR",
+      "ecmrID":                   "I1234567890",
+      "status":                   "CONFIRMED_DELIVERED",
+      "agreementTerms":           "agreement terms here",
+      "agreementTermsSec":        "agreement terms sec",
+      "legalOwnerRef":            "ASD213123S",
+      "carrierRef":               "H2238723VASD",
+      "recipientRef":             "SDADHGA21312312",
+      "orderID":                  "AAAA123456",
+      "creation":                 {
+        "$class":  "org.digitalcmr.Creation",
+        "address": {
+          "$class":      "org.digitalcmr.Address",
+          "name":        "Amsterdam Compound",
+          "street":      "compenstraat",
+          "houseNumber": "21",
+          "city":        "Assen",
+          "zipCode":     "9976ZH",
+          "country":     "Netherlands",
+          "latitude":    52.377698,
+          "longitude":   4.896555
+        },
+        "date":    1502229600000
+      },
+      "loading":                  {
+        "$class":     "org.digitalcmr.Loading",
+        "address":    {
+          "$class":      "org.digitalcmr.Address",
+          "name":        "Eindhoven Compound",
+          "street":      "Compound Eindhoven",
+          "houseNumber": "21",
+          "city":        "Eindhoven",
+          "zipCode":     "6452KJ",
+          "country":     "Netherlands",
+          "latitude":    52.377698,
+          "longitude":   4.896555
+        },
+        "actualDate": 1502229600000
+      },
+      "delivery":                 {
+        "$class":     "org.digitalcmr.Delivery",
+        "address":    {
+          "$class":      "org.digitalcmr.Address",
+          "name":        "Rob Carman",
+          "street":      "autostraat",
+          "houseNumber": "12",
+          "city":        "Rotterdam",
+          "zipCode":     "9442KO",
+          "country":     "Netherlands",
+          "latitude":    51.917153,
+          "longitude":   4.474623
+        },
+        "actualDate": 1502920800000
+      },
+      "owner":                    "leaseplan",
+      "source":                   "amsterdamcompound",
+      "transporter":              "harry@koopman.org",
+      "carrier":                  "koopman",
+      "recipientOrg":             "cardealer",
+      "recipient":                "rob@cardealer.org",
+      "issueDate":                0,
+      "issuedBy":                 "koopman",
+      "carrierComments":          "",
+      "documents":                [
+        "doc1"
+      ],
+      "goods":                    [
+        {
+          "$class":            "org.digitalcmr.Good",
+          "vehicle":           {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "183726339N",
+            "manufacturer":    "Audi",
+            "model":           "A1",
+            "type":            "sportback",
+            "ecmrs":           [],
+            "odoMeterReading": 0,
+            "plateNumber":     "AV198RX"
+          },
+          "description":       "vehicle",
+          "weight":            1500,
+          "loadingStartDate":  1502834400000,
+          "loadingEndDate":    1502834400000,
+          "deliveryStartDate": 1502834400000,
+          "deliveryEndDate":   1502834400000
+        },
+        {
+          "$class":            "org.digitalcmr.Good",
+          "vehicle":           {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "DS8281321",
+            "manufacturer":    "Mercedes",
+            "model":           "Benz",
+            "type":            "sportback",
+            "ecmrs":           [],
+            "odoMeterReading": 0,
+            "plateNumber":     "M238KA"
+          },
+          "description":       "vehicle",
+          "weight":            1500,
+          "loadingStartDate":  1502834400000,
+          "loadingEndDate":    1502834400000,
+          "deliveryStartDate": 1502834400000,
+          "deliveryEndDate":   1502834400000
+        },
+        {
+          "$class":            "org.digitalcmr.Good",
+          "vehicle":           {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "183726339N",
+            "manufacturer":    "Audi",
+            "model":           "A1",
+            "type":            "sportback",
+            "ecmrs":           [],
+            "odoMeterReading": 0,
+            "plateNumber":     "AV198RX"
+          },
+          "description":       "vehicle",
+          "weight":            1500,
+          "loadingStartDate":  1502834400000,
+          "loadingEndDate":    1502834400000,
+          "deliveryStartDate": 1502834400000,
+          "deliveryEndDate":   1502834400000
+        },
+        {
+          "$class":            "org.digitalcmr.Good",
+          "vehicle":           {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "8762178623GA",
+            "manufacturer":    "Mercedes",
+            "model":           "Benz",
+            "type":            "sportback",
+            "ecmrs":           [],
+            "odoMeterReading": 0,
+            "plateNumber":     "M238KA"
+          },
+          "description":       "vehicle",
+          "weight":            1500,
+          "loadingStartDate":  1502834400000,
+          "loadingEndDate":    1502834400000,
+          "deliveryStartDate": 1502834400000,
+          "deliveryEndDate":   1502834400000
+        }
+      ],
+      "legalOwnerInstructions":   "string",
+      "paymentInstructions":      "string",
+      "payOnDelivery":            "string",
+      "compoundSignature":        {
+        "certificate": "willem@amsterdamcompound.org",
+        "timestamp":   0
+      },
+      "carrierLoadingSignature":  {
+        "certificate": "harry@koopman.org",
+        "timestamp":   0
+      },
+      "carrierDeliverySignature": {
+        "certificate": "harry@koopman.org",
+        "timestamp":   0
+      },
+      "recipientSignature":       {
+        "certificate": "rob@cardealer.org",
+        "timestamp":   0
+      }
     }
   ],
   "transportOrders": [

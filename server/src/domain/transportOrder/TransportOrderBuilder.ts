@@ -1,6 +1,6 @@
 import {BuilderUtils} from '../../blockchain/BuilderUtils';
 import {Factory} from 'composer-common';
-import {TransportOrder} from '../../../resources/interfaces/transportOrder.interface';
+import {TransportOrder} from '../../interfaces/transportOrder.interface';
 
 export class TransportOrderBuilder {
   public static buildTransportOrder(factory: Factory, namespace: string, transportOrder: TransportOrder): TransportOrder {

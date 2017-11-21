@@ -8,13 +8,14 @@ import {Identity} from '../domain/Identity';
 import {Entity} from '../domain/Entity';
 import {UserApp} from '../domain/users/models/UserApp';
 import {ParticipantCreator} from '../domain/participants/ParticipantCreator';
+import {Config} from '../config/index';
 
 export class IdentityManager {
   private dataService: DataService;
   private businessNetworkHandler: BusinessNetworkHandler;
   private logger: LoggerInstance;
   private static adminIdentity: Identity   = {userID: 'admin', userSecret: 'adminpw'};
-  private static connectionProfile: string = 'defaultProfile';
+  private static connectionProfile: string = Config.settings.composer.profile;
 
   public constructor(private namespace: string) {
     this.dataService            = Container.get(DataService);

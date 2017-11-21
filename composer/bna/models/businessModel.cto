@@ -211,7 +211,7 @@ transaction UpdateTransportOrder {
   o TransportOrder transportOrder
 }
 
-transaction UpdateTransportOrderDateWindow {
+transaction UpdateTransportOrderPickupWindow {
   --> TransportOrder transportOrder
   o DateWindow dateWindow
   o String vin
