@@ -48,9 +48,9 @@ describe('Admin of the network', () => {
   };
 
   const userIDs = {
-    willem: 'willem@amsterdamcompound.org',
-    harry: 'harry@koopman.org',
-    rob: 'rob@cardealer.org'
+    Willem: 'willem@amsterdamcompound.org',
+    Harry: 'harry@koopman.org',
+    Rob: 'rob@cardealer.org'
   };
 
   /**
