@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {TransportOrder} from '../../../interfaces/transportOrder.interface';
-import {Ecmr} from '../../../interfaces/ecmr.interface';
+import {TransportOrder} from '../../../../../interfaces/transportOrder.interface';
+import {Ecmr} from '../../../../../interfaces/ecmr.interface';
 
 @Component({
   selector:    'app-transportorder-goods',

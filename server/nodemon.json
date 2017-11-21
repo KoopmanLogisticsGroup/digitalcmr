@@ -2,8 +2,7 @@
   "verbose": false,
   "ext":     "ts,json",
   "env":     {
-    "DEBUG":    "app:config",
-    "NODE_ENV": "development"
+    "DEBUG": "app:config"
   },
   "watch":   [
     "src"

@@ -1,6 +1,6 @@
 import {BuilderUtils} from '../../blockchain/BuilderUtils';
 import {Factory} from 'composer-common';
-import {TransportOrder} from '../../../resources/interfaces/transportOrder.interface';
+import {TransportOrder} from '../../interfaces/transportOrder.interface';
 
 export class TransportOrderBuilder {
   public static buildTransportOrder(factory: Factory, namespace: string, transportOrder: TransportOrder): TransportOrder {
@@ -15,7 +15,6 @@ export class TransportOrderBuilder {
     validatedObject.carrier = BuilderUtils.createRelationship(factory, namespace, 'CarrierOrg', transportOrder.carrier);
 
     for (let i = 0; i < transportOrder.ecmrs.length; i++) {
-      console.log(transportOrder.ecmrs[i]);
       validatedObject.ecmrs[i] = BuilderUtils.createRelationship(factory, namespace, 'ECMR', transportOrder.ecmrs[i]);
     }
 
