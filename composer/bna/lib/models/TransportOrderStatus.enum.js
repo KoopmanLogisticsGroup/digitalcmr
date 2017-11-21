@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-var transportOrderStatus = {
+var TransportOrderStatus = {
   Open: 'OPEN',
   InProgress: 'IN_PROGRESS',
   Completed: 'COMPLETED'

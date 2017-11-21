@@ -205,6 +205,10 @@ transaction UpdateTransportOrder {
   --> ECMR[] ecmrs
 }
 
+transaction UpdateTransportOrderStatusToCompleted {
+  --> TransportOrder transportOrder
+}
+
 transaction CreateECMR {
   o ECMR ecmr
 }

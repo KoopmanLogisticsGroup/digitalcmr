@@ -248,7 +248,7 @@ rule CarrierMemberCanCreateTransportOrderUpdateTransaction {
     description: "Allow the Carrier Member to CREATE a transport order UPDATE transaction"
     participant: "org.digitalcmr.CarrierMember"
     operation: CREATE
-    resource: "org.digitalcmr.UpdateTransportOrder"
+    resource: "org.digitalcmr.UpdateTransportOrderStatusToCompleted"
     action: ALLOW
 }
 
@@ -257,7 +257,7 @@ rule CarrierMemberCanSubmitUpdateTransportOrderForInProgress {
     participant(p): "org.digitalcmr.CarrierMember"
     operation: UPDATE
     resource(r): "org.digitalcmr.TransportOrder"
-    transaction(tx): "org.digitalcmr.UpdateTransportOrder"
+    transaction(tx): "org.digitalcmr.UpdateTransportOrderStatusToCompleted"
     condition: (r.carrier.getIdentifier() === p.org.getIdentifier() && r.status == 'IN_PROGRESS')
     action: ALLOW
 }
