@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {TransportOrder} from '../../../interfaces/transportOrder.interface';
+import {TransportOrder} from '../../../../../interfaces/transportOrder.interface';
 
 @Component({
   selector:    'app-transportorder-goods',

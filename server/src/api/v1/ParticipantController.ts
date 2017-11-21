@@ -11,7 +11,7 @@ import {
 } from 'routing-controllers';
 import {ErrorHandlerMiddleware, ComposerInterceptor, UserAuthenticatorMiddleware} from '../../middleware';
 import {JSONWebToken} from '../../utils/authentication/JSONWebToken';
-import {TransactionHandler} from '../../blockchain/TransactionHandler';
+import {QueryReturnType, TransactionHandler} from '../../blockchain/TransactionHandler';
 import {Identity} from '../../domain/Identity';
 import {Config} from '../../config/index';
 
@@ -27,14 +27,14 @@ export class OrganizationController {
   public async getAllLegalOwnerAdmins(@Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getAllLegalOwnerAdmins');
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Multiple, 'getAllLegalOwnerAdmins');
   }
 
   @Get('/legalowner/admin/userID/:userID')
   public async getLegalOwnerAdminByUserID(@Param('userID') userID: string, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getLegalOwnerAdminByUserID',
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Single, 'getLegalOwnerAdminByUserID',
       {userID: userID});
   }
 
@@ -42,21 +42,21 @@ export class OrganizationController {
   public async getLegalOwnerAdminByOrg(@Param('org') org: string, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getLegalOwnerAdminByOrg', {org: org});
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Multiple, 'getLegalOwnerAdminByOrg', {org: org});
   }
 
   @Get('/compound/admin/')
   public async getAllCompoundAdmins(@Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getAllCompoundAdmins');
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Multiple, 'getAllCompoundAdmins');
   }
 
   @Get('/compound/admin/userID/:userID')
   public async getCompoundAdminByUserID(@Param('userID') userID: string, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getCompoundAdminByUserID',
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Single, 'getCompoundAdminByUserID',
       {userID: userID});
   }
 
@@ -64,21 +64,21 @@ export class OrganizationController {
   public async getCompoundAdminByOrg(@Param('org') org: string, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getCompoundAdminByOrg', {org: org});
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Multiple, 'getCompoundAdminByOrg', {org: org});
   }
 
   @Get('/carrier/admin/')
   public async getAllCarrierAdmins(@Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getAllCarrierAdmins');
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Multiple, 'getAllCarrierAdmins');
   }
 
   @Get('/carrier/admin/userID/:userID')
   public async getCarrierAdminByUserID(@Param('userID') userID: string, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getCarrierAdminByUserID',
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Single, 'getCarrierAdminByUserID',
       {userID: userID});
   }
 
@@ -86,21 +86,21 @@ export class OrganizationController {
   public async getCarrierAdminByOrg(@Param('org') org: string, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getCarrierAdminByOrg', {org: org});
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Multiple, 'getCarrierAdminByOrg', {org: org});
   }
 
   @Get('/carrier/member/')
   public async getAllCarrierMembers(@Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getAllCarrierMembers');
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Multiple, 'getAllCarrierMembers');
   }
 
   @Get('/carrier/member/userID/:userID')
   public async getCarrierMemberByUserID(@Param('userID') userID: string, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getCarrierMemberByUserID',
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Single, 'getCarrierMemberByUserID',
       {userID: userID});
   }
 
@@ -108,21 +108,21 @@ export class OrganizationController {
   public async getCarrierMemberByOrg(@Param('org') org: string, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getCarrierMemberByOrg', {org: org});
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Multiple, 'getCarrierMemberByOrg', {org: org});
   }
 
   @Get('/recipient/admin/')
   public async getAllRecipientAdmins(@Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getAllRecipientAdmins');
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Multiple, 'getAllRecipientAdmins');
   }
 
   @Get('/recipient/admin/userID/:userID')
   public async getRecipientAdminByUserID(@Param('userID') userID: string, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getRecipientAdminByUserID',
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Single, 'getRecipientAdminByUserID',
       {userID: userID});
   }
 
@@ -130,21 +130,21 @@ export class OrganizationController {
   public async getRecipientAdminByOrg(@Param('org') org: string, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getRecipientAdminByOrg', {org: org});
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Multiple, 'getRecipientAdminByOrg', {org: org});
   }
 
   @Get('/recipient/member/')
   public async getAllRecipientMembers(@Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getAllRecipientMembers');
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Multiple, 'getAllRecipientMembers');
   }
 
   @Get('/recipient/member/userID/:userID')
   public async getRecipientMemberByUserID(@Param('userID') userID: string, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getRecipientMemberByUserID',
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Single, 'getRecipientMemberByUserID',
       {userID: userID});
   }
 
@@ -152,7 +152,7 @@ export class OrganizationController {
   public async getRecipientMemberByOrg(@Param('org') org: string, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, 'getRecipientMemberByOrg', {org: org});
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Multiple, 'getRecipientMemberByOrg', {org: org});
   }
 
   @Post('/')

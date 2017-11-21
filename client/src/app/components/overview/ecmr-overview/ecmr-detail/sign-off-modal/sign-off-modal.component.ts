@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {EcmrService} from '../../../services/ecmr.service';
-import {AuthenticationService} from '../../../services/authentication.service';
-import {Ecmr} from '../../../interfaces/ecmr.interface';
+import {EcmrService} from '../../../../../services/ecmr.service';
+import {AuthenticationService} from '../../../../../services/authentication.service';
+import {Ecmr} from '../../../../../interfaces/ecmr.interface';
 import * as GeoLib from 'geolib';
 
 @Component({
