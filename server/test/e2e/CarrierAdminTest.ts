@@ -416,4 +416,20 @@ describe('A Carrier admin can', () => {
         done(err);
       });
   });
+
+  it('read a transport order', (done) => {
+    const transportOrder = buildTransportOrder();
+    server
+      .get('/api/v1/transportOrder')
+      .set('x-access-token', token)
+      .expect(ok)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+          return done(err);
+        }
+        should.exist(res.body.find((transportOrder) => transportOrder.orderID === '12345567890'));
+        done(err);
+      });
+  });
 });
