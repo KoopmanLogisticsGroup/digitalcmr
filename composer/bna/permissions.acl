@@ -124,6 +124,15 @@ rule CarrierAdminCanReadECMR {
     action: ALLOW
 }
 
+rule CarrierAdminCanReadTransportOrders {
+  description: "Allow Carrier Admin to READ all Transport orders where his org is a carrier"
+  participant(p): "org.digitalcmr.CarrierAdmin"
+  operation: READ
+  resource(r): "org.digitalcmr.TransportOrder"
+  condition: (r.carrier.getIdentifier() === p.org.getIdentifier())
+  action: ALLOW
+}
+
 rule CarrierMemberCanReadECMR {
     description: "Allow Carrier Member to READ all eCMRs where he is a transporter and status is not Created"
     participant(p): "org.digitalcmr.CarrierMember"
