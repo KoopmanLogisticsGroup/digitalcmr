@@ -11,14 +11,11 @@ export class TransportOrderTransactor implements TransactionCreator {
       transaction.transportOrder = await TransportOrderBuilder.buildTransportOrder(factory, namespace, data);
     } else if (transactionName === Transaction.CreateTransportOrders) {
       transaction.transportOrders = await TransportOrderBuilder.buildTransportOrders(factory, namespace, data);
+    } else if (transactionName === Transaction.UpdateTransportOrderStatusToCancelled) {
+      transaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', data.orderID);
+      console.log(transaction);
+      // transaction.transportOrder = TransportOrderBuilder.buildTransportOrder(factory, namespace, data);
     }
-
-    return transaction;
-  }
-
-  public async update(factory: Factory, namespace: string, data: any): Promise<any> {
-    let transaction            = factory.newTransaction(namespace, 'UpdateTransportOrder');
-    transaction.transportOrder = TransportOrderBuilder.buildTransportOrder(factory, namespace, data);
 
     return transaction;
   }

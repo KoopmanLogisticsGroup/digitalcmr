@@ -236,6 +236,10 @@ transaction UpdateTransportOrder {
   o TransportOrder transportOrder
 }
 
+transaction UpdateTransportOrderStatusToCancelled {
+  --> TransportOrder transportOrder
+}
+
 transaction UpdateRegistrationCountry {
   --> Vehicle vehicle
   o String registrationCountry

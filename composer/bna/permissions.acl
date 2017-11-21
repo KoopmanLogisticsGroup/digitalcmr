@@ -84,17 +84,17 @@ rule LegalOwnerAdminCanCreateTransportOrderUpdateTransaction {
     description: "Allow the Legal Owner Admin to CREATE a transport order UPDATE transaction"
     participant: "org.digitalcmr.LegalOwnerAdmin"
     operation: CREATE
-    resource: "org.digitalcmr.UpdateTransportOrder"
+    resource: "org.digitalcmr.UpdateTransportOrderStatusToCancelled"
     action: ALLOW
 }
 
-rule LegalOwnerAdminnCanSubmitUpdateTransportOrderForOpen {
+rule LegalOwnerAdminCanSubmitUpdateTransportOrderForOpen {
     description: "Allow Legal Owner Admin to submit an Update TransportOrder transaction for his organization and for status OPEN when new status is CANCELLED"
     participant(p): "org.digitalcmr.LegalOwnerAdmin"
     operation: UPDATE
     resource(r): "org.digitalcmr.TransportOrder"
-    transaction(tx): "org.digitalcmr.UpdateTransportOrder"
-    condition: (r.owner.getIdentifier() === p.org.getIdentifier() && r.status == 'OPEN' && tx.transportOrder.status == 'CANCELLED')
+    transaction(tx): "org.digitalcmr.UpdateTransportOrderStatusToCancelled"
+    condition: (r.owner.getIdentifier() === p.org.getIdentifier() && r.status == 'OPEN')
     action: ALLOW
 }
 

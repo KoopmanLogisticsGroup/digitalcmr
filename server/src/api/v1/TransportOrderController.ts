@@ -56,6 +56,6 @@ export class TransportOrderController {
   public async update(@Body() transportOrder: TransportOrder, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.update(identity, Config.settings.composer.profile, Config.settings.composer.namespace, transportOrder, transportOrder.orderID, new TransportOrderTransactor());
+    return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateTransportOrderStatusToCancelled, transportOrder, new TransportOrderTransactor());
   }
 }
