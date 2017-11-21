@@ -35,3 +35,9 @@ services:
     image: couchdb:1.7.0
     ports:
       - "5985:5984"
+
+  api:
+    container_name: api
+    build: api_doc
+    ports:
+      - "8001:8080"
