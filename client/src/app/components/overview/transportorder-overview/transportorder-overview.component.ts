@@ -57,8 +57,8 @@ export class TransportorderOverviewComponent implements OnInit {
 
   public ngOnInit(): void {
     this.nav.show();
-    this.transportOrderService.getAllTransportOrders().subscribe(transportOrders => {
-      this.transportOrders      = transportOrders instanceof Array ? transportOrders : [transportOrders];
+    this.transportOrderService.getAllTransportOrders().subscribe((transportOrders: TransportOrder[]) => {
+      this.transportOrders      = transportOrders;
       this.transportOrderFilter = this.transportOrders.filter(transportOrder =>
         transportOrder.status.toUpperCase() === this.viewStatus.New);
       this.firstView();

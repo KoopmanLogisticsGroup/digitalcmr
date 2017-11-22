@@ -23,15 +23,15 @@ export class DefaultConfig {
       },
       serverSecret: 'sUp4hS3cr37kE9c0D3',
       composer:     {
-        url:       'http://composer-rest-server:3000/api',
-        channel:   'composerchannel',
-        profile:   'defaultProfile',
-        network:   'basic-sample-network',
-        namespace: 'org.acme.sample'
+        url:       '',
+        channel:   '',
+        profile:   '',
+        network:   '',
+        namespace: ''
       },
       privateDB:    {
-        host: 'private-db',
-        port: '5984'
+        host: '',
+        port: ''
       }
     };
   }

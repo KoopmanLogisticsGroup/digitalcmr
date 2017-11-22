@@ -65,39 +65,28 @@ function CreateTransportOrders(tx) {
 }
 
 /**
- * UpdateTransportOrder transaction processor function.
- * @param {org.digitalcmr.UpdateTransportOrder} tx  - The UpdateTransportOrder transaction
+ * UpdateTransportOrderStatusToCancelled transaction processor function.
+ * @param {org.digitalcmr.UpdateTransportOrderStatusToCancelled} tx  - UpdateTransportOrderStatusToCancelled transaction
  * @return {Promise} Asset registry Promise
  * @transaction
  */
-function UpdateTransportOrder(tx) {
-
+function UpdateTransportOrderStatusToCancelled(tx) {
   console.log('Invoking function processor to set update TransportOrder');
   console.log('orderID: ' + tx.transportOrder.orderID);
 
   // Get the asset registry for the asset.
+  // Updates the status of a TransportOrder when an ECMR is created
+  tx.transportOrder.status = TransportOrderStatus.Cancelled;
+
   return getAssetRegistry('org.digitalcmr.TransportOrder')
     .then(function (assetRegistry) {
-      return assetRegistry.get(tx.transportOrder.orderID)
+      return assetRegistry.update(tx.transportOrder)
         .catch(function (error) {
           console.log('[Update TransportOrder] An error occurred while updating the registry asset: ' + error);
           throw error;
         });
-    })
-    .then(function (transportOrder) {
-      //Updates the status of a TransportOrder
-      transportOrder.status = tx.transportOrder.status;
-
-      return getAssetRegistry('org.digitalcmr.TransportOrder')
-        .then(function (assetRegistry) {
-          return assetRegistry.update(transportOrder)
-            .catch(function (error) {
-              console.log('[Update TransportOrder] An error occurred while updating the registry asset: ' + error);
-              throw error;
-            });
-        }).catch(function (error) {
-          console.log('[Update TransportOrder] An error occurred while updating the TransportOrder asset: ' + error);
-          throw error;
-        });
+    }).catch(function (error) {
+      console.log('[Update TransportOrder] An error occurred while updating the TransportOrder asset: ' + error);
+      throw error;
     });
 }

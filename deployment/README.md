@@ -32,11 +32,13 @@ kubectl proxy
 # On the browser go to 127.0.0.1:8001/ui
 ```
 
+**Note: Creating the blockchain network will make some changes in your configuration files. Revert all these changes to be sure the deployment will work again.**
+
 ## Deploy the application 
 ### Create the Docker images for the application
 1. Build the images for `client`, `server` and `private-db`
 ```bash
-docker-compose -f app-only build
+docker-compose -f app-only.yml build
 ```
 2. Build the image for the swagger API
 ```bash
@@ -68,31 +70,50 @@ npm run prepublish
 Your `.bna` will be under the `./composer/bna/dist` folder. Check it contains all the updated information
 2. Access the Composer-Playground using the Public IP address and the port provided by k8s
 3. In the section `hlfv1` go to `deploy` and select the `.bna`
-4. Wait until the operation is completed. Then your business network (chaincode container) is up and running.
+4. Wait until the operation is completed. Then your business network (chaincode container) is up and running
 
-**Now you can run your application.**
+**Note: Wait at least 5 min to be sure the admin user has been succesfully enrolled, otherwise you risk to comproise its certificate.**
+
+Now you can run your application.
 
 ### Create the k8s pods for the app
+**Note: Before spinning up the application, be sure you have the following:**
+- Your server holds the correct addresses of the blockchain network under `server/resources/connectionProfiles/production`
+- Your client holds the correct address to your remote server in `client/src/environments/environment.prod.ts`
 1. Navigate to the `create` sub-directory:
 ```bash
-cd cs-offerings/free/scripts/create
+cd cs-offerings/free/scripts
 ```
 2. Run the script to create all the app services and pods
 ```bash
-./create_application.sh
+./create/create_application.sh
 ```
 
-### Deploy testData
-You should now add the initial data needed to your application (including blockchain users).
+## Deploy a new version of the application
+**Note: If you want to replace user identities and testData previously added to the system, then follow the section below _Run a clean environemnt_.**
+
+Instead, if you do not want to delete your previous blockchain network together with the ledger of all the transactions, then you could follow the steps below:
+1. Delete the application pods and services
+```bash
+cd cs-offerings/free/scripts
+./delete/delete_application.sh
+```
+2. Create new images of your application components and push to your remote private registry
+3. If you made any changes at your business network, export the new `.bna` and deploy it through the Composer Playground service (you could probably upgrade the previous version)
+4. Create again all the application pods and services
+```bash
+cd cs-offerings/free/scripts
+./create/create_applicaton.sh
+```
 
 ## Run the Composer-Rest-Server
 1. Navigate to the `create` sub-directory:
 ```bash
-cd cs-offerings/free/scripts/create
+cd cs-offerings/free/scripts/
 ```
 2. Run the script to create all the app services and pods
 ```bash
-./create_composer-rest-server.sh
+./create/create_composer-rest-server.sh
 ```
 3. Access the Composer-Rest-Server using the Public IP address and the port provided by k8s
 4. Test it out
@@ -108,3 +129,33 @@ cd cs-offerings/free/scripts
 ./delete_all.sh
 ```
 or, alternatively, you can delete a specific components using one of the script contained in `cs-offerings/scripts/delete` directory.
+
+## Run a clean environment
+1. Follow the steps in the section _Clean up the environment_
+2. Recreate the blockchain network
+```bash
+cd cs-offerings/free/scripts
+./create_all.sh --with-couchdb
+```
+3. Export the `.bna`
+```bash
+cd composer/bna
+npm run prepublish
+```
+4. Deploy the `.bna` through the Composer Playground service
+5. Create again all the application pods and services
+```bash
+cd cs-offerings/free/scripts
+./create/create_applicaton.sh
+```
+
+## Troubleshooting
+### Admin identity
+**T:** I get the following errors when I try to connect as admin on Composer Playground
+```text
+Error: Error trying login and get user Context. Error: Error trying to enroll user. Error: Error: Invalid results returned ::FORBIDDEN
+
+Error: Error trying to ping. Error: Error trying to query business network. Error: Failed to deserialize creator identity, err The supplied identity is not valid, Verify() returned x509: certificate has expired or is not yet valid
+```
+
+**S:** You have been too fast and you need to cleanup your environment and restart. Apparently there is a 5 minutes time delay on the certs generated. So if you try using a cert before 5 minutes there is a chance it would be invalid. Apparently this is fixed in fabric v1.0.3.
