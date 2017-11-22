@@ -16,8 +16,8 @@ export class TransportOrderTransactor implements TransactionCreator {
     } else if (transactionName === Transaction.UpdateTransportOrderPickupWindow) {
       transaction.transportOrder       = factory.newRelationship(namespace, 'TransportOrder', data.orderID);
       transaction.dateWindow           = factory.newConcept(namespace, 'DateWindow', data.pickupWindow);
-      transaction.dateWindow.startDate = data.pickupWindow[0];
-      transaction.dateWindow.endDate   = data.pickupWindow[1];
+      transaction.dateWindow.startDate = data.dateWindow[0];
+      transaction.dateWindow.endDate   = data.dateWindow[1];
       transaction.vin                  = data.vin;
     }
 

@@ -5,6 +5,7 @@ import * as http from 'http';
 import {Ecmr} from '../../../client/src/app/interfaces/ecmr.interface';
 import {TransportOrder} from '../../src/interfaces/transportOrder.interface';
 import {Address} from '../../src/interfaces/address.interface';
+import {PickupWindow} from '../../src/interfaces/PickupWindow.interface';
 
 const server = supertest.agent('http://localhost:8080');
 const should = chai.should();
@@ -418,7 +419,6 @@ describe('A Carrier admin can', () => {
   });
 
   it('read a transport order', (done) => {
-    const transportOrder = buildTransportOrder();
     server
       .get('/api/v1/transportOrder')
       .set('x-access-token', token)
@@ -429,6 +429,26 @@ describe('A Carrier admin can', () => {
           return done(err);
         }
         should.exist(res.body.find((transportOrder) => transportOrder.orderID === '12345567890'));
+        done(err);
+      });
+  });
+
+  it('not update a transport order', (done) => {
+    const pickupWindow: PickupWindow = {
+      orderID:    '12345567890',
+      vin:        '183726339N',
+      dateWindow: [1010101010, 2020202020]
+    };
+    server
+      .put('/api/v1/transportOrder/updatePickupWindow')
+      .set('x-access-token', token)
+      .send(pickupWindow)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+          return done(err);
+        }
         done(err);
       });
   });

@@ -5,6 +5,7 @@ import * as http from 'http';
 import {TransportOrder} from '../../src/interfaces/transportOrder.interface';
 import {Ecmr} from '../../src/interfaces/ecmr.interface';
 import {Address} from '../../src/interfaces/address.interface';
+import {PickupWindow} from '../../src/interfaces/PickupWindow.interface';
 
 const server = supertest.agent('http://localhost:8080');
 const should = chai.should();
@@ -32,7 +33,7 @@ const buildAddress = (): Address => {
   };
 };
 //TODO when an ADMIN has been created make sure to replace ecmrID by new Date().getTime().toString() for all participants
-const buildECMR = (ecmrID: string): Ecmr => {
+const buildECMR    = (ecmrID: string): Ecmr => {
   return <Ecmr>{
     ecmrID:                 ecmrID,
     status:                 'CREATED',
@@ -204,11 +205,10 @@ describe('A legal owner admin can', () => {
       .get('/api/v1/ECMR/ecmrID/H1234567890')
       .set('x-access-token', token)
       .expect(200)
-      .end((err: Error, res) => {
+      .end((err: Error) => {
         if (err) {
           console.log(err.stack);
         }
-        res.body.should.equal(200);
         done(err);
       });
   });
@@ -346,6 +346,26 @@ describe('A legal owner admin can', () => {
       .send(wrongTransportOrder)
       .expect('Content-Type', /json/)
       .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
+  it('update a transport order', (done) => {
+    const pickupWindow: PickupWindow = {
+      orderID:    '12345567890',
+      vin:        '183726339N',
+      dateWindow: [1010101010, 2020202020]
+    };
+    server
+      .put('/api/v1/transportOrder/updatePickupWindow')
+      .set('x-access-token', token)
+      .send(pickupWindow)
+      .expect(ok)
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
