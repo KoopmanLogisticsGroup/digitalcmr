@@ -232,9 +232,9 @@ describe('Admin of the network', () => {
         // creates two transactions for two different carrier transports
 
         let ecmrList = [];
-        ecmrList.push(buildECMR('ecmr1'));
+        ecmrList.push(buildECMR('created'));
 
-        let ecmr = buildECMR('ecmr2');
+        let ecmr = buildECMR('loaded');
         ecmr.status = ecmrStatus.Loaded;
         ecmr.compoundSignature = buildSignature(userIDs.Willem);
         ecmrList.push(ecmr);
@@ -318,9 +318,9 @@ describe('Admin of the network', () => {
       });
   });
 
-  it('should be able to update ECMR status to LOADED when status is CREATED', () => {
+  it('should be able to update ECMR status from CREATED to LOADED', () => {
     let updateTransaction = factory.newTransaction(namespace, 'UpdateECMR');
-    updateTransaction.ecmr = buildECMR('ecmr2');
+    updateTransaction.ecmr = buildECMR('created');
     updateTransaction.ecmr.status = ecmrStatus.Loaded;
     updateTransaction.ecmr.compoundSignature = buildSignature(userIDs.Willem);
 
@@ -328,21 +328,21 @@ describe('Admin of the network', () => {
       .then(() => {
         return businessNetworkConnection.getAssetRegistry('org.digitalcmr.ECMR')
           .then((assetRegistry) => {
-            return assetRegistry.get('ecmr2');
+            return assetRegistry.get('created');
           })
           .then((updatedECMR) => {
             updatedECMR.status.should.equal(ecmrStatus.Loaded);
           });
       });
   });
-  it('should be able to update ECMR status to IN_TRANSIT when status is LOADED', () => {
+  it('should be able to update ECMR status from LOADED to IN_TRANSIT', () => {
     const transaction = factory.newTransaction(namespace, 'CreateTransportOrder');
     transaction.transportOrder = buildTransportOrder('ORDER1');
 
     return businessNetworkConnection.submitTransaction(transaction)
       .then(() => {
         const updateTransaction = factory.newTransaction(namespace, 'UpdateECMR');
-        updateTransaction.ecmr = buildECMR('ecmr2');
+        updateTransaction.ecmr = buildECMR('loaded');
         updateTransaction.ecmr.status = ecmrStatus.InTransit;
         updateTransaction.ecmr.carrierLoadingSignature = buildSignature(userIDs.Harry);
         updateTransaction.transportOrder = factory.newRelationship('org.digitalcmr', 'TransportOrder', 'ORDER1');
@@ -352,7 +352,7 @@ describe('Admin of the network', () => {
       .then(() => {
         return businessNetworkConnection.getAssetRegistry('org.digitalcmr.ECMR')
           .then((assetRegistry) => {
-            return assetRegistry.get('ecmr2');
+            return assetRegistry.get('loaded');
           })
           .then((updatedECMR) => {
             updatedECMR.status.should.equal(ecmrStatus.InTransit);

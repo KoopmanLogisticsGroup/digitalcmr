@@ -16,7 +16,6 @@ export class EcmrTransactor implements TransactionCreator {
       transaction.ecmrs          = await EcmrBuilder.buildECMRs(factory, namespace, data.ecmrs, identity, ip);
       transaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', data.orderID);
     } else if (transactionName === Transaction.UpdateEcmr) {
-      console.log(data.status);
       transaction.ecmr           = EcmrBuilder.buildECMR(factory, namespace, data, identity, ip);
       transaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', data.orderID);
     }
