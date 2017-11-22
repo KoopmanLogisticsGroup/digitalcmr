@@ -393,4 +393,26 @@ describe('A legal owner admin can', () => {
         done(err);
       });
   });
+
+  it('update a delivery window of a transport order', (done) => {
+    const pickupWindow: PickupWindow = {
+      orderID:    '12345567890',
+      vin:        '183726339N',
+      dateWindow: [1010101010, 2020202020]
+    };
+
+    server
+      .put('/api/v1/transportOrder/updateDeliveryWindow')
+      .set('x-access-token', token)
+      .send(pickupWindow)
+      .expect(ok)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
 });

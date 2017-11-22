@@ -215,6 +215,28 @@ describe('A Compound Admin can', () => {
       });
   });
 
+  it('submit an update status from CREATED to LOADED', (done) => {
+    updateEcmr.status            = 'LOADED';
+    updateEcmr.compoundSignature = {
+      certificate: 'willem@amsterdamcompound.org',
+      timestamp:   0
+    };
+    console.log(updateEcmr);
+    server
+      .put('/api/v1/ECMR')
+      .set('x-access-token', token)
+      .send(updateEcmr)
+      .expect(200)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
   it('not update an ECMR when his org is not the source', (done) => {
     updateEcmr.source = 'rotterdamCompound';
     server
@@ -345,27 +367,6 @@ describe('A Compound Admin can', () => {
       });
   });
 
-  it('submit an update status from CREATED to LOADED', (done) => {
-    updateEcmr.status            = 'LOADED';
-    updateEcmr.compoundSignature = {
-      certificate: 'willem@amsterdamcompound.org',
-      timestamp:   0
-    };
-    server
-      .put('/api/v1/ECMR')
-      .set('x-access-token', token)
-      .send(updateEcmr)
-      .expect(200)
-      .end((err: Error) => {
-        if (err) {
-          console.log(err.stack);
-
-          return done(err);
-        }
-        done(err);
-      });
-  });
-
   it('not update an ECMR for his org and status is IN_TRANSIT', (done) => {
     updateEcmr.status = 'IN_TRANSIT';
     server
@@ -462,6 +463,28 @@ describe('A Compound Admin can', () => {
     };
     server
       .put('/api/v1/transportOrder/updatePickupWindow')
+      .set('x-access-token', token)
+      .send(pickupWindow)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
+  it('not update a delivery window of a transport order', (done) => {
+    const pickupWindow: PickupWindow = {
+      orderID:    '12345567890',
+      vin:        '183726339N',
+      dateWindow: [1010101010, 2020202020]
+    };
+
+    server
+      .put('/api/v1/transportOrder/updateDeliveryWindow')
       .set('x-access-token', token)
       .send(pickupWindow)
       .expect(500)

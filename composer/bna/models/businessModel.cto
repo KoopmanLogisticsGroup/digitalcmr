@@ -213,6 +213,12 @@ transaction UpdateTransportOrderPickupWindow {
   o String vin
 }
 
+transaction UpdateTransportOrderDeliveryWindow {
+  --> TransportOrder transportOrder
+  o DateWindow dateWindow
+  o String vin
+}
+
 transaction CreateECMR {
   o ECMR ecmr
 }

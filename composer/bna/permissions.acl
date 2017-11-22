@@ -71,6 +71,24 @@ rule LegalOwnerAdminCanSubmitTransactionUpdateTransportOrderPickupWindow {
   action: ALLOW
 }
 
+rule LegalOwnerAdminCanCreateTransactionUpdateTransportOrderDeliveryWindow {
+  description: "Allow LegalOwnerAdmin to CREATE a transaction to update the Delivery window of a TransportOrder"
+  participant: "org.digitalcmr.LegalOwnerAdmin"
+  operation: CREATE
+  resource: "org.digitalcmr.UpdateTransportOrderDeliveryWindow"
+  action: ALLOW
+}
+
+rule LegalOwnerAdminCanSubmitTransactionUpdateTransportOrderDeliveryWindow {
+  description: "Allow LegalOwnerAdmin to submit an UpdateTransportOrderDeliveryWindow transaction to UPDATE a TransportOrder"
+  participant(p): "org.digitalcmr.LegalOwnerAdmin"
+  operation: UPDATE
+  resource(r): "org.digitalcmr.TransportOrder"
+  transaction: "org.digitalcmr.UpdateTransportOrderDeliveryWindow"
+  condition: (r.owner.getIdentifier() === p.org.getIdentifier() && r.status == 'OPEN')
+  action: ALLOW
+}
+
 rule LegalOwnerAdminCanReadAndCreateECMR {
     description: "Allow Legal Owner Admin to CREATE and READ an eCMR"
     participant(p): "org.digitalcmr.LegalOwnerAdmin"

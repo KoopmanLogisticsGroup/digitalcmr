@@ -258,4 +258,25 @@ describe('As admin of the network, ', () => {
         transportOrder.goods[0].pickupWindow.endDate.should.equal(20202020);
       });
   });
+
+  it('should be able to update a deliveryWindow in a transport order', () => {
+    const transaction = factory.newTransaction('org.digitalcmr', 'UpdateTransportOrderDeliveryWindow');
+    transaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', '12345567890');
+    transaction.dateWindow = factory.newConcept(namespace, 'DateWindow');
+    transaction.vin = '213123123123ASDSAD';
+    transaction.dateWindow.startDate = 10101010;
+    transaction.dateWindow.endDate = 20202020;
+
+    return businessNetworkConnection.submitTransaction(transaction)
+      .then(() => {
+        return businessNetworkConnection.getAssetRegistry('org.digitalcmr.TransportOrder');
+      })
+      .then((assetRegistry) => {
+        return assetRegistry.get('12345567890');
+      })
+      .then((transportOrder) => {
+        transportOrder.goods[0].deliveryWindow.startDate.should.equal(10101010);
+        transportOrder.goods[0].deliveryWindow.endDate.should.equal(20202020);
+      });
+  });
 });

@@ -65,13 +65,13 @@ function CreateTransportOrders(tx) {
 }
 
 /**
- *  Update DateWindow transport order transaction processor function
- *  @param {org.digitalcmr.UpdateTransportOrderPickupWindow} tx - The update transport order transaction
+ *  Update Pickup transport order transaction processor function
+ *  @param {org.digitalcmr.UpdateTransportOrderPickupWindow} tx - The update transport order pickup window transaction
  *  @return {Promise} Asset registry Promise
  *  @transaction
  */
 function updateTransportOrderPickupWindow(tx) {
-  console.log('Invoking function processor to update DateWindow');
+  console.log('Invoking function processor to update Pickup Window');
 
   return getAssetRegistry('org.digitalcmr.TransportOrder')
     .then(function (assetRegistry) {
@@ -82,11 +82,38 @@ function updateTransportOrderPickupWindow(tx) {
       }
 
       return assetRegistry.update(tx.transportOrder).catch(function (error) {
-        console.log('[Update TransporOrder pickupwindow] An error occurred while updating the registry asset: ' + error);
+        console.log('[Update TransporOrder PickupWindow] An error occurred while updating the registry asset: ' + error);
         throw error;
       });
     }).catch(function (error) {
-      console.log('[Update TransporOrder pickupwindow] An error occurred while retrieving the asset registry: ' + error);
+      console.log('[Update TransporOrder PickupWindow] An error occurred while retrieving the asset registry: ' + error);
+      throw error;
+    });
+}
+
+/**
+ *  Update DeliveryWindow transport order transaction processor function
+ *  @param {org.digitalcmr.UpdateTransportOrderDeliveryWindow} tx - The update transport order delivery window transaction
+ *  @return {Promise} Asset registry Promise
+ *  @transaction
+ */
+function updateTransportOrderDeliveryWindow(tx) {
+  console.log('Invoking function processor to update Delivery Window');
+
+  return getAssetRegistry('org.digitalcmr.TransportOrder')
+    .then(function (assetRegistry) {
+      for (var goodIndex = 0; goodIndex < tx.transportOrder.goods.length; goodIndex++) {
+        if (tx.transportOrder.goods[goodIndex].vehicle.vin === tx.vin) {
+          tx.transportOrder.goods[goodIndex].deliveryWindow = tx.dateWindow;
+        }
+      }
+
+      return assetRegistry.update(tx.transportOrder).catch(function (error) {
+        console.log('[Update TransporOrder DeliveryWindow] An error occurred while updating the registry asset: ' + error);
+        throw error;
+      });
+    }).catch(function (error) {
+      console.log('[Update TransporOrder DeliveryWindow] An error occurred while retrieving the asset registry: ' + error);
       throw error;
     });
 }

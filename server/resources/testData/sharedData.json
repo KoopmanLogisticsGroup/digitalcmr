@@ -499,16 +499,16 @@
       "payOnDelivery":          "string"
     },
     {
-      "$class":            "org.digitalcmr.ECMR",
-      "ecmrID":            "B1234567890",
-      "status":            "CREATED",
-      "agreementTerms":    "agreement terms here",
-      "agreementTermsSec": "agreement terms sec",
-      "legalOwnerRef":     "ASD213123S",
-      "carrierRef":        "H2238723VASD",
-      "recipientRef":      "SDADHGA21312312",
-      "orderID":           "12345567890",
-      "creation":          {
+      "$class":                 "org.digitalcmr.ECMR",
+      "ecmrID":                 "B1234567890",
+      "status":                 "CREATED",
+      "agreementTerms":         "agreement terms here",
+      "agreementTermsSec":      "agreement terms sec",
+      "legalOwnerRef":          "ASD213123S",
+      "carrierRef":             "H2238723VASD",
+      "recipientRef":           "SDADHGA21312312",
+      "orderID":                "12345567890",
+      "creation":               {
         "$class":  "org.digitalcmr.Creation",
         "address": {
           "$class":      "org.digitalcmr.Address",
