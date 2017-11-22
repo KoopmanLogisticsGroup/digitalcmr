@@ -1,9 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {TransportOrder} from '../../interfaces/transportOrder.interface';
-import {TransportOrderService} from '../../services/transportorder.service';
-import {AuthenticationService} from '../../services/authentication.service';
-import {CancelModalComponent} from './cancel-modal/cancel-modal.component';
+import {CancelModalComponent} from '../../../transportorder-detail/cancel-modal/cancel-modal.component';
+import {TransportOrder} from '../../../../interfaces/transportOrder.interface';
+import {TransportOrderService} from '../../../../services/transportorder.service';
+import {AuthenticationService} from '../../../../services/authentication.service';
 
 @Component({
   selector:    'app-transportorder-detail',
