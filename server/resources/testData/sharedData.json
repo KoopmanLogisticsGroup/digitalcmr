@@ -99,7 +99,7 @@
     {
       "participant": {
         "participantID": "userID",
-        "$class":        "CarrierPlanner",
+        "$class":        "CarrierAdmin",
         "org":           "CarrierOrg#koopman",
         "userID":        "pete@koopman.org",
         "userName":      "pete",
@@ -125,7 +125,7 @@
         "password":  "passw0rd",
         "firstName": "Pete",
         "lastName":  "Koppy",
-        "role":      "CarrierPlanner"
+        "role":      "CarrierAdmin"
       }
     },
     {
@@ -515,12 +515,12 @@
           "description":    "vehicle",
           "weight":         1900,
           "pickupWindow":   {
-            "$class":          "org.digitalcmr.DateWindow",
+            "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           },
           "deliveryWindow": {
-            "$class":          "org.digitalcmr.DateWindow",
+            "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           }
@@ -599,8 +599,8 @@
       ],
       "goods":                  [
         {
-          "$class":            "org.digitalcmr.Good",
-          "vehicle":           {
+          "$class":         "org.digitalcmr.Good",
+          "vehicle":        {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "183726339N",
             "manufacturer":    "Audi",
@@ -610,22 +610,22 @@
             "odoMeterReading": 0,
             "plateNumber":     "AV198RX"
           },
-          "description":       "vehicle",
-          "weight":            1500,
+          "description":    "vehicle",
+          "weight":         1500,
           "pickupWindow":   {
-            "$class":          "org.digitalcmr.DateWindow",
+            "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           },
           "deliveryWindow": {
-            "$class":          "org.digitalcmr.DateWindow",
+            "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           }
         },
         {
-          "$class":            "org.digitalcmr.Good",
-          "vehicle":           {
+          "$class":         "org.digitalcmr.Good",
+          "vehicle":        {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "736182CHD28172",
             "manufacturer":    "Mercedes",
@@ -635,15 +635,15 @@
             "odoMeterReading": 0,
             "plateNumber":     "I827YE"
           },
-          "description":       "vehicle",
-          "weight":            1800,
+          "description":    "vehicle",
+          "weight":         1800,
           "pickupWindow":   {
-            "$class":          "org.digitalcmr.DateWindow",
+            "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           },
           "deliveryWindow": {
-            "$class":          "org.digitalcmr.DateWindow",
+            "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           }
@@ -722,8 +722,8 @@
       ],
       "goods":                    [
         {
-          "$class":            "org.digitalcmr.Good",
-          "vehicle":           {
+          "$class":         "org.digitalcmr.Good",
+          "vehicle":        {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "183726339N",
             "manufacturer":    "Audi",
@@ -733,15 +733,15 @@
             "odoMeterReading": 0,
             "plateNumber":     "AV198RX"
           },
-          "description":       "vehicle",
-          "weight":            1500,
+          "description":    "vehicle",
+          "weight":         1500,
           "pickupWindow":   {
-            "$class":          "org.digitalcmr.DateWindow",
+            "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           },
           "deliveryWindow": {
-            "$class":          "org.digitalcmr.DateWindow",
+            "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           }
@@ -832,8 +832,8 @@
       ],
       "goods":                  [
         {
-          "$class":            "org.digitalcmr.Good",
-          "vehicle":           {
+          "$class":         "org.digitalcmr.Good",
+          "vehicle":        {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "183726339N",
             "manufacturer":    "Audi",
@@ -843,15 +843,15 @@
             "odoMeterReading": 0,
             "plateNumber":     "AV198RX"
           },
-          "description":       "vehicle",
-          "weight":            1500,
+          "description":    "vehicle",
+          "weight":         1500,
           "pickupWindow":   {
-            "$class":          "org.digitalcmr.DateWindow",
+            "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           },
           "deliveryWindow": {
-            "$class":          "org.digitalcmr.DateWindow",
+            "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           }
@@ -934,8 +934,8 @@
       ],
       "goods":                   [
         {
-          "$class":            "org.digitalcmr.Good",
-          "vehicle":           {
+          "$class":         "org.digitalcmr.Good",
+          "vehicle":        {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "183726339N",
             "manufacturer":    "Audi",
@@ -945,22 +945,22 @@
             "odoMeterReading": 0,
             "plateNumber":     "AV198RX"
           },
-          "description":       "vehicle",
-          "weight":            1500,
+          "description":    "vehicle",
+          "weight":         1500,
           "pickupWindow":   {
-            "$class":          "org.digitalcmr.DateWindow",
+            "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           },
           "deliveryWindow": {
-            "$class":          "org.digitalcmr.DateWindow",
+            "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           }
         },
         {
-          "$class":            "org.digitalcmr.Good",
-          "vehicle":           {
+          "$class":         "org.digitalcmr.Good",
+          "vehicle":        {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "37316231GA",
             "manufacturer":    "Mercedes",
@@ -970,15 +970,15 @@
             "odoMeterReading": 0,
             "plateNumber":     "M238KA"
           },
-          "description":       "vehicle",
-          "weight":            1500,
+          "description":    "vehicle",
+          "weight":         1500,
           "pickupWindow":   {
-            "$class":          "org.digitalcmr.DateWindow",
+            "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           },
           "deliveryWindow": {
-            "$class":          "org.digitalcmr.DateWindow",
+            "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           }
@@ -1065,8 +1065,8 @@
       ],
       "goods":                    [
         {
-          "$class":            "org.digitalcmr.Good",
-          "vehicle":           {
+          "$class":         "org.digitalcmr.Good",
+          "vehicle":        {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "183726339N",
             "manufacturer":    "Audi",
@@ -1076,22 +1076,22 @@
             "odoMeterReading": 0,
             "plateNumber":     "AV198RX"
           },
-          "description":       "vehicle",
-          "weight":            1500,
+          "description":    "vehicle",
+          "weight":         1500,
           "pickupWindow":   {
-            "$class":          "org.digitalcmr.DateWindow",
+            "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           },
           "deliveryWindow": {
-            "$class":          "org.digitalcmr.DateWindow",
+            "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           }
         },
         {
-          "$class":            "org.digitalcmr.Good",
-          "vehicle":           {
+          "$class":         "org.digitalcmr.Good",
+          "vehicle":        {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "DS8281321",
             "manufacturer":    "Mercedes",
@@ -1101,22 +1101,22 @@
             "odoMeterReading": 0,
             "plateNumber":     "M238KA"
           },
-          "description":       "vehicle",
-          "weight":            1500,
+          "description":    "vehicle",
+          "weight":         1500,
           "pickupWindow":   {
-            "$class":          "org.digitalcmr.DateWindow",
+            "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           },
           "deliveryWindow": {
-            "$class":          "org.digitalcmr.DateWindow",
+            "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           }
         },
         {
-          "$class":            "org.digitalcmr.Good",
-          "vehicle":           {
+          "$class":         "org.digitalcmr.Good",
+          "vehicle":        {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "183726339N",
             "manufacturer":    "Audi",
@@ -1126,22 +1126,22 @@
             "odoMeterReading": 0,
             "plateNumber":     "AV198RX"
           },
-          "description":       "vehicle",
-          "weight":            1500,
+          "description":    "vehicle",
+          "weight":         1500,
           "pickupWindow":   {
-            "$class":          "org.digitalcmr.DateWindow",
+            "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           },
           "deliveryWindow": {
-            "$class":          "org.digitalcmr.DateWindow",
+            "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           }
         },
         {
-          "$class":            "org.digitalcmr.Good",
-          "vehicle":           {
+          "$class":         "org.digitalcmr.Good",
+          "vehicle":        {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "8762178623GA",
             "manufacturer":    "Mercedes",
@@ -1151,15 +1151,15 @@
             "odoMeterReading": 0,
             "plateNumber":     "M238KA"
           },
-          "description":       "vehicle",
-          "weight":            1500,
+          "description":    "vehicle",
+          "weight":         1500,
           "pickupWindow":   {
-            "$class":          "org.digitalcmr.DateWindow",
+            "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           },
           "deliveryWindow": {
-            "$class":          "org.digitalcmr.DateWindow",
+            "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           }
@@ -1250,8 +1250,8 @@
       ],
       "goods":                   [
         {
-          "$class":            "org.digitalcmr.Good",
-          "vehicle":           {
+          "$class":         "org.digitalcmr.Good",
+          "vehicle":        {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "183726339N",
             "manufacturer":    "Audi",
@@ -1261,22 +1261,22 @@
             "odoMeterReading": 0,
             "plateNumber":     "AV198RX"
           },
-          "description":       "vehicle",
-          "weight":            1500,
+          "description":    "vehicle",
+          "weight":         1500,
           "pickupWindow":   {
-            "$class":          "org.digitalcmr.DateWindow",
+            "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           },
           "deliveryWindow": {
-            "$class":          "org.digitalcmr.DateWindow",
+            "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           }
         },
         {
-          "$class":            "org.digitalcmr.Good",
-          "vehicle":           {
+          "$class":         "org.digitalcmr.Good",
+          "vehicle":        {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "736182CHD28172",
             "manufacturer":    "Mercedes",
@@ -1286,15 +1286,15 @@
             "odoMeterReading": 0,
             "plateNumber":     "I827YE"
           },
-          "description":       "vehicle",
-          "weight":            1800,
+          "description":    "vehicle",
+          "weight":         1800,
           "pickupWindow":   {
-            "$class":          "org.digitalcmr.DateWindow",
+            "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           },
           "deliveryWindow": {
-            "$class":          "org.digitalcmr.DateWindow",
+            "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           }
@@ -1381,8 +1381,8 @@
       ],
       "goods":                  [
         {
-          "$class":            "org.digitalcmr.Good",
-          "vehicle":           {
+          "$class":         "org.digitalcmr.Good",
+          "vehicle":        {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "2131231414CN",
             "manufacturer":    "BMW",
@@ -1392,15 +1392,15 @@
             "odoMeterReading": 0,
             "plateNumber":     "O291RX"
           },
-          "description":       "vehicle",
-          "weight":            1900,
+          "description":    "vehicle",
+          "weight":         1900,
           "pickupWindow":   {
-            "$class":          "org.digitalcmr.DateWindow",
+            "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           },
           "deliveryWindow": {
-            "$class":          "org.digitalcmr.DateWindow",
+            "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           }
@@ -1479,8 +1479,8 @@
       ],
       "goods":                    [
         {
-          "$class":            "org.digitalcmr.Good",
-          "vehicle":           {
+          "$class":         "org.digitalcmr.Good",
+          "vehicle":        {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "183726339N",
             "manufacturer":    "Audi",
@@ -1490,16 +1490,22 @@
             "odoMeterReading": 0,
             "plateNumber":     "AV198RX"
           },
-          "description":       "vehicle",
-          "weight":            1500,
-          "loadingStartDate":  1502834400000,
-          "loadingEndDate":    1502834400000,
-          "deliveryStartDate": 1502834400000,
-          "deliveryEndDate":   1502834400000
+          "description":    "vehicle",
+          "weight":         1500,
+          "pickupWindow":   {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow": {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          }
         },
         {
-          "$class":            "org.digitalcmr.Good",
-          "vehicle":           {
+          "$class":         "org.digitalcmr.Good",
+          "vehicle":        {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "DS8281321",
             "manufacturer":    "Mercedes",
@@ -1509,16 +1515,22 @@
             "odoMeterReading": 0,
             "plateNumber":     "M238KA"
           },
-          "description":       "vehicle",
-          "weight":            1500,
-          "loadingStartDate":  1502834400000,
-          "loadingEndDate":    1502834400000,
-          "deliveryStartDate": 1502834400000,
-          "deliveryEndDate":   1502834400000
+          "description":    "vehicle",
+          "weight":         1500,
+          "pickupWindow":   {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow": {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          }
         },
         {
-          "$class":            "org.digitalcmr.Good",
-          "vehicle":           {
+          "$class":         "org.digitalcmr.Good",
+          "vehicle":        {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "183726339N",
             "manufacturer":    "Audi",
@@ -1528,16 +1540,22 @@
             "odoMeterReading": 0,
             "plateNumber":     "AV198RX"
           },
-          "description":       "vehicle",
-          "weight":            1500,
-          "loadingStartDate":  1502834400000,
-          "loadingEndDate":    1502834400000,
-          "deliveryStartDate": 1502834400000,
-          "deliveryEndDate":   1502834400000
+          "description":    "vehicle",
+          "weight":         1500,
+          "pickupWindow":   {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow": {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          }
         },
         {
-          "$class":            "org.digitalcmr.Good",
-          "vehicle":           {
+          "$class":         "org.digitalcmr.Good",
+          "vehicle":        {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "8762178623GA",
             "manufacturer":    "Mercedes",
@@ -1547,12 +1565,18 @@
             "odoMeterReading": 0,
             "plateNumber":     "M238KA"
           },
-          "description":       "vehicle",
-          "weight":            1500,
-          "loadingStartDate":  1502834400000,
-          "loadingEndDate":    1502834400000,
-          "deliveryStartDate": 1502834400000,
-          "deliveryEndDate":   1502834400000
+          "description":    "vehicle",
+          "weight":         1500,
+          "pickupWindow":   {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow": {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          }
         }
       ],
       "legalOwnerInstructions":   "string",
@@ -1616,8 +1640,8 @@
       "carrier":   "koopman",
       "goods":     [
         {
-          "$class":            "org.digitalcmr.Good",
-          "vehicle":           {
+          "$class":         "org.digitalcmr.Good",
+          "vehicle":        {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "183726339N",
             "manufacturer":    "Audi",
@@ -1627,22 +1651,22 @@
             "odoMeterReading": 0,
             "plateNumber":     "AV198RX"
           },
-          "description":       "vehicle",
-          "weight":            1500,
+          "description":    "vehicle",
+          "weight":         1500,
           "pickupWindow":   {
-            "$class":          "org.digitalcmr.DateWindow",
+            "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           },
           "deliveryWindow": {
-            "$class":          "org.digitalcmr.DateWindow",
+            "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           }
         },
         {
-          "$class":            "org.digitalcmr.Good",
-          "vehicle":           {
+          "$class":         "org.digitalcmr.Good",
+          "vehicle":        {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "736182CHD28172",
             "manufacturer":    "Mercedes",
@@ -1652,15 +1676,15 @@
             "odoMeterReading": 0,
             "plateNumber":     "I827YE"
           },
-          "description":       "vehicle",
-          "weight":            1800,
+          "description":    "vehicle",
+          "weight":         1800,
           "pickupWindow":   {
-            "$class":          "org.digitalcmr.DateWindow",
+            "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           },
           "deliveryWindow": {
-            "$class":          "org.digitalcmr.DateWindow",
+            "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           }

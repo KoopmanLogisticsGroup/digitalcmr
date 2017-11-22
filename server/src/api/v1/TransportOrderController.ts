@@ -54,14 +54,9 @@ export class TransportOrderController {
     return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateTransportOrder, transportOrder, new TransportOrderTransactor());
   }
 
-  @Put('/orderID/:orderID/vin/:vin')
-  public async updatePickupWindow(@Param('orderID') orderID: string, @Param('vin') vin: string, @Body() pickupWindow: DateWindow, @Req() request: any): Promise<any> {
+  @Put('/updatePickupWindow')
+  public async updatePickupWindow(@Body() pickupWindowObject: DateWindow, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
-    let pickupWindowObject   = {
-      orderID:      orderID,
-      vin:          vin,
-      pickupWindow: pickupWindow
-    };
     return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateTransportOrderPickupWindow, pickupWindowObject, new TransportOrderTransactor());
   }
 }

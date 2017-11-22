@@ -54,7 +54,7 @@ rule LegalOwnerAdminCanSubmitTransactionCreateTransportOrder {
 }
 
 rule LegalOwnerAdminCanCreateTransactionUpdateTransportOrderPickupWindow {
-  description: "Allow LegalOwnerAdmin to create a transaction to update the pickup window of a TransportOrder"
+  description: "Allow LegalOwnerAdmin to CREATE a transaction to update the pickup window of a TransportOrder"
   participant: "org.digitalcmr.LegalOwnerAdmin"
   operation: CREATE
   resource: "org.digitalcmr.UpdateTransportOrderPickupWindow"

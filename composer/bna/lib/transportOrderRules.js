@@ -70,7 +70,7 @@ function CreateTransportOrders(tx) {
  *  @return {Promise} Asset registry Promise
  *  @transaction
  */
-function UpdateTransportOrderPickupWindow(tx) {
+function updateTransportOrderPickupWindow(tx) {
   console.log('Invoking function processor to update DateWindow');
 
   return getAssetRegistry('org.digitalcmr.TransportOrder')
@@ -80,6 +80,7 @@ function UpdateTransportOrderPickupWindow(tx) {
           tx.transportOrder.goods[goodIndex].pickupWindow = tx.dateWindow;
         }
       }
+
       return assetRegistry.update(tx.transportOrder).catch(function (error) {
         console.log('[Update TransporOrder pickupwindow] An error occurred while updating the registry asset: ' + error);
         throw error;

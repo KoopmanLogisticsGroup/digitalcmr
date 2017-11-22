@@ -3,11 +3,6 @@ import {Factory} from 'composer-common';
 import {TransportOrderBuilder} from './TransportOrderBuilder';
 import {Transaction} from '../../blockchain/Transactions';
 
-export enum QueryReturnType {
-  Multiple,
-  Single
-}
-
 export class TransportOrderTransactor implements TransactionCreator {
   public async invoke(factory: Factory, namespace: string, transactionName: string, data: any): Promise<any> {
     let transaction = factory.newTransaction(namespace, transactionName);
@@ -21,8 +16,8 @@ export class TransportOrderTransactor implements TransactionCreator {
     } else if (transactionName === Transaction.UpdateTransportOrderPickupWindow) {
       transaction.transportOrder       = factory.newRelationship(namespace, 'TransportOrder', data.orderID);
       transaction.dateWindow           = factory.newConcept(namespace, 'DateWindow', data.pickupWindow);
-      transaction.dateWindow.startDate = data.pickupWindow.pickupWindow[0];
-      transaction.dateWindow.endDate   = data.pickupWindow.pickupWindow[1];
+      transaction.dateWindow.startDate = data.pickupWindow[0];
+      transaction.dateWindow.endDate   = data.pickupWindow[1];
       transaction.vin                  = data.vin;
     }
 
