@@ -28,6 +28,7 @@ export class TransportOrderBuilder {
         validatedObject.goods[i].vehicle.ecmrs[vehicleEcmrIndex] = BuilderUtils.createRelationship(factory, namespace, 'ECMR', transportOrder.goods[i].vehicle.ecmrs[vehicleEcmrIndex]);
       }
     }
+
     return <TransportOrder> validatedObject;
   }
 

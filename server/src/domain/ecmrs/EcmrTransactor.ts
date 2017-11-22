@@ -13,6 +13,8 @@ export class EcmrTransactor implements TransactionCreator {
       transaction.ecmr = await EcmrBuilder.buildECMR(factory, namespace, data, enrollmentID, ip);
     } else if (transactionName === Transaction.CreateEcmrs) {
       transaction.ecmrs = await EcmrBuilder.buildECMRs(factory, namespace, data, enrollmentID, ip);
+    } else if (transactionName === Transaction.UpdateEcmr) {
+      transaction.ecmr = await EcmrBuilder.buildECMR(factory, namespace, data, enrollmentID, ip);
     }
 
     return transaction;

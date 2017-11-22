@@ -81,6 +81,6 @@ export class ECMRController {
     const identity: Identity = new JSONWebToken(request).getIdentity();
     const ip                 = request.ip;
 
-    return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateEcmr, ecmr.ecmrID, new EcmrTransactor());
+    return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateEcmr, ecmr, new EcmrTransactor());
   }
 }
