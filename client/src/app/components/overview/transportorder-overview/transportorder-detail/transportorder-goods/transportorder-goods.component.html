@@ -24,13 +24,13 @@
         <td>{{good?.vehicle?.odoMeterReading}}</td>
         <td class="loadingWindow">
           <span>{{transportOrder?.loading?.address?.city}}</span>
-          <span> {{good?.loadingStartDate}}</span>
-          <span> {{good?.loadingEndDate}}</span>
+          <span> {{good?.pickupWindow.startDate}}</span>
+          <span> {{good?.pickupWindow.endDate}}</span>
         </td>
         <td class="loadingWindow">
           <span>{{transportOrder?.loading?.address?.city}}</span>
-          <span> {{good?.loadingStartDate}}</span>
-          <span> {{good?.loadingEndDate}}</span>
+          <span> {{good?.deliveryWindow.startDate}}</span>
+          <span> {{good?.deliveryWindow.endDate}}</span>
         </td>
       </tr>
       </tbody>
