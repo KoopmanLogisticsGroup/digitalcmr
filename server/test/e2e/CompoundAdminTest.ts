@@ -114,8 +114,7 @@ describe('A Compound Admin can', () => {
         }
         should.exist(res.body.token);
         token = res.body.token;
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -131,8 +130,7 @@ describe('A Compound Admin can', () => {
         }
         res.body[0].ecmrID.should.be.equal('A1234567890');
         res.body[1].ecmrID.should.be.equal('B1234567890');
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -148,8 +146,7 @@ describe('A Compound Admin can', () => {
         }
         res.body[0].ecmrID.should.be.equal('A1234567890');
         res.body[1].ecmrID.should.be.equal('B1234567890');
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -165,8 +162,7 @@ describe('A Compound Admin can', () => {
           return done(err);
         }
         updateEcmr = res.body;
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -182,8 +178,7 @@ describe('A Compound Admin can', () => {
           return done(err);
         }
         res.body.length.should.be.greaterThan(0, 'no ECMRs were found.');
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -198,8 +193,7 @@ describe('A Compound Admin can', () => {
 
           return done(err);
         }
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -217,8 +211,7 @@ describe('A Compound Admin can', () => {
 
           return done(err);
         }
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -235,8 +228,7 @@ describe('A Compound Admin can', () => {
 
           return done(err);
         }
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -258,8 +250,7 @@ describe('A Compound Admin can', () => {
         } else {
           res.body.should.equal(200);
         }
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -281,8 +272,7 @@ describe('A Compound Admin can', () => {
           } else {
             res.body.should.equal(200);
           }
-
-        return done(err);
+        done(err);
         }
       );
   });
@@ -305,8 +295,7 @@ describe('A Compound Admin can', () => {
           } else {
             res.body.should.equal(200);
           }
-
-        return done(err);
+        done(err);
         }
       );
   });
@@ -330,8 +319,7 @@ describe('A Compound Admin can', () => {
         } else {
           res.body.should.equal(200);
         }
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -353,8 +341,7 @@ describe('A Compound Admin can', () => {
         } else {
           res.body.should.equal(200);
         }
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -375,8 +362,7 @@ describe('A Compound Admin can', () => {
 
           return done(err);
         }
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -392,8 +378,7 @@ describe('A Compound Admin can', () => {
           console.log(err.stack);
           return done(err);
         }
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -416,8 +401,7 @@ describe('A Compound Admin can', () => {
         } else {
           res.body.should.equal(200);
         }
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -433,8 +417,7 @@ describe('A Compound Admin can', () => {
           return done(err);
         }
         res.body.vin.should.equal('183726339N');
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -450,8 +433,7 @@ describe('A Compound Admin can', () => {
           return done(err);
         }
         res.body.plateNumber.should.equal('AV198RX');
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -468,12 +450,11 @@ describe('A Compound Admin can', () => {
 
           return done(err);
         }
-
-        return done(err);
+        done(err);
       });
   });
 
-  it('not update a transport order', (done) => {
+  it('not update a pickup window of a transport order', (done) => {
     const pickupWindow: PickupWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
@@ -490,8 +471,7 @@ describe('A Compound Admin can', () => {
 
           return done(err);
         }
-
-        return done(err);
+        done(err);
       });
   });
 });

@@ -116,8 +116,7 @@ describe('A Recipient Admin can', () => {
         }
         should.exist(res.body.token);
         token = res.body.token;
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -134,8 +133,7 @@ describe('A Recipient Admin can', () => {
 
           return done(err);
         }
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -151,8 +149,7 @@ describe('A Recipient Admin can', () => {
           return done(err);
         }
         res.body.length.should.be.greaterThan(0, 'no ECMRs were found.');
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -167,8 +164,7 @@ describe('A Recipient Admin can', () => {
 
           return done(err);
         }
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -185,8 +181,7 @@ describe('A Recipient Admin can', () => {
         }
         should.exist(res.body.find(ecmr => ecmr.ecmrID === 'A1234567890'));
         should.exist(res.body.find(ecmr => ecmr.ecmrID === 'B1234567890'));
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -202,8 +197,7 @@ describe('A Recipient Admin can', () => {
         }
         should.exist(res.body.find(ecmr => ecmr.ecmrID === 'A1234567890'));
         should.exist(res.body.find(ecmr => ecmr.ecmrID === 'B1234567890'));
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -219,8 +213,7 @@ describe('A Recipient Admin can', () => {
           return done(err);
         }
         updateEcmr = res.body;
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -236,8 +229,7 @@ describe('A Recipient Admin can', () => {
           return done(err);
         }
         should.exist(res.body.find(ecmr => ecmr.status === 'DELIVERED'));
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -253,8 +245,7 @@ describe('A Recipient Admin can', () => {
           console.log(err.stack);
           return done(err);
         }
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -272,8 +263,7 @@ describe('A Recipient Admin can', () => {
 
           return done(err);
         }
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -289,8 +279,7 @@ describe('A Recipient Admin can', () => {
           return done(err);
         }
         res.body.length.should.be.greaterThan(0);
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -306,8 +295,7 @@ describe('A Recipient Admin can', () => {
           return done(err);
         }
         res.body.vin.should.equal('183726339N');
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -323,8 +311,7 @@ describe('A Recipient Admin can', () => {
           return done(err);
         }
         res.body.plateNumber.should.equal('AV198RX');
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -341,12 +328,11 @@ describe('A Recipient Admin can', () => {
 
           return done(err);
         }
-
-        return done(err);
+        done(err);
       });
   });
 
-  it('not update a transport order', (done) => {
+  it('not update a pickup window of a transport order', (done) => {
     const pickupWindow: PickupWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
@@ -363,8 +349,7 @@ describe('A Recipient Admin can', () => {
 
           return done(err);
         }
-
-        return done(err);
+        done(err);
       });
   });
 });

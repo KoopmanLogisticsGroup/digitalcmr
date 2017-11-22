@@ -113,8 +113,7 @@ describe('A Carrier member can', () => {
         }
         should.exist(res.body.token);
         token = res.body.token;
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -128,8 +127,7 @@ describe('A Carrier member can', () => {
 
           return done(err);
         }
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -143,8 +141,7 @@ describe('A Carrier member can', () => {
 
           return done(err);
         }
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -160,8 +157,7 @@ describe('A Carrier member can', () => {
           return done(err);
         }
         updateEcmr = res.body;
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -178,8 +174,7 @@ describe('A Carrier member can', () => {
 
           return done(err);
         }
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -202,8 +197,7 @@ describe('A Carrier member can', () => {
         } else {
           res.body.should.equal(200);
         }
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -219,8 +213,7 @@ describe('A Carrier member can', () => {
           return done(err);
         }
         res.body.length.should.equal(0);
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -236,8 +229,7 @@ describe('A Carrier member can', () => {
           return done(err);
         }
         res.body.length.should.equal(0);
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -252,8 +244,7 @@ describe('A Carrier member can', () => {
           console.log(err.stack);
           return done(err);
         }
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -271,8 +262,7 @@ describe('A Carrier member can', () => {
 
           return done(err);
         }
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -292,8 +282,7 @@ describe('A Carrier member can', () => {
 
           return done(err);
         }
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -313,8 +302,7 @@ describe('A Carrier member can', () => {
 
           return done(err);
         }
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -328,8 +316,7 @@ describe('A Carrier member can', () => {
 
           return done(err);
         }
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -351,8 +338,7 @@ describe('A Carrier member can', () => {
           } else {
             res.body.should.equal(200);
           }
-
-        return done(err);
+        done(err);
         }
       );
   });
@@ -375,8 +361,7 @@ describe('A Carrier member can', () => {
           } else {
             res.body.should.equal(200);
           }
-
-        return done(err);
+        done(err);
         }
       );
   });
@@ -400,8 +385,7 @@ describe('A Carrier member can', () => {
         } else {
           res.body.should.equal(200);
         }
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -423,8 +407,7 @@ describe('A Carrier member can', () => {
         } else {
           res.body.should.equal(200);
         }
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -441,8 +424,7 @@ describe('A Carrier member can', () => {
 
           return done(err);
         }
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -465,8 +447,7 @@ describe('A Carrier member can', () => {
         } else {
           res.body.should.equal(200);
         }
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -482,8 +463,7 @@ describe('A Carrier member can', () => {
           return done(err);
         }
         res.body.vin.should.equal('183726339N');
-
-        return done(err);
+        done(err);
       });
   });
 
@@ -499,12 +479,11 @@ describe('A Carrier member can', () => {
           return done(err);
         }
         res.body.plateNumber.should.equal('AV198RX');
-
-        return done(err);
+        done(err);
       });
   });
 
-  it('not update a transport order', (done) => {
+  it('not update a pickup window of a transport order', (done) => {
     const pickupWindow: PickupWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
@@ -522,8 +501,7 @@ describe('A Carrier member can', () => {
 
           return done(err);
         }
-
-        return done(err);
+        done(err);
       });
   });
 });
