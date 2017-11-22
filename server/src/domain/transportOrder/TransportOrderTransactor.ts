@@ -13,8 +13,6 @@ export class TransportOrderTransactor implements TransactionCreator {
       transaction.transportOrders = await TransportOrderBuilder.buildTransportOrders(factory, namespace, data);
     } else if (transactionName === Transaction.UpdateTransportOrderStatusToCancelled) {
       transaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', data.orderID);
-      console.log(transaction);
-      // transaction.transportOrder = TransportOrderBuilder.buildTransportOrder(factory, namespace, data);
     }
 
     return transaction;
