@@ -1,4 +1,4 @@
 export interface DateWindow {
-  startDate:  number;
-  endDate:  number;
+  startDate: number;
+  endDate: number;
 }
