@@ -85,7 +85,9 @@ export class EcmrBuilder {
     }
 
     for (let i = 0; i < ecmr.goods.length; i++) {
-      validatedObject.goods[i] = BuilderUtils.createConcept(factory, namespace, 'Good', ecmr.goods[i]);
+      validatedObject.goods[i]                = BuilderUtils.createConcept(factory, namespace, 'Good', ecmr.goods[i]);
+      validatedObject.goods[i].pickupWindow   = BuilderUtils.createConcept(factory, namespace, 'DateWindow', ecmr.goods[i].pickupWindow);
+      validatedObject.goods[i].deliveryWindow = BuilderUtils.createConcept(factory, namespace, 'DateWindow', ecmr.goods[i].deliveryWindow);
       if (ecmr.goods[i].compoundRemark) {
         validatedObject.goods[i].compoundRemark           = BuilderUtils.createConcept(factory, namespace, 'Remark', ecmr.goods[i].compoundRemark);
         validatedObject.goods[i].compoundRemark.comments  = ecmr.goods[i].compoundRemark.comments;
@@ -109,9 +111,7 @@ export class EcmrBuilder {
         validatedObject.goods[i].recipientRemark.comments  = ecmr.goods[i].recipientRemark.comments;
         validatedObject.goods[i].recipientRemark.isDamaged = ecmr.goods[i].recipientRemark.isDamaged;
       }
-
-      let vehicle                      = BuilderUtils.createResource(factory, namespace, 'Vehicle', ecmr.goods[i].vehicle);
-      validatedObject.goods[i].vehicle = vehicle;
+      validatedObject.goods[i].vehicle = BuilderUtils.createResource(factory, namespace, 'Vehicle', ecmr.goods[i].vehicle);
     }
 
     return validatedObject;

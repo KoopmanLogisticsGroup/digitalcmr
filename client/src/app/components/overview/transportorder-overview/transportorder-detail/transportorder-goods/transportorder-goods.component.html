@@ -24,24 +24,24 @@
         <td>{{good?.vehicle?.odoMeterReading}}</td>
         <td class="loadingWindow">
           <span>{{transportOrder?.loading?.address?.city}}</span>
-          <span> {{good?.loadingStartDate}}</span>
-          <span> {{good?.loadingEndDate}}</span>
+          <span> {{good?.pickupWindow.startDate | date: "dd-MM-yyyy HH:mm"}}</span>
+          <span> {{good?.pickupWindow.endDate | date: "dd-MM-yyyy HH:mm"}}</span>
           <div *ngFor="let ecmr of ecmrs">
             <div *ngFor="let ecmrGood of ecmr?.goods">
               <div *ngIf="good?.vehicle?.vin == ecmrGood?.vehicle?.vin">
-                <span> {{ecmr?.carrierLoadingSignature?.timestamp}} </span>
+                <span> {{ecmr?.carrierLoadingSignature?.timestamp | date: "dd-MM-yyyy HH:mm"}} </span>
               </div>
             </div>
           </div>
         </td>
         <td class="loadingWindow">
           <span>{{transportOrder?.loading?.address?.city}}</span>
-          <span> {{good?.loadingStartDate}}</span>
-          <span> {{good?.loadingEndDate}}</span>
+          <span> {{good?.deliveryWindow.startDate | date: "dd-MM-yyyy HH:mm"}}</span>
+          <span> {{good?.deliveryWindow.endDate | date: "dd-MM-yyyy HH:mm"}}</span>
           <div *ngFor="let ecmr of ecmrs">
             <div *ngFor="let ecmrGood of ecmr?.goods">
               <div *ngIf="good?.vehicle?.vin == ecmrGood?.vehicle?.vin">
-                <span>{{ecmr?.carrierDeliverySignature?.timestamp}}</span>
+                <span>{{ecmr?.carrierDeliverySignature?.timestamp | date: "dd-MM-yyyy HH:mm"}}</span>
               </div>
             </div>
           </div>
