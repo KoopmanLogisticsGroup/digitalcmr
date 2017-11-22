@@ -109,11 +109,12 @@ describe('A Carrier admin can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         should.exist(res.body.token);
         token = res.body.token;
-        done(err);
+        return done(err);
       });
   });
 
@@ -124,11 +125,13 @@ describe('A Carrier admin can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         should.exist(res.body.find(ecmr => ecmr.ecmrID === 'A1234567890'));
         should.exist(res.body.find(ecmr => ecmr.ecmrID === 'B1234567890'));
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -139,11 +142,13 @@ describe('A Carrier admin can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         should.exist(res.body.find(ecmr => ecmr.ecmrID === 'A1234567890'));
         should.exist(res.body.find(ecmr => ecmr.ecmrID === 'B1234567890'));
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -155,10 +160,12 @@ describe('A Carrier admin can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         updateEcmr = res.body;
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -170,6 +177,7 @@ describe('A Carrier admin can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         if (res.body instanceof Array) {
@@ -180,7 +188,8 @@ describe('A Carrier admin can', () => {
         } else {
           res.body.should.equal(200);
         }
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -192,10 +201,12 @@ describe('A Carrier admin can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         res.body.length.should.equal(0);
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -209,9 +220,11 @@ describe('A Carrier admin can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -225,9 +238,11 @@ describe('A Carrier admin can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -241,9 +256,11 @@ describe('A Carrier admin can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -254,7 +271,8 @@ describe('A Carrier admin can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
-          done(err);
+
+          return done(err);
         }
         if (res.body instanceof Array) {
           res.body.length.should.be.greaterThan(0, 'No CREATED ECMRs were found.');
@@ -264,7 +282,8 @@ describe('A Carrier admin can', () => {
         } else {
           res.body.should.equal(200);
         }
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -275,7 +294,8 @@ describe('A Carrier admin can', () => {
       .end((err: Error, res) => {
           if (err) {
             console.log(err.stack);
-            done(err);
+
+            return done(err);
           }
           if (res.body instanceof Array) {
             res.body.length.should.be.greaterThan(0, 'No LOADED ECMRs were found.');
@@ -285,7 +305,8 @@ describe('A Carrier admin can', () => {
           } else {
             res.body.should.equal(200);
           }
-          done(err);
+
+        return done(err);
         }
       );
   });
@@ -297,7 +318,8 @@ describe('A Carrier admin can', () => {
       .end((err: Error, res) => {
           if (err) {
             console.log(err.stack);
-            done(err);
+
+            return done(err);
           }
           if (res.body instanceof Array) {
             res.body.length.should.be.greaterThan(0, 'No IN_TRANSIT ECMRs were found.');
@@ -307,7 +329,8 @@ describe('A Carrier admin can', () => {
           } else {
             res.body.should.equal(200);
           }
-          done(err);
+
+        return done(err);
         }
       );
   });
@@ -319,7 +342,8 @@ describe('A Carrier admin can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
-          done(err);
+
+          return done(err);
         }
         if (res.body instanceof Array) {
           res.body.length.should.be.greaterThan(0, 'No DELIVERED ECMRs were found.');
@@ -330,7 +354,8 @@ describe('A Carrier admin can', () => {
         } else {
           res.body.should.equal(200);
         }
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -341,7 +366,8 @@ describe('A Carrier admin can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
-          done(err);
+
+          return done(err);
         }
         if (res.body instanceof Array) {
           res.body.length.should.be.greaterThan(0, 'No CONFIRMED_DELIVERED ECMRs were found.');
@@ -351,7 +377,8 @@ describe('A Carrier admin can', () => {
         } else {
           res.body.should.equal(200);
         }
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -363,11 +390,13 @@ describe('A Carrier admin can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
-          done(err);
+
+          return done(err);
         }
         should.exist(res.body);
         res.body.length.should.be.greaterThan(0);
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -379,10 +408,12 @@ describe('A Carrier admin can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
-          done(err);
+
+          return done(err);
         }
         res.body.vin.should.equal('183726339N');
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -394,11 +425,13 @@ describe('A Carrier admin can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
-          done(err);
+
+          return done(err);
         }
         should.exist(res.body);
         res.body.plateNumber.should.equal('AV198RX');
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -412,9 +445,11 @@ describe('A Carrier admin can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -426,10 +461,12 @@ describe('A Carrier admin can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         should.exist(res.body.find((transportOrder) => transportOrder.orderID === '12345567890'));
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -447,9 +484,11 @@ describe('A Carrier admin can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
-        done(err);
+
+        return done(err);
       });
   });
 });

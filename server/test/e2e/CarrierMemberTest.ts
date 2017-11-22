@@ -108,11 +108,13 @@ describe('A Carrier member can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         should.exist(res.body.token);
         token = res.body.token;
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -123,9 +125,11 @@ describe('A Carrier member can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -136,9 +140,11 @@ describe('A Carrier member can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -150,10 +156,12 @@ describe('A Carrier member can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         updateEcmr = res.body;
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -167,9 +175,11 @@ describe('A Carrier member can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -181,6 +191,7 @@ describe('A Carrier member can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         if (res.body instanceof Array) {
@@ -191,7 +202,8 @@ describe('A Carrier member can', () => {
         } else {
           res.body.should.equal(200);
         }
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -203,10 +215,12 @@ describe('A Carrier member can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         res.body.length.should.equal(0);
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -218,10 +232,12 @@ describe('A Carrier member can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         res.body.length.should.equal(0);
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -234,8 +250,10 @@ describe('A Carrier member can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+          return done(err);
         }
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -250,9 +268,11 @@ describe('A Carrier member can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -269,9 +289,11 @@ describe('A Carrier member can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -288,8 +310,11 @@ describe('A Carrier member can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+
+          return done(err);
         }
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -300,9 +325,11 @@ describe('A Carrier member can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
-          done(err);
+
+          return done(err);
         }
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -313,7 +340,8 @@ describe('A Carrier member can', () => {
       .end((err: Error, res) => {
           if (err) {
             console.log(err.stack);
-            done(err);
+
+            return done(err);
           }
           if (res.body instanceof Array) {
             res.body.length.should.be.greaterThan(0, 'No LOADED ECMRs were found.');
@@ -323,7 +351,8 @@ describe('A Carrier member can', () => {
           } else {
             res.body.should.equal(200);
           }
-          done(err);
+
+        return done(err);
         }
       );
   });
@@ -335,7 +364,8 @@ describe('A Carrier member can', () => {
       .end((err: Error, res) => {
           if (err) {
             console.log(err.stack);
-            done(err);
+
+            return done(err);
           }
           if (res.body instanceof Array) {
             res.body.length.should.be.greaterThan(0, 'No IN_TRANSIT ECMRs were found.');
@@ -345,7 +375,8 @@ describe('A Carrier member can', () => {
           } else {
             res.body.should.equal(200);
           }
-          done(err);
+
+        return done(err);
         }
       );
   });
@@ -357,7 +388,8 @@ describe('A Carrier member can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
-          done(err);
+
+          return done(err);
         }
         if (res.body instanceof Array) {
           res.body.length.should.be.greaterThan(0, 'No DELIVERED ECMRs were found.');
@@ -368,7 +400,8 @@ describe('A Carrier member can', () => {
         } else {
           res.body.should.equal(200);
         }
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -379,7 +412,8 @@ describe('A Carrier member can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
-          done(err);
+
+          return done(err);
         }
         if (res.body instanceof Array) {
           res.body.length.should.be.greaterThan(0, 'No CONFIRMED_DELIVERED ECMRs were found.');
@@ -389,7 +423,8 @@ describe('A Carrier member can', () => {
         } else {
           res.body.should.equal(200);
         }
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -403,8 +438,11 @@ describe('A Carrier member can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+
+          return done(err);
         }
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -416,7 +454,8 @@ describe('A Carrier member can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
-          done(err);
+
+          return done(err);
         }
         if (res.body instanceof Array) {
           //res.body.length.should.be.greaterThan(0, 'No CONFIRMED_DELIVERED ECMRs were found.');
@@ -426,7 +465,8 @@ describe('A Carrier member can', () => {
         } else {
           res.body.should.equal(200);
         }
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -438,10 +478,12 @@ describe('A Carrier member can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
-          done(err);
+
+          return done(err);
         }
         res.body.vin.should.equal('183726339N');
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -453,10 +495,12 @@ describe('A Carrier member can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
-          done(err);
+
+          return done(err);
         }
         res.body.plateNumber.should.equal('AV198RX');
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -466,6 +510,7 @@ describe('A Carrier member can', () => {
       vin:        '183726339N',
       dateWindow: [1010101010, 2020202020]
     };
+
     server
       .put('/api/v1/transportOrder/updatePickupWindow')
       .set('x-access-token', token)
@@ -474,9 +519,11 @@ describe('A Carrier member can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
-        done(err);
+
+        return done(err);
       });
   });
 });

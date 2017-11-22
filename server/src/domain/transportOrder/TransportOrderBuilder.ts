@@ -24,6 +24,7 @@ export class TransportOrderBuilder {
       validatedObject.goods[i].deliveryWindow = BuilderUtils.createConcept(factory, namespace, 'DateWindow', transportOrder.goods[i].deliveryWindow);
       validatedObject.goods[i].vehicle        = BuilderUtils.createResource(factory, namespace, 'Vehicle', transportOrder.goods[i].vehicle);
     }
+
     return <TransportOrder> validatedObject;
   }
 

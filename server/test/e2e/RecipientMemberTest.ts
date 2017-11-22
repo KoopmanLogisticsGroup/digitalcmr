@@ -109,11 +109,13 @@ describe('An Recipient member can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         should.exist(res.body.token);
         token = res.body.token;
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -127,8 +129,11 @@ describe('An Recipient member can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+
+          return done(err);
         }
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -140,10 +145,12 @@ describe('An Recipient member can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         updateEcmr = res.body;
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -155,10 +162,12 @@ describe('An Recipient member can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         should.exist(res.body.find(ecmr => ecmr.status === 'DELIVERED'));
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -170,9 +179,12 @@ describe('An Recipient member can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
+          return done(err);
         }
         res.body.length.should.be.greaterThan(0, 'no ECMRs were found.');
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -184,8 +196,11 @@ describe('An Recipient member can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+
+          return done(err);
         }
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -197,11 +212,13 @@ describe('An Recipient member can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         should.exist(res.body.find(ecmr => ecmr.ecmrID === 'A1234567890'));
         should.exist(res.body.find(ecmr => ecmr.ecmrID === 'B1234567890'));
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -212,11 +229,13 @@ describe('An Recipient member can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         should.exist(res.body.find(ecmr => ecmr.ecmrID === 'A1234567890'));
         should.exist(res.body.find(ecmr => ecmr.ecmrID === 'B1234567890'));
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -230,8 +249,11 @@ describe('An Recipient member can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+
+          return done(err);
         }
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -247,8 +269,11 @@ describe('An Recipient member can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+
+          return done(err);
         }
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -263,8 +288,11 @@ describe('An Recipient member can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+
+          return done(err);
         }
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -276,10 +304,12 @@ describe('An Recipient member can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         res.body.length.should.be.greaterThan(0);
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -291,10 +321,12 @@ describe('An Recipient member can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         res.body.vin.should.equal('183726339N');
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -306,10 +338,12 @@ describe('An Recipient member can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         res.body.plateNumber.should.equal('AV198RX');
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -323,8 +357,11 @@ describe('An Recipient member can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+
+          return done(err);
         }
-        done(err);
+
+        return done(err);
       });
   });
 
@@ -342,9 +379,11 @@ describe('An Recipient member can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
-        done(err);
+
+        return done(err);
       });
   });
 });
