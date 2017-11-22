@@ -16,7 +16,7 @@ import {Request} from 'express';
 import {TransportOrderTransactor} from '../../domain/transportOrder/TransportOrderTransactor';
 import {TransportOrder} from '../../interfaces/transportOrder.interface';
 import {Transaction} from '../../blockchain/Transactions';
-import {DateWindow} from '../../../resources/interfaces/date.window.interface';
+import {PickupWindow} from '../../interfaces/PickupWindow.interface';
 
 @JsonController('/transportOrder')
 @UseBefore(UserAuthenticatorMiddleware)
@@ -55,8 +55,9 @@ export class TransportOrderController {
   }
 
   @Put('/updatePickupWindow')
-  public async updatePickupWindow(@Body() pickupWindowObject: DateWindow, @Req() request: any): Promise<any> {
+  public async updatePickupWindow(@Body() pickupWindowObject: PickupWindow, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
+
     return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateTransportOrderPickupWindow, pickupWindowObject, new TransportOrderTransactor());
   }
 }
