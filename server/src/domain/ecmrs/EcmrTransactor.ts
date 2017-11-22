@@ -9,17 +9,17 @@ import {Ecmr} from '../../interfaces/ecmr.interface';
 import {Config} from '../../config/index';
 
 export class EcmrTransactor implements TransactionCreator {
-  public async invoke(factory: Factory, namespace: string, transactionName: string, data: any, enrollmentID: string, ip?: string): Promise<any> {
+  public async invoke(factory: Factory, namespace: string, transactionName: string, data: any, identity: Identity, enrollmentID: string, ip?: string): Promise<any> {
     let transaction = factory.newTransaction(namespace, transactionName);
 
     if (transactionName === Transaction.CreateEcmr) {
-      transaction.ecmr           = await EcmrBuilder.buildECMR(factory, namespace, data, enrollmentID, ip);
-      transaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', data[0].orderID);
+      transaction.ecmr           = await EcmrBuilder.buildECMR(factory, namespace, data, identity, ip);
+      transaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', data.orderID);
     } else if (transactionName === Transaction.CreateEcmrs) {
-      transaction.ecmrs          = await EcmrBuilder.buildECMRs(factory, namespace, data, enrollmentID, ip);
-      transaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', data[0].orderID);
+      transaction.ecmrs          = await EcmrBuilder.buildECMRs(factory, namespace, data.ecmrs, identity, ip);
+      transaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', data.orderID);
     } else if (transactionName === Transaction.UpdateEcmr) {
-      transaction.ecmr = EcmrBuilder.buildECMR(factory, namespace, data, enrollmentID, ip);
+      transaction.ecmr = EcmrBuilder.buildECMR(factory, namespace, data, identity, ip);
     }
 
     return transaction;

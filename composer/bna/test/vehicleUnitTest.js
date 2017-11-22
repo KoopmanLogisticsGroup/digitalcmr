@@ -173,6 +173,7 @@ describe('As admin of the network, ', () => {
           });
       })
   });
+
   it('should be able to create a Vehicle', () => {
     let vehicles = [];
     vehicles.push(buildVehicle('vehicle3'));
@@ -210,31 +211,4 @@ describe('As admin of the network, ', () => {
         vehicles[2].$identifier.should.equal('vehicle6');
       });
   });
-
-  // todo add factory.newRelationship
-  // it('should be able to update the registration country of a Vehicle', () => {
-  //   return businessNetworkConnection.getAssetRegistry('org.digitalcmr.Vehicle')
-  //     .then((asset) => {
-  //       return asset.get('vehicle100');
-  //     })
-  //     .then((vehicle) => {
-  //       let transaction = factory.newTransaction(namespace, 'UpdateRegistrationCountry');
-  //       transaction.vehicle = vehicle;
-  //       transaction.vehicle.registrationCountry = 'Italy';
-  //
-  //       return businessNetworkConnection.submitTransaction(transaction);
-  //     })
-  //     .then(() => {
-  //       // Get the assets
-  //       return businessNetworkConnection.getAssetRegistry('org.digitalcmr.Vehicle')
-  //         .then((assetRegistry) => {
-  //         console.log(assetRegistry);
-  //           return assetRegistry.get('vehicle100');
-  //         });
-  //     })
-  //     .then((asset) => {
-  //       console.log(asset);
-  //       asset.vehicles.registrationCountry.should.equal('Italy');
-  //     })
-  // });
 });

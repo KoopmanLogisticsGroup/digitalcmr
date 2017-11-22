@@ -102,7 +102,7 @@ export class TestData {
         this.logger.error('Error adding Transport Orders', error);
       }
     }
-    if (sharedData.ecmrs && sharedData.ecmrs.length) {
+    if (sharedData.ecmrs) {
       this.logger.info('Adding Ecmrs');
       try {
         await this.addEcmrs(sharedData.ecmrs);

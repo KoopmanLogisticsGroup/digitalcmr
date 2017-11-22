@@ -14,11 +14,11 @@
 
 /**
  * Create transport order transaction processor function.
- * @param {org.digitalcmr.CreateTransportOrder} tx - The create transport order transaction
+ * @param {org.digitalcmr.CreateTransportOrder} tx - CreateTransportOrder transaction
  * @return {Promise} Asset registry Promise
  * @transaction
  */
-function CreateTransportOrder(tx) {
+function createTransportOrder(tx) {
   console.log('Invoking function: CreateTransportOrder');
 
   // Get the asset registry for the asset.
@@ -40,11 +40,11 @@ function CreateTransportOrder(tx) {
 
 /**
  * Create transport orders transaction processor function.
- * @param {org.digitalcmr.CreateTransportOrders} tx - The create transport orders transaction
+ * @param {org.digitalcmr.CreateTransportOrders} tx - CreateTransportOrders transaction
  * @return {Promise} Asset registry Promise
  * @transaction
  */
-function CreateTransportOrders(tx) {
+function createTransportOrders(tx) {
   console.log('Invoking function: CreateTransportOrders');
 
   // Get the asset registry for the asset.
@@ -64,7 +64,7 @@ function CreateTransportOrders(tx) {
     })
 }
 
-function UpdateTransportOrderToInProgress(tx) {
+function updateTransportOrderToInProgress(tx) {
   console.log('Invoking function processor to set update TransportOrder');
   console.log('orderID: ' + tx.transportOrder.orderID);
 
@@ -90,11 +90,11 @@ function UpdateTransportOrderToInProgress(tx) {
 
 /**
  * UpdateTransportOrderStatusToCompleted transaction processor function.
- * @param {org.digitalcmr.UpdateTransportOrderStatusToCompleted} tx  - UpdateTransportOrderStatusToCompleted transaction
+ * @param {org.digitalcmr.UpdateTransportOrderStatusToCompleted} tx - UpdateTransportOrderStatusToCompleted transaction
  * @return {Promise} Asset registry Promise
  * @transaction
  */
-function UpdateTransportOrderStatusToCompleted(tx) {
+function updateTransportOrderStatusToCompleted(tx) {
   console.log('Invoking function processor to set update TransportOrder');
   console.log('orderID: ' + tx.transportOrder.orderID);
 

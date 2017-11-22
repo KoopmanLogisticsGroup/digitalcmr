@@ -1,7 +1,8 @@
 import {BuilderUtils} from '../../blockchain/BuilderUtils';
+import {Identity} from '../Identity';
 
 export class EcmrBuilder {
-  public static buildECMR(factory: any, namespace: string, ecmr: any, enrollmentID: string, ip?: any): any {
+  public static buildECMR(factory: any, namespace: string, ecmr: any, identity: Identity, ip?: any): any {
     let validatedObject = BuilderUtils.createResource(factory, namespace, 'ECMR', ecmr);
 
     validatedObject.creation         = BuilderUtils.createConcept(factory, namespace, 'Creation', ecmr.creation);
@@ -21,7 +22,7 @@ export class EcmrBuilder {
 
     if (ecmr.compoundSignature) {
       validatedObject.compoundSignature             = BuilderUtils.createConcept(factory, namespace, 'Signature', ecmr.compoundSignature);
-      validatedObject.compoundSignature.certificate = BuilderUtils.createRelationship(factory, namespace, 'User', enrollmentID || ecmr.compoundSignature.certificate);
+      validatedObject.compoundSignature.certificate = BuilderUtils.createRelationship(factory, namespace, 'User', identity.userID || ecmr.compoundSignature.certificate);
       if (ecmr.compoundSignature.generalRemark) {
         validatedObject.compoundSignature.generalRemark = BuilderUtils.createConcept(factory, namespace, 'Remark', ecmr.compoundSignature.generalRemark);
       }
@@ -37,7 +38,7 @@ export class EcmrBuilder {
     }
     if (ecmr.carrierLoadingSignature) {
       validatedObject.carrierLoadingSignature             = BuilderUtils.createConcept(factory, namespace, 'Signature', ecmr.carrierLoadingSignature);
-      validatedObject.carrierLoadingSignature.certificate = BuilderUtils.createRelationship(factory, namespace, 'User', enrollmentID || ecmr.carrierLoadingSignature.certificate);
+      validatedObject.carrierLoadingSignature.certificate = BuilderUtils.createRelationship(factory, namespace, 'User', identity.userID || ecmr.carrierLoadingSignature.certificate);
       if (ecmr.carrierLoadingSignature.generalRemark) {
         validatedObject.carrierLoadingSignature.generalRemark = BuilderUtils.createConcept(factory, namespace, 'Remark', ecmr.carrierLoadingSignature.generalRemark);
       }
@@ -53,7 +54,7 @@ export class EcmrBuilder {
     }
     if (ecmr.carrierDeliverySignature) {
       validatedObject.carrierDeliverySignature             = BuilderUtils.createConcept(factory, namespace, 'Signature', ecmr.carrierDeliverySignature);
-      validatedObject.carrierDeliverySignature.certificate = BuilderUtils.createRelationship(factory, namespace, 'User', enrollmentID || ecmr.carrierDeliverySignature.certificate);
+      validatedObject.carrierDeliverySignature.certificate = BuilderUtils.createRelationship(factory, namespace, 'User', identity.userID || ecmr.carrierDeliverySignature.certificate);
       if (ecmr.carrierDeliverySignature.generalRemark) {
         validatedObject.carrierDeliverySignature.generalRemark = BuilderUtils.createConcept(factory, namespace, 'Remark', ecmr.carrierDeliverySignature.generalRemark);
       }
@@ -69,7 +70,7 @@ export class EcmrBuilder {
     }
     if (ecmr.recipientSignature) {
       validatedObject.recipientSignature             = BuilderUtils.createConcept(factory, namespace, 'Signature', ecmr.recipientSignature);
-      validatedObject.recipientSignature.certificate = BuilderUtils.createRelationship(factory, namespace, 'User', enrollmentID || ecmr.recipientSignature.certificate);
+      validatedObject.recipientSignature.certificate = BuilderUtils.createRelationship(factory, namespace, 'User', identity.userID || ecmr.recipientSignature.certificate);
       if (ecmr.recipientSignature.generalRemark) {
         validatedObject.recipientSignature.generalRemark = BuilderUtils.createConcept(factory, namespace, 'Remark', ecmr.recipientSignature.generalRemark);
       }
@@ -117,11 +118,11 @@ export class EcmrBuilder {
     return validatedObject;
   }
 
-  public static async buildECMRs(factory: any, namespace: string, ecmrs: any, enrollmentID: string, ip?: any): Promise<any> {
+  public static async buildECMRs(factory: any, namespace: string, ecmrs: any, identity: Identity, ip?: any): Promise<any> {
     let validatedObjects: any = [];
 
     for (const ecmr of ecmrs) {
-      validatedObjects.push(this.buildECMR(factory, namespace, ecmr, enrollmentID, ip));
+      validatedObjects.push(this.buildECMR(factory, namespace, ecmr, identity, ip));
     }
 
     return validatedObjects;

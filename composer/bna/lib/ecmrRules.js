@@ -14,11 +14,11 @@
 
 /**
  * Create ecmr transaction processor function.
- * @param {org.digitalcmr.CreateECMR} tx  - The create ecmr transaction
+ * @param {org.digitalcmr.CreateECMR} tx  - Create ECMR transaction
  * @return {Promise} Asset registry Promise
  * @transaction
  */
-function CreateECMR(tx) {
+function createECMR(tx) {
   console.log('Invoking function: CreateECMR');
 
   // Get the asset registry for the asset.
@@ -29,7 +29,7 @@ function CreateECMR(tx) {
           console.log('Asset added with success');
         })
         .catch(function (error) {
-          console.log('An error occurred while addAll ecmr assets', error);
+          console.log('An error occurred while addAll ECMRs', error);
           throw error;
         });
     }).catch(function (error) {
@@ -40,11 +40,11 @@ function CreateECMR(tx) {
 
 /**
  * Create ECMRs transaction processor function.
- * @param {org.digitalcmr.CreateECMRs} tx  - Create ecmrs transaction
+ * @param {org.digitalcmr.CreateECMRs} tx  - Create ECMRs transaction
  * @return {Promise} Asset registry Promise
  * @transaction
  */
-function CreateECMRs(tx) {
+function createECMRs(tx) {
   console.log('Invoking function: CreateECMRs');
 
   // Get the asset registry for the asset.
@@ -53,26 +53,25 @@ function CreateECMRs(tx) {
       return assetRegistry.addAll(tx.ecmrs)
         .then(function () {
           console.log('ECMRs added with success');
-          UpdateTransportOrderToInProgress(tx);
+          updateTransportOrderToInProgress(tx);
         })
         .catch(function (error) {
           console.log('An error occurred while addAll ECMRs', error);
           throw error;
         });
     }).catch(function (error) {
-      console.log('An error occurred while getting the asset registery', error);
+      console.log('An error occurred while getting the asset registry', error);
       throw error;
     });
 }
 
 /**
  * Update EMCR transaction processor function.
- * @param {org.digitalcmr.UpdateECMR} tx  - The UpdateECMR transaction
+ * @param {org.digitalcmr.UpdateECMR} tx  - UpdateECMR transaction
  * @return {Promise} Asset registry Promise
  * @transaction
  */
-function UpdateECMR(tx) {
-
+function updateECMR(tx) {
   console.log('Invoking function processor to set update ECMR');
   console.log('ecmrID: ' + tx.ecmr.ecmrID);
 
@@ -165,7 +164,6 @@ function UpdateECMR(tx) {
       if (!statusIsValid) {
         throw new Error("[Update ECMR] Validation failure! Provided status: " + ecmr.status + "is not a valid status!");
       }
-
       return getAssetRegistry('org.digitalcmr.ECMR')
         .then(function (assetRegistry) {
           return assetRegistry.update(ecmr).catch(function (error) {
