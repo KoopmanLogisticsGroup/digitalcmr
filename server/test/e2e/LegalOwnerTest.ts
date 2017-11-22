@@ -2,9 +2,9 @@ import * as supertest from 'supertest';
 import '../../node_modules/mocha';
 import * as chai from 'chai';
 import * as http from 'http';
-import {TransportOrder} from '../../resources/interfaces/transportOrder.interface';
-import {Ecmr} from '../../resources/interfaces/ecmr.interface';
-import {Address} from '../../resources/interfaces/address.interface';
+import {TransportOrder} from '../../src/interfaces/transportOrder.interface';
+import {Ecmr} from '../../src/interfaces/ecmr.interface';
+import {Address} from '../../src/interfaces/address.interface';
 
 const server = supertest.agent('http://localhost:8080');
 const should = chai.should();
@@ -32,7 +32,7 @@ const buildAddress = (): Address => {
   };
 };
 //TODO when an ADMIN has been created make sure to replace ecmrID by new Date().getTime().toString() for all participants
-const buildECMR = (ecmrID: string): Ecmr => {
+const buildECMR    = (ecmrID: string): Ecmr => {
   return <Ecmr>{
     ecmrID:                 ecmrID,
     status:                 'CREATED',
@@ -100,6 +100,7 @@ describe('A legal owner admin can', () => {
       'username': 'lapo@leaseplan.org',
       'password': 'passw0rd'
     };
+
     server
       .post('/api/v1/login')
       .send(loginParams)

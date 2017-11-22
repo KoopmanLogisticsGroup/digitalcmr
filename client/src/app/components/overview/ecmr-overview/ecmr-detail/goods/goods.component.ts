@@ -1,7 +1,7 @@
 import {Component, OnInit, Input, ViewChild} from '@angular/core';
 import {SignOffModalComponent} from '../sign-off-modal/sign-off-modal.component';
-import {AuthenticationService} from '../../../services/authentication.service';
-import {Ecmr} from '../../../interfaces/ecmr.interface';
+import {AuthenticationService} from '../../../../../services/authentication.service';
+import {Ecmr} from '../../../../../interfaces/ecmr.interface';
 
 @Component({
   selector:    'app-goods',

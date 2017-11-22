@@ -16,8 +16,9 @@ import {VehicleTransactor} from '../domain/vehicles/VehicleTransactor';
 import {EcmrTransactor} from '../domain/ecmrs/EcmrTransactor';
 import {BusinessNetworkHandler} from '../blockchain/BusinessNetworkHandler';
 import {IdentityManager} from '../blockchain/IdentityManager';
-import {TransportOrder} from '../../resources/interfaces/transportOrder.interface';
+import {TransportOrder} from '../interfaces/transportOrder.interface';
 import {TransportOrderTransactor} from '../domain/transportOrder/TransportOrderTransactor';
+import {Transaction} from '../blockchain/Transactions';
 
 export class TestData {
   private logger: LoggerInstance         = Container.get(LoggerFactory).get('TestData');
@@ -129,22 +130,22 @@ export class TestData {
       // get all the ecmrs contained in the vehicle
       switch (orgClass) {
         case 'legalOwnerOrg': {
-          promises.push(this.transactionHandler.create(TestData.adminIdentity, Config.settings.composer.profile, Config.settings.composer.namespace, org, new LegalOwnerTransactor()));
+          promises.push(this.transactionHandler.invoke(TestData.adminIdentity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateLegalOwnerOrg, org, new LegalOwnerTransactor()));
           break;
         }
 
         case 'compoundOrg': {
-          promises.push(this.transactionHandler.create(TestData.adminIdentity, Config.settings.composer.profile, Config.settings.composer.namespace, org, new CompoundTransactor()));
+          promises.push(this.transactionHandler.invoke(TestData.adminIdentity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateCompoundOrg, org, new CompoundTransactor()));
           break;
         }
 
         case 'carrierOrg': {
-          promises.push(this.transactionHandler.create(TestData.adminIdentity, Config.settings.composer.profile, Config.settings.composer.namespace, org, new CarrierTransactor()));
+          promises.push(this.transactionHandler.invoke(TestData.adminIdentity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateCarrierOrg, org, new CarrierTransactor()));
           break;
         }
 
         case 'recipientOrg': {
-          promises.push(this.transactionHandler.create(TestData.adminIdentity, Config.settings.composer.profile, Config.settings.composer.namespace, org, new RecipientTransactor()));
+          promises.push(this.transactionHandler.invoke(TestData.adminIdentity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateRecipientOrg, org, new RecipientTransactor()));
           break;
         }
       }
@@ -155,15 +156,15 @@ export class TestData {
   }
 
   private async addVehicles(vehicles: any[]): Promise<any> {
-    return this.transactionHandler.create(TestData.adminIdentity, Config.settings.composer.profile, Config.settings.composer.namespace, vehicles, new VehicleTransactor());
+    return this.transactionHandler.invoke(TestData.adminIdentity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateVehicles, vehicles, new VehicleTransactor());
   }
 
   private async addEcmrs(ecmrs: any[]): Promise<any> {
-    return this.transactionHandler.create(TestData.adminIdentity, Config.settings.composer.profile, Config.settings.composer.namespace, ecmrs, new EcmrTransactor());
+    return this.transactionHandler.invoke(TestData.adminIdentity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateEcmrs, ecmrs, new EcmrTransactor());
   }
 
   private async addTransportOrders(transportOrders: TransportOrder[]): Promise<any> {
-    return this.transactionHandler.create(TestData.adminIdentity, Config.settings.composer.profile, Config.settings.composer.namespace, transportOrders, new TransportOrderTransactor());
+    return this.transactionHandler.invoke(TestData.adminIdentity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateTransportOrders, transportOrders, new TransportOrderTransactor());
   }
 
   // private async addParticipants(): Promise<any> {

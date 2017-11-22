@@ -1,25 +1,17 @@
 import {TransactionCreator} from '../../blockchain/TransactionCreator';
 import {Factory} from 'composer-common';
 import {TransportOrderBuilder} from './TransportOrderBuilder';
+import {Transaction} from '../../blockchain/Transactions';
 
 export class TransportOrderTransactor implements TransactionCreator {
-  public async create(factory: Factory, namespace: string, data: any): Promise<any> {
-    let transaction: any;
+  public async invoke(factory: Factory, namespace: string, transactionName: string, data: any): Promise<any> {
+    let transaction = factory.newTransaction(namespace, transactionName);
 
-    if (Array.isArray(data)) {
-      transaction                 = factory.newTransaction(namespace, 'CreateTransportOrders');
+    if (transactionName === Transaction.CreateTransportOrder) {
+      transaction.transportOrder = await TransportOrderBuilder.buildTransportOrder(factory, namespace, data);
+    } else if (transactionName === Transaction.CreateTransportOrders) {
       transaction.transportOrders = await TransportOrderBuilder.buildTransportOrders(factory, namespace, data);
-    } else {
-      transaction                = factory.newTransaction(namespace, 'CreateTransportOrder');
-      transaction.transportOrder = await  TransportOrderBuilder.buildTransportOrder(factory, namespace, data);
     }
-
-    return transaction;
-  }
-
-  public update(factory: Factory, namespace: string, data: any): Promise<any> {
-    let transaction            = factory.newTransaction(namespace, 'UpdateTransportOrder');
-    transaction.transportOrder = TransportOrderBuilder.buildTransportOrder(factory, namespace, data);
 
     return transaction;
   }
