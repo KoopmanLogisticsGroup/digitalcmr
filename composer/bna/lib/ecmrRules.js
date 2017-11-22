@@ -74,6 +74,8 @@ function createECMRs(tx) {
 function updateECMR(tx) {
   console.log('Invoking function processor to set update ECMR');
   console.log('ecmrID: ' + tx.ecmr.ecmrID);
+  console.log(tx.ecmr.status);
+  console.log(tx.transportOrder);
 
   // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.ECMR')
@@ -84,6 +86,7 @@ function updateECMR(tx) {
       });
     })
     .then(function (ecmr) {
+      console.log(ecmr.status + ' ' + tx.ecmr.status);
       ecmr.status = tx.ecmr.status;
 
       var statusIsValid = false;
@@ -93,6 +96,7 @@ function updateECMR(tx) {
         statusIsValid = true;
         // write the compound signature into the ecmr
         ecmr.compoundSignature = tx.ecmr.compoundSignature;
+        console.log('Goes in loaded');
         // write the compound remarks into the ecmr
         for (var i = 0; tx.ecmr.goods && i < tx.ecmr.goods.length; i++) {
           if (tx.ecmr.goods[i].compoundRemark) {
@@ -103,6 +107,7 @@ function updateECMR(tx) {
 
       //if the transporter updated the ecmr status as IN_TRANSIT, add the transporter signature confirming the loading
       if (ecmr.status === 'IN_TRANSIT') {
+        console.log('Goes in IN_TRANSIT');
         statusIsValid = true;
         // check if the required signatures has been placed in the previous steps
         if (!ecmr.compoundSignature) {
@@ -110,6 +115,7 @@ function updateECMR(tx) {
         }
         // write the carrier loading signature into the ecmr
         ecmr.carrierLoadingSignature = tx.ecmr.carrierLoadingSignature;
+        console.log(tx.ecmr.carrierLoadingSignature);
         // write the carrier loading remarks into the ecmr
         for (var i = 0; tx.ecmr.goods && i < tx.ecmr.goods.length; i++) {
           if (tx.ecmr.goods[i].carrierLoadingRemark) {
@@ -130,12 +136,17 @@ function updateECMR(tx) {
         }
         // write the carrier delivery signature into the ecmr
         ecmr.carrierDeliverySignature = tx.ecmr.carrierDeliverySignature;
+
         // write the carrier delivery remarks into the ecmr
         for (var i = 0; tx.ecmr.goods && i < tx.ecmr.goods.length; i++) {
           if (tx.ecmr.goods[i].carrierDeliveryRemark) {
             ecmr.goods[i].carrierDeliveryRemark = tx.ecmr.goods[i].carrierDeliveryRemark;
           }
         }
+
+        updateTransportOrderStatusToCompleted(tx).then(function () {
+          console.log('updated transport order');
+        });
       }
 
       //if the recipient has confirmed the delivery and updated the ecmr status as CONFIRMED_DELIVERED, add the recipient signature

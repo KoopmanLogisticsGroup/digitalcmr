@@ -17,7 +17,6 @@ export class TransactionHandler {
     const factory: Factory = await this.businessNetworkHandler.getFactory();
 
     const transaction = await transactionCreator.invoke(factory, namespace, transactionName, data, identity);
-
     try {
       await this.businessNetworkHandler.submitTransaction(transaction);
     } catch (error) {

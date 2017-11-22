@@ -88,12 +88,6 @@ function updateTransportOrderToInProgress(tx) {
     });
 }
 
-/**
- * UpdateTransportOrderStatusToCompleted transaction processor function.
- * @param {org.digitalcmr.UpdateTransportOrderStatusToCompleted} tx - UpdateTransportOrderStatusToCompleted transaction
- * @return {Promise} Asset registry Promise
- * @transaction
- */
 function updateTransportOrderStatusToCompleted(tx) {
   console.log('Invoking function processor to set update TransportOrder');
   console.log('orderID: ' + tx.transportOrder.orderID);

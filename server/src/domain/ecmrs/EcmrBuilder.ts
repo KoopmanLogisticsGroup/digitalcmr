@@ -22,6 +22,7 @@ export class EcmrBuilder {
 
     if (ecmr.compoundSignature) {
       validatedObject.compoundSignature             = BuilderUtils.createConcept(factory, namespace, 'Signature', ecmr.compoundSignature);
+      console.log(identity.userID);
       validatedObject.compoundSignature.certificate = BuilderUtils.createRelationship(factory, namespace, 'User', identity.userID || ecmr.compoundSignature.certificate);
       if (ecmr.compoundSignature.generalRemark) {
         validatedObject.compoundSignature.generalRemark = BuilderUtils.createConcept(factory, namespace, 'Remark', ecmr.compoundSignature.generalRemark);
@@ -42,7 +43,7 @@ export class EcmrBuilder {
       if (ecmr.carrierLoadingSignature.generalRemark) {
         validatedObject.carrierLoadingSignature.generalRemark = BuilderUtils.createConcept(factory, namespace, 'Remark', ecmr.carrierLoadingSignature.generalRemark);
       }
-
+      console.log(ecmr.status);
       if (ecmr.status === 'LOADED') {
         validatedObject.status = 'IN_TRANSIT';
         if (ip) {
@@ -63,6 +64,7 @@ export class EcmrBuilder {
         if (ip) {
           validatedObject.carrierDeliverySignature.ip = ip;
         }
+        console.log('setting status to delivered');
         validatedObject.status = 'DELIVERED';
       }
 

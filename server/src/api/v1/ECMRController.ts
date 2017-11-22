@@ -73,6 +73,6 @@ export class ECMRController {
   public async update(@Body() ecmr: Ecmr, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.ecmrTransactor.updateECMRAndTransportOrder(identity, Config.settings.composer.profile, Config.settings.composer.namespace, ecmr, this.transactionHandler);
+    return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateEcmr, ecmr, new EcmrTransactor());
   }
 }

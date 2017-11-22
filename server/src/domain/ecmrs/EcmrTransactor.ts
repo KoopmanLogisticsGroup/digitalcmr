@@ -4,9 +4,6 @@ import {Factory} from 'composer-common';
 import {EcmrBuilder} from './EcmrBuilder';
 import {QueryReturnType, TransactionHandler} from '../../blockchain/TransactionHandler';
 import {Transaction} from '../../blockchain/Transactions';
-import {TransportOrderTransactor} from '../transportOrder/TransportOrderTransactor';
-import {Ecmr} from '../../interfaces/ecmr.interface';
-import {Config} from '../../config/index';
 
 export class EcmrTransactor implements TransactionCreator {
   public async invoke(factory: Factory, namespace: string, transactionName: string, data: any, identity: Identity, enrollmentID: string, ip?: string): Promise<any> {
@@ -19,20 +16,12 @@ export class EcmrTransactor implements TransactionCreator {
       transaction.ecmrs          = await EcmrBuilder.buildECMRs(factory, namespace, data.ecmrs, identity, ip);
       transaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', data.orderID);
     } else if (transactionName === Transaction.UpdateEcmr) {
-      transaction.ecmr = EcmrBuilder.buildECMR(factory, namespace, data, identity, ip);
+      console.log(data.status);
+      transaction.ecmr           = EcmrBuilder.buildECMR(factory, namespace, data, identity, ip);
+      transaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', data.orderID);
     }
 
     return transaction;
-  }
-
-  public async updateECMRAndTransportOrder(identity: Identity, connectionProfile: string, namespace: string, ecmr: Ecmr, transactionHandler: TransactionHandler): Promise<any> {
-    if (ecmr.status === 'DELIVERED') {
-      let orderID        = ecmr.orderID;
-      let transportOrder = await transactionHandler.executeQuery(identity, connectionProfile, QueryReturnType.Single, 'getTransportOrderById', {orderID: orderID});
-      await transactionHandler.invoke(identity, connectionProfile, namespace, Transaction.UpdateTransportOrderStatusToCompleted, transportOrder, new TransportOrderTransactor());
-    }
-
-    return await transactionHandler.invoke(identity, connectionProfile, namespace, Transaction.UpdateEcmr, ecmr, new EcmrTransactor());
   }
 
   // TODO improve function
