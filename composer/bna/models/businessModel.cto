@@ -167,10 +167,8 @@ concept Good {
   o Remark carrierDeliveryRemark optional
   o String description optional
   o Double weight optional
-  o Integer loadingStartDate
-  o Integer loadingEndDate
-  o Integer deliveryStartDate
-  o Integer deliveryEndDate
+  o DateWindow pickupWindow
+  o DateWindow deliveryWindow
   o Cancellation cancellation optional
 }
 
@@ -188,6 +186,11 @@ concept Signature {
   o Remark generalRemark optional
 }
 
+concept DateWindow {
+  o Integer startDate
+  o Integer endDate
+}
+
 /**
  * Transactions
  */
@@ -198,6 +201,16 @@ transaction CreateTransportOrder {
 
 transaction CreateTransportOrders {
   o TransportOrder[] transportOrders
+}
+
+transaction UpdateTransportOrder {
+  o TransportOrder transportOrder
+}
+
+transaction UpdateTransportOrderPickupWindow {
+  --> TransportOrder transportOrder
+  o DateWindow dateWindow
+  o String vin
 }
 
 transaction CreateECMR {

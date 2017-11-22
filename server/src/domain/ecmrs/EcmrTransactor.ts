@@ -13,6 +13,8 @@ export class EcmrTransactor implements TransactionCreator {
       transaction.ecmr = await EcmrBuilder.buildECMR(factory, namespace, data, enrollmentID, ip);
     } else if (transactionName === Transaction.CreateEcmrs) {
       transaction.ecmrs = await EcmrBuilder.buildECMRs(factory, namespace, data, enrollmentID, ip);
+    } else if (transactionName === Transaction.UpdateEcmr) {
+      transaction.ecmr = await EcmrBuilder.buildECMR(factory, namespace, data, enrollmentID, ip);
     }
 
     return transaction;
@@ -38,7 +40,7 @@ export class EcmrTransactor implements TransactionCreator {
     }
   }
 
-  // TODO improve function
+  // TODO improve functionw
   public async getEcmrsByPlateNumber(transactionHandler: TransactionHandler, identity: Identity, connectionProfile: string, plateNumber: string): Promise<any> {
     // get vehicle by vin
     const vehicle     = await transactionHandler.executeQuery(identity, connectionProfile, QueryReturnType.Single, 'getVehicleByPlateNumber', {plateNumber: plateNumber});

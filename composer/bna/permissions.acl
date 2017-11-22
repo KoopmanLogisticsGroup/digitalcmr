@@ -27,7 +27,7 @@ rule EveryBodyCanReadVehicles {
  */
 
 rule LegalOwnerAdminCanReadTransportOrder {
-    description: "Allow Legal Owner Admin to READ a Transport Order"
+    description: "Allow Legal Owner Admin to READ a TransportOrder"
     participant(p): "org.digitalcmr.LegalOwnerAdmin"
     operation: READ
     resource(r): "org.digitalcmr.TransportOrder"
@@ -50,6 +50,24 @@ rule LegalOwnerAdminCanSubmitTransactionCreateTransportOrder {
   resource(r): "org.digitalcmr.TransportOrder"
   transaction: "org.digitalcmr.CreateTransportOrder"
   condition: (r.owner.getIdentifier() === p.org.getIdentifier())
+  action: ALLOW
+}
+
+rule LegalOwnerAdminCanCreateTransactionUpdateTransportOrderPickupWindow {
+  description: "Allow LegalOwnerAdmin to CREATE a transaction to update the pickup window of a TransportOrder"
+  participant: "org.digitalcmr.LegalOwnerAdmin"
+  operation: CREATE
+  resource: "org.digitalcmr.UpdateTransportOrderPickupWindow"
+  action: ALLOW
+}
+
+rule LegalOwnerAdminCanSubmitTransactionUpdateTransportOrderPickupWindow {
+  description: "Allow LegalOwnerAdmin to submit an UpdateTransportOrderPickupWindow transaction to UPDATE a TransportOrder"
+  participant(p): "org.digitalcmr.LegalOwnerAdmin"
+  operation: UPDATE
+  resource(r): "org.digitalcmr.TransportOrder"
+  transaction: "org.digitalcmr.UpdateTransportOrderPickupWindow"
+  condition: (r.owner.getIdentifier() === p.org.getIdentifier() && r.status == 'OPEN')
   action: ALLOW
 }
 
@@ -124,11 +142,29 @@ rule CarrierAdminCanReadECMR {
     action: ALLOW
 }
 
-rule CarrierAdminCanReadTransportOrders {
-  description: "Allow Carrier Admin to READ all Transport orders where his org is a carrier"
+rule CarrierAdminCanReadTransportOrder {
+    description: "Allow CarrierAdmin to READ a TransportOrder"
+    participant(p): "org.digitalcmr.CarrierAdmin"
+    operation: READ
+    resource(r): "org.digitalcmr.TransportOrder"
+    condition: (r.carrier.getIdentifier() === p.org.getIdentifier())
+    action: ALLOW
+}
+
+rule CarrierAdminCanCreateTransactionUpdateTransportOrder {
+    description: "Allow LegalOwnerAdmin to CREATE a CreateTransportOrder transaction"
+    participant: "org.digitalcmr.CarrierAdmin"
+    operation: CREATE
+    resource: "org.digitalcmr.UpdateTransportOrder"
+    action: ALLOW
+}
+
+rule CarrierAdminCanSubmitTransactionUpdateTransportOrder {
+  description: "Allow CarrierAdmin to CREATE a TransportOrder using the CreateTransportOrder transaction"
   participant(p): "org.digitalcmr.CarrierAdmin"
-  operation: READ
+  operation: UPDATE
   resource(r): "org.digitalcmr.TransportOrder"
+  transaction: "org.digitalcmr.UpdateTransportOrder"
   condition: (r.carrier.getIdentifier() === p.org.getIdentifier())
   action: ALLOW
 }

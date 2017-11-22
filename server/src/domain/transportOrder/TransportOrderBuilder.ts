@@ -19,9 +19,16 @@ export class TransportOrderBuilder {
     }
 
     for (let i = 0; i < transportOrder.goods.length; i++) {
-      validatedObject.goods[i]         = BuilderUtils.createConcept(factory, namespace, 'Good', transportOrder.goods[i]);
-      validatedObject.goods[i].vehicle = BuilderUtils.createResource(factory, namespace, 'Vehicle', transportOrder.goods[i].vehicle);
+      validatedObject.goods[i]                = BuilderUtils.createConcept(factory, namespace, 'Good', transportOrder.goods[i]);
+      validatedObject.goods[i].pickupWindow   = BuilderUtils.createConcept(factory, namespace, 'DateWindow', transportOrder.goods[i].pickupWindow);
+      validatedObject.goods[i].deliveryWindow = BuilderUtils.createConcept(factory, namespace, 'DateWindow', transportOrder.goods[i].deliveryWindow);
+      validatedObject.goods[i].vehicle        = BuilderUtils.createResource(factory, namespace, 'Vehicle', transportOrder.goods[i].vehicle);
+
+      for (let vehicleEcmrIndex = 0; vehicleEcmrIndex < transportOrder.goods[i].vehicle.ecmrs.length; vehicleEcmrIndex++) {
+        validatedObject.goods[i].vehicle.ecmrs[vehicleEcmrIndex] = BuilderUtils.createRelationship(factory, namespace, 'ECMR', transportOrder.goods[i].vehicle.ecmrs[vehicleEcmrIndex]);
+      }
     }
+
     return <TransportOrder> validatedObject;
   }
 
