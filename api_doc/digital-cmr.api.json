@@ -2052,7 +2052,7 @@
         }
       }
     },
-    "Vehicle":          {
+    "Vehicle":    {
       "type":       "object",
       "properties": {
         "vin":                 {
@@ -2092,7 +2092,7 @@
         }
       }
     },
-    "ECMR_STATUS":      {
+    "EcmrStatus": {
       "type": "string",
       "enum": [
         "CREATED",
@@ -2102,7 +2102,7 @@
         "CONFIRMED_DELIVERED"
       ]
     },
-    "ECMR":             {
+    "ECMR":       {
       "type":        "object",
       "description": "description",
       "properties":  {
@@ -2111,7 +2111,7 @@
           "required": true
         },
         "status":                   {
-          "$ref":     "#/definitions/ECMR_STATUS",
+          "$ref":     "#/definitions/EcmrStatus",
           "required": true
         },
         "creation":                 {

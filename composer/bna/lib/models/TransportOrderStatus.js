@@ -16,5 +16,5 @@ var TransportOrderStatus = {
   Open: 'OPEN',
   InProgress: 'IN_PROGRESS',
   Completed: 'COMPLETED',
-  Cancelled: 'CANCELLED'
+  Canceled: 'CANCELED'
 };
