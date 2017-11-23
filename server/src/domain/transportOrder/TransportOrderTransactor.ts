@@ -11,14 +11,7 @@ export class TransportOrderTransactor implements TransactionCreator {
       transaction.transportOrder = await TransportOrderBuilder.buildTransportOrder(factory, namespace, data);
     } else if (transactionName === Transaction.CreateTransportOrders) {
       transaction.transportOrders = await TransportOrderBuilder.buildTransportOrders(factory, namespace, data);
-    } else if (transactionName === Transaction.UpdateTransportOrder) {
-      transaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', data[0].orderID);
-      transaction.ecmrs          = [];
-
-      for (let ecmr of data) {
-        transaction.ecmrs.push(factory.newRelationship(namespace, 'ECMR', ecmr));
-      }
-    } else if (transactionName === Transaction.UpdateTransportOrderStatusToCompleted) {
+    } else if (transactionName === Transaction.UpdateTransportOrderStatusToCanceled) {
       transaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', data.orderID);
     }
 

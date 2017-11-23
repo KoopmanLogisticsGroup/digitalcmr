@@ -52,10 +52,10 @@ export class TransportOrderController {
     return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateTransportOrder, transportOrder, new TransportOrderTransactor());
   }
 
-  @Put('/')
-  public async update(@Body() transportOrder: any, @Req() request: any): Promise<any> {
+  @Put('/cancelTransportOrder')
+  public async update(@Body() transportOrder: TransportOrder, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateTransportOrder, transportOrder, new TransportOrderTransactor());
+    return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateTransportOrderStatusToCanceled, transportOrder, new TransportOrderTransactor());
   }
 }

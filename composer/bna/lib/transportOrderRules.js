@@ -108,3 +108,29 @@ function updateTransportOrderStatusToCompleted(tx) {
       throw error;
     });
 }
+
+/**
+ * UpdateTransportOrderStatusToCanceled transaction processor function.
+ * @param {org.digitalcmr.UpdateTransportOrderStatusToCanceled} tx  - UpdateTransportOrderStatusToCanceled transaction
+ * @return {Promise} Asset registry Promise
+ * @transaction
+ */
+function updateTransportOrderStatusToCanceled(tx) {
+  console.log('Invoking function: updateTransportOrderStatusToCanceled');
+
+  // Get the asset registry for the asset.
+  // Updates the status of a TransportOrder when an ECMR is created
+  tx.transportOrder.status = TransportOrderStatus.Canceled;
+
+  return getAssetRegistry('org.digitalcmr.TransportOrder')
+    .then(function (assetRegistry) {
+      return assetRegistry.update(tx.transportOrder)
+        .catch(function (error) {
+          console.log('[updateTransportOrderStatusToCanceled] An error occurred while updating the registry asset: ' + error);
+          throw error;
+        });
+    }).catch(function (error) {
+      console.log('[updateTransportOrderStatusToCanceled] An error occurred while retrieving the asset registry: ' + error);
+      throw error;
+    });
+}
