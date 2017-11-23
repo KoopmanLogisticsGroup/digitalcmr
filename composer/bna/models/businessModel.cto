@@ -232,7 +232,7 @@ transaction UpdateECMR {
   o ECMR ecmr
 }
 
-transaction UpdateTransportOrderStatusToCancelled {
+transaction UpdateTransportOrderStatusToCanceled {
   --> TransportOrder transportOrder
 }
 

@@ -85,7 +85,7 @@ function updateTransportOrderStatusToCanceled(tx) {
           throw error;
         });
     }).catch(function (error) {
-      console.log('[updateTransportOrderStatusToCanceled] An error occurred while updating the TransportOrder asset: ' + error);
+      console.log('[updateTransportOrderStatusToCanceled] An error occurred while retrieving the asset registry: ' + error);
       throw error;
     });
 }
