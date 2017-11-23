@@ -11,6 +11,8 @@ export class TransportOrderTransactor implements TransactionCreator {
       transaction.transportOrder = await TransportOrderBuilder.buildTransportOrder(factory, namespace, data);
     } else if (transactionName === Transaction.CreateTransportOrders) {
       transaction.transportOrders = await TransportOrderBuilder.buildTransportOrders(factory, namespace, data);
+    } else if (transactionName === Transaction.UpdateTransportOrderStatusToCanceled) {
+      transaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', data.orderID);
     }
 
     return transaction;

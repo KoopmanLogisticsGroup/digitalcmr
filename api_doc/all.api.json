@@ -2026,7 +2026,7 @@
         }
       }
     },
-    "Creation":         {
+    "Creation":   {
       "type":       "object",
       "properties": {
         "address": {
@@ -2039,7 +2039,7 @@
         }
       }
     },
-    "Remark":           {
+    "Remark":     {
       "type":       "object",
       "properties": {
         "comments":  {
@@ -2052,7 +2052,7 @@
         }
       }
     },
-    "Vehicle":          {
+    "Vehicle":    {
       "type":       "object",
       "properties": {
         "vin":                 {
@@ -2092,7 +2092,7 @@
         }
       }
     },
-    "EcmrStatus":       {
+    "EcmrStatus": {
       "type": "string",
       "enum": [
         "CREATED",
@@ -2102,7 +2102,7 @@
         "CONFIRMED_DELIVERED"
       ]
     },
-    "ECMR":             {
+    "ECMR":       {
       "type":        "object",
       "description": "description",
       "properties":  {
@@ -2111,7 +2111,7 @@
           "required": true
         },
         "status":                   {
-          "$ref":     "##/definitions/EcmrStatus",
+          "$ref":     "#/definitions/EcmrStatus",
           "required": true
         },
         "creation":                 {

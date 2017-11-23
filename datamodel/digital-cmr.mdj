@@ -16587,7 +16587,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "+cancelledBy: UserBlockchain",
+											"text": "+canceledBy: UserBlockchain",
 											"horizontalAlignment": 0,
 											"verticalAlignment": 5,
 											"wordWrap": false
@@ -26733,7 +26733,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFfWRgi3ef1OF8="
 							},
-							"name": "cancelledBy",
+							"name": "canceledBy",
 							"visibility": "public",
 							"isStatic": false,
 							"isLeaf": false,
