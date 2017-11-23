@@ -40,7 +40,7 @@ export class EcmrTransactor implements TransactionCreator {
     }
   }
 
-  // TODO improve functionw
+  // TODO improve function
   public async getEcmrsByPlateNumber(transactionHandler: TransactionHandler, identity: Identity, connectionProfile: string, plateNumber: string): Promise<any> {
     // get vehicle by vin
     const vehicle     = await transactionHandler.executeQuery(identity, connectionProfile, QueryReturnType.Single, 'getVehicleByPlateNumber', {plateNumber: plateNumber});

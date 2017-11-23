@@ -310,12 +310,14 @@ describe('A Carrier member can', () => {
     server
       .get('/api/v1/ECMR/status/CREATED')
       .set('x-access-token', token)
-      .end((err: Error) => {
+      .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
 
           return done(err);
         }
+        res.body.length.should.be.greaterThan(0, 'No CREATED ECMRs were found.');
+        should.exist(res.body.find(ecmr => ecmr.status === 'CREATED'));
         done(err);
       });
   });

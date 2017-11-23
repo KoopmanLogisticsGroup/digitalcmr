@@ -243,6 +243,7 @@ describe('A Recipient Admin can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         done(err);
