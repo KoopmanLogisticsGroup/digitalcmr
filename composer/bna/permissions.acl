@@ -253,24 +253,6 @@ rule CarrierMemberCanSubmitUpdateECMRForDelivery {
     action: ALLOW
 }
 
-rule CarrierMemberCanSubmitUpdateTransportOrderForInProgress {
-    description: "Allow CarrierMember to submit an UpdateTransportOrderStatusToCompleted transaction for his organization only if the current TransportOrder status is IN_PROGRESS"
-    participant(p): "org.digitalcmr.CarrierMember"
-    operation: UPDATE
-    resource(r): "org.digitalcmr.TransportOrder"
-    condition: (r.carrier.getIdentifier() == p.org.getIdentifier() && r.status == "IN_PROGRESS")
-    action: ALLOW
-}
-
-rule CarrierMemberCanReadTransportOrder {
-    description: "Allow CarrierMember to READ a Transport Order"
-    participant(p): "org.digitalcmr.CarrierMember"
-    operation: READ
-    resource(r): "org.digitalcmr.TransportOrder"
-    condition: (r.carrier.getIdentifier() == p.org.getIdentifier())
-    action: ALLOW
-}
-
 /**
  * Recipient permission list
  */
