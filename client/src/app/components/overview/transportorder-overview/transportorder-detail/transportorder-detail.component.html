@@ -1,9 +1,9 @@
 <div class="ui container top_margin_content">
-  <div *ngIf="getUserRole() === User.LegalOwnerAdmin && transportOrder?.status !== 'CANCELLED'; else cancelled"
+  <div *ngIf="getUserRole() === User.LegalOwnerAdmin && transportOrder?.status !== 'CANCELED'; else canceled"
        class="ui primary basic button right floated" (click)="openModal(transportOrder)">Cancel
   </div>
-  <ng-template #cancelled>
-    <div class="ui disabled button red right floated">CANCELLED</div>
+  <ng-template #canceled>
+    <div class="ui disabled button red right floated">CANCELED</div>
   </ng-template>
   <div class="row">
     <img class="back_button"/>

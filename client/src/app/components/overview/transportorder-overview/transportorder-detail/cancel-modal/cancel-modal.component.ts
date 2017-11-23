@@ -1,10 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {EcmrService} from '../../../services/ecmr.service';
-import {AuthenticationService} from '../../../services/authentication.service';
-import {Ecmr} from '../../../interfaces/ecmr.interface';
+import {EcmrService} from '../../../../../services/ecmr.service';
+import {AuthenticationService} from '../../../../../services/authentication.service';
+import {Ecmr} from '../../../../../interfaces/ecmr.interface';
 import * as GeoLib from 'geolib';
-import {TransportOrder} from '../../../interfaces/transportOrder.interface';
-import {TransportOrderService} from '../../../services/transportorder.service';
+import {TransportOrder} from '../../../../../interfaces/transportOrder.interface';
+import {TransportOrderService} from '../../../../../services/transportorder.service';
 
 @Component({
   selector:    'app-cancel-modal',
@@ -34,7 +34,7 @@ export class CancelModalComponent implements OnInit {
 
   public onSubmit(): void {
     $('#submitButton').addClass('basic loading');
-    this.transportOrder.status = 'CANCELLED';
+    this.transportOrder.status = 'CANCELED';
     this.transportOrderService.cancelTransportOrder(this.transportOrder).subscribe(result => {
       $('#cancel_modal.ui.modal').modal('hide');
       $('#cancel_modal.ui.modal').modal('hide');
