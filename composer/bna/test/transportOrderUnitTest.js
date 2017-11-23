@@ -126,12 +126,6 @@ describe('As admin of the network, ', () => {
 
   function buildTransportOrder(transportOrderID) {
     let transportOrder = factory.newResource(namespace, 'TransportOrder', transportOrderID);
-    transportOrder.loading = factory.newConcept(namespace, 'Loading');
-    transportOrder.loading.address = buildAddress();
-    transportOrder.loading.actualDate = 0;
-    transportOrder.delivery = factory.newConcept(namespace, 'Delivery');
-    transportOrder.delivery.address = buildAddress();
-    transportOrder.delivery.actualDate = 0;
     transportOrder.owner = factory.newRelationship(namespace, 'LegalOwnerOrg', 'lapo@leaseplan.org');
     transportOrder.source = factory.newRelationship(namespace, 'CompoundOrg', 'amsterdamcompound');
     transportOrder.carrier = factory.newRelationship(namespace, 'CarrierOrg', 'koopman');
@@ -145,6 +139,10 @@ describe('As admin of the network, ', () => {
     transportOrder.goods[0].pickupWindow.endDate = 0;
     transportOrder.goods[0].deliveryWindow.startDate = 0;
     transportOrder.goods[0].deliveryWindow.endDate = 0;
+    transportOrder.goods[0].loadingAddress = factory.newConcept(namespace, 'Address');
+    transportOrder.goods[0].deliveryAddress = factory.newConcept(namespace, 'Address');
+    transportOrder.goods[0].loadingAddress = buildAddress();
+    transportOrder.goods[0].deliveryAddress = buildAddress();
     transportOrder.issueDate = 0;
     transportOrder.ecmrs = [];
     transportOrder.status = 'OPEN';
@@ -233,8 +231,8 @@ describe('As admin of the network, ', () => {
         return assetRegistry.getAll();
       })
       .then((transportOrders) => {
-        transportOrders[0].$identifier.should.equal('transportOrder8');
-        transportOrders[1].$identifier.should.equal('transportOrder9');
+        transportOrders.find((transportOrder) => transportOrder.$identifier === 'transportOrder8');
+        transportOrders.find((transportOrder) => transportOrder.$identifier === 'transportOrder9');
       });
   });
 

@@ -23,7 +23,7 @@
         <td>{{good?.weight}} kg</td>
         <td>{{good?.vehicle?.odoMeterReading}}</td>
         <td class="loadingWindow">
-          <span>{{transportOrder?.loading?.address?.city}}</span>
+          <span>{{good?.loadingAddress?.city}}</span>
           <span> {{good?.pickupWindow.startDate | date: "dd-MM-yyyy HH:mm"}}</span>
           <span> {{good?.pickupWindow.endDate | date: "dd-MM-yyyy HH:mm"}}</span>
           <div *ngFor="let ecmr of ecmrs">
@@ -35,7 +35,7 @@
           </div>
         </td>
         <td class="loadingWindow">
-          <span>{{transportOrder?.loading?.address?.city}}</span>
+          <span>{{good?.loadingAddress?.city}}</span>
           <span> {{good?.deliveryWindow.startDate | date: "dd-MM-yyyy HH:mm"}}</span>
           <span> {{good?.deliveryWindow.endDate | date: "dd-MM-yyyy HH:mm"}}</span>
           <div *ngFor="let ecmr of ecmrs">

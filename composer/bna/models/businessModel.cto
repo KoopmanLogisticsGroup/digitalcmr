@@ -10,8 +10,6 @@ namespace org.digitalcmr
 
 asset TransportOrder identified by orderID {
   o String orderID
-  o Loading loading
-  o Delivery delivery
   --> LegalOwnerOrg owner
   --> CompoundOrg source
   --> CarrierOrg carrier
@@ -167,6 +165,8 @@ concept Good {
   o Remark carrierDeliveryRemark optional
   o String description optional
   o Double weight optional
+  o Address loadingAddress
+  o Address deliveryAddress
   o DateWindow pickupWindow
   o DateWindow deliveryWindow
   o Cancellation cancellation optional

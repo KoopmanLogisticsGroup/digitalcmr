@@ -5,7 +5,7 @@ import * as http from 'http';
 import {TransportOrder} from '../../src/interfaces/transportOrder.interface';
 import {Ecmr} from '../../src/interfaces/ecmr.interface';
 import {Address} from '../../src/interfaces/address.interface';
-import {PickupWindow} from '../../src/interfaces/PickupWindow.interface';
+import {PickupWindow} from '../../src/interfaces/pickupWindow.interface';
 
 const server = supertest.agent('http://localhost:8080');
 const should = chai.should();
@@ -75,14 +75,6 @@ const buildECMR    = (ecmrID: string): Ecmr => {
 const buildTransportOrder = (): TransportOrder => {
   return <TransportOrder> {
     orderID:   String(new Date()),
-    loading:   {
-      actualDate: 1502834400000,
-      address:    buildAddress(),
-    },
-    delivery:  {
-      actualDate: 1502834400000,
-      address:    buildAddress(),
-    },
     carrier:   'koopman',
     source:    'amsterdamcompound',
     goods:     [],
@@ -211,12 +203,13 @@ describe('A legal owner admin can', () => {
       .get('/api/v1/ECMR/ecmrID/H1234567890')
       .set('x-access-token', token)
       .expect(200)
-      .end((err: Error) => {
+      .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
 
           return done(err);
         }
+        res.body.length.should.equal(0);
         done(err);
       });
   });

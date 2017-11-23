@@ -5,7 +5,7 @@ import * as http from 'http';
 import {Ecmr} from '../../src/interfaces/ecmr.interface';
 import {TransportOrder} from '../../src/interfaces/transportOrder.interface';
 import {Address} from '../../src/interfaces/address.interface';
-import {PickupWindow} from '../../src/interfaces/PickupWindow.interface';
+import {PickupWindow} from '../../src/interfaces/pickupWindow.interface';
 
 const server = supertest.agent('http://localhost:8080');
 const should = chai.should();
@@ -74,14 +74,6 @@ const buildECMR = (ecmrID: string): Ecmr => {
 const buildTransportOrder = (): TransportOrder => {
   return <TransportOrder> {
     orderID:   String(new Date()),
-    loading:   {
-      actualDate: 1502834400000,
-      address:    buildAddress(),
-    },
-    delivery:  {
-      actualDate: 1502834400000,
-      address:    buildAddress(),
-    },
     carrier:   'koopman',
     source:    'amsterdamcompound',
     goods:     [],
@@ -316,8 +308,7 @@ describe('A Carrier member can', () => {
 
           return done(err);
         }
-        res.body.length.should.be.greaterThan(0, 'No CREATED ECMRs were found.');
-        should.exist(res.body.find(ecmr => ecmr.status === 'CREATED'));
+        res.body.length.should.equal(0);
         done(err);
       });
   });
@@ -388,7 +379,7 @@ describe('A Carrier member can', () => {
       });
   });
 
-  it('can not create a transport order', (done) => {
+  it('not create a transport order', (done) => {
     const transportOrder = buildTransportOrder();
     server
       .post('/api/v1/transportOrder')

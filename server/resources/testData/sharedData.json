@@ -469,8 +469,30 @@
       ],
       "goods":                  [
         {
-          "$class":         "org.digitalcmr.Good",
-          "vehicle":        {
+          "$class":          "org.digitalcmr.Good",
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "2131231414CN",
             "manufacturer":    "BMW",
@@ -480,14 +502,14 @@
             "odoMeterReading": 0,
             "plateNumber":     "O291RX"
           },
-          "description":    "vehicle",
-          "weight":         1900,
-          "pickupWindow":   {
+          "description":     "vehicle",
+          "weight":          1900,
+          "pickupWindow":    {
             "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           },
-          "deliveryWindow": {
+          "deliveryWindow":  {
             "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
@@ -567,8 +589,30 @@
       ],
       "goods":                  [
         {
-          "$class":         "org.digitalcmr.Good",
-          "vehicle":        {
+          "$class":          "org.digitalcmr.Good",
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "183726339N",
             "manufacturer":    "Audi",
@@ -578,22 +622,44 @@
             "odoMeterReading": 0,
             "plateNumber":     "AV198RX"
           },
-          "description":    "vehicle",
-          "weight":         1500,
-          "pickupWindow":   {
+          "description":     "vehicle",
+          "weight":          1500,
+          "pickupWindow":    {
             "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           },
-          "deliveryWindow": {
+          "deliveryWindow":  {
             "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           }
         },
         {
-          "$class":         "org.digitalcmr.Good",
-          "vehicle":        {
+          "$class":          "org.digitalcmr.Good",
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "736182CHD28172",
             "manufacturer":    "Mercedes",
@@ -603,14 +669,14 @@
             "odoMeterReading": 0,
             "plateNumber":     "I827YE"
           },
-          "description":    "vehicle",
-          "weight":         1800,
-          "pickupWindow":   {
+          "description":     "vehicle",
+          "weight":          1800,
+          "pickupWindow":    {
             "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           },
-          "deliveryWindow": {
+          "deliveryWindow":  {
             "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
@@ -622,16 +688,16 @@
       "payOnDelivery":          "string"
     },
     {
-      "$class":            "org.digitalcmr.ECMR",
-      "ecmrID":            "C1234567890",
-      "status":            "DELIVERED",
-      "agreementTerms":    "agreement terms here",
-      "agreementTermsSec": "agreement terms sec",
-      "legalOwnerRef":     "ASD213123S",
-      "carrierRef":        "H2238723VASD",
-      "recipientRef":      "SDADHGA21312312",
-      "orderID":           "12345567890",
-      "creation":          {
+      "$class":                   "org.digitalcmr.ECMR",
+      "ecmrID":                   "C1234567890",
+      "status":                   "DELIVERED",
+      "agreementTerms":           "agreement terms here",
+      "agreementTermsSec":        "agreement terms sec",
+      "legalOwnerRef":            "ASD213123S",
+      "carrierRef":               "H2238723VASD",
+      "recipientRef":             "SDADHGA21312312",
+      "orderID":                  "12345567890",
+      "creation":                 {
         "$class":  "org.digitalcmr.Creation",
         "address": {
           "$class":      "org.digitalcmr.Address",
@@ -690,8 +756,30 @@
       ],
       "goods":                    [
         {
-          "$class":         "org.digitalcmr.Good",
-          "vehicle":        {
+          "$class":          "org.digitalcmr.Good",
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "183726339N",
             "manufacturer":    "Audi",
@@ -701,14 +789,14 @@
             "odoMeterReading": 0,
             "plateNumber":     "AV198RX"
           },
-          "description":    "vehicle",
-          "weight":         1500,
-          "pickupWindow":   {
+          "description":     "vehicle",
+          "weight":          1500,
+          "pickupWindow":    {
             "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           },
-          "deliveryWindow": {
+          "deliveryWindow":  {
             "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
@@ -800,8 +888,30 @@
       ],
       "goods":                  [
         {
-          "$class":         "org.digitalcmr.Good",
-          "vehicle":        {
+          "$class":          "org.digitalcmr.Good",
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "183726339N",
             "manufacturer":    "Audi",
@@ -811,14 +921,14 @@
             "odoMeterReading": 0,
             "plateNumber":     "AV198RX"
           },
-          "description":    "vehicle",
-          "weight":         1500,
-          "pickupWindow":   {
+          "description":     "vehicle",
+          "weight":          1500,
+          "pickupWindow":    {
             "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           },
-          "deliveryWindow": {
+          "deliveryWindow":  {
             "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
@@ -902,8 +1012,30 @@
       ],
       "goods":                   [
         {
-          "$class":         "org.digitalcmr.Good",
-          "vehicle":        {
+          "$class":          "org.digitalcmr.Good",
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "183726339N",
             "manufacturer":    "Audi",
@@ -913,22 +1045,44 @@
             "odoMeterReading": 0,
             "plateNumber":     "AV198RX"
           },
-          "description":    "vehicle",
-          "weight":         1500,
-          "pickupWindow":   {
+          "description":     "vehicle",
+          "weight":          1500,
+          "pickupWindow":    {
             "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           },
-          "deliveryWindow": {
+          "deliveryWindow":  {
             "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           }
         },
         {
-          "$class":         "org.digitalcmr.Good",
-          "vehicle":        {
+          "$class":          "org.digitalcmr.Good",
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "37316231GA",
             "manufacturer":    "Mercedes",
@@ -938,14 +1092,14 @@
             "odoMeterReading": 0,
             "plateNumber":     "M238KA"
           },
-          "description":    "vehicle",
-          "weight":         1500,
-          "pickupWindow":   {
+          "description":     "vehicle",
+          "weight":          1500,
+          "pickupWindow":    {
             "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           },
-          "deliveryWindow": {
+          "deliveryWindow":  {
             "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
@@ -1033,8 +1187,30 @@
       ],
       "goods":                    [
         {
-          "$class":         "org.digitalcmr.Good",
-          "vehicle":        {
+          "$class":          "org.digitalcmr.Good",
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "183726339N",
             "manufacturer":    "Audi",
@@ -1044,22 +1220,44 @@
             "odoMeterReading": 0,
             "plateNumber":     "AV198RX"
           },
-          "description":    "vehicle",
-          "weight":         1500,
-          "pickupWindow":   {
+          "description":     "vehicle",
+          "weight":          1500,
+          "pickupWindow":    {
             "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           },
-          "deliveryWindow": {
+          "deliveryWindow":  {
             "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           }
         },
         {
-          "$class":         "org.digitalcmr.Good",
-          "vehicle":        {
+          "$class":          "org.digitalcmr.Good",
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "DS8281321",
             "manufacturer":    "Mercedes",
@@ -1069,22 +1267,44 @@
             "odoMeterReading": 0,
             "plateNumber":     "M238KA"
           },
-          "description":    "vehicle",
-          "weight":         1500,
-          "pickupWindow":   {
+          "description":     "vehicle",
+          "weight":          1500,
+          "pickupWindow":    {
             "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           },
-          "deliveryWindow": {
+          "deliveryWindow":  {
             "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           }
         },
         {
-          "$class":         "org.digitalcmr.Good",
-          "vehicle":        {
+          "$class":          "org.digitalcmr.Good",
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "183726339N",
             "manufacturer":    "Audi",
@@ -1094,22 +1314,44 @@
             "odoMeterReading": 0,
             "plateNumber":     "AV198RX"
           },
-          "description":    "vehicle",
-          "weight":         1500,
-          "pickupWindow":   {
+          "description":     "vehicle",
+          "weight":          1500,
+          "pickupWindow":    {
             "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           },
-          "deliveryWindow": {
+          "deliveryWindow":  {
             "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           }
         },
         {
-          "$class":         "org.digitalcmr.Good",
-          "vehicle":        {
+          "$class":          "org.digitalcmr.Good",
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "8762178623GA",
             "manufacturer":    "Mercedes",
@@ -1119,14 +1361,14 @@
             "odoMeterReading": 0,
             "plateNumber":     "M238KA"
           },
-          "description":    "vehicle",
-          "weight":         1500,
-          "pickupWindow":   {
+          "description":     "vehicle",
+          "weight":          1500,
+          "pickupWindow":    {
             "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           },
-          "deliveryWindow": {
+          "deliveryWindow":  {
             "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
@@ -1218,8 +1460,30 @@
       ],
       "goods":                   [
         {
-          "$class":         "org.digitalcmr.Good",
-          "vehicle":        {
+          "$class":          "org.digitalcmr.Good",
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "183726339N",
             "manufacturer":    "Audi",
@@ -1229,22 +1493,44 @@
             "odoMeterReading": 0,
             "plateNumber":     "AV198RX"
           },
-          "description":    "vehicle",
-          "weight":         1500,
-          "pickupWindow":   {
+          "description":     "vehicle",
+          "weight":          1500,
+          "pickupWindow":    {
             "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           },
-          "deliveryWindow": {
+          "deliveryWindow":  {
             "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           }
         },
         {
-          "$class":         "org.digitalcmr.Good",
-          "vehicle":        {
+          "$class":          "org.digitalcmr.Good",
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "736182CHD28172",
             "manufacturer":    "Mercedes",
@@ -1254,14 +1540,14 @@
             "odoMeterReading": 0,
             "plateNumber":     "I827YE"
           },
-          "description":    "vehicle",
-          "weight":         1800,
-          "pickupWindow":   {
+          "description":     "vehicle",
+          "weight":          1800,
+          "pickupWindow":    {
             "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           },
-          "deliveryWindow": {
+          "deliveryWindow":  {
             "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
@@ -1349,8 +1635,30 @@
       ],
       "goods":                  [
         {
-          "$class":         "org.digitalcmr.Good",
-          "vehicle":        {
+          "$class":          "org.digitalcmr.Good",
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "2131231414CN",
             "manufacturer":    "BMW",
@@ -1360,14 +1668,14 @@
             "odoMeterReading": 0,
             "plateNumber":     "O291RX"
           },
-          "description":    "vehicle",
-          "weight":         1900,
-          "pickupWindow":   {
+          "description":     "vehicle",
+          "weight":          1900,
+          "pickupWindow":    {
             "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           },
-          "deliveryWindow": {
+          "deliveryWindow":  {
             "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
@@ -1447,8 +1755,30 @@
       ],
       "goods":                    [
         {
-          "$class":         "org.digitalcmr.Good",
-          "vehicle":        {
+          "$class":          "org.digitalcmr.Good",
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "183726339N",
             "manufacturer":    "Audi",
@@ -1458,22 +1788,44 @@
             "odoMeterReading": 0,
             "plateNumber":     "AV198RX"
           },
-          "description":    "vehicle",
-          "weight":         1500,
-          "pickupWindow":   {
+          "description":     "vehicle",
+          "weight":          1500,
+          "pickupWindow":    {
             "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           },
-          "deliveryWindow": {
+          "deliveryWindow":  {
             "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           }
         },
         {
-          "$class":         "org.digitalcmr.Good",
-          "vehicle":        {
+          "$class":          "org.digitalcmr.Good",
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "DS8281321",
             "manufacturer":    "Mercedes",
@@ -1483,22 +1835,44 @@
             "odoMeterReading": 0,
             "plateNumber":     "M238KA"
           },
-          "description":    "vehicle",
-          "weight":         1500,
-          "pickupWindow":   {
+          "description":     "vehicle",
+          "weight":          1500,
+          "pickupWindow":    {
             "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           },
-          "deliveryWindow": {
+          "deliveryWindow":  {
             "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           }
         },
         {
-          "$class":         "org.digitalcmr.Good",
-          "vehicle":        {
+          "$class":          "org.digitalcmr.Good",
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "183726339N",
             "manufacturer":    "Audi",
@@ -1508,22 +1882,44 @@
             "odoMeterReading": 0,
             "plateNumber":     "AV198RX"
           },
-          "description":    "vehicle",
-          "weight":         1500,
-          "pickupWindow":   {
+          "description":     "vehicle",
+          "weight":          1500,
+          "pickupWindow":    {
             "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           },
-          "deliveryWindow": {
+          "deliveryWindow":  {
             "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           }
         },
         {
-          "$class":         "org.digitalcmr.Good",
-          "vehicle":        {
+          "$class":          "org.digitalcmr.Good",
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "8762178623GA",
             "manufacturer":    "Mercedes",
@@ -1533,14 +1929,14 @@
             "odoMeterReading": 0,
             "plateNumber":     "M238KA"
           },
-          "description":    "vehicle",
-          "weight":         1500,
-          "pickupWindow":   {
+          "description":     "vehicle",
+          "weight":          1500,
+          "pickupWindow":    {
             "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           },
-          "deliveryWindow": {
+          "deliveryWindow":  {
             "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
@@ -1572,44 +1968,35 @@
     {
       "$class":    "org.digitalcmr.TransportOrder",
       "orderID":   "12345567890",
-      "loading":   {
-        "actualDate":   1502834400000,
-        "expectedDate": 1502835400000,
-        "address":      {
-          "$class":      "org.digitalcmr.Address",
-          "name":        "loading address",
-          "street":      "een straat",
-          "houseNumber": "41",
-          "city":        "Groningen",
-          "zipCode":     "7811 HC",
-          "country":     "netherlands",
-          "longitude":   124,
-          "latitude":    123
-        }
-      },
-      "delivery":  {
-        "$class":       "org.digitalcmr.Delivery",
-        "actualDate":   1502834400000,
-        "expectedDate": 1502835400000,
-        "address":      {
-          "$class":      "org.digitalcmr.Address",
-          "name":        "delivery adress",
-          "street":      "een straat",
-          "houseNumber": "41",
-          "city":        "Groningen",
-          "zipCode":     "7811 HC",
-          "country":     "netherlands",
-          "longitude":   124,
-          "latitude":    123
-        }
-      },
       "owner":     "leaseplan",
       "source":    "amsterdamcompound",
       "carrier":   "koopman",
       "goods":     [
         {
-          "$class":         "org.digitalcmr.Good",
-          "vehicle":        {
+          "$class":          "org.digitalcmr.Good",
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "183726339N",
             "manufacturer":    "Audi",
@@ -1621,22 +2008,22 @@
             "odoMeterReading": 0,
             "plateNumber":     "AV198RX"
           },
-          "description":    "vehicle",
-          "weight":         1500,
-          "pickupWindow":   {
+          "description":     "vehicle",
+          "weight":          1500,
+          "pickupWindow":    {
             "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           },
-          "deliveryWindow": {
+          "deliveryWindow":  {
             "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           }
         },
         {
-          "$class":         "org.digitalcmr.Good",
-          "vehicle":        {
+          "$class":          "org.digitalcmr.Good",
+          "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "736182CHD28172",
             "manufacturer":    "Mercedes",
@@ -1648,17 +2035,39 @@
             "odoMeterReading": 0,
             "plateNumber":     "I827YE"
           },
-          "description":    "vehicle",
-          "weight":         1800,
-          "pickupWindow":   {
+          "description":     "vehicle",
+          "weight":          1800,
+          "pickupWindow":    {
             "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
           },
-          "deliveryWindow": {
+          "deliveryWindow":  {
             "$class":    "org.digitalcmr.DateWindow",
             "startDate": 1502834400000,
             "endDate":   1502834400000
+          },
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
           }
         }
       ],

@@ -85,9 +85,11 @@ export class EcmrBuilder {
     }
 
     for (let i = 0; i < ecmr.goods.length; i++) {
-      validatedObject.goods[i]                = BuilderUtils.createConcept(factory, namespace, 'Good', ecmr.goods[i]);
-      validatedObject.goods[i].pickupWindow   = BuilderUtils.createConcept(factory, namespace, 'DateWindow', ecmr.goods[i].pickupWindow);
-      validatedObject.goods[i].deliveryWindow = BuilderUtils.createConcept(factory, namespace, 'DateWindow', ecmr.goods[i].deliveryWindow);
+      validatedObject.goods[i]                 = BuilderUtils.createConcept(factory, namespace, 'Good', ecmr.goods[i]);
+      validatedObject.goods[i].pickupWindow    = BuilderUtils.createConcept(factory, namespace, 'DateWindow', ecmr.goods[i].pickupWindow);
+      validatedObject.goods[i].deliveryWindow  = BuilderUtils.createConcept(factory, namespace, 'DateWindow', ecmr.goods[i].deliveryWindow);
+      validatedObject.goods[i].loadingAddress  = BuilderUtils.createConcept(factory, namespace, 'Address', ecmr.goods[i].loadingAddress);
+      validatedObject.goods[i].deliveryAddress = BuilderUtils.createConcept(factory, namespace, 'Address', ecmr.goods[i].deliveryAddress);
       if (ecmr.goods[i].compoundRemark) {
         validatedObject.goods[i].compoundRemark           = BuilderUtils.createConcept(factory, namespace, 'Remark', ecmr.goods[i].compoundRemark);
         validatedObject.goods[i].compoundRemark.comments  = ecmr.goods[i].compoundRemark.comments;

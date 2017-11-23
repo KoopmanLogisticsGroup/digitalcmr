@@ -5,7 +5,7 @@ import * as http from 'http';
 import {TransportOrder} from '../../src/interfaces/transportOrder.interface';
 import {Ecmr} from '../../src/interfaces/ecmr.interface';
 import {Address} from '../../src/interfaces/address.interface';
-import {PickupWindow} from '../../src/interfaces/PickupWindow.interface';
+import {PickupWindow} from '../../src/interfaces/pickupWindow.interface';
 
 const server = supertest.agent('http://localhost:8080');
 const should = chai.should();
@@ -187,12 +187,13 @@ describe('A Compound Admin can', () => {
       .get('/api/v1/ECMR/ecmrID/H1234567890')
       .set('x-access-token', token)
       .expect(200)
-      .end((err: Error) => {
+      .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
 
           return done(err);
         }
+        res.body.length.should.equal(0);
         done(err);
       });
   });
@@ -221,7 +222,7 @@ describe('A Compound Admin can', () => {
       certificate: 'willem@amsterdamcompound.org',
       timestamp:   0
     };
-    console.log(updateEcmr);
+
     server
       .put('/api/v1/ECMR')
       .set('x-access-token', token)
