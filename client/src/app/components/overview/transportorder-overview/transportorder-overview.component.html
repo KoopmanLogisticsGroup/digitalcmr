@@ -7,6 +7,8 @@
        [ngClass]="{'active' : currentView === viewStatus.InProgress ? true : false}">IN PROGRESS</a>
     <a class="item" data-tab="third" (click)="setTransportOrderView(viewStatus.Completed)"
        [ngClass]="{'active' : currentView === viewStatus.Completed ? true : false}">COMPLETED</a>
+    <a class="item" data-tab="third" (click)="setTransportOrderView(viewStatus.Cancelled)"
+       [ngClass]="{'active' : currentView === viewStatus.Cancelled ? true : false}">CANCELLED</a>
   </div>
   <div class="ui active tab grid" data-tab="first">
     <div class="row">
