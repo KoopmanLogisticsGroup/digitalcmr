@@ -1,7 +1,7 @@
 import 'mocha';
 import 'reflect-metadata';
 import * as chai from 'chai';
-import {LoggerFactory} from '../src/utils/logger/LoggerFactory';
+import {LoggerFactory} from '../../src/utils/logger/LoggerFactory';
 
 chai.should();
 
