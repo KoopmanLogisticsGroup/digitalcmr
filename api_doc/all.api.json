@@ -2000,7 +2000,7 @@
         }
       }
     },
-    "Delivery":         {
+    "Delivery":   {
       "type":       "object",
       "properties": {
         "address": {
@@ -2013,7 +2013,7 @@
         }
       }
     },
-    "Loading":          {
+    "Loading":    {
       "type":       "object",
       "properties": {
         "address": {
