@@ -28,12 +28,7 @@ export class TransportorderDetailComponent implements OnInit {
         this.transportOrder = transportOrder;
         this.ecmrService.getEcmrsByTransportOrderID(this.orderID)
           .subscribe((ecmrs: Ecmr[]) => {
-            if (ecmrs instanceof Array) {
-              this.ecmrs = ecmrs;
-            } else {
-              this.ecmrs = [];
-              this.ecmrs.push(ecmrs);
-            }
+            this.ecmrs = ecmrs;
           });
       });
   }
