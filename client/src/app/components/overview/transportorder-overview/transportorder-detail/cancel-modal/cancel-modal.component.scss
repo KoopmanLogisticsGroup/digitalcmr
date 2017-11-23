@@ -1,0 +1,28 @@
+.ui {
+  &.modal {
+    position: relative;
+    margin:   auto;
+    width:    35%;
+    height:   35%;
+    left:     0;
+    right:    0;
+    top:      50%;
+    bottom:   0;
+    .header {
+      border-bottom: none;
+    }
+    .button_position {
+      color:       white;
+      font-weight: normal;
+      margin-top:  20%;
+      margin-left: 40%;
+    }
+  }
+  .field {
+    margin-top: 5%;
+    resize:     none;
+  }
+  span {
+    display: block;
+  }
+}

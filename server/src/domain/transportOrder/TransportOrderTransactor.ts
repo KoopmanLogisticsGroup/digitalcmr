@@ -19,6 +19,8 @@ export class TransportOrderTransactor implements TransactionCreator {
       transaction.dateWindow.startDate = data.dateWindow[0];
       transaction.dateWindow.endDate   = data.dateWindow[1];
       transaction.vin                  = data.vin;
+    } else if (transactionName === Transaction.UpdateTransportOrderStatusToCanceled) {
+      transaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', data.orderID);
     }
 
     return transaction;

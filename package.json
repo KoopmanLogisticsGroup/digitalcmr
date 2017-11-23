@@ -1,6 +1,6 @@
 {
   "name":            "digital-cmr",
-  "version":         "1.2.0",
+  "version":         "1.2.2",
   "description":     "Logistic supply chain on blockchain",
   "main":            "docker-compose.yml",
   "scripts":         {
@@ -8,10 +8,9 @@
     "start":           "docker-compose up --force-recreate",
     "test-server":     "cd server && npm test",
     "test-composer":   "cd composer/bna && npm test",
-    "test":            "npm run test-server && npm run test-composer",
-    "lint":            "(cd client && ng lint) && (cd server && npm run lint) && (cd composer/bna && npm run lint)",
-    "validate-commit": "branch=$(git rev-parse --abbrev-ref HEAD); if [ $branch == 'master' ]; then echo \"You can't commit directly to master branch\"; exit 1; fi && npm run lint",
-    "generateSDK":     "docker run --rm -v $(pwd)/server/src:/local --net=host swaggerapi/swagger-codegen-cli generate -i http://localhost:3000/explorer/swagger.json -l typescript-node -o /local/sdk -DsupportsES6=true"
+    "test":            "npm run test-server & npm run test-composer",
+    "lint":            "(cd client && ng lint) & (cd server && npm run lint) & (cd composer/bna && npm run lint)",
+    "validate-commit": "branch=$(git rev-parse --abbrev-ref HEAD); if [ $branch == 'master' ]; then echo \"You can't commit directly to master branch\"; exit 1; fi & npm run lint & npm run test"
   },
   "repository":      {
     "type": "git",

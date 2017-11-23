@@ -29,4 +29,10 @@ export class TransportOrderService {
       .get(this.actionUrl, {headers: this.headers})
       .map(res => res.json())
   }
+
+  public cancelTransportOrder(transportOrder): Observable<any> {
+    return this._http
+      .put(this.actionUrl + 'cancelTransportOrder', transportOrder, {headers: this.headers})
+      .map(res => res.json())
+  }
 }

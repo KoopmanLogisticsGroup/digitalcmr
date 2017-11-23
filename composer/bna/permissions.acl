@@ -27,7 +27,7 @@ rule EveryBodyCanReadVehicles {
  */
 
 rule LegalOwnerAdminCanReadTransportOrder {
-    description: "Allow Legal Owner Admin to READ a TransportOrder"
+    description: "Allow LegalOwnerAdmin to READ a Transport Order"
     participant(p): "org.digitalcmr.LegalOwnerAdmin"
     operation: READ
     resource(r): "org.digitalcmr.TransportOrder"
@@ -86,11 +86,12 @@ rule LegalOwnerAdminCanSubmitTransactionUpdateTransportOrderDeliveryrWindow {
   resource(r): "org.digitalcmr.TransportOrder"
   transaction: "org.digitalcmr.UpdateTransportOrderDeliveryWindow"
   condition: (r.owner.getIdentifier() == p.org.getIdentifier() && r.status == "OPEN")
+  condition: (r.owner.getIdentifier() == p.org.getIdentifier())
   action: ALLOW
 }
 
 rule LegalOwnerAdminCanReadAndCreateECMR {
-    description: "Allow Legal Owner Admin to CREATE and READ an eCMR"
+    description: "Allow LegalOwnerAdmin to CREATE and READ an eCMR"
     participant(p): "org.digitalcmr.LegalOwnerAdmin"
     operation: READ, CREATE
     resource(r): "org.digitalcmr.ECMR"
@@ -99,7 +100,7 @@ rule LegalOwnerAdminCanReadAndCreateECMR {
 }
 
 rule LegalOwnerAdminCanCreateECMRCreateTransaction {
-    description: "Allow Legal Owner Admin to CREATE an eCMR create transaction"
+    description: "Allow LegalOwnerAdmin to CREATE an eCMR create transaction"
     participant: "org.digitalcmr.LegalOwnerAdmin"
     operation: CREATE
     resource: "org.digitalcmr.CreateECMR"
@@ -107,12 +108,30 @@ rule LegalOwnerAdminCanCreateECMRCreateTransaction {
 }
 
 rule LegalOwnerAdminCanSubmitCreateECMR {
-    description: "Allow Legal Owner Admin to Submit a CREATE eCMR transaction for his organization"
+    description: "Allow LegalOwnerAdmin to Submit a CREATE eCMR transaction for his organization"
     participant(p): "org.digitalcmr.LegalOwnerAdmin"
     operation: CREATE
     resource(r): "org.digitalcmr.ECMR"
     transaction: "org.digitalcmr.CreateECMR"
     condition: (r.owner.getIdentifier() == p.org.getIdentifier())
+    action: ALLOW
+}
+
+rule LegalOwnerAdminCanCreateUpdateTransportOrderStatusToCanceledTransaction {
+    description: "Allow the LegalOwnerAdmin to CREATE UpdateTransportOrderStatusToCanceled transaction"
+    participant: "org.digitalcmr.LegalOwnerAdmin"
+    operation: CREATE
+    resource: "org.digitalcmr.UpdateTransportOrderStatusToCanceled"
+    action: ALLOW
+}
+
+rule LegalOwnerAdminCanSubmitUpdateTransportOrderStatusToCanceled {
+    description: "Allow LegalOwnerAdmin to submit an UpdateTransportOrderStatusToCanceled transaction for his organization from OPEN status to CANCELED"
+    participant(p): "org.digitalcmr.LegalOwnerAdmin"
+    operation: UPDATE
+    resource(r): "org.digitalcmr.TransportOrder"
+    transaction(tx): "org.digitalcmr.UpdateTransportOrderStatusToCanceled"
+    condition: (r.owner.getIdentifier() == p.org.getIdentifier() && r.status == "OPEN")
     action: ALLOW
 }
 
@@ -130,7 +149,7 @@ rule CompoundAdminCanReadECMR {
 }
 
 rule CompoundAdminCanCreateECMRUpdateTransaction {
-    description: "Allow Legal Owner Admin to CREATE an eCMR update transaction"
+    description: "Allow LegalOwnerAdmin to CREATE an eCMR update transaction"
     participant: "org.digitalcmr.CompoundAdmin"
     operation: CREATE
     resource: "org.digitalcmr.UpdateECMR"

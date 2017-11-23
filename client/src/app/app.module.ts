@@ -30,6 +30,7 @@ import {
 } from './components/overview/transportorder-overview/transportorder-detail/transportorder-goods/transportorder-goods.component';
 import {EcmrOverviewComponent} from './components/overview/ecmr-overview/ecmr-overview.component';
 import {TransportorderOverviewComponent} from './components/overview/transportorder-overview/transportorder-overview.component';
+import {CancelModalComponent} from './components/overview/transportorder-overview/transportorder-detail/cancel-modal/cancel-modal.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import {TransportorderOverviewComponent} from './components/overview/transportor
     TransportorderDetailComponent,
     TransportorderGoodsComponent,
     EcmrOverviewComponent,
-    TransportorderOverviewComponent
+    TransportorderOverviewComponent,
+    CancelModalComponent
   ],
   imports:      [
     BrowserModule,

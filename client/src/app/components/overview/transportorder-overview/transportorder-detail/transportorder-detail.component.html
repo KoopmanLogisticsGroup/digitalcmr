@@ -1,4 +1,10 @@
 <div class="ui container top_margin_content">
+  <div *ngIf="getUserRole() === User.LegalOwnerAdmin && transportOrder?.status !== 'CANCELED'; else canceled"
+       class="ui primary basic button right floated" (click)="openModal(transportOrder)">Cancel
+  </div>
+  <ng-template #canceled>
+    <div class="ui disabled button red right floated">CANCELED</div>
+  </ng-template>
   <div class="row">
     <img class="back_button"/>
     <div routerLink="/overview" class="titles">BACK</div>
@@ -6,4 +12,5 @@
   <div class="fourteen wide column first_column"></div>
   <app-transportorder-goods [transportOrder]="transportOrder" [ecmrs]="ecmrs"></app-transportorder-goods>
   <div class="ten wide column"></div>
+  <app-cancel-modal></app-cancel-modal>
 </div>
