@@ -1,0 +1,13 @@
+<div id="modal-container" class="ui container">
+  <div id="cancel_modal" class="ui modal">
+    <i class="close icon" (click)="close()"></i>
+    <div class="header">CANCEL TRANSPORT ORDER</div>
+    <div class="content">
+      <p>You are about to cancel the Transport Order</p>
+      <div class="buttons ui button_position">
+        <button class="ui primary button" (click)="close()" type="submit">CANCEL</button>
+        <button id="submitButton" class="ui primary button" (click)="onSubmit()" type="submit">CONFIRM</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -49,7 +49,7 @@ asset ECMR identified by ecmrID {
   o Signature carrierLoadingSignature optional
   o Signature carrierDeliverySignature optional
   o Signature recipientSignature optional
-  o ECMR_STATUS status
+  o EcmrStatus status
   o String orderID
   o Cancellation cancellation optional
   --> CarrierMember transporter optional
@@ -154,7 +154,7 @@ concept Creation {
 }
 
 concept Cancellation {
-  --> Entity cancelledBy
+  --> Entity canceledBy
   o Integer date
   o String reason
 }
@@ -236,6 +236,10 @@ transaction UpdateECMR {
   o ECMR ecmr
 }
 
+transaction UpdateTransportOrderStatusToCanceled {
+  --> TransportOrder transportOrder
+}
+
 transaction UpdateRegistrationCountry {
   --> Vehicle vehicle
   o String registrationCountry
@@ -245,18 +249,18 @@ transaction UpdateRegistrationCountry {
  * Enums
  */
 
-enum ECMR_STATUS {
+enum EcmrStatus {
   o CREATED
   o LOADED
   o IN_TRANSIT
   o DELIVERED
   o CONFIRMED_DELIVERED
-  o CANCELLED
+  o CANCELED
 }
 
 enum OrderStatus {
   o OPEN
   o IN_PROGRESS
   o COMPLETED
-  o CANCELLED
+  o CANCELED
 }
