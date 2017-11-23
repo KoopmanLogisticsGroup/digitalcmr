@@ -177,14 +177,8 @@ describe('A Carrier admin can', () => {
 
           return done(err);
         }
-        if (res.body instanceof Array) {
-          res.body.length.should.be.greaterThan(0, 'No ECMRs were found for carrier org');
-          should.exist(res.body.find(ecmr => ecmr.carrier === 'resource:org.digitalcmr.CarrierOrg#koopman'));
-        } else if (res.body instanceof Object) {
-          res.body.carrier.should.equal('resource:org.digitalcmr.CarrierOrg#koopman');
-        } else {
-          res.body.should.equal(200);
-        }
+        res.body.length.should.be.greaterThan(0, 'No ECMRs were found for carrier org');
+        should.exist(res.body.find(ecmr => ecmr.carrier === 'resource:org.digitalcmr.CarrierOrg#koopman'));
         done(err);
       });
   });
@@ -266,14 +260,8 @@ describe('A Carrier admin can', () => {
 
           return done(err);
         }
-        if (res.body instanceof Array) {
-          res.body.length.should.be.greaterThan(0, 'No CREATED ECMRs were found.');
-          should.exist(res.body.find(ecmr => ecmr.status === 'CREATED'));
-        } else if (res.body instanceof Object) {
-          res.body.status.should.equal('CREATED');
-        } else {
-          res.body.should.equal(200);
-        }
+        res.body.length.should.be.greaterThan(0, 'No CREATED ECMRs were found.');
+        should.exist(res.body.find(ecmr => ecmr.status === 'CREATED'));
         done(err);
       });
   });
@@ -288,14 +276,8 @@ describe('A Carrier admin can', () => {
 
             return done(err);
           }
-          if (res.body instanceof Array) {
-            res.body.length.should.be.greaterThan(0, 'No LOADED ECMRs were found.');
-            should.exist(res.body.find(ecmr => ecmr.status === 'LOADED'));
-          } else if (res.body instanceof Object) {
-            res.body.status.should.equal('LOADED');
-          } else {
-            res.body.should.equal(200);
-          }
+        res.body.length.should.be.greaterThan(0, 'No LOADED ECMRs were found.');
+        should.exist(res.body.find(ecmr => ecmr.status === 'LOADED'));
         done(err);
         }
       );
@@ -311,14 +293,8 @@ describe('A Carrier admin can', () => {
 
             return done(err);
           }
-          if (res.body instanceof Array) {
-            res.body.length.should.be.greaterThan(0, 'No IN_TRANSIT ECMRs were found.');
-            should.exist(res.body.find(ecmr => ecmr.status === 'IN_TRANSIT'));
-          } else if (res.body instanceof Object) {
-            res.body.status.should.equal('IN_TRANSIT');
-          } else {
-            res.body.should.equal(200);
-          }
+        res.body.length.should.be.greaterThan(0, 'No IN_TRANSIT ECMRs were found.');
+        should.exist(res.body.find(ecmr => ecmr.status === 'IN_TRANSIT'));
         done(err);
         }
       );
@@ -334,15 +310,8 @@ describe('A Carrier admin can', () => {
 
           return done(err);
         }
-        if (res.body instanceof Array) {
-          res.body.length.should.be.greaterThan(0, 'No DELIVERED ECMRs were found.');
-          should.exist(res.body.find(ecmr => ecmr.status === 'DELIVERED'));
-        } else if (res.body instanceof Object) {
-          console.log(res.body);
-          res.body.status.should.equal('DELIVERED');
-        } else {
-          res.body.should.equal(200);
-        }
+        res.body.length.should.be.greaterThan(0, 'No DELIVERED ECMRs were found.');
+        should.exist(res.body.find(ecmr => ecmr.status === 'DELIVERED'));
         done(err);
       });
   });
@@ -357,14 +326,8 @@ describe('A Carrier admin can', () => {
 
           return done(err);
         }
-        if (res.body instanceof Array) {
-          res.body.length.should.be.greaterThan(0, 'No CONFIRMED_DELIVERED ECMRs were found.');
-          should.exist(res.body.find(ecmr => ecmr.status === 'CONFIRMED_DELIVERED'));
-        } else if (res.body instanceof Object) {
-          res.body.status.should.equal('CONFIRMED_DELIVERED');
-        } else {
-          res.body.should.equal(200);
-        }
+        res.body.length.should.be.greaterThan(0, 'No CONFIRMED_DELIVERED ECMRs were found.');
+        should.exist(res.body.find(ecmr => ecmr.status === 'CONFIRMED_DELIVERED'));
         done(err);
       });
   });
