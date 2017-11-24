@@ -1,7 +1,7 @@
 {
   "info": {
     "name":        "digital-cmr",
-    "_postman_id": "83b1065d-5d18-f91e-2252-34faf8bb3d2f",
+    "_postman_id": "7e3c7673-0f95-2507-59ec-2cac2132d9c8",
     "description": "Postman collection for Digital CMR - KOOPMAN",
     "schema":      "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
@@ -170,7 +170,7 @@
         ],
         "body":        {
           "mode": "raw",
-          "raw":  "    {\n      \"orderID\":   \"ORDER1\",\n      \"loading\":   {\n        \"actualDate\":              1502834400000,\n        \"address\":           {\n          \"name\":        \"loading address\",\n          \"street\":      \"een straat\",\n          \"houseNumber\": \"41\",\n          \"city\":        \"Groningen\",\n          \"zipCode\":     \"7811 HC\",\n          \"country\":     \"netherlands\",\n          \"longitude\":   124,\n          \"latitude\":    123\n        }\n      },\n      \"delivery\":  {\n        \"actualDate\":    1502834400000,\n        \"address\": {\n          \"name\":        \"delivery adress\",\n          \"street\":      \"een straat\",\n          \"houseNumber\": \"41\",\n          \"city\":        \"Groningen\",\n          \"zipCode\":     \"7811 HC\",\n          \"country\":     \"netherlands\",\n          \"longitude\":   124,\n          \"latitude\":    123\n        }\n      },\n      \"carrier\":   \"koopman\",\n      \"source\":    \"amsterdamcompound\",\n      \"goods\":     [\n        {\n          \"$class\":            \"org.digitalcmr.Good\",\n          \"vehicle\":           {\n            \"$class\":          \"org.digitalcmr.Vehicle\",\n            \"vin\":             \"183726339N\",\n            \"manufacturer\":    \"Audi\",\n            \"model\":           \"A1\",\n            \"type\":            \"sportback\",\n            \"ecmrs\":           [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\":     \"AV198RX\"\n          },\n          \"description\":       \"vehicle\",\n          \"weight\":            1500,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        },\n        {\n          \"$class\":            \"org.digitalcmr.Good\",\n          \"vehicle\":           {\n            \"$class\":          \"org.digitalcmr.Vehicle\",\n            \"vin\":             \"736182CHD28172\",\n            \"manufacturer\":    \"Mercedes\",\n            \"model\":           \"SLK\",\n            \"type\":            \"Station\",\n            \"ecmrs\":           [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\":     \"I827YE\"\n          },\n          \"description\":       \"vehicle\",\n          \"weight\":            1800,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        }\n      ],\n      \"status\":    \"OPEN\",\n      \"issueDate\": 1502834400000,\n      \"ecmrs\":     [],\n      \"orderRef\":  \"ref\",\n      \"owner\":     \"leaseplan\"\n    }"
+          "raw":  "    {\n      \"orderID\":   \"ORDER1\",\n      \"carrier\":   \"koopman\",\n      \"source\":    \"amsterdamcompound\",\n      \"goods\": [\n      \t{\n          \"loadingAddress\":  {\n            \"name\":        \"loading address\",\n            \"street\":      \"een straat\",\n            \"houseNumber\": \"41\",\n            \"city\":        \"Groningen\",\n            \"zipCode\":     \"7811 HC\",\n            \"country\":     \"netherlands\",\n            \"longitude\":   124,\n            \"latitude\":    123\n          },\n          \"deliveryAddress\": {\n            \"name\":        \"delivery adress\",\n            \"street\":      \"een straat\",\n            \"houseNumber\": \"41\",\n            \"city\":        \"Groningen\",\n            \"zipCode\":     \"7811 HC\",\n            \"country\":     \"netherlands\",\n            \"longitude\":   124,\n            \"latitude\":    123\n          },\n          \"vehicle\":         {\n            \"vin\":             \"183726339N\",\n            \"manufacturer\":    \"Audi\",\n            \"model\":           \"A1\",\n            \"type\":            \"sportback\",\n            \"ecmrs\":           [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\":     \"AV198RX\"\n          },\n          \"description\":     \"vehicle\",\n          \"weight\":          1500,\n          \"pickupWindow\":    {\n            \"startDate\": 1502834400000,\n            \"endDate\":   1502834400000\n          },\n          \"deliveryWindow\":  {\n            \"startDate\": 1502834400000,\n            \"endDate\":   1502834400000\n          }\n      \t},\n        {\n          \"vehicle\":         {\n            \"vin\":             \"736182CHD28172\",\n            \"manufacturer\":    \"Mercedes\",\n            \"model\":           \"SLK\",\n            \"type\":            \"Station\",\n            \"ecmrs\":           [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\":     \"I827YE\"\n          },\n          \"description\":     \"vehicle\",\n          \"weight\":          1800,\n          \"pickupWindow\":    {\n            \"startDate\": 1502834400000,\n            \"endDate\":   1502834400000\n          },\n          \"deliveryWindow\":  {\n            \"startDate\": 1502834400000,\n            \"endDate\":   1502834400000\n          },\n          \"loadingAddress\":  {\n            \"name\":        \"loading address\",\n            \"street\":      \"een straat\",\n            \"houseNumber\": \"41\",\n            \"city\":        \"Groningen\",\n            \"zipCode\":     \"7811 HC\",\n            \"country\":     \"netherlands\",\n            \"longitude\":   124,\n            \"latitude\":    123\n          },\n          \"deliveryAddress\": {\n            \"name\":        \"delivery adress\",\n            \"street\":      \"een straat\",\n            \"houseNumber\": \"41\",\n            \"city\":        \"Groningen\",\n            \"zipCode\":     \"7811 HC\",\n            \"country\":     \"netherlands\",\n            \"longitude\":   124,\n            \"latitude\":    123\n          }\n        }\n      ],\n      \"status\":    \"OPEN\",\n      \"issueDate\": 1502834400000,\n      \"ecmrs\":     [],\n      \"orderRef\":  \"ref\",\n      \"owner\":     \"leaseplan\"\n    }"
         },
         "url":         {
           "raw":  "{{localhost}}{{clientPort}}/api/v1/TransportOrder/",
@@ -182,6 +182,96 @@
             "v1",
             "TransportOrder",
             ""
+          ]
+        },
+        "description": "Legal Owner can create Transport Order"
+      },
+      "response": []
+    },
+    {
+      "name":     "Legal Owner Admin - UpdatePickupWindow",
+      "event":    [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "tests[\"Status code is 200\"] = responseCode.code === 200;"
+            ]
+          }
+        }
+      ],
+      "request":  {
+        "method":      "PUT",
+        "header":      [
+          {
+            "key":   "x-access-token",
+            "value": "{{legalOwnerToken}}"
+          },
+          {
+            "key":   "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body":        {
+          "mode": "raw",
+          "raw":  "{\n\t\"orderID\": \"ORDER1\",\n\t\"vin\": \"183726339N\",\n\t\"dateWindow\": [1512082800000, 1512428400000]\n}"
+        },
+        "url":         {
+          "raw":  "{{localhost}}{{clientPort}}/api/v1/TransportOrder/updatePickupWindow",
+          "host": [
+            "{{localhost}}{{clientPort}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "TransportOrder",
+            "updatePickupWindow"
+          ]
+        },
+        "description": "Legal Owner can create Transport Order"
+      },
+      "response": []
+    },
+    {
+      "name":     "Legal Owner Admin - UpdateDeliveryWindow",
+      "event":    [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "tests[\"Status code is 200\"] = responseCode.code === 200;"
+            ]
+          }
+        }
+      ],
+      "request":  {
+        "method":      "PUT",
+        "header":      [
+          {
+            "key":   "x-access-token",
+            "value": "{{legalOwnerToken}}"
+          },
+          {
+            "key":   "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body":        {
+          "mode": "raw",
+          "raw":  "{\n\t\"orderID\": \"ORDER1\",\n\t\"vin\": \"183726339N\",\n\t\"dateWindow\": [1512514800000, 1512860400000]\n}"
+        },
+        "url":         {
+          "raw":  "{{localhost}}{{clientPort}}/api/v1/TransportOrder/updateDeliveryWindow",
+          "host": [
+            "{{localhost}}{{clientPort}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "TransportOrder",
+            "updateDeliveryWindow"
           ]
         },
         "description": "Legal Owner can create Transport Order"
@@ -963,7 +1053,7 @@
         ],
         "body":   {
           "mode": "raw",
-          "raw":  "{\n\t\"orderID\": \"ORDER1\",\n\t\"ecmrs\": [\n{\n      \"ecmrID\": \"535345345\",\n      \"status\": \"CREATED\",\n      \"agreementTerms\" : \"agreement terms\",\n      \"agreementTermsSec\": \"sec agreement terms\",\n      \"legalOwnerRef\" : \"453543\",\n      \"carrierRef\": \"123\",\n      \"recipientRef\": \"321\",\n      \"orderID\": \"ORDER1\",\n      \"creation\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Assen\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"date\": 1502402400000\n      },\n      \"loading\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Amsterdam Zuid\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"actualDate\": 1502402400000\n      },\n      \"delivery\": {\n        \"address\": {\n          \"name\": \"Rob Carman\",\n          \"street\": \"autostraat\",\n          \"houseNumber\": \"12\",\n          \"city\": \"Rotterdam\",\n          \"zipCode\": \"9442KO\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 51.4443,\n          \"longitude\": 60.3323\n        },\n        \"actualDate\": 1502488800000\n      },\n      \"owner\": \"leaseplan\",\n      \"source\": \"amsterdamcompound\",\n      \"transporter\": \"harry@koopman.org\",\n      \"carrier\": \"koopman\",\n      \"recipientOrg\": \"cardealer\",\n      \"recipient\": \"rob@cardealer.org\",\n      \"issueDate\": 0,\n      \"issuedBy\": \"koopman\",\n      \"carrierComments\": \"No comments\",\n      \"documents\": [\n        \"doc1\"\n      ],\n      \"goods\": [\n        {\n          \"vehicle\": {\n            \"vin\": \"183726339N\",\n            \"manufacturer\": \"Audi\",\n            \"model\": \"A1\",\n            \"type\": \"sportback\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"AV198RX\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1500,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        },\n        {\n          \"vehicle\": {\n            \"vin\": \"736182CHD28172\",\n            \"manufacturer\": \"Mercedes\",\n            \"model\": \"SLK\",\n            \"type\": \"Station\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"I827YE\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1800,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        }\n      ],\n      \"legalOwnerInstructions\": \"string\",\n      \"paymentInstructions\": \"string\",\n      \"payOnDelivery\": \"string\"\n    },\n    {\n      \"ecmrID\": \"4553543535335\",\n      \"status\": \"CREATED\",\n      \"agreementTerms\" : \"agreement terms\",\n      \"agreementTermsSec\": \"sec agreement terms\",\n      \"legalOwnerRef\" : \"453543\",\n      \"carrierRef\": \"123\",\n      \"recipientRef\": \"321\",\n      \"orderID\": \"ORDER1\",\n      \"creation\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Assen\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"date\": 1502402400000\n      },\n      \"loading\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Amsterdam Zuid\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"actualDate\": 1502402400000\n      },\n      \"delivery\": {\n        \"address\": {\n          \"name\": \"Rob Carman\",\n          \"street\": \"autostraat\",\n          \"houseNumber\": \"12\",\n          \"city\": \"Rotterdam\",\n          \"zipCode\": \"9442KO\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 51.4443,\n          \"longitude\": 60.3323\n        },\n        \"actualDate\": 1502488800000\n      },\n      \"owner\": \"leaseplan\",\n      \"source\": \"amsterdamcompound\",\n      \"transporter\": \"harry@koopman.org\",\n      \"carrier\": \"koopman\",\n      \"recipientOrg\": \"cardealer\",\n      \"recipient\": \"rob@cardealer.org\",\n      \"issueDate\": 0,\n      \"issuedBy\": \"koopman\",\n      \"carrierComments\": \"No comments\",\n      \"documents\": [\n        \"doc1\"\n      ],\n      \"goods\": [\n        {\n          \"vehicle\": {\n            \"vin\": \"183726339N\",\n            \"manufacturer\": \"Audi\",\n            \"model\": \"A1\",\n            \"type\": \"sportback\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"AV198RX\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1500,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        },\n        {\n          \"vehicle\": {\n            \"vin\": \"736182CHD28172\",\n            \"manufacturer\": \"Mercedes\",\n            \"model\": \"SLK\",\n            \"type\": \"Station\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"I827YE\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1800,\n          \"loadingStartDate\":  1502834400000,\n          \"loadingEndDate\":    1502834400000,\n          \"deliveryStartDate\": 1502834400000,\n          \"deliveryEndDate\":   1502834400000\n        }\n      ],\n      \"legalOwnerInstructions\": \"string\",\n      \"paymentInstructions\": \"string\",\n      \"payOnDelivery\": \"string\"\n    }\n    ]\n}"
+          "raw":  "{\n\t\"orderID\": \"ORDER1\",\n\t\"ecmrs\": [\n{\n      \"ecmrID\": \"535345345\",\n      \"status\": \"CREATED\",\n      \"agreementTerms\" : \"agreement terms\",\n      \"agreementTermsSec\": \"sec agreement terms\",\n      \"legalOwnerRef\" : \"453543\",\n      \"carrierRef\": \"123\",\n      \"recipientRef\": \"321\",\n      \"orderID\": \"ORDER1\",\n      \"creation\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Assen\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"date\": 1502402400000\n      },\n      \"loading\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Amsterdam Zuid\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"actualDate\": 1502402400000\n      },\n      \"delivery\": {\n        \"address\": {\n          \"name\": \"Rob Carman\",\n          \"street\": \"autostraat\",\n          \"houseNumber\": \"12\",\n          \"city\": \"Rotterdam\",\n          \"zipCode\": \"9442KO\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 51.4443,\n          \"longitude\": 60.3323\n        },\n        \"actualDate\": 1502488800000\n      },\n      \"owner\": \"leaseplan\",\n      \"source\": \"amsterdamcompound\",\n      \"transporter\": \"harry@koopman.org\",\n      \"carrier\": \"koopman\",\n      \"recipientOrg\": \"cardealer\",\n      \"recipient\": \"rob@cardealer.org\",\n      \"issueDate\": 0,\n      \"issuedBy\": \"koopman\",\n      \"carrierComments\": \"No comments\",\n      \"documents\": [\n        \"doc1\"\n      ],\n      \"goods\": [\n      \t{\n          \"loadingAddress\":  {\n            \"name\":        \"loading address\",\n            \"street\":      \"een straat\",\n            \"houseNumber\": \"41\",\n            \"city\":        \"Groningen\",\n            \"zipCode\":     \"7811 HC\",\n            \"country\":     \"netherlands\",\n            \"longitude\":   124,\n            \"latitude\":    123\n          },\n          \"deliveryAddress\": {\n            \"name\":        \"delivery adress\",\n            \"street\":      \"een straat\",\n            \"houseNumber\": \"41\",\n            \"city\":        \"Groningen\",\n            \"zipCode\":     \"7811 HC\",\n            \"country\":     \"netherlands\",\n            \"longitude\":   124,\n            \"latitude\":    123\n          },\n          \"vehicle\":         {\n            \"vin\":             \"183726339N\",\n            \"manufacturer\":    \"Audi\",\n            \"model\":           \"A1\",\n            \"type\":            \"sportback\",\n            \"ecmrs\":           [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\":     \"AV198RX\"\n          },\n          \"description\":     \"vehicle\",\n          \"weight\":          1500,\n          \"pickupWindow\":    {\n            \"startDate\": 1502834400000,\n            \"endDate\":   1502834400000\n          },\n          \"deliveryWindow\":  {\n            \"startDate\": 1502834400000,\n            \"endDate\":   1502834400000\n          }\n      \t},\n        {\n          \"vehicle\":         {\n            \"vin\":             \"736182CHD28172\",\n            \"manufacturer\":    \"Mercedes\",\n            \"model\":           \"SLK\",\n            \"type\":            \"Station\",\n            \"ecmrs\":           [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\":     \"I827YE\"\n          },\n          \"description\":     \"vehicle\",\n          \"weight\":          1800,\n          \"pickupWindow\":    {\n            \"startDate\": 1502834400000,\n            \"endDate\":   1502834400000\n          },\n          \"deliveryWindow\":  {\n            \"startDate\": 1502834400000,\n            \"endDate\":   1502834400000\n          },\n          \"loadingAddress\":  {\n            \"name\":        \"loading address\",\n            \"street\":      \"een straat\",\n            \"houseNumber\": \"41\",\n            \"city\":        \"Groningen\",\n            \"zipCode\":     \"7811 HC\",\n            \"country\":     \"netherlands\",\n            \"longitude\":   124,\n            \"latitude\":    123\n          },\n          \"deliveryAddress\": {\n            \"name\":        \"delivery adress\",\n            \"street\":      \"een straat\",\n            \"houseNumber\": \"41\",\n            \"city\":        \"Groningen\",\n            \"zipCode\":     \"7811 HC\",\n            \"country\":     \"netherlands\",\n            \"longitude\":   124,\n            \"latitude\":    123\n          }\n        }\n      ],\n      \"legalOwnerInstructions\": \"string\",\n      \"paymentInstructions\": \"string\",\n      \"payOnDelivery\": \"string\"\n    },\n    {\n      \"ecmrID\": \"4553543535335\",\n      \"status\": \"CREATED\",\n      \"agreementTerms\" : \"agreement terms\",\n      \"agreementTermsSec\": \"sec agreement terms\",\n      \"legalOwnerRef\" : \"453543\",\n      \"carrierRef\": \"123\",\n      \"recipientRef\": \"321\",\n      \"orderID\": \"ORDER1\",\n      \"creation\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Assen\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"date\": 1502402400000\n      },\n      \"loading\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Amsterdam Zuid\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"actualDate\": 1502402400000\n      },\n      \"delivery\": {\n        \"address\": {\n          \"name\": \"Rob Carman\",\n          \"street\": \"autostraat\",\n          \"houseNumber\": \"12\",\n          \"city\": \"Rotterdam\",\n          \"zipCode\": \"9442KO\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 51.4443,\n          \"longitude\": 60.3323\n        },\n        \"actualDate\": 1502488800000\n      },\n      \"owner\": \"leaseplan\",\n      \"source\": \"amsterdamcompound\",\n      \"transporter\": \"harry@koopman.org\",\n      \"carrier\": \"koopman\",\n      \"recipientOrg\": \"cardealer\",\n      \"recipient\": \"rob@cardealer.org\",\n      \"issueDate\": 0,\n      \"issuedBy\": \"koopman\",\n      \"carrierComments\": \"No comments\",\n      \"documents\": [\n        \"doc1\"\n      ],\n      \"goods\": [\n      \t{\n          \"loadingAddress\":  {\n            \"name\":        \"loading address\",\n            \"street\":      \"een straat\",\n            \"houseNumber\": \"41\",\n            \"city\":        \"Groningen\",\n            \"zipCode\":     \"7811 HC\",\n            \"country\":     \"netherlands\",\n            \"longitude\":   124,\n            \"latitude\":    123\n          },\n          \"deliveryAddress\": {\n            \"name\":        \"delivery adress\",\n            \"street\":      \"een straat\",\n            \"houseNumber\": \"41\",\n            \"city\":        \"Groningen\",\n            \"zipCode\":     \"7811 HC\",\n            \"country\":     \"netherlands\",\n            \"longitude\":   124,\n            \"latitude\":    123\n          },\n          \"vehicle\":         {\n            \"vin\":             \"183726339N\",\n            \"manufacturer\":    \"Audi\",\n            \"model\":           \"A1\",\n            \"type\":            \"sportback\",\n            \"ecmrs\":           [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\":     \"AV198RX\"\n          },\n          \"description\":     \"vehicle\",\n          \"weight\":          1500,\n          \"pickupWindow\":    {\n            \"startDate\": 1502834400000,\n            \"endDate\":   1502834400000\n          },\n          \"deliveryWindow\":  {\n            \"startDate\": 1502834400000,\n            \"endDate\":   1502834400000\n          }\n      \t},\n        {\n          \"vehicle\":         {\n            \"vin\":             \"736182CHD28172\",\n            \"manufacturer\":    \"Mercedes\",\n            \"model\":           \"SLK\",\n            \"type\":            \"Station\",\n            \"ecmrs\":           [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\":     \"I827YE\"\n          },\n          \"description\":     \"vehicle\",\n          \"weight\":          1800,\n          \"pickupWindow\":    {\n            \"startDate\": 1502834400000,\n            \"endDate\":   1502834400000\n          },\n          \"deliveryWindow\":  {\n            \"startDate\": 1502834400000,\n            \"endDate\":   1502834400000\n          },\n          \"loadingAddress\":  {\n            \"name\":        \"loading address\",\n            \"street\":      \"een straat\",\n            \"houseNumber\": \"41\",\n            \"city\":        \"Groningen\",\n            \"zipCode\":     \"7811 HC\",\n            \"country\":     \"netherlands\",\n            \"longitude\":   124,\n            \"latitude\":    123\n          },\n          \"deliveryAddress\": {\n            \"name\":        \"delivery adress\",\n            \"street\":      \"een straat\",\n            \"houseNumber\": \"41\",\n            \"city\":        \"Groningen\",\n            \"zipCode\":     \"7811 HC\",\n            \"country\":     \"netherlands\",\n            \"longitude\":   124,\n            \"latitude\":    123\n          }\n        }\n      ],\n      \"legalOwnerInstructions\": \"string\",\n      \"paymentInstructions\": \"string\",\n      \"payOnDelivery\": \"string\"\n    }\n    ]\n}"
         },
         "url":    {
           "raw":  "{{localhost}}{{clientPort}}/api/v1/ECMR/",
@@ -1702,7 +1792,10 @@
             "value": "{{carrierMemberToken}}"
           }
         ],
-        "body":   {},
+        "body":   {
+          "mode": "raw",
+          "raw":  ""
+        },
         "url":    {
           "raw":  "{{localhost}}{{clientPort}}/api/v1/ECMR/ecmrID/C1234567890",
           "host": [
