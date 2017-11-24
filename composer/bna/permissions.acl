@@ -79,14 +79,13 @@ rule LegalOwnerAdminCanCreateTransactionUpdateTransportOrderDeliveryWindow {
   action: ALLOW
 }
 
-rule LegalOwnerAdminCanSubmitTransactionUpdateTransportOrderDeliveryrWindow {
+rule LegalOwnerAdminCanSubmitTransactionUpdateTransportOrderDeliveryWindow {
   description: "Allow LegalOwnerAdmin to submit an UpdateTransportOrderDeliveryWindow transaction to UPDATE a TransportOrder"
   participant(p): "org.digitalcmr.LegalOwnerAdmin"
   operation: UPDATE
   resource(r): "org.digitalcmr.TransportOrder"
   transaction: "org.digitalcmr.UpdateTransportOrderDeliveryWindow"
   condition: (r.owner.getIdentifier() == p.org.getIdentifier() && r.status == "OPEN")
-  condition: (r.owner.getIdentifier() == p.org.getIdentifier())
   action: ALLOW
 }
 

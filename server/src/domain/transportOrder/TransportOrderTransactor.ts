@@ -13,7 +13,7 @@ export class TransportOrderTransactor implements TransactionCreator {
       transaction.transportOrders = await TransportOrderBuilder.buildTransportOrders(factory, namespace, data);
     } else if (transactionName === Transaction.UpdateTransportOrder) {
       transaction.transportOrder = TransportOrderBuilder.buildTransportOrder(factory, namespace, data);
-    } else if (transactionName === Transaction.UpdateTransportOrderPickupWindow || Transaction.UpdateTransportOrderDeliveryWindow) {
+    } else if ((transactionName === Transaction.UpdateTransportOrderPickupWindow) || (transactionName === Transaction.UpdateTransportOrderDeliveryWindow)) {
       transaction.transportOrder       = factory.newRelationship(namespace, 'TransportOrder', data.orderID);
       transaction.dateWindow           = factory.newConcept(namespace, 'DateWindow', data.pickupWindow);
       transaction.dateWindow.startDate = data.dateWindow[0];

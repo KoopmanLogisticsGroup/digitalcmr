@@ -13,7 +13,8 @@ import {Ecmr} from '../../../../interfaces/ecmr.interface';
   styleUrls:   ['./transportorder-detail.component.scss']
 })
 export class TransportorderDetailComponent implements OnInit {
-  @ViewChild(CancelModalComponent) public cancelModal: CancelModalComponent;
+  @ViewChild(CancelModalComponent)
+  public cancelModal: CancelModalComponent;
   private orderID: string;
   public transportOrder: TransportOrder;
   public ecmrs: Ecmr[];
@@ -27,8 +28,7 @@ export class TransportorderDetailComponent implements OnInit {
 
   public constructor(private route: ActivatedRoute,
                      private transportOrderService: TransportOrderService,
-                     private authenticationService: AuthenticationService) {
-                     private transportOrderService: TransportOrderService,
+                     private authenticationService: AuthenticationService,
                      private ecmrService: EcmrService) {
   }
 
@@ -51,6 +51,4 @@ export class TransportorderDetailComponent implements OnInit {
   public getUserRole(): string {
     return this.authenticationService.isAuthenticated() ? JSON.parse(localStorage.getItem('currentUser')).user.role : '';
   }
-
-
 }

@@ -418,13 +418,4 @@ describe('Admin of the network', () => {
     return businessNetworkConnection.submitTransaction(updateTransaction)
       .should.be.rejectedWith(/Attempt to set the status on CONFIRMED_DELIVERED before the transporter signed for the delivery!/);
   });
-
-  it('should not be able to update ECMR status to an invalid status', () => {
-    let updateTransaction = factory.newTransaction(namespace, 'UpdateECMR');
-    updateTransaction.ecmr = buildECMR('ecmr7');
-    updateTransaction.ecmr.status = 'NOT_CONFIRMED_DELIVERED';
-
-    return businessNetworkConnection.submitTransaction(updateTransaction)
-      .should.be.rejectedWith(/invalid enum value NOT_CONFIRMED_DELIVERED for field ECMR_STATUS/);
-  });
 });
