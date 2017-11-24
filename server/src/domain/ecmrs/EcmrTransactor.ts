@@ -6,7 +6,7 @@ import {QueryReturnType, TransactionHandler} from '../../blockchain/TransactionH
 import {Transaction} from '../../blockchain/Transactions';
 
 export class EcmrTransactor implements TransactionCreator {
-  public async invoke(factory: Factory, namespace: string, transactionName: string, data: any, identity: Identity, enrollmentID: string, ip?: string): Promise<any> {
+  public async invoke(factory: Factory, namespace: string, transactionName: string, data: any, identity: Identity, ip?: string): Promise<any> {
     let transaction = factory.newTransaction(namespace, transactionName);
 
     if (transactionName === Transaction.CreateEcmr) {

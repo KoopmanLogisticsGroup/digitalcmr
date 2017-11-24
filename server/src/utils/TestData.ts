@@ -160,7 +160,10 @@ export class TestData {
   }
 
   private async addEcmrs(ecmrs: any[]): Promise<any> {
-    return this.transactionHandler.invoke(TestData.adminIdentity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateEcmrs, ecmrs, new EcmrTransactor());
+    return this.transactionHandler.invoke(TestData.adminIdentity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateEcmrs, {
+      'orderID': ecmrs[0].orderID,
+      'ecmrs':   ecmrs
+    }, new EcmrTransactor());
   }
 
   private async addTransportOrders(transportOrders: TransportOrder[]): Promise<any> {

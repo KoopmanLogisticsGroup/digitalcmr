@@ -104,8 +104,6 @@ export class EcmrBuilder {
       validatedObject.goods[i].vehicle = BuilderUtils.createResource(factory, namespace, 'Vehicle', ecmr.goods[i].vehicle);
     }
 
-    console.log(validatedObject);
-
     return validatedObject;
   }
 
