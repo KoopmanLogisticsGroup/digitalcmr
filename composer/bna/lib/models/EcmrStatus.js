@@ -12,8 +12,10 @@
  * limitations under the License.
  */
 
-var TransportOrderStatus = {
-  Open: 'OPEN',
-  InProgress: 'IN_PROGRESS',
-  Completed: 'COMPLETED'
+var EcmrStatus = {
+  Created: 'CREATED',
+  Loaded: 'LOADED',
+  InTransit: 'IN_TRANSIT',
+  Delivered: 'DELIVERED',
+  ConfirmedDelivered: 'CONFIRMED_DELIVERED',
 };

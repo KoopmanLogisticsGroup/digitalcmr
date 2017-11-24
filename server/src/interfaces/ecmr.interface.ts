@@ -31,9 +31,17 @@ export interface Ecmr {
   carrierLoadingSignature?: Signature;
   carrierDeliverySignature?: Signature;
   recipientSignature?: Signature;
-  status: string;
+  status: EcmrStatus;
   orderID: string;
   cancellation?: Cancellation;
   transporter?: string;
   recipient?: string;
+}
+
+export enum EcmrStatus {
+  Created            = 'CREATED',
+  Loaded             = 'LOADED',
+  InTransit          = 'IN_TRANSIT',
+  Delivered          = 'DELIVERED',
+  ConfirmedDelivered = 'CONFIRMED_DELIVERED'
 }

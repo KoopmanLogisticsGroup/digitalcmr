@@ -18,6 +18,15 @@ rule EveryBodyCanReadVehicles {
     action: ALLOW
 }
 
+rule EverybodyCanReadOrganizationInUpdateECMR {
+    description: "Allow Participant to READ other participants in UpdateECMR"
+    participant: "org.hyperledger.composer.system.Participant"
+    operation: READ
+    resource: "org.digitalcmr.Entity"
+    transaction: "org.digitalcmr.UpdateECMR"
+    action: ALLOW
+}
+
 /**
  * Digital CMR permission list
  */
@@ -125,7 +134,7 @@ rule CompoundAdminCanSubmitUpdateECMR {
     operation: UPDATE
     resource(r): "org.digitalcmr.ECMR"
     transaction(tx): "org.digitalcmr.UpdateECMR"
-    condition: (r.source.getIdentifier() == p.org.getIdentifier() && r.status == "CREATED" && tx.ecmr.status == "LOADED" && tx.ecmr.compoundSignature)
+    condition: (r.source.getIdentifier() == p.org.getIdentifier() && r.status == "CREATED" && tx.ecmr.compoundSignature)
     action: ALLOW
 }
 
@@ -147,7 +156,7 @@ rule CarrierAdminCanReadTransportOrder {
     participant(p): "org.digitalcmr.CarrierAdmin"
     operation: READ
     resource(r): "org.digitalcmr.TransportOrder"
-    condition: (r.carrier.getIdentifier() === p.org.getIdentifier())
+    condition: (r.carrier.getIdentifier() == p.org.getIdentifier())
     action: ALLOW
 }
 
@@ -156,7 +165,7 @@ rule CarrierAdminCanCreateECMR {
     participant(p): "org.digitalcmr.CarrierAdmin"
     operation: CREATE
     resource(r): "org.digitalcmr.ECMR"
-    condition: (r.carrier.getIdentifier() === p.org.getIdentifier())
+    condition: (r.carrier.getIdentifier() == p.org.getIdentifier())
     action: ALLOW
 }
 
@@ -174,7 +183,7 @@ rule CarrierAdminCanSubmitCreateECMR {
     operation: CREATE
     resource(r): "org.digitalcmr.ECMR"
     transaction: "org.digitalcmr.CreateECMR"
-    condition: (r.carrier.getIdentifier() === p.org.getIdentifier())
+    condition: (r.carrier.getIdentifier() == p.org.getIdentifier())
     action: ALLOW
 }
 
@@ -192,16 +201,16 @@ rule CarrierAdminCanSubmitCreateECMRs {
     operation: CREATE
     resource(r): "org.digitalcmr.ECMR"
     transaction: "org.digitalcmr.CreateECMRs"
-    condition: (r.carrier.getIdentifier() === p.org.getIdentifier())
+    condition: (r.carrier.getIdentifier() == p.org.getIdentifier())
     action: ALLOW
 }
 
-rule CarrierAdminCanSubmitUpdateTransportOrder {
-    description: "Allow CarrierAdmin to update a TransportOrder for his organization only if the current TransportOrder status is OPEN"
+rule CarrierAdminCanUpdateTransportOrder {
+    description: "Allow CarrierAdmin to UPDATE a TransportOrder for his organization only if the current TransportOrder status is OPEN"
     participant(p): "org.digitalcmr.CarrierAdmin"
     operation: UPDATE
     resource(r): "org.digitalcmr.TransportOrder"
-    condition: (r.carrier.getIdentifier() === p.org.getIdentifier() && r.status == 'OPEN')
+    condition: (r.carrier.getIdentifier() == p.org.getIdentifier() && r.status == "OPEN")
     action: ALLOW
 }
 
@@ -215,6 +224,15 @@ rule CarrierMemberCanReadECMR {
     action: ALLOW
 }
 
+rule CarrierMemberCanReadTrasportOrder {
+    description: "Allow CarrierMember to READ TrasportOrder where he is a conpany is carrier and status is IN_PROGRESS"
+    participant(p): "org.digitalcmr.CarrierMember"
+    operation: READ
+    resource(r): "org.digitalcmr.TransportOrder"
+    condition: (r.carrier.getIdentifier() == p.org.getIdentifier() && r.status == "IN_PROGRESS")
+    action: ALLOW
+}
+
 rule CarrierMemberCreateECMRUpdateTransaction {
     description: "Allow CarrierMember to CREATE an UpdateECMR transaction"
     participant: "org.digitalcmr.CarrierMember"
@@ -223,23 +241,13 @@ rule CarrierMemberCreateECMRUpdateTransaction {
     action: ALLOW
 }
 
-rule CarrierMemberCannotSubmitUpdateECMRForCreated {
-    description: "Prevent CarrierMember from submitting an UpdateECMR transaction for his organization and for status CREATED"
-    participant(p): "org.digitalcmr.CarrierMember"
-    operation: UPDATE
-    resource(r): "org.digitalcmr.ECMR"
-    transaction(tx): "org.digitalcmr.UpdateECMR"
-    condition: (r.transporter.getIdentifier() == p.getIdentifier() && r.status == "CREATED")
-    action: DENY
-}
-
 rule CarrierMemberCanSubmitUpdateECMRForLoading {
     description: "Allow CarrierMember to Submit an UpdateECMR transaction for his organization when ECMR status is LOADED"
     participant(p): "org.digitalcmr.CarrierMember"
     operation: UPDATE
     resource(r): "org.digitalcmr.ECMR"
     transaction(tx): "org.digitalcmr.UpdateECMR"
-    condition: (r.transporter.getIdentifier() == p.getIdentifier() && r.status == "LOADED" && tx.ecmr.status == "IN_TRANSIT" && tx.ecmr.carrierLoadingSignature)
+    condition: (r.transporter.getIdentifier() == p.getIdentifier() && r.status == "LOADED" && tx.ecmr.carrierLoadingSignature)
     action: ALLOW
 }
 
@@ -249,7 +257,16 @@ rule CarrierMemberCanSubmitUpdateECMRForDelivery {
     operation: UPDATE
     resource(r): "org.digitalcmr.ECMR"
     transaction(tx): "org.digitalcmr.UpdateECMR"
-    condition: (r.transporter.getIdentifier() == p.getIdentifier() && r.status == "IN_TRANSIT" && tx.ecmr.status == "DELIVERED" && tx.ecmr.carrierDeliverySignature)
+    condition: (r.transporter.getIdentifier() == p.getIdentifier() && r.status == "IN_TRANSIT" && tx.ecmr.carrierDeliverySignature)
+    action: ALLOW
+}
+
+rule CarrierMemberCanUpdateTransportOrder {
+    description: "Allow CarrierMember to UPDATE a TransportOrder for his organization only if the current TransportOrder status is IN_PROGRESS"
+    participant(p): "org.digitalcmr.CarrierMember"
+    operation: UPDATE
+    resource(r): "org.digitalcmr.TransportOrder"
+    condition: (r.carrier.getIdentifier() == p.org.getIdentifier() && r.status == "IN_PROGRESS")
     action: ALLOW
 }
 
@@ -283,7 +300,7 @@ rule RecipientMemberCanCreateECMRUpdateTransaction {
     action: ALLOW
 }
 
-rule recipientMemberCanSubmitUpdateECMRForConfirmed {
+rule RecipientMemberCanSubmitUpdateECMRForConfirmed {
     description: "Allow RecipientMember to Submit an UpdateECMR transaction for his organization when ECMR status is LOADED"
     participant(p): "org.digitalcmr.RecipientMember"
     operation: UPDATE
