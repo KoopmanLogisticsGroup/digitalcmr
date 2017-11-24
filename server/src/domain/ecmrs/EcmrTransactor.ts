@@ -6,15 +6,18 @@ import {QueryReturnType, TransactionHandler} from '../../blockchain/TransactionH
 import {Transaction} from '../../blockchain/Transactions';
 
 export class EcmrTransactor implements TransactionCreator {
-  public async invoke(factory: Factory, namespace: string, transactionName: string, data: any, enrollmentID: string, ip?: string): Promise<any> {
+  public async invoke(factory: Factory, namespace: string, transactionName: string, data: any, identity: Identity, ip?: string): Promise<any> {
     let transaction = factory.newTransaction(namespace, transactionName);
 
     if (transactionName === Transaction.CreateEcmr) {
-      transaction.ecmr = await EcmrBuilder.buildECMR(factory, namespace, data, enrollmentID, ip);
+      transaction.ecmr           = await EcmrBuilder.buildECMR(factory, namespace, data, identity, ip);
+      transaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', data.orderID);
     } else if (transactionName === Transaction.CreateEcmrs) {
-      transaction.ecmrs = await EcmrBuilder.buildECMRs(factory, namespace, data, enrollmentID, ip);
+      transaction.ecmrs          = await EcmrBuilder.buildECMRs(factory, namespace, data.ecmrs, identity, ip);
+      transaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', data.orderID);
     } else if (transactionName === Transaction.UpdateEcmr) {
-      transaction.ecmr = await EcmrBuilder.buildECMR(factory, namespace, data, enrollmentID, ip);
+      transaction.ecmr           = EcmrBuilder.buildECMR(factory, namespace, data, identity, ip);
+      transaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', data.orderID);
     }
 
     return transaction;

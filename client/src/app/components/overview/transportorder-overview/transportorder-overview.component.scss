@@ -9,10 +9,11 @@
     width: 20px;
   }
   td {
-    border-width: 3px 0;
-    width:        65%;
-    color:        black;
-    border-top:   none;
+    border-width:   3px 0;
+    width:          65%;
+    color:          black;
+    border-top:     none;
+    vertical-align: top;
   }
   td:first-child {
     width: 20px;
@@ -215,5 +216,20 @@
   }
   .show_results {
     font-size: 0.8vw;
+  }
+}
+
+.loadingWindow {
+  span {
+    display: block;
+
+    &:nth-child(4n+2) {
+      padding-top: 15px;
+    }
+
+    &:nth-child(4n+3) {
+      padding-bottom: 15px;
+    }
+
   }
 }
