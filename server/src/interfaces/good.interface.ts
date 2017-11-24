@@ -1,6 +1,8 @@
 import {Remark} from './remark.interface';
 import {Vehicle} from './vehicle.interface';
 import {Cancellation} from './cancellation.interface';
+import {DateWindow} from './dateWindow.interface';
+import {Address} from './address.interface';
 
 export interface Good {
   vehicle: Vehicle;
@@ -10,9 +12,9 @@ export interface Good {
   recipientRemark?: Remark;
   description?: string;
   weight?: number;
-  loadingStartDate: number;
-  loadingEndDate: number;
-  deliveryStartDate: number;
-  deliveryEndDate: number;
+  pickupWindow: DateWindow;
+  deliveryWindow: DateWindow;
+  loadingAddress: Address;
+  deliveryAddress: Address;
   cancellation?: Cancellation;
 }

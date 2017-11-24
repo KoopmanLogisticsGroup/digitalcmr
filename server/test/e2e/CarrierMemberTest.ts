@@ -5,6 +5,7 @@ import * as http from 'http';
 import {Ecmr} from '../../src/interfaces/ecmr.interface';
 import {TransportOrder} from '../../src/interfaces/transportOrder.interface';
 import {Address} from '../../src/interfaces/address.interface';
+import {PickupWindow} from '../../src/interfaces/pickupWindow.interface';
 
 const server = supertest.agent('http://localhost:8080');
 const should = chai.should();
@@ -73,14 +74,6 @@ const buildECMR = (ecmrID: string): Ecmr => {
 const buildTransportOrder = (): TransportOrder => {
   return <TransportOrder> {
     orderID:   String(new Date()),
-    loading:   {
-      actualDate: 1502834400000,
-      address:    buildAddress(),
-    },
-    delivery:  {
-      actualDate: 1502834400000,
-      address:    buildAddress(),
-    },
     carrier:   'koopman',
     source:    'amsterdamcompound',
     goods:     [],
@@ -107,6 +100,7 @@ describe('A Carrier member can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         should.exist(res.body.token);
@@ -122,6 +116,7 @@ describe('A Carrier member can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         done(err);
@@ -135,6 +130,7 @@ describe('A Carrier member can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         done(err);
@@ -149,6 +145,7 @@ describe('A Carrier member can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         updateEcmr = res.body;
@@ -166,6 +163,7 @@ describe('A Carrier member can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         done(err);
@@ -180,6 +178,7 @@ describe('A Carrier member can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         if (res.body instanceof Array) {
@@ -202,6 +201,7 @@ describe('A Carrier member can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         res.body.length.should.equal(0);
@@ -217,6 +217,7 @@ describe('A Carrier member can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         res.body.length.should.equal(0);
@@ -233,6 +234,7 @@ describe('A Carrier member can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+          return done(err);
         }
         done(err);
       });
@@ -249,6 +251,7 @@ describe('A Carrier member can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         done(err);
@@ -268,6 +271,7 @@ describe('A Carrier member can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         done(err);
@@ -287,6 +291,8 @@ describe('A Carrier member can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+
+          return done(err);
         }
         done(err);
       });
@@ -299,16 +305,10 @@ describe('A Carrier member can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
-          done(err);
+
+          return done(err);
         }
-        if (res.body instanceof Array) {
-          res.body.length.should.be.greaterThan(0, 'No CREATED ECMRs were found.');
-          should.exist(res.body.find(ecmr => ecmr.status === 'CREATED'));
-        } else if (res.body instanceof Object) {
-          res.body.status.should.equal('LOADED');
-        } else {
-          res.body.should.equal(200);
-        }
+        res.body.length.should.equal(0);
         done(err);
       });
   });
@@ -320,17 +320,12 @@ describe('A Carrier member can', () => {
       .end((err: Error, res) => {
           if (err) {
             console.log(err.stack);
-            done(err);
+
+            return done(err);
           }
-          if (res.body instanceof Array) {
-            res.body.length.should.be.greaterThan(0, 'No LOADED ECMRs were found.');
-            should.exist(res.body.find(ecmr => ecmr.status === 'LOADED'));
-          } else if (res.body instanceof Object) {
-            res.body.status.should.equal('LOADED');
-          } else {
-            res.body.should.equal(200);
-          }
-          done(err);
+        res.body.length.should.be.greaterThan(0, 'No LOADED ECMRs were found.');
+        should.exist(res.body.find(ecmr => ecmr.status === 'LOADED'));
+        done(err);
         }
       );
   });
@@ -342,17 +337,12 @@ describe('A Carrier member can', () => {
       .end((err: Error, res) => {
           if (err) {
             console.log(err.stack);
-            done(err);
+
+            return done(err);
           }
-          if (res.body instanceof Array) {
-            res.body.length.should.be.greaterThan(0, 'No IN_TRANSIT ECMRs were found.');
-            should.exist(res.body.find(ecmr => ecmr.status === 'IN_TRANSIT'));
-          } else if (res.body instanceof Object) {
-            res.body.status.should.equal('LOADED');
-          } else {
-            res.body.should.equal(200);
-          }
-          done(err);
+        res.body.length.should.be.greaterThan(0, 'No IN_TRANSIT ECMRs were found.');
+        should.exist(res.body.find(ecmr => ecmr.status === 'IN_TRANSIT'));
+        done(err);
         }
       );
   });
@@ -364,17 +354,11 @@ describe('A Carrier member can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
-          done(err);
+
+          return done(err);
         }
-        if (res.body instanceof Array) {
-          res.body.length.should.be.greaterThan(0, 'No DELIVERED ECMRs were found.');
-          should.exist(res.body.find(ecmr => ecmr.status === 'DELIVERED'));
-        } else if (res.body instanceof Object) {
-          console.log(res.body);
-          res.body.status.should.equal('DELIVERED');
-        } else {
-          res.body.should.equal(200);
-        }
+        res.body.length.should.be.greaterThan(0, 'No DELIVERED ECMRs were found.');
+        should.exist(res.body.find(ecmr => ecmr.status === 'DELIVERED'));
         done(err);
       });
   });
@@ -386,21 +370,16 @@ describe('A Carrier member can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
-          done(err);
+
+          return done(err);
         }
-        if (res.body instanceof Array) {
-          res.body.length.should.be.greaterThan(0, 'No CONFIRMED_DELIVERED ECMRs were found.');
-          should.exist(res.body.find(ecmr => ecmr.status === 'CONFIRMED_DELIVERED'));
-        } else if (res.body instanceof Object) {
-          res.body.status.should.equal('CONFIRMED_DELIVERED');
-        } else {
-          res.body.should.equal(200);
-        }
+        res.body.length.should.be.greaterThan(0, 'No CONFIRMED_DELIVERED ECMRs were found.');
+        should.exist(res.body.find(ecmr => ecmr.status === 'CONFIRMED_DELIVERED'));
         done(err);
       });
   });
 
-  it('can not create a transport order', (done) => {
+  it('not create a transport order', (done) => {
     const transportOrder = buildTransportOrder();
     server
       .post('/api/v1/transportOrder')
@@ -410,6 +389,8 @@ describe('A Carrier member can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+
+          return done(err);
         }
         done(err);
       });
@@ -423,16 +404,10 @@ describe('A Carrier member can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
-          done(err);
+
+          return done(err);
         }
-        if (res.body instanceof Array) {
-          //res.body.length.should.be.greaterThan(0, 'No CONFIRMED_DELIVERED ECMRs were found.');
-          should.exist(res.body[0].plateNumber);
-        } else if (res.body instanceof Object) {
-          should.exist(res.body.plateNumber);
-        } else {
-          res.body.should.equal(200);
-        }
+        should.exist(res.body.find((vehicle) => vehicle.plateNumber));
         done(err);
       });
   });
@@ -445,7 +420,8 @@ describe('A Carrier member can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
-          done(err);
+
+          return done(err);
         }
         res.body.vin.should.equal('183726339N');
         done(err);
@@ -460,41 +436,55 @@ describe('A Carrier member can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
-          done(err);
+
+          return done(err);
         }
         res.body.plateNumber.should.equal('AV198RX');
         done(err);
       });
   });
-  // it('can  submit an update transaction for his org and status from LOADED to IN_TRANSIT', (done) => {
-  //   updateEcmr.status  = 'IN_TRANSIT';
-  //   updateEcmr.carrierLoadingSignature = {'certificate': 'harry@koopman.org', 'timestamp': 0 };
-  //   server
-  //     .put('/api/v1/ECMR')
-  //     .set('x-access-token', token)
-  //     .send(updateEcmr)
-  //     .expect(200)
-  //     .end((err: Error) => {
-  //       if (err) {
-  //         console.log(err.stack);
-  //       }
-  //       done(err);
-  //     });
-  // });
-  //
-  // it('can  submit an update transaction for his org and status from IN_TANSIT to DELIVERED', (done) => {
-  //   updateEcmr.status = 'DELIVERED';
-  //   updateEcmr.carrierDeliverySignature = {'certificate': 'harry@koopman.org', 'timestamp': 0 };
-  //   server
-  //     .put('/api/v1/ECMR')
-  //     .set('x-access-token', token)
-  //     .send(updateEcmr)
-  //     .expect(200)
-  //     .end((err: Error) => {
-  //       if (err) {
-  //         console.log(err.stack);
-  //       }
-  //       done(err);
-  //     });
-  // });
+
+  it('not update a pickup window of a transport order', (done) => {
+    const pickupWindow: PickupWindow = {
+      orderID:    '12345567890',
+      vin:        '183726339N',
+      dateWindow: [1010101010, 2020202020]
+    };
+
+    server
+      .put('/api/v1/transportOrder/updatePickupWindow')
+      .set('x-access-token', token)
+      .send(pickupWindow)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
+  it('not update a delivery window of a transport order', (done) => {
+    const pickupWindow: PickupWindow = {
+      orderID:    '12345567890',
+      vin:        '183726339N',
+      dateWindow: [1010101010, 2020202020]
+    };
+
+    server
+      .put('/api/v1/transportOrder/updateDeliveryWindow')
+      .set('x-access-token', token)
+      .send(pickupWindow)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
 });

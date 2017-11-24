@@ -45,6 +45,12 @@ query getEcmrsByIssueTimeRange {
           WHERE (issueDate >= _$min_age AND issueDate <= _$max_age)
 }
 
+query getEcmrsByOrderID {
+  description: "Select all ECMRs based on the order ID"
+  statement:
+      SELECT org.digitalcmr.ECMR
+          WHERE (orderID == _$orderID)
+}
 query getEcmrsByOwner {
   description: "Select all ECMRs based on their owner organization"
   statement:

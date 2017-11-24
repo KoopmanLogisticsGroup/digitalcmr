@@ -46,7 +46,6 @@ function updateRegistrationCountry(tx) {
 
   console.log('Invoking function processor to update RegistrationCountry');
   console.log(tx);
-  console.log(tx.vehicle);
 
   // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.Vehicle')

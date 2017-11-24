@@ -99,10 +99,17 @@ describe('Admin of the network', () => {
     ecmr.goods = [];
     ecmr.goods[0] = factory.newConcept(namespace, 'Good');
     ecmr.goods[0].vehicle = buildVehicle();
-    ecmr.goods[0].loadingStartDate = 0;
-    ecmr.goods[0].loadingEndDate = 0;
-    ecmr.goods[0].deliveryStartDate = 0;
-    ecmr.goods[0].deliveryEndDate = 0;
+    ecmr.goods[0].pickupWindow = factory.newConcept(namespace, 'DateWindow');
+    ecmr.goods[0].deliveryWindow = factory.newConcept(namespace, 'DateWindow');
+    ecmr.goods[0].deliveryWindow.startDate = 0;
+    ecmr.goods[0].deliveryWindow.endDate = 0;
+    ecmr.goods[0].pickupWindow.startDate = 0;
+    ecmr.goods[0].pickupWindow.endDate = 0;
+    ecmr.goods[0].loadingAddress = factory.newConcept(namespace, 'Address');
+    ecmr.goods[0].deliveryAddress = factory.newConcept(namespace, 'Address');
+    ecmr.goods[0].loadingAddress = buildAddress();
+    ecmr.goods[0].deliveryAddress = buildAddress();
+
     ecmr.legalOwnerInstructions = 'instructions';
     ecmr.paymentInstructions = 'instructions';
     ecmr.payOnDelivery = 'payondelivery';
@@ -455,14 +462,5 @@ describe('Admin of the network', () => {
 
     return businessNetworkConnection.submitTransaction(updateTransaction)
       .should.be.rejectedWith(/Attempt to set the status on CONFIRMED_DELIVERED before the transporter signed for the delivery!/);
-  });
-
-  it('should not be able to update ECMR status to an invalid status', () => {
-    let updateTransaction = factory.newTransaction(namespace, 'UpdateECMR');
-    updateTransaction.ecmr = buildECMR('ecmr7');
-    updateTransaction.ecmr.status = 'NOT_CONFIRMED_DELIVERED';
-
-    return businessNetworkConnection.submitTransaction(updateTransaction)
-      .should.be.rejectedWith(/invalid enum value NOT_CONFIRMED_DELIVERED for field ECMR_STATUS/);
   });
 });

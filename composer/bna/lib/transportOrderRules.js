@@ -29,11 +29,11 @@ function createTransportOrder(tx) {
           console.log('Asset added with success');
         })
         .catch(function (error) {
-          console.log('An error occurred while add transport order assets', error);
+          console.log('[CreateTransportOrder] An error occurred while adding a transport order asset', error);
           throw error;
         })
     }).catch(function (error) {
-      console.log('An error occurred while retrieving the asset registry', error);
+      console.log('[CreateTransportOrder] An error occurred while retrieving the asset registry', error);
       throw error;
     })
 }
@@ -55,11 +55,11 @@ function createTransportOrders(tx) {
           console.log('Assets added with success');
         })
         .catch(function (error) {
-          console.log('An error occurred while addAll transport orders assets', error);
+          console.log('[CreateTransportOrders] An error occurred while adding transport orders assets', error);
           throw error;
         })
     }).catch(function (error) {
-      console.log('An error occurred while retrieving the asset registry', error);
+      console.log('[CreateTransportOrders] An error occurred while retrieving the asset registry', error);
       throw error;
     })
 }
@@ -105,6 +105,60 @@ function updateTransportOrderStatusToCompleted(tx) {
         });
     }).catch(function (error) {
       console.log('[Update TransportOrder] An error occurred while updating the TransportOrder asset: ' + error);
+      throw error;
+    });
+}
+
+/**
+ *  Update Pickup transport order transaction processor function
+ *  @param {org.digitalcmr.UpdateTransportOrderPickupWindow} tx - The update transport order pickup window transaction
+ *  @return {Promise} Asset registry Promise
+ *  @transaction
+ */
+function updateTransportOrderPickupWindow(tx) {
+  console.log('Invoking function processor updateTransportOrderPickupWindow');
+
+  return getAssetRegistry('org.digitalcmr.TransportOrder')
+    .then(function (assetRegistry) {
+      for (var goodIndex = 0; goodIndex < tx.transportOrder.goods.length; goodIndex++) {
+        if (tx.transportOrder.goods[goodIndex].vehicle.vin === tx.vin) {
+          tx.transportOrder.goods[goodIndex].pickupWindow = tx.dateWindow;
+        }
+      }
+
+      return assetRegistry.update(tx.transportOrder).catch(function (error) {
+        console.log('[updateTransportOrderPickupWindow] An error occurred while updating the asset registry : ' + error);
+        throw error;
+      });
+    }).catch(function (error) {
+      console.log('[updateTransportOrderPickupWindow] An error occurred while retrieving the asset registry: ' + error);
+      throw error;
+    });
+}
+
+/**
+ *  Update DeliveryWindow transport order transaction processor function
+ *  @param {org.digitalcmr.UpdateTransportOrderDeliveryWindow} tx - The update transport order delivery window transaction
+ *  @return {Promise} Asset registry Promise
+ *  @transaction
+ */
+function updateTransportOrderDeliveryWindow(tx) {
+  console.log('Invoking function processor updateTransportOrderDeliveryWindow');
+
+  return getAssetRegistry('org.digitalcmr.TransportOrder')
+    .then(function (assetRegistry) {
+      for (var goodIndex = 0; goodIndex < tx.transportOrder.goods.length; goodIndex++) {
+        if (tx.transportOrder.goods[goodIndex].vehicle.vin === tx.vin) {
+          tx.transportOrder.goods[goodIndex].deliveryWindow = tx.dateWindow;
+        }
+      }
+
+      return assetRegistry.update(tx.transportOrder).catch(function (error) {
+        console.log('[updateTransportOrderDeliveryWindow] An error occurred while updating the asset registry: ' + error);
+        throw error;
+      });
+    }).catch(function (error) {
+      console.log('[updateTransportOrderDeliveryWindow] An error occurred while retrieving the asset registry: ' + error);
       throw error;
     });
 }
