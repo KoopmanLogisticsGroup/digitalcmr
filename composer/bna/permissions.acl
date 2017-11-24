@@ -170,7 +170,7 @@ rule CompoundAdminCanSubmitUpdateECMR {
     operation: UPDATE
     resource(r): "org.digitalcmr.ECMR"
     transaction(tx): "org.digitalcmr.UpdateECMR"
-    condition: (r.source.getIdentifier() == p.org.getIdentifier() && r.status == "CREATED" && tx.ecmr.compoundSignature)
+    condition: (r.source.getIdentifier() == p.org.getIdentifier() && r.status == "CREATED")
     action: ALLOW
 }
 
@@ -283,7 +283,7 @@ rule CarrierMemberCanSubmitUpdateECMRForLoading {
     operation: UPDATE
     resource(r): "org.digitalcmr.ECMR"
     transaction(tx): "org.digitalcmr.UpdateECMR"
-    condition: (r.transporter.getIdentifier() == p.getIdentifier() && r.status == "LOADED" && tx.ecmr.carrierLoadingSignature)
+    condition: (r.transporter.getIdentifier() == p.getIdentifier() && r.status == "LOADED")
     action: ALLOW
 }
 
@@ -293,7 +293,7 @@ rule CarrierMemberCanSubmitUpdateECMRForDelivery {
     operation: UPDATE
     resource(r): "org.digitalcmr.ECMR"
     transaction(tx): "org.digitalcmr.UpdateECMR"
-    condition: (r.transporter.getIdentifier() == p.getIdentifier() && r.status == "IN_TRANSIT" && tx.ecmr.carrierDeliverySignature)
+    condition: (r.transporter.getIdentifier() == p.getIdentifier() && r.status == "IN_TRANSIT")
     action: ALLOW
 }
 
@@ -342,6 +342,6 @@ rule RecipientMemberCanSubmitUpdateECMRForConfirmed {
     operation: UPDATE
     resource(r): "org.digitalcmr.ECMR"
     transaction(tx): "org.digitalcmr.UpdateECMR"
-    condition: (r.recipient.getIdentifier() == p.getIdentifier() && r.status == "DELIVERED" && tx.ecmr.status == "CONFIRMED_DELIVERED" && tx.ecmr.recipientSignature)
+    condition: (r.recipient.getIdentifier() == p.getIdentifier() && r.status == "DELIVERED" && tx.ecmr.status == "CONFIRMED_DELIVERED")
     action: ALLOW
 }
