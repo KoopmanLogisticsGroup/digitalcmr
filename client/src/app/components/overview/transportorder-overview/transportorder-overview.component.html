@@ -30,8 +30,14 @@
           <td>{{transportOrder?.issueDate | date:"dd-MM-yyyy"}}</td>
           <td>{{transportOrder?.goods?.length}}</td>
           <td>{{transportOrder?.carrier?.split('#')[1]}}</td>
-          <td>{{transportOrder?.loading?.actualDate | date:"dd-MM-yyyy"}}</td>
-          <td>{{transportOrder?.delivery?.actualDate | date:"dd-MM-yyyy"}}</td>
+          <td class="loadingWindow">
+            <span> {{transportOrder?.goods[0]?.pickupWindow.startDate | date:"dd-MM-yyyy"}}</span>
+            <span>{{transportOrder?.goods[0]?.pickupWindow.endDate | date:"dd-MM-yyyy"}} </span>
+          </td>
+          <td class="loadingWindow">
+            <span>{{transportOrder?.goods[0]?.deliveryWindow.startDate | date:"dd-MM-yyyy"}}</span>
+            <span>{{transportOrder?.goods[0]?.deliveryWindow.endDate | date:"dd-MM-yyyy"}}</span>
+          </td>
           <td>
             <img class="view_more_order" routerLink="/transportorder/{{transportOrder.orderID}}"/>
           </td>
