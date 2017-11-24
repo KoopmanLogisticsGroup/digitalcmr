@@ -19,11 +19,33 @@
       <tr *ngFor="let good of transportOrder?.goods">
         <td>{{good?.vehicle?.vin}}</td>
         <td>{{good?.vehicle?.plateNumber}}</td>
-        <td>{{good?.description}} kg</td>
-        <td>{{good?.weight}}</td>
+        <td>{{good?.description}}</td>
+        <td>{{good?.weight}} kg</td>
         <td>{{good?.vehicle?.odoMeterReading}}</td>
-        <td>{{transportOrder?.loading?.address?.city}}</td>
-        <td>{{transportOrder?.delivery?.address?.city}}</td>
+        <td class="loadingWindow">
+          <span>{{good?.loadingAddress?.city}}</span>
+          <span> {{good?.pickupWindow.startDate | date: "dd-MM-yyyy HH:mm"}}</span>
+          <span> {{good?.pickupWindow.endDate | date: "dd-MM-yyyy HH:mm"}}</span>
+          <div *ngFor="let ecmr of ecmrs">
+            <div *ngFor="let ecmrGood of ecmr?.goods">
+              <div *ngIf="good?.vehicle?.vin == ecmrGood?.vehicle?.vin">
+                <span> {{ecmr?.carrierLoadingSignature?.timestamp | date: "dd-MM-yyyy HH:mm"}} </span>
+              </div>
+            </div>
+          </div>
+        </td>
+        <td class="loadingWindow">
+          <span>{{good?.loadingAddress?.city}}</span>
+          <span> {{good?.deliveryWindow.startDate | date: "dd-MM-yyyy HH:mm"}}</span>
+          <span> {{good?.deliveryWindow.endDate | date: "dd-MM-yyyy HH:mm"}}</span>
+          <div *ngFor="let ecmr of ecmrs">
+            <div *ngFor="let ecmrGood of ecmr?.goods">
+              <div *ngIf="good?.vehicle?.vin == ecmrGood?.vehicle?.vin">
+                <span>{{ecmr?.carrierDeliverySignature?.timestamp | date: "dd-MM-yyyy HH:mm"}}</span>
+              </div>
+            </div>
+          </div>
+        </td>
       </tr>
       </tbody>
     </table>

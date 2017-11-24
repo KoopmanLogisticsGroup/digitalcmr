@@ -35,7 +35,6 @@ describe('As admin of the network, ', () => {
   let factory;
   // These are the identities.
   const adminIdentity = {'userID': 'admin', 'userSecret': 'adminpw'};
-  let LegalOwnerAdminIdentity;
   // These are a list of received events.
   let events;
 
@@ -127,12 +126,6 @@ describe('As admin of the network, ', () => {
 
   function buildTransportOrder(transportOrderID) {
     let transportOrder = factory.newResource(namespace, 'TransportOrder', transportOrderID);
-    transportOrder.loading = factory.newConcept(namespace, 'Loading');
-    transportOrder.loading.address = buildAddress();
-    transportOrder.loading.actualDate = 0;
-    transportOrder.delivery = factory.newConcept(namespace, 'Delivery');
-    transportOrder.delivery.address = buildAddress();
-    transportOrder.delivery.actualDate = 0;
     transportOrder.owner = factory.newRelationship(namespace, 'LegalOwnerOrg', 'lapo@leaseplan.org');
     transportOrder.source = factory.newRelationship(namespace, 'CompoundOrg', 'amsterdamcompound');
     transportOrder.carrier = factory.newRelationship(namespace, 'CarrierOrg', 'koopman');
@@ -140,11 +133,16 @@ describe('As admin of the network, ', () => {
     transportOrder.goods[0] = factory.newConcept(namespace, 'Good');
     transportOrder.goods[0].description = 'Car 1';
     transportOrder.goods[0].vehicle = buildVehicle('213123123123ASDSAD');
-    transportOrder.goods[0].description = 'Car 1';
-    transportOrder.goods[0].loadingStartDate = 0;
-    transportOrder.goods[0].loadingEndDate = 0;
-    transportOrder.goods[0].deliveryStartDate = 0;
-    transportOrder.goods[0].deliveryEndDate = 0;
+    transportOrder.goods[0].pickupWindow = factory.newConcept(namespace, 'DateWindow');
+    transportOrder.goods[0].deliveryWindow = factory.newConcept(namespace, 'DateWindow');
+    transportOrder.goods[0].pickupWindow.startDate = 0;
+    transportOrder.goods[0].pickupWindow.endDate = 0;
+    transportOrder.goods[0].deliveryWindow.startDate = 0;
+    transportOrder.goods[0].deliveryWindow.endDate = 0;
+    transportOrder.goods[0].loadingAddress = factory.newConcept(namespace, 'Address');
+    transportOrder.goods[0].deliveryAddress = factory.newConcept(namespace, 'Address');
+    transportOrder.goods[0].loadingAddress = buildAddress();
+    transportOrder.goods[0].deliveryAddress = buildAddress();
     transportOrder.issueDate = 0;
     transportOrder.ecmrs = [];
     transportOrder.status = 'OPEN';
@@ -191,6 +189,14 @@ describe('As admin of the network, ', () => {
 
         // Get the factory for the business network
         factory = businessNetworkConnection.getBusinessNetwork().getFactory();
+        let transportOrder = buildTransportOrder('12345567890');
+
+        return businessNetworkConnection.getAssetRegistry('org.digitalcmr.TransportOrder')
+          .then((assetRegistry) => {
+            return assetRegistry.addAll([transportOrder]);
+          }).catch((error) => {
+            console.log('Something went wrong while adding the transport order to the asset registry: ' + error);
+          });
       })
   });
 
@@ -216,6 +222,7 @@ describe('As admin of the network, ', () => {
     transportOrders.push(buildTransportOrder('transportOrder9'));
     const transaction = factory.newTransaction('org.digitalcmr', 'CreateTransportOrders');
     transaction.transportOrders = transportOrders;
+
     return businessNetworkConnection.submitTransaction(transaction)
       .then(() => {
         return businessNetworkConnection.getAssetRegistry('org.digitalcmr.TransportOrder');
@@ -224,11 +231,50 @@ describe('As admin of the network, ', () => {
         return assetRegistry.getAll();
       })
       .then((transportOrders) => {
-        transportOrders[0].$identifier.should.equal('transportOrder8');
-        transportOrders[1].$identifier.should.equal('transportOrder9');
+        transportOrders.find((transportOrder) => transportOrder.$identifier === 'transportOrder8');
+        transportOrders.find((transportOrder) => transportOrder.$identifier === 'transportOrder9');
       });
   });
 
+  it('should be able to update a pickupWindow in a transport order', () => {
+    const transaction = factory.newTransaction('org.digitalcmr', 'UpdateTransportOrderPickupWindow');
+    transaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', '12345567890');
+    transaction.dateWindow = factory.newConcept(namespace, 'DateWindow');
+    transaction.vin = '213123123123ASDSAD';
+    transaction.dateWindow.startDate = 10101010;
+    transaction.dateWindow.endDate = 20202020;
 
-  // field missing
+    return businessNetworkConnection.submitTransaction(transaction)
+      .then(() => {
+        return businessNetworkConnection.getAssetRegistry('org.digitalcmr.TransportOrder');
+      })
+      .then((assetRegistry) => {
+        return assetRegistry.get('12345567890');
+      })
+      .then((transportOrder) => {
+        transportOrder.goods[0].pickupWindow.startDate.should.equal(10101010);
+        transportOrder.goods[0].pickupWindow.endDate.should.equal(20202020);
+      });
+  });
+
+  it('should be able to update a deliveryWindow in a transport order', () => {
+    const transaction = factory.newTransaction('org.digitalcmr', 'UpdateTransportOrderDeliveryWindow');
+    transaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', '12345567890');
+    transaction.dateWindow = factory.newConcept(namespace, 'DateWindow');
+    transaction.vin = '213123123123ASDSAD';
+    transaction.dateWindow.startDate = 10101010;
+    transaction.dateWindow.endDate = 20202020;
+
+    return businessNetworkConnection.submitTransaction(transaction)
+      .then(() => {
+        return businessNetworkConnection.getAssetRegistry('org.digitalcmr.TransportOrder');
+      })
+      .then((assetRegistry) => {
+        return assetRegistry.get('12345567890');
+      })
+      .then((transportOrder) => {
+        transportOrder.goods[0].deliveryWindow.startDate.should.equal(10101010);
+        transportOrder.goods[0].deliveryWindow.endDate.should.equal(20202020);
+      });
+  });
 });

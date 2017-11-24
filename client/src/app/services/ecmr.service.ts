@@ -5,7 +5,6 @@ import 'rxjs/add/operator/map';
 import {Configuration} from '../app.constants';
 import {AuthenticationService} from './authentication.service';
 import {Observable} from 'rxjs/Observable';
-import {ErrorObservable} from 'rxjs/observable/ErrorObservable';
 
 @Injectable()
 export class EcmrService {
@@ -33,6 +32,11 @@ export class EcmrService {
 
   public updateEcmr(ecmr: any): Observable<any> {
     return this._http.put(this.actionUrl, ecmr, {headers: this.headers})
+      .map(res => res.json())
+  }
+
+  public getEcmrsByTransportOrderID(orderID: string): Observable<any> {
+    return this._http.get(this.actionUrl + 'orderID/' + orderID, {headers: this.headers})
       .map(res => res.json())
   }
 }

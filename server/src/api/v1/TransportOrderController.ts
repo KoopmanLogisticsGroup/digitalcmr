@@ -16,6 +16,8 @@ import {Request} from 'express';
 import {TransportOrderTransactor} from '../../domain/transportOrder/TransportOrderTransactor';
 import {TransportOrder} from '../../interfaces/transportOrder.interface';
 import {Transaction} from '../../blockchain/Transactions';
+import {PickupWindow} from '../../interfaces/pickupWindow.interface';
+import {DeliveryWindow} from '../../interfaces/deliveryWindow.interface';
 
 @JsonController('/transportOrder')
 @UseBefore(UserAuthenticatorMiddleware)
@@ -49,13 +51,27 @@ export class TransportOrderController {
   @Post('/')
   public async create(@Body() transportOrder: TransportOrder, @Req() request: Request): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
+
     return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateTransportOrder, transportOrder, new TransportOrderTransactor());
+  }
+
+  @Put('/updatePickupWindow')
+  public async updatePickupWindow(@Body() pickupWindowObject: PickupWindow, @Req() request: any): Promise<any> {
+    const identity: Identity = new JSONWebToken(request).getIdentity();
+
+    return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateTransportOrderPickupWindow, pickupWindowObject, new TransportOrderTransactor());
+  }
+
+  @Put('/updateDeliveryWindow')
+  public async updateDeliveryWindow(@Body() deliveryWindowObject: DeliveryWindow, @Req() request: any): Promise<any> {
+    const identity: Identity = new JSONWebToken(request).getIdentity();
+
+    return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateTransportOrderDeliveryWindow, deliveryWindowObject, new TransportOrderTransactor());
   }
 
   @Put('/cancelTransportOrder')
   public async update(@Body() transportOrder: TransportOrder, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
-
     return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateTransportOrderStatusToCanceled, transportOrder, new TransportOrderTransactor());
   }
 }

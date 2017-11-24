@@ -5,6 +5,7 @@ import * as http from 'http';
 import {TransportOrder} from '../../src/interfaces/transportOrder.interface';
 import {Ecmr} from '../../src/interfaces/ecmr.interface';
 import {Address} from '../../src/interfaces/address.interface';
+import {PickupWindow} from '../../src/interfaces/pickupWindow.interface';
 
 const server = supertest.agent('http://localhost:8080');
 const should = chai.should();
@@ -74,14 +75,6 @@ const buildECMR    = (ecmrID: string): Ecmr => {
 const buildTransportOrder = (): TransportOrder => {
   return <TransportOrder> {
     orderID:   String(new Date()),
-    loading:   {
-      actualDate: 1502834400000,
-      address:    buildAddress(),
-    },
-    delivery:  {
-      actualDate: 1502834400000,
-      address:    buildAddress(),
-    },
     carrier:   'koopman',
     source:    'amsterdamcompound',
     goods:     [],
@@ -110,6 +103,7 @@ describe('A legal owner admin can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         should.exist(res.body.token);
@@ -129,6 +123,7 @@ describe('A legal owner admin can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         done(err);
@@ -147,6 +142,7 @@ describe('A legal owner admin can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         done(err);
@@ -162,6 +158,7 @@ describe('A legal owner admin can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         res.body.length.should.be.greaterThan(0, 'No ECMRs found');
@@ -177,6 +174,7 @@ describe('A legal owner admin can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         updateEcmr = res.body;
@@ -192,6 +190,7 @@ describe('A legal owner admin can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         should.exist(res.body.find(ecmr => ecmr.status === 'CREATED'));
@@ -207,8 +206,10 @@ describe('A legal owner admin can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
+          return done(err);
         }
-        res.body.should.equal(200);
+        res.body.length.should.equal(0);
         done(err);
       });
   });
@@ -221,6 +222,7 @@ describe('A legal owner admin can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         should.exist(res.body.find(ecmr => ecmr.ecmrID === 'A1234567890'));
@@ -236,6 +238,7 @@ describe('A legal owner admin can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         should.exist(res.body.find(ecmr => ecmr.ecmrID === 'A1234567890'));
@@ -252,6 +255,7 @@ describe('A legal owner admin can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         res.body.length.should.be.greaterThan(0);
@@ -267,6 +271,7 @@ describe('A legal owner admin can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         res.body.vin.should.equal('183726339N');
@@ -282,6 +287,7 @@ describe('A legal owner admin can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         res.body.plateNumber.should.equal('AV198RX');
@@ -300,6 +306,7 @@ describe('A legal owner admin can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         done(err);
@@ -315,6 +322,8 @@ describe('A legal owner admin can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
+          return done(err);
         }
         should.exist(res.body.orderID === transportOrder.orderID);
         done(err);
@@ -330,6 +339,7 @@ describe('A legal owner admin can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         should.exist(res.body.orderID === transportOrder.orderID);
@@ -349,6 +359,50 @@ describe('A legal owner admin can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
+  it('update the pickup window of a transport order', (done) => {
+    const pickupWindow: PickupWindow = {
+      orderID:    '12345567890',
+      vin:        '183726339N',
+      dateWindow: [1010101010, 2020202020]
+    };
+    server
+      .put('/api/v1/transportOrder/updatePickupWindow')
+      .set('x-access-token', token)
+      .send(pickupWindow)
+      .expect(ok)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
+  it('update a delivery window of a transport order', (done) => {
+    const pickupWindow: PickupWindow = {
+      orderID:    '12345567890',
+      vin:        '183726339N',
+      dateWindow: [1010101010, 2020202020]
+    };
+
+    server
+      .put('/api/v1/transportOrder/updateDeliveryWindow')
+      .set('x-access-token', token)
+      .send(pickupWindow)
+      .expect(ok)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
           return done(err);
         }
         done(err);

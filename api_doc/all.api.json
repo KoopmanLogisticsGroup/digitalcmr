@@ -1963,7 +1963,7 @@
     }
   },
   "definitions":         {
-    "Address":          {
+    "Address":  {
       "type":       "object",
       "properties": {
         "name":        {
@@ -2000,7 +2000,7 @@
         }
       }
     },
-    "Delivery":         {
+    "Delivery": {
       "type":       "object",
       "properties": {
         "address": {
@@ -2013,7 +2013,7 @@
         }
       }
     },
-    "Loading":          {
+    "Loading":  {
       "type":       "object",
       "properties": {
         "address": {
@@ -2026,7 +2026,7 @@
         }
       }
     },
-    "Creation":   {
+    "Creation": {
       "type":       "object",
       "properties": {
         "address": {
@@ -2039,7 +2039,7 @@
         }
       }
     },
-    "Remark":     {
+    "Remark":   {
       "type":       "object",
       "properties": {
         "comments":  {
@@ -2052,7 +2052,7 @@
         }
       }
     },
-    "Vehicle":    {
+    "Vehicle":  {
       "type":       "object",
       "properties": {
         "vin":                 {

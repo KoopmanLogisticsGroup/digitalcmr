@@ -5,6 +5,7 @@ import * as http from 'http';
 import {TransportOrder} from '../../src/interfaces/transportOrder.interface';
 import {Ecmr} from '../../src/interfaces/ecmr.interface';
 import {Address} from '../../src/interfaces/address.interface';
+import {PickupWindow} from '../../src/interfaces/pickupWindow.interface';
 
 const server = supertest.agent('http://localhost:8080');
 const should = chai.should();
@@ -108,6 +109,7 @@ describe('A Compound Admin can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         should.exist(res.body.token);
@@ -123,10 +125,11 @@ describe('A Compound Admin can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
-        res.body[0].ecmrID.should.be.equal('A1234567890');
-        res.body[1].ecmrID.should.be.equal('B1234567890');
+        should.exist(res.body.find((ecmr) => ecmr.ecmrID === 'A1234567890'));
+        should.exist(res.body.find((ecmr) => ecmr.ecmrID === 'B1234567890'));
         done(err);
       });
   });
@@ -138,6 +141,7 @@ describe('A Compound Admin can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         res.body[0].ecmrID.should.be.equal('A1234567890');
@@ -154,6 +158,7 @@ describe('A Compound Admin can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         updateEcmr = res.body;
@@ -169,6 +174,8 @@ describe('A Compound Admin can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
+          return done(err);
         }
         res.body.length.should.be.greaterThan(0, 'no ECMRs were found.');
         done(err);
@@ -183,8 +190,10 @@ describe('A Compound Admin can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
+          return done(err);
         }
-        res.body.should.equal(200);
+        res.body.length.should.equal(0);
         done(err);
       });
   });
@@ -200,6 +209,30 @@ describe('A Compound Admin can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
+  it('submit an update status from CREATED to LOADED', (done) => {
+    updateEcmr.status            = 'LOADED';
+    updateEcmr.compoundSignature = {
+      certificate: 'willem@amsterdamcompound.org',
+      timestamp:   0
+    };
+
+    server
+      .put('/api/v1/ECMR')
+      .set('x-access-token', token)
+      .send(updateEcmr)
+      .expect(200)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
         }
         done(err);
       });
@@ -215,6 +248,8 @@ describe('A Compound Admin can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+
+          return done(err);
         }
         done(err);
       });
@@ -227,16 +262,11 @@ describe('A Compound Admin can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
-          done(err);
+
+          return done(err);
         }
-        if (res.body instanceof Array) {
-          res.body.length.should.be.greaterThan(0, 'No CREATED ECMRs were found.');
-          should.exist(res.body.find(ecmr => ecmr.status === 'CREATED'));
-        } else if (res.body instanceof Object) {
-          res.body.status.should.equal('LOADED');
-        } else {
-          res.body.should.equal(200);
-        }
+        res.body.length.should.be.greaterThan(0, 'No CREATED ECMRs were found.');
+        should.exist(res.body.find(ecmr => ecmr.status === 'CREATED'));
         done(err);
       });
   });
@@ -248,17 +278,12 @@ describe('A Compound Admin can', () => {
       .end((err: Error, res) => {
           if (err) {
             console.log(err.stack);
-            done(err);
+
+            return done(err);
           }
-          if (res.body instanceof Array) {
-            res.body.length.should.be.greaterThan(0, 'No LOADED ECMRs were found.');
-            should.exist(res.body.find(ecmr => ecmr.status === 'LOADED'));
-          } else if (res.body instanceof Object) {
-            res.body.status.should.equal('LOADED');
-          } else {
-            res.body.should.equal(200);
-          }
-          done(err);
+        res.body.length.should.be.greaterThan(0, 'No LOADED ECMRs were found.');
+        should.exist(res.body.find(ecmr => ecmr.status === 'LOADED'));
+        done(err);
         }
       );
   });
@@ -270,17 +295,12 @@ describe('A Compound Admin can', () => {
       .end((err: Error, res) => {
           if (err) {
             console.log(err.stack);
-            done(err);
+
+            return done(err);
           }
-          if (res.body instanceof Array) {
-            res.body.length.should.be.greaterThan(0, 'No IN_TRANSIT ECMRs were found.');
-            should.exist(res.body.find(ecmr => ecmr.status === 'IN_TRANSIT'));
-          } else if (res.body instanceof Object) {
-            res.body.status.should.equal('LOADED');
-          } else {
-            res.body.should.equal(200);
-          }
-          done(err);
+        res.body.length.should.be.greaterThan(0, 'No IN_TRANSIT ECMRs were found.');
+        should.exist(res.body.find(ecmr => ecmr.status === 'IN_TRANSIT'));
+        done(err);
         }
       );
   });
@@ -292,17 +312,11 @@ describe('A Compound Admin can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
-          done(err);
+
+          return done(err);
         }
-        if (res.body instanceof Array) {
-          res.body.length.should.be.greaterThan(0, 'No DELIVERED ECMRs were found.');
-          should.exist(res.body.find(ecmr => ecmr.status === 'DELIVERED'));
-        } else if (res.body instanceof Object) {
-          console.log(res.body);
-          res.body.status.should.equal('DELIVERED');
-        } else {
-          res.body.should.equal(200);
-        }
+        res.body.length.should.be.greaterThan(0, 'No DELIVERED ECMRs were found.');
+        should.exist(res.body.find(ecmr => ecmr.status === 'DELIVERED'));
         done(err);
       });
   });
@@ -314,35 +328,11 @@ describe('A Compound Admin can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
-          done(err);
-        }
-        if (res.body instanceof Array) {
-          res.body.length.should.be.greaterThan(0, 'No CONFIRMED_DELIVERED ECMRs were found.');
-          res.body[0].should.equal('CONFIRMED_DELIVERED');
-        } else if (res.body instanceof Object) {
-          res.body.status.should.equal('CONFIRMED_DELIVERED');
-        } else {
-          res.body.should.equal(200);
-        }
-        done(err);
-      });
-  });
 
-  it('submit an update status from CREATED to LOADED', (done) => {
-    updateEcmr.status            = 'LOADED';
-    updateEcmr.compoundSignature = {
-      certificate: 'willem@amsterdamcompound.org',
-      timestamp:   0
-    };
-    server
-      .put('/api/v1/ECMR')
-      .set('x-access-token', token)
-      .send(updateEcmr)
-      .expect(200)
-      .end((err: Error) => {
-        if (err) {
-          console.log(err.stack);
+          return done(err);
         }
+        res.body.length.should.be.greaterThan(0, 'No CONFIRMED_DELIVERED ECMRs were found.');
+        should.exist(res.body.find((ecmr) => ecmr.status === 'CONFIRMED_DELIVERED'));
         done(err);
       });
   });
@@ -357,6 +347,7 @@ describe('A Compound Admin can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+          return done(err);
         }
         done(err);
       });
@@ -370,16 +361,10 @@ describe('A Compound Admin can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
-          done(err);
+
+          return done(err);
         }
-        if (res.body instanceof Array) {
-          //res.body.length.should.be.greaterThan(0, 'No CONFIRMED_DELIVERED ECMRs were found.');
-          should.exist(res.body[0].plateNumber);
-        } else if (res.body instanceof Object) {
-          should.exist(res.body.plateNumber);
-        } else {
-          res.body.should.equal(200);
-        }
+        should.exist(res.body.find((vehicle) => vehicle.plateNumber));
         done(err);
       });
   });
@@ -392,7 +377,8 @@ describe('A Compound Admin can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
-          done(err);
+
+          return done(err);
         }
         res.body.vin.should.equal('183726339N');
         done(err);
@@ -407,7 +393,8 @@ describe('A Compound Admin can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
-          done(err);
+
+          return done(err);
         }
         res.body.plateNumber.should.equal('AV198RX');
         done(err);
@@ -424,6 +411,51 @@ describe('A Compound Admin can', () => {
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
+  it('not update a pickup window of a transport order', (done) => {
+    const pickupWindow: PickupWindow = {
+      orderID:    '12345567890',
+      vin:        '183726339N',
+      dateWindow: [1010101010, 2020202020]
+    };
+    server
+      .put('/api/v1/transportOrder/updatePickupWindow')
+      .set('x-access-token', token)
+      .send(pickupWindow)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
+  it('not update a delivery window of a transport order', (done) => {
+    const pickupWindow: PickupWindow = {
+      orderID:    '12345567890',
+      vin:        '183726339N',
+      dateWindow: [1010101010, 2020202020]
+    };
+
+    server
+      .put('/api/v1/transportOrder/updateDeliveryWindow')
+      .set('x-access-token', token)
+      .send(pickupWindow)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
         }
         done(err);
       });

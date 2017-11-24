@@ -4,6 +4,8 @@ import {CancelModalComponent} from './cancel-modal/cancel-modal.component';
 import {TransportOrder} from '../../../../interfaces/transportOrder.interface';
 import {TransportOrderService} from '../../../../services/transportorder.service';
 import {AuthenticationService} from '../../../../services/authentication.service';
+import {EcmrService} from '../../../../services/ecmr.service';
+import {Ecmr} from '../../../../interfaces/ecmr.interface';
 
 @Component({
   selector:    'app-transportorder-detail',
@@ -11,9 +13,11 @@ import {AuthenticationService} from '../../../../services/authentication.service
   styleUrls:   ['./transportorder-detail.component.scss']
 })
 export class TransportorderDetailComponent implements OnInit {
-  @ViewChild(CancelModalComponent) public cancelModal: CancelModalComponent;
+  @ViewChild(CancelModalComponent)
+  public cancelModal: CancelModalComponent;
   private orderID: string;
   public transportOrder: TransportOrder;
+  public ecmrs: Ecmr[];
 
   public User = {
     CompoundAdmin:   'CompoundAdmin',
@@ -24,16 +28,19 @@ export class TransportorderDetailComponent implements OnInit {
 
   public constructor(private route: ActivatedRoute,
                      private transportOrderService: TransportOrderService,
-                     private authenticationService: AuthenticationService) {
+                     private authenticationService: AuthenticationService,
+                     private ecmrService: EcmrService) {
   }
 
   public ngOnInit(): void {
-    this.route.params
-      .subscribe(params => {
-        this.orderID = params['orderID'];
-        this.transportOrderService.getTransportOrderByOrderID(this.orderID).subscribe((transportOrder: TransportOrder) => {
-          this.transportOrder = transportOrder;
-        });
+    this.orderID = this.route.snapshot.paramMap.get('orderID');
+    this.transportOrderService.getTransportOrderByOrderID(this.orderID)
+      .subscribe((transportOrder: TransportOrder) => {
+        this.transportOrder = transportOrder;
+        this.ecmrService.getEcmrsByTransportOrderID(this.orderID)
+          .subscribe((ecmrs: Ecmr[]) => {
+            this.ecmrs = ecmrs;
+          });
       });
   }
 
@@ -44,6 +51,4 @@ export class TransportorderDetailComponent implements OnInit {
   public getUserRole(): string {
     return this.authenticationService.isAuthenticated() ? JSON.parse(localStorage.getItem('currentUser')).user.role : '';
   }
-
-
 }

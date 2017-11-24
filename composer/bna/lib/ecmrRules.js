@@ -80,7 +80,7 @@ function UpdateECMR(tx) {
   return getAssetRegistry('org.digitalcmr.ECMR')
     .then(function (assetRegistry) {
       return assetRegistry.get(tx.ecmr.ecmrID).catch(function (error) {
-        console.log('[Update ECMR] An error occurred while updating the registry asset: ' + error);
+        console.log('[Update ECMR] An error occurred while getting the registry asset: ' + error);
         throw error;
       });
     })
@@ -173,7 +173,7 @@ function UpdateECMR(tx) {
             throw error;
           });
         }).catch(function (error) {
-          console.log('[Update ECMR] An error occurred while updating the ECMR asset: ' + error);
+          console.log('[Update ECMR] An error occurred while getting the asset Registry: ' + error);
           throw error;
         });
     });
