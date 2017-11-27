@@ -260,8 +260,8 @@ rule CarrierMemberCanReadECMR {
     action: ALLOW
 }
 
-rule CarrierMemberCanReadTrasportOrder {
-    description: "Allow CarrierMember to READ TrasportOrder where he is a conpany is carrier and status is IN_PROGRESS"
+rule CarrierMemberCanReadTransportOrder {
+    description: "Allow CarrierMember to READ TransportOrder where his company is carrier and the status is IN_PROGRESS"
     participant(p): "org.digitalcmr.CarrierMember"
     operation: READ
     resource(r): "org.digitalcmr.TransportOrder"
