@@ -20,7 +20,6 @@
  */
 function createVehicles(tx) {
   console.log('Invoking function processor CreateVehicles');
-  console.log(tx);
 
   // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.Vehicle')
@@ -45,7 +44,6 @@ function createVehicles(tx) {
 function updateRegistrationCountry(tx) {
 
   console.log('Invoking function processor to update RegistrationCountry');
-  console.log(tx);
 
   // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.Vehicle')

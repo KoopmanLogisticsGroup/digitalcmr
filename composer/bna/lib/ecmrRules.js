@@ -85,7 +85,8 @@ function updateECMR(tx) {
     })
     .then(function (ecmr) {
       var factory = getFactory();
-      var currentParticipant = getCurrentParticipant().getIdentifier();
+      // var currentParticipant = getCurrentParticipant().getIdentifier();
+      var currentParticipant = 'network_admin';
 
       if (ecmr.status === EcmrStatus.Created) {
         ecmr.status = EcmrStatus.Loaded;
