@@ -17,8 +17,8 @@ docker rm -f `docker ps -aq`
 ```
 **Tip:** You can add something like a `cleanDocker` alias to use anytime for cleaning up your env.
 ```bash
-source ~/.bash_profile
 echo "alias cleanDocker='docker rm -f -v $(docker ps -aq) 2>/dev/null; docker rmi $(docker images -qf "dangling=true") 2>/dev/null; docker rmi $(docker images | grep "dev-" | awk "{print $1}") 2>/dev/null; docker rmi $(docker images | grep "^<none>" | awk "{print $3}") 2>/dev/null;'" >> ~/.bash_profile
+source ~/.bash_profile
 ```
 Restart your terminal and then try to run: `cleanDocker`.
 
@@ -44,9 +44,3 @@ Additional and useful commands:
 - if you are working only frontend: `docker-compose -f app-only.yml up --force-recreate client`
 
 **Remember you can kill containers singularly and restart them in case you need. You should not clean up and restart all the environment every time if not needed** (that will save you a lot of time).
-
-## Generate TypeScript for the server  
-When you run the following command the models and API's are generated automatically.
-```bash
-npm run generateSDK
-```

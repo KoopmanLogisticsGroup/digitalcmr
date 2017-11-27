@@ -14,11 +14,11 @@
 
 /**
  * Create ecmr transaction processor function.
- * @param {org.digitalcmr.CreateECMR} tx  - The create ecmr transaction
+ * @param {org.digitalcmr.CreateECMR} tx  - Create ECMR transaction
  * @return {Promise} Asset registry Promise
  * @transaction
  */
-function CreateECMR(tx) {
+function createECMR(tx) {
   console.log('Invoking function: CreateECMR');
 
   // Get the asset registry for the asset.
@@ -29,7 +29,7 @@ function CreateECMR(tx) {
           console.log('Asset added with success');
         })
         .catch(function (error) {
-          console.log('An error occurred while addAll ecmr assets', error);
+          console.log('An error occurred while addAll ECMRs', error);
           throw error;
         });
     }).catch(function (error) {
@@ -40,12 +40,11 @@ function CreateECMR(tx) {
 
 /**
  * Create ECMRs transaction processor function.
- * @param {org.digitalcmr.CreateECMRs} tx  - Create ecmrs transaction
+ * @param {org.digitalcmr.CreateECMRs} tx  - Create ECMRs transaction
  * @return {Promise} Asset registry Promise
  * @transaction
  */
-function CreateECMRs(tx) {
-
+function createECMRs(tx) {
   console.log('Invoking function: CreateECMRs');
 
   // Get the asset registry for the asset.
@@ -53,26 +52,26 @@ function CreateECMRs(tx) {
     .then(function (assetRegistry) {
       return assetRegistry.addAll(tx.ecmrs)
         .then(function () {
-          console.log('Asset added with success');
+          console.log('ECMRs added with success');
+          updateTransportOrderToInProgress(tx);
         })
         .catch(function (error) {
-          console.log('An error occurred while addAll ecmr assets', error);
+          console.log('An error occurred while addAll ECMRs', error);
           throw error;
         });
     }).catch(function (error) {
-      console.log('An error occurred while saving the ecmr assets', error);
+      console.log('An error occurred while getting the asset registry', error);
       throw error;
     });
 }
 
 /**
  * Update EMCR transaction processor function.
- * @param {org.digitalcmr.UpdateECMR} tx  - The UpdateECMR transaction
+ * @param {org.digitalcmr.UpdateECMR} tx  - UpdateECMR transaction
  * @return {Promise} Asset registry Promise
  * @transaction
  */
-function UpdateECMR(tx) {
-
+function updateECMR(tx) {
   console.log('Invoking function processor to set update ECMR');
   console.log('ecmrID: ' + tx.ecmr.ecmrID);
 
@@ -85,43 +84,42 @@ function UpdateECMR(tx) {
       });
     })
     .then(function (ecmr) {
-      ecmr.status = tx.ecmr.status;
+      var factory = getFactory();
+      var currentParticipant = getCurrentParticipant() && getCurrentParticipant().getIdentifier();
+      if (currentParticipant == undefined) {
+        console.log('setting currentParticipant');
+        currentParticipant = 'network_admin';
+      }
 
-      var statusIsValid = false;
+      if (ecmr.status === EcmrStatus.Created) {
+        ecmr.status = EcmrStatus.Loaded;
 
-      //if the compound admin updated the ecmr status as LOADED, add the compound admin signature
-      if (ecmr.status === 'LOADED') {
-        statusIsValid = true;
-        // write the compound signature into the ecmr
         ecmr.compoundSignature = tx.ecmr.compoundSignature;
+        ecmr.compoundSignature.certificate = factory.newRelationship('org.digitalcmr', 'User', currentParticipant);
+
         // write the compound remarks into the ecmr
         for (var i = 0; tx.ecmr.goods && i < tx.ecmr.goods.length; i++) {
           if (tx.ecmr.goods[i].compoundRemark) {
             ecmr.goods[i].compoundRemark = tx.ecmr.goods[i].compoundRemark;
           }
         }
-      }
-
-      //if the transporter updated the ecmr status as IN_TRANSIT, add the transporter signature confirming the loading
-      if (ecmr.status === 'IN_TRANSIT') {
-        statusIsValid = true;
-        // check if the required signatures has been placed in the previous steps
+      } else if (ecmr.status === EcmrStatus.Loaded) {
         if (!ecmr.compoundSignature) {
           throw new Error("[Update ECMR] Transaction is not valid. Attempt to set the status on IN_TRANSIT before the compound admin signature");
         }
-        // write the carrier loading signature into the ecmr
+
+        ecmr.status = EcmrStatus.InTransit;
+
         ecmr.carrierLoadingSignature = tx.ecmr.carrierLoadingSignature;
+        ecmr.carrierLoadingSignature.certificate = factory.newRelationship('org.digitalcmr', 'User', currentParticipant);
+
         // write the carrier loading remarks into the ecmr
         for (var i = 0; tx.ecmr.goods && i < tx.ecmr.goods.length; i++) {
           if (tx.ecmr.goods[i].carrierLoadingRemark) {
             ecmr.goods[i].carrierLoadingRemark = tx.ecmr.goods[i].carrierLoadingRemark;
           }
         }
-      }
-
-      //if the transporter updated the ecmr status as DELIVERED, add the trasnsporter admin signature
-      if (ecmr.status === 'DELIVERED') {
-        statusIsValid = true;
+      } else if (ecmr.status === EcmrStatus.InTransit) {
         // check if the required signatures has been placed in the previous steps
         if (!ecmr.compoundSignature) {
           throw new Error("[Update ECMR] Transaction is not valid. Attempt to set the status on DELIVERED before the compound admin signed!");
@@ -129,19 +127,25 @@ function UpdateECMR(tx) {
         if (!ecmr.carrierLoadingSignature) {
           throw new Error("[Update ECMR] Transaction is not valid. Attempt to set the status on DELIVERED before the transporter signed for the loading!");
         }
+
+        ecmr.status = EcmrStatus.Delivered;
+
         // write the carrier delivery signature into the ecmr
         ecmr.carrierDeliverySignature = tx.ecmr.carrierDeliverySignature;
+        ecmr.carrierDeliverySignature.certificate = factory.newRelationship('org.digitalcmr', 'User', currentParticipant);
+
+
         // write the carrier delivery remarks into the ecmr
         for (var i = 0; tx.ecmr.goods && i < tx.ecmr.goods.length; i++) {
           if (tx.ecmr.goods[i].carrierDeliveryRemark) {
             ecmr.goods[i].carrierDeliveryRemark = tx.ecmr.goods[i].carrierDeliveryRemark;
           }
         }
-      }
 
-      //if the recipient has confirmed the delivery and updated the ecmr status as CONFIRMED_DELIVERED, add the recipient signature
-      if (ecmr.status === 'CONFIRMED_DELIVERED') {
-        statusIsValid = true;
+        updateTransportOrderStatusToCompleted(tx).then(function () {
+          console.log('updated transport order');
+        });
+      } else if (ecmr.status === EcmrStatus.Delivered) {
         // check if the required signatures has been placed in the previous steps
         if (!ecmr.compoundSignature) {
           throw new Error("[Update ECMR] Transaction is not valid. Attempt to set the status on CONFIRMED_DELIVERED before the compound admin signed!");
@@ -152,19 +156,20 @@ function UpdateECMR(tx) {
         if (!ecmr.carrierDeliverySignature) {
           throw new Error("[Update ECMR] Transaction is not valid. Attempt to set the status on CONFIRMED_DELIVERED before the transporter signed for the delivery!");
         }
+
+        ecmr.status = EcmrStatus.ConfirmedDelivered;
+
         // write the recipient signature into the ecmr
         ecmr.recipientSignature = tx.ecmr.recipientSignature;
+        ecmr.recipientSignature.certificate = factory.newRelationship('org.digitalcmr', 'User', currentParticipant);
+
         // write the recipient remarks into the ecmr
         for (var i = 0; tx.ecmr.goods && i < tx.ecmr.goods.length; i++) {
           if (tx.ecmr.goods[i].recipientRemark) {
             ecmr.goods[i].recipientRemark = tx.ecmr.goods[i].recipientRemark;
           }
         }
-      }
-
-      if (!statusIsValid) {
-        throw new Error("[Update ECMR] Validation failure! Provided status: " + ecmr.status + "is not a valid status!");
-      }
+      } else throw new Error("[Update ECMR] Validation failure! Provided status: " + ecmr.status + "is not a valid status!");
 
       return getAssetRegistry('org.digitalcmr.ECMR')
         .then(function (assetRegistry) {

@@ -244,11 +244,37 @@ transaction CreateVehicles {
 }
 
 transaction CreateECMRs {
+  --> TransportOrder transportOrder
   o ECMR[] ecmrs
 }
 
 transaction UpdateECMR {
+  --> TransportOrder transportOrder
   o ECMR ecmr
+}
+
+transaction UpdateEcmrStatusToLoaded {
+  --> TransportOrder transportOrder
+  --> ECMR ecmr
+  o ECMR updatedEcmr
+}
+
+transaction UpdateEcmrStatusToInTransit {
+  --> TransportOrder transportOrder
+  --> ECMR ecmr
+  o ECMR updatedEcmr
+}
+
+transaction UpdateEcmrStatusToDelivered {
+  --> TransportOrder transportOrder
+  --> ECMR ecmr
+  o ECMR updatedEcmr
+}
+
+transaction UpdateEcmrStatusToConfirmedDelivered {
+  --> TransportOrder transportOrder
+  --> ECMR ecmr
+  o ECMR updatedEcmr
 }
 
 transaction UpdateTransportOrderStatusToCanceled {

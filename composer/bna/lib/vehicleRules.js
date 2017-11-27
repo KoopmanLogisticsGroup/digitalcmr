@@ -14,14 +14,12 @@
 
 /**
  * Create RecipientOrg transaction processor function.
- * @param {org.digitalcmr.CreateVehicles} tx  - The CreateVehicles transaction
+ * @param {org.digitalcmr.CreateVehicles} tx  - CreateVehicles transaction
  * @return {Promise} Asset registry Promise
  * @transaction
  */
-function CreateVehicles(tx) {
-
+function createVehicles(tx) {
   console.log('Invoking function processor CreateVehicles');
-  console.log(tx);
 
   // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.Vehicle')
@@ -39,19 +37,19 @@ function CreateVehicles(tx) {
 
 /**
  * Create UpdateRegistrationCountry transaction processor function.
- * @param {org.digitalcmr.UpdateRegistrationCountry} tx  - Create registration country transaction
+ * @param {org.digitalcmr.UpdateRegistrationCountry} tx  - Create Registration Country transaction
  * @return {Promise} Asset registry Promise
  * @transaction
  */
 function updateRegistrationCountry(tx) {
 
   console.log('Invoking function processor to update RegistrationCountry');
-  console.log(tx);
 
   // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.Vehicle')
     .then(function (assetRegistry) {
       tx.vehicle.registrationCountry = tx.registrationCountry;
+
       return assetRegistry.update(tx.vehicle).catch(function (error) {
             console.log('[Update Vehicle] An error occurred while updating the registry asset: ' + error);
             throw error;

@@ -401,16 +401,16 @@
   ],
   "ecmrs":           [
     {
-      "$class":                 "org.digitalcmr.ECMR",
-      "ecmrID":                 "A1234567890",
-      "status":                 "CREATED",
-      "agreementTerms":         "agreement terms here",
-      "agreementTermsSec":      "agreement terms sec",
-      "legalOwnerRef":          "ASD213123S",
-      "carrierRef":             "H2238723VASD",
-      "recipientRef":           "SDADHGA21312312",
-      "orderID":                "AAAA123456",
-      "creation":               {
+      "$class":            "org.digitalcmr.ECMR",
+      "ecmrID":            "A1234567890",
+      "status":            "CREATED",
+      "agreementTerms":    "agreement terms here",
+      "agreementTermsSec": "agreement terms sec",
+      "legalOwnerRef":     "ASD213123S",
+      "carrierRef":        "H2238723VASD",
+      "recipientRef":      "SDADHGA21312312",
+      "orderID":           "12345567890",
+      "creation":          {
         "$class":  "org.digitalcmr.Creation",
         "address": {
           "$class":      "org.digitalcmr.Address",
@@ -828,7 +828,7 @@
       "legalOwnerRef":          "ASD213123S",
       "carrierRef":             "H2238723VASD",
       "recipientRef":           "SDADHGA21312312",
-      "orderID":                "AAAA123456",
+      "orderID":                "12345567890",
       "creation":               {
         "$class":  "org.digitalcmr.Creation",
         "address": {
@@ -952,7 +952,7 @@
       "legalOwnerRef":          "ASD213123S",
       "carrierRef":             "H2238723VASD",
       "recipientRef":           "SDADHGA21312312",
-      "orderID":                "AAAA123456",
+      "orderID":                "12345567890",
       "creation":               {
         "$class":  "org.digitalcmr.Creation",
         "address": {
@@ -1076,7 +1076,7 @@
       "legalOwnerRef":           "ASD213123S",
       "carrierRef":              "H2238723VASD",
       "recipientRef":            "SDADHGA21312312",
-      "orderID":                 "AAAA123456",
+      "orderID":                 "12345567890",
       "creation":                {
         "$class":  "org.digitalcmr.Creation",
         "address": {
@@ -1251,7 +1251,7 @@
       "legalOwnerRef":            "ASD213123S",
       "carrierRef":               "H2238723VASD",
       "recipientRef":             "SDADHGA21312312",
-      "orderID":                  "AAAA123456",
+      "orderID":                  "12345567890",
       "creation":                 {
         "$class":  "org.digitalcmr.Creation",
         "address": {
@@ -1524,7 +1524,7 @@
       "legalOwnerRef":           "ASD213123S",
       "carrierRef":              "H2238723VASD",
       "recipientRef":            "SDADHGA21312312",
-      "orderID":                 "AAAA123456",
+      "orderID":                 "12345567890",
       "creation":                {
         "$class":  "org.digitalcmr.Creation",
         "address": {
@@ -1699,7 +1699,7 @@
       "legalOwnerRef":          "ASD213123S",
       "carrierRef":             "H2238723VASD",
       "recipientRef":           "SDADHGA21312312",
-      "orderID":                "AAAA123456",
+      "orderID":                "12345567890",
       "creation":               {
         "$class":  "org.digitalcmr.Creation",
         "address": {
@@ -1811,16 +1811,16 @@
       "payOnDelivery":          "string"
     },
     {
-      "$class":                   "org.digitalcmr.ECMR",
-      "ecmrID":                   "I1234567890",
-      "status":                   "CONFIRMED_DELIVERED",
-      "agreementTerms":           "agreement terms here",
-      "agreementTermsSec":        "agreement terms sec",
-      "legalOwnerRef":            "ASD213123S",
-      "carrierRef":               "H2238723VASD",
-      "recipientRef":             "SDADHGA21312312",
-      "orderID":                  "AAAA123456",
-      "creation":                 {
+      "$class":            "org.digitalcmr.ECMR",
+      "ecmrID":            "I1234567890",
+      "status":            "CONFIRMED_DELIVERED",
+      "agreementTerms":    "agreement terms here",
+      "agreementTermsSec": "agreement terms sec",
+      "legalOwnerRef":     "ASD213123S",
+      "carrierRef":        "H2238723VASD",
+      "recipientRef":      "SDADHGA21312312",
+      "orderID":           "12345567890",
+      "creation":          {
         "$class":  "org.digitalcmr.Creation",
         "address": {
           "$class":      "org.digitalcmr.Address",

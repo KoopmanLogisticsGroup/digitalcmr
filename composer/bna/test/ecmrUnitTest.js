@@ -119,7 +119,7 @@ describe('Admin of the network', () => {
     ecmr.legalOwnerRef = 'aqe2321312';
     ecmr.carrierRef = 'asdisajdaiodasj';
     ecmr.recipientRef = '2323423dsdf';
-    ecmr.orderID = 'A1234567890';
+    ecmr.orderID = 'ORDER1';
 
     return ecmr;
   }
@@ -138,6 +138,34 @@ describe('Admin of the network', () => {
     vehicle.plateNumber = 'platenumber';
 
     return vehicle;
+  }
+
+  function buildTransportOrder(transportOrderID) {
+    let transportOrder = factory.newResource(namespace, 'TransportOrder', transportOrderID);
+    transportOrder.owner = factory.newRelationship(namespace, 'LegalOwnerOrg', 'lapo@leaseplan.org');
+    transportOrder.source = factory.newRelationship(namespace, 'CompoundOrg', 'amsterdamcompound');
+    transportOrder.carrier = factory.newRelationship(namespace, 'CarrierOrg', 'koopman');
+    transportOrder.goods = [];
+    transportOrder.goods[0] = factory.newConcept(namespace, 'Good');
+    transportOrder.goods[0].description = 'Car 1';
+    transportOrder.goods[0].vehicle = buildVehicle('213123123123ASDSAD');
+    transportOrder.goods[0].pickupWindow = factory.newConcept(namespace, 'DateWindow');
+    transportOrder.goods[0].deliveryWindow = factory.newConcept(namespace, 'DateWindow');
+    transportOrder.goods[0].pickupWindow.startDate = 0;
+    transportOrder.goods[0].pickupWindow.endDate = 0;
+    transportOrder.goods[0].deliveryWindow.startDate = 0;
+    transportOrder.goods[0].deliveryWindow.endDate = 0;
+    transportOrder.goods[0].loadingAddress = factory.newConcept(namespace, 'Address');
+    transportOrder.goods[0].deliveryAddress = factory.newConcept(namespace, 'Address');
+    transportOrder.goods[0].loadingAddress = buildAddress();
+    transportOrder.goods[0].deliveryAddress = buildAddress();
+    transportOrder.issueDate = 0;
+    transportOrder.ecmrs = [];
+    transportOrder.status = 'OPEN';
+    transportOrder.ecmrs[0] = factory.newRelationship(namespace, 'ECMR', buildECMR('ecmr12345'));
+    transportOrder.orderRef = 'order1';
+
+    return transportOrder;
   }
 
   /**
@@ -210,9 +238,9 @@ describe('Admin of the network', () => {
         // creates two transactions for two different carrier transports
 
         let ecmrList = [];
-        ecmrList.push(buildECMR('ecmr1'));
+        ecmrList.push(buildECMR('created'));
 
-        let ecmr = buildECMR('ecmr2');
+        let ecmr = buildECMR('loaded');
         ecmr.status = ecmrStatus.Loaded;
         ecmr.compoundSignature = buildSignature(userIDs.Willem);
         ecmrList.push(ecmr);
@@ -245,6 +273,21 @@ describe('Admin of the network', () => {
         ecmr.status = ecmrStatus.Delivered;
         ecmrList.push(ecmr);
 
+        ecmr = buildECMR('ecmr12');
+        ecmr.status = ecmrStatus.Delivered;
+        ecmrList.push(ecmr);
+
+        ecmr = buildECMR('ecmr13');
+        ecmr.status = ecmrStatus.Delivered;
+        ecmr.compoundSignature = buildSignature(userIDs.Willem);
+        ecmrList.push(ecmr);
+
+        ecmr = buildECMR('ecmr14');
+        ecmr.status = ecmrStatus.Delivered;
+        ecmr.compoundSignature = buildSignature(userIDs.Willem);
+        ecmr.carrierLoadingSignature = buildSignature(userIDs.Harry);
+        ecmrList.push(ecmr);
+
         return businessNetworkConnection.getAssetRegistry('org.digitalcmr.ECMR')
           .then((assetRegistry) => {
             return assetRegistry.addAll(ecmrList);
@@ -254,7 +297,6 @@ describe('Admin of the network', () => {
       })
   });
 
-  // // write below here your unit tests
   it('A new ECMR can be created', () => {
     const transaction = factory.newTransaction('org.digitalcmr', 'CreateECMR');
     transaction.ecmr = buildECMR('ecmr8');
@@ -275,10 +317,16 @@ describe('Admin of the network', () => {
     let ecmrs = [];
     ecmrs.push(buildECMR('ecmr8'));
     ecmrs.push(buildECMR('ecmr9'));
-    const transaction = factory.newTransaction('org.digitalcmr', 'CreateECMRs');
-    transaction.ecmrs = ecmrs;
-
+    const transaction = factory.newTransaction(namespace, 'CreateTransportOrder');
+    transaction.transportOrder = buildTransportOrder('ORDER1');
     return businessNetworkConnection.submitTransaction(transaction)
+      .then(() => {
+        const transaction = factory.newTransaction('org.digitalcmr', 'CreateECMRs');
+        transaction.ecmrs = ecmrs;
+        transaction.transportOrder = factory.newRelationship('org.digitalcmr', 'TransportOrder', ecmrs[0].orderID);
+
+        return businessNetworkConnection.submitTransaction(transaction)
+      })
       .then(() => {
         return businessNetworkConnection.getAssetRegistry('org.digitalcmr.ECMR');
       })
@@ -291,9 +339,10 @@ describe('Admin of the network', () => {
       });
   });
 
-  it('should be able to update ECMR status to LOADED when status is CREATED', () => {
+  it('should be able to update ECMR status from CREATED to LOADED', () => {
     let updateTransaction = factory.newTransaction(namespace, 'UpdateECMR');
-    updateTransaction.ecmr = buildECMR('ecmr2');
+    updateTransaction.transportOrder = factory.newRelationship('org.digitalcmr', 'TransportOrder', 'ORDER1');
+    updateTransaction.ecmr = buildECMR('created');
     updateTransaction.ecmr.status = ecmrStatus.Loaded;
     updateTransaction.ecmr.compoundSignature = buildSignature(userIDs.Willem);
 
@@ -301,26 +350,31 @@ describe('Admin of the network', () => {
       .then(() => {
         return businessNetworkConnection.getAssetRegistry('org.digitalcmr.ECMR')
           .then((assetRegistry) => {
-            return assetRegistry.get('ecmr2');
+            return assetRegistry.get('created');
           })
           .then((updatedECMR) => {
             updatedECMR.status.should.equal(ecmrStatus.Loaded);
           });
       });
   });
+  it('should be able to update ECMR status from LOADED to IN_TRANSIT', () => {
+    const transaction = factory.newTransaction(namespace, 'CreateTransportOrder');
+    transaction.transportOrder = buildTransportOrder('ORDER1');
 
-  it('should be able to update ECMR status to IN_TRANSIT when status is LOADED', () => {
-    let updateTransaction = factory.newTransaction(namespace, 'UpdateECMR');
-    updateTransaction.ecmr = buildECMR('ecmr2');
-    updateTransaction.ecmr.status = ecmrStatus.InTransit;
-    updateTransaction.ecmr.compoundSignature = buildSignature(userIDs.Willem);
-    updateTransaction.ecmr.carrierLoadingSignature = buildSignature(userIDs.Harry);
+    return businessNetworkConnection.submitTransaction(transaction)
+      .then(() => {
+        const updateTransaction = factory.newTransaction(namespace, 'UpdateECMR');
+        updateTransaction.ecmr = buildECMR('loaded');
+        updateTransaction.ecmr.status = ecmrStatus.InTransit;
+        updateTransaction.ecmr.carrierLoadingSignature = buildSignature(userIDs.Harry);
+        updateTransaction.transportOrder = factory.newRelationship('org.digitalcmr', 'TransportOrder', 'ORDER1');
 
-    return businessNetworkConnection.submitTransaction(updateTransaction)
+        return businessNetworkConnection.submitTransaction(updateTransaction)
+      })
       .then(() => {
         return businessNetworkConnection.getAssetRegistry('org.digitalcmr.ECMR')
           .then((assetRegistry) => {
-            return assetRegistry.get('ecmr2');
+            return assetRegistry.get('loaded');
           })
           .then((updatedECMR) => {
             updatedECMR.status.should.equal(ecmrStatus.InTransit);
@@ -328,23 +382,29 @@ describe('Admin of the network', () => {
       });
   });
 
-  it('should not be able to update ECMR status to IN_TRANSIT when status is LOADED without signature', () => {
-    let updateTransaction = factory.newTransaction(namespace, 'UpdateECMR');
-    updateTransaction.ecmr = buildECMR('ecmr1');
-    updateTransaction.ecmr.status = ecmrStatus.InTransit;
-    updateTransaction.ecmr.carrierLoadingSignature = undefined;
-
-    return businessNetworkConnection.submitTransaction(updateTransaction)
-      .should.be.rejectedWith(/Attempt to set the status on IN_TRANSIT before the compound admin signature/);
-  });
+  // it('should not be able to update ECMR status to IN_TRANSIT when status is LOADED without signature', () => {
+  //   let updateTransaction = factory.newTransaction(namespace, 'UpdateECMR');
+  //   updateTransaction.transportOrder = factory.newRelationship('org.digitalcmr', 'TransportOrder', 'ORDER1');
+  //   updateTransaction.ecmr = buildECMR('created');
+  //   updateTransaction.ecmr.status = ecmrStatus.InTransit;
+  //
+  //   return businessNetworkConnection.submitTransaction(updateTransaction)
+  //     .should.be.rejectedWith(/Attempt to set the status on IN_TRANSIT before the compound admin signature/);
+  // });
 
   it('should be able to update ECMR status to DELIVERED when status is IN_TRANSIT', () => {
-    let updateTransaction = factory.newTransaction(namespace, 'UpdateECMR');
-    updateTransaction.ecmr = buildECMR('ecmr3');
-    updateTransaction.ecmr.status = ecmrStatus.Delivered;
-    updateTransaction.ecmr.carrierDeliverySignature = buildSignature(userIDs.Harry);
+    const transaction = factory.newTransaction(namespace, 'CreateTransportOrder');
+    transaction.transportOrder = buildTransportOrder('ORDER1');
+    return businessNetworkConnection.submitTransaction(transaction)
+      .then(() => {
+        let updateTransaction = factory.newTransaction(namespace, 'UpdateECMR');
+        updateTransaction.ecmr = buildECMR('ecmr3');
+        updateTransaction.ecmr.status = ecmrStatus.Delivered;
+        updateTransaction.ecmr.carrierDeliverySignature = buildSignature(userIDs.Harry);
+        updateTransaction.transportOrder = factory.newRelationship('org.digitalcmr', 'TransportOrder', 'ORDER1');
 
-    return businessNetworkConnection.submitTransaction(updateTransaction)
+        return businessNetworkConnection.submitTransaction(updateTransaction)
+      })
       .then(() => {
         return businessNetworkConnection.getAssetRegistry('org.digitalcmr.ECMR')
           .then((assetRegistry) => {
@@ -358,6 +418,7 @@ describe('Admin of the network', () => {
 
   it('should be able to update ECMR status to CONFIRMED_DELIVERED when status is DELIVERED', () => {
     let updateTransaction = factory.newTransaction(namespace, 'UpdateECMR');
+    updateTransaction.transportOrder = factory.newRelationship('org.digitalcmr', 'TransportOrder', 'ORDER1');
     updateTransaction.ecmr = buildECMR('ecmr4');
     updateTransaction.ecmr.status = ecmrStatus.ConfirmedDelivered;
     updateTransaction.ecmr.recipientSignature = buildSignature(userIDs.Rob);
@@ -376,6 +437,7 @@ describe('Admin of the network', () => {
 
   it('should not be able to update ECMR status to DELIVERED when status is IN_TRANSIT without compound signature', () => {
     let updateTransaction = factory.newTransaction(namespace, 'UpdateECMR');
+    updateTransaction.transportOrder = factory.newRelationship('org.digitalcmr', 'TransportOrder', 'ORDER1');
     updateTransaction.ecmr = buildECMR('ecmr5');
     updateTransaction.ecmr.status = ecmrStatus.Delivered;
 
@@ -385,6 +447,7 @@ describe('Admin of the network', () => {
 
   it('should not be able to update ECMR status to DELIVERED when status is IN_TRANSIT before transporter signed for loading', () => {
     let updateTransaction = factory.newTransaction(namespace, 'UpdateECMR');
+    updateTransaction.transportOrder = factory.newRelationship('org.digitalcmr', 'TransportOrder', 'ORDER1');
     updateTransaction.ecmr = buildECMR('ecmr6');
     updateTransaction.ecmr.status = ecmrStatus.Delivered;
 
@@ -394,7 +457,8 @@ describe('Admin of the network', () => {
 
   it('should not be able to update ECMR status to CONFIRMED_DELIVERED when without signature before compound admin signed', () => {
     let updateTransaction = factory.newTransaction(namespace, 'UpdateECMR');
-    updateTransaction.ecmr = buildECMR('ecmr5');
+    updateTransaction.transportOrder = factory.newRelationship('org.digitalcmr', 'TransportOrder', 'ORDER1');
+    updateTransaction.ecmr = buildECMR('ecmr12');
     updateTransaction.ecmr.status = ecmrStatus.ConfirmedDelivered;
 
     return businessNetworkConnection.submitTransaction(updateTransaction)
@@ -403,7 +467,8 @@ describe('Admin of the network', () => {
 
   it('should not be able to update ECMR status to CONFIRMED_DELIVERED when without signature before the transporter signed for loading', () => {
     let updateTransaction = factory.newTransaction(namespace, 'UpdateECMR');
-    updateTransaction.ecmr = buildECMR('ecmr6');
+    updateTransaction.transportOrder = factory.newRelationship('org.digitalcmr', 'TransportOrder', 'ORDER1');
+    updateTransaction.ecmr = buildECMR('ecmr13');
     updateTransaction.ecmr.status = ecmrStatus.ConfirmedDelivered;
 
     return businessNetworkConnection.submitTransaction(updateTransaction)
@@ -412,7 +477,8 @@ describe('Admin of the network', () => {
 
   it('should not be able to update ECMR status to CONFIRMED_DELIVERED when without signature before the transport signed for delivery', () => {
     let updateTransaction = factory.newTransaction(namespace, 'UpdateECMR');
-    updateTransaction.ecmr = buildECMR('ecmr7');
+    updateTransaction.transportOrder = factory.newRelationship('org.digitalcmr', 'TransportOrder', 'ORDER1');
+    updateTransaction.ecmr = buildECMR('ecmr14');
     updateTransaction.ecmr.status = ecmrStatus.ConfirmedDelivered;
 
     return businessNetworkConnection.submitTransaction(updateTransaction)

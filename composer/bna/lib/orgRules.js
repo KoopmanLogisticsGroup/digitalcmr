@@ -14,12 +14,11 @@
 
 /**
  * Create Legal Owner org transaction processor function.
- * @param {org.digitalcmr.CreateLegalOwnerOrg} tx  - The CreateLegalOwnerOrg transaction
+ * @param {org.digitalcmr.CreateLegalOwnerOrg} tx  - CreateLegalOwnerOrg transaction
  * @return {Promise} Asset registry Promise
  * @transaction
  */
-function CreateLegalOwnerOrg(tx) {
-
+function createLegalOwnerOrg(tx) {
   console.log('Invoking function processor CreateLegalOwnerOrg');
   console.log(tx);
 
@@ -39,12 +38,11 @@ function CreateLegalOwnerOrg(tx) {
 
 /**
  * CreateCompoundOrg transaction processor function.
- * @param {org.digitalcmr.CreateCompoundOrg} tx  - The CreateCompoundOrg transaction
+ * @param {org.digitalcmr.CreateCompoundOrg} tx  - CreateCompoundOrg transaction
  * @return {Promise} Asset registry Promise
  * @transaction
  */
-function CreateCompoundOrg(tx) {
-
+function createCompoundOrg(tx) {
   console.log('Invoking function processor create CompoundOrg');
   console.log(tx);
 
@@ -64,12 +62,11 @@ function CreateCompoundOrg(tx) {
 
 /**
  * Create CarrierOrg transaction processor function.
- * @param {org.digitalcmr.CreateCarrierOrg} tx  - The CreateCarrierOrg transaction
+ * @param {org.digitalcmr.CreateCarrierOrg} tx  - CreateCarrierOrg transaction
  * @return {Promise} Asset registry Promise
  * @transaction
  */
-function CreateCarrierOrg(tx) {
-
+function createCarrierOrg(tx) {
   console.log('Invoking function processor create CarrierOrg');
   console.log(tx);
 
@@ -89,12 +86,11 @@ function CreateCarrierOrg(tx) {
 
 /**
  * Create RecipientOrg transaction processor function.
- * @param {org.digitalcmr.CreateRecipientOrg} tx  - The RecipientOrg transaction
+ * @param {org.digitalcmr.CreateRecipientOrg} tx - RecipientOrg transaction
  * @return {Promise} Asset registry Promise
  * @transaction
  */
-function CreateRecipientOrg(tx) {
-
+function createRecipientOrg(tx) {
   console.log('Invoking function processor create RecipientOrg');
   console.log(tx);
 

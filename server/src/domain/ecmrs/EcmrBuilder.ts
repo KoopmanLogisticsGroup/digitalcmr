@@ -22,63 +22,51 @@ export class EcmrBuilder {
 
     if (ecmr.compoundSignature) {
       validatedObject.compoundSignature             = BuilderUtils.createConcept(factory, namespace, 'Signature', ecmr.compoundSignature);
-      validatedObject.compoundSignature.certificate = BuilderUtils.createRelationship(factory, namespace, 'User', identity.userID || ecmr.compoundSignature.certificate);
+      validatedObject.compoundSignature.certificate = BuilderUtils.createRelationship(factory, namespace, 'User', ecmr.compoundSignature.certificate || identity.userID);
       if (ecmr.compoundSignature.generalRemark) {
         validatedObject.compoundSignature.generalRemark = BuilderUtils.createConcept(factory, namespace, 'Remark', ecmr.compoundSignature.generalRemark);
       }
-
-      if (ecmr.status === 'CREATED') {
-        validatedObject.status = 'LOADED';
-        if (ip) {
-          validatedObject.compoundSignature.ip = ip;
-        }
+      if (ip) {
+        validatedObject.compoundSignature.ip = ip;
       }
 
       validatedObject.compoundSignature.timestamp = new Date().getTime();
     }
+
     if (ecmr.carrierLoadingSignature) {
       validatedObject.carrierLoadingSignature             = BuilderUtils.createConcept(factory, namespace, 'Signature', ecmr.carrierLoadingSignature);
-      validatedObject.carrierLoadingSignature.certificate = BuilderUtils.createRelationship(factory, namespace, 'User', identity.userID || ecmr.carrierLoadingSignature.certificate);
+      validatedObject.carrierLoadingSignature.certificate = BuilderUtils.createRelationship(factory, namespace, 'User', ecmr.carrierLoadingSignature.certificate || identity.userID);
       if (ecmr.carrierLoadingSignature.generalRemark) {
         validatedObject.carrierLoadingSignature.generalRemark = BuilderUtils.createConcept(factory, namespace, 'Remark', ecmr.carrierLoadingSignature.generalRemark);
       }
-      if (ecmr.status === 'LOADED') {
-        validatedObject.status = 'IN_TRANSIT';
-        if (ip) {
-          validatedObject.carrierLoadingSignature.ip = ip;
-        }
+      if (ip) {
+        validatedObject.carrierLoadingSignature.ip = ip;
       }
 
       validatedObject.carrierLoadingSignature.timestamp = new Date().getTime();
     }
+
     if (ecmr.carrierDeliverySignature) {
       validatedObject.carrierDeliverySignature             = BuilderUtils.createConcept(factory, namespace, 'Signature', ecmr.carrierDeliverySignature);
-      validatedObject.carrierDeliverySignature.certificate = BuilderUtils.createRelationship(factory, namespace, 'User', identity.userID || ecmr.carrierDeliverySignature.certificate);
+      validatedObject.carrierDeliverySignature.certificate = BuilderUtils.createRelationship(factory, namespace, 'User', ecmr.carrierDeliverySignature.certificate || identity.userID);
       if (ecmr.carrierDeliverySignature.generalRemark) {
         validatedObject.carrierDeliverySignature.generalRemark = BuilderUtils.createConcept(factory, namespace, 'Remark', ecmr.carrierDeliverySignature.generalRemark);
       }
-
-      if (ecmr.status === 'IN_TRANSIT') {
-        if (ip) {
-          validatedObject.carrierDeliverySignature.ip = ip;
-        }
-        validatedObject.status = 'DELIVERED';
+      if (ip) {
+        validatedObject.carrierDeliverySignature.ip = ip;
       }
 
       validatedObject.carrierDeliverySignature.timestamp = new Date().getTime();
     }
+
     if (ecmr.recipientSignature) {
       validatedObject.recipientSignature             = BuilderUtils.createConcept(factory, namespace, 'Signature', ecmr.recipientSignature);
-      validatedObject.recipientSignature.certificate = BuilderUtils.createRelationship(factory, namespace, 'User', identity.userID || ecmr.recipientSignature.certificate);
+      validatedObject.recipientSignature.certificate = BuilderUtils.createRelationship(factory, namespace, 'User', ecmr.recipientSignature.certificate || identity.userID);
       if (ecmr.recipientSignature.generalRemark) {
         validatedObject.recipientSignature.generalRemark = BuilderUtils.createConcept(factory, namespace, 'Remark', ecmr.recipientSignature.generalRemark);
       }
-
-      if (ecmr.status === 'DELIVERED') {
-        validatedObject.status = 'CONFIRMED_DELIVERED';
-        if (ip) {
-          validatedObject.recipientSignature.ip = ip;
-        }
+      if (ip) {
+        validatedObject.recipientSignature.ip = ip;
       }
 
       validatedObject.recipientSignature.timestamp = new Date().getTime();
@@ -113,9 +101,7 @@ export class EcmrBuilder {
         validatedObject.goods[i].recipientRemark.comments  = ecmr.goods[i].recipientRemark.comments;
         validatedObject.goods[i].recipientRemark.isDamaged = ecmr.goods[i].recipientRemark.isDamaged;
       }
-
-      let vehicle                      = BuilderUtils.createResource(factory, namespace, 'Vehicle', ecmr.goods[i].vehicle);
-      validatedObject.goods[i].vehicle = vehicle;
+      validatedObject.goods[i].vehicle = BuilderUtils.createResource(factory, namespace, 'Vehicle', ecmr.goods[i].vehicle);
     }
 
     return validatedObject;
