@@ -3,7 +3,7 @@ import '../../node_modules/mocha';
 import * as chai from 'chai';
 import * as http from 'http';
 import {TransportOrder} from '../../src/interfaces/transportOrder.interface';
-import {Ecmr} from '../../src/interfaces/ecmr.interface';
+import {Ecmr, EcmrStatus} from '../../src/interfaces/ecmr.interface';
 import {Address} from '../../src/interfaces/address.interface';
 import {PickupWindow} from '../../src/interfaces/pickupWindow.interface';
 
@@ -35,7 +35,7 @@ const buildAddress = (): Address => {
 const buildECMR = (ecmrID: string): Ecmr => {
   return <Ecmr>{
     ecmrID:                 ecmrID,
-    status:                 'CREATED',
+    status:                 EcmrStatus.Created,
     issueDate:              1502402400000,
     agreementTerms:         'agreement terms here',
     agreementTermsSec:      'agreement terms sec',
@@ -73,7 +73,7 @@ const buildECMR = (ecmrID: string): Ecmr => {
 
 const buildTransportOrder = (): TransportOrder => {
   return <TransportOrder> {
-    orderID:   String(new Date()),
+    orderID:   String(new Date().getMilliseconds()),
     carrier:   'koopman',
     source:    'amsterdamcompound',
     goods:     [],
@@ -154,7 +154,7 @@ describe('An Recipient member can', () => {
 
           return done(err);
         }
-        should.exist(res.body.find(ecmr => ecmr.status === 'DELIVERED'));
+        should.exist(res.body.find(ecmr => ecmr.status === EcmrStatus.Delivered));
         done(err);
       });
   });
@@ -243,7 +243,7 @@ describe('An Recipient member can', () => {
 
   it('not update an ECMR from DELIVERED to Confirmed Delivered when his org is not recipient', (done) => {
     const updateECMR     = buildECMR('F1234567890');
-    updateECMR.status    = 'CONFIRMED_DELIVERED';
+    updateECMR.status    = EcmrStatus.ConfirmedDelivered;
     updateECMR.recipient = 'notCarDealer';
     server
       .post('/api/v1/ECMR')
@@ -262,7 +262,7 @@ describe('An Recipient member can', () => {
 
   it('update an ECMR from DELIVERED to CONFIRMED DELIVERED', (done) => {
     const updateECMR  = buildECMR('ecmr1');
-    updateECMR.status = 'CONFIRMED_DELIVERED';
+    updateECMR.status = EcmrStatus.ConfirmedDelivered;
     server
       .put('/api/v1/ECMR')
       .set('x-access-token', token)
@@ -322,6 +322,21 @@ describe('An Recipient member can', () => {
           return done(err);
         }
         res.body.plateNumber.should.equal('AV198RX');
+        done(err);
+      });
+  });
+
+  it('not get a specific transport order based on status', (done) => {
+    server
+      .get(`/api/v1/transportOrder/status/'12345567890'`)
+      .set('x-access-token', token)
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+          return done(err);
+        }
         done(err);
       });
   });

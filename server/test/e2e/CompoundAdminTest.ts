@@ -3,7 +3,7 @@ import '../../node_modules/mocha';
 import * as chai from 'chai';
 import * as http from 'http';
 import {TransportOrder} from '../../src/interfaces/transportOrder.interface';
-import {Ecmr} from '../../src/interfaces/ecmr.interface';
+import {Ecmr, EcmrStatus} from '../../src/interfaces/ecmr.interface';
 import {Address} from '../../src/interfaces/address.interface';
 import {PickupWindow} from '../../src/interfaces/pickupWindow.interface';
 
@@ -35,7 +35,7 @@ const buildAddress = (): Address => {
 const buildECMR = (ecmrID: string): Ecmr => {
   return <Ecmr>{
     ecmrID:                 ecmrID,
-    status:                 'CREATED',
+    status:                 EcmrStatus.Created,
     issueDate:              1502402400000,
     agreementTerms:         'agreement terms here',
     agreementTermsSec:      'agreement terms sec',
@@ -73,7 +73,7 @@ const buildECMR = (ecmrID: string): Ecmr => {
 
 const buildTransportOrder = (): TransportOrder => {
   return <TransportOrder> {
-    orderID:   String(new Date()),
+    orderID:   String(new Date().getMilliseconds()),
     loading:   {
       actualDate: 1502834400000,
       address:    buildAddress(),
@@ -217,7 +217,7 @@ describe('A Compound Admin can', () => {
   });
 
   it('submit an update status from CREATED to LOADED', (done) => {
-    updateEcmr.status            = 'LOADED';
+    updateEcmr.status            = EcmrStatus.Loaded;
     updateEcmr.compoundSignature = {
       certificate: 'willem@amsterdamcompound.org',
       timestamp:   0
@@ -338,7 +338,7 @@ describe('A Compound Admin can', () => {
   });
 
   it('not update an ECMR for his org and status is IN_TRANSIT', (done) => {
-    updateEcmr.status = 'IN_TRANSIT';
+    updateEcmr.status = EcmrStatus.InTransit;
     server
       .put('/api/v1/ECMR')
       .set('x-access-token', token)
@@ -412,6 +412,21 @@ describe('A Compound Admin can', () => {
         if (err) {
           console.log(err.stack);
 
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
+  it('not get a specific transport order based on status', (done) => {
+    server
+      .get(`/api/v1/transportOrder/status/'12345567890'`)
+      .set('x-access-token', token)
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
           return done(err);
         }
         done(err);

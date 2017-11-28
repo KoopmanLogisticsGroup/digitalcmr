@@ -76,7 +76,7 @@ rule LegalOwnerAdminCanSubmitTransactionUpdateTransportOrderPickupWindow {
   operation: UPDATE
   resource(r): "org.digitalcmr.TransportOrder"
   transaction: "org.digitalcmr.UpdateTransportOrderPickupWindow"
-  condition: (r.owner.getIdentifier() == p.org.getIdentifier() && r.status == "OPEN")
+  condition: (r.owner.getIdentifier() == p.org.getIdentifier())
   action: ALLOW
 }
 
@@ -94,7 +94,7 @@ rule LegalOwnerAdminCanSubmitTransactionUpdateTransportOrderDeliveryWindow {
   operation: UPDATE
   resource(r): "org.digitalcmr.TransportOrder"
   transaction: "org.digitalcmr.UpdateTransportOrderDeliveryWindow"
-  condition: (r.owner.getIdentifier() == p.org.getIdentifier() && r.status == "OPEN")
+  condition: (r.owner.getIdentifier() == p.org.getIdentifier())
   action: ALLOW
 }
 
