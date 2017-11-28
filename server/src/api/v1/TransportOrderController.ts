@@ -48,6 +48,14 @@ export class TransportOrderController {
     return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Multiple, 'getTransportOrdersByStatus', {status: orderStatus});
   }
 
+  @Get('/vin/:vin')
+  public async getAllTransportOrdersByVin(@Param('vin') vin: string, @Req() request: any): Promise<any> {
+    const identity: Identity = new JSONWebToken(request).getIdentity();
+
+    console.log(vin);
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Multiple, 'getTransportOrdersByVin', {vin: vin});
+  }
+
   @Post('/')
   public async create(@Body() transportOrder: TransportOrder, @Req() request: Request): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();

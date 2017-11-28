@@ -18,6 +18,13 @@ query getTransportOrdersByStatus {
           WHERE (status == _$status)
 }
 
+query getTransportOrdersByVin {
+  description: "Select all transport orders based on their vin"
+  statement:
+      SELECT org.digitalcmr.TransportOrder
+          WHERE ((goods CONTAINS (value == "vehicle.vin")) == _$vin)
+}
+
 query getAllEcmrs {
   description: "Get all ECMRs (user has permission to)"
   statement:
