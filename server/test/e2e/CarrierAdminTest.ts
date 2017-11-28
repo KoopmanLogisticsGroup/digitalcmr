@@ -449,4 +449,25 @@ describe('A Carrier admin can', () => {
         done(err);
       });
   });
+
+  it('can update an delivery eta of a transport order', (done) => {
+    const deliveryEta = {
+      ecmrID:    'E1234567890',
+      etaWindow: [7247832478934, 212213821321]
+    };
+
+    server
+      .put('/api/v1/ECMR/updateEcmrDeliveryETA')
+      .set('x-access-token', token)
+      .send(deliveryEta)
+      .expect(ok)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
 });
