@@ -194,7 +194,7 @@ function updateEcmrDeliveryEta(tx) {
   console.log('Invoking function UpdateEcmrDeliveryEta');
   console.log('ecmrID: ', tx.ecmr.ecmrID);
 
-  tx.ecmr.deliveryEta = tx.etaWindow;
+  tx.ecmr.delivery.expectedWindow = tx.etaWindow;
 
   return getAssetRegistry('org.digitalcmr.ECMR')
     .then(function (assetRegistry) {

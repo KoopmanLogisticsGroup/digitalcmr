@@ -1,6 +1,6 @@
 import {DateWindow} from './dateWindow.interface';
 
-export interface EtaObject {
+export interface ExpectedWindow {
   ecmrID: string;
   etaWindow: DateWindow;
 }

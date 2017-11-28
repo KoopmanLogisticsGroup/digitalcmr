@@ -17,7 +17,7 @@ import {Config} from '../../config/index';
 import {EcmrTransactor} from '../../domain/ecmrs/EcmrTransactor';
 import {Transaction} from '../../blockchain/Transactions';
 import {Ecmr} from '../../interfaces/ecmr.interface';
-import {EtaObject} from '../../interfaces/etaObject.interface';
+import {ExpectedWindow} from '../../interfaces/expectedWindow.interface';
 
 @JsonController('/ECMR')
 @UseBefore(UserAuthenticatorMiddleware)
@@ -85,8 +85,8 @@ export class ECMRController {
     return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateEcmr, ecmr, new EcmrTransactor());
   }
 
-  @Put('/updateEcmrDeliveryETA')
-  public async updateEcmrDeliveryETA(@Body() etaObject: EtaObject, @Req() request: any): Promise<any> {
+  @Put('/updateExpectedDeliveryWindow')
+  public async updateEcmrDeliveryETA(@Body() etaObject: ExpectedWindow, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
     return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateEcmrDeliveryEta, etaObject, new EcmrTransactor());

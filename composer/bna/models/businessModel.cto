@@ -50,8 +50,6 @@ asset ECMR identified by ecmrID {
   o EcmrStatus status
   o String orderID
   o Cancellation cancellation optional
-  o DateWindow deliveryEta optional
-  o DateWindow pickupEta optional
   --> CarrierMember transporter optional
   --> RecipientMember recipient optional
 }
@@ -138,13 +136,13 @@ concept Address {
 
 concept Delivery {
   o Address address
-  o Integer expectedDate optional
+  o DateWindow expectedWindow optional
   o Integer actualDate optional
 }
 
 concept Loading {
   o Address address
-  o Integer expectedDate optional
+  o DateWindow expectedWindow optional
   o Integer actualDate optional
 }
 

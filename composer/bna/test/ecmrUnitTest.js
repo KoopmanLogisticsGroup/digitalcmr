@@ -498,8 +498,8 @@ describe('Admin of the network', () => {
           .then((assetRegistry) => {
             return assetRegistry.get('loaded')
               .then((ecmr) => {
-                ecmr.deliveryEta.startDate.should.equal(7247832478934);
-                ecmr.deliveryEta.endDate.should.equal(212213821321);
+                ecmr.delivery.expectedWindow.startDate.should.equal(7247832478934);
+                ecmr.delivery.expectedWindow.endDate.should.equal(212213821321);
               }).catch((error) => {
                 console.log(error);
               })
