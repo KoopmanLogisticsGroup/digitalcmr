@@ -358,7 +358,7 @@ describe('A legal owner admin can', () => {
           console.log(err.stack);
           return done(err);
         }
-        should.exist(res.body.find(transportOrders => transportOrders.status = transportOrder.status));
+        should.exist(res.body.find(transportOrders => transportOrders.status === transportOrder.status));
         done(err);
       });
   });
