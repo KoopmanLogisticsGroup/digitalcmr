@@ -478,6 +478,7 @@ describe('Admin of the network', () => {
   it('should not be able to update ECMR status to CONFIRMED_DELIVERED when without signature before the transport signed for delivery', () => {
     let updateTransaction = factory.newTransaction(namespace, 'UpdateECMR');
     updateTransaction.transportOrder = factory.newRelationship('org.digitalcmr', 'TransportOrder', 'ORDER1');
+    console.log(updateTransaction.transportOrder);
     updateTransaction.ecmr = buildECMR('ecmr14');
     updateTransaction.ecmr.status = ecmrStatus.ConfirmedDelivered;
 
