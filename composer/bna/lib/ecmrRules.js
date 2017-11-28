@@ -22,7 +22,7 @@ function createECMR(tx) {
   console.log('Invoking function: CreateECMR');
 
   // Get the asset registry for the asset.
-  return getAssetRegistry(nameSpaces.Ecmr)
+  return getAssetRegistry('org.digitalcmr.ECMR')
     .then(function (assetRegistry) {
       return assetRegistry.add(tx.ecmr)
         .then(function () {
@@ -48,7 +48,7 @@ function createECMRs(tx) {
   console.log('Invoking function: CreateECMRs');
 
   // Get the asset registry for the asset.
-  return getAssetRegistry(nameSpaces.Ecmr)
+  return getAssetRegistry('org.digitalcmr.ECMR')
     .then(function (assetRegistry) {
       return assetRegistry.addAll(tx.ecmrs)
         .then(function () {
@@ -76,7 +76,7 @@ function updateECMR(tx) {
   console.log('ecmrID: ' + tx.ecmr.ecmrID);
 
   // Get the asset registry for the asset.
-  return getAssetRegistry(nameSpaces.Ecmr)
+  return getAssetRegistry('org.digitalcmr.ECMR')
     .then(function (assetRegistry) {
       return assetRegistry.get(tx.ecmr.ecmrID).catch(function (error) {
         console.log('[Update ECMR] An error occurred while getting the registry asset: ' + error);
@@ -171,7 +171,7 @@ function updateECMR(tx) {
         }
       } else throw new Error("[Update ECMR] Validation failure! Provided status: " + ecmr.status + "is not a valid status!");
 
-      return getAssetRegistry(nameSpaces.Ecmr)
+      return getAssetRegistry('org.digitalcmr.ECMR')
         .then(function (assetRegistry) {
           return assetRegistry.update(ecmr).catch(function (error) {
             console.log('[Update ECMR] An error occurred while updating the registry asset: ' + error);
