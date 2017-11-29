@@ -209,3 +209,27 @@ function updateExpectedPickupWindow(tx) {
       throw error;
     });
 }
+
+/**
+ * UpdateExpectedDeliveryWindow transaction processor function.
+ * @param {org.digitalcmr.UpdateExpectedDeliveryWindow} tx  - UpdateExpectedDeliveryWindow transaction
+ * @return {Promise} Asset registry Promise
+ * @transaction
+ */
+function updateExpectedDeliveryWindow(tx) {
+  console.log('Invoking function UpdateExpectedDeliveryWindow');
+  console.log('ecmrID: ', tx.ecmr.ecmrID);
+
+  tx.ecmr.delivery.expectedWindow = tx.expectedWindow;
+
+  return getAssetRegistry('org.digitalcmr.ECMR')
+    .then(function (assetRegistry) {
+      assetRegistry.update(tx.ecmr).catch(function (error) {
+        console.log('[UpdateExpectedDeliveryWindow] An error occurred while updating the registry asset: ' + error)
+        throw error;
+      });
+    }).catch(function (error) {
+      console.log('[UpdateExpectedDeliveryWindow] An error occurred while getting the asset registry: ' + error);
+      throw error;
+    });
+}

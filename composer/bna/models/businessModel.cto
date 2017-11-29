@@ -265,6 +265,11 @@ transaction UpdateEcmrStatusToInTransit {
   o ECMR updatedEcmr
 }
 
+transaction UpdateExpectedDeliveryWindow {
+  --> ECMR ecmr
+  o DateWindow expectedWindow
+}
+
 transaction UpdateExpectedPickupWindow {
   --> ECMR ecmr
   o DateWindow expectedWindow
