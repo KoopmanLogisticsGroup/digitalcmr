@@ -18,6 +18,9 @@ export class EcmrTransactor implements TransactionCreator {
     } else if (transactionName === Transaction.UpdateEcmr) {
       transaction.ecmr           = EcmrBuilder.buildECMR(factory, namespace, data, identity, ip);
       transaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', data.orderID);
+    } else if (transactionName === Transaction.UpdateEcmrStatusToCanceled) {
+      transaction.ecmr   = factory.newRelationship(namespace, 'ECMR', data.ecmrID);
+      transaction.reason = data.reason;
     }
 
     return transaction;

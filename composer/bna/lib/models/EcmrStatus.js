@@ -18,4 +18,5 @@ var EcmrStatus = {
   InTransit: 'IN_TRANSIT',
   Delivered: 'DELIVERED',
   ConfirmedDelivered: 'CONFIRMED_DELIVERED',
+  Canceled: 'CANCELED'
 };

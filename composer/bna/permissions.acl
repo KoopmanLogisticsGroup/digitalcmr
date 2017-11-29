@@ -175,7 +175,7 @@ rule CompoundAdminCanSubmitUpdateECMR {
 }
 
 /**
-  * Carrier permission list
+  * Carrier Admin permission list
   */
 
 rule CarrierAdminCanReadECMR {
@@ -249,6 +249,28 @@ rule CarrierAdminCanUpdateTransportOrder {
     condition: (r.carrier.getIdentifier() == p.org.getIdentifier() && r.status == "OPEN")
     action: ALLOW
 }
+
+rule CarrierAdminCanCreateUpdateECMRStatusToCanceledTransaction {
+    description: "Allow CarrierAdmin to CREATE UpdateECMRStatusToCanceled transaction only when ECMR status is CREATED"
+    participant: "org.digitalcmr.CarrierAdmin"
+    operation: CREATE
+    resource: "org.digitalcmr.UpdateECMRStatusToCanceled"
+    action: ALLOW
+}
+
+rule CarrierAdminCanSubmitUpdateECMRStatusToCanceled {
+    description: "Allow CarrierAdmin to submit an UpdateECMRStatusToCanceled transaction for his organization from CREATED status to CANCELED"
+    participant(p): "org.digitalcmr.CarrierAdmin"
+    operation: UPDATE
+    resource(r): "org.digitalcmr.ECMR"
+    transaction(tx): "org.digitalcmr.UpdateECMRStatusToCanceled"
+    condition: (r.carrier.getIdentifier() == p.org.getIdentifier() && r.status == "CREATED")
+    action: ALLOW
+}
+
+/**
+  * Carrier Member permission list
+  */
 
 rule CarrierMemberCanReadECMR {
     description: "Allow CarrierMember to READ all ECMRs where he is a transporter and status is not CREATED"

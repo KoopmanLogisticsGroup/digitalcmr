@@ -18,7 +18,7 @@ asset TransportOrder identified by orderID {
   o Integer issueDate
   --> ECMR[] ecmrs
   o String orderRef
-  o Cancellation cancellation optional
+  o Cancelation cancelation optional
 }
 
 asset ECMR identified by ecmrID {
@@ -49,7 +49,7 @@ asset ECMR identified by ecmrID {
   o Signature recipientSignature optional
   o EcmrStatus status
   o String orderID
-  o Cancellation cancellation optional
+  o Cancelation cancelation optional
   --> CarrierMember transporter optional
   --> RecipientMember recipient optional
 }
@@ -151,7 +151,7 @@ concept Creation {
   o Integer date
 }
 
-concept Cancellation {
+concept Cancelation {
   --> Entity canceledBy
   o Integer date
   o String reason
@@ -169,7 +169,7 @@ concept Good {
   o Address deliveryAddress
   o DateWindow pickupWindow
   o DateWindow deliveryWindow
-  o Cancellation cancellation optional
+  o Cancelation cancelation optional
 }
 
 concept Remark {
@@ -277,8 +277,14 @@ transaction UpdateEcmrStatusToConfirmedDelivered {
   o ECMR updatedEcmr
 }
 
+transaction UpdateECMRStatusToCanceled {
+  --> ECMR ecmr
+  o String reason
+}
+
 transaction UpdateTransportOrderStatusToCanceled {
   --> TransportOrder transportOrder
+  o String reason
 }
 
 transaction UpdateRegistrationCountry {

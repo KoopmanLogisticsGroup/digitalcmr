@@ -44,13 +44,15 @@ describe('Admin of the network', () => {
     Loaded: 'LOADED',
     InTransit: 'IN_TRANSIT',
     Delivered: 'DELIVERED',
-    ConfirmedDelivered: 'CONFIRMED_DELIVERED'
+    ConfirmedDelivered: 'CONFIRMED_DELIVERED',
+    Canceled: 'CANCELED'
   };
 
   const userIDs = {
     Willem: 'willem@amsterdamcompound.org',
     Harry: 'harry@koopman.org',
-    Rob: 'rob@cardealer.org'
+    Rob: 'rob@cardealer.org',
+    Pete: 'pete@koopman.org'
   };
 
   /**
@@ -336,6 +338,24 @@ describe('Admin of the network', () => {
       .then((ecmrs) => {
         ecmrs.find(ecmr => ecmr.ecmrID === ecmrs[0].ecmrID);
         ecmrs.find(ecmr => ecmr.ecmrID === ecmrs[1].ecmrID);
+      });
+  });
+  it('should be able to cancel an ECMR', () => {
+    let transaction = factory.newTransaction(namespace, 'UpdateECMRStatusToCanceled');
+    transaction.ecmr = buildECMR('created');
+    transaction.ecmr = factory.newRelationship('org.digitalcmr', 'ECMR', 'created');
+    transaction.reason = 'no reason';
+
+    return businessNetworkConnection.submitTransaction(transaction)
+      .then(() => {
+        return businessNetworkConnection.getAssetRegistry('org.digitalcmr.ECMR')
+          .then((assetRegistry) => {
+            return assetRegistry.get('created');
+          })
+          .then((updatedECMR) => {
+            updatedECMR.status.should.equal(ecmrStatus.Canceled);
+            updatedECMR.cancelation.should.be.instanceOf(Object);
+          });
       });
   });
 

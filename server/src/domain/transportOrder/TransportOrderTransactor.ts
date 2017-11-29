@@ -21,6 +21,7 @@ export class TransportOrderTransactor implements TransactionCreator {
       transaction.vin                  = data.vin;
     } else if (transactionName === Transaction.UpdateTransportOrderStatusToCanceled) {
       transaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', data.orderID);
+      transaction.reason         = data.reason;
     }
 
     return transaction;

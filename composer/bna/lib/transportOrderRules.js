@@ -172,9 +172,23 @@ function updateTransportOrderDeliveryWindow(tx) {
 function updateTransportOrderStatusToCanceled(tx) {
   console.log('Invoking function: updateTransportOrderStatusToCanceled');
 
+  var factory = getFactory();
+  var currentParticipant = getCurrentParticipant() && getCurrentParticipant().getIdentifier();
+
+  if (currentParticipant == undefined || null) {
+    console.log('setting currentParticipant');
+    currentParticipant = 'network_admin';
+  }
+
   // Get the asset registry for the asset.
-  // Updates the status of a TransportOrder when an ECMR is created
+  // Updates the status of a TransportOrder when it is canceled
   tx.transportOrder.status = TransportOrderStatus.Canceled;
+
+  // Updates the transportOrder with an object that displays cancelation information
+  tx.transportOrder.cancelation = factory.newConcept('org.digitalcmr', 'Cancelation');
+  tx.transportOrder.cancelation.canceledBy = factory.newRelationship('org.digitalcmr', 'Entity', currentParticipant);
+  tx.transportOrder.cancelation.date = new Date().getMilliseconds();
+  tx.transportOrder.cancelation.reason = tx.reason;
 
   return getAssetRegistry('org.digitalcmr.TransportOrder')
     .then(function (assetRegistry) {
