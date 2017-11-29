@@ -198,11 +198,13 @@ function updateExpectedPickupWindow(tx) {
 
   return getAssetRegistry('org.digitalcmr.ECMR')
     .then(function (assetRegistry) {
-      assetRegistry.update(tx.ecmr).catch(function (error) {
-        console.log('[UpdateExpectedPickupWindow] An error occurred while updating the registry asset: ' + error)
-        throw error;
-      });
-    }).catch(function (error) {
+      assetRegistry.update(tx.ecmr)
+        .catch(function (error) {
+          console.log('[UpdateExpectedPickupWindow] An error occurred while updating the registry asset: ' + error);
+          throw error;
+        });
+    })
+    .catch(function (error) {
       console.log('[UpdateExpectedPickupWindow] An error occurred while getting the asset registry: ' + error);
       throw error;
     });
