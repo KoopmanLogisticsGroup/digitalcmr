@@ -190,7 +190,7 @@ function updateECMR(tx) {
  * @return {Promise} Asset registry Promise
  * @transaction
  */
-function UpdateExpectedDeliveryWindow(tx) {
+function updateExpectedDeliveryWindow(tx) {
   console.log('Invoking function UpdateExpectedDeliveryWindow');
   console.log('ecmrID: ', tx.ecmr.ecmrID);
 
