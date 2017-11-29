@@ -1,4 +1,4 @@
-export enum Queries {
+export enum Query {
   GetAllEcmrs                = 'getAllEcmrs',
   GetEcmrById                = 'getEcmrById',
   GetEcmrsByStatus           = 'getEcmrsByStatus',

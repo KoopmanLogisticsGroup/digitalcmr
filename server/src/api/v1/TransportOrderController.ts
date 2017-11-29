@@ -18,7 +18,7 @@ import {TransportOrder} from '../../interfaces/transportOrder.interface';
 import {Transaction} from '../../blockchain/Transactions';
 import {PickupWindow} from '../../interfaces/pickupWindow.interface';
 import {DeliveryWindow} from '../../interfaces/deliveryWindow.interface';
-import {Queries} from '../../blockchain/Queries';
+import {Query} from '../../blockchain/Queries';
 
 @JsonController('/transportOrder')
 @UseBefore(UserAuthenticatorMiddleware)
@@ -33,21 +33,21 @@ export class TransportOrderController {
   public async getAllTransportOrders(@Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Multiple, Queries.GetAllTransportOrders);
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Multiple, Query.GetAllTransportOrders);
   }
 
   @Get('/orderID/:orderID')
   public async getTransportOrderByOrderID(@Param('orderID') orderID: string, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Single, Queries.GetTransportOrderById, {orderID: orderID});
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Single, Query.GetTransportOrderById, {orderID: orderID});
   }
 
   @Get('/status/:orderStatus')
   public async getAllTransportOrdersByStatus(@Param('orderStatus') orderStatus: string, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Multiple, Queries.GetTransportOrdersByStatus, {status: orderStatus});
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Multiple, Query.GetTransportOrdersByStatus, {status: orderStatus});
   }
 
   @Get('/vin/:vin')
