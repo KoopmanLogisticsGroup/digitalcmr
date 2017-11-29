@@ -4,6 +4,7 @@ import {Factory} from 'composer-common';
 import {EcmrBuilder} from './EcmrBuilder';
 import {QueryReturnType, TransactionHandler} from '../../blockchain/TransactionHandler';
 import {Transaction} from '../../blockchain/Transactions';
+import {Queries} from '../../blockchain/Queries';
 
 export class EcmrTransactor implements TransactionCreator {
   public async invoke(factory: Factory, namespace: string, transactionName: string, data: any, identity: Identity, ip?: string): Promise<any> {
@@ -25,7 +26,7 @@ export class EcmrTransactor implements TransactionCreator {
 
   // TODO improve function
   public async getEcmrsByVin(transactionHandler: TransactionHandler, identity: Identity, connectionProfile: string, vin: string): Promise<any> {
-    let vehicle       = await transactionHandler.executeQuery(identity, connectionProfile, QueryReturnType.Single, 'getVehicleByVin', {vin: vin});
+    let vehicle       = await transactionHandler.executeQuery(identity, connectionProfile, QueryReturnType.Single, Queries.GetVehicleByVin, {vin: vin});
     let result: any[] = [];
     if (!vehicle) {
       return result;
@@ -33,7 +34,7 @@ export class EcmrTransactor implements TransactionCreator {
       for (let ecmr of vehicle.ecmrs) {
         // get all the ecmrs contained in the vehicle
         const ecmrID = ecmr.split('#')[1];
-        await transactionHandler.executeQuery(identity, connectionProfile, QueryReturnType.Single, 'getEcmrById', {ecmrID: ecmrID}).then((ecmr) => {
+        await transactionHandler.executeQuery(identity, connectionProfile, QueryReturnType.Single, Queries.GetEcmrById, {ecmrID: ecmrID}).then((ecmr) => {
           if (ecmr instanceof Object) {
             result.push(ecmr);
           }
@@ -46,7 +47,7 @@ export class EcmrTransactor implements TransactionCreator {
   // TODO improve function
   public async getEcmrsByPlateNumber(transactionHandler: TransactionHandler, identity: Identity, connectionProfile: string, plateNumber: string): Promise<any> {
     // get vehicle by vin
-    const vehicle     = await transactionHandler.executeQuery(identity, connectionProfile, QueryReturnType.Single, 'getVehicleByPlateNumber', {plateNumber: plateNumber});
+    const vehicle     = await transactionHandler.executeQuery(identity, connectionProfile, QueryReturnType.Single, Queries.GetVehicleByPlateNumber, {plateNumber: plateNumber});
     let result: any[] = [];
     if (!vehicle) {
       return result;
@@ -54,7 +55,7 @@ export class EcmrTransactor implements TransactionCreator {
       for (let ecmr of vehicle.ecmrs) {
         const ecmrID = ecmr.split('#')[1];
         // get all the ecmrs contained in the vehicle
-        await transactionHandler.executeQuery(identity, connectionProfile, QueryReturnType.Single, 'getEcmrById', {ecmrID: ecmrID}).then((ecmr) => {
+        await transactionHandler.executeQuery(identity, connectionProfile, QueryReturnType.Single, Queries.GetEcmrById, {ecmrID: ecmrID}).then((ecmr) => {
           if (ecmr instanceof Object) {
             result.push(ecmr);
           }

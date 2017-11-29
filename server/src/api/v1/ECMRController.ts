@@ -17,6 +17,7 @@ import {Config} from '../../config/index';
 import {EcmrTransactor} from '../../domain/ecmrs/EcmrTransactor';
 import {Transaction} from '../../blockchain/Transactions';
 import {Ecmr} from '../../interfaces/ecmr.interface';
+import {Queries} from '../../blockchain/Queries';
 
 @JsonController('/ECMR')
 @UseBefore(UserAuthenticatorMiddleware)
@@ -31,28 +32,28 @@ export class ECMRController {
   public async getAllEcmrs(@Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Multiple, 'getAllEcmrs');
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Multiple, Queries.GetAllEcmrs);
   }
 
   @Get('/ecmrID/:ecmrID')
   public async getEcmrByEcmrID(@Param('ecmrID') ecmrID: string, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Single, 'getEcmrById', {ecmrID: ecmrID});
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Single, Queries.GetEcmrById, {ecmrID: ecmrID});
   }
 
   @Get('/status/:ecmrStatus')
   public async getAllEcmrsByStatus(@Param('ecmrStatus') ecmrStatus: string, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Multiple, 'getEcmrsByStatus', {status: ecmrStatus});
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Multiple, Queries.GetEcmrsByStatus, {status: ecmrStatus});
   }
 
   @Get('/orderID/:orderID')
   public async getAllEcmrsByOrderID(@Param('orderID') orderID: string, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Multiple, 'getEcmrsByOrderID', {orderID: orderID});
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Multiple, Queries.GetEcmrsByOrderID, {orderID: orderID});
   }
 
   @Get('/vehicle/vin/:vin')

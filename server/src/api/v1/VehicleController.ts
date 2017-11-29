@@ -16,6 +16,7 @@ import {Config} from '../../config/index';
 import {VehicleTransactor} from '../../domain/vehicles/VehicleTransactor';
 import {Transaction} from '../../blockchain/Transactions';
 import {Vehicle} from '../../interfaces/vehicle.interface';
+import {Queries} from '../../blockchain/Queries';
 
 @JsonController('/vehicle')
 @UseBefore(UserAuthenticatorMiddleware)
@@ -29,21 +30,21 @@ export class ECMRController {
   public async getAllVehicles(@Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Multiple, 'getAllVehicles');
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Multiple, Queries.GetAllVehicles);
   }
 
   @Get('/vin/:vin/')
   public async getVehicleByVin(@Param('vin') vin: string, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Single, 'getVehicleByVin', {vin: vin});
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Single, Queries.GetVehicleByVin, {vin: vin});
   }
 
   @Get('/plateNumber/:plateNumber/')
   public async getVehicleByPlateNumber(@Param('plateNumber') plateNumber: string, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Single, 'getVehicleByPlateNumber',
+    return await this.transactionHandler.executeQuery(identity, Config.settings.composer.profile, QueryReturnType.Single, Queries.GetVehicleByPlateNumber,
       {plateNumber: plateNumber});
   }
 
