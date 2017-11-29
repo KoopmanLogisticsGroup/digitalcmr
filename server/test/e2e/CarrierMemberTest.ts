@@ -2,14 +2,16 @@ import * as supertest from 'supertest';
 import '../../node_modules/mocha';
 import * as chai from 'chai';
 import * as http from 'http';
-import {Ecmr} from '../../src/interfaces/ecmr.interface';
+import {Ecmr, EcmrStatus} from '../../src/interfaces/ecmr.interface';
 import {TransportOrder} from '../../src/interfaces/transportOrder.interface';
 import {Address} from '../../src/interfaces/address.interface';
 import {PickupWindow} from '../../src/interfaces/pickupWindow.interface';
+import {disconnect} from 'cluster';
 
 const server = supertest.agent('http://localhost:8080');
 const should = chai.should();
 let token: string;
+let transportOrder: TransportOrder;
 let updateEcmr: Ecmr;
 
 const ok = (res) => {
@@ -35,7 +37,7 @@ const buildAddress = (): Address => {
 const buildECMR = (ecmrID: string): Ecmr => {
   return <Ecmr>{
     ecmrID:                 ecmrID,
-    status:                 'CREATED',
+    status:                 EcmrStatus.Created,
     issueDate:              1502402400000,
     agreementTerms:         'agreement terms here',
     agreementTermsSec:      'agreement terms sec',
@@ -73,7 +75,7 @@ const buildECMR = (ecmrID: string): Ecmr => {
 
 const buildTransportOrder = (): TransportOrder => {
   return <TransportOrder> {
-    orderID:   String(new Date()),
+    orderID:   String(new Date().getMilliseconds()),
     carrier:   'koopman',
     source:    'amsterdamcompound',
     goods:     [],
@@ -84,16 +86,18 @@ const buildTransportOrder = (): TransportOrder => {
     owner:     'leaseplan'
   };
 };
+
 describe('A Carrier member can', () => {
   before((done) => {
-    const loginParams = {
+    transportOrder                 = buildTransportOrder();
+    const loginParamsCarrierMember = {
       'username': 'harry@koopman.org',
       'password': 'passw0rd'
     };
 
     server
       .post('/api/v1/login')
-      .send(loginParams)
+      .send(loginParamsCarrierMember)
       .expect(ok)
       .expect('Content-Type', /json/)
       .expect(200)
@@ -259,7 +263,7 @@ describe('A Carrier member can', () => {
   });
 
   it('submit an update status from LOADED to IN_TRANSIT', (done) => {
-    updateEcmr.status                  = 'IN_TRANSIT';
+    updateEcmr.status                  = EcmrStatus.InTransit;
     updateEcmr.carrierLoadingSignature = {
       certificate: 'harry@koopman.org', timestamp: 0
     };
@@ -279,7 +283,7 @@ describe('A Carrier member can', () => {
   });
 
   it('submit an update status from IN_TRANSIT to DELIVERED', (done) => {
-    updateEcmr.status                   = 'DELIVERED';
+    updateEcmr.status                   = EcmrStatus.Delivered;
     updateEcmr.carrierDeliverySignature = {
       certificate: 'harry@koopman.org', timestamp: 0
     };
@@ -324,7 +328,7 @@ describe('A Carrier member can', () => {
             return done(err);
           }
         res.body.length.should.be.greaterThan(0, 'No LOADED ECMRs were found.');
-        should.exist(res.body.find(ecmr => ecmr.status === 'LOADED'));
+        should.exist(res.body.find(ecmr => ecmr.status === EcmrStatus.Loaded));
         done(err);
         }
       );
@@ -341,7 +345,7 @@ describe('A Carrier member can', () => {
             return done(err);
           }
         res.body.length.should.be.greaterThan(0, 'No IN_TRANSIT ECMRs were found.');
-        should.exist(res.body.find(ecmr => ecmr.status === 'IN_TRANSIT'));
+        should.exist(res.body.find(ecmr => ecmr.status === EcmrStatus.InTransit));
         done(err);
         }
       );
@@ -358,7 +362,7 @@ describe('A Carrier member can', () => {
           return done(err);
         }
         res.body.length.should.be.greaterThan(0, 'No DELIVERED ECMRs were found.');
-        should.exist(res.body.find(ecmr => ecmr.status === 'DELIVERED'));
+        should.exist(res.body.find(ecmr => ecmr.status === EcmrStatus.Delivered));
         done(err);
       });
   });
@@ -374,7 +378,42 @@ describe('A Carrier member can', () => {
           return done(err);
         }
         res.body.length.should.be.greaterThan(0, 'No CONFIRMED_DELIVERED ECMRs were found.');
-        should.exist(res.body.find(ecmr => ecmr.status === 'CONFIRMED_DELIVERED'));
+        should.exist(res.body.find(ecmr => ecmr.status === EcmrStatus.ConfirmedDelivered));
+        done(err);
+      });
+  });
+
+  it('not get a specific transport order based on ID', (done) => {
+    server
+      .get('/api/v1/transportOrder/orderID/12345567890')
+      .set('x-access-token', token)
+      .expect(ok)
+      .expect('Content-Type', /json/)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        res.body.length.should.equal(0);
+        done(err);
+      });
+  });
+
+  it('get a specific transport order when status is IN_PROGRESS', (done) => {
+    server
+      .get('/api/v1/transportOrder/status/IN_PROGRESS')
+      .set('x-access-token', token)
+      .expect(ok)
+      .expect('Content-Type', /json/)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        res.body.length.should.be.greaterThan(0);
+        should.exist(res.body.status === transportOrder.status);
         done(err);
       });
   });

@@ -3,7 +3,7 @@ import '../../node_modules/mocha';
 import * as chai from 'chai';
 import * as http from 'http';
 import {TransportOrder} from '../../src/interfaces/transportOrder.interface';
-import {Ecmr} from '../../src/interfaces/ecmr.interface';
+import {Ecmr, EcmrStatus} from '../../src/interfaces/ecmr.interface';
 import {Address} from '../../src/interfaces/address.interface';
 import {PickupWindow} from '../../src/interfaces/pickupWindow.interface';
 
@@ -34,9 +34,9 @@ const buildAddress = (): Address => {
 };
 //TODO when an ADMIN has been created make sure to replace ecmrID by new Date().getTime().toString() for all participants
 const buildECMR    = (ecmrID: string): Ecmr => {
-  return <Ecmr>{
+  return <Ecmr> {
     ecmrID:                 ecmrID,
-    status:                 'CREATED',
+    status:                 EcmrStatus.Created,
     issueDate:              1502402400000,
     agreementTerms:         'agreement terms here',
     agreementTermsSec:      'agreement terms sec',
@@ -74,7 +74,7 @@ const buildECMR    = (ecmrID: string): Ecmr => {
 
 const buildTransportOrder = (): TransportOrder => {
   return <TransportOrder> {
-    orderID:   String(new Date()),
+    orderID:   String(new Date().getMilliseconds()),
     carrier:   'koopman',
     source:    'amsterdamcompound',
     goods:     [],
@@ -193,7 +193,7 @@ describe('A legal owner admin can', () => {
 
           return done(err);
         }
-        should.exist(res.body.find(ecmr => ecmr.status === 'CREATED'));
+        should.exist(res.body.find(ecmr => ecmr.status === EcmrStatus.Created));
         done(err);
       });
   });
@@ -332,7 +332,7 @@ describe('A legal owner admin can', () => {
 
   it('get a specific transport order based on ID', (done) => {
     server
-      .get(`/api/v1/transportOrder/orderID/${transportOrder.orderID}`)
+      .get('/api/v1/transportOrder/orderID/12345567890')
       .set('x-access-token', token)
       .expect(ok)
       .expect('Content-Type', /json/)
@@ -342,7 +342,24 @@ describe('A legal owner admin can', () => {
 
           return done(err);
         }
-        should.exist(res.body.orderID === transportOrder.orderID);
+        should.exist(res.body.orderID === '12345567890');
+        done(err);
+      });
+  });
+
+  it('get a specific transport order based on status', (done) => {
+    server
+      .get(`/api/v1/transportOrder/status/${transportOrder.status}`)
+      .set('x-access-token', token)
+      .expect(ok)
+      .expect('Content-Type', /json/)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        should.exist(res.body.find(transportOrders => transportOrders.status === transportOrder.status));
         done(err);
       });
   });
