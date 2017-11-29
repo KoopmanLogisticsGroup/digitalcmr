@@ -19,22 +19,14 @@
  * @transaction
  */
 function createECMR(tx) {
-  console.log('Invoking function: CreateECMR');
-
-  // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.ECMR')
     .then(function (assetRegistry) {
       return assetRegistry.add(tx.ecmr)
-        .then(function () {
-          console.log('Asset added with success');
-        })
         .catch(function (error) {
-          console.log('An error occurred while addAll ECMRs', error);
-          throw error;
+          throw new Error('[CreateECMR] An error occurred while addAll ECMRs', error);
         });
     }).catch(function (error) {
-      console.log('An error occurred while saving the ECMR asset', error);
-      throw error;
+      throw new Error('[CreateECMR] An error occurred while saving the ECMR asset', error);
     });
 }
 
@@ -45,23 +37,17 @@ function createECMR(tx) {
  * @transaction
  */
 function createECMRs(tx) {
-  console.log('Invoking function: CreateECMRs');
-
-  // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.ECMR')
     .then(function (assetRegistry) {
       return assetRegistry.addAll(tx.ecmrs)
         .then(function () {
-          console.log('ECMRs added with success');
           updateTransportOrderToInProgress(tx);
         })
         .catch(function (error) {
-          console.log('An error occurred while addAll ECMRs', error);
-          throw error;
+          throw new Error('[CreateECMRs] An error occurred while addAll ECMRs', error);
         });
     }).catch(function (error) {
-      console.log('An error occurred while getting the asset registry', error);
-      throw error;
+      throw new Error('[CreateECMRs] An error occurred while getting the asset registry', error);
     });
 }
 
@@ -72,22 +58,16 @@ function createECMRs(tx) {
  * @transaction
  */
 function updateECMR(tx) {
-  console.log('Invoking function processor to set update ECMR');
-  console.log('ecmrID: ' + tx.ecmr.ecmrID);
-
-  // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.ECMR')
     .then(function (assetRegistry) {
       return assetRegistry.get(tx.ecmr.ecmrID).catch(function (error) {
-        console.log('[Update ECMR] An error occurred while getting the registry asset: ' + error);
-        throw error;
+        throw new Error('[UpdateECMR] An error occurred while getting the registry asset: ' + error);
       });
     })
     .then(function (ecmr) {
       var factory = getFactory();
       var currentParticipant = getCurrentParticipant() && getCurrentParticipant().getIdentifier();
       if (currentParticipant == undefined) {
-        console.log('setting currentParticipant');
         currentParticipant = 'network_admin';
       }
 
@@ -105,7 +85,7 @@ function updateECMR(tx) {
         }
       } else if (ecmr.status === EcmrStatus.Loaded) {
         if (!ecmr.compoundSignature) {
-          throw new Error("[Update ECMR] Transaction is not valid. Attempt to set the status on IN_TRANSIT before the compound admin signature");
+          throw new Error("[UpdateECMR] Transaction is not valid. Attempt to set the status on IN_TRANSIT before the compound admin signature");
         }
 
         ecmr.status = EcmrStatus.InTransit;
@@ -122,10 +102,10 @@ function updateECMR(tx) {
       } else if (ecmr.status === EcmrStatus.InTransit) {
         // check if the required signatures has been placed in the previous steps
         if (!ecmr.compoundSignature) {
-          throw new Error("[Update ECMR] Transaction is not valid. Attempt to set the status on DELIVERED before the compound admin signed!");
+          throw new Error("[UpdateECMR] Transaction is not valid. Attempt to set the status on DELIVERED before the compound admin signed!");
         }
         if (!ecmr.carrierLoadingSignature) {
-          throw new Error("[Update ECMR] Transaction is not valid. Attempt to set the status on DELIVERED before the transporter signed for the loading!");
+          throw new Error("[UpdateECMR] Transaction is not valid. Attempt to set the status on DELIVERED before the transporter signed for the loading!");
         }
 
         ecmr.status = EcmrStatus.Delivered;
@@ -142,19 +122,17 @@ function updateECMR(tx) {
           }
         }
 
-        updateTransportOrderStatusToCompleted(tx).then(function () {
-          console.log('updated transport order');
-        });
+        updateTransportOrderStatusToCompleted(tx);
       } else if (ecmr.status === EcmrStatus.Delivered) {
         // check if the required signatures has been placed in the previous steps
         if (!ecmr.compoundSignature) {
-          throw new Error("[Update ECMR] Transaction is not valid. Attempt to set the status on CONFIRMED_DELIVERED before the compound admin signed!");
+          throw new Error("[UpdateECMR] Transaction is not valid. Attempt to set the status on CONFIRMED_DELIVERED before the compound admin signed!");
         }
         if (!ecmr.carrierLoadingSignature) {
-          throw new Error("[Update ECMR] Transaction is not valid. Attempt to set the status on CONFIRMED_DELIVERED before the transporter signed for the loading!");
+          throw new Error("[UpdateECMR] Transaction is not valid. Attempt to set the status on CONFIRMED_DELIVERED before the transporter signed for the loading!");
         }
         if (!ecmr.carrierDeliverySignature) {
-          throw new Error("[Update ECMR] Transaction is not valid. Attempt to set the status on CONFIRMED_DELIVERED before the transporter signed for the delivery!");
+          throw new Error("[UpdateECMR] Transaction is not valid. Attempt to set the status on CONFIRMED_DELIVERED before the transporter signed for the delivery!");
         }
 
         ecmr.status = EcmrStatus.ConfirmedDelivered;
@@ -169,17 +147,16 @@ function updateECMR(tx) {
             ecmr.goods[i].recipientRemark = tx.ecmr.goods[i].recipientRemark;
           }
         }
-      } else throw new Error("[Update ECMR] Validation failure! Provided status: " + ecmr.status + "is not a valid status!");
+      } else throw new Error("[UpdateECMR] Validation failure! Provided status: " + ecmr.status + "is not a valid status!");
 
       return getAssetRegistry('org.digitalcmr.ECMR')
         .then(function (assetRegistry) {
-          return assetRegistry.update(ecmr).catch(function (error) {
-            console.log('[Update ECMR] An error occurred while updating the registry asset: ' + error);
-            throw error;
-          });
+          return assetRegistry.update(ecmr)
+            .catch(function (error) {
+              throw new Error('[UpdateECMR] An error occurred while updating the registry asset: ' + error);
+            });
         }).catch(function (error) {
-          console.log('[Update ECMR] An error occurred while getting the asset Registry: ' + error);
-          throw error;
+          throw new Error('[UpdateECMR] An error occurred while getting the asset Registry: ' + error);
         });
     });
 }
@@ -191,22 +168,17 @@ function updateECMR(tx) {
  * @transaction
  */
 function updateExpectedPickupWindow(tx) {
-  console.log('Invoking function UpdateExpectedPickupWindow');
-  console.log('ecmrID: ', tx.ecmr.ecmrID);
-
   tx.ecmr.loading.expectedWindow = tx.expectedWindow;
 
   return getAssetRegistry('org.digitalcmr.ECMR')
     .then(function (assetRegistry) {
       assetRegistry.update(tx.ecmr)
         .catch(function (error) {
-          console.log('[UpdateExpectedPickupWindow] An error occurred while updating the registry asset: ' + error);
-          throw error;
+          throw new Error('[UpdateExpectedPickupWindow] An error occurred while updating the registry asset: ' + error);
         });
     })
     .catch(function (error) {
-      console.log('[UpdateExpectedPickupWindow] An error occurred while getting the asset registry: ' + error);
-      throw error;
+      throw new Error('[UpdateExpectedPickupWindow] An error occurred while getting the asset registry: ' + error);
     });
 }
 
@@ -217,19 +189,14 @@ function updateExpectedPickupWindow(tx) {
  * @transaction
  */
 function updateExpectedDeliveryWindow(tx) {
-  console.log('Invoking function UpdateExpectedDeliveryWindow');
-  console.log('ecmrID: ', tx.ecmr.ecmrID);
-
   tx.ecmr.delivery.expectedWindow = tx.expectedWindow;
 
   return getAssetRegistry('org.digitalcmr.ECMR')
     .then(function (assetRegistry) {
       assetRegistry.update(tx.ecmr).catch(function (error) {
-        console.log('[UpdateExpectedDeliveryWindow] An error occurred while updating the registry asset: ' + error)
-        throw error;
+        throw new Error('[UpdateExpectedDeliveryWindow] An error occurred while updating the registry asset: ' + error)
       });
     }).catch(function (error) {
-      console.log('[UpdateExpectedDeliveryWindow] An error occurred while getting the asset registry: ' + error);
-      throw error;
+      throw new Error('[UpdateExpectedDeliveryWindow] An error occurred while getting the asset registry: ' + error);
     });
 }
