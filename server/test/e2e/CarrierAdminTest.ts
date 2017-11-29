@@ -405,6 +405,7 @@ describe('A Carrier Admin can', () => {
 
           return done(err);
         }
+        res.body.length.should.be.greaterThan(0);
         should.exist(res.body.find(transportOrder => transportOrder.orderID === '12345567890'));
         done(err);
       });
@@ -412,7 +413,7 @@ describe('A Carrier Admin can', () => {
 
   it('get a specific transport order based on ID', (done) => {
     server
-      .get(`/api/v1/transportOrder/orderID/${transportOrder.orderID}`)
+      .get(`/api/v1/transportOrder/orderID/12345567890`)
       .set('x-access-token', token)
       .expect(ok)
       .expect('Content-Type', /json/)
@@ -422,23 +423,24 @@ describe('A Carrier Admin can', () => {
 
           return done(err);
         }
-        should.exist(res.body.orderID === transportOrder.orderID);
+        should.exist(res.body.orderID === '12345567890');
         done(err);
       });
   });
 
-  it('get a specific transport order based on status', (done) => {
+  it('get a specific transport order based on any status', (done) => {
     server
-      .get(`/api/v1/transportOrder/status/${transportOrder.status}`)
+      .get(`/api/v1/transportOrder/status/IN_PROGRESS`)
       .set('x-access-token', token)
       .expect(ok)
       .expect('Content-Type', /json/)
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
-        should.exist(res.body.find(transportOrders => transportOrders.status === transportOrder.status));
+        res.body.length.should.be.greaterThan(0);
         done(err);
       });
   });

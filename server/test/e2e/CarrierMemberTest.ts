@@ -383,17 +383,36 @@ describe('A Carrier member can', () => {
       });
   });
 
-  it('get a specific transport order based when status is IN_PROGRESS', (done) => {
+  it('not get a specific transport order based on ID', (done) => {
     server
-      .get(`/api/v1/transportOrder/status/${transportOrder.status}`)
+      .get(`/api/v1/transportOrder/orderID/12345567890`)
       .set('x-access-token', token)
       .expect(ok)
       .expect('Content-Type', /json/)
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
+        res.body.length.should.equal(0);
+        done(err);
+      });
+  });
+
+  it('get a specific transport order when status is IN_PROGRESS', (done) => {
+    server
+      .get(`/api/v1/transportOrder/status/IN_PROGRESS`)
+      .set('x-access-token', token)
+      .expect(ok)
+      .expect('Content-Type', /json/)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        res.body.length.should.be.greaterThan(0);
         should.exist(res.body.status === transportOrder.status);
         done(err);
       });

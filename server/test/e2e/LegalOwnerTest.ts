@@ -332,7 +332,7 @@ describe('A legal owner admin can', () => {
 
   it('get a specific transport order based on ID', (done) => {
     server
-      .get(`/api/v1/transportOrder/orderID/${transportOrder.orderID}`)
+      .get(`/api/v1/transportOrder/orderID/12345567890`)
       .set('x-access-token', token)
       .expect(ok)
       .expect('Content-Type', /json/)
@@ -342,7 +342,7 @@ describe('A legal owner admin can', () => {
 
           return done(err);
         }
-        should.exist(res.body.orderID === transportOrder.orderID);
+        should.exist(res.body.orderID === '12345567890');
         done(err);
       });
   });
@@ -356,6 +356,7 @@ describe('A legal owner admin can', () => {
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         should.exist(res.body.find(transportOrders => transportOrders.status === transportOrder.status));

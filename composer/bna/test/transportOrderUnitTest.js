@@ -277,6 +277,4 @@ describe('As admin of the network, ', () => {
         transportOrder.goods[0].deliveryWindow.endDate.should.equal(20202020);
       });
   });
-
-
 });

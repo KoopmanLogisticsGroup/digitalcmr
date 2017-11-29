@@ -326,17 +326,36 @@ describe('An Recipient member can', () => {
       });
   });
 
+  it('not get a specific transport order based on ID', (done) => {
+    server
+      .get(`/api/v1/transportOrder/orderID/12345567890`)
+      .set('x-access-token', token)
+      .expect(ok)
+      .expect('Content-Type', /json/)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        res.body.length.should.equal(0);
+        done(err);
+      });
+  });
+
   it('not get a specific transport order based on status', (done) => {
     server
-      .get(`/api/v1/transportOrder/status/'12345567890'`)
+      .get(`/api/v1/transportOrder/status/IN_PROGRESS`)
       .set('x-access-token', token)
       .expect(200)
       .expect('Content-Type', /json/)
       .end((err: Error, res) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
+        res.body.length.should.equal(0);
         done(err);
       });
   });
