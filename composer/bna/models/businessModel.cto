@@ -136,13 +136,13 @@ concept Address {
 
 concept Delivery {
   o Address address
-  o Integer expectedDate optional
+  o DateWindow expectedWindow optional
   o Integer actualDate optional
 }
 
 concept Loading {
   o Address address
-  o Integer expectedDate optional
+  o DateWindow expectedWindow optional
   o Integer actualDate optional
 }
 
@@ -263,6 +263,11 @@ transaction UpdateEcmrStatusToInTransit {
   --> TransportOrder transportOrder
   --> ECMR ecmr
   o ECMR updatedEcmr
+}
+
+transaction UpdateExpectedDeliveryWindow {
+  --> ECMR ecmr
+  o DateWindow expectedWindow
 }
 
 transaction UpdateEcmrStatusToDelivered {

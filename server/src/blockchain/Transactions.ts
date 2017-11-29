@@ -3,6 +3,7 @@ export enum Transaction {
   CreateEcmr                           = 'CreateECMR',
   UpdateEcmr                           = 'UpdateECMR',
   UpdateEcmrStatusToCanceled           = 'UpdateECMRStatusToCanceled',
+  UpdateExpectedDeliveryWindow         = 'UpdateExpectedDeliveryWindow',
   CreateTransportOrders                = 'CreateTransportOrders',
   CreateTransportOrder                 = 'CreateTransportOrder',
   UpdateTransportOrder                 = 'UpdateTransportOrder',
