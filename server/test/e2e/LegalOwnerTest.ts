@@ -332,7 +332,7 @@ describe('A legal owner admin can', () => {
 
   it('get a specific transport order based on ID', (done) => {
     server
-      .get(`/api/v1/transportOrder/orderID/12345567890`)
+      .get('/api/v1/transportOrder/orderID/12345567890')
       .set('x-access-token', token)
       .expect(ok)
       .expect('Content-Type', /json/)
