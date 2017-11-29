@@ -18,7 +18,7 @@ export class EcmrTransactor implements TransactionCreator {
     } else if (transactionName === Transaction.UpdateEcmr) {
       transaction.ecmr           = EcmrBuilder.buildECMR(factory, namespace, data, identity, ip);
       transaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', data.orderID);
-    } else if (transactionName === Transaction.UpdateExpectedDeliveryWindow) {
+    } else if ((transactionName === Transaction.UpdateExpectedPickupWindow) || (transactionName === Transaction.UpdateExpectedDeliveryWindow)) {
       transaction.ecmr                     = factory.newRelationship(namespace, 'ECMR', data.ecmrID);
       transaction.expectedWindow           = factory.newConcept(namespace, 'DateWindow');
       transaction.expectedWindow.startDate = data.expectedWindow[0];
