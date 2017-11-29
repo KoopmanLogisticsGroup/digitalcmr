@@ -270,6 +270,11 @@ transaction UpdateExpectedDeliveryWindow {
   o DateWindow expectedWindow
 }
 
+transaction UpdateExpectedPickupWindow {
+  --> ECMR ecmr
+  o DateWindow expectedWindow
+}
+
 transaction UpdateEcmrStatusToDelivered {
   --> TransportOrder transportOrder
   --> ECMR ecmr

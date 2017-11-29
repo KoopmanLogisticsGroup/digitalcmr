@@ -241,6 +241,24 @@ rule CarrierAdminCanSubmitCreateECMRs {
     action: ALLOW
 }
 
+rule CarrierAdminCanCreateUpdateExpectedPickupWindow {
+  description: "Allow CarrierAdmin to create an UpdateExpectedPickupWindow transaction"
+  participant: "org.digitalcmr.CarrierAdmin"
+  operation: CREATE
+  resource: "org.digitalcmr.UpdateExpectedPickupWindow"
+  action: ALLOW
+}
+
+rule CarrierAdminCanSubmitUpdateExpectedPickupWindowTransaction {
+  description: "Allow CarrierAdmin to submit an UpdateExpectedPickupWindow transaction for an ECMR where his org is the carrier and status of ECMR is IN_TRANSIT"
+  participant(p): "org.digitalcmr.CarrierAdmin"
+  operation: UPDATE
+  resource(r): "org.digitalcmr.ECMR"
+  transaction(tx): "org.digitalcmr.UpdateExpectedPickupWindow"
+  condition: (r.carrier.getIdentifier() == p.org.getIdentifier() && r.status == "CREATED")
+  action: ALLOW
+}
+
 rule CarrierAdminCanCreateUpdateExpectedDeliveryWindow {
   description: "Allow CarrierAdmin to create an UpdateExpectedDeliveryWindow transaction"
   participant: "org.digitalcmr.CarrierAdmin"
