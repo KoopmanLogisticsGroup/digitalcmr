@@ -542,4 +542,15 @@ describe('Admin of the network', () => {
         throw error;
       });
   });
+
+  it('Should not be able to update the expectedDeliveryWindow of an ECMR which status is not IN_TRANSIT', () => {
+    let updateExpectedDeliveryWindowTransaction = factory.newTransaction(namespace, 'UpdateExpectedDeliveryWindow');
+    updateExpectedDeliveryWindowTransaction.ecmr = factory.newRelationship(namespace, 'ECMR', 'created');
+    updateExpectedDeliveryWindowTransaction.expectedWindow = factory.newConcept(namespace, 'DateWindow');
+    updateExpectedDeliveryWindowTransaction.expectedWindow.startDate = 7247832478934;
+    updateExpectedDeliveryWindowTransaction.expectedWindow.endDate = 212213821321;
+
+    return businessNetworkConnection.submitTransaction(updateExpectedDeliveryWindowTransaction)
+      .should.be.rejectedWith(/Transaction is not valid. Attempting to set an ExpectedDeliveryWindow when status is not IN_TRANSIT. Actual status:/);
+  });
 });
