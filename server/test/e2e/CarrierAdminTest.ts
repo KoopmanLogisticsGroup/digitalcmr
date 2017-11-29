@@ -268,9 +268,9 @@ describe('A Carrier admin can', () => {
 
             return done(err);
           }
-          res.body.length.should.be.greaterThan(0, 'No LOADED ECMRs were found.');
-          should.exist(res.body.find(ecmr => ecmr.status === 'LOADED'));
-          done(err);
+        res.body.length.should.be.greaterThan(0, 'No LOADED ECMRs were found.');
+        should.exist(res.body.find(ecmr => ecmr.status === 'LOADED'));
+        done(err);
         }
       );
   });
@@ -285,9 +285,9 @@ describe('A Carrier admin can', () => {
 
             return done(err);
           }
-          res.body.length.should.be.greaterThan(0, 'No IN_TRANSIT ECMRs were found.');
-          should.exist(res.body.find(ecmr => ecmr.status === 'IN_TRANSIT'));
-          done(err);
+        res.body.length.should.be.greaterThan(0, 'No IN_TRANSIT ECMRs were found.');
+        should.exist(res.body.find(ecmr => ecmr.status === 'IN_TRANSIT'));
+        done(err);
         }
       );
   });
