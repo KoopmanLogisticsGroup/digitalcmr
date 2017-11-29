@@ -449,4 +449,25 @@ describe('A Carrier admin can', () => {
         done(err);
       });
   });
+
+  it('can update an expectedPickupWindow of an ECMR', (done) => {
+    const expectedWindow = {
+      ecmrID:         'A1234567890',
+      expectedWindow: [7247832478934, 212213821321]
+    };
+
+    server
+      .put('/api/v1/ECMR/updateExpectedPickupWindow')
+      .set('x-access-token', token)
+      .send(expectedWindow)
+      .expect(ok)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
 });

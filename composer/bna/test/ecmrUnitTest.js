@@ -484,4 +484,33 @@ describe('Admin of the network', () => {
     return businessNetworkConnection.submitTransaction(updateTransaction)
       .should.be.rejectedWith(/Attempt to set the status on CONFIRMED_DELIVERED before the transporter signed for the delivery!/);
   });
+
+  it('Should be able to update the expectedPickupWindow of an ECMR which status is IN_TRANSIT', () => {
+    let updateExpectedPickupWindowTransaction = factory.newTransaction(namespace, 'UpdateExpectedPickupWindow');
+    updateExpectedPickupWindowTransaction.ecmr = factory.newRelationship(namespace, 'ECMR', 'created');
+    updateExpectedPickupWindowTransaction.expectedWindow = factory.newConcept(namespace, 'DateWindow');
+    updateExpectedPickupWindowTransaction.expectedWindow.startDate = 7247832478934;
+    updateExpectedPickupWindowTransaction.expectedWindow.endDate = 212213821321;
+
+    return businessNetworkConnection.submitTransaction(updateExpectedPickupWindowTransaction)
+      .then(() => {
+        return businessNetworkConnection.getAssetRegistry('org.digitalcmr.ECMR')
+          .then((assetRegistry) => {
+            return assetRegistry.get('created')
+              .then((ecmr) => {
+                ecmr.loading.expectedWindow.startDate.should.equal(7247832478934);
+                ecmr.loading.expectedWindow.endDate.should.equal(212213821321);
+              }).catch((error) => {
+                console.log(error);
+                throw error;
+              })
+          }).catch((error) => {
+            console.log(error);
+            throw error;
+          })
+      }).catch((error) => {
+        console.log(error);
+        throw error;
+      });
+  });
 });

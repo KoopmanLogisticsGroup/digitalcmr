@@ -17,6 +17,7 @@ import {Config} from '../../config/index';
 import {EcmrTransactor} from '../../domain/ecmrs/EcmrTransactor';
 import {Transaction} from '../../blockchain/Transactions';
 import {Ecmr} from '../../interfaces/ecmr.interface';
+import {ExpectedWindow} from '../../interfaces/expectedWindow.interface';
 
 @JsonController('/ECMR')
 @UseBefore(UserAuthenticatorMiddleware)
@@ -82,5 +83,12 @@ export class ECMRController {
     const ip                 = request.ip;
 
     return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateEcmr, ecmr, new EcmrTransactor());
+  }
+
+  @Put('/updateExpectedPickupWindow')
+  public async updateExpectedPickupWindow(@Body() etaObject: ExpectedWindow, @Req() request: any): Promise<any> {
+    const identity: Identity = new JSONWebToken(request).getIdentity();
+
+    return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateExpectedPickupWindow, etaObject, new EcmrTransactor());
   }
 }
