@@ -437,7 +437,7 @@ describe('Admin of the network', () => {
 
   it('should not be able to update ECMR status to DELIVERED when status is IN_TRANSIT without compound signature', () => {
     let updateTransaction = factory.newTransaction(namespace, 'UpdateECMR');
-    updateTransaction.transportOrder = factory.newRelationship('org.digitalcmr', 'TransportOrder', 'ORDER1');
+    updateTransaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', 'ORDER1');
     updateTransaction.ecmr = buildECMR('ecmr5');
     updateTransaction.ecmr.status = ecmrStatus.Delivered;
 
@@ -447,7 +447,7 @@ describe('Admin of the network', () => {
 
   it('should not be able to update ECMR status to DELIVERED when status is IN_TRANSIT before transporter signed for loading', () => {
     let updateTransaction = factory.newTransaction(namespace, 'UpdateECMR');
-    updateTransaction.transportOrder = factory.newRelationship('org.digitalcmr', 'TransportOrder', 'ORDER1');
+    updateTransaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', 'ORDER1');
     updateTransaction.ecmr = buildECMR('ecmr6');
     updateTransaction.ecmr.status = ecmrStatus.Delivered;
 
@@ -457,7 +457,7 @@ describe('Admin of the network', () => {
 
   it('should not be able to update ECMR status to CONFIRMED_DELIVERED when without signature before compound admin signed', () => {
     let updateTransaction = factory.newTransaction(namespace, 'UpdateECMR');
-    updateTransaction.transportOrder = factory.newRelationship('org.digitalcmr', 'TransportOrder', 'ORDER1');
+    updateTransaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', 'ORDER1');
     updateTransaction.ecmr = buildECMR('ecmr12');
     updateTransaction.ecmr.status = ecmrStatus.ConfirmedDelivered;
 
@@ -467,7 +467,7 @@ describe('Admin of the network', () => {
 
   it('should not be able to update ECMR status to CONFIRMED_DELIVERED when without signature before the transporter signed for loading', () => {
     let updateTransaction = factory.newTransaction(namespace, 'UpdateECMR');
-    updateTransaction.transportOrder = factory.newRelationship('org.digitalcmr', 'TransportOrder', 'ORDER1');
+    updateTransaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', 'ORDER1');
     updateTransaction.ecmr = buildECMR('ecmr13');
     updateTransaction.ecmr.status = ecmrStatus.ConfirmedDelivered;
 
@@ -477,11 +477,40 @@ describe('Admin of the network', () => {
 
   it('should not be able to update ECMR status to CONFIRMED_DELIVERED when without signature before the transport signed for delivery', () => {
     let updateTransaction = factory.newTransaction(namespace, 'UpdateECMR');
-    updateTransaction.transportOrder = factory.newRelationship('org.digitalcmr', 'TransportOrder', 'ORDER1');
+    updateTransaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', 'ORDER1');
     updateTransaction.ecmr = buildECMR('ecmr14');
     updateTransaction.ecmr.status = ecmrStatus.ConfirmedDelivered;
 
     return businessNetworkConnection.submitTransaction(updateTransaction)
       .should.be.rejectedWith(/Attempt to set the status on CONFIRMED_DELIVERED before the transporter signed for the delivery!/);
+  });
+
+  it('Should be able to update the expectedDeliveryWindow of an ECMR which status is IN_TRANSIT', () => {
+    let updateExpectedDeliveryWindowTransaction = factory.newTransaction(namespace, 'UpdateExpectedDeliveryWindow');
+    updateExpectedDeliveryWindowTransaction.ecmr = factory.newRelationship(namespace, 'ECMR', 'loaded');
+    updateExpectedDeliveryWindowTransaction.expectedWindow = factory.newConcept(namespace, 'DateWindow');
+    updateExpectedDeliveryWindowTransaction.expectedWindow.startDate = 7247832478934;
+    updateExpectedDeliveryWindowTransaction.expectedWindow.endDate = 212213821321;
+
+    return businessNetworkConnection.submitTransaction(updateExpectedDeliveryWindowTransaction)
+      .then(() => {
+        return businessNetworkConnection.getAssetRegistry('org.digitalcmr.ECMR')
+          .then((assetRegistry) => {
+            return assetRegistry.get('loaded')
+              .then((ecmr) => {
+                ecmr.delivery.expectedWindow.startDate.should.equal(7247832478934);
+                ecmr.delivery.expectedWindow.endDate.should.equal(212213821321);
+              }).catch((error) => {
+                console.log(error);
+                throw error;
+              })
+          }).catch((error) => {
+            console.log(error);
+            throw error;
+          })
+      }).catch((error) => {
+        console.log(error);
+        throw error;
+      });
   });
 });
