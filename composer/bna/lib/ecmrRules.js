@@ -222,6 +222,10 @@ function updateExpectedDeliveryWindow(tx) {
 
   tx.ecmr.delivery.expectedWindow = tx.expectedWindow;
 
+  if (tx.ecmr.status !== EcmrStatus.InTransit) {
+    throw new Error('[UpdateExpectedDeliveryWindow] Transaction is not valid. Attempting to set an ExpectedDeliveryWindow when status is not IN_TRANSIT. Actual status: ' + tx.ecmr.status);
+  }
+
   return getAssetRegistry('org.digitalcmr.ECMR')
     .then(function (assetRegistry) {
       assetRegistry.update(tx.ecmr).catch(function (error) {

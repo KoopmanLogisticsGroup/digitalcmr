@@ -383,7 +383,7 @@ describe('A Carrier member can', () => {
       });
   });
 
-  it('not get a specific transport order based on ID', (done) => {
+  it('get a specific transport order based on ID', (done) => {
     server
       .get('/api/v1/transportOrder/orderID/12345567890')
       .set('x-access-token', token)
@@ -395,7 +395,7 @@ describe('A Carrier member can', () => {
 
           return done(err);
         }
-        res.body.length.should.equal(0);
+        res.body.orderID.should.equal('12345567890');
         done(err);
       });
   });
@@ -516,6 +516,27 @@ describe('A Carrier member can', () => {
       .put('/api/v1/transportOrder/updateDeliveryWindow')
       .set('x-access-token', token)
       .send(pickupWindow)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
+  it('can not update an expectedDeliveryWindow of an ECMR with a status other than IN_TRANSIT', (done) => {
+    const expectedWindow = {
+      ecmrID:         'A1234567890',
+      expectedWindow: [7247832478934, 212213821321]
+    };
+
+    server
+      .put('/api/v1/ECMR/updateExpectedDeliveryWindow')
+      .set('x-access-token', token)
+      .send(expectedWindow)
       .expect(500)
       .end((err: Error) => {
         if (err) {
