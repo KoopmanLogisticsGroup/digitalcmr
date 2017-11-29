@@ -485,7 +485,7 @@ describe('Admin of the network', () => {
       .should.be.rejectedWith(/Attempt to set the status on CONFIRMED_DELIVERED before the transporter signed for the delivery!/);
   });
 
-  it('Should be able to update the  of an ECMR which status is IN_TRANSIT', () => {
+  it('Should be able to update the expectedDeliveryWindow of an ECMR which status is IN_TRANSIT', () => {
     let updateExpectedDeliveryWindowTransaction = factory.newTransaction(namespace, 'UpdateExpectedDeliveryWindow');
     updateExpectedDeliveryWindowTransaction.ecmr = factory.newRelationship(namespace, 'ECMR', 'loaded');
     updateExpectedDeliveryWindowTransaction.expectedWindow = factory.newConcept(namespace, 'DateWindow');
