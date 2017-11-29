@@ -18,11 +18,11 @@ export class EcmrTransactor implements TransactionCreator {
     } else if (transactionName === Transaction.UpdateEcmr) {
       transaction.ecmr           = EcmrBuilder.buildECMR(factory, namespace, data, identity, ip);
       transaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', data.orderID);
-    } else if ((transactionName === Transaction.UpdateEcmrDeliveryEta) || (transactionName === Transaction.UpdateEcmrPickupEta)) {
-      transaction.ecmr                = factory.newRelationship(namespace, 'ECMR', data.ecmrID);
-      transaction.etaWindow           = factory.newConcept(namespace, 'DateWindow');
-      transaction.etaWindow.startDate = data.etaWindow[0];
-      transaction.etaWindow.endDate   = data.etaWindow[1];
+    } else if (transactionName === Transaction.UpdateExpectedDeliveryWindow) {
+      transaction.ecmr                     = factory.newRelationship(namespace, 'ECMR', data.ecmrID);
+      transaction.expectedWindow           = factory.newConcept(namespace, 'DateWindow');
+      transaction.expectedWindow.startDate = data.expectedWindow[0];
+      transaction.expectedWindow.endDate   = data.expectedWindow[1];
     }
 
     return transaction;

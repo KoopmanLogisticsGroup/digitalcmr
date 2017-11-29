@@ -185,25 +185,25 @@ function updateECMR(tx) {
 }
 
 /**
- * Update EMCR delivery ETA transaction processor function.
- * @param {org.digitalcmr.UpdateEcmrDeliveryEta} tx  - UpdateEcmrDeliveryEta transaction
+ * UpdateExpectedDeliveryWindow transaction processor function.
+ * @param {org.digitalcmr.UpdateExpectedDeliveryWindow} tx  - UpdateExpectedDeliveryWindow transaction
  * @return {Promise} Asset registry Promise
  * @transaction
  */
-function updateEcmrDeliveryEta(tx) {
-  console.log('Invoking function UpdateEcmrDeliveryEta');
+function UpdateExpectedDeliveryWindow(tx) {
+  console.log('Invoking function UpdateExpectedDeliveryWindow');
   console.log('ecmrID: ', tx.ecmr.ecmrID);
 
-  tx.ecmr.delivery.expectedWindow = tx.etaWindow;
+  tx.ecmr.delivery.expectedWindow = tx.expectedWindow;
 
   return getAssetRegistry('org.digitalcmr.ECMR')
     .then(function (assetRegistry) {
       assetRegistry.update(tx.ecmr).catch(function (error) {
-        console.log('[UpdateEcmrDeliveryEta] An error occurred while updating the registry asset: ' + error)
+        console.log('[UpdateExpectedDeliveryWindow] An error occurred while updating the registry asset: ' + error)
         throw error;
       });
     }).catch(function (error) {
-      console.log('[UpdateEcmrDeliveryEta] An error occurred while getting the asset registry: ' + error);
+      console.log('[UpdateExpectedDeliveryWindow] An error occurred while getting the asset registry: ' + error);
       throw error;
     });
 }

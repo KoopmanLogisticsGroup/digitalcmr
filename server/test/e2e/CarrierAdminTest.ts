@@ -450,16 +450,16 @@ describe('A Carrier admin can', () => {
       });
   });
 
-  it('can update an delivery eta of a transport order', (done) => {
-    const deliveryEta = {
-      ecmrID:    'E1234567890',
-      etaWindow: [7247832478934, 212213821321]
+  it('can update an delivery window of an ECMR', (done) => {
+    const expectedWindow = {
+      ecmrID:         'E1234567890',
+      expectedWindow: [7247832478934, 212213821321]
     };
 
     server
-      .put('/api/v1/ECMR/updateEcmrDeliveryETA')
+      .put('/api/v1/ECMR/updateExpectedDeliveryWindow')
       .set('x-access-token', token)
-      .send(deliveryEta)
+      .send(expectedWindow)
       .expect(ok)
       .end((err: Error) => {
         if (err) {

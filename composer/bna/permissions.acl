@@ -241,20 +241,20 @@ rule CarrierAdminCanSubmitCreateECMRs {
     action: ALLOW
 }
 
-rule CarrierAdminCanCreateUpdateDeliveryEta {
-  description: "Allow CarrierAdmin to create an UpdateEcmrDeliveryEta transaction"
+rule CarrierAdminCanCreateUpdateExpectedDeliveryWindow {
+  description: "Allow CarrierAdmin to create an UpdateExpectedDeliveryWindow transaction"
   participant: "org.digitalcmr.CarrierAdmin"
   operation: CREATE
-  resource: "org.digitalcmr.UpdateEcmrDeliveryEta"
+  resource: "org.digitalcmr.UpdateExpectedDeliveryWindow"
   action: ALLOW
 }
 
-rule CarrierAdminCanSubmitUpdateDeliveryEtaTransaction {
-  description: "Allow CarrierAdmin to submit an UpdateEcmrDeliveryEta transaction for an ECMR where his org is the carrier and status of ECMR is IN_TRANSIT"
+rule CarrierAdminCanSubmitUpdateExpectedDeliveryWindowTransaction {
+  description: "Allow CarrierAdmin to submit an UpdateExpectedDeliveryWindow transaction for an ECMR where his org is the carrier and status of ECMR is IN_TRANSIT"
   participant(p): "org.digitalcmr.CarrierAdmin"
   operation: UPDATE
   resource(r): "org.digitalcmr.ECMR"
-  transaction(tx): "org.digitalcmr.UpdateEcmrDeliveryEta"
+  transaction(tx): "org.digitalcmr.UpdateExpectedDeliveryWindow"
   condition: (r.carrier.getIdentifier() == p.org.getIdentifier() && r.status == "IN_TRANSIT")
   action: ALLOW
 }

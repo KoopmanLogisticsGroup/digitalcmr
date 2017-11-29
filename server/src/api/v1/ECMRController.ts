@@ -86,9 +86,9 @@ export class ECMRController {
   }
 
   @Put('/updateExpectedDeliveryWindow')
-  public async updateEcmrDeliveryETA(@Body() etaObject: ExpectedWindow, @Req() request: any): Promise<any> {
+  public async updateExpectedDeliveryWindow(@Body() etaObject: ExpectedWindow, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateEcmrDeliveryEta, etaObject, new EcmrTransactor());
+    return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateExpectedDeliveryWindow, etaObject, new EcmrTransactor());
   }
 }
