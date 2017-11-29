@@ -92,6 +92,13 @@ export class ECMRController {
     return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateEcmrStatusToCanceled, ecmr, new EcmrTransactor());
   }
 
+  @Put('/updateExpectedPickupWindow')
+  public async updateExpectedPickupWindow(@Body() etaObject: ExpectedWindow, @Req() request: any): Promise<any> {
+    const identity: Identity = new JSONWebToken(request).getIdentity();
+
+    return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateExpectedPickupWindow, etaObject, new EcmrTransactor());
+  }
+
   @Put('/updateExpectedDeliveryWindow')
   public async updateExpectedDeliveryWindow(@Body() etaObject: ExpectedWindow, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();

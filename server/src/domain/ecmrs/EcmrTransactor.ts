@@ -21,7 +21,7 @@ export class EcmrTransactor implements TransactionCreator {
     } else if (transactionName === Transaction.UpdateEcmrStatusToCanceled) {
       transaction.ecmr   = factory.newRelationship(namespace, 'ECMR', data.ecmrID);
       transaction.reason = data.reason;
-    } else if (transactionName === Transaction.UpdateExpectedDeliveryWindow) {
+    } else if ((transactionName === Transaction.UpdateExpectedPickupWindow) || (transactionName === Transaction.UpdateExpectedDeliveryWindow)) {
       transaction.ecmr                     = factory.newRelationship(namespace, 'ECMR', data.ecmrID);
       transaction.expectedWindow           = factory.newConcept(namespace, 'DateWindow');
       transaction.expectedWindow.startDate = data.expectedWindow[0];

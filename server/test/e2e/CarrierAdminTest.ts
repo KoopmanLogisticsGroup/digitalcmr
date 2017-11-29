@@ -268,9 +268,9 @@ describe('A Carrier admin can', () => {
 
             return done(err);
           }
-        res.body.length.should.be.greaterThan(0, 'No LOADED ECMRs were found.');
-        should.exist(res.body.find(ecmr => ecmr.status === 'LOADED'));
-        done(err);
+          res.body.length.should.be.greaterThan(0, 'No LOADED ECMRs were found.');
+          should.exist(res.body.find(ecmr => ecmr.status === 'LOADED'));
+          done(err);
         }
       );
   });
@@ -285,9 +285,9 @@ describe('A Carrier admin can', () => {
 
             return done(err);
           }
-        res.body.length.should.be.greaterThan(0, 'No IN_TRANSIT ECMRs were found.');
-        should.exist(res.body.find(ecmr => ecmr.status === 'IN_TRANSIT'));
-        done(err);
+          res.body.length.should.be.greaterThan(0, 'No IN_TRANSIT ECMRs were found.');
+          should.exist(res.body.find(ecmr => ecmr.status === 'IN_TRANSIT'));
+          done(err);
         }
       );
   });
@@ -440,6 +440,27 @@ describe('A Carrier admin can', () => {
       .set('x-access-token', token)
       .send(pickupWindow)
       .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
+  it('can update an expectedPickupWindow of an ECMR', (done) => {
+    const expectedWindow = {
+      ecmrID:         'A1234567890',
+      expectedWindow: [7247832478934, 212213821321]
+    };
+
+    server
+      .put('/api/v1/ECMR/updateExpectedPickupWindow')
+      .set('x-access-token', token)
+      .send(expectedWindow)
+      .expect(ok)
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
