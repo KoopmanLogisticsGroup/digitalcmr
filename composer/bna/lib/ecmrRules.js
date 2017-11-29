@@ -19,8 +19,6 @@
  * @transaction
  */
 function createECMR(tx) {
-  console.log('Invoking function: CreateECMR');
-
   // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.ECMR')
     .then(function (assetRegistry) {
@@ -45,8 +43,6 @@ function createECMR(tx) {
  * @transaction
  */
 function createECMRs(tx) {
-  console.log('Invoking function: CreateECMRs');
-
   // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.ECMR')
     .then(function (assetRegistry) {
@@ -72,9 +68,6 @@ function createECMRs(tx) {
  * @transaction
  */
 function updateECMR(tx) {
-  console.log('Invoking function processor to set update ECMR');
-  console.log('ecmrID: ' + tx.ecmr.ecmrID);
-
   // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.ECMR')
     .then(function (assetRegistry) {
@@ -191,9 +184,9 @@ function updateECMR(tx) {
  * @transaction
  */
 function updateExpectedPickupWindow(tx) {
-  console.log('Invoking function UpdateExpectedPickupWindow');
-  console.log('ecmrID: ', tx.ecmr.ecmrID);
-
+  if (tx.ecmr.status !== EcmrStatus.Created) {
+    throw new Error('[UpdateExpectedDeliveryWindow] Transaction is not valid. Attempting to set an ExpectedPickupWindow when status is not CREATED. Actual status: ' + tx.ecmr.status);
+  }
   tx.ecmr.loading.expectedWindow = tx.expectedWindow;
 
   return getAssetRegistry('org.digitalcmr.ECMR')
@@ -217,14 +210,11 @@ function updateExpectedPickupWindow(tx) {
  * @transaction
  */
 function updateExpectedDeliveryWindow(tx) {
-  console.log('Invoking function UpdateExpectedDeliveryWindow');
-  console.log('ecmrID: ', tx.ecmr.ecmrID);
-
-  tx.ecmr.delivery.expectedWindow = tx.expectedWindow;
-
   if (tx.ecmr.status !== EcmrStatus.InTransit) {
     throw new Error('[UpdateExpectedDeliveryWindow] Transaction is not valid. Attempting to set an ExpectedDeliveryWindow when status is not IN_TRANSIT. Actual status: ' + tx.ecmr.status);
   }
+
+  tx.ecmr.delivery.expectedWindow = tx.expectedWindow;
 
   return getAssetRegistry('org.digitalcmr.ECMR')
     .then(function (assetRegistry) {
