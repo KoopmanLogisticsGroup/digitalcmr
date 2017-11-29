@@ -450,7 +450,7 @@ describe('A Carrier admin can', () => {
       });
   });
 
-  it('can update an delivery window of an ECMR', (done) => {
+  it('can update an expectedDeliveryWindow of an ECMR', (done) => {
     const expectedWindow = {
       ecmrID:         'E1234567890',
       expectedWindow: [7247832478934, 212213821321]
