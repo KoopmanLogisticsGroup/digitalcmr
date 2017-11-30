@@ -1,12 +1,12 @@
 /*
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Licensed under the Apache License, Version 2.0 (the 'License');
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
+ * distributed under the License is distributed on an 'AS IS' BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -19,14 +19,14 @@
  * @transaction
  */
 function createECMR(tx) {
-  return getAssetRegistry("org.digitalcmr.ECMR")
+  return getAssetRegistry('org.digitalcmr.ECMR')
     .then(function (assetRegistry) {
       return assetRegistry.add(tx.ecmr)
         .catch(function (error) {
-          throw new Error("[CreateECMR] An error occurred while addAll ECMRs", error);
+          throw new Error('[CreateECMR] An error occurred while addAll ECMRs', error);
         });
     }).catch(function (error) {
-      throw new Error("[CreateECMR] An error occurred while saving the ECMR asset", error);
+      throw new Error('[CreateECMR] An error occurred while saving the ECMR asset', error);
     });
 }
 
@@ -37,17 +37,17 @@ function createECMR(tx) {
  * @transaction
  */
 function createECMRs(tx) {
-  return getAssetRegistry("org.digitalcmr.ECMR")
+  return getAssetRegistry('org.digitalcmr.ECMR')
     .then(function (assetRegistry) {
       return assetRegistry.addAll(tx.ecmrs)
         .then(function () {
           updateTransportOrderToInProgress(tx);
         })
         .catch(function (error) {
-          throw new Error("[CreateECMRs] An error occurred while addAll ECMRs", error);
+          throw new Error('[CreateECMRs] An error occurred while addAll ECMRs', error);
         });
     }).catch(function (error) {
-      throw new Error("[CreateECMRs] An error occurred while getting the asset registry", error);
+      throw new Error('[CreateECMRs] An error occurred while getting the asset registry', error);
     });
 }
 
@@ -58,24 +58,24 @@ function createECMRs(tx) {
  * @transaction
  */
 function updateECMR(tx) {
-  return getAssetRegistry("org.digitalcmr.ECMR")
+  return getAssetRegistry('org.digitalcmr.ECMR')
     .then(function (assetRegistry) {
       return assetRegistry.get(tx.ecmr.ecmrID).catch(function (error) {
-        throw new Error("[UpdateECMR] An error occurred while getting the registry asset: " + error);
+        throw new Error('[UpdateECMR] An error occurred while getting the registry asset: ' + error);
       });
     })
     .then(function (ecmr) {
       var factory = getFactory();
       var currentParticipant = getCurrentParticipant() && getCurrentParticipant().getIdentifier();
       if (currentParticipant == undefined) {
-        currentParticipant = "network_admin";
+        currentParticipant = 'network_admin';
       }
 
       if (ecmr.status === EcmrStatus.Created) {
         ecmr.status = EcmrStatus.Loaded;
 
         ecmr.compoundSignature = tx.ecmr.compoundSignature;
-        ecmr.compoundSignature.certificate = factory.newRelationship("org.digitalcmr", "User", currentParticipant);
+        ecmr.compoundSignature.certificate = factory.newRelationship('org.digitalcmr', 'User', currentParticipant);
 
         // write the compound remarks into the ecmr
         for (var i = 0; tx.ecmr.goods && i < tx.ecmr.goods.length; i++) {
@@ -85,13 +85,13 @@ function updateECMR(tx) {
         }
       } else if (ecmr.status === EcmrStatus.Loaded) {
         if (!ecmr.compoundSignature) {
-          throw new Error("[UpdateECMR] Transaction is not valid. Attempt to set the status on IN_TRANSIT before the compound admin signature");
+          throw new Error('[UpdateECMR] Transaction is not valid. Attempt to set the status on IN_TRANSIT before the compound admin signature');
         }
 
         ecmr.status = EcmrStatus.InTransit;
 
         ecmr.carrierLoadingSignature = tx.ecmr.carrierLoadingSignature;
-        ecmr.carrierLoadingSignature.certificate = factory.newRelationship("org.digitalcmr", "User", currentParticipant);
+        ecmr.carrierLoadingSignature.certificate = factory.newRelationship('org.digitalcmr', 'User', currentParticipant);
 
         // write the carrier loading remarks into the ecmr
         for (var i = 0; tx.ecmr.goods && i < tx.ecmr.goods.length; i++) {
@@ -102,17 +102,17 @@ function updateECMR(tx) {
       } else if (ecmr.status === EcmrStatus.InTransit) {
         // check if the required signatures has been placed in the previous steps
         if (!ecmr.compoundSignature) {
-          throw new Error("[UpdateECMR] Transaction is not valid. Attempt to set the status on DELIVERED before the compound admin signed!");
+          throw new Error('[UpdateECMR] Transaction is not valid. Attempt to set the status on DELIVERED before the compound admin signed!');
         }
         if (!ecmr.carrierLoadingSignature) {
-          throw new Error("[UpdateECMR] Transaction is not valid. Attempt to set the status on DELIVERED before the transporter signed for the loading!");
+          throw new Error('[UpdateECMR] Transaction is not valid. Attempt to set the status on DELIVERED before the transporter signed for the loading!');
         }
 
         ecmr.status = EcmrStatus.Delivered;
 
         // write the carrier delivery signature into the ecmr
         ecmr.carrierDeliverySignature = tx.ecmr.carrierDeliverySignature;
-        ecmr.carrierDeliverySignature.certificate = factory.newRelationship("org.digitalcmr", "User", currentParticipant);
+        ecmr.carrierDeliverySignature.certificate = factory.newRelationship('org.digitalcmr', 'User', currentParticipant);
 
 
         // write the carrier delivery remarks into the ecmr
@@ -126,20 +126,20 @@ function updateECMR(tx) {
       } else if (ecmr.status === EcmrStatus.Delivered) {
         // check if the required signatures has been placed in the previous steps
         if (!ecmr.compoundSignature) {
-          throw new Error("[UpdateECMR] Transaction is not valid. Attempt to set the status on CONFIRMED_DELIVERED before the compound admin signed!");
+          throw new Error('[UpdateECMR] Transaction is not valid. Attempt to set the status on CONFIRMED_DELIVERED before the compound admin signed!');
         }
         if (!ecmr.carrierLoadingSignature) {
-          throw new Error("[UpdateECMR] Transaction is not valid. Attempt to set the status on CONFIRMED_DELIVERED before the transporter signed for the loading!");
+          throw new Error('[UpdateECMR] Transaction is not valid. Attempt to set the status on CONFIRMED_DELIVERED before the transporter signed for the loading!');
         }
         if (!ecmr.carrierDeliverySignature) {
-          throw new Error("[UpdateECMR] Transaction is not valid. Attempt to set the status on CONFIRMED_DELIVERED before the transporter signed for the delivery!");
+          throw new Error('[UpdateECMR] Transaction is not valid. Attempt to set the status on CONFIRMED_DELIVERED before the transporter signed for the delivery!');
         }
 
         ecmr.status = EcmrStatus.ConfirmedDelivered;
 
         // write the recipient signature into the ecmr
         ecmr.recipientSignature = tx.ecmr.recipientSignature;
-        ecmr.recipientSignature.certificate = factory.newRelationship("org.digitalcmr", "User", currentParticipant);
+        ecmr.recipientSignature.certificate = factory.newRelationship('org.digitalcmr', 'User', currentParticipant);
 
         // write the recipient remarks into the ecmr
         for (var i = 0; tx.ecmr.goods && i < tx.ecmr.goods.length; i++) {
@@ -147,16 +147,16 @@ function updateECMR(tx) {
             ecmr.goods[i].recipientRemark = tx.ecmr.goods[i].recipientRemark;
           }
         }
-      } else throw new Error("[UpdateECMR] Validation failure! Provided status: " + ecmr.status + "is not a valid status!");
+      } else throw new Error('[UpdateECMR] Validation failure! Provided status: ' + ecmr.status + 'is not a valid status!');
 
-      return getAssetRegistry("org.digitalcmr.ECMR")
+      return getAssetRegistry('org.digitalcmr.ECMR')
         .then(function (assetRegistry) {
           return assetRegistry.update(ecmr)
             .catch(function (error) {
-              throw new Error("[UpdateECMR] An error occurred while updating the registry asset: " + error);
+              throw new Error('[UpdateECMR] An error occurred while updating the registry asset: ' + error);
             });
         }).catch(function (error) {
-          throw new Error("[UpdateECMR] An error occurred while getting the asset Registry: " + error);
+          throw new Error('[UpdateECMR] An error occurred while getting the asset Registry: ' + error);
         });
     });
 }
@@ -169,19 +169,19 @@ function updateECMR(tx) {
  */
 function updateExpectedPickupWindow(tx) {
   if (tx.ecmr.status !== EcmrStatus.Created) {
-    throw new Error("[UpdateExpectedPickupWindow] Invalid transaction. Trying to set pickup window on an ECMR with an invalid status: " + tx.ecmr.status);
+    throw new Error('[UpdateExpectedPickupWindow] Invalid transaction. Trying to set pickup window on an ECMR with an invalid status: ' + tx.ecmr.status);
   }
   tx.ecmr.loading.expectedWindow = tx.expectedWindow;
 
-  return getAssetRegistry("org.digitalcmr.ECMR")
+  return getAssetRegistry('org.digitalcmr.ECMR')
     .then(function (assetRegistry) {
       assetRegistry.update(tx.ecmr)
         .catch(function (error) {
-          throw new Error("[UpdateExpectedPickupWindow] An error occurred while updating the registry asset: " + error);
+          throw new Error('[UpdateExpectedPickupWindow] An error occurred while updating the registry asset: ' + error);
         });
     })
     .catch(function (error) {
-      throw new Error("[UpdateExpectedPickupWindow] An error occurred while getting the asset registry: " + error);
+      throw new Error('[UpdateExpectedPickupWindow] An error occurred while getting the asset registry: ' + error);
     });
 }
 
@@ -193,16 +193,16 @@ function updateExpectedPickupWindow(tx) {
  */
 function updateExpectedDeliveryWindow(tx) {
   if (tx.ecmr.status !== EcmrStatus.InTransit) {
-    throw new Error("[UpdateExpectedPickupWindow] Invalid transaction. Trying to set pickup window on an ECMR with an invalid status: " + tx.ecmr.status);
+    throw new Error('[UpdateExpectedPickupWindow] Invalid transaction. Trying to set pickup window on an ECMR with an invalid status: ' + tx.ecmr.status);
   }
   tx.ecmr.delivery.expectedWindow = tx.expectedWindow;
 
-  return getAssetRegistry("org.digitalcmr.ECMR")
+  return getAssetRegistry('org.digitalcmr.ECMR')
     .then(function (assetRegistry) {
       assetRegistry.update(tx.ecmr).catch(function (error) {
-        throw new Error("[UpdateExpectedDeliveryWindow] An error occurred while updating the registry asset: " + error)
+        throw new Error('[UpdateExpectedDeliveryWindow] An error occurred while updating the registry asset: ' + error)
       });
     }).catch(function (error) {
-      throw new Error("[UpdateExpectedDeliveryWindow] An error occurred while getting the asset registry: " + error);
+      throw new Error('[UpdateExpectedDeliveryWindow] An error occurred while getting the asset registry: ' + error);
     });
 }
