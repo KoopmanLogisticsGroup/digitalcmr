@@ -48,6 +48,5 @@ function updateRegistrationCountry(tx) {
         });
     }).catch(function (error) {
       throw new Error('[UpdateRegistrationCountry] An error occurred while updating the Vehicle asset: ' + error);
-      throw error;
     });
 }

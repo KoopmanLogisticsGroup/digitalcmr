@@ -198,6 +198,28 @@ describe('Admin of the network', () => {
       });
   });
 
+  it('should be able to cancel an ECMR', () => {
+    let transaction = factory.newTransaction(Network.namespace, 'UpdateECMRStatusToCancelled');
+    transaction.ecmr = builder.buildECMR('created');
+    transaction.ecmr = factory.newRelationship(Network.namespace, 'ECMR', 'created');
+    transaction.cancellation = factory.newConcept(Network.namespace, 'Cancellation');
+    transaction.cancellation.cancelledBy = factory.newRelationship(Network.namespace, 'Entity', 'pete@koopman.org');
+    transaction.cancellation.date = new Date().getTime();
+    transaction.cancellation.reason = 'one big reason';
+
+    return businessNetworkConnection.submitTransaction(transaction)
+      .then(() => {
+        return businessNetworkConnection.getAssetRegistry(Network.namespace, 'ECMR')
+          .then((assetRegistry) => {
+            return assetRegistry.get('created');
+          })
+          .then((updatedECMR) => {
+            updatedECMR.status.should.equal(BusinessModel.ecmrStatus.Cancelled);
+            updatedECMR.cancellation.should.be.instanceOf(Object);
+          });
+      });
+  });
+
   it('should be able to update ECMR status from CREATED to LOADED', () => {
     let updateTransaction = factory.newTransaction(Network.namespace, 'UpdateECMR');
     updateTransaction.transportOrder = factory.newRelationship(Network.namespace, 'TransportOrder', 'ORDER1');

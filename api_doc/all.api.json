@@ -2619,7 +2619,7 @@
         "OPEN",
         "IN_PROGRESS",
         "COMPLETED",
-        "CANCELED"
+        "CANCELLED"
       ]
     },
     "LoginCredentials": {

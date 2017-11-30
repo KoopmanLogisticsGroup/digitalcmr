@@ -7733,7 +7733,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "CANCELED",
+											"text": "CANCELLED",
 											"horizontalAlignment": 0,
 											"verticalAlignment": 5,
 											"wordWrap": false
@@ -14169,7 +14169,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "CANCELED",
+											"text": "CANCELLED",
 											"horizontalAlignment": 0,
 											"verticalAlignment": 5,
 											"wordWrap": false
@@ -16529,7 +16529,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "+canceledBy: UserBlockchain",
+											"text": "+cancelledBy: UserBlockchain",
 											"horizontalAlignment": 0,
 											"verticalAlignment": 5,
 											"wordWrap": false
@@ -26406,7 +26406,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFdor2LreAqT0c="
 							},
-							"name": "CANCELED",
+							"name": "CANCELLED",
 							"visibility": "public"
 						}
 					]
@@ -27332,7 +27332,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFfWP7OkQJowug="
 							},
-							"name": "CANCELED",
+							"name": "CANCELLED",
 							"visibility": "public"
 						}
 					]
@@ -27400,7 +27400,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFfWRgi3ef1OF8="
 							},
-							"name": "canceledBy",
+							"name": "cancelledBy",
 							"visibility": "public",
 							"isStatic": false,
 							"isLeaf": false,

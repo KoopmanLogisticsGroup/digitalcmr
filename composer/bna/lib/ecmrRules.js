@@ -162,6 +162,42 @@ function updateECMR(tx) {
 }
 
 /**
+ * UpdateECMRStatusToCancelled transaction processor function.
+ * @param {org.digitalcmr.UpdateECMRStatusToCancelled} tx  - UpdateECMRStatusToCancelled transaction
+ * @return {Promise} Asset registry Promise
+ * @transaction
+ */
+function updateECMRStatusToCancelled(tx) {
+  var factory = getFactory();
+  var currentParticipant = getCurrentParticipant() && getCurrentParticipant().getIdentifier();
+
+  if (currentParticipant == undefined || null) {
+    currentParticipant = 'network_admin';
+  }
+
+  // Get the asset registry for the asset.
+  // Updates the status of a ECMR when the status of the specific ECMR is still CREATED
+  tx.ecmr.status = EcmrStatus.Cancelled;
+
+  // Updates the ECMR with an object that displays cancellation information
+  tx.ecmr.cancellation = factory.newConcept('org.digitalcmr', 'Cancellation');
+  tx.ecmr.cancellation.cancelledBy = factory.newRelationship('org.digitalcmr', 'Entity', currentParticipant);
+  tx.ecmr.cancellation.date = tx.cancellation.date;
+  tx.ecmr.cancellation.reason = tx.cancellation.reason;
+
+  return getAssetRegistry('org.digitalcmr.ECMR')
+    .then(function (assetRegistry) {
+      return assetRegistry.update(tx.ecmr)
+        .catch(function (error) {
+          throw new Error('[UpdateECMRStatusToCancelled] An error occurred while updating the registry asset: ' + error);
+        });
+    }).catch(function (error) {
+      throw new Error('[UpdateECMRStatusToCancelled] An error occurred while retrieving the asset registry: ' + error);
+    });
+}
+
+
+/**
  * UpdateExpectedPickupWindow transaction processor function.
  * @param {org.digitalcmr.UpdateExpectedPickupWindow} tx  - UpdateExpectedPickupWindow transaction
  * @return {Promise} Asset registry Promise

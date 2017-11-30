@@ -31,8 +31,17 @@ export class CancelModalComponent implements OnInit {
 
   public onSubmit(): void {
     $('#submitButton').addClass('basic loading');
-    this.transportOrder.status = 'CANCELED';
-    this.transportOrderService.cancelTransportOrder(this.transportOrder).subscribe(result => {
+
+    const transportOrderCancelled = {
+      'orderID':      this.transportOrder.orderID,
+      'cancellation': {
+        'cancelledBy': 'pete@koopman.org',
+        'date':        new Date().getTime(),
+        'reason':      'a lot of reasons'
+      }
+    };
+
+    this.transportOrderService.cancelTransportOrder(transportOrderCancelled).subscribe(result => {
       $('#cancel_modal.ui.modal').modal('hide');
       $('#cancel_modal.ui.modal').modal('hide');
       location.reload();
