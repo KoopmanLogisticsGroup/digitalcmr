@@ -125,20 +125,20 @@ rule LegalOwnerAdminCanSubmitCreateECMR {
     action: ALLOW
 }
 
-rule LegalOwnerAdminCanCreateUpdateTransportOrderStatusToCanceledTransaction {
-    description: "Allow LegalOwnerAdmin to CREATE UpdateTransportOrderStatusToCanceled transaction"
+rule LegalOwnerAdminCanCreateUpdateTransportOrderStatusToCancelledTransaction {
+    description: "Allow LegalOwnerAdmin to CREATE UpdateTransportOrderStatusToCancelled transaction"
     participant: "org.digitalcmr.LegalOwnerAdmin"
     operation: CREATE
-    resource: "org.digitalcmr.UpdateTransportOrderStatusToCanceled"
+    resource: "org.digitalcmr.UpdateTransportOrderStatusToCancelled"
     action: ALLOW
 }
 
-rule LegalOwnerAdminCanSubmitUpdateTransportOrderStatusToCanceled {
-    description: "Allow LegalOwnerAdmin to submit an UpdateTransportOrderStatusToCanceled transaction for his organization from OPEN status to CANCELED"
+rule LegalOwnerAdminCanSubmitUpdateTransportOrderStatusToCancelled {
+    description: "Allow LegalOwnerAdmin to submit an UpdateTransportOrderStatusToCancelled transaction for his organization from OPEN status to CANCELLED"
     participant(p): "org.digitalcmr.LegalOwnerAdmin"
     operation: UPDATE
     resource(r): "org.digitalcmr.TransportOrder"
-    transaction(tx): "org.digitalcmr.UpdateTransportOrderStatusToCanceled"
+    transaction(tx): "org.digitalcmr.UpdateTransportOrderStatusToCancelled"
     condition: (r.owner.getIdentifier() == p.org.getIdentifier() && r.status == "OPEN")
     action: ALLOW
 }
@@ -286,20 +286,20 @@ rule CarrierAdminCanUpdateTransportOrder {
     action: ALLOW
 }
 
-rule CarrierAdminCanCreateUpdateECMRStatusToCanceledTransaction {
-    description: "Allow CarrierAdmin to CREATE UpdateECMRStatusToCanceled transaction only when ECMR status is CREATED"
+rule CarrierAdminCanCreateUpdateECMRStatusToCancelledTransaction {
+    description: "Allow CarrierAdmin to CREATE UpdateECMRStatusToCancelled transaction only when ECMR status is CREATED"
     participant: "org.digitalcmr.CarrierAdmin"
     operation: CREATE
-    resource: "org.digitalcmr.UpdateECMRStatusToCanceled"
+    resource: "org.digitalcmr.UpdateECMRStatusToCancelled"
     action: ALLOW
 }
 
-rule CarrierAdminCanSubmitUpdateECMRStatusToCanceled {
-    description: "Allow CarrierAdmin to submit an UpdateECMRStatusToCanceled transaction for his organization from CREATED status to CANCELED"
+rule CarrierAdminCanSubmitUpdateECMRStatusToCancelled {
+    description: "Allow CarrierAdmin to submit an UpdateECMRStatusToCancelled transaction for his organization from CREATED status to CANCELLED"
     participant(p): "org.digitalcmr.CarrierAdmin"
     operation: UPDATE
     resource(r): "org.digitalcmr.ECMR"
-    transaction(tx): "org.digitalcmr.UpdateECMRStatusToCanceled"
+    transaction(tx): "org.digitalcmr.UpdateECMRStatusToCancelled"
     condition: (r.carrier.getIdentifier() == p.org.getIdentifier() && r.status == "CREATED")
     action: ALLOW
 }

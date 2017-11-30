@@ -19,9 +19,6 @@
  * @transaction
  */
 function createLegalOwnerOrg(tx) {
-  console.log('Invoking function processor CreateLegalOwnerOrg');
-  console.log(tx);
-
   // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.LegalOwnerOrg')
     .then(function (assetRegistry) {
@@ -43,9 +40,6 @@ function createLegalOwnerOrg(tx) {
  * @transaction
  */
 function createCompoundOrg(tx) {
-  console.log('Invoking function processor create CompoundOrg');
-  console.log(tx);
-
   // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.CompoundOrg')
     .then(function (assetRegistry) {
@@ -67,9 +61,6 @@ function createCompoundOrg(tx) {
  * @transaction
  */
 function createCarrierOrg(tx) {
-  console.log('Invoking function processor create CarrierOrg');
-  console.log(tx);
-
   // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.CarrierOrg')
     .then(function (assetRegistry) {
@@ -91,9 +82,6 @@ function createCarrierOrg(tx) {
  * @transaction
  */
 function createRecipientOrg(tx) {
-  console.log('Invoking function processor create RecipientOrg');
-  console.log(tx);
-
   // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.RecipientOrg')
     .then(function (assetRegistry) {

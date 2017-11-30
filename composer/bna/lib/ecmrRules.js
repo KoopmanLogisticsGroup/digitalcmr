@@ -19,8 +19,6 @@
  * @transaction
  */
 function createECMR(tx) {
-  console.log('Invoking function: CreateECMR');
-
   // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.ECMR')
     .then(function (assetRegistry) {
@@ -45,8 +43,6 @@ function createECMR(tx) {
  * @transaction
  */
 function createECMRs(tx) {
-  console.log('Invoking function: CreateECMRs');
-
   // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.ECMR')
     .then(function (assetRegistry) {
@@ -72,9 +68,6 @@ function createECMRs(tx) {
  * @transaction
  */
 function updateECMR(tx) {
-  console.log('Invoking function processor to set update ECMR');
-  console.log('ecmrID: ' + tx.ecmr.ecmrID);
-
   // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.ECMR')
     .then(function (assetRegistry) {
@@ -185,43 +178,37 @@ function updateECMR(tx) {
 }
 
 /**
- * UpdateECMRStatusToCanceled transaction processor function.
- * @param {org.digitalcmr.UpdateECMRStatusToCanceled} tx  - UpdateECMRStatusToCanceled transaction
+ * UpdateECMRStatusToCancelled transaction processor function.
+ * @param {org.digitalcmr.UpdateECMRStatusToCancelled} tx  - UpdateECMRStatusToCancelled transaction
  * @return {Promise} Asset registry Promise
  * @transaction
  */
-function updateECMRStatusToCanceled(tx) {
-  console.log('Invoking function: UpdateECMRStatusToCanceled');
-  console.log(tx.ecmr.status);
-
+function updateECMRStatusToCancelled(tx) {
   var factory = getFactory();
   var currentParticipant = getCurrentParticipant() && getCurrentParticipant().getIdentifier();
 
   if (currentParticipant == undefined || null) {
-    console.log('setting currentParticipant');
     currentParticipant = 'network_admin';
   }
 
   // Get the asset registry for the asset.
   // Updates the status of a ECMR when the status of the specific ECMR is still CREATED
-  tx.ecmr.status = EcmrStatus.Canceled;
+  tx.ecmr.status = EcmrStatus.Cancelled;
 
-  // Updates the ECMR with an object that displays cancelation information
-  tx.ecmr.cancelation = factory.newConcept('org.digitalcmr', 'Cancelation');
-  tx.ecmr.cancelation.canceledBy = factory.newRelationship('org.digitalcmr', 'Entity', currentParticipant);
-  tx.ecmr.cancelation.date = new Date().getMilliseconds();
-  tx.ecmr.cancelation.reason = tx.reason;
+  // Updates the ECMR with an object that displays cancellation information
+  tx.ecmr.cancellation = factory.newConcept('org.digitalcmr', 'Cancellation');
+  tx.ecmr.cancellation.cancelledBy = factory.newRelationship('org.digitalcmr', 'Entity', currentParticipant);
+  tx.ecmr.cancellation.date = tx.cancellation.date;
+  tx.ecmr.cancellation.reason = tx.cancellation.reason;
 
   return getAssetRegistry('org.digitalcmr.ECMR')
     .then(function (assetRegistry) {
       return assetRegistry.update(tx.ecmr)
         .catch(function (error) {
-          console.log('[updateECMRStatusToCanceled] An error occurred while updating the registry asset: ' + error);
-          throw error;
+          throw new Error('[UpdateECMRStatusToCancelled] An error occurred while updating the registry asset: ' + error);
         });
     }).catch(function (error) {
-      console.log('[updateECMRStatusToCanceled] An error occurred while retrieving the asset registry: ' + error);
-      throw error;
+      throw new Error('[UpdateECMRStatusToCancelled] An error occurred while retrieving the asset registry: ' + error);
     });
 }
 
@@ -233,22 +220,17 @@ function updateECMRStatusToCanceled(tx) {
  * @transaction
  */
 function updateExpectedPickupWindow(tx) {
-  console.log('Invoking function UpdateExpectedPickupWindow');
-  console.log('ecmrID: ', tx.ecmr.ecmrID);
-
   tx.ecmr.loading.expectedWindow = tx.expectedWindow;
 
   return getAssetRegistry('org.digitalcmr.ECMR')
     .then(function (assetRegistry) {
       assetRegistry.update(tx.ecmr)
         .catch(function (error) {
-          console.log('[UpdateExpectedPickupWindow] An error occurred while updating the registry asset: ' + error);
-          throw error;
+          throw new Error('[UpdateExpectedPickupWindow] An error occurred while updating the registry asset: ' + error);
         });
     })
     .catch(function (error) {
-      console.log('[UpdateExpectedPickupWindow] An error occurred while getting the asset registry: ' + error);
-      throw error;
+      throw new Error('[UpdateExpectedPickupWindow] An error occurred while getting the asset registry: ' + error);
     });
 }
 
@@ -259,19 +241,14 @@ function updateExpectedPickupWindow(tx) {
  * @transaction
  */
 function updateExpectedDeliveryWindow(tx) {
-  console.log('Invoking function UpdateExpectedDeliveryWindow');
-  console.log('ecmrID: ', tx.ecmr.ecmrID);
-
   tx.ecmr.delivery.expectedWindow = tx.expectedWindow;
 
   return getAssetRegistry('org.digitalcmr.ECMR')
     .then(function (assetRegistry) {
       assetRegistry.update(tx.ecmr).catch(function (error) {
-        console.log('[UpdateExpectedDeliveryWindow] An error occurred while updating the registry asset: ' + error)
-        throw error;
+        throw new Error('[UpdateExpectedDeliveryWindow] An error occurred while updating the registry asset: ' + error);
       });
     }).catch(function (error) {
-      console.log('[UpdateExpectedDeliveryWindow] An error occurred while getting the asset registry: ' + error);
-      throw error;
+      throw new Error('[UpdateExpectedDeliveryWindow] An error occurred while getting the asset registry: ' + error);
     });
 }

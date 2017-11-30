@@ -19,6 +19,8 @@ import {Transaction} from '../../blockchain/Transactions';
 import {Ecmr} from '../../interfaces/ecmr.interface';
 import {Query} from '../../blockchain/Queries';
 import {ExpectedWindow} from '../../interfaces/expectedWindow.interface';
+import {EcmrCancellation} from '../../interfaces/cancellation.interface';
+import {isUndefined} from 'util';
 
 @JsonController('/ECMR')
 @UseBefore(UserAuthenticatorMiddleware)
@@ -72,10 +74,10 @@ export class ECMRController {
   }
 
   @Post('/')
-  public async create(@Body() ecmr: Ecmr, @Req() request: any): Promise<any> {
+  public async create(@Body() data: any, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateEcmrs, ecmr, new EcmrTransactor());
+    return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateEcmrs, data, new EcmrTransactor());
   }
 
   @Put('/')
@@ -87,10 +89,12 @@ export class ECMRController {
   }
 
   @Put('/cancelECMR')
-  public async updateECMRtoCanceled(@Body() ecmr: Ecmr, @Req() request: any): Promise<any> {
+  public async updateECMRtoCancelled(@Body() ecmrCancellation: EcmrCancellation, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateEcmrStatusToCanceled, ecmr, new EcmrTransactor());
+    ecmrCancellation.cancellation.date = new Date().getTime();
+
+    return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateEcmrStatusToCancelled, ecmrCancellation, new EcmrTransactor());
   }
 
   @Put('/updateExpectedPickupWindow')

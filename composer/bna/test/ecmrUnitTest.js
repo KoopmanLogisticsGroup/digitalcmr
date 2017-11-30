@@ -45,7 +45,7 @@ describe('Admin of the network', () => {
     InTransit: 'IN_TRANSIT',
     Delivered: 'DELIVERED',
     ConfirmedDelivered: 'CONFIRMED_DELIVERED',
-    Canceled: 'CANCELED'
+    Cancelled: 'CANCELLED'
   };
 
   const userIDs = {
@@ -341,7 +341,7 @@ describe('Admin of the network', () => {
       });
   });
   it('should be able to cancel an ECMR', () => {
-    let transaction = factory.newTransaction(namespace, 'UpdateECMRStatusToCanceled');
+    let transaction = factory.newTransaction(namespace, 'UpdateECMRStatusToCancelled');
     transaction.ecmr = buildECMR('created');
     transaction.ecmr = factory.newRelationship('org.digitalcmr', 'ECMR', 'created');
     transaction.reason = 'no reason';
@@ -353,8 +353,8 @@ describe('Admin of the network', () => {
             return assetRegistry.get('created');
           })
           .then((updatedECMR) => {
-            updatedECMR.status.should.equal(ecmrStatus.Canceled);
-            updatedECMR.cancelation.should.be.instanceOf(Object);
+            updatedECMR.status.should.equal(ecmrStatus.Cancelled);
+            updatedECMR.cancellation.should.be.instanceOf(Object);
           });
       });
   });

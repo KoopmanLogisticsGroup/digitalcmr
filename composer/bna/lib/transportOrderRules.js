@@ -19,8 +19,6 @@
  * @transaction
  */
 function createTransportOrder(tx) {
-  console.log('Invoking function: CreateTransportOrder');
-
   // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.TransportOrder')
     .then(function (assetRegistry) {
@@ -45,8 +43,6 @@ function createTransportOrder(tx) {
  * @transaction
  */
 function createTransportOrders(tx) {
-  console.log('Invoking function: CreateTransportOrders');
-
   // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.TransportOrder')
     .then(function (assetRegistry) {
@@ -65,9 +61,6 @@ function createTransportOrders(tx) {
 }
 
 function updateTransportOrderToInProgress(tx) {
-  console.log('Invoking function processor to set update TransportOrder');
-  console.log('orderID: ' + tx.transportOrder.orderID);
-
   // Get the asset registry for the asset.
   // Updates the status of a TransportOrder when an ECMR is created
   tx.transportOrder.status = TransportOrderStatus.InProgress;
@@ -89,9 +82,6 @@ function updateTransportOrderToInProgress(tx) {
 }
 
 function updateTransportOrderStatusToCompleted(tx) {
-  console.log('Invoking function processor to set update TransportOrder');
-  console.log('orderID: ' + tx.transportOrder.orderID);
-
   // Get the asset registry for the asset.
   // Updates the status of a TransportOrder when an ECMR is created
   tx.transportOrder.status = TransportOrderStatus.Completed;
@@ -116,8 +106,6 @@ function updateTransportOrderStatusToCompleted(tx) {
  *  @transaction
  */
 function updateTransportOrderPickupWindow(tx) {
-  console.log('Invoking function processor updateTransportOrderPickupWindow');
-
   return getAssetRegistry('org.digitalcmr.TransportOrder')
     .then(function (assetRegistry) {
       for (var goodIndex = 0; goodIndex < tx.transportOrder.goods.length; goodIndex++) {
@@ -143,8 +131,6 @@ function updateTransportOrderPickupWindow(tx) {
  *  @transaction
  */
 function updateTransportOrderDeliveryWindow(tx) {
-  console.log('Invoking function processor updateTransportOrderDeliveryWindow');
-
   return getAssetRegistry('org.digitalcmr.TransportOrder')
     .then(function (assetRegistry) {
       for (var goodIndex = 0; goodIndex < tx.transportOrder.goods.length; goodIndex++) {
@@ -164,41 +150,36 @@ function updateTransportOrderDeliveryWindow(tx) {
 }
 
 /**
- * UpdateTransportOrderStatusToCanceled transaction processor function.
- * @param {org.digitalcmr.UpdateTransportOrderStatusToCanceled} tx  - UpdateTransportOrderStatusToCanceled transaction
+ * UpdateTransportOrderStatusToCancelled transaction processor function.
+ * @param {org.digitalcmr.UpdateTransportOrderStatusToCancelled} tx  - UpdateTransportOrderStatusToCancelled transaction
  * @return {Promise} Asset registry Promise
  * @transaction
  */
-function updateTransportOrderStatusToCanceled(tx) {
-  console.log('Invoking function: updateTransportOrderStatusToCanceled');
-
+function updateTransportOrderStatusToCancelled(tx) {
   var factory = getFactory();
   var currentParticipant = getCurrentParticipant() && getCurrentParticipant().getIdentifier();
 
   if (currentParticipant == undefined || null) {
-    console.log('setting currentParticipant');
     currentParticipant = 'network_admin';
   }
 
   // Get the asset registry for the asset.
-  // Updates the status of a TransportOrder when it is canceled
-  tx.transportOrder.status = TransportOrderStatus.Canceled;
+  // Updates the status of a TransportOrder when it is cancelled
+  tx.transportOrder.status = TransportOrderStatus.Cancelled;
 
-  // Updates the transportOrder with an object that displays cancelation information
-  tx.transportOrder.cancelation = factory.newConcept('org.digitalcmr', 'Cancelation');
-  tx.transportOrder.cancelation.canceledBy = factory.newRelationship('org.digitalcmr', 'Entity', currentParticipant);
-  tx.transportOrder.cancelation.date = new Date().getMilliseconds();
-  tx.transportOrder.cancelation.reason = tx.reason;
+  // Updates the transportOrder with an object that displays cancellation information
+  tx.transportOrder.cancellation = factory.newConcept('org.digitalcmr', 'Cancellation');
+  tx.transportOrder.cancellation.cancelledBy = factory.newRelationship('org.digitalcmr', 'Entity', currentParticipant);
+  tx.transportOrder.cancellation.date = tx.cancellation.date;
+  tx.transportOrder.cancellation.reason = tx.cancellation.reason;
 
   return getAssetRegistry('org.digitalcmr.TransportOrder')
     .then(function (assetRegistry) {
       return assetRegistry.update(tx.transportOrder)
         .catch(function (error) {
-          console.log('[updateTransportOrderStatusToCanceled] An error occurred while updating the registry asset: ' + error);
-          throw error;
+          throw new Error('[UpdateTransportOrderStatusToCancelled] An error occurred while updating the registry asset: ' + error);
         });
     }).catch(function (error) {
-      console.log('[updateTransportOrderStatusToCanceled] An error occurred while retrieving the asset registry: ' + error);
-      throw error;
+      throw new Error('[UpdateTransportOrderStatusToCancelled] An error occurred while retrieving the asset registry: ' + error);
     });
 }
