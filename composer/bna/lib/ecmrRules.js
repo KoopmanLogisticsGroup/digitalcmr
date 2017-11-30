@@ -168,6 +168,9 @@ function updateECMR(tx) {
  * @transaction
  */
 function updateExpectedPickupWindow(tx) {
+  if (tx.ecmr.status !== EcmrStatus.Created) {
+    throw new Error('[UpdateExpectedPickupWindow] Invalid transaction. Trying to set pickup window on an ECMR with an invalid status: ' + tx.ecmr.status);
+  }
   tx.ecmr.loading.expectedWindow = tx.expectedWindow;
 
   return getAssetRegistry('org.digitalcmr.ECMR')
@@ -189,6 +192,9 @@ function updateExpectedPickupWindow(tx) {
  * @transaction
  */
 function updateExpectedDeliveryWindow(tx) {
+  if (tx.ecmr.status !== EcmrStatus.InTransit) {
+    throw new Error('[UpdateExpectedPickupWindow] Invalid transaction. Trying to set pickup window on an ECMR with an invalid status: ' + tx.ecmr.status);
+  }
   tx.ecmr.delivery.expectedWindow = tx.expectedWindow;
 
   return getAssetRegistry('org.digitalcmr.ECMR')
