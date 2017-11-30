@@ -403,12 +403,12 @@ describe('Admin of the network', () => {
     updateExpectedPickupWindowTransaction.expectedWindow.endDate = 2;
 
     return businessNetworkConnection.submitTransaction(updateExpectedPickupWindowTransaction)
-      .should.be.rejectedWith(/Invalid transaction. Trying to set pickup window on an ECMR with an invalid status/);
+      .should.be.rejectedWith(/Transaction is not valid/);
   });
 
   it('should be able to update the expectedDeliveryWindow of an ECMR which status is IN_TRANSIT', () => {
     let updateExpectedDeliveryWindowTransaction = factory.newTransaction(Network.namespace, 'UpdateExpectedDeliveryWindow');
-    updateExpectedDeliveryWindowTransaction.ecmr = factory.newRelationship(Network.namespace, 'ECMR', 'loaded');
+    updateExpectedDeliveryWindowTransaction.ecmr = factory.newRelationship(Network.namespace, 'ECMR', 'ecmr3');
     updateExpectedDeliveryWindowTransaction.expectedWindow = factory.newConcept(Network.namespace, 'DateWindow');
     updateExpectedDeliveryWindowTransaction.expectedWindow.startDate = 1;
     updateExpectedDeliveryWindowTransaction.expectedWindow.endDate = 2;
@@ -417,7 +417,7 @@ describe('Admin of the network', () => {
       .then(() => {
         return businessNetworkConnection.getAssetRegistry('org.digitalcmr.ECMR')
           .then((assetRegistry) => {
-            return assetRegistry.get('loaded')
+            return assetRegistry.get('ecmr3')
               .then((ecmr) => {
                 ecmr.delivery.expectedWindow.startDate.should.equal(1);
                 ecmr.delivery.expectedWindow.endDate.should.equal(2);
@@ -436,9 +436,9 @@ describe('Admin of the network', () => {
   });
 
   it('should not be able to update the expectedDeliveryWindow of an ECMR which status is not IN_TRANSIT', () => {
-    let updateExpectedDeliveryWindowTransaction = factory.newTransaction(namespace, 'UpdateExpectedDeliveryWindow');
-    updateExpectedDeliveryWindowTransaction.ecmr = factory.newRelationship(namespace, 'ECMR', 'created');
-    updateExpectedDeliveryWindowTransaction.expectedWindow = factory.newConcept(namespace, 'DateWindow');
+    let updateExpectedDeliveryWindowTransaction = factory.newTransaction(Network.namespace, 'UpdateExpectedDeliveryWindow');
+    updateExpectedDeliveryWindowTransaction.ecmr = factory.newRelationship(Network.namespace, 'ECMR', 'created');
+    updateExpectedDeliveryWindowTransaction.expectedWindow = factory.newConcept(Network.namespace, 'DateWindow');
     updateExpectedDeliveryWindowTransaction.expectedWindow.startDate = 1;
     updateExpectedDeliveryWindowTransaction.expectedWindow.endDate = 2;
 
