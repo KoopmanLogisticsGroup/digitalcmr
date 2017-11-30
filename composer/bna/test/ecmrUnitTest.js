@@ -366,7 +366,7 @@ describe('Admin of the network', () => {
       .should.be.rejectedWith(/Attempt to set the status on CONFIRMED_DELIVERED before the transporter signed for the delivery!/);
   });
 
-  it('should be able to update the expectedPickupWindow of an ECMR which status is IN_TRANSIT', () => {
+  it('should be able to update the expectedPickupWindow of an ECMR which status is CREATED', () => {
     let updateExpectedPickupWindowTransaction = factory.newTransaction(Network.namespace, 'UpdateExpectedPickupWindow');
     updateExpectedPickupWindowTransaction.ecmr = factory.newRelationship(Network.namespace, 'ECMR', 'created');
     updateExpectedPickupWindowTransaction.expectedWindow = factory.newConcept(Network.namespace, 'DateWindow');
@@ -393,6 +393,17 @@ describe('Admin of the network', () => {
         console.log(error);
         throw error;
       });
+  });
+
+  it('should not be able to update the expectedPickupWindow of an ECMR which status is not CREATED', () => {
+    let updateExpectedPickupWindowTransaction = factory.newTransaction(Network.namespace, 'UpdateExpectedPickupWindow');
+    updateExpectedPickupWindowTransaction.ecmr = factory.newRelationship(Network.namespace, 'ECMR', 'loaded');
+    updateExpectedPickupWindowTransaction.expectedWindow = factory.newConcept(Network.namespace, 'DateWindow');
+    updateExpectedPickupWindowTransaction.expectedWindow.startDate = 1;
+    updateExpectedPickupWindowTransaction.expectedWindow.endDate = 2;
+
+    return businessNetworkConnection.submitTransaction(updateExpectedPickupWindowTransaction)
+      .should.be.rejectedWith(/Invalid transaction. Trying to set pickup window on an ECMR with an invalid status/);
   });
 
   it('should be able to update the expectedDeliveryWindow of an ECMR which status is IN_TRANSIT', () => {
@@ -422,5 +433,16 @@ describe('Admin of the network', () => {
         console.log(error);
         throw error;
       });
+  });
+
+  it('should not be able to update the expectedDeliveryWindow of an ECMR which status is not IN_TRANSIT', () => {
+    let updateExpectedPickupWindowTransaction = factory.newTransaction(Network.namespace, 'UpdateExpectedDeliveryWindow');
+    updateExpectedPickupWindowTransaction.ecmr = factory.newRelationship(Network.namespace, 'ECMR', 'created');
+    updateExpectedPickupWindowTransaction.expectedWindow = factory.newConcept(Network.namespace, 'DateWindow');
+    updateExpectedPickupWindowTransaction.expectedWindow.startDate = 1;
+    updateExpectedPickupWindowTransaction.expectedWindow.endDate = 2;
+
+    return businessNetworkConnection.submitTransaction(updateExpectedPickupWindowTransaction)
+      .should.be.rejectedWith(/Invalid transaction. Trying to set pickup window on an ECMR with an invalid status/);
   });
 });

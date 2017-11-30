@@ -85,7 +85,7 @@ function updateECMR(tx) {
         }
       } else if (ecmr.status === EcmrStatus.Loaded) {
         if (!ecmr.compoundSignature) {
-          throw new Error("[UpdateECMR] Transaction is not valid. Attempt to set the status on IN_TRANSIT before the compound admin signature");
+          throw new Error('[UpdateECMR] Transaction is not valid. Attempt to set the status on IN_TRANSIT before the compound admin signature');
         }
 
         ecmr.status = EcmrStatus.InTransit;
@@ -102,10 +102,10 @@ function updateECMR(tx) {
       } else if (ecmr.status === EcmrStatus.InTransit) {
         // check if the required signatures has been placed in the previous steps
         if (!ecmr.compoundSignature) {
-          throw new Error("[UpdateECMR] Transaction is not valid. Attempt to set the status on DELIVERED before the compound admin signed!");
+          throw new Error('[UpdateECMR] Transaction is not valid. Attempt to set the status on DELIVERED before the compound admin signed!');
         }
         if (!ecmr.carrierLoadingSignature) {
-          throw new Error("[UpdateECMR] Transaction is not valid. Attempt to set the status on DELIVERED before the transporter signed for the loading!");
+          throw new Error('[UpdateECMR] Transaction is not valid. Attempt to set the status on DELIVERED before the transporter signed for the loading!');
         }
 
         ecmr.status = EcmrStatus.Delivered;
@@ -126,13 +126,13 @@ function updateECMR(tx) {
       } else if (ecmr.status === EcmrStatus.Delivered) {
         // check if the required signatures has been placed in the previous steps
         if (!ecmr.compoundSignature) {
-          throw new Error("[UpdateECMR] Transaction is not valid. Attempt to set the status on CONFIRMED_DELIVERED before the compound admin signed!");
+          throw new Error('[UpdateECMR] Transaction is not valid. Attempt to set the status on CONFIRMED_DELIVERED before the compound admin signed!');
         }
         if (!ecmr.carrierLoadingSignature) {
-          throw new Error("[UpdateECMR] Transaction is not valid. Attempt to set the status on CONFIRMED_DELIVERED before the transporter signed for the loading!");
+          throw new Error('[UpdateECMR] Transaction is not valid. Attempt to set the status on CONFIRMED_DELIVERED before the transporter signed for the loading!');
         }
         if (!ecmr.carrierDeliverySignature) {
-          throw new Error("[UpdateECMR] Transaction is not valid. Attempt to set the status on CONFIRMED_DELIVERED before the transporter signed for the delivery!");
+          throw new Error('[UpdateECMR] Transaction is not valid. Attempt to set the status on CONFIRMED_DELIVERED before the transporter signed for the delivery!');
         }
 
         ecmr.status = EcmrStatus.ConfirmedDelivered;
@@ -147,7 +147,7 @@ function updateECMR(tx) {
             ecmr.goods[i].recipientRemark = tx.ecmr.goods[i].recipientRemark;
           }
         }
-      } else throw new Error("[UpdateECMR] Validation failure! Provided status: " + ecmr.status + "is not a valid status!");
+      } else throw new Error('[UpdateECMR] Validation failure! Provided status: ' + ecmr.status + 'is not a valid status!');
 
       return getAssetRegistry('org.digitalcmr.ECMR')
         .then(function (assetRegistry) {
@@ -204,6 +204,9 @@ function updateECMRStatusToCancelled(tx) {
  * @transaction
  */
 function updateExpectedPickupWindow(tx) {
+  if (tx.ecmr.status !== EcmrStatus.Created) {
+    throw new Error('[UpdateExpectedPickupWindow] Invalid transaction. Trying to set pickup window on an ECMR with an invalid status: ' + tx.ecmr.status);
+  }
   tx.ecmr.loading.expectedWindow = tx.expectedWindow;
 
   return getAssetRegistry('org.digitalcmr.ECMR')
@@ -225,6 +228,9 @@ function updateExpectedPickupWindow(tx) {
  * @transaction
  */
 function updateExpectedDeliveryWindow(tx) {
+  if (tx.ecmr.status !== EcmrStatus.InTransit) {
+    throw new Error('[UpdateExpectedPickupWindow] Invalid transaction. Trying to set pickup window on an ECMR with an invalid status: ' + tx.ecmr.status);
+  }
   tx.ecmr.delivery.expectedWindow = tx.expectedWindow;
 
   return getAssetRegistry('org.digitalcmr.ECMR')
