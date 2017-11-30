@@ -205,7 +205,7 @@ function updateECMRStatusToCancelled(tx) {
  */
 function updateExpectedPickupWindow(tx) {
   if (tx.ecmr.status !== EcmrStatus.Created) {
-    throw new Error('[UpdateExpectedDeliveryWindow] Transaction is not valid. Attempting to set an ExpectedPickupWindow when status is not CREATED. Actual status: ' + tx.ecmr.status);
+    throw new Error('[UpdateExpectedPickupWindow] Transaction is not valid. Attempting to set an ExpectedPickupWindow when status is not CREATED. Actual status: ' + tx.ecmr.status);
   }
   tx.ecmr.loading.expectedWindow = tx.expectedWindow;
 
