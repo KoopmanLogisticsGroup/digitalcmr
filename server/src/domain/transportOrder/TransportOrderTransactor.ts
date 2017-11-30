@@ -22,8 +22,12 @@ export class TransportOrderTransactor implements TransactionCreator {
       transaction.dateWindow.startDate = data.dateWindow[0];
       transaction.dateWindow.endDate   = data.dateWindow[1];
       transaction.vin                  = data.vin;
-    } else if (transactionName === Transaction.UpdateTransportOrderStatusToCanceled) {
-      transaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', data.orderID);
+    } else if (transactionName === Transaction.UpdateTransportOrderStatusToCancelled) {
+      transaction.transportOrder           = factory.newRelationship(namespace, 'TransportOrder', data.orderID);
+      transaction.cancellation             = factory.newConcept(namespace, 'Cancellation');
+      transaction.cancellation.cancelledBy = factory.newRelationship(namespace, 'Entity', data.cancellation.cancelledBy);
+      transaction.cancellation.date        = data.cancellation.date;
+      transaction.cancellation.reason      = data.cancellation.reason;
     }
 
     return transaction;

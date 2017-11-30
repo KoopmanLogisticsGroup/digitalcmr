@@ -1,5 +1,5 @@
 export interface Cancellation {
-  canceledBy: string;
+  cancelledBy: string;
   date: number;
   reason: string;
 }

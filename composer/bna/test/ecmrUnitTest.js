@@ -198,6 +198,28 @@ describe('Admin of the network', () => {
       });
   });
 
+  it('should be able to cancel an ECMR', () => {
+    let transaction = factory.newTransaction(Network.namespace, 'UpdateECMRStatusToCancelled');
+    transaction.ecmr = builder.buildECMR('created');
+    transaction.ecmr = factory.newRelationship(Network.namespace, 'ECMR', 'created');
+    transaction.cancellation = factory.newConcept(Network.namespace, 'Cancellation');
+    transaction.cancellation.cancelledBy = factory.newRelationship(Network.namespace, 'Entity', 'pete@koopman.org');
+    transaction.cancellation.date = new Date().getTime();
+    transaction.cancellation.reason = 'one big reason';
+
+    return businessNetworkConnection.submitTransaction(transaction)
+      .then(() => {
+        return businessNetworkConnection.getAssetRegistry(Network.namespace, 'ECMR')
+          .then((assetRegistry) => {
+            return assetRegistry.get('created');
+          })
+          .then((updatedECMR) => {
+            updatedECMR.status.should.equal(BusinessModel.ecmrStatus.Cancelled);
+            updatedECMR.cancellation.should.be.instanceOf(Object);
+          });
+      });
+  });
+
   it('should be able to update ECMR status from CREATED to LOADED', () => {
     let updateTransaction = factory.newTransaction(Network.namespace, 'UpdateECMR');
     updateTransaction.transportOrder = factory.newRelationship(Network.namespace, 'TransportOrder', 'ORDER1');
@@ -344,7 +366,7 @@ describe('Admin of the network', () => {
       .should.be.rejectedWith(/Attempt to set the status on CONFIRMED_DELIVERED before the transporter signed for the delivery!/);
   });
 
-  it('should be able to update the expectedPickupWindow of an ECMR which status is IN_TRANSIT', () => {
+  it('should be able to update the expectedPickupWindow of an ECMR which status is CREATED', () => {
     let updateExpectedPickupWindowTransaction = factory.newTransaction(Network.namespace, 'UpdateExpectedPickupWindow');
     updateExpectedPickupWindowTransaction.ecmr = factory.newRelationship(Network.namespace, 'ECMR', 'created');
     updateExpectedPickupWindowTransaction.expectedWindow = factory.newConcept(Network.namespace, 'DateWindow');
@@ -371,6 +393,17 @@ describe('Admin of the network', () => {
         console.log(error);
         throw error;
       });
+  });
+
+  it('should not be able to update the expectedPickupWindow of an ECMR which status is not CREATED', () => {
+    let updateExpectedPickupWindowTransaction = factory.newTransaction(Network.namespace, 'UpdateExpectedPickupWindow');
+    updateExpectedPickupWindowTransaction.ecmr = factory.newRelationship(Network.namespace, 'ECMR', 'loaded');
+    updateExpectedPickupWindowTransaction.expectedWindow = factory.newConcept(Network.namespace, 'DateWindow');
+    updateExpectedPickupWindowTransaction.expectedWindow.startDate = 1;
+    updateExpectedPickupWindowTransaction.expectedWindow.endDate = 2;
+
+    return businessNetworkConnection.submitTransaction(updateExpectedPickupWindowTransaction)
+      .should.be.rejectedWith(/Invalid transaction. Trying to set pickup window on an ECMR with an invalid status/);
   });
 
   it('should be able to update the expectedDeliveryWindow of an ECMR which status is IN_TRANSIT', () => {
