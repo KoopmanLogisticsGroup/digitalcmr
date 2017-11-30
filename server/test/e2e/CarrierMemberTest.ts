@@ -383,7 +383,7 @@ describe('A Carrier member can', () => {
       });
   });
 
-  it('not get a specific transport order based on ID', (done) => {
+  it('get a specific transport order based on ID', (done) => {
     server
       .get('/api/v1/transportOrder/orderID/12345567890')
       .set('x-access-token', token)
@@ -395,7 +395,7 @@ describe('A Carrier member can', () => {
 
           return done(err);
         }
-        res.body.length.should.equal(0);
+        should.exist(res.body.orderID === '12345567890');
         done(err);
       });
   });
@@ -431,6 +431,23 @@ describe('A Carrier member can', () => {
 
           return done(err);
         }
+        done(err);
+      });
+  });
+
+  it('not get a specific transport order based on vin', (done) => {
+    server
+      .get('/api/v1/transportOrder/vin/183726339N')
+      .set('x-access-token', token)
+      .expect(ok)
+      .expect('Content-Type', /json/)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        res.body.length.should.be.greaterThan(0);
         done(err);
       });
   });
