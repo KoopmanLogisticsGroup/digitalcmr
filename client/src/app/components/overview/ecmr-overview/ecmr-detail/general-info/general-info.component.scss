@@ -130,7 +130,13 @@
 }
 
 .top_line_styling {
-  border-top: 1px solid #d8dde6;
+  border-top:       1px solid #d8dde6;
+  background-color: #F3F4FA;
+  text-align:       center;
+  p {
+    color:     #8B95D3;
+    font-size: 110%;
+  }
 }
 
 .selectedImg1 {

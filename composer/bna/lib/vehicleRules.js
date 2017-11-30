@@ -19,16 +19,14 @@
  * @transaction
  */
 function createVehicles(tx) {
-  // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.Vehicle')
     .then(function (assetRegistry) {
-      return assetRegistry.addAll(tx.vehicles).catch(function (error) {
-        console.log('An error occurred while addAll the Vehicle assets: ' + error);
-        throw error;
-      });
+      return assetRegistry.addAll(tx.vehicles)
+        .catch(function (error) {
+          throw new Error('[CreateVehicles] An error occurred while addAll the Vehicle assets: ' + error);
+        });
     }).catch(function (error) {
-      console.log('An error occurred while saving the Vehicle assets: ' + error);
-      throw error;
+      throw new Error('[CreateVehicles] An error occurred while saving the Vehicle assets: ' + error);
     });
 
 }
@@ -40,18 +38,15 @@ function createVehicles(tx) {
  * @transaction
  */
 function updateRegistrationCountry(tx) {
-  // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.Vehicle')
     .then(function (assetRegistry) {
       tx.vehicle.registrationCountry = tx.registrationCountry;
 
-      return assetRegistry.update(tx.vehicle).catch(function (error) {
-            console.log('[Update Vehicle] An error occurred while updating the registry asset: ' + error);
-            throw error;
-          });
-        }).catch(function (error) {
-          console.log('[Update Vehicle] An error occurred while updating the Vehicle asset: ' + error);
-          throw error;
+      return assetRegistry.update(tx.vehicle)
+        .catch(function (error) {
+          throw new Error('[UpdateRegistrationCountry] An error occurred while updating the registry asset: ' + error);
         });
-  // })
+    }).catch(function (error) {
+      throw new Error('[UpdateRegistrationCountry] An error occurred while updating the Vehicle asset: ' + error);
+    });
 }

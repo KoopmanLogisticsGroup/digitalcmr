@@ -19,16 +19,13 @@
  * @transaction
  */
 function createLegalOwnerOrg(tx) {
-  // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.LegalOwnerOrg')
     .then(function (assetRegistry) {
       return assetRegistry.add(tx.legalOwnerOrg).catch(function (error) {
-        console.log('An error occurred while adding all the assets in the registry: ' + error);
-        throw error;
+        throw new Error('[CreateLegalOwnerOrg] An error occurred while adding all the assets in the registry: ' + error);
       });
     }).catch(function (error) {
-      console.log('An error occurred while saving the LegalOwnerOrg asset', error);
-      throw error;
+      throw new Error('[CreateLegalOwnerOrg] An error occurred while saving the LegalOwnerOrg asset', error);
     });
 
 }
@@ -40,16 +37,13 @@ function createLegalOwnerOrg(tx) {
  * @transaction
  */
 function createCompoundOrg(tx) {
-  // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.CompoundOrg')
     .then(function (assetRegistry) {
       return assetRegistry.add(tx.compoundOrg).catch(function (error) {
-        console.log('An error occurred while adding all the assets in the registry: ' + error);
-        throw error;
+        throw new Error('[CreateCompoundOrg] An error occurred while adding all the assets in the registry: ' + error);
       });
     }).catch(function (error) {
-      console.log('An error occurred while saving the CompoundOrg asset', error);
-      throw error;
+      throw new Error('[CreateCompoundOrg] An error occurred while saving the CompoundOrg asset', error);
     });
 
 }
@@ -61,15 +55,14 @@ function createCompoundOrg(tx) {
  * @transaction
  */
 function createCarrierOrg(tx) {
-  // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.CarrierOrg')
     .then(function (assetRegistry) {
       return assetRegistry.add(tx.carrierOrg).catch(function (error) {
-        console.log('An error occurred while adding all the assets in the registry: ' + error);
+        console.log('[CreateCarrierOrg] An error occurred while adding all the assets in the registry: ' + error);
         throw error;
       });
     }).catch(function (error) {
-      console.log('An error occurred while saving the CarrierOrg asset', error);
+      console.log('[CreateCarrierOrg] An error occurred while saving the CarrierOrg asset', error);
       throw error;
     });
 
@@ -82,16 +75,13 @@ function createCarrierOrg(tx) {
  * @transaction
  */
 function createRecipientOrg(tx) {
-  // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.RecipientOrg')
     .then(function (assetRegistry) {
       return assetRegistry.add(tx.recipientOrg).catch(function (error) {
-        console.log('An error occurred while adding all the assets in the registry: ' + error);
-        throw error;
+        throw new Error('[CreateRecipientOrg] An error occurred while adding all the assets in the registry: ' + error);
       });
     }).catch(function (error) {
-      console.log('An error occurred while saving the RecipientOrg asset: ' + error);
-      throw error;
+      throw new Error('[CreateRecipientOrg] An error occurred while saving the RecipientOrg asset: ' + error);
     });
 
 }
