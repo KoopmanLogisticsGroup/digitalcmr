@@ -88,7 +88,7 @@ export class ECMRController {
     return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateEcmr, ecmr, new EcmrTransactor());
   }
 
-  @Put('/cancelECMR')
+  @Put('/cancel')
   public async updateECMRtoCancelled(@Body() ecmrCancellation: EcmrCancellation, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 

@@ -197,11 +197,15 @@ describe('Admin of the network', () => {
         ecmrs.find(ecmr => ecmr.ecmrID === ecmrs[1].ecmrID);
       });
   });
+
   it('should be able to cancel an ECMR', () => {
     let transaction = factory.newTransaction(Network.namespace, 'UpdateECMRStatusToCancelled');
     transaction.ecmr = builder.buildECMR('created');
     transaction.ecmr = factory.newRelationship(Network.namespace, 'ECMR', 'created');
-    transaction.reason = 'no reason';
+    transaction.cancellation = factory.newConcept(Network.namespace, 'Cancellation');
+    transaction.cancellation.cancelledBy = factory.newRelationship(Network.namespace, 'Entity', 'pete@koopman.org');
+    transaction.cancellation.date = new Date().getTime();
+    transaction.cancellation.reason = 'one big reason';
 
     return businessNetworkConnection.submitTransaction(transaction)
       .then(() => {

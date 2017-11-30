@@ -79,7 +79,7 @@ export class TransportOrderController {
     return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateTransportOrderDeliveryWindow, deliveryWindowObject, new TransportOrderTransactor());
   }
 
-  @Put('/cancelTransportOrder')
+  @Put('/cancel')
   public async update(@Body() transportOrderCancellation: TransportOrderCancellation, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 

@@ -6,18 +6,10 @@ export interface Cancellation {
 
 export interface EcmrCancellation {
   ecmrID: string;
-  cancellation: {
-    cancelledBy: string;
-    date: number;
-    reason: string;
-  };
+  cancellation: Cancellation;
 }
 
 export interface TransportOrderCancellation {
   orderID: string;
-  cancellation: {
-    cancelledBy: string;
-    date: number;
-    reason: string;
-  };
+  cancellation: Cancellation;
 }
