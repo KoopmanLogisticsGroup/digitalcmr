@@ -152,7 +152,7 @@ concept Creation {
 }
 
 concept Cancellation {
-  --> Entity canceledBy
+  --> Entity cancelledBy
   o Integer date
   o String reason
 }
@@ -287,8 +287,14 @@ transaction UpdateEcmrStatusToConfirmedDelivered {
   o ECMR updatedEcmr
 }
 
-transaction UpdateTransportOrderStatusToCanceled {
+transaction UpdateECMRStatusToCancelled {
+  --> ECMR ecmr
+  o Cancellation cancellation
+}
+
+transaction UpdateTransportOrderStatusToCancelled {
   --> TransportOrder transportOrder
+  o Cancellation cancellation
 }
 
 transaction UpdateRegistrationCountry {
@@ -306,12 +312,12 @@ enum EcmrStatus {
   o IN_TRANSIT
   o DELIVERED
   o CONFIRMED_DELIVERED
-  o CANCELED
+  o CANCELLED
 }
 
 enum OrderStatus {
   o OPEN
   o IN_PROGRESS
   o COMPLETED
-  o CANCELED
+  o CANCELLED
 }

@@ -126,21 +126,36 @@ function updateTransportOrderDeliveryWindow(tx) {
 }
 
 /**
- * UpdateTransportOrderStatusToCanceled transaction processor function.
- * @param {org.digitalcmr.UpdateTransportOrderStatusToCanceled} tx  - UpdateTransportOrderStatusToCanceled transaction
+ * UpdateTransportOrderStatusToCancelled transaction processor function.
+ * @param {org.digitalcmr.UpdateTransportOrderStatusToCancelled} tx  - UpdateTransportOrderStatusToCancelled transaction
  * @return {Promise} Asset registry Promise
  * @transaction
  */
-function updateTransportOrderStatusToCanceled(tx) {
-  tx.transportOrder.status = TransportOrderStatus.Canceled;
+function updateTransportOrderStatusToCancelled(tx) {
+  var factory = getFactory();
+  var currentParticipant = getCurrentParticipant() && getCurrentParticipant().getIdentifier();
+
+  if (currentParticipant == undefined || null) {
+    currentParticipant = 'network_admin';
+  }
+
+  // Get the asset registry for the asset.
+  // Updates the status of a TransportOrder when it is cancelled
+  tx.transportOrder.status = TransportOrderStatus.Cancelled;
+
+  // Updates the transportOrder with an object that displays cancellation information
+  tx.transportOrder.cancellation = factory.newConcept('org.digitalcmr', 'Cancellation');
+  tx.transportOrder.cancellation.cancelledBy = factory.newRelationship('org.digitalcmr', 'Entity', currentParticipant);
+  tx.transportOrder.cancellation.date = tx.cancellation.date;
+  tx.transportOrder.cancellation.reason = tx.cancellation.reason;
 
   return getAssetRegistry('org.digitalcmr.TransportOrder')
     .then(function (assetRegistry) {
       return assetRegistry.update(tx.transportOrder)
         .catch(function (error) {
-          throw new Error('[UpdateTransportOrderStatusToCanceled] An error occurred while updating the registry asset: ' + error);
+          throw new Error('[UpdateTransportOrderStatusToCancelled] An error occurred while updating the registry asset: ' + error);
         });
     }).catch(function (error) {
-      throw new Error('[updateTransportOrderStatusToCanceled] An error occurred while retrieving the asset registry: ' + error);
+      throw new Error('[UpdateTransportOrderStatusToCancelled] An error occurred while retrieving the asset registry: ' + error);
     });
 }
