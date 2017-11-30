@@ -13,7 +13,7 @@
  */
 
 'use strict';
-const models = require('./businessModel');
+const BusinessModel = require('./businessModel');
 var Network = require('./network');
 Network = new Network();
 
@@ -64,7 +64,7 @@ Builder.prototype.buildECMR = function buildECMR(ecmrID) {
   ecmr.legalOwnerInstructions = 'instructions';
   ecmr.paymentInstructions = 'instructions';
   ecmr.payOnDelivery = 'payondelivery';
-  ecmr.status = models.ecmrStatus.Created;
+  ecmr.status = BusinessModel.ecmrStatus.Created;
   ecmr.agreementTerms = 'string';
   ecmr.agreementTermsSec = 'string';
   ecmr.legalOwnerRef = 'aqe2321312';
@@ -125,7 +125,7 @@ Builder.prototype.buildTransportOrder = function buildTransportOrder(transportOr
   transportOrder.carrier = this.factory.newRelationship(Network.namespace, 'CarrierOrg', 'koopman');
   transportOrder.goods = [this.buildGood()];
   transportOrder.issueDate = 0;
-  transportOrder.status = 'OPEN';
+  transportOrder.status = BusinessModel.orderStatus.Open;
   transportOrder.ecmrs = [this.factory.newRelationship(Network.namespace, 'ECMR', this.buildECMR('ecmr12345'))];
   transportOrder.orderRef = 'orderRef';
 
