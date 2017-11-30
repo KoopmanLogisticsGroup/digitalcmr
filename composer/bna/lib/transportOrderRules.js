@@ -19,22 +19,14 @@
  * @transaction
  */
 function createTransportOrder(tx) {
-  console.log('Invoking function: CreateTransportOrder');
-
-  // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.TransportOrder')
     .then(function (assetRegistry) {
       return assetRegistry.add(tx.transportOrder)
-        .then(function () {
-          console.log('Asset added with success');
-        })
         .catch(function (error) {
-          console.log('[CreateTransportOrder] An error occurred while adding a transport order asset', error);
-          throw error;
+          throw new Error('[CreateTransportOrder] An error occurred while adding a transport order asset', error);
         })
     }).catch(function (error) {
-      console.log('[CreateTransportOrder] An error occurred while retrieving the asset registry', error);
-      throw error;
+      throw new Error('[CreateTransportOrder] An error occurred while retrieving the asset registry', error);
     })
 }
 
@@ -45,31 +37,18 @@ function createTransportOrder(tx) {
  * @transaction
  */
 function createTransportOrders(tx) {
-  console.log('Invoking function: CreateTransportOrders');
-
-  // Get the asset registry for the asset.
   return getAssetRegistry('org.digitalcmr.TransportOrder')
     .then(function (assetRegistry) {
       return assetRegistry.addAll(tx.transportOrders)
-        .then(function () {
-          console.log('Assets added with success');
-        })
         .catch(function (error) {
-          console.log('[CreateTransportOrders] An error occurred while adding transport orders assets', error);
-          throw error;
+          throw new Error('[CreateTransportOrders] An error occurred while adding transport orders assets', error);
         })
     }).catch(function (error) {
-      console.log('[CreateTransportOrders] An error occurred while retrieving the asset registry', error);
-      throw error;
+      throw new Error('[CreateTransportOrders] An error occurred while retrieving the asset registry', error);
     })
 }
 
 function updateTransportOrderToInProgress(tx) {
-  console.log('Invoking function processor to set update TransportOrder');
-  console.log('orderID: ' + tx.transportOrder.orderID);
-
-  // Get the asset registry for the asset.
-  // Updates the status of a TransportOrder when an ECMR is created
   tx.transportOrder.status = TransportOrderStatus.InProgress;
 
   // Adds the created ECMR resource to the array of ECMRs by checking if orderIDs are corresponding
@@ -79,33 +58,24 @@ function updateTransportOrderToInProgress(tx) {
     .then(function (assetRegistry) {
       return assetRegistry.update(tx.transportOrder)
         .catch(function (error) {
-          console.log('[Update TransportOrder] An error occurred while updating the registry asset: ' + error);
-          throw error;
+          throw new Error('[UpdateTransportOrderStatusToInProgress] An error occurred while updating the registry asset: ' + error);
         });
     }).catch(function (error) {
-      console.log('[Update TransportOrder] An error occurred while updating the TransportOrder asset: ' + error);
-      throw error;
+      throw new Error('[UpdateTransportOrderStatusToInProgress] An error occurred while updating the TransportOrder asset: ' + error);
     });
 }
 
 function updateTransportOrderStatusToCompleted(tx) {
-  console.log('Invoking function processor to set update TransportOrder');
-  console.log('orderID: ' + tx.transportOrder.orderID);
-
-  // Get the asset registry for the asset.
-  // Updates the status of a TransportOrder when an ECMR is created
   tx.transportOrder.status = TransportOrderStatus.Completed;
 
   return getAssetRegistry('org.digitalcmr.TransportOrder')
     .then(function (assetRegistry) {
       return assetRegistry.update(tx.transportOrder)
         .catch(function (error) {
-          console.log('[Update TransportOrder] An error occurred while updating the registry asset: ' + error);
-          throw error;
+          throw new Error('[UpdateTransportOrderStatusToCompleted] An error occurred while updating the registry asset: ' + error);
         });
     }).catch(function (error) {
-      console.log('[Update TransportOrder] An error occurred while updating the TransportOrder asset: ' + error);
-      throw error;
+      throw new Error('[UpdateTransportOrderStatusToCompleted] An error occurred while updating the TransportOrder asset: ' + error);
     });
 }
 
@@ -116,8 +86,6 @@ function updateTransportOrderStatusToCompleted(tx) {
  *  @transaction
  */
 function updateTransportOrderPickupWindow(tx) {
-  console.log('Invoking function processor updateTransportOrderPickupWindow');
-
   return getAssetRegistry('org.digitalcmr.TransportOrder')
     .then(function (assetRegistry) {
       for (var goodIndex = 0; goodIndex < tx.transportOrder.goods.length; goodIndex++) {
@@ -127,12 +95,10 @@ function updateTransportOrderPickupWindow(tx) {
       }
 
       return assetRegistry.update(tx.transportOrder).catch(function (error) {
-        console.log('[updateTransportOrderPickupWindow] An error occurred while updating the asset registry : ' + error);
-        throw error;
+        throw new Error('[UdateTransportOrderPickupWindow] An error occurred while updating the asset registry : ' + error);
       });
     }).catch(function (error) {
-      console.log('[updateTransportOrderPickupWindow] An error occurred while retrieving the asset registry: ' + error);
-      throw error;
+      throw new Error('[UpdateTransportOrderPickupWindow] An error occurred while retrieving the asset registry: ' + error);
     });
 }
 
@@ -143,8 +109,6 @@ function updateTransportOrderPickupWindow(tx) {
  *  @transaction
  */
 function updateTransportOrderDeliveryWindow(tx) {
-  console.log('Invoking function processor updateTransportOrderDeliveryWindow');
-
   return getAssetRegistry('org.digitalcmr.TransportOrder')
     .then(function (assetRegistry) {
       for (var goodIndex = 0; goodIndex < tx.transportOrder.goods.length; goodIndex++) {
@@ -154,12 +118,10 @@ function updateTransportOrderDeliveryWindow(tx) {
       }
 
       return assetRegistry.update(tx.transportOrder).catch(function (error) {
-        console.log('[updateTransportOrderDeliveryWindow] An error occurred while updating the asset registry: ' + error);
-        throw error;
+        throw new Error('[UpdateTransportOrderDeliveryWindow] An error occurred while updating the asset registry: ' + error);
       });
     }).catch(function (error) {
-      console.log('[updateTransportOrderDeliveryWindow] An error occurred while retrieving the asset registry: ' + error);
-      throw error;
+      throw new Error('[UpdateTransportOrderDeliveryWindow] An error occurred while retrieving the asset registry: ' + error);
     });
 }
 
@@ -170,21 +132,15 @@ function updateTransportOrderDeliveryWindow(tx) {
  * @transaction
  */
 function updateTransportOrderStatusToCanceled(tx) {
-  console.log('Invoking function: updateTransportOrderStatusToCanceled');
-
-  // Get the asset registry for the asset.
-  // Updates the status of a TransportOrder when an ECMR is created
   tx.transportOrder.status = TransportOrderStatus.Canceled;
 
   return getAssetRegistry('org.digitalcmr.TransportOrder')
     .then(function (assetRegistry) {
       return assetRegistry.update(tx.transportOrder)
         .catch(function (error) {
-          console.log('[updateTransportOrderStatusToCanceled] An error occurred while updating the registry asset: ' + error);
-          throw error;
+          throw new Error('[UpdateTransportOrderStatusToCanceled] An error occurred while updating the registry asset: ' + error);
         });
     }).catch(function (error) {
-      console.log('[updateTransportOrderStatusToCanceled] An error occurred while retrieving the asset registry: ' + error);
-      throw error;
+      throw new Error('[updateTransportOrderStatusToCanceled] An error occurred while retrieving the asset registry: ' + error);
     });
 }
