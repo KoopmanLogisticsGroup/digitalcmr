@@ -481,6 +481,23 @@ describe('A Compound Admin can', () => {
       });
   });
 
+  it('not get a specific transport order based on vin', (done) => {
+    server
+      .get('/api/v1/transportOrder/vin/183726339N')
+      .set('x-access-token', token)
+      .expect(ok)
+      .expect('Content-Type', /json/)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        res.body.length.should.equal(0);
+        done(err);
+      });
+  });
+
   it('not update a pickup window of a transport order', (done) => {
     const pickupWindow: PickupWindow = {
       orderID:    '12345567890',

@@ -389,6 +389,23 @@ describe('An Recipient member can', () => {
       });
   });
 
+  it('not get a specific transport order based on vin', (done) => {
+    server
+      .get('/api/v1/transportOrder/vin/183726339N')
+      .set('x-access-token', token)
+      .expect(ok)
+      .expect('Content-Type', /json/)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        res.body.length.should.equal(0);
+        done(err);
+      });
+  });
+
   it('not create a transport order', (done) => {
     const transportOrder = buildTransportOrder();
     server
