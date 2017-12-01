@@ -16,7 +16,7 @@ export class TransportorderOverviewComponent implements OnInit {
 
   public currentView: string;
   public searchBarData: string;
-  public filterEcmr: number;
+  public filterTransportOrder: number;
   public transportOrders: TransportOrder[];
   public transportOrderFilter: TransportOrder[];
 
@@ -49,7 +49,7 @@ export class TransportorderOverviewComponent implements OnInit {
       this.searchBarData = data;
     });
     this.searchService.filterEcmr$.subscribe((data: number) => {
-      this.filterEcmr = data;
+      this.filterTransportOrder = data;
     });
     this.currentView   = this.viewStatus.Open;
     this.searchBarData = '';

@@ -1,6 +1,9 @@
 <div class="ui container top_margin_content">
-  <div class="table_title">Transport Orders</div>
-  <div class="ui pointing secondary menu">
+  <div class="table_title" *ngIf="searchBarData === ''; else searchResults">Transport Orders</div>
+  <ng-template #searchResults>
+    <div class="table_title"> Search Results</div>
+  </ng-template>
+  <div class="ui pointing secondary menu" *ngIf="searchBarData === ''">
     <a class="item" data-tab="first" (click)="setTransportOrderView(viewStatus.New)"
        [ngClass]="{'active' : currentView === viewStatus.New ? true : false}">NEW</a>
     <a class="item" data-tab="second" (click)="setTransportOrderView(viewStatus.InProgress)"
@@ -24,28 +27,50 @@
         <th></th>
         </thead>
         <tbody>
-        <tr *ngFor="let transportOrder of transportOrderFilter" class="table_row">
-          <td></td>
-          <td>{{transportOrder?.orderID}}</td>
-          <td>{{transportOrder?.issueDate | date:"dd-MM-yyyy"}}</td>
-          <td>{{transportOrder?.goods?.length}}</td>
-          <td>{{transportOrder?.carrier?.split('#')[1]}}</td>
-          <td class="loadingWindow">
-            <span> {{transportOrder?.goods[0]?.pickupWindow.startDate | date:"dd-MM-yyyy"}}</span>
-            <span>{{transportOrder?.goods[0]?.pickupWindow.endDate | date:"dd-MM-yyyy"}} </span>
-          </td>
-          <td class="loadingWindow">
-            <span>{{transportOrder?.goods[0]?.deliveryWindow.startDate | date:"dd-MM-yyyy"}}</span>
-            <span>{{transportOrder?.goods[0]?.deliveryWindow.endDate | date:"dd-MM-yyyy"}}</span>
-          </td>
-          <td>
-            <img class="view_more_order" routerLink="/transportorder/{{transportOrder.orderID}}"/>
-          </td>
-        </tr>
+        <div *ngIf="searchBarData === ''; else showSearchResults">
+          <tr *ngFor="let transportOrder of transportOrderFilter" class="table_row">
+            <td></td>
+            <td>{{transportOrder?.orderID}}</td>
+            <td>{{transportOrder?.issueDate | date:"dd-MM-yyyy"}}</td>
+            <td>{{transportOrder?.goods?.length}}</td>
+            <td>{{transportOrder?.carrier?.split('#')[1]}}</td>
+            <td class="loadingWindow">
+              <span> {{transportOrder?.goods[0]?.pickupWindow.startDate | date:"dd-MM-yyyy"}}</span>
+              <span>{{transportOrder?.goods[0]?.pickupWindow.endDate | date:"dd-MM-yyyy"}} </span>
+            </td>
+            <td class="loadingWindow">
+              <span>{{transportOrder?.goods[0]?.deliveryWindow.startDate | date:"dd-MM-yyyy"}}</span>
+              <span>{{transportOrder?.goods[0]?.deliveryWindow.endDate | date:"dd-MM-yyyy"}}</span>
+            </td>
+            <td>
+              <img class="view_more_order" routerLink="/transportorder/{{transportOrder.orderID}}"/>
+            </td>
+          </tr>
+        </div>
+        <ng-template #showSearchResults>
+          <tr *ngFor="let transportOrder of transportOrders | filterBy: searchBarData" class="table_row">
+            <td></td>
+            <td>{{transportOrder?.orderID}}</td>
+            <td>{{transportOrder?.issueDate | date:"dd-MM-yyyy"}}</td>
+            <td>{{transportOrder?.goods?.length}}</td>
+            <td>{{transportOrder?.carrier?.split('#')[1]}}</td>
+            <td class="loadingWindow">
+              <span> {{transportOrder?.goods[0]?.pickupWindow.startDate | date:"dd-MM-yyyy"}}</span>
+              <span>{{transportOrder?.goods[0]?.pickupWindow.endDate | date:"dd-MM-yyyy"}} </span>
+            </td>
+            <td class="loadingWindow">
+              <span>{{transportOrder?.goods[0]?.deliveryWindow.startDate | date:"dd-MM-yyyy"}}</span>
+              <span>{{transportOrder?.goods[0]?.deliveryWindow.endDate | date:"dd-MM-yyyy"}}</span>
+            </td>
+            <td>
+              <img class="view_more_order" routerLink="/transportorder/{{transportOrder.orderID}}"/>
+            </td>
+          </tr>
+        </ng-template>
         </tbody>
       </table>
     </div>
-    <img class="no_results" *ngIf="filterEcmr < 1 && searchBarData !== ''">
-    <p *ngIf="filterEcmr < 1 && searchBarData !== ''" class="no_results_text">NO RESULTS FOUND</p>
+    <img class="no_results" *ngIf="filterTransportOrder < 1 && searchBarData !== ''">
+    <p *ngIf="filterTransportOrder < 1 && searchBarData !== ''" class="no_results_text">NO RESULTS FOUND</p>
   </div>
 </div>
