@@ -73,7 +73,7 @@ const buildECMR = (ecmrID: string): Ecmr => {
 
 const buildTransportOrder = (): TransportOrder => {
   return <TransportOrder> {
-    orderID:   String(new Date().getMilliseconds()),
+    orderID:   String(new Date().getTime()),
     carrier:   'koopman',
     source:    'amsterdamcompound',
     goods:     [],
@@ -348,6 +348,23 @@ describe('An Recipient member can', () => {
       .get('/api/v1/transportOrder/status/IN_PROGRESS')
       .set('x-access-token', token)
       .expect(200)
+      .expect('Content-Type', /json/)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        res.body.length.should.equal(0);
+        done(err);
+      });
+  });
+
+  it('not get a specific transport order based on vin', (done) => {
+    server
+      .get('/api/v1/transportOrder/vin/183726339N')
+      .set('x-access-token', token)
+      .expect(ok)
       .expect('Content-Type', /json/)
       .end((err: Error, res) => {
         if (err) {

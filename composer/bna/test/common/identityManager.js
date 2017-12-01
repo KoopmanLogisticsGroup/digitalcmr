@@ -12,11 +12,13 @@
  * limitations under the License.
  */
 
-var EcmrStatus = {
-  Created: 'CREATED',
-  Loaded: 'LOADED',
-  InTransit: 'IN_TRANSIT',
-  Delivered: 'DELIVERED',
-  ConfirmedDelivered: 'CONFIRMED_DELIVERED',
-  Cancelled: 'CANCELLED'
+var Identity = function () {
+  this.userIDs = {
+    admin: 'admin',
+    compoundAdmin: 'willem@amsterdamcompound.org',
+    carrierMember: 'harry@koopman.org',
+    recipientAdmin: 'rob@cardealer.org'
+  };
 };
+
+module.exports = Identity;

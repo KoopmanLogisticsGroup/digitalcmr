@@ -74,7 +74,7 @@ const buildECMR    = (ecmrID: string): Ecmr => {
 
 const buildTransportOrder = (): TransportOrder => {
   return <TransportOrder> {
-    orderID:   String(new Date().getMilliseconds()),
+    orderID:   String(new Date().getTime()),
     carrier:   'koopman',
     source:    'amsterdamcompound',
     goods:     [],
@@ -360,6 +360,23 @@ describe('A legal owner admin can', () => {
           return done(err);
         }
         should.exist(res.body.find(transportOrders => transportOrders.status === transportOrder.status));
+        done(err);
+      });
+  });
+
+  it('get a specific transport order based on vin', (done) => {
+    server
+      .get('/api/v1/transportOrder/vin/183726339N')
+      .set('x-access-token', token)
+      .expect(ok)
+      .expect('Content-Type', /json/)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        res.body.length.should.be.greaterThan(0);
         done(err);
       });
   });

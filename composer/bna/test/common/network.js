@@ -12,11 +12,10 @@
  * limitations under the License.
  */
 
-var EcmrStatus = {
-  Created: 'CREATED',
-  Loaded: 'LOADED',
-  InTransit: 'IN_TRANSIT',
-  Delivered: 'DELIVERED',
-  ConfirmedDelivered: 'CONFIRMED_DELIVERED',
-  Cancelled: 'CANCELLED'
+var Network = function () {
+  this.namespace = 'org.digitalcmr';
+  this.networkName = 'digital-cmr-network';
+  this.connectionProfile = 'defaultProfile';
 };
+
+module.exports = Network;

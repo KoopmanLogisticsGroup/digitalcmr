@@ -19,6 +19,7 @@ import {Transaction} from '../../blockchain/Transactions';
 import {PickupWindow} from '../../interfaces/pickupWindow.interface';
 import {DeliveryWindow} from '../../interfaces/deliveryWindow.interface';
 import {Query} from '../../blockchain/Queries';
+import {Cancellation, TransportOrderCancellation} from '../../interfaces/cancellation.interface';
 
 @JsonController('/transportOrder')
 @UseBefore(UserAuthenticatorMiddleware)
@@ -78,9 +79,12 @@ export class TransportOrderController {
     return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateTransportOrderDeliveryWindow, deliveryWindowObject, new TransportOrderTransactor());
   }
 
-  @Put('/cancelTransportOrder')
-  public async update(@Body() transportOrder: TransportOrder, @Req() request: any): Promise<any> {
+  @Put('/cancel')
+  public async update(@Body() transportOrderCancellation: TransportOrderCancellation, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
-    return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateTransportOrderStatusToCanceled, transportOrder, new TransportOrderTransactor());
+
+    transportOrderCancellation.cancellation.date = new Date().getTime();
+
+    return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateTransportOrderStatusToCancelled, transportOrderCancellation, new TransportOrderTransactor());
   }
 }

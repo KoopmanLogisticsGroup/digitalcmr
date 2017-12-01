@@ -12,11 +12,18 @@
  * limitations under the License.
  */
 
-var EcmrStatus = {
+var ecmrStatus = exports.ecmrStatus = {
   Created: 'CREATED',
   Loaded: 'LOADED',
   InTransit: 'IN_TRANSIT',
   Delivered: 'DELIVERED',
   ConfirmedDelivered: 'CONFIRMED_DELIVERED',
-  Cancelled: 'CANCELLED'
+  Canceled: 'CANCELED'
+};
+
+var orderStatus = exports.orderStatus = {
+  Open: 'OPEN',
+  InProgress: 'IN_PROGRESS',
+  Completed: 'COMPLETED',
+  Canceled: 'CANCELED'
 };
