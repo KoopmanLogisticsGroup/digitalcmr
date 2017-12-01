@@ -96,6 +96,15 @@ Feature: Compound Admin feature test
       """
     Then I should get an error matching /does not have 'CREATE' access to resource/
 
+  # todo refactor later
+  Scenario: Willem should not be able to cancel a Transport Order by using the UpdateTransportOrderStatusToCancelled Transaction
+    When I use the identity Willem
+    Given I submit the following transaction of type org.digitalcmr.UpdateTransportOrderStatusToCancelled
+      """
+        { "$class": "org.digitalcmr.UpdateTransportOrderStatusToCancelled", "transportOrder": "A12345567890", "cancellation": { "cancelledBy": "pete@koopman.org", "date": 321321, "reason": "the big reason" }}
+      """
+    Then I should get an error
+
   Scenario: Willem can not update the expectedDeliveryWindow of an ECMR
     When I use the identity Willem
     Given I should have the following assets of type org.digitalcmr.ECMR
