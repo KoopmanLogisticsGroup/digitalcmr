@@ -89,6 +89,8 @@ const buildTransportOrder = (): TransportOrder => {
 
 describe('A Recipient Admin can', () => {
   before((done) => {
+    updateEcmr = buildECMR('ecmr1');
+
     const loginParams = {
       'username': 'clara@cardealer.org',
       'password': 'passw0rd'
@@ -244,12 +246,12 @@ describe('A Recipient Admin can', () => {
   });
 
   it('not update an ECMR from DELIVERED to CONFIRMED_DELIVERED', (done) => {
-    const transportOrder  = buildECMR('F1234567890');
-    transportOrder.status = EcmrStatus.ConfirmedDelivered;
+    const ecmr  = buildECMR('F1234567890');
+    ecmr.status = EcmrStatus.ConfirmedDelivered;
     server
       .post('/api/v1/transportOrder')
       .set('x-access-token', token)
-      .send(transportOrder)
+      .send(ecmr)
       .expect(500)
       .end((err: Error) => {
         if (err) {

@@ -88,7 +88,9 @@ const buildTransportOrder = (): TransportOrder => {
 
 describe('A legal owner admin can', () => {
   before((done) => {
-    transportOrder    = buildTransportOrder();
+    transportOrder = buildTransportOrder();
+    updateEcmr     = buildECMR('ecmr1');
+
     const loginParams = {
       'username': 'lapo@leaseplan.org',
       'password': 'passw0rd'
@@ -295,6 +297,31 @@ describe('A legal owner admin can', () => {
       });
   });
 
+  it('not cancel an ECMR', (done) => {
+    let cancel = {
+      'ecmrID':       updateEcmr.ecmrID,
+      'cancellation': {
+        'cancelledBy': 'lapo@leaseplan.org',
+        'reason':      'no reason',
+        'date':        123
+      }
+    };
+
+    server
+      .put('/api/v1/ECMR/cancel')
+      .set('x-access-token', token)
+      .send(cancel)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
   it('create a transport order', (done) => {
     server
       .post('/api/v1/transportOrder/')
@@ -360,6 +387,31 @@ describe('A legal owner admin can', () => {
           return done(err);
         }
         should.exist(res.body.find(transportOrders => transportOrders.status === transportOrder.status));
+        done(err);
+      });
+  });
+
+  it('cancel a transportOrder', (done) => {
+    let cancel = {
+      'orderID':      transportOrder.orderID,
+      'cancellation': {
+        'cancelledBy': 'lapo@leaseplan.org',
+        'date':        123,
+        'reason':      'invalid order'
+      }
+    };
+
+    server
+      .put('/api/v1/transportOrder/cancel')
+      .set('x-access-token', token)
+      .send(cancel)
+      .expect(200)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
         done(err);
       });
   });

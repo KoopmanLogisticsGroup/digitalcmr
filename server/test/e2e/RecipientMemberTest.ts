@@ -10,6 +10,7 @@ import {PickupWindow} from '../../src/interfaces/pickupWindow.interface';
 const server = supertest.agent('http://localhost:8080');
 const should = chai.should();
 let token: string;
+let transportOrder: TransportOrder;
 let updateEcmr: Ecmr;
 
 const ok = (res) => {
@@ -87,6 +88,9 @@ const buildTransportOrder = (): TransportOrder => {
 
 describe('An Recipient member can', () => {
   before((done) => {
+    transportOrder = buildTransportOrder();
+    updateEcmr     = buildECMR('ecmr1');
+
     const loginParams = {
       'username': 'rob@cardealer.org',
       'password': 'passw0rd'
@@ -278,6 +282,31 @@ describe('An Recipient member can', () => {
       });
   });
 
+  it('not cancel an ECMR', (done) => {
+    let cancel = {
+      'ecmrID':       updateEcmr.ecmrID,
+      'cancellation': {
+        'cancelledBy': 'rob@cardealer.org',
+        'reason':      'no reason',
+        'date':        123
+      }
+    };
+
+    server
+      .put('/api/v1/ECMR/cancel')
+      .set('x-access-token', token)
+      .send(cancel)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
   it('get all vehicles', (done) => {
     server
       .get('/api/v1/vehicle/')
@@ -387,6 +416,31 @@ describe('An Recipient member can', () => {
       .put('/api/v1/transportOrder/updatePickupWindow')
       .set('x-access-token', token)
       .send(pickupWindow)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
+  it('not cancel a transportOrder', (done) => {
+    let cancel = {
+      'orderID':      transportOrder.orderID,
+      'cancellation': {
+        'cancelledBy': 'lapo@leaseplan.org',
+        'date':        123,
+        'reason':      'invalid order'
+      }
+    };
+
+    server
+      .put('/api/v1/transportOrder/cancel')
+      .set('x-access-token', token)
+      .send(cancel)
       .expect(500)
       .end((err: Error) => {
         if (err) {

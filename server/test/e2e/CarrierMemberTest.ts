@@ -89,7 +89,9 @@ const buildTransportOrder = (): TransportOrder => {
 
 describe('A Carrier member can', () => {
   before((done) => {
-    transportOrder                 = buildTransportOrder();
+    transportOrder = buildTransportOrder();
+    updateEcmr     = buildECMR('ecmr1');
+
     const loginParamsCarrierMember = {
       'username': 'harry@koopman.org',
       'password': 'passw0rd'
@@ -383,6 +385,31 @@ describe('A Carrier member can', () => {
       });
   });
 
+  it('not be able to cancel an ECMR', (done) => {
+    let cancel = {
+      'ecmrID':       updateEcmr.ecmrID,
+      'cancellation': {
+        'cancelledBy': 'harry@koopman.org',
+        'reason':      'no reason',
+        'date':        123
+      }
+    };
+
+    server
+      .put('/api/v1/ECMR/cancel')
+      .set('x-access-token', token)
+      .send(cancel)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
   it('not get a specific transport order based on ID', (done) => {
     server
       .get('/api/v1/transportOrder/orderID/12345567890')
@@ -494,6 +521,31 @@ describe('A Carrier member can', () => {
       .put('/api/v1/transportOrder/updatePickupWindow')
       .set('x-access-token', token)
       .send(pickupWindow)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
+  it('not cancel a transportOrder', (done) => {
+    let cancel = {
+      'orderID':      transportOrder.orderID,
+      'cancellation': {
+        'cancelledBy': 'lapo@leaseplan.org',
+        'date':        123,
+        'reason':      'invalid order'
+      }
+    };
+
+    server
+      .put('/api/v1/transportOrder/cancel')
+      .set('x-access-token', token)
+      .send(cancel)
       .expect(500)
       .end((err: Error) => {
         if (err) {

@@ -194,6 +194,31 @@ describe('A Carrier Admin can', () => {
       });
   });
 
+  it('can cancel an ECMR', (done) => {
+    let cancel = {
+      'ecmrID':       updateEcmr.ecmrID,
+      'cancellation': {
+        'cancelledBy': 'pete@koopman.org',
+        'reason':      'no reason',
+        'date':        123
+      }
+    };
+
+    server
+      .put('/api/v1/ECMR/cancel')
+      .set('x-access-token', token)
+      .send(cancel)
+      .expect(200)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
   it('not create an ECMR', (done) => {
     const ecmr = buildECMR('ecmr1');
     server
@@ -441,6 +466,31 @@ describe('A Carrier Admin can', () => {
           return done(err);
         }
         res.body.length.should.be.greaterThan(0);
+        done(err);
+      });
+  });
+
+  it('not cancel a transportOrder', (done) => {
+    let cancel = {
+      'orderID':      transportOrder.orderID,
+      'cancellation': {
+        'cancelledBy': 'lapo@leaseplan.org',
+        'date':        123,
+        'reason':      'invalid order'
+      }
+    };
+
+    server
+      .put('/api/v1/transportOrder/cancel')
+      .set('x-access-token', token)
+      .send(cancel)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
         done(err);
       });
   });

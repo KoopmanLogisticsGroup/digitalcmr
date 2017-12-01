@@ -10,6 +10,7 @@ import {PickupWindow} from '../../src/interfaces/pickupWindow.interface';
 const server = supertest.agent('http://localhost:8080');
 const should = chai.should();
 let token: string;
+let transportOrder: TransportOrder;
 let updateEcmr: Ecmr;
 
 const ok = (res) => {
@@ -95,6 +96,9 @@ const buildTransportOrder = (): TransportOrder => {
 
 describe('A Compound Admin can', () => {
   before((done) => {
+    transportOrder = buildTransportOrder();
+    updateEcmr     = buildECMR('ecmr1');
+
     const loginParams = {
       'username': 'willem@amsterdamcompound.org',
       'password': 'passw0rd'
@@ -205,6 +209,31 @@ describe('A Compound Admin can', () => {
       .set('x-access-token', token)
       .send(ecmr)
       .expect('Content-Type', /json/)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
+  it('not cancel an ECMR', (done) => {
+    let cancel = {
+      'ecmrID':       updateEcmr.ecmrID,
+      'cancellation': {
+        'cancelledBy': 'willem@amsterdamcompound.org',
+        'reason':      'no reason',
+        'date':        123
+      }
+    };
+
+    server
+      .put('/api/v1/ECMR/cancel')
+      .set('x-access-token', token)
+      .send(cancel)
       .expect(500)
       .end((err: Error) => {
         if (err) {
@@ -462,6 +491,31 @@ describe('A Compound Admin can', () => {
       .put('/api/v1/transportOrder/updatePickupWindow')
       .set('x-access-token', token)
       .send(pickupWindow)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
+  it('not cancel a transportOrder', (done) => {
+    let cancel = {
+      'orderID':      transportOrder.orderID,
+      'cancellation': {
+        'cancelledBy': 'lapo@leaseplan.org',
+        'date':        123,
+        'reason':      'invalid order'
+      }
+    };
+
+    server
+      .put('/api/v1/transportOrder/cancel')
+      .set('x-access-token', token)
+      .send(cancel)
       .expect(500)
       .end((err: Error) => {
         if (err) {
