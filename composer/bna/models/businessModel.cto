@@ -248,11 +248,6 @@ transaction CreateECMRs {
   o ECMR[] ecmrs
 }
 
-transaction UpdateECMR {
-  --> TransportOrder transportOrder
-  o ECMR ecmr
-}
-
 transaction UpdateEcmrStatusToLoaded {
   --> TransportOrder transportOrder
   --> ECMR ecmr
@@ -263,16 +258,6 @@ transaction UpdateEcmrStatusToInTransit {
   --> TransportOrder transportOrder
   --> ECMR ecmr
   o ECMR updatedEcmr
-}
-
-transaction UpdateExpectedDeliveryWindow {
-  --> ECMR ecmr
-  o DateWindow expectedWindow
-}
-
-transaction UpdateExpectedPickupWindow {
-  --> ECMR ecmr
-  o DateWindow expectedWindow
 }
 
 transaction UpdateEcmrStatusToDelivered {
@@ -290,6 +275,16 @@ transaction UpdateEcmrStatusToConfirmedDelivered {
 transaction UpdateECMRStatusToCancelled {
   --> ECMR ecmr
   o Cancellation cancellation
+}
+
+transaction UpdateExpectedDeliveryWindow {
+  --> ECMR ecmr
+  o DateWindow expectedWindow
+}
+
+transaction UpdateExpectedPickupWindow {
+  --> ECMR ecmr
+  o DateWindow expectedWindow
 }
 
 transaction UpdateTransportOrderStatusToCancelled {
