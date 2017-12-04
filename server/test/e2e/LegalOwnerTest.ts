@@ -6,6 +6,7 @@ import {TransportOrder} from '../../src/interfaces/transportOrder.interface';
 import {Ecmr, EcmrStatus} from '../../src/interfaces/ecmr.interface';
 import {Address} from '../../src/interfaces/address.interface';
 import {PickupWindow} from '../../src/interfaces/pickupWindow.interface';
+import {EcmrCancellation} from '../../src/interfaces/cancellation.interface';
 
 const server = supertest.agent('http://localhost:8080');
 const should = chai.should();
@@ -298,7 +299,7 @@ describe('A legal owner admin can', () => {
   });
 
   it('not cancel an ECMR', (done) => {
-    let cancel = {
+    let cancel = <EcmrCancellation> {
       'ecmrID':       updateEcmr.ecmrID,
       'cancellation': {
         'cancelledBy': 'lapo@leaseplan.org',
