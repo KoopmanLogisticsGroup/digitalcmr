@@ -79,7 +79,7 @@ describe('As admin of the network, ', () => {
 
         let transportOrder = builder.buildTransportOrder('12345567890');
 
-        return businessNetworkConnection.getAssetRegistry('org.digitalcmr.TransportOrder')
+        return businessNetworkConnection.getAssetRegistry(Network.namespace + '.TransportOrder')
           .then((assetRegistry) => {
             return assetRegistry.addAll([transportOrder]);
           }).catch((error) => {
@@ -94,7 +94,7 @@ describe('As admin of the network, ', () => {
 
     return businessNetworkConnection.submitTransaction(transaction)
       .then(() => {
-        return businessNetworkConnection.getAssetRegistry('org.digitalcmr.TransportOrder');
+        return businessNetworkConnection.getAssetRegistry(Network.namespace + '.TransportOrder');
       })
       .then((assetRegistry) => {
         return assetRegistry.get('transportOrder1');
@@ -113,7 +113,7 @@ describe('As admin of the network, ', () => {
 
     return businessNetworkConnection.submitTransaction(transaction)
       .then(() => {
-        return businessNetworkConnection.getAssetRegistry('org.digitalcmr.TransportOrder');
+        return businessNetworkConnection.getAssetRegistry(Network.namespace + '.TransportOrder');
       })
       .then((assetRegistry) => {
         return assetRegistry.getAll();
@@ -121,6 +121,27 @@ describe('As admin of the network, ', () => {
       .then((transportOrders) => {
         transportOrders.find((transportOrder) => transportOrder.$identifier === 'transportOrder8');
         transportOrders.find((transportOrder) => transportOrder.$identifier === 'transportOrder9');
+      });
+  });
+
+  it('should be able to cancel a TransportOrder', () => {
+    let transaction = factory.newTransaction(Network.namespace, 'UpdateTransportOrderStatusToCancelled');
+    transaction.transportOrder = factory.newRelationship(Network.namespace, 'TransportOrder', '12345567890');
+    transaction.cancellation = factory.newConcept(Network.namespace, 'Cancellation');
+    transaction.cancellation.cancelledBy = factory.newRelationship(Network.namespace, 'Entity', 'pete@koopman.org');
+    transaction.cancellation.date = new Date().getTime();
+    transaction.cancellation.reason = 'another big reason';
+
+    return businessNetworkConnection.submitTransaction(transaction)
+      .then(() => {
+        return businessNetworkConnection.getAssetRegistry(Network.namespace + '.TransportOrder');
+      })
+      .then((assetRegistry) => {
+        return assetRegistry.getAll();
+      })
+      .then((cancelledTransportOrder) => {
+        cancelledTransportOrder[0].status.should.equal(BusinessModel.ecmrStatus.Cancelled);
+        cancelledTransportOrder[0].cancellation.should.be.instanceOf(Object);
       });
   });
 
@@ -134,7 +155,7 @@ describe('As admin of the network, ', () => {
 
     return businessNetworkConnection.submitTransaction(transaction)
       .then(() => {
-        return businessNetworkConnection.getAssetRegistry('org.digitalcmr.TransportOrder');
+        return businessNetworkConnection.getAssetRegistry(Network.namespace + '.TransportOrder');
       })
       .then((assetRegistry) => {
         return assetRegistry.get('12345567890');
@@ -155,7 +176,7 @@ describe('As admin of the network, ', () => {
 
     return businessNetworkConnection.submitTransaction(transaction)
       .then(() => {
-        return businessNetworkConnection.getAssetRegistry('org.digitalcmr.TransportOrder');
+        return businessNetworkConnection.getAssetRegistry(Network.namespace + '.TransportOrder');
       })
       .then((assetRegistry) => {
         return assetRegistry.get('12345567890');

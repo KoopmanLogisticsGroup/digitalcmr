@@ -23,10 +23,10 @@ function createECMR(tx) {
     .then(function (assetRegistry) {
       return assetRegistry.add(tx.ecmr)
         .catch(function (error) {
-          throw new Error('[CreateECMR] An error occurred while addAll ECMRs', error);
+          throw new Error('[CreateECMR] An error occurred while addAll ECMRs' + error);
         });
     }).catch(function (error) {
-      throw new Error('[CreateECMR] An error occurred while saving the ECMR asset', error);
+      throw new Error('[CreateECMR] An error occurred while saving the ECMR asset' + error);
     });
 }
 
@@ -44,10 +44,10 @@ function createECMRs(tx) {
           updateTransportOrderToInProgress(tx);
         })
         .catch(function (error) {
-          throw new Error('[CreateECMRs] An error occurred while addAll ECMRs', error);
+          throw new Error('[CreateECMRs] An error occurred while addAll ECMRs' + error);
         });
     }).catch(function (error) {
-      throw new Error('[CreateECMRs] An error occurred while getting the asset registry', error);
+      throw new Error('[CreateECMRs] An error occurred while getting the asset registry' + error);
     });
 }
 
