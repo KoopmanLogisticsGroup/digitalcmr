@@ -249,27 +249,29 @@ transaction CreateECMRs {
 }
 
 transaction UpdateEcmrStatusToLoaded {
-  --> TransportOrder transportOrder
   --> ECMR ecmr
-  o ECMR updatedEcmr
+  o Good[] goods
+  o Signature signature
 }
 
 transaction UpdateEcmrStatusToInTransit {
-  --> TransportOrder transportOrder
   --> ECMR ecmr
-  o ECMR updatedEcmr
+  o Good[] goods
+  o Signature signature
 }
 
 transaction UpdateEcmrStatusToDelivered {
   --> TransportOrder transportOrder
   --> ECMR ecmr
-  o ECMR updatedEcmr
+  o Good[] goods
+  o Signature signature
 }
 
 transaction UpdateEcmrStatusToConfirmedDelivered {
   --> TransportOrder transportOrder
   --> ECMR ecmr
-  o ECMR updatedEcmr
+  o Good[] goods
+  o Signature signature
 }
 
 transaction UpdateECMRStatusToCancelled {

@@ -59,24 +59,26 @@ function createECMRs(tx) {
  */
 function updateEcmrStatusToLoaded(tx) {
   if (tx.ecmr.status !== EcmrStatus.Created) {
-    throw new Error('[UpdateEcmrStatusToLoaded] Invalid transaction. Trying to set status LOADED to an ECMR with status: ' + tx.updatedEcmr.status);
+    throw new Error('[UpdateEcmrStatusToLoaded] Invalid transaction. Trying to set status LOADED to an ECMR with status: ' + tx.ecmr.status);
   }
 
   var factory = getFactory();
   var currentParticipant = getCurrentParticipant() && getCurrentParticipant().getIdentifier();
-  if (currentParticipant == undefined) {
-    currentParticipant = 'network_admin';
+
+  // TODO only for test purposes
+  if (typeof currentParticipant === 'undefined' || !currentParticipant) {
+    currentParticipant = tx.signature.certificate;
   }
 
   tx.ecmr.status = EcmrStatus.Loaded;
 
-  tx.ecmr.compoundSignature = tx.updatedEcmr.compoundSignature;
+  tx.ecmr.compoundSignature = tx.signature;
   tx.ecmr.compoundSignature.certificate = factory.newRelationship('org.digitalcmr', 'User', currentParticipant);
 
   // write the compound remarks into the ecmr
-  for (var i = 0; tx.updatedEcmr.goods && i < tx.updatedEcmr.goods.length; i++) {
-    if (tx.updatedEcmr.goods[i].compoundRemark) {
-      tx.ecmr.goods[i].compoundRemark = tx.updatedEcmr.goods[i].compoundRemark;
+  for (var i = 0; tx.goods && i < tx.goods.length; i++) {
+    if (tx.goods[i].compoundRemark) {
+      tx.ecmr.goods[i].compoundRemark = tx.goods[i].compoundRemark;
     }
   }
 
@@ -99,7 +101,7 @@ function updateEcmrStatusToLoaded(tx) {
  */
 function updateEcmrStatusToInTransit(tx) {
   if (tx.ecmr.status !== EcmrStatus.Loaded) {
-    throw new Error('[UpdateEcmrStatusToInTransit] Invalid transaction. Trying to set status IN_TRANSIT to an ECMR with status: ' + tx.updatedEcmr.status);
+    throw new Error('[UpdateEcmrStatusToInTransit] Invalid transaction. Trying to set status IN_TRANSIT to an ECMR with status: ' + tx.ecmr.status);
   }
 
   if (!tx.ecmr.compoundSignature) {
@@ -108,19 +110,21 @@ function updateEcmrStatusToInTransit(tx) {
 
   var factory = getFactory();
   var currentParticipant = getCurrentParticipant() && getCurrentParticipant().getIdentifier();
-  if (currentParticipant == undefined) {
-    currentParticipant = 'network_admin';
+
+  // TODO only for test purposes
+  if (typeof currentParticipant === 'undefined' || !currentParticipant) {
+    currentParticipant = tx.signature.certificate;
   }
 
   tx.ecmr.status = EcmrStatus.InTransit;
 
-  tx.ecmr.carrierLoadingSignature = tx.updatedEcmr.carrierLoadingSignature;
+  tx.ecmr.carrierLoadingSignature = tx.signature;
   tx.ecmr.carrierLoadingSignature.certificate = factory.newRelationship('org.digitalcmr', 'User', currentParticipant);
 
   // write the carrier loading remarks into the ecmr
-  for (var i = 0; tx.updatedEcmr.goods && i < tx.updatedEcmr.goods.length; i++) {
-    if (tx.updatedEcmr.goods[i].carrierLoadingRemark) {
-      tx.ecmr.goods[i].carrierLoadingRemark = tx.updatedEcmr.goods[i].carrierLoadingRemark;
+  for (var i = 0; tx.goods && i < tx.goods.length; i++) {
+    if (tx.goods[i].carrierLoadingRemark) {
+      tx.ecmr.goods[i].carrierLoadingRemark = tx.goods[i].carrierLoadingRemark;
     }
   }
 
@@ -143,7 +147,7 @@ function updateEcmrStatusToInTransit(tx) {
  */
 function updateEcmrStatusToDelivered(tx) {
   if (tx.ecmr.status !== EcmrStatus.InTransit) {
-    throw new Error('[UpdateEcmrStatusToDelivered] Invalid transaction. Trying to set status DELIVERED to an ECMR with status: ' + tx.updatedEcmr.status);
+    throw new Error('[UpdateEcmrStatusToDelivered] Invalid transaction. Trying to set status DELIVERED to an ECMR with status: ' + tx.ecmr.status);
   }
 
   if (!tx.ecmr.compoundSignature) {
@@ -155,21 +159,23 @@ function updateEcmrStatusToDelivered(tx) {
 
   var factory = getFactory();
   var currentParticipant = getCurrentParticipant() && getCurrentParticipant().getIdentifier();
-  if (currentParticipant == undefined) {
-    currentParticipant = 'network_admin';
+
+  // TODO only for test purposes
+  if (typeof currentParticipant === 'undefined' || !currentParticipant) {
+    currentParticipant = tx.signature.certificate;
   }
 
   tx.ecmr.status = EcmrStatus.Delivered;
 
   // write the carrier delivery signature into the ecmr
-  tx.ecmr.carrierDeliverySignature = tx.updatedEcmr.carrierDeliverySignature;
+  tx.ecmr.carrierDeliverySignature = tx.signature;
   tx.ecmr.carrierDeliverySignature.certificate = factory.newRelationship('org.digitalcmr', 'User', currentParticipant);
 
 
   // write the carrier delivery remarks into the ecmr
-  for (var i = 0; tx.updatedEcmr.goods && i < tx.updatedEcmr.goods.length; i++) {
-    if (tx.updatedEcmr.goods[i].carrierDeliveryRemark) {
-      tx.ecmr.goods[i].carrierDeliveryRemark = tx.updatedEcmr.goods[i].carrierDeliveryRemark;
+  for (var i = 0; tx.goods && i < tx.goods.length; i++) {
+    if (tx.goods[i].carrierDeliveryRemark) {
+      tx.ecmr.goods[i].carrierDeliveryRemark = tx.goods[i].carrierDeliveryRemark;
     }
   }
 
@@ -177,7 +183,7 @@ function updateEcmrStatusToDelivered(tx) {
     .then(function (assetRegistry) {
       return assetRegistry.update(tx.ecmr)
         .then(function () {
-          updateTransportOrderStatusToCompleted(tx);
+          updateTransportOrderStatusToCompleted(tx.transportOrder);
         })
         .catch(function (error) {
           throw new Error('[UpdateEcmrStatusToDelivered] An error occurred while updating the registry asset: ' + error);
@@ -195,7 +201,7 @@ function updateEcmrStatusToDelivered(tx) {
  */
 function updateEcmrStatusToConfirmedDelivered(tx) {
   if (tx.ecmr.status !== EcmrStatus.Delivered) {
-    throw new Error('[UpdateEcmrStatusToConfirmedDelivered] Invalid transaction. Trying to set status CONFIRMED_DELIVERED to an ECMR with status: ' + tx.updatedEcmr.status);
+    throw new Error('[UpdateEcmrStatusToConfirmedDelivered] Invalid transaction. Trying to set status CONFIRMED_DELIVERED to an ECMR with status: ' + tx.ecmr.status);
   }
 
   if (!tx.ecmr.compoundSignature) {
@@ -210,20 +216,22 @@ function updateEcmrStatusToConfirmedDelivered(tx) {
 
   var factory = getFactory();
   var currentParticipant = getCurrentParticipant() && getCurrentParticipant().getIdentifier();
-  if (currentParticipant == undefined) {
-    currentParticipant = 'network_admin';
+
+  // TODO only for test purposes
+  if (typeof currentParticipant === 'undefined' || !currentParticipant) {
+    currentParticipant = tx.signature.certificate;
   }
 
   tx.ecmr.status = EcmrStatus.ConfirmedDelivered;
 
   // write the recipient signature into the ecmr
-  tx.ecmr.recipientSignature = tx.updatedEcmr.recipientSignature;
+  tx.ecmr.recipientSignature = tx.signature;
   tx.ecmr.recipientSignature.certificate = factory.newRelationship('org.digitalcmr', 'User', currentParticipant);
 
   // write the recipient remarks into the ecmr
-  for (var i = 0; tx.updatedEcmr.goods && i < tx.updatedEcmr.goods.length; i++) {
-    if (tx.updatedEcmr.goods[i].recipientRemark) {
-      tx.ecmr.goods[i].recipientRemark = tx.updatedEcmr.goods[i].recipientRemark;
+  for (var i = 0; tx.goods && i < tx.goods.length; i++) {
+    if (tx.goods[i].recipientRemark) {
+      tx.ecmr.goods[i].recipientRemark = tx.goods[i].recipientRemark;
     }
   }
 
@@ -248,7 +256,8 @@ function updateECMRStatusToCancelled(tx) {
   var factory = getFactory();
   var currentParticipant = getCurrentParticipant() && getCurrentParticipant().getIdentifier();
 
-  if (currentParticipant == undefined || null) {
+  // TODO only for test purposes
+  if (typeof currentParticipant === 'undefined' || !currentParticipant) {
     currentParticipant = 'network_admin';
   }
 

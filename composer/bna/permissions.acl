@@ -10,7 +10,7 @@ rule SystemACL {
     action: ALLOW
 }
 
-rule EveryBodyCanReadVehicles {
+rule EverybodyCanReadVehicles {
     description:  "Allow everybody to read vehicle data"
     participant: "org.hyperledger.composer.system.Participant"
     operation: READ
@@ -336,6 +336,14 @@ rule CarrierMemberCanSubmitUpdateEcmrStatusToInTransit {
     action: ALLOW
 }
 
+rule CarrierMemberCreateUpdateEcmrStatusToDeliveredTransaction {
+    description: "Allow CarrierMember to CREATE an UpdateEcmrStatusToDelivered transaction"
+    participant: "org.digitalcmr.CarrierMember"
+    operation: CREATE
+    resource: "org.digitalcmr.UpdateEcmrStatusToDelivered"
+    action: ALLOW
+}
+
 rule CarrierMemberCanSubmitUpdateEcmrStatusToDelivered {
     description: "Allow CarrierMember to Submit an UpdateEcmrStatusToDelivered transaction for his organization when ECMR status is IN_TRANSIT"
     participant(p): "org.digitalcmr.CarrierMember"
@@ -391,6 +399,6 @@ rule RecipientMemberCanSubmitUpdateEcmrStatusToConfirmedDelivered {
     operation: UPDATE
     resource(r): "org.digitalcmr.ECMR"
     transaction(tx): "org.digitalcmr.UpdateEcmrStatusToConfirmedDelivered"
-    condition: (r.recipient.getIdentifier() == p.getIdentifier() && r.status == "DELIVERED" && tx.ecmr.status == "CONFIRMED_DELIVERED")
+    condition: (r.recipient.getIdentifier() == p.getIdentifier() && r.status == "DELIVERED")
     action: ALLOW
 }

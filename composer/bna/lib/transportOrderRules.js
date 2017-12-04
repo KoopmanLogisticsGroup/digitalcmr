@@ -65,12 +65,12 @@ function updateTransportOrderToInProgress(tx) {
     });
 }
 
-function updateTransportOrderStatusToCompleted(tx) {
-  tx.transportOrder.status = TransportOrderStatus.Completed;
+function updateTransportOrderStatusToCompleted(transportOrder) {
+  transportOrder.status = TransportOrderStatus.Completed;
 
   return getAssetRegistry('org.digitalcmr.TransportOrder')
     .then(function (assetRegistry) {
-      return assetRegistry.update(tx.transportOrder)
+      return assetRegistry.update(transportOrder)
         .catch(function (error) {
           throw new Error('[UpdateTransportOrderStatusToCompleted] An error occurred while updating the registry asset: ' + error);
         });
