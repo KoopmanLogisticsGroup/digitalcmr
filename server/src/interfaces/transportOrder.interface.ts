@@ -14,7 +14,7 @@ export interface TransportOrder {
   cancellation?: Cancellation;
 }
 
-export enum OrderStatus {
+export enum TransportOrderStatus {
   Open       = 'OPEN',
   InProgress = 'IN_PROGRESS',
   Completed  = 'COMPLETED',

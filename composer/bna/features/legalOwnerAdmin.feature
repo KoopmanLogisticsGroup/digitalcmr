@@ -108,6 +108,17 @@ Feature: LegalOwnerAdmin feature test
       """
     Then I should get an error matching /does not have 'CREATE' access to resource/
 
+  Scenario: Lapo can cancel a Transport Order by using the UpdateTransportOrderStatusToCancelled Transaction
+    When I use the identity Lapo
+    Given I submit the following transaction of type org.digitalcmr.UpdateTransportOrderStatusToCancelled
+      """
+        { "$class": "org.digitalcmr.UpdateTransportOrderStatusToCancelled", "transportOrder": "A123456789", "cancellation": { "cancelledBy": "lapo@leaseplan.org", "date": 321321, "reason": "the big reason" }}
+      """
+    Then I should have the following asset of type org.digitalcmr.TransportOrder
+      """
+        { "$class": "org.digitalcmr.TransportOrder", "orderID": "A123456789", "status": "CANCELLED", "loading": { "$class": "org.digitalcmr.Loading", "address": { "$class": "org.digitalcmr.Address", "name": "Amsterdam Compound", "street": "compenstraat", "houseNumber": "21", "city": "Amsterdam", "zipCode": "9976ZH", "country": "Netherlands", "latitude": 52.377698, "longitude": 4.896555 }, "actualDate": 1502402400000 }, "delivery": { "$class": "org.digitalcmr.Delivery", "address": { "$class": "org.digitalcmr.Address", "name": "Rob Carman", "street": "autostraat", "houseNumber": "12", "city": "Rotterdam", "zipCode": "9442KO", "country": "Netherlands", "latitude": 51.917153, "longitude": 4.474623 }, "actualDate": 1502488800000 }, "owner": "leaseplan", "source": "amsterdamcompound", "carrier": "koopman", "issueDate": 0, "orderRef": "ABC213321BCA", "goods": [ { "$class": "org.digitalcmr.Good", "vehicle": { "$class": "org.digitalcmr.Vehicle", "vin": "736182CHD28172", "manufacturer": "Mercedes", "model": "SLK", "type": "Station", "ecmrs": [], "odoMeterReading": 0, "plateNumber": "I827YE", "loadingStartDate": 2132141, "loadingEndDate": 2213313, "deliveryStartDate": 123123, "deliveryEndDate": 121312 }, "description": "vehicle", "weight": 1800, "loadingAddress": { "$class": "org.digitalcmr.Address", "name": "loading address", "street": "een straat", "houseNumber": "41", "city": "Groningen", "zipCode": "7811 HC", "country": "netherlands", "longitude": 124, "latitude": 123 }, "deliveryAddress": { "$class": "org.digitalcmr.Address", "name": "delivery adress", "street": "een straat", "houseNumber": "41", "city": "Groningen", "zipCode": "7811 HC", "country": "netherlands", "longitude": 124, "latitude": 123 }, "pickupWindow": { "$class": "org.digitalcmr.DateWindow", "startDate": "1502834400000", "endDate": "1502834400000" }, "deliveryWindow": { "startDate": "1502834400000", "endDate": "1502834400000" } } ], "cancellation": { "cancelledBy": "lapo@leaseplan.org", "date": 321321, "reason": "the big reason" }, "ecmrs": [] }
+      """
+
   Scenario: Lapo can not update the expectedDeliveryWindow of an ECMR
     When I use the identity Lapo
     Given I should have the following assets of type org.digitalcmr.ECMR

@@ -8,18 +8,23 @@ import {Response} from 'superagent';
 import {Builder} from './common/Builder';
 import {Vehicle} from '../../src/interfaces/vehicle.interface';
 import {PickupWindow} from '../../src/interfaces/pickupWindow.interface';
-import {OrderStatus} from '../../src/interfaces/transportOrder.interface';
+import {TransportOrderStatus, TransportOrder} from '../../src/interfaces/transportOrder.interface';
 import {CreateEcmrs} from '../../src/interfaces/createEcmrs.interface';
+import {TransportOrderCancellation} from '../../src/interfaces/cancellation.interface';
 
 const server = supertest.agent('http://localhost:8080');
 const should = chai.should();
 
 const baseEndPoint = '/api/v1';
 let token: string;
+let transportOrder: TransportOrder;
 let updateEcmr: Ecmr;
 
 describe('A Compound Admin can', () => {
   before((done) => {
+    transportOrder = Builder.buildTransportOrder();
+    updateEcmr     = Builder.buildECMR('ecmr1');
+
     const loginParams = {
       'username': 'willem@amsterdamcompound.org',
       'password': 'passw0rd'
@@ -149,6 +154,31 @@ describe('A Compound Admin can', () => {
           return done(err);
         }
 
+        done(err);
+      });
+  });
+
+  it('not cancel an ECMR', (done) => {
+    let cancel = {
+      'ecmrID':       updateEcmr.ecmrID,
+      'cancellation': {
+        'cancelledBy': 'willem@amsterdamcompound.org',
+        'reason':      'no reason',
+        'date':        123
+      }
+    };
+
+    server
+      .put('/api/v1/ECMR/cancel')
+      .set('x-access-token', token)
+      .send(cancel)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
         done(err);
       });
   });
@@ -392,7 +422,7 @@ describe('A Compound Admin can', () => {
 
   it('cannot get a transportOrder by status', (done) => {
     server
-      .get(`${baseEndPoint}/transportOrder/status/${OrderStatus.InProgress}`)
+      .get(`${baseEndPoint}/transportOrder/status/${TransportOrderStatus.InProgress}`)
       .set('x-access-token', token)
       .expect(200)
       .expect('Content-Type', /json/)
@@ -448,7 +478,32 @@ describe('A Compound Admin can', () => {
       });
   });
 
-  it('cannot update a delivery window of a transport order', (done) => {
+  it('not cancel a transportOrder', (done) => {
+    let cancel = <TransportOrderCancellation> {
+      'orderID':      transportOrder.orderID,
+      'cancellation': {
+        'cancelledBy': 'lapo@leaseplan.org',
+        'date':        123,
+        'reason':      'invalid order'
+      }
+    };
+
+    server
+      .put('/api/v1/transportOrder/cancel')
+      .set('x-access-token', token)
+      .send(cancel)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
+  it('not update a delivery window of a transport order', (done) => {
     const pickupWindow: PickupWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
@@ -459,6 +514,27 @@ describe('A Compound Admin can', () => {
       .put(`${baseEndPoint}/transportOrder/updateDeliveryWindow`)
       .set('x-access-token', token)
       .send(pickupWindow)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
+  it('can not update an expectedDeliveryWindow of an ECMR with a status other than IN_TRANSIT', (done) => {
+    const expectedWindow = {
+      ecmrID:         'A1234567890',
+      expectedWindow: [7247832478934, 212213821321]
+    };
+
+    server
+      .put('/api/v1/ECMR/updateExpectedDeliveryWindow')
+      .set('x-access-token', token)
+      .send(expectedWindow)
       .expect(500)
       .end((err: Error) => {
         if (err) {

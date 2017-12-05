@@ -7,6 +7,7 @@ import {PickupWindow} from '../../src/interfaces/pickupWindow.interface';
 import {EcmrStatus} from '../../src/interfaces/ecmr.interface';
 import {StatusCode} from './common/StatusCode';
 import {Builder} from './common/Builder';
+import {EcmrCancellation, TransportOrderCancellation} from '../../src/interfaces/cancellation.interface';
 
 const server = supertest.agent('http://localhost:8080');
 const should = chai.should();
@@ -121,6 +122,31 @@ describe('A Carrier Admin can', () => {
       });
   });
 
+  it('can cancel an ECMR', (done) => {
+    let cancel = <EcmrCancellation> {
+      'ecmrID':       updateEcmr.ecmrID,
+      'cancellation': {
+        'cancelledBy': 'pete@koopman.org',
+        'reason':      'no reason',
+        'date':        123
+      }
+    };
+
+    server
+      .put('/api/v1/ECMR/cancel')
+      .set('x-access-token', token)
+      .send(cancel)
+      .expect(200)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
   it('not create an ECMR', (done) => {
     const ecmr = Builder.buildECMR('ecmr1');
     server
@@ -198,9 +224,9 @@ describe('A Carrier Admin can', () => {
 
             return done(err);
           }
-        res.body.length.should.be.greaterThan(0, 'No LOADED ECMRs were found.');
-        should.exist(res.body.find(ecmr => ecmr.status === EcmrStatus.Loaded));
-        done(err);
+          res.body.length.should.be.greaterThan(0, 'No LOADED ECMRs were found.');
+          should.exist(res.body.find(ecmr => ecmr.status === EcmrStatus.Loaded));
+          done(err);
         }
       );
   });
@@ -215,9 +241,9 @@ describe('A Carrier Admin can', () => {
 
             return done(err);
           }
-        res.body.length.should.be.greaterThan(0, 'No IN_TRANSIT ECMRs were found.');
-        should.exist(res.body.find(ecmr => ecmr.status === EcmrStatus.InTransit));
-        done(err);
+          res.body.length.should.be.greaterThan(0, 'No IN_TRANSIT ECMRs were found.');
+          should.exist(res.body.find(ecmr => ecmr.status === EcmrStatus.InTransit));
+          done(err);
         }
       );
   });
@@ -372,6 +398,31 @@ describe('A Carrier Admin can', () => {
       });
   });
 
+  it('not cancel a transportOrder', (done) => {
+    let cancel = <TransportOrderCancellation> {
+      'orderID':      transportOrder.orderID,
+      'cancellation': {
+        'cancelledBy': 'lapo@leaseplan.org',
+        'date':        123,
+        'reason':      'invalid order'
+      }
+    };
+
+    server
+      .put('/api/v1/transportOrder/cancel')
+      .set('x-access-token', token)
+      .send(cancel)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
   it('get a specific transport order based on vin', (done) => {
     server
       .get('/api/v1/transportOrder/vin/183726339N')
@@ -464,6 +515,27 @@ describe('A Carrier Admin can', () => {
       .set('x-access-token', token)
       .send(expectedWindow)
       .expect(StatusCode.ok)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
+  it('can not update an expectedDeliveryWindow of an ECMR with a status other than IN_TRANSIT', (done) => {
+    const expectedWindow = {
+      ecmrID:         'A1234567890',
+      expectedWindow: [7247832478934, 212213821321]
+    };
+
+    server
+      .put('/api/v1/ECMR/updateExpectedDeliveryWindow')
+      .set('x-access-token', token)
+      .send(expectedWindow)
+      .expect(500)
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);

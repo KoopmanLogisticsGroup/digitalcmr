@@ -85,7 +85,7 @@ describe('Admin of the network', () => {
         carrierMember.org = factory.newRelationship(Network.namespace, 'CarrierOrg', 'koopman');
 
         // Add participant to the registry
-        return businessNetworkConnection.getParticipantRegistry('org.digitalcmr.CarrierMember')
+        return businessNetworkConnection.getParticipantRegistry(Network.namespace + '.CarrierMember')
           .then((participantRegistry) => {
             participantRegistry.addAll([carrierMember]);
           })
@@ -147,7 +147,7 @@ describe('Admin of the network', () => {
         ecmr.carrierLoadingSignature = builder.buildSignature(Identity.userIDs.carrierMember);
         ecmrList.push(ecmr);
 
-        return businessNetworkConnection.getAssetRegistry('org.digitalcmr.ECMR')
+        return businessNetworkConnection.getAssetRegistry(Network.namespace + '.ECMR')
           .then((assetRegistry) => {
             return assetRegistry.addAll(ecmrList);
           }).catch((error) => {
@@ -172,7 +172,7 @@ describe('Admin of the network', () => {
 
     return businessNetworkConnection.submitTransaction(transaction)
       .then(() => {
-        return businessNetworkConnection.getAssetRegistry('org.digitalcmr.ECMR');
+        return businessNetworkConnection.getAssetRegistry(Network.namespace + '.ECMR');
       })
       .then((assetRegistry) => {
         return assetRegistry.get(transaction.ecmr.ecmrID);
@@ -191,7 +191,7 @@ describe('Admin of the network', () => {
 
     return businessNetworkConnection.submitTransaction(transaction)
       .then(() => {
-        return businessNetworkConnection.getAssetRegistry('org.digitalcmr.ECMR');
+        return businessNetworkConnection.getAssetRegistry(Network.namespace + '.ECMR');
       })
       .then((assetRegistry) => {
         return assetRegistry.getAll();
@@ -230,7 +230,7 @@ describe('Admin of the network', () => {
 
     return businessNetworkConnection.submitTransaction(transaction)
       .then(() => {
-        return businessNetworkConnection.getAssetRegistry('org.digitalcmr.ECMR')
+        return businessNetworkConnection.getAssetRegistry(Network.namespace + '.ECMR')
           .then((assetRegistry) => {
             return assetRegistry.get('loaded');
           })
@@ -259,7 +259,7 @@ describe('Admin of the network', () => {
 
     return businessNetworkConnection.submitTransaction(transaction)
       .then(() => {
-        return businessNetworkConnection.getAssetRegistry('org.digitalcmr.ECMR')
+        return businessNetworkConnection.getAssetRegistry(Network.namespace + '.ECMR')
           .then((assetRegistry) => {
             return assetRegistry.get('in_transit');
           })
@@ -278,7 +278,7 @@ describe('Admin of the network', () => {
 
     return businessNetworkConnection.submitTransaction(transaction)
       .then(() => {
-        return businessNetworkConnection.getAssetRegistry('org.digitalcmr.ECMR')
+        return businessNetworkConnection.getAssetRegistry(Network.namespace + '.ECMR')
           .then((assetRegistry) => {
             return assetRegistry.get('delivered');
           })
@@ -369,7 +369,7 @@ describe('Admin of the network', () => {
 
     return businessNetworkConnection.submitTransaction(updateExpectedPickupWindowTransaction)
       .then(() => {
-        return businessNetworkConnection.getAssetRegistry('org.digitalcmr.ECMR')
+        return businessNetworkConnection.getAssetRegistry(Network.namespace + '.ECMR')
           .then((assetRegistry) => {
             return assetRegistry.get('created')
               .then((ecmr) => {
@@ -406,7 +406,7 @@ describe('Admin of the network', () => {
 
     return businessNetworkConnection.submitTransaction(updateExpectedDeliveryWindowTransaction)
       .then(() => {
-        return businessNetworkConnection.getAssetRegistry('org.digitalcmr.ECMR')
+        return businessNetworkConnection.getAssetRegistry(Network.namespace + '.ECMR')
           .then((assetRegistry) => {
             return assetRegistry.get('ecmr3')
               .then((ecmr) => {
@@ -433,5 +433,4 @@ describe('Admin of the network', () => {
     return businessNetworkConnection.submitTransaction(updateExpectedDeliveryWindowTransaction)
       .should.be.rejectedWith(/Transaction is not valid. Attempting to set an ExpectedDeliveryWindow when status is not IN_TRANSIT. Actual status:/);
   });
-})
-;
+});

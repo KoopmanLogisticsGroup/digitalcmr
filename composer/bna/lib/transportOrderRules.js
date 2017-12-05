@@ -23,10 +23,10 @@ function createTransportOrder(tx) {
     .then(function (assetRegistry) {
       return assetRegistry.add(tx.transportOrder)
         .catch(function (error) {
-          throw new Error('[CreateTransportOrder] An error occurred while adding a transport order asset', error);
+          throw new Error('[CreateTransportOrder] An error occurred while adding a transport order asset' + error);
         })
     }).catch(function (error) {
-      throw new Error('[CreateTransportOrder] An error occurred while retrieving the asset registry', error);
+      throw new Error('[CreateTransportOrder] An error occurred while retrieving the asset registry' + error);
     })
 }
 
@@ -41,10 +41,10 @@ function createTransportOrders(tx) {
     .then(function (assetRegistry) {
       return assetRegistry.addAll(tx.transportOrders)
         .catch(function (error) {
-          throw new Error('[CreateTransportOrders] An error occurred while adding transport orders assets', error);
+          throw new Error('[CreateTransportOrders] An error occurred while adding transport orders assets' + error);
         })
     }).catch(function (error) {
-      throw new Error('[CreateTransportOrders] An error occurred while retrieving the asset registry', error);
+      throw new Error('[CreateTransportOrders] An error occurred while retrieving the asset registry' + error);
     })
 }
 
