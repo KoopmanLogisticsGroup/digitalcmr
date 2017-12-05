@@ -13,24 +13,6 @@
  */
 
 /**
- * Create ecmr transaction processor function.
- * @param {org.digitalcmr.CreateECMR} tx  - Create ECMR transaction
- * @return {Promise} Asset registry Promise
- * @transaction
- */
-function createECMR(tx) {
-  return getAssetRegistry('org.digitalcmr.ECMR')
-    .then(function (assetRegistry) {
-      return assetRegistry.add(tx.ecmr)
-        .catch(function (error) {
-          throw new Error('[CreateECMR] An error occurred while addAll ECMRs', error);
-        });
-    }).catch(function (error) {
-      throw new Error('[CreateECMR] An error occurred while saving the ECMR asset', error);
-    });
-}
-
-/**
  * Create ECMRs transaction processor function.
  * @param {org.digitalcmr.CreateECMRs} tx  - Create ECMRs transaction
  * @return {Promise} Asset registry Promise
