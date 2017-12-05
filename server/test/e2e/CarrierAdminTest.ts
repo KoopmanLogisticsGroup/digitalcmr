@@ -68,7 +68,7 @@ const buildECMR = (ecmrID: string): Ecmr => {
 
 const buildTransportOrder = (): TransportOrder => {
   return <TransportOrder> {
-    orderID:   String(new Date().getTime()),
+    orderID:   String(new Date().getMilliseconds()),
     carrier:   'koopman',
     source:    'amsterdamcompound',
     goods:     [],
@@ -271,9 +271,9 @@ describe('A Carrier Admin can', () => {
 
             return done(err);
           }
-        res.body.length.should.be.greaterThan(0, 'No LOADED ECMRs were found.');
-        should.exist(res.body.find(ecmr => ecmr.status === EcmrStatus.Loaded));
-        done(err);
+          res.body.length.should.be.greaterThan(0, 'No LOADED ECMRs were found.');
+          should.exist(res.body.find(ecmr => ecmr.status === EcmrStatus.Loaded));
+          done(err);
         }
       );
   });
@@ -288,9 +288,9 @@ describe('A Carrier Admin can', () => {
 
             return done(err);
           }
-        res.body.length.should.be.greaterThan(0, 'No IN_TRANSIT ECMRs were found.');
-        should.exist(res.body.find(ecmr => ecmr.status === EcmrStatus.InTransit));
-        done(err);
+          res.body.length.should.be.greaterThan(0, 'No IN_TRANSIT ECMRs were found.');
+          should.exist(res.body.find(ecmr => ecmr.status === EcmrStatus.InTransit));
+          done(err);
         }
       );
   });

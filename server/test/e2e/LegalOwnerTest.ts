@@ -74,7 +74,7 @@ const buildECMR    = (ecmrID: string): Ecmr => {
 
 const buildTransportOrder = (): TransportOrder => {
   return <TransportOrder> {
-    orderID:   String(new Date().getTime()),
+    orderID:   String(new Date().getMilliseconds()),
     carrier:   'koopman',
     source:    'amsterdamcompound',
     goods:     [],
