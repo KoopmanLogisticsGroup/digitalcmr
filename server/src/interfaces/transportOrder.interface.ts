@@ -13,3 +13,10 @@ export interface TransportOrder {
   orderRef: string;
   cancellation?: Cancellation;
 }
+
+export enum OrderStatus {
+  Open       = 'OPEN',
+  InProgress = 'IN_PROGRESS',
+  Completed  = 'COMPLETED',
+  Cancelled  = 'CANCELLED'
+}

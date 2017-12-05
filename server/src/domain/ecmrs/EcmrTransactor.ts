@@ -10,12 +10,9 @@ export class EcmrTransactor implements TransactionCreator {
   public async invoke(factory: Factory, namespace: string, transactionName: string, data: any, identity: Identity): Promise<any> {
     let transaction = factory.newTransaction(namespace, transactionName);
 
-    if (transactionName === Transaction.CreateEcmr) {
-      transaction.ecmr           = await EcmrBuilder.buildECMR(factory, namespace, data.ecmr, identity);
-      transaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', data.orderID);
-    } else if (transactionName === Transaction.CreateEcmrs) {
+    if (transactionName === Transaction.CreateEcmrs) {
       transaction.ecmrs          = await EcmrBuilder.buildECMRs(factory, namespace, data.ecmrs, identity);
-      transaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', data.orderID);
+      transaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', data.transportOrderID);
     } else if (transactionName === Transaction.UpdateEcmrStatusToLoaded || transactionName === Transaction.UpdateEcmrStatusToInTransit) {
       transaction.ecmr      = factory.newRelationship(namespace, 'ECMR', data.ecmrID);
       transaction.goods     = EcmrBuilder.buildGoods(factory, namespace, data.goods);

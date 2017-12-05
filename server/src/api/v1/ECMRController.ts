@@ -22,6 +22,7 @@ import {ExpectedWindow} from '../../interfaces/expectedWindow.interface';
 import {UpdateEcmrStatus} from '../../interfaces/updateEcmrStatus.interface';
 import {EcmrCancellation} from '../../interfaces/cancellation.interface';
 import {Signature} from '../../interfaces/signature.interface';
+import {CreateEcmrs} from '../../interfaces/createEcmrs.interface';
 
 @JsonController('/ECMR')
 @UseBefore(UserAuthenticatorMiddleware)
@@ -75,7 +76,7 @@ export class ECMRController {
   }
 
   @Post('/')
-  public async create(@Body() data: any, @Req() request: any): Promise<any> {
+  public async create(@Body() data: CreateEcmrs, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
     return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateEcmrs, data, new EcmrTransactor());
