@@ -73,7 +73,7 @@ const buildECMR = (ecmrID: string): Ecmr => {
 
 const buildTransportOrder = (): TransportOrder => {
   return <TransportOrder> {
-    orderID:   String(new Date().getMilliseconds()),
+    orderID:   String(new Date().getTime()),
     loading:   {
       actualDate: 1502834400000,
       address:    buildAddress(),
