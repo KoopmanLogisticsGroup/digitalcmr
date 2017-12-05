@@ -1,76 +1,97 @@
 <div class="ui container top_margin_content">
-  <div class="table_title" *ngIf="searchBarData === ''; else searchResults">Transport Orders</div>
-  <ng-template #searchResults>
-    <div class="table_title"> Search Results</div>
-  </ng-template>
-  <div class="ui pointing secondary menu" *ngIf="searchBarData === ''">
-    <a class="item" data-tab="first" (click)="setTransportOrderView(viewStatus.New)"
-       [ngClass]="{'active' : currentView === viewStatus.New ? true : false}">NEW</a>
-    <a class="item" data-tab="second" (click)="setTransportOrderView(viewStatus.InProgress)"
-       [ngClass]="{'active' : currentView === viewStatus.InProgress ? true : false}">IN PROGRESS</a>
-    <a class="item" data-tab="third" (click)="setTransportOrderView(viewStatus.Completed)"
-       [ngClass]="{'active' : currentView === viewStatus.Completed ? true : false}">COMPLETED</a>
-    <a class="item" data-tab="third" (click)="setTransportOrderView(viewStatus.Canceled)"
-       [ngClass]="{'active' : currentView === viewStatus.Canceled ? true : false}">CANCELED</a>
-  </div>
-  <div class="ui active tab grid" data-tab="first">
-    <div class="row">
-      <table class="ui unstackable table spacing_table">
-        <thead class="table_header">
-        <th></th>
-        <th>ORDER NR</th>
-        <th>CREATED ON</th>
-        <th>Nr. OF GOODS</th>
-        <th>CARRIER</th>
-        <th>PICK UP WINDOW</th>
-        <th>DELIVERY WINDOW</th>
-        <th></th>
-        </thead>
-        <tbody>
-        <div *ngIf="searchBarData === ''; else showSearchResults">
-          <tr *ngFor="let transportOrder of transportOrderFilter" class="table_row">
-            <td></td>
-            <td>{{transportOrder?.orderID}}</td>
-            <td>{{transportOrder?.issueDate | date:"dd-MM-yyyy"}}</td>
-            <td>{{transportOrder?.goods?.length}}</td>
-            <td>{{transportOrder?.carrier?.split('#')[1]}}</td>
-            <td class="loadingWindow">
-              <span> {{transportOrder?.goods[0]?.pickupWindow.startDate | date:"dd-MM-yyyy"}}</span>
-              <span>{{transportOrder?.goods[0]?.pickupWindow.endDate | date:"dd-MM-yyyy"}} </span>
-            </td>
-            <td class="loadingWindow">
-              <span>{{transportOrder?.goods[0]?.deliveryWindow.startDate | date:"dd-MM-yyyy"}}</span>
-              <span>{{transportOrder?.goods[0]?.deliveryWindow.endDate | date:"dd-MM-yyyy"}}</span>
-            </td>
-            <td>
-              <img class="view_more_order" routerLink="/transportorder/{{transportOrder.orderID}}"/>
-            </td>
-          </tr>
-        </div>
-        <ng-template #showSearchResults>
-          <tr *ngFor="let transportOrder of transportOrders | filterBy: searchBarData" class="table_row">
-            <td></td>
-            <td>{{transportOrder?.orderID}}</td>
-            <td>{{transportOrder?.issueDate | date:"dd-MM-yyyy"}}</td>
-            <td>{{transportOrder?.goods?.length}}</td>
-            <td>{{transportOrder?.carrier?.split('#')[1]}}</td>
-            <td class="loadingWindow">
-              <span> {{transportOrder?.goods[0]?.pickupWindow.startDate | date:"dd-MM-yyyy"}}</span>
-              <span>{{transportOrder?.goods[0]?.pickupWindow.endDate | date:"dd-MM-yyyy"}} </span>
-            </td>
-            <td class="loadingWindow">
-              <span>{{transportOrder?.goods[0]?.deliveryWindow.startDate | date:"dd-MM-yyyy"}}</span>
-              <span>{{transportOrder?.goods[0]?.deliveryWindow.endDate | date:"dd-MM-yyyy"}}</span>
-            </td>
-            <td>
-              <img class="view_more_order" routerLink="/transportorder/{{transportOrder.orderID}}"/>
-            </td>
-          </tr>
-        </ng-template>
-        </tbody>
-      </table>
+  <div class="row">
+    <div class="table_title">
+      <ng-container *ngIf="searchBarData === ''; else searchResults">Transport Order Overview</ng-container>
+      <ng-template #searchResults>
+        Search Results
+        <img class="close_results" (click)="clearSearchBar()">
+      </ng-template>
     </div>
-    <img class="no_results" *ngIf="filterTransportOrder < 1 && searchBarData !== ''">
-    <p *ngIf="filterTransportOrder < 1 && searchBarData !== ''" class="no_results_text">NO RESULTS FOUND</p>
+    <div class="row">
+      <div class="ui pointing secondary menu" *ngIf="searchBarData !== ''">
+        <div class="results_top">Showing
+          <span *ngIf="searchBarData === ''; else showFilteredResults">{{transportOrders?.length}}</span>
+          <ng-template #showFilteredResults>{{getLength(transportOrders | filterBy: searchBarData)}}</ng-template>
+          of {{transportOrders?.length}} Results
+        </div>
+      </div>
+      <div class="ui pointing secondary menu" *ngIf="searchBarData === ''">
+        <a class="item" data-tab="first" (click)="setTransportOrderView(viewStatus.New)"
+           [ngClass]="{'active' : currentView === viewStatus.New ? true : false}">NEW</a>
+        <a class="item" data-tab="second" (click)="setTransportOrderView(viewStatus.InProgress)"
+           [ngClass]="{'active' : currentView === viewStatus.InProgress ? true : false}">IN PROGRESS</a>
+        <a class="item" data-tab="third" (click)="setTransportOrderView(viewStatus.Completed)"
+           [ngClass]="{'active' : currentView === viewStatus.Completed ? true : false}">COMPLETED</a>
+        <a class="item" data-tab="third" (click)="setTransportOrderView(viewStatus.Canceled)"
+           [ngClass]="{'active' : currentView === viewStatus.Canceled ? true : false}">CANCELED</a>
+      </div>
+      <div class="ui active tab grid" data-tab="first">
+        <div class="row">
+          <table class="ui unstackable table spacing_table">
+            <thead class="table_header">
+            <th></th>
+            <th>ORDER NR</th>
+            <th>CREATED ON</th>
+            <th>Nr. OF GOODS</th>
+            <th>CARRIER</th>
+            <th>PICK UP WINDOW</th>
+            <th>DELIVERY WINDOW</th>
+            <th></th>
+            </thead>
+            <tbody>
+            <div *ngIf="searchBarData === ''; else showSearchResults">
+              <tr *ngFor="let transportOrder of filteredTransportOrders" class="table_row">
+                <td></td>
+                <td>{{transportOrder?.orderID}}</td>
+                <td>{{transportOrder?.issueDate | date:"dd-MM-yyyy"}}</td>
+                <td>{{transportOrder?.goods?.length}}</td>
+                <td>{{transportOrder?.carrier?.split('#')[1]}}</td>
+                <td class="loadingWindow">
+                  <span> {{transportOrder?.goods[0]?.pickupWindow.startDate | date:"dd-MM-yyyy"}}</span>
+                  <span>{{transportOrder?.goods[0]?.pickupWindow.endDate | date:"dd-MM-yyyy"}} </span>
+                </td>
+                <td class="loadingWindow">
+                  <span>{{transportOrder?.goods[0]?.deliveryWindow.startDate | date:"dd-MM-yyyy"}}</span>
+                  <span>{{transportOrder?.goods[0]?.deliveryWindow.endDate | date:"dd-MM-yyyy"}}</span>
+                </td>
+                <td>
+                  <img class="view_more_order" routerLink="/transportorder/{{transportOrder.orderID}}"/>
+                </td>
+              </tr>
+            </div>
+            <ng-template #showSearchResults>
+              <tr *ngFor="let transportOrder of transportOrders | filterBy: searchBarData" class="table_row">
+                <td></td>
+                <td>{{transportOrder?.orderID}}</td>
+                <td>{{transportOrder?.issueDate | date:"dd-MM-yyyy"}}</td>
+                <td>{{transportOrder?.goods?.length}}</td>
+                <td>{{transportOrder?.carrier?.split('#')[1]}}</td>
+                <td class="loadingWindow">
+                  <span> {{transportOrder?.goods[0]?.pickupWindow.startDate | date:"dd-MM-yyyy"}}</span>
+                  <span>{{transportOrder?.goods[0]?.pickupWindow.endDate | date:"dd-MM-yyyy"}} </span>
+                </td>
+                <td class="loadingWindow">
+                  <span>{{transportOrder?.goods[0]?.deliveryWindow.startDate | date:"dd-MM-yyyy"}}</span>
+                  <span>{{transportOrder?.goods[0]?.deliveryWindow.endDate | date:"dd-MM-yyyy"}}</span>
+                </td>
+                <td>
+                  <img class="view_more_order" routerLink="/transportorder/{{transportOrder.orderID}}"/>
+                </td>
+              </tr>
+            </ng-template>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div *ngIf="getLength(transportOrders | filterBy: searchBarData) < 1 && searchBarData !== ''">
+        <img class="no_results">
+        <p class="no_results_text">NO RESULTS FOUND</p>
+      </div>
+      <div class="show_results" *ngIf="searchBarData === ''">Showing
+        <span *ngIf="searchBarData === ''; else showFilteredResults">{{filteredTransportOrders?.length}}</span>
+        <ng-template #showFilteredResults>{{getLength(transportOrders | filterBy: searchBarData)}}</ng-template>
+        of {{filteredTransportOrders?.length}} Results
+      </div>
+    </div>
   </div>
 </div>

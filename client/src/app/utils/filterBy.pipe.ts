@@ -7,24 +7,24 @@ export class FilterByPipe implements PipeTransform {
   public constructor() {
   }
 
-  public transform(ecmrs: any[], query: string): any[] {
-    if (!(ecmrs && ecmrs.length && (typeof query === 'string')) || query === '') {
-      return ecmrs;
+  public transform(data: any[], query: string): any[] {
+    if (!(data && data.length && (typeof query === 'string')) || query === '') {
+      return data;
     }
-    query                = query.toLocaleLowerCase();
-    const ecmrProperties = Object.keys(ecmrs[0]);
-    const filtered       = new Set;
-    ecmrs.forEach(emcr => {
-      emcr.goods.filter(good => {
+    query                  = query.toLocaleLowerCase();
+    const objectProperties = Object.keys(data[0]);
+    const filtered         = new Set;
+    data.forEach(object => {
+      object.goods.filter(good => {
         if (good.vehicle.vin.toString().toLocaleLowerCase().indexOf(query) !== -1) {
-          filtered.add(emcr);
+          filtered.add(object);
         } else if (good.vehicle.plateNumber.toString().toLocaleLowerCase().indexOf(query) !== -1) {
-          filtered.add(emcr);
+          filtered.add(object);
         }
       });
-      ecmrProperties.forEach(ecmrProperty => {
-        if (emcr[ecmrProperty] !== undefined && emcr[ecmrProperty].toString().toLocaleLowerCase().indexOf(query) !== -1) {
-          filtered.add(emcr);
+      objectProperties.forEach(objectProperty => {
+        if (object[objectProperty] !== undefined && object[objectProperty].toString().toLocaleLowerCase().indexOf(query) !== -1) {
+          filtered.add(object);
         }
       });
     });

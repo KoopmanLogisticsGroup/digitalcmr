@@ -10,11 +10,11 @@
   </div>
   <div class="row">
     <div class="ui pointing secondary menu" *ngIf="searchBarData !== ''">
-      <div [hidden]="(filterEcmr < 1 && searchBarData)">
+      <div [hidden]="(getLength(ecmrs | filterBy: searchBarData) < 1 && searchBarData)">
         <div class="results_top">Showing
-          <span *ngIf="searchBarData === ''; else showFilteredResults">{{ecmrsFiltered?.length}}</span>
-          <ng-template #showFilteredResults>{{filterEcmr}}</ng-template>
-          of {{ecmrsFiltered?.length}} Results
+          <span *ngIf="searchBarData === ''; else showFilteredResults">{{filteredEcmrs?.length}}</span>
+          <ng-template #showFilteredResults>{{getLength(ecmrs | filterBy: searchBarData)}}</ng-template>
+          of {{filteredEcmrs?.length}} Results
         </div>
       </div>
     </div>
@@ -34,7 +34,7 @@
     <div class="ui active tab grid" data-tab="first">
       <div class="row">
         <table class="ui unstackable table spacing_table">
-          <div [hidden]="(filterEcmr < 1 && searchBarData)">
+          <div [hidden]="(getLength(ecmrs | filterBy: searchBarData) < 1 && searchBarData)">
             <thead class="table-header">
             <th></th>
             <th>Date</th>
@@ -51,7 +51,7 @@
             </thead>
           </div>
           <tbody>
-          <tr *ngFor="let ecmr of ecmrsFiltered | filterBy: searchBarData" class="table_row">
+          <tr *ngFor="let ecmr of filteredEcmrs | filterBy: searchBarData" class="table_row">
             <td></td>
             <td>{{ecmr?.creation?.date | date:"dd-MM-yyyy"}}</td>
             <td>{{ecmr?.ecmrID}}</td>
@@ -83,13 +83,14 @@
           </tbody>
         </table>
       </div>
-      <img class="no_results" *ngIf="filterEcmr < 1 && searchBarData !== ''">
-      <p *ngIf="filterEcmr < 1 && searchBarData !== ''" class="no_results_text">NO RESULTS FOUND</p>
+      <img class="no_results" *ngIf="getLength(ecmrs | filterBy: searchBarData) < 1 && searchBarData !== ''">
+      <p *ngIf="getLength(ecmrs | filterBy: searchBarData) < 1 && searchBarData !== ''" class="no_results_text">NO
+        RESULTS FOUND</p>
     </div>
     <div class="show_results" *ngIf="searchBarData === ''">Showing
-      <span *ngIf="searchBarData === ''; else showFilteredResults">{{ecmrsFiltered?.length}}</span>
-      <ng-template #showFilteredResults>{{filterEcmr}}</ng-template>
-      of {{ecmrsFiltered?.length}} Results
+      <span *ngIf="searchBarData === ''; else showFilteredResults">{{filteredEcmrs?.length}}</span>
+      <ng-template #showFilteredResults>{{getLength(ecmrs | filterBy: searchBarData)}}</ng-template>
+      of {{filteredEcmrs?.length}} Results
     </div>
   </div>
 </div>

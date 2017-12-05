@@ -3,7 +3,6 @@ import {NavbarService} from '../../../services/navbar.service';
 import {SearchService} from '../../../services/search.service';
 import {TransportOrderService} from '../../../services/transportorder.service';
 import {TransportOrder} from '../../../interfaces/transportOrder.interface';
-import {Ecmr} from '../../../interfaces/ecmr.interface';
 
 @Component({
   selector:    'app-transportorder-overview',
@@ -12,13 +11,11 @@ import {Ecmr} from '../../../interfaces/ecmr.interface';
 })
 export class TransportorderOverviewComponent implements OnInit {
   @Input() public transportOrder: TransportOrder;
-  @Input() public ecmr: Ecmr;
 
   public currentView: string;
   public searchBarData: string;
-  public filterTransportOrder: number;
   public transportOrders: TransportOrder[];
-  public transportOrderFilter: TransportOrder[];
+  public filteredTransportOrders: TransportOrder[];
 
   public TransportOrderStatus = {
     Open:       'OPEN',
@@ -48,9 +45,6 @@ export class TransportorderOverviewComponent implements OnInit {
     this.searchService.searchData$.subscribe((data: string) => {
       this.searchBarData = data;
     });
-    this.searchService.filterEcmr$.subscribe((data: number) => {
-      this.filterTransportOrder = data;
-    });
     this.currentView   = this.viewStatus.Open;
     this.searchBarData = '';
   }
@@ -58,16 +52,16 @@ export class TransportorderOverviewComponent implements OnInit {
   public ngOnInit(): void {
     this.nav.show();
     this.transportOrderService.getAllTransportOrders().subscribe((transportOrders: TransportOrder[]) => {
-      this.transportOrders      = transportOrders;
-      this.transportOrderFilter = this.transportOrders.filter(transportOrder =>
+      this.transportOrders         = transportOrders;
+      this.filteredTransportOrders = this.transportOrders.filter(transportOrder =>
         transportOrder.status.toUpperCase() === this.viewStatus.New);
       this.firstView();
     });
   }
 
   private firstView(): void {
-    this.currentView          = this.viewStatus.New;
-    this.transportOrderFilter = this.transportOrders.filter(transportOrder => {
+    this.currentView             = this.viewStatus.New;
+    this.filteredTransportOrders = this.transportOrders.filter(transportOrder => {
       if (this.currentView === this.viewStatus.New && transportOrder.status === this.TransportOrderStatus.Open) {
         return transportOrder;
       }
@@ -75,8 +69,8 @@ export class TransportorderOverviewComponent implements OnInit {
   }
 
   public setTransportOrderView(view: string): void {
-    this.currentView          = view;
-    this.transportOrderFilter = this.transportOrders.filter(transportOrder => {
+    this.currentView             = view;
+    this.filteredTransportOrders = this.transportOrders.filter(transportOrder => {
       if ((this.currentView === this.viewStatus.New && transportOrder.status === this.TransportOrderStatus.Open) ||
         (this.currentView === this.viewStatus.InProgress && transportOrder.status === this.TransportOrderStatus.InProgress) ||
         (this.currentView === this.viewStatus.Completed && transportOrder.status === this.TransportOrderStatus.Completed) ||
@@ -86,5 +80,16 @@ export class TransportorderOverviewComponent implements OnInit {
       }
       }
     );
+  }
+
+  public getLength(object: any) {
+    if (object) {
+      return Object.keys(object).length;
+    }
+  }
+
+  public clearSearchBar() {
+    this.searchBarData = '';
+    this.searchService.clearSearchBar();
   }
 }
