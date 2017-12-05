@@ -1,6 +1,5 @@
 export enum Transaction {
   CreateEcmrs                          = 'CreateECMRs',
-  CreateEcmr                           = 'CreateECMR',
   UpdateEcmrStatusToLoaded             = 'UpdateEcmrStatusToLoaded',
   UpdateEcmrStatusToInTransit          = 'UpdateEcmrStatusToInTransit',
   UpdateEcmrStatusToDelivered          = 'UpdateEcmrStatusToDelivered',

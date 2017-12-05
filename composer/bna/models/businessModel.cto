@@ -219,10 +219,6 @@ transaction UpdateTransportOrderDeliveryWindow {
   o String vin
 }
 
-transaction CreateECMR {
-  o ECMR ecmr
-}
-
 transaction CreateLegalOwnerOrg {
   o LegalOwnerOrg legalOwnerOrg
 }

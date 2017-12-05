@@ -98,24 +98,6 @@ rule LegalOwnerAdminCanReadAndCreateECMR {
     action: ALLOW
 }
 
-rule LegalOwnerAdminCanCreateECMRCreateTransaction {
-    description: "Allow LegalOwnerAdmin to CREATE an ECMR create transaction"
-    participant: "org.digitalcmr.LegalOwnerAdmin"
-    operation: CREATE
-    resource: "org.digitalcmr.CreateECMR"
-    action: ALLOW
-}
-
-rule LegalOwnerAdminCanSubmitCreateECMR {
-    description: "Allow LegalOwnerAdmin to Submit a CreateECMR transaction for his organization"
-    participant(p): "org.digitalcmr.LegalOwnerAdmin"
-    operation: CREATE
-    resource(r): "org.digitalcmr.ECMR"
-    transaction: "org.digitalcmr.CreateECMR"
-    condition: (r.owner.getIdentifier() == p.org.getIdentifier())
-    action: ALLOW
-}
-
 rule LegalOwnerAdminCanCreateUpdateTransportOrderStatusToCancelledTransaction {
     description: "Allow LegalOwnerAdmin to CREATE UpdateTransportOrderStatusToCancelled transaction"
     participant: "org.digitalcmr.LegalOwnerAdmin"
@@ -196,23 +178,6 @@ rule CarrierAdminCanCreateECMR {
     action: ALLOW
 }
 
-rule CarrierAdminCanCreateECMRCreateTransaction {
-    description: "Allow CarrierAdmin to CREATE an CreateECMR transaction"
-    participant: "org.digitalcmr.CarrierAdmin"
-    operation: CREATE
-    resource: "org.digitalcmr.CreateECMR"
-    action: ALLOW
-}
-
-rule CarrierAdminCanSubmitCreateECMR {
-    description: "Allow CarrierAdmin to Submit a CreateECMR transaction for his organization"
-    participant(p): "org.digitalcmr.CarrierAdmin"
-    operation: CREATE
-    resource(r): "org.digitalcmr.ECMR"
-    transaction: "org.digitalcmr.CreateECMR"
-    condition: (r.carrier.getIdentifier() == p.org.getIdentifier())
-    action: ALLOW
-}
 
 rule CarrierAdminCanCreateECMRsCreateTransaction {
     description: "Allow CarrierAdmin to submit a CreateECMRs transaction"
