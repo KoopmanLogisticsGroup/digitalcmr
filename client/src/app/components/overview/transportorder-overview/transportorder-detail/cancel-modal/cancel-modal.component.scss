@@ -3,7 +3,7 @@
     position: relative;
     margin:   auto;
     width:    35%;
-    height:   35%;
+    height:   55%;
     left:     0;
     right:    0;
     top:      50%;
@@ -12,10 +12,11 @@
       border-bottom: none;
     }
     .button_position {
+      position:    fixed;
       color:       white;
       font-weight: normal;
-      margin-top:  20%;
-      margin-left: 40%;
+      margin-top:  8%;
+      margin-left: 68%;
     }
   }
   .field {

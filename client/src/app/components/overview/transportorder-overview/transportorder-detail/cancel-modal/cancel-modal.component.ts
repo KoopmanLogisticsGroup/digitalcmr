@@ -11,6 +11,14 @@ import {TransportOrderService} from '../../../../../services/transportorder.serv
 
 export class CancelModalComponent implements OnInit {
   @Input() transportOrder: TransportOrder;
+  public transportOrderCancelled = {
+    'orderID':      '',
+    'cancellation': {
+      'cancelledBy': this.getUserRole(),
+      'date':        new Date().getTime(),
+      'reason':      ''
+    }
+  };
 
   public constructor(private authenticationService: AuthenticationService,
                      private transportOrderService: TransportOrderService) {
@@ -31,17 +39,10 @@ export class CancelModalComponent implements OnInit {
 
   public onSubmit(): void {
     $('#submitButton').addClass('basic loading');
+    this.transportOrderCancelled.orderID = this.transportOrder.orderID;
 
-    const transportOrderCancelled = {
-      'orderID':      this.transportOrder.orderID,
-      'cancellation': {
-        'cancelledBy': 'pete@koopman.org',
-        'date':        new Date().getTime(),
-        'reason':      'a lot of reasons'
-      }
-    };
-
-    this.transportOrderService.cancelTransportOrder(transportOrderCancelled).subscribe(result => {
+    console.log(this.transportOrderCancelled);
+    this.transportOrderService.cancelTransportOrder(this.transportOrderCancelled).subscribe(result => {
       $('#cancel_modal.ui.modal').modal('hide');
       $('#cancel_modal.ui.modal').modal('hide');
       location.reload();
@@ -49,6 +50,6 @@ export class CancelModalComponent implements OnInit {
   }
 
   public getUserRole(): string {
-    return this.authenticationService.isAuthenticated() ? JSON.parse(localStorage.getItem('currentUser')).user.role : '';
+    return this.authenticationService.isAuthenticated() ? JSON.parse(localStorage.getItem('currentUser')).user.username : '';
   }
 }
