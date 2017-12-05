@@ -18,12 +18,12 @@ var ecmrStatus = exports.ecmrStatus = {
   InTransit: 'IN_TRANSIT',
   Delivered: 'DELIVERED',
   ConfirmedDelivered: 'CONFIRMED_DELIVERED',
-  Canceled: 'CANCELED'
+  Cancelled: 'CANCELLED'
 };
 
 var orderStatus = exports.orderStatus = {
   Open: 'OPEN',
   InProgress: 'IN_PROGRESS',
   Completed: 'COMPLETED',
-  Canceled: 'CANCELED'
+  Cancelled: 'CANCELLED'
 };

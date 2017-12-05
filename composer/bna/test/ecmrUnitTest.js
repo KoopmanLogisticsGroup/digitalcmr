@@ -85,7 +85,7 @@ describe('Admin of the network', () => {
         carrierMember.org = factory.newRelationship(Network.namespace, 'CarrierOrg', 'koopman');
 
         // Add participant to the registry
-        return businessNetworkConnection.getParticipantRegistry('org.digitalcmr.CarrierMember')
+        return businessNetworkConnection.getParticipantRegistry(Network.namespace + '.CarrierMember')
           .then((participantRegistry) => {
             participantRegistry.addAll([carrierMember]);
           })
@@ -147,7 +147,7 @@ describe('Admin of the network', () => {
         ecmr.carrierLoadingSignature = builder.buildSignature(Identity.userIDs.carrierMember);
         ecmrList.push(ecmr);
 
-        return businessNetworkConnection.getAssetRegistry('org.digitalcmr.ECMR')
+        return businessNetworkConnection.getAssetRegistry(Network.namespace + '.ECMR')
           .then((assetRegistry) => {
             return assetRegistry.addAll(ecmrList);
           }).catch((error) => {
@@ -162,7 +162,7 @@ describe('Admin of the network', () => {
 
     return businessNetworkConnection.submitTransaction(transaction)
       .then(() => {
-        return businessNetworkConnection.getAssetRegistry('org.digitalcmr.ECMR');
+        return businessNetworkConnection.getAssetRegistry(Network.namespace + '.ECMR');
       })
       .then((assetRegistry) => {
         return assetRegistry.get(transaction.ecmr.ecmrID);
@@ -187,7 +187,7 @@ describe('Admin of the network', () => {
         return businessNetworkConnection.submitTransaction(transaction)
       })
       .then(() => {
-        return businessNetworkConnection.getAssetRegistry('org.digitalcmr.ECMR');
+        return businessNetworkConnection.getAssetRegistry(Network.namespace + '.ECMR');
       })
       .then((assetRegistry) => {
         return assetRegistry.getAll();
@@ -195,6 +195,27 @@ describe('Admin of the network', () => {
       .then((ecmrs) => {
         ecmrs.find(ecmr => ecmr.ecmrID === ecmrs[0].ecmrID);
         ecmrs.find(ecmr => ecmr.ecmrID === ecmrs[1].ecmrID);
+      });
+  });
+
+  it('should be able to cancel an ECMR', () => {
+    let transaction = factory.newTransaction(Network.namespace, 'UpdateECMRStatusToCancelled');
+    transaction.ecmr = factory.newRelationship(Network.namespace, 'ECMR', 'created');
+    transaction.cancellation = factory.newConcept(Network.namespace, 'Cancellation');
+    transaction.cancellation.cancelledBy = factory.newRelationship(Network.namespace, 'Entity', 'lapo@leaseplan.org');
+    transaction.cancellation.date = new Date().getTime();
+    transaction.cancellation.reason = 'one big reason';
+
+    return businessNetworkConnection.submitTransaction(transaction)
+      .then(() => {
+        return businessNetworkConnection.getAssetRegistry(Network.namespace + '.ECMR')
+          .then((assetRegistry) => {
+            return assetRegistry.get('created');
+          })
+          .then((cancelledEcmr) => {
+            cancelledEcmr.status.should.equal(BusinessModel.ecmrStatus.Cancelled);
+            cancelledEcmr.cancellation.should.be.instanceOf(Object);
+          });
       });
   });
 
@@ -207,7 +228,7 @@ describe('Admin of the network', () => {
 
     return businessNetworkConnection.submitTransaction(updateTransaction)
       .then(() => {
-        return businessNetworkConnection.getAssetRegistry('org.digitalcmr.ECMR')
+        return businessNetworkConnection.getAssetRegistry(Network.namespace + '.ECMR')
           .then((assetRegistry) => {
             return assetRegistry.get('created');
           })
@@ -231,7 +252,7 @@ describe('Admin of the network', () => {
         return businessNetworkConnection.submitTransaction(updateTransaction)
       })
       .then(() => {
-        return businessNetworkConnection.getAssetRegistry('org.digitalcmr.ECMR')
+        return businessNetworkConnection.getAssetRegistry(Network.namespace + '.ECMR')
           .then((assetRegistry) => {
             return assetRegistry.get('loaded');
           })
@@ -265,7 +286,7 @@ describe('Admin of the network', () => {
         return businessNetworkConnection.submitTransaction(updateTransaction)
       })
       .then(() => {
-        return businessNetworkConnection.getAssetRegistry('org.digitalcmr.ECMR')
+        return businessNetworkConnection.getAssetRegistry(Network.namespace + '.ECMR')
           .then((assetRegistry) => {
             return assetRegistry.get('ecmr3');
           })
@@ -284,7 +305,7 @@ describe('Admin of the network', () => {
 
     return businessNetworkConnection.submitTransaction(updateTransaction)
       .then(() => {
-        return businessNetworkConnection.getAssetRegistry('org.digitalcmr.ECMR')
+        return businessNetworkConnection.getAssetRegistry(Network.namespace + '.ECMR')
           .then((assetRegistry) => {
             return assetRegistry.get('ecmr4');
           })
@@ -344,7 +365,7 @@ describe('Admin of the network', () => {
       .should.be.rejectedWith(/Attempt to set the status on CONFIRMED_DELIVERED before the transporter signed for the delivery!/);
   });
 
-  it('should be able to update the expectedPickupWindow of an ECMR which status is IN_TRANSIT', () => {
+  it('should be able to update the expectedPickupWindow of an ECMR which status is CREATED', () => {
     let updateExpectedPickupWindowTransaction = factory.newTransaction(Network.namespace, 'UpdateExpectedPickupWindow');
     updateExpectedPickupWindowTransaction.ecmr = factory.newRelationship(Network.namespace, 'ECMR', 'created');
     updateExpectedPickupWindowTransaction.expectedWindow = factory.newConcept(Network.namespace, 'DateWindow');
@@ -353,7 +374,7 @@ describe('Admin of the network', () => {
 
     return businessNetworkConnection.submitTransaction(updateExpectedPickupWindowTransaction)
       .then(() => {
-        return businessNetworkConnection.getAssetRegistry('org.digitalcmr.ECMR')
+        return businessNetworkConnection.getAssetRegistry(Network.namespace + '.ECMR')
           .then((assetRegistry) => {
             return assetRegistry.get('created')
               .then((ecmr) => {
@@ -373,18 +394,29 @@ describe('Admin of the network', () => {
       });
   });
 
+  it('should not be able to update the expectedPickupWindow of an ECMR which status is not CREATED', () => {
+    let updateExpectedPickupWindowTransaction = factory.newTransaction(Network.namespace, 'UpdateExpectedPickupWindow');
+    updateExpectedPickupWindowTransaction.ecmr = factory.newRelationship(Network.namespace, 'ECMR', 'loaded');
+    updateExpectedPickupWindowTransaction.expectedWindow = factory.newConcept(Network.namespace, 'DateWindow');
+    updateExpectedPickupWindowTransaction.expectedWindow.startDate = 1;
+    updateExpectedPickupWindowTransaction.expectedWindow.endDate = 2;
+
+    return businessNetworkConnection.submitTransaction(updateExpectedPickupWindowTransaction)
+      .should.be.rejectedWith(/Transaction is not valid/);
+  });
+
   it('should be able to update the expectedDeliveryWindow of an ECMR which status is IN_TRANSIT', () => {
     let updateExpectedDeliveryWindowTransaction = factory.newTransaction(Network.namespace, 'UpdateExpectedDeliveryWindow');
-    updateExpectedDeliveryWindowTransaction.ecmr = factory.newRelationship(Network.namespace, 'ECMR', 'loaded');
+    updateExpectedDeliveryWindowTransaction.ecmr = factory.newRelationship(Network.namespace, 'ECMR', 'ecmr3');
     updateExpectedDeliveryWindowTransaction.expectedWindow = factory.newConcept(Network.namespace, 'DateWindow');
     updateExpectedDeliveryWindowTransaction.expectedWindow.startDate = 1;
     updateExpectedDeliveryWindowTransaction.expectedWindow.endDate = 2;
 
     return businessNetworkConnection.submitTransaction(updateExpectedDeliveryWindowTransaction)
       .then(() => {
-        return businessNetworkConnection.getAssetRegistry('org.digitalcmr.ECMR')
+        return businessNetworkConnection.getAssetRegistry(Network.namespace + '.ECMR')
           .then((assetRegistry) => {
-            return assetRegistry.get('loaded')
+            return assetRegistry.get('ecmr3')
               .then((ecmr) => {
                 ecmr.delivery.expectedWindow.startDate.should.equal(1);
                 ecmr.delivery.expectedWindow.endDate.should.equal(2);
@@ -400,5 +432,16 @@ describe('Admin of the network', () => {
         console.log(error);
         throw error;
       });
+  });
+
+  it('should not be able to update the expectedDeliveryWindow of an ECMR which status is not IN_TRANSIT', () => {
+    let updateExpectedDeliveryWindowTransaction = factory.newTransaction(Network.namespace, 'UpdateExpectedDeliveryWindow');
+    updateExpectedDeliveryWindowTransaction.ecmr = factory.newRelationship(Network.namespace, 'ECMR', 'created');
+    updateExpectedDeliveryWindowTransaction.expectedWindow = factory.newConcept(Network.namespace, 'DateWindow');
+    updateExpectedDeliveryWindowTransaction.expectedWindow.startDate = 1;
+    updateExpectedDeliveryWindowTransaction.expectedWindow.endDate = 2;
+
+    return businessNetworkConnection.submitTransaction(updateExpectedDeliveryWindowTransaction)
+      .should.be.rejectedWith(/Transaction is not valid. Attempting to set an ExpectedDeliveryWindow when status is not IN_TRANSIT. Actual status:/);
   });
 });

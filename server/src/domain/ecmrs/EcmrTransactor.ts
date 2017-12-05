@@ -11,7 +11,7 @@ export class EcmrTransactor implements TransactionCreator {
     let transaction = factory.newTransaction(namespace, transactionName);
 
     if (transactionName === Transaction.CreateEcmr) {
-      transaction.ecmr           = await EcmrBuilder.buildECMR(factory, namespace, data, identity, ip);
+      transaction.ecmr           = await EcmrBuilder.buildECMR(factory, namespace, data.ecmr, identity, ip);
       transaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', data.orderID);
     } else if (transactionName === Transaction.CreateEcmrs) {
       transaction.ecmrs          = await EcmrBuilder.buildECMRs(factory, namespace, data.ecmrs, identity, ip);
@@ -19,6 +19,12 @@ export class EcmrTransactor implements TransactionCreator {
     } else if (transactionName === Transaction.UpdateEcmr) {
       transaction.ecmr           = EcmrBuilder.buildECMR(factory, namespace, data, identity, ip);
       transaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', data.orderID);
+    } else if (transactionName === Transaction.UpdateEcmrStatusToCancelled) {
+      transaction.ecmr                     = factory.newRelationship(namespace, 'ECMR', data.ecmrID);
+      transaction.cancellation             = factory.newConcept(namespace, 'Cancellation');
+      transaction.cancellation.cancelledBy = factory.newRelationship(namespace, 'Entity', data.cancellation.cancelledBy);
+      transaction.cancellation.date        = data.cancellation.date;
+      transaction.cancellation.reason      = data.cancellation.reason;
     } else if ((transactionName === Transaction.UpdateExpectedPickupWindow) || (transactionName === Transaction.UpdateExpectedDeliveryWindow)) {
       transaction.ecmr                     = factory.newRelationship(namespace, 'ECMR', data.ecmrID);
       transaction.expectedWindow           = factory.newConcept(namespace, 'DateWindow');

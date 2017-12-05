@@ -21,7 +21,7 @@ export class TransportorderOverviewComponent implements OnInit {
     Open:       'OPEN',
     InProgress: 'IN_PROGRESS',
     Completed:  'COMPLETED',
-    Canceled:   'CANCELED'
+    Cancelled:  'CANCELLED'
   };
 
   public User = {
@@ -36,7 +36,7 @@ export class TransportorderOverviewComponent implements OnInit {
     New:        'NEW',
     InProgress: 'IN_PROGRESS',
     Completed:  'COMPLETED',
-    Canceled:   'CANCELED'
+    Cancelled:  'CANCELLED'
   };
 
   public constructor(private transportOrderService: TransportOrderService,
@@ -74,7 +74,7 @@ export class TransportorderOverviewComponent implements OnInit {
       if ((this.currentView === this.viewStatus.New && transportOrder.status === this.TransportOrderStatus.Open) ||
         (this.currentView === this.viewStatus.InProgress && transportOrder.status === this.TransportOrderStatus.InProgress) ||
         (this.currentView === this.viewStatus.Completed && transportOrder.status === this.TransportOrderStatus.Completed) ||
-        (this.currentView === this.viewStatus.Canceled && transportOrder.status === this.TransportOrderStatus.Canceled)) {
+        (this.currentView === this.viewStatus.Cancelled && transportOrder.status === this.TransportOrderStatus.Cancelled)) {
 
         return transportOrder;
       }

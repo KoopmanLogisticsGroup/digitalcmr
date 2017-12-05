@@ -6,7 +6,7 @@ import {Ecmr, EcmrStatus} from '../../src/interfaces/ecmr.interface';
 import {TransportOrder} from '../../src/interfaces/transportOrder.interface';
 import {Address} from '../../src/interfaces/address.interface';
 import {PickupWindow} from '../../src/interfaces/pickupWindow.interface';
-import {disconnect} from 'cluster';
+import {EcmrCancellation, TransportOrderCancellation} from '../../src/interfaces/cancellation.interface';
 
 const server = supertest.agent('http://localhost:8080');
 const should = chai.should();
@@ -75,7 +75,7 @@ const buildECMR = (ecmrID: string): Ecmr => {
 
 const buildTransportOrder = (): TransportOrder => {
   return <TransportOrder> {
-    orderID:   String(new Date().getMilliseconds()),
+    orderID:   String(new Date().getTime()),
     carrier:   'koopman',
     source:    'amsterdamcompound',
     goods:     [],
@@ -89,7 +89,9 @@ const buildTransportOrder = (): TransportOrder => {
 
 describe('A Carrier member can', () => {
   before((done) => {
-    transportOrder                 = buildTransportOrder();
+    transportOrder = buildTransportOrder();
+    updateEcmr     = buildECMR('ecmr1');
+
     const loginParamsCarrierMember = {
       'username': 'harry@koopman.org',
       'password': 'passw0rd'
@@ -383,6 +385,31 @@ describe('A Carrier member can', () => {
       });
   });
 
+  it('not be able to cancel an ECMR', (done) => {
+    let cancel = <EcmrCancellation> {
+      'ecmrID':       updateEcmr.ecmrID,
+      'cancellation': {
+        'cancelledBy': 'harry@koopman.org',
+        'reason':      'no reason',
+        'date':        123
+      }
+    };
+
+    server
+      .put('/api/v1/ECMR/cancel')
+      .set('x-access-token', token)
+      .send(cancel)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
   it('not get a specific transport order based on ID', (done) => {
     server
       .get('/api/v1/transportOrder/orderID/12345567890')
@@ -395,7 +422,7 @@ describe('A Carrier member can', () => {
 
           return done(err);
         }
-        res.body.length.should.equal(0);
+        should.exist(res.body.orderID === '12345567890');
         done(err);
       });
   });
@@ -431,6 +458,23 @@ describe('A Carrier member can', () => {
 
           return done(err);
         }
+        done(err);
+      });
+  });
+
+  it('not get a specific transport order based on vin', (done) => {
+    server
+      .get('/api/v1/transportOrder/vin/183726339N')
+      .set('x-access-token', token)
+      .expect(ok)
+      .expect('Content-Type', /json/)
+      .end((err: Error, res) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        res.body.length.should.be.greaterThan(0);
         done(err);
       });
   });
@@ -494,6 +538,31 @@ describe('A Carrier member can', () => {
       .put('/api/v1/transportOrder/updatePickupWindow')
       .set('x-access-token', token)
       .send(pickupWindow)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
+  it('not cancel a transportOrder', (done) => {
+    let cancel = <TransportOrderCancellation> {
+      'orderID':      transportOrder.orderID,
+      'cancellation': {
+        'cancelledBy': 'lapo@leaseplan.org',
+        'date':        123,
+        'reason':      'invalid order'
+      }
+    };
+
+    server
+      .put('/api/v1/transportOrder/cancel')
+      .set('x-access-token', token)
+      .send(cancel)
       .expect(500)
       .end((err: Error) => {
         if (err) {
