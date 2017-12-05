@@ -75,7 +75,7 @@ const buildECMR = (ecmrID: string): Ecmr => {
 
 const buildTransportOrder = (): TransportOrder => {
   return <TransportOrder> {
-    orderID:   String(new Date().getMilliseconds()),
+    orderID:   String(new Date().getTime()),
     loading:   {
       actualDate: 1502834400000,
       address:    buildAddress(),
@@ -556,6 +556,27 @@ describe('A Compound Admin can', () => {
       .put('/api/v1/transportOrder/updateDeliveryWindow')
       .set('x-access-token', token)
       .send(pickupWindow)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
+  it('can not update an expectedDeliveryWindow of an ECMR with a status other than IN_TRANSIT', (done) => {
+    const expectedWindow = {
+      ecmrID:         'A1234567890',
+      expectedWindow: [7247832478934, 212213821321]
+    };
+
+    server
+      .put('/api/v1/ECMR/updateExpectedDeliveryWindow')
+      .set('x-access-token', token)
+      .send(expectedWindow)
       .expect(500)
       .end((err: Error) => {
         if (err) {
