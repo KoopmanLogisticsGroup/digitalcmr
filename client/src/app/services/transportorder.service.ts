@@ -32,7 +32,7 @@ export class TransportOrderService {
 
   public cancelTransportOrder(transportOrder): Observable<any> {
     return this._http
-      .put(this.actionUrl + 'cancelTransportOrder', transportOrder, {headers: this.headers})
+      .put(this.actionUrl + 'cancel', transportOrder, {headers: this.headers})
       .map(res => res.json())
   }
 }
