@@ -16,7 +16,6 @@ import {Identity} from '../../domain/Identity';
 import {Config} from '../../config/index';
 import {EcmrTransactor} from '../../domain/ecmrs/EcmrTransactor';
 import {Transaction} from '../../blockchain/Transactions';
-import {Ecmr} from '../../interfaces/ecmr.interface';
 import {Query} from '../../blockchain/Queries';
 import {ExpectedWindow} from '../../interfaces/expectedWindow.interface';
 import {UpdateEcmrStatus} from '../../interfaces/updateEcmrStatus.interface';
