@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../../../../services/authentication.service';
 import {TransportOrder} from '../../../../../interfaces/transportOrder.interface';
 import {TransportOrderService} from '../../../../../services/transportorder.service';
+import {TransportOrderCancellation} from 'app/interfaces/cancellation.interface'
 
 @Component({
   selector:    'app-cancel-modal',
@@ -11,7 +12,7 @@ import {TransportOrderService} from '../../../../../services/transportorder.serv
 
 export class CancelModalComponent implements OnInit {
   @Input() transportOrder: TransportOrder;
-  public transportOrderCancelled = {
+  public transportOrderCancelled = <TransportOrderCancellation> {
     'orderID':      '',
     'cancellation': {
       'cancelledBy': this.getUserRole(),
