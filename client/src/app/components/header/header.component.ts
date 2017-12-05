@@ -16,6 +16,9 @@ export class HeaderComponent implements OnInit {
   public constructor(private searchService: SearchService,
                      private authenticationService: AuthenticationService,
                      public nav: NavbarService) {
+    this.searchService.componentCalled$.subscribe(() => {
+      this.queryData = '';
+    });
   }
 
   public ngOnInit(): void {

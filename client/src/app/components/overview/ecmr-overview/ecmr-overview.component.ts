@@ -16,8 +16,7 @@ export class EcmrOverviewComponent implements OnInit {
 
   public currentView: string;
   public searchBarData: string;
-  public filterEcmr: number;
-  public ecmrsFiltered: Ecmr[];
+  public filteredEcmrs: Ecmr[];
 
   public EcmrStatus = {
     Created:            'CREATED',
@@ -48,9 +47,6 @@ export class EcmrOverviewComponent implements OnInit {
     this.searchService.searchData$.subscribe((data: string) => {
       this.searchBarData = data;
     });
-    this.searchService.filterEcmr$.subscribe((data: number) => {
-      this.filterEcmr = data;
-    });
     this.currentView   = this.viewStatus.Open;
     this.searchBarData = '';
   }
@@ -59,7 +55,7 @@ export class EcmrOverviewComponent implements OnInit {
     this.nav.show();
     this.ecmrService.getAllEcmrs().subscribe((ecmrs: Ecmr[]) => {
       this.ecmrs         = ecmrs;
-      this.ecmrsFiltered = this.ecmrs.filter(ecmr => ecmr.status.toUpperCase() === this.EcmrStatus.Created);
+      this.filteredEcmrs = this.ecmrs.filter(ecmr => ecmr.status.toUpperCase() === this.EcmrStatus.Created);
       this.firstView();
     });
   }
@@ -69,7 +65,7 @@ export class EcmrOverviewComponent implements OnInit {
       this.currentView = this.viewStatus.Open;
     } else if (this.getUserRole() === this.User.CarrierMember || this.getUserRole() === this.User.RecipientMember) {
       this.currentView   = this.viewStatus.InProgress;
-      this.ecmrsFiltered = this.ecmrs.filter(ecmr => {
+      this.filteredEcmrs = this.ecmrs.filter(ecmr => {
         if (this.currentView === this.viewStatus.InProgress && (ecmr.status === this.EcmrStatus.Loaded
             || ecmr.status === this.EcmrStatus.InTransit)) {
           return ecmr;
@@ -77,7 +73,7 @@ export class EcmrOverviewComponent implements OnInit {
       });
     } else if (this.getUserRole() === this.User.LegalOwnerAdmin) {
       this.currentView   = this.viewStatus.Completed;
-      this.ecmrsFiltered = this.ecmrs.filter(ecmr => {
+      this.filteredEcmrs = this.ecmrs.filter(ecmr => {
         if (this.currentView === this.viewStatus.Completed && (ecmr.status === this.EcmrStatus.Delivered ||
             ecmr.status === this.EcmrStatus.ConfirmedDelivered)) {
           return ecmr;
@@ -92,7 +88,7 @@ export class EcmrOverviewComponent implements OnInit {
 
   public setCurrentView(view: string): void {
     this.currentView   = view;
-    this.ecmrsFiltered = this.ecmrs.filter(ecmr => {
+    this.filteredEcmrs = this.ecmrs.filter(ecmr => {
       if ((this.currentView === this.viewStatus.Open && ecmr.status === this.EcmrStatus.Created) ||
         (this.currentView === this.viewStatus.InProgress && (ecmr.status === this.EcmrStatus.Loaded ||
           ecmr.status === this.EcmrStatus.InTransit) ||
@@ -140,6 +136,12 @@ export class EcmrOverviewComponent implements OnInit {
       return 'completed_status';
     } else if (ecmr && ecmr.status === this.EcmrStatus.ConfirmedDelivered) {
       return 'confirmed_status';
+    }
+  }
+
+  public getLength(object: any) {
+    if (object) {
+      return Object.keys(object).length;
     }
   }
 }
