@@ -20,7 +20,7 @@ let ecmrs: Ecmr[];
 describe('A legal owner admin can', () => {
   before((done) => {
     transportOrder = Builder.buildTransportOrder();
-    ecmrs = [Builder.buildECMR('randomEcmr')];
+    ecmrs          = [Builder.buildECMR('randomEcmr')];
 
     const loginParams = {
       'username': 'lapo@leaseplan.org',
