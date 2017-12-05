@@ -3,7 +3,7 @@
   "info":                {
     "title":       "Digital CMR APIs",
     "description": "APIs for managing the digital CMR",
-    "version":     "1.2.2"
+    "version":     "1.3.0"
   },
   "host":                "159.8.76.83:31001",
   "schemes":             [
@@ -19,11 +19,11 @@
     "application/json"
   ],
   "paths":               {
-    "/login":                               {
+    "/login":                                           {
       "post": {
         "x-swagger-router-controller": "AuthController",
         "operationId":                 "login",
-        "summary":                     "Login on the server",
+        "summary":                     "Login to the server",
         "description":                 "The user logs into the system and gets back user metadata an auth x-access-token\n",
         "consumes":                    [
           "application/json"
@@ -32,7 +32,7 @@
           {
             "name":        "login-credentials",
             "in":          "body",
-            "description": "The login credentials",
+            "description": "Provide login credentials below:",
             "required":    true,
             "schema":      {
               "$ref": "#/definitions/LoginCredentials"
@@ -55,12 +55,12 @@
         }
       }
     },
-    "/transportOrder/":                     {
+    "/transportOrder/":                                 {
       "post": {
         "x-swagger-router-controller": "TransportOrderController",
         "operationId":                 "create",
-        "summary":                     "Creates a new Transport Order",
-        "description":                 "Creates a new Transport Order and saves it on the blockchain, if the user has the right permissions.\n",
+        "summary":                     "Create a new Transport Order",
+        "description":                 "Creates a new transportOrder and saves it to the blockchain, if the user has the right permissions.\n",
         "consumes":                    [
           "application/json"
         ],
@@ -68,7 +68,7 @@
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           },
@@ -84,7 +84,7 @@
         ],
         "responses":                   {
           "200":     {
-            "description": "The Transport Order has been created and written into the blockchain\n",
+            "description": "The Transport Order has been created and written to the blockchain\n",
             "schema":      {
               "$ref": "#/definitions/TransportOrder"
             }
@@ -100,20 +100,20 @@
       "get":  {
         "x-swagger-router-controller": "TransportOrderController",
         "operationId":                 "getAllTransportOrders",
-        "summary":                     "Returns the complete list of the Transport Orders",
-        "description":                 "Returns the complete list of the Transport Orders current user has the right to read",
+        "summary":                     "Return the complete list of Transport Orders",
+        "description":                 "Returns the complete list of Transport Orders which the current user has the right to read",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           }
         ],
         "responses":                   {
           "200":     {
-            "description": "The list of the Transport Orders is returned\n",
+            "description": "The list of Transport Orders is returned\n",
             "schema":      {
               "type":  "array",
               "items": {
@@ -130,17 +130,17 @@
         }
       }
     },
-    "/transportOrder/orderID/{orderID}":    {
+    "/transportOrder/orderID/{orderID}":                {
       "get": {
         "x-swagger-router-controller": "TransportOrderController",
         "operationId":                 "getTransportOrderByOrderID",
-        "summary":                     "Returns the Transport Order selected by ID",
-        "description":                 "Returns the Transport Order selected by ID",
+        "summary":                     "Return the Transport Order selected by ID",
+        "description":                 "Returns the Transport Order that is selected by ID",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           },
@@ -148,13 +148,13 @@
             "name":        "orderID",
             "type":        "string",
             "in":          "path",
-            "description": "The unique orderID of the Transport Order",
+            "description": "Unique orderID of the Transport Order",
             "required":    "true"
           }
         ],
         "responses":                   {
           "200":     {
-            "description": "The list contains the Transport Order, or is empty if no Transport Order with the provided orderID exists or if the user does not have permission to read the Transport Order\n",
+            "description": "The list contains the Transport Order. It is empty if a Transport Order with the provided orderID does not exist, or if the user does not have permission to read the Transport Order\n",
             "schema":      {
               "type":  "array",
               "items": {
@@ -171,17 +171,17 @@
         }
       }
     },
-    "/transportOrder/status/{orderStatus}": {
+    "/transportOrder/status/{orderStatus}":             {
       "get": {
         "x-swagger-router-controller": "TransportOrderController",
         "operationId":                 "getAllTransportOrdersByStatus",
-        "summary":                     "Returns the Transport Order selected by status",
+        "summary":                     "Return the Transport Order selected by status",
         "description":                 "Returns the Transport Order selected by status",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           },
@@ -189,13 +189,13 @@
             "name":        "status",
             "in":          "path",
             "type":        "string",
-            "description": "The status of the Transport Order",
+            "description": "Status of the Transport Order",
             "required":    "true"
           }
         ],
         "responses":                   {
           "200":     {
-            "description": "The list contains the Transport Order(s) by status, or is empty if no Transport Order with the provided status exists or if the user does not have permission to read the Transport Order\n",
+            "description": "The list contains the Transport Order(s) by status. It is empty if a Transport Order with the provided status does not exist, or if the user does not have permission to read the Transport Order\n",
             "schema":      {
               "type":  "array",
               "items": {
@@ -212,12 +212,53 @@
         }
       }
     },
-    "/ECMR/":                               {
-      "post": {
-        "x-swagger-router-controller": "ECMRController",
-        "operationId":                 "create",
-        "summary":                     "Creates a new ECMR",
-        "description":                 "Creates a new ECMR and saves it into blockchain, if the user has the proper permissions.\n",
+    "/transportOrder/vin/{vin}":                        {
+      "get": {
+        "x-swagger-router-controller": "TransportOrderController",
+        "operationId":                 "getAllTransportOrdersByVin",
+        "summary":                     "Return the Transport Order selected by VIN",
+        "description":                 "Returns the Transport Order selected by VIN",
+        "parameters":                  [
+          {
+            "name":        "x-access-token",
+            "in":          "header",
+            "description": "Provide authentication token",
+            "required":    true,
+            "type":        "string"
+          },
+          {
+            "name":        "vin",
+            "in":          "path",
+            "type":        "string",
+            "description": "Provide the VIN that is used to make a selection of TransportOrders",
+            "required":    "true"
+          }
+        ],
+        "responses":                   {
+          "200":     {
+            "description": "The list contains the Transport Order(s) by VIN. It is empty if a Transport Order with the provided VIN does not exist, or if the user does not have permission to read the Transport Order\n",
+            "schema":      {
+              "type":  "array",
+              "items": {
+                "$ref": "#/definitions/TransportOrder"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema":      {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/transportOrder/updatePickupWindow":               {
+      "put": {
+        "x-swagger-router-controller": "TransportOrderController",
+        "operationId":                 "updatePickupWindow",
+        "summary":                     "Update the Pickup Window of an existing TransportOrder",
+        "description":                 "Updates the Pickup Window of an existing transportOrder and saves it to the blockchain, if the user has the proper permissions.\n",
         "consumes":                    [
           "application/json"
         ],
@@ -225,7 +266,136 @@
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
+            "required":    true,
+            "type":        "string"
+          },
+          {
+            "name":        "TransportOrder",
+            "in":          "body",
+            "description": "Updates the TransportOrder object with the Pickup Window",
+            "required":    true,
+            "schema":      {
+              "$ref": "#/definitions/UpdateWindow"
+            }
+          }
+        ],
+        "responses":                   {
+          "200":     {
+            "description": "The TransportOrder has been updated and written to the blockchain\n",
+            "schema":      {
+              "$ref": "#/definitions/UpdateWindow"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema":      {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/transportOrder/updateDeliveryWindow":             {
+      "put": {
+        "x-swagger-router-controller": "TransportOrderController",
+        "operationId":                 "updateDeliveryWindow",
+        "summary":                     "Update the Delivery Window of an existing TransportOrder",
+        "description":                 "Updates the Delivery Window of an existing TransportOrder and saves it to the blockchain, if the user has the proper permissions.\n",
+        "consumes":                    [
+          "application/json"
+        ],
+        "parameters":                  [
+          {
+            "name":        "x-access-token",
+            "in":          "header",
+            "description": "Provide authentication token",
+            "required":    true,
+            "type":        "string"
+          },
+          {
+            "name":        "ecmr",
+            "in":          "body",
+            "description": "Updates the TransportOrder object",
+            "required":    true,
+            "schema":      {
+              "$ref": "#/definitions/UpdateWindow"
+            }
+          }
+        ],
+        "responses":                   {
+          "200":     {
+            "description": "The TransportOrder has been updated and written to the blockchain\n",
+            "schema":      {
+              "$ref": "#/definitions/UpdateWindow"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema":      {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/transportOrder/cancel":                           {
+      "put": {
+        "x-swagger-router-controller": "TransportOrderController",
+        "operationId":                 "update",
+        "summary":                     "Update the status of an existing TransportOrder to cancelled",
+        "description":                 "Updates the status of an existing TransportOrder to cancelled and saves it to the blockchain, if the user has the proper permissions.\n",
+        "consumes":                    [
+          "application/json"
+        ],
+        "parameters":                  [
+          {
+            "name":        "x-access-token",
+            "in":          "header",
+            "description": "Provide authentication token",
+            "required":    true,
+            "type":        "string"
+          },
+          {
+            "name":        "ecmr",
+            "in":          "body",
+            "description": "Updates the TransportOrder object",
+            "required":    true,
+            "schema":      {
+              "$ref": "#/definitions/CancelTransportOrder"
+            }
+          }
+        ],
+        "responses":                   {
+          "200":     {
+            "description": "The TransportOrder has been updated and written to the blockchain\n",
+            "schema":      {
+              "$ref": "#/definitions/CancelTransportOrder"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema":      {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/ECMR/":                                           {
+      "post": {
+        "x-swagger-router-controller": "ECMRController",
+        "operationId":                 "create",
+        "summary":                     "Create a new ECMR",
+        "description":                 "Creates a new ECMR and saves it to the blockchain, if the user has the proper permissions.\n",
+        "consumes":                    [
+          "application/json"
+        ],
+        "parameters":                  [
+          {
+            "name":        "x-access-token",
+            "in":          "header",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           },
@@ -235,15 +405,15 @@
             "description": "The ECMR object",
             "required":    true,
             "schema":      {
-              "$ref": "#/definitions/ECMR"
+              "$ref": "#/definitions/CreateECMRs"
             }
           }
         ],
         "responses":                   {
           "200":     {
-            "description": "The ECMR has been created and written into the blockchain\n",
+            "description": "The ECMR has been created and written to the blockchain\n",
             "schema":      {
-              "$ref": "#/definitions/ECMR"
+              "$ref": "#/definitions/CreateECMRs"
             }
           },
           "default": {
@@ -257,8 +427,8 @@
       "put":  {
         "x-swagger-router-controller": "ECMRController",
         "operationId":                 "update",
-        "summary":                     "Updates an existing ECMR",
-        "description":                 "Updates an existing ECMR and saves it into blockchain, if the user has the proper permissions.\n",
+        "summary":                     "Update an existing ECMR",
+        "description":                 "Updates an existing ECMR and saves it to the blockchain, if the user has the proper permissions.\n",
         "consumes":                    [
           "application/json"
         ],
@@ -266,7 +436,7 @@
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           },
@@ -282,7 +452,7 @@
         ],
         "responses":                   {
           "200":     {
-            "description": "The ECMR has been updated and written into the blockchain\n",
+            "description": "The ECMR has been updated and written to the blockchain\n",
             "schema":      {
               "$ref": "#/definitions/ECMR"
             }
@@ -298,20 +468,20 @@
       "get":  {
         "x-swagger-router-controller": "ECMRController",
         "operationId":                 "getAllEcmrs",
-        "summary":                     "Returns the complete list of the ECMRs",
-        "description":                 "Returns the complete list of the ECMRs current user has the right to read",
+        "summary":                     "Return the complete list of ECMRs",
+        "description":                 "Returns the complete list of ECMRs, which the current user is allowed to read",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           }
         ],
         "responses":                   {
           "200":     {
-            "description": "The list of the ECMRs is returned\n",
+            "description": "The list of ECMRs is returned\n",
             "schema":      {
               "type":  "array",
               "items": {
@@ -332,13 +502,13 @@
       "get": {
         "x-swagger-router-controller": "ECMRController",
         "operationId":                 "getEcmrByEcmrID",
-        "summary":                     "Returns the ECMR selected by ID",
-        "description":                 "Returns the ECMR selected by ID",
+        "summary":                     "Return an ECMR selected by ID",
+        "description":                 "Returns an ECMR selected by ID",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           },
@@ -346,13 +516,13 @@
             "name":        "ecmrID",
             "type":        "string",
             "in":          "path",
-            "description": "The unique ID of the ECMR",
+            "description": "The unique ID of an ECMR",
             "required":    "true"
           }
         ],
         "responses":                   {
           "200":     {
-            "description": "The list contains the ECMR, or is empty if no ECMR with the provided id exists or if the user has no permission to read the ECMR\n",
+            "description": "The list contains the ECMR. It is empty if an ECMR with the provided id does not exist, or if the user has no permission to read the ECMR\n",
             "schema":      {
               "type":  "array",
               "items": {
@@ -373,13 +543,13 @@
       "get": {
         "x-swagger-router-controller": "ECMRController",
         "operationId":                 "getAllEcmrsByStatus",
-        "summary":                     "Returns the ECMR selected by status",
+        "summary":                     "Return the ECMR selected by status",
         "description":                 "Returns the ECMR selected by status",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           },
@@ -393,7 +563,7 @@
         ],
         "responses":                   {
           "200":     {
-            "description": "The list contains the ECMR(s) by status, or is empty if no ECMR with the provided status exists or if the user has no permission to read the ECMR\n",
+            "description": "The list contains the ECMR(s) by status. It is empty if an ECMR with the provided status does not exist, or if the user has no permission to read the ECMR\n",
             "schema":      {
               "type":  "array",
               "items": {
@@ -414,13 +584,13 @@
       "get": {
         "x-swagger-router-controller": "ECMRController",
         "operationId":                 "getAllEcmrsFromVehicleByVin",
-        "summary":                     "Returns the ECMRs containing a vehicle with the provided vin",
+        "summary":                     "Return the ECMRs containing a vehicle with the provided vin",
         "description":                 "Returns the ECMRs containing a vehicle with the provided vin",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           },
@@ -428,13 +598,13 @@
             "name":        "vin",
             "in":          "path",
             "type":        "string",
-            "description": "The unique vin of a vehicle",
+            "description": "Unique vin of a vehicle",
             "required":    "true"
           }
         ],
         "responses":                   {
           "200":     {
-            "description": "The list contains the ECMRs containing a vehicle with the provided vin, or is empty if they do not exist or if the user has no permission to read them\n",
+            "description": "The list contains the ECMRs containing a vehicle with the provided vin. It is empty if a vehicle with the provided vin does not exist, or if the user has no permission to read them\n",
             "schema":      {
               "type":  "array",
               "items": {
@@ -455,13 +625,13 @@
       "get": {
         "x-swagger-router-controller": "ECMRController",
         "operationId":                 "getAllEcmrsFromVehicleByPlateNumber",
-        "summary":                     "Returns the ECMRs containing a vehicle with the provided platenumber",
-        "description":                 "Returns the ECMRs containing a vehicle with the provided platenumber",
+        "summary":                     "Return the ECMRs containing a vehicle with the provided plateNumber",
+        "description":                 "Returns the ECMRs containing a vehicle with the provided plateNumber",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           },
@@ -469,13 +639,13 @@
             "name":        "plateNumber",
             "in":          "path",
             "type":        "string",
-            "description": "The unique plateNumber of a vehicle",
+            "description": "Unique plateNumber of a vehicle",
             "required":    "true"
           }
         ],
         "responses":                   {
           "200":     {
-            "description": "The list contains the ECMRs containing a vehicle with the provided platenumber, or is empty if they do not exist or if the user has no permission to read them\n",
+            "description": "The list contains the ECMRs containing a vehicle with the provided plateNumber. It is empty if a vehicle with the plateNumber does not exist or if the user has no permission to read them\n",
             "schema":      {
               "type":  "array",
               "items": {
@@ -492,12 +662,12 @@
         }
       }
     },
-    "/organization/legalowner/":                        {
-      "post": {
-        "x-swagger-router-controller": "OrganizationController",
-        "operationId":                 "create",
-        "summary":                     "Creates a new Legal Owner",
-        "description":                 "Creates a new Legal Owner and saves it into blockchain, if the user has the proper permissions.\n",
+    "/ECMR/cancel/":                                    {
+      "put": {
+        "x-swagger-router-controller": "ECMRController",
+        "operationId":                 "updateECMRtoCancelled",
+        "summary":                     "Update an existing ECMR to cancelled",
+        "description":                 "Updates an existing ECMR to cancelled and saves it to the blockchain, if the user has the right permissions.\n",
         "consumes":                    [
           "application/json"
         ],
@@ -505,7 +675,136 @@
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
+            "required":    true,
+            "type":        "string"
+          },
+          {
+            "name":        "CancelECMR",
+            "in":          "body",
+            "description": "Updates the ECMR object",
+            "required":    true,
+            "schema":      {
+              "$ref": "#/definitions/CancelECMR"
+            }
+          }
+        ],
+        "responses":                   {
+          "200":     {
+            "description": "The ECMR has been cancelled and written to the blockchain\n",
+            "schema":      {
+              "$ref": "#/definitions/CancelECMR"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema":      {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/ECMR/updateExpectedPickupWindow/":                {
+      "put": {
+        "x-swagger-router-controller": "ECMRController",
+        "operationId":                 "updateExpectedPickupWindow",
+        "summary":                     "Update an existing ECMR with the Expected Pickup Window",
+        "description":                 "Updates an existing ECMR with the Expected Pickup Window and saves it to the blockchain, if the user has the right permissions.\n",
+        "consumes":                    [
+          "application/json"
+        ],
+        "parameters":                  [
+          {
+            "name":        "x-access-token",
+            "in":          "header",
+            "description": "Provide authentication token",
+            "required":    true,
+            "type":        "string"
+          },
+          {
+            "name":        "UpdatePickUpWindow",
+            "in":          "body",
+            "description": "Updates the ECMR object",
+            "required":    true,
+            "schema":      {
+              "$ref": "#/definitions/UpdateExpectedWindow"
+            }
+          }
+        ],
+        "responses":                   {
+          "200":     {
+            "description": "The ECMR has been updated with the Expected Pickup Window and written to the blockchain\n",
+            "schema":      {
+              "$ref": "#/definitions/UpdateExpectedWindow"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema":      {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/ECMR/updateExpectedDeliveryWindow/":              {
+      "put": {
+        "x-swagger-router-controller": "ECMRController",
+        "operationId":                 "updateExpectedDeliveryWindow",
+        "summary":                     "Update an existing ECMR with the Expected Delivery Window",
+        "description":                 "Updates an existing ECMR with the Expected Delivery Window and saves it to the blockchain, if the user has the right permissions.\n",
+        "consumes":                    [
+          "application/json"
+        ],
+        "parameters":                  [
+          {
+            "name":        "x-access-token",
+            "in":          "header",
+            "description": "Provide authentication token",
+            "required":    true,
+            "type":        "string"
+          },
+          {
+            "name":        "ecmr",
+            "in":          "body",
+            "description": "Updates the ECMR object",
+            "required":    true,
+            "schema":      {
+              "$ref": "#/definitions/UpdateExpectedWindow"
+            }
+          }
+        ],
+        "responses":                   {
+          "200":     {
+            "description": "The ECMR has been updated with the Expected Delivery Window and written to the blockchain\n",
+            "schema":      {
+              "$ref": "#/definitions/UpdateExpectedWindow"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema":      {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/organization/legalowner/":                        {
+      "post": {
+        "x-swagger-router-controller": "OrganizationController",
+        "operationId":                 "create",
+        "summary":                     "Create a new Legal Owner",
+        "description":                 "Creates a new Legal Owner and saves it to the blockchain, if the user has the right permissions.\n",
+        "consumes":                    [
+          "application/json"
+        ],
+        "parameters":                  [
+          {
+            "name":        "x-access-token",
+            "in":          "header",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           },
@@ -521,7 +820,7 @@
         ],
         "responses":                   {
           "200":     {
-            "description": "The Legal Owner has been created and written into the blockchain\n",
+            "description": "The Legal Owner has been created and written to the blockchain\n",
             "schema":      {
               "$ref": "#/definitions/LegalOwnerOrg"
             }
@@ -537,20 +836,20 @@
       "get":  {
         "x-swagger-router-controller": "OrganizationController",
         "operationId":                 "getAllLegalOwnerOrgs",
-        "summary":                     "Returns the complete list of all Legal Owners",
-        "description":                 "Returns the complete list of all Legal Owners which the current user has the right to read",
+        "summary":                     "Return the complete list of Legal Owners",
+        "description":                 "Returns the complete list of Legal Owners, which the current user has the right to read",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           }
         ],
         "responses":                   {
           "200":     {
-            "description": "The legal owner has been found.\n",
+            "description": "The Legal Owner has been found.\n",
             "schema":      {
               "type":  "array",
               "items": {
@@ -571,27 +870,27 @@
       "get": {
         "x-swagger-router-controller": "OrganizationController",
         "operationId":                 "getLegalOwnerOrgByEntityID",
-        "summary":                     "Returns the Legal Owner Organization selected by ID",
+        "summary":                     "Return the Legal Owner Organization selected by ID",
         "description":                 "Returns the Legal Owner Organization selected by ID",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           },
           {
             "name":        "entityID",
             "in":          "path",
-            "description": "The ID of the organization",
+            "description": "ID of the organization",
             "required":    true,
             "type":        "string"
           }
         ],
         "responses":                   {
           "200":     {
-            "description": "The legal owner has been found and is returned.\n",
+            "description": "The Legal Owner has been found and is returned.\n",
             "schema":      {
               "type":  "array",
               "items": {
@@ -612,27 +911,27 @@
       "get": {
         "x-swagger-router-controller": "OrganizationController",
         "operationId":                 "getLegalOwnerOrgByName",
-        "summary":                     "Returns the Legal Owner Organization selected by name",
+        "summary":                     "Return the Legal Owner Organization selected by name",
         "description":                 "Returns the Legal Owner Organization selected by name",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           },
           {
             "name":        "name",
             "in":          "path",
-            "description": "The name of the organization",
+            "description": "Name of the organization",
             "required":    true,
             "type":        "string"
           }
         ],
         "responses":                   {
           "200":     {
-            "description": "The legal owner has been found and is returned.\n",
+            "description": "The Legal Owner has been found and is returned.\n",
             "schema":      {
               "type":  "array",
               "items": {
@@ -653,8 +952,8 @@
       "post": {
         "x-swagger-router-controller": "OrganizationController",
         "operationId":                 "create",
-        "summary":                     "Creates a new Compound org",
-        "description":                 "Creates a new Compound org and saves it into blockchain, if the user has the proper permissions.\n",
+        "summary":                     "Create a new Compound Organization",
+        "description":                 "Creates a new Compound Organization and saves it to the blockchain, if the user has the right permissions.\n",
         "consumes":                    [
           "application/json"
         ],
@@ -669,7 +968,7 @@
           {
             "name":        "CompoundOrg",
             "in":          "body",
-            "description": "The compound org object",
+            "description": "The Compound organization object",
             "required":    true,
             "schema":      {
               "$ref": "#/definitions/CompoundOrg"
@@ -678,7 +977,7 @@
         ],
         "responses":                   {
           "200":     {
-            "description": "The compound org has been created and written into the blockchain\n",
+            "description": "The Compound organization has been created and written to the blockchain\n",
             "schema":      {
               "$ref": "#/definitions/CompoundOrg"
             }
@@ -694,20 +993,20 @@
       "get":  {
         "x-swagger-router-controller": "OrganizationController",
         "operationId":                 "getAllCompoundOrgs",
-        "summary":                     "Returns the complete list of all Compound Orgs",
-        "description":                 "Returns the complete list of all Legal Owners which the current user has the right to read",
+        "summary":                     "Return the complete list of Compound Organizations",
+        "description":                 "Returns the complete list of Legal Owners, which the current user has the right to read",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           }
         ],
         "responses":                   {
           "200":     {
-            "description": "The compound org has been found.\n",
+            "description": "The Compound organization has been found.\n",
             "schema":      {
               "type":  "array",
               "items": {
@@ -728,13 +1027,13 @@
       "get": {
         "x-swagger-router-controller": "OrganizationController",
         "operationId":                 "getCompoundOrgByEntityID",
-        "summary":                     "Returns the Compound Organization selected by ID",
+        "summary":                     "Return the Compound Organization selected by ID",
         "description":                 "Returns the Compound Organization selected by ID",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           },
@@ -769,20 +1068,20 @@
       "get": {
         "x-swagger-router-controller": "OrganizationController",
         "operationId":                 "getCompoundOrgByName",
-        "summary":                     "Returns the Compound Organization selected by name",
+        "summary":                     "Return the Compound Organization selected by name",
         "description":                 "Returns the Compound Organization selected by name",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           },
           {
             "name":        "name",
             "in":          "path",
-            "description": "The name of the organization",
+            "description": "Name of the organization",
             "required":    true,
             "type":        "string"
           }
@@ -810,8 +1109,8 @@
       "post": {
         "x-swagger-router-controller": "OrganizationController",
         "operationId":                 "create",
-        "summary":                     "Creates a new Carrier org",
-        "description":                 "Creates a new Carrier org and saves it into blockchain, if the user has the proper permissions.\n",
+        "summary":                     "Create a new Carrier Organization",
+        "description":                 "Creates a new Carrier org and saves it to the blockchain, if the user has the right permissions.\n",
         "consumes":                    [
           "application/json"
         ],
@@ -819,14 +1118,14 @@
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           },
           {
             "name":        "CarrierOrg",
             "in":          "body",
-            "description": "The carrier org object",
+            "description": "The Carrier organization object",
             "required":    true,
             "schema":      {
               "$ref": "#/definitions/CarrierOrg"
@@ -835,7 +1134,7 @@
         ],
         "responses":                   {
           "200":     {
-            "description": "The carrier org has been created and written into the blockchain\n",
+            "description": "The Carrier organization has been created and written to the blockchain\n",
             "schema":      {
               "$ref": "#/definitions/CarrierOrg"
             }
@@ -851,20 +1150,20 @@
       "get":  {
         "x-swagger-router-controller": "OrganizationController",
         "operationId":                 "getAllCarrierOrgs",
-        "summary":                     "Returns the complete list of all Carrier Orgs",
-        "description":                 "Returns the complete list of all Carriers which the current user has the right to read",
+        "summary":                     "Return the complete list of Carrier Organizations",
+        "description":                 "Returns the complete list of all Carriers, which the current user has the right to read",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           }
         ],
         "responses":                   {
           "200":     {
-            "description": "The carrier org has been found.\n",
+            "description": "The Carrier organization has been found.\n",
             "schema":      {
               "type":  "array",
               "items": {
@@ -885,13 +1184,13 @@
       "get": {
         "x-swagger-router-controller": "OrganizationController",
         "operationId":                 "getCarrierOrgByEntityID",
-        "summary":                     "Returns the Carrier Organization selected by ID",
+        "summary":                     "Return the Carrier Organization selected by ID",
         "description":                 "Returns the Carrier Organization selected by ID",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           },
@@ -926,20 +1225,20 @@
       "get": {
         "x-swagger-router-controller": "OrganizationController",
         "operationId":                 "getCarrierOrgByName",
-        "summary":                     "Returns the Carrier Organization selected by name",
+        "summary":                     "Return the Carrier Organization selected by name",
         "description":                 "Returns the Carrier Organization selected by name",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           },
           {
             "name":        "name",
             "in":          "path",
-            "description": "The name of the organization",
+            "description": "Name of the organization",
             "required":    true,
             "type":        "string"
           }
@@ -967,8 +1266,8 @@
       "post": {
         "x-swagger-router-controller": "OrganizationController",
         "operationId":                 "create",
-        "summary":                     "Creates a new recipient org",
-        "description":                 "Creates a new recipient org and saves it into blockchain, if the user has the proper permissions.\n",
+        "summary":                     "Create a new Recipient Organization",
+        "description":                 "Creates a new Recipient organization and saves it to the blockchain, if the user has the right permissions.\n",
         "consumes":                    [
           "application/json"
         ],
@@ -976,14 +1275,14 @@
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           },
           {
             "name":        "RecipientOrg",
             "in":          "body",
-            "description": "The recipient org object",
+            "description": "The Recipient organization object",
             "required":    true,
             "schema":      {
               "$ref": "#/definitions/RecipientOrg"
@@ -992,7 +1291,7 @@
         ],
         "responses":                   {
           "200":     {
-            "description": "The recipient org has been created and written into the blockchain\n",
+            "description": "The Recipient organization has been created and written to the blockchain\n",
             "schema":      {
               "$ref": "#/definitions/RecipientOrg"
             }
@@ -1008,20 +1307,20 @@
       "get":  {
         "x-swagger-router-controller": "OrganizationController",
         "operationId":                 "getAllRecipientOrgs",
-        "summary":                     "Returns the complete list of all Recipient Orgs",
-        "description":                 "Returns the complete list of all Recipients which the current user has the right to read",
+        "summary":                     "Return the complete list of Recipient Organizations",
+        "description":                 "Returns the complete list of Recipients, which the current user has the right to read",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           }
         ],
         "responses":                   {
           "200":     {
-            "description": "The recipient org has been found.\n",
+            "description": "The Recipient organization has been found.\n",
             "schema":      {
               "type":  "array",
               "items": {
@@ -1042,13 +1341,13 @@
       "get": {
         "x-swagger-router-controller": "OrganizationController",
         "operationId":                 "getRecipientOrgByEntityID",
-        "summary":                     "Returns the Recipient Organization selected by ID",
+        "summary":                     "Return the Recipient Organization selected by ID",
         "description":                 "Returns the Recipient Organization selected by ID",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           },
@@ -1083,20 +1382,20 @@
       "get": {
         "x-swagger-router-controller": "OrganizationController",
         "operationId":                 "getRecipientOrgByName",
-        "summary":                     "Returns the Recipient Organization selected by name",
+        "summary":                     "Return the Recipient Organization selected by name",
         "description":                 "Returns the Recipient Organization selected by name",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           },
           {
             "name":        "name",
             "in":          "path",
-            "description": "The name of the organization",
+            "description": "Name of the organization",
             "required":    true,
             "type":        "string"
           }
@@ -1124,8 +1423,8 @@
       "post": {
         "x-swagger-router-controller": "VehicleController",
         "operationId":                 "createVehicles",
-        "summary":                     "Creates a set of vehicles from a list",
-        "description":                 "Creates a set of vehicles from a list, if the user has the proper permissions.\n",
+        "summary":                     "Create a set of vehicles from a list",
+        "description":                 "Creates a set of vehicles from a list, if the user has the right permissions.\n",
         "consumes":                    [
           "application/json"
         ],
@@ -1133,7 +1432,7 @@
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           },
@@ -1169,13 +1468,13 @@
       "get":  {
         "x-swagger-router-controller": "VehicleController",
         "operationId":                 "getAllVehicles",
-        "summary":                     "Returns the complete list of vehicles",
-        "description":                 "Returns the complete list of all vehicles which the current user has the right to read",
+        "summary":                     "Return the complete list of vehicles",
+        "description":                 "Returns the complete list of vehicles, which the current user has the right to read",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           }
@@ -1201,20 +1500,20 @@
       "get": {
         "x-swagger-router-controller": "VehicleController",
         "operationId":                 "getVehicleByVin",
-        "summary":                     "Returns the vehicle having the provided vin",
-        "description":                 "Returns the vehicle having the provided vin",
+        "summary":                     "Return the vehicle containing the provided vin",
+        "description":                 "Returns the vehicle containing the provided vin",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           },
           {
             "name":        "vin",
             "in":          "path",
-            "description": "The vin of the vehicle",
+            "description": "Vin of the vehicle",
             "required":    true,
             "type":        "string"
           }
@@ -1240,20 +1539,20 @@
       "get": {
         "x-swagger-router-controller": "VehicleController",
         "operationId":                 "getVehicleByPlateNumber",
-        "summary":                     "Returns the vehicle having the provided plateNumber",
-        "description":                 "Returns the vehicle having the provided plateNumber",
+        "summary":                     "Return the vehicle containing the provided plateNumber",
+        "description":                 "Returns the vehicle containing the provided plateNumber",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           },
           {
             "name":        "plateNumber",
             "in":          "path",
-            "description": "The plateNumber of the vehicle",
+            "description": "PlateNumber of the vehicle",
             "required":    true,
             "type":        "string"
           }
@@ -1279,8 +1578,8 @@
       "post": {
         "x-swagger-router-controller": "ParticipantController",
         "operationId":                 "addParticipant",
-        "summary":                     "Creates a new participant and issues an identity on the blockchain",
-        "description":                 "Creates a new participant and issues an identity on the blockchain, and a new user for the app server\n",
+        "summary":                     "Create a new participant and issue an identity on the blockchain",
+        "description":                 "Creates a new participant, issues an identity on the blockchain and a new user for the app server\n",
         "consumes":                    [
           "application/json"
         ],
@@ -1288,14 +1587,14 @@
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           },
           {
             "name":        "participant",
             "in":          "body",
-            "description": "The list of participants",
+            "description": "List of participants",
             "required":    true,
             "schema":      {
               "$ref": "#/definitions/Participant"
@@ -1304,7 +1603,7 @@
         ],
         "responses":                   {
           "200":     {
-            "description": "The participant(s) have been created and written into the blockchain\n",
+            "description": "The participant(s) have been created and written to the blockchain\n",
             "type":        "array",
             "items":       {
               "$ref": "#/definitions/Vehicle"
@@ -1323,20 +1622,20 @@
       "get": {
         "x-swagger-router-controller": "ParticipantController",
         "operationId":                 "getAllLegalOwnerAdmins",
-        "summary":                     "Returns the list of the legal owner admins",
-        "description":                 "Returns the list of the legal owner admins",
+        "summary":                     "Return the list of the Legal Owner Admins",
+        "description":                 "Returns the list of the Legal Owner Admins",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           }
         ],
         "responses":                   {
           "200":     {
-            "description": "The list of legal owner admins is returned\n",
+            "description": "The list of Legal Owner Admins is returned\n",
             "type":        "array",
             "items":       {
               "$ref": "#/definitions/LegalOwnerAdmin"
@@ -1355,13 +1654,13 @@
       "get": {
         "x-swagger-router-controller": "ParticipantController",
         "operationId":                 "getLegalOwnerAdminByUserID",
-        "summary":                     "Returns the legal owner admin with the specified user ID",
-        "description":                 "Returns the legal owner admin with the specified user ID",
+        "summary":                     "Return the Legal Owner Admin with the specified userID",
+        "description":                 "Returns the Legal Owner Admin with the specified userID",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           },
@@ -1375,7 +1674,7 @@
         ],
         "responses":                   {
           "200":     {
-            "description": "The legal owner admin is returned\n",
+            "description": "The Legal Owner Admin is returned\n",
             "$ref":        "#/definitions/LegalOwnerAdmin"
           },
           "default": {
@@ -1391,27 +1690,27 @@
       "get": {
         "x-swagger-router-controller": "ParticipantController",
         "operationId":                 "getLegalOwnerAdminByOrg",
-        "summary":                     "Returns the list of legal owner admins who are part of the specified organization",
-        "description":                 "Returns the list of legal owner admins who are part of the specified organization",
+        "summary":                     "Return the list of Legal Owner Admins who are part of the specified organization",
+        "description":                 "Returns the list of Legal Owner Admins who are part of the specified organization",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication tokenn",
             "required":    true,
             "type":        "string"
           },
           {
             "name":        "org",
             "in":          "path",
-            "description": "The organization id",
+            "description": "The organization ID",
             "required":    true,
             "type":        "string"
           }
         ],
         "responses":                   {
           "200":     {
-            "description": "The legal owner admins are returned\n",
+            "description": "The Legal Owner Admins are returned\n",
             "type":        "array",
             "items":       {
               "$ref": "#/definitions/LegalOwnerAdmin"
@@ -1430,20 +1729,20 @@
       "get": {
         "x-swagger-router-controller": "ParticipantController",
         "operationId":                 "getAllCompoundAdmins",
-        "summary":                     "Returns the list of Compound admins",
-        "description":                 "Returns the list of Compound admins",
+        "summary":                     "Return the list of CompoundAdmins",
+        "description":                 "Returns the list of CompoundAdmins",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           }
         ],
         "responses":                   {
           "200":     {
-            "description": "The list of Compound admins is returned\n",
+            "description": "The list of CompoundAdmins is returned\n",
             "type":        "array",
             "items":       {
               "$ref": "#/definitions/CompoundAdmin"
@@ -1462,27 +1761,27 @@
       "get": {
         "x-swagger-router-controller": "ParticipantController",
         "operationId":                 "getCompoundAdminByUserID",
-        "summary":                     "Returns the Compound admin with the specified user ID",
-        "description":                 "Returns the Compound admin with the specified user ID",
+        "summary":                     "Return the Compound Admin with the specified userID",
+        "description":                 "Returns the Compound Admin with the specified userID",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           },
           {
             "name":        "userID",
             "in":          "path",
-            "description": "The user ID",
+            "description": "The userID",
             "required":    true,
             "type":        "string"
           }
         ],
         "responses":                   {
           "200":     {
-            "description": "The legal owner admin is returned\n",
+            "description": "The Legal Owner Admin is returned\n",
             "$ref":        "#/definitions/CompoundAdmin"
           },
           "default": {
@@ -1498,13 +1797,13 @@
       "get": {
         "x-swagger-router-controller": "ParticipantController",
         "operationId":                 "getCompoundAdminByOrg",
-        "summary":                     "Returns the list of Compound admins who are part of the specified organization",
-        "description":                 "Returns the list of Compound admins who are part of the specified organization",
+        "summary":                     "Return the list of Compound Admins who are part of the specified organization",
+        "description":                 "Returns the list of Compound Admins who are part of the specified organization",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           },
@@ -1518,7 +1817,7 @@
         ],
         "responses":                   {
           "200":     {
-            "description": "The compound admins are returned\n",
+            "description": "The Compound Admins are returned\n",
             "type":        "array",
             "items":       {
               "$ref": "#/definitions/CompoundAdmin"
@@ -1537,20 +1836,20 @@
       "get": {
         "x-swagger-router-controller": "ParticipantController",
         "operationId":                 "getAllCarrierMembers",
-        "summary":                     "Returns the list of Carrier members",
-        "description":                 "Returns the list of Carrier members",
+        "summary":                     "Return the list of Carrier Members",
+        "description":                 "Returns the list of Carrier Members",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           }
         ],
         "responses":                   {
           "200":     {
-            "description": "The list of Carrier members is returned\n",
+            "description": "The list of Carrier Members is returned\n",
             "type":        "array",
             "items":       {
               "$ref": "#/definitions/CarrierMember"
@@ -1569,27 +1868,27 @@
       "get": {
         "x-swagger-router-controller": "ParticipantController",
         "operationId":                 "getCarrierMemberByUserID",
-        "summary":                     "Returns the Carrier member with the specified user ID",
-        "description":                 "Returns the Carrier member with the specified user ID",
+        "summary":                     "Return the Carrier Member with the specified userID",
+        "description":                 "Returns the Carrier Member with the specified userID",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           },
           {
             "name":        "userID",
             "in":          "path",
-            "description": "The user ID",
+            "description": "The userID",
             "required":    true,
             "type":        "string"
           }
         ],
         "responses":                   {
           "200":     {
-            "description": "The carrier member is returned\n",
+            "description": "The Carrier Member is returned\n",
             "$ref":        "#/definitions/CarrierMember"
           },
           "default": {
@@ -1605,27 +1904,27 @@
       "get": {
         "x-swagger-router-controller": "ParticipantController",
         "operationId":                 "getCarrierMemberByOrg",
-        "summary":                     "Returns the list of Carrier members who are part of the specified organization",
-        "description":                 "Returns the list of Carrier members who are part of the specified organization",
+        "summary":                     "Return the list of Carrier Members who are part of the specified organization",
+        "description":                 "Returns the list of Carrier Members who are part of the specified organization",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           },
           {
             "name":        "org",
             "in":          "path",
-            "description": "The organization id",
+            "description": "The organization ID",
             "required":    true,
             "type":        "string"
           }
         ],
         "responses":                   {
           "200":     {
-            "description": "The Carrier members are returned\n",
+            "description": "The Carrier Members are returned\n",
             "type":        "array",
             "items":       {
               "$ref": "#/definitions/CarrierMember"
@@ -1644,20 +1943,20 @@
       "get": {
         "x-swagger-router-controller": "ParticipantController",
         "operationId":                 "getAllCarrierAdmins",
-        "summary":                     "Returns the list of Carrier admins",
-        "description":                 "Returns the list of Carrier admins",
+        "summary":                     "Return the list of Carrier Admins",
+        "description":                 "Returns the list of Carrier Admins",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           }
         ],
         "responses":                   {
           "200":     {
-            "description": "The list of Carrier admins is returned\n",
+            "description": "The list of Carrier Admins is returned\n",
             "type":        "array",
             "items":       {
               "$ref": "#/definitions/CarrierAdmin"
@@ -1676,27 +1975,27 @@
       "get": {
         "x-swagger-router-controller": "ParticipantController",
         "operationId":                 "getCarrierAdminByUserID",
-        "summary":                     "Returns the Carrier admin with the specified user ID",
-        "description":                 "Returns the Carrier admin with the specified user ID",
+        "summary":                     "Return the Carrier Admin with the specified userID",
+        "description":                 "Returns the Carrier Admin with the specified userID",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           },
           {
             "name":        "userID",
             "in":          "path",
-            "description": "The user ID",
+            "description": "The userID",
             "required":    true,
             "type":        "string"
           }
         ],
         "responses":                   {
           "200":     {
-            "description": "The carrier admin is returned\n",
+            "description": "The Carrier Admin is returned\n",
             "$ref":        "#/definitions/CarrierAdmin"
           },
           "default": {
@@ -1712,27 +2011,27 @@
       "get": {
         "x-swagger-router-controller": "ParticipantController",
         "operationId":                 "getCarrierAdminByOrg",
-        "summary":                     "Returns the list of Carrier admins who are part of the specified organization",
-        "description":                 "Returns the list of Carrier admins who are part of the specified organization",
+        "summary":                     "Return the list of Carrier Admins who are part of the specified organization",
+        "description":                 "Returns the list of Carrier Admins who are part of the specified organization",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           },
           {
             "name":        "org",
             "in":          "path",
-            "description": "The organization id",
+            "description": "The organization ID",
             "required":    true,
             "type":        "string"
           }
         ],
         "responses":                   {
           "200":     {
-            "description": "The Carrier admins are returned\n",
+            "description": "The Carrier Admins are returned\n",
             "type":        "array",
             "items":       {
               "$ref": "#/definitions/CarrierAdmin"
@@ -1751,20 +2050,20 @@
       "get": {
         "x-swagger-router-controller": "ParticipantController",
         "operationId":                 "getAllRecipientAdmins",
-        "summary":                     "Returns the list of Recipient admins",
-        "description":                 "Returns the list of Recipient admins",
+        "summary":                     "Return the list of Recipient Admins",
+        "description":                 "Returns the list of Recipient Admins",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           }
         ],
         "responses":                   {
           "200":     {
-            "description": "The list of Recipient admins is returned\n",
+            "description": "The list of Recipient Admins is returned\n",
             "type":        "array",
             "items":       {
               "$ref": "#/definitions/RecipientAdmin"
@@ -1783,27 +2082,27 @@
       "get": {
         "x-swagger-router-controller": "ParticipantController",
         "operationId":                 "getRecipientAdminByUserID",
-        "summary":                     "Returns the Recipient admin with the specified user ID",
-        "description":                 "Returns the Recipient admin with the specified user ID",
+        "summary":                     "Return the Recipient Admin with the specified userID",
+        "description":                 "Returns the Recipient Admin with the specified userID",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           },
           {
             "name":        "userID",
             "in":          "path",
-            "description": "The user ID",
+            "description": "The userID",
             "required":    true,
             "type":        "string"
           }
         ],
         "responses":                   {
           "200":     {
-            "description": "The Recipient admin is returned\n",
+            "description": "The Recipient Admin is returned\n",
             "$ref":        "#/definitions/RecipientAdmin"
           },
           "default": {
@@ -1819,27 +2118,27 @@
       "get": {
         "x-swagger-router-controller": "ParticipantController",
         "operationId":                 "getRecipientAdminByOrg",
-        "summary":                     "Returns the list of Recipient admins who are part of the specified organization",
-        "description":                 "Returns the list of Recipient admins who are part of the specified organization",
+        "summary":                     "Return the list of Recipient Admins who are part of the specified organization",
+        "description":                 "Returns the list of Recipient Admins who are part of the specified organization",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           },
           {
             "name":        "org",
             "in":          "path",
-            "description": "The organization id",
+            "description": "The organization ID",
             "required":    true,
             "type":        "string"
           }
         ],
         "responses":                   {
           "200":     {
-            "description": "The Recipient admins are returned\n",
+            "description": "The Recipient Admins are returned\n",
             "type":        "array",
             "items":       {
               "$ref": "#/definitions/CarrierAdmin"
@@ -1858,20 +2157,20 @@
       "get": {
         "x-swagger-router-controller": "ParticipantController",
         "operationId":                 "getAllRecipientMember",
-        "summary":                     "Returns the list of the Recipient members",
-        "description":                 "Returns the list of the Recipient members",
+        "summary":                     "Return the list of the Recipient Members",
+        "description":                 "Returns the list of the Recipient Members",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           }
         ],
         "responses":                   {
           "200":     {
-            "description": "The list of Recipient members is returned\n",
+            "description": "The list of Recipient Members is returned\n",
             "type":        "array",
             "items":       {
               "$ref": "#/definitions/RecipientMember"
@@ -1890,27 +2189,27 @@
       "get": {
         "x-swagger-router-controller": "ParticipantController",
         "operationId":                 "getRecipientMemberByUserID",
-        "summary":                     "Returns the Recipient member with the specified user ID",
-        "description":                 "Returns the Recipient member with the specified user ID",
+        "summary":                     "Return the Recipient Member with the specified userID",
+        "description":                 "Returns the Recipient Member with the specified userID",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           },
           {
             "name":        "userID",
             "in":          "path",
-            "description": "The user ID",
+            "description": "The userID",
             "required":    true,
             "type":        "string"
           }
         ],
         "responses":                   {
           "200":     {
-            "description": "The Recipient admin is returned\n",
+            "description": "The Recipient Admin is returned\n",
             "$ref":        "#/definitions/RecipientMember"
           },
           "default": {
@@ -1926,27 +2225,27 @@
       "get": {
         "x-swagger-router-controller": "ParticipantController",
         "operationId":                 "getRecipientMemberByOrg",
-        "summary":                     "Returns the list of Recipient members who are part of the specified organization",
-        "description":                 "Returns the list of Recipient members who are part of the specified organization",
+        "summary":                     "Return the list of Recipient Members who are part of the specified organization",
+        "description":                 "Returns the list of Recipient Members who are part of the specified organization",
         "parameters":                  [
           {
             "name":        "x-access-token",
             "in":          "header",
-            "description": "The authentication token",
+            "description": "Provide authentication token",
             "required":    true,
             "type":        "string"
           },
           {
             "name":        "org",
             "in":          "path",
-            "description": "The organization id",
+            "description": "The organization ID",
             "required":    true,
             "type":        "string"
           }
         ],
         "responses":                   {
           "200":     {
-            "description": "The Recipient members are returned\n",
+            "description": "The Recipient Members are returned\n",
             "type":        "array",
             "items":       {
               "$ref": "#/definitions/CarrierMember"
@@ -1963,138 +2262,175 @@
     }
   },
   "definitions":         {
-    "Address":          {
+    "Address":                {
       "type":       "object",
       "properties": {
         "name":        {
-          "type":     "string",
-          "required": true
+          "type":        "string",
+          "description": "Provide a name",
+          "required":    true
         },
         "street":      {
-          "type":     "string",
-          "required": true
+          "type":        "string",
+          "description": "Provide a street name",
+          "required":    true
         },
         "houseNumber": {
-          "type":     "string",
-          "required": true
+          "type":        "string",
+          "description": "Provide a house number",
+          "required":    true
         },
         "city":        {
-          "type":     "string",
-          "required": true
+          "type":        "string",
+          "description": "Provide the name of the city",
+          "required":    true
         },
         "zipCode":     {
-          "type":     "string",
-          "required": true
+          "type":        "string",
+          "description": "Provide a zip code",
+          "required":    true
         },
         "country":     {
-          "type":     "string",
-          "required": true
+          "type":        "string",
+          "description": "Provide the name of the country",
+          "required":    true
         },
         "latitude":    {
-          "type":     "number",
-          "required": true
+          "type":        "number",
+          "description": "Provide the correct latitude in integers",
+          "required":    true
         },
         "longitude":   {
-          "type":     "number",
-          "required": true
+          "type":        "number",
+          "description": "Provide the correct longitude in integers",
+          "required":    true
         }
       }
     },
-    "Delivery":   {
+    "Window":                 {
+      "type":       "object",
+      "properties": {
+        "startDate": {
+          "type":        "number",
+          "description": "Provide the correct start date in integers",
+          "example":     1502834400000,
+          "required":    false
+        },
+        "endDate":   {
+          "type":        "number",
+          "description": "Provide the correct end date in integers",
+          "example":     1502834400000,
+          "required":    false
+        }
+      }
+    },
+    "Delivery":               {
+      "type":       "object",
+      "properties": {
+        "address":    {
+          "$ref":        "#/definitions/Address",
+          "description": "Returns the address object",
+          "required":    true
+        },
+        "actualDate": {
+          "type":        "number",
+          "description": "Provide an actual date in integers",
+          "required":    false
+        }
+      }
+    },
+    "Loading":                {
+      "type":       "object",
+      "properties": {
+        "address":    {
+          "$ref":        "#/definitions/Address",
+          "description": "Returns the address object",
+          "required":    true
+        },
+        "actualDate": {
+          "type":        "number",
+          "description": "Provide an actual date in integers",
+          "required":    true
+        }
+      }
+    },
+    "Creation":               {
       "type":       "object",
       "properties": {
         "address": {
-          "$ref":     "#/definitions/Address",
-          "required": true
+          "$ref":        "#/definitions/Address",
+          "description": "Returns the address object",
+          "required":    true
         },
         "date":    {
-          "type":     "number",
-          "required": false
+          "type":        "number",
+          "description": "Provide a date in integers",
+          "required":    true
         }
       }
     },
-    "Loading":    {
-      "type":       "object",
-      "properties": {
-        "address": {
-          "$ref":     "#/definitions/Address",
-          "required": true
-        },
-        "date":    {
-          "type":     "number",
-          "required": true
-        }
-      }
-    },
-    "Creation":   {
-      "type":       "object",
-      "properties": {
-        "address": {
-          "$ref":     "#/definitions/Address",
-          "required": true
-        },
-        "date":    {
-          "type":     "number",
-          "required": true
-        }
-      }
-    },
-    "Remark":     {
+    "Remark":                 {
       "type":       "object",
       "properties": {
         "comments":  {
-          "type":     "string",
-          "required": true
+          "type":        "string",
+          "description": "Provide comments",
+          "required":    true
         },
         "isDamaged": {
-          "type":     "boolean",
-          "required": false
+          "type":        "boolean",
+          "description": "Specify if a good is damaged with true or false",
+          "required":    false
         }
       }
     },
-    "Vehicle":    {
+    "Vehicle":                {
       "type":       "object",
       "properties": {
-        "vin":                 {
-          "type":     "string",
-          "required": true
+        "vin":             {
+          "type":        "string",
+          "description": "Provide a vin number",
+          "required":    true
         },
-        "manufacturer":        {
-          "type":     "string",
-          "required": true
+        "manufacturer":    {
+          "type":        "string",
+          "description": "Provide a manufacturer",
+          "required":    true
         },
-        "model":               {
-          "type":     "string",
-          "required": true
+        "model":           {
+          "type":        "string",
+          "description": "Provide a good model",
+          "required":    true
         },
-        "type":                {
-          "type":     "string",
-          "required": true
+        "type":            {
+          "type":        "string",
+          "description": "Provide a good type",
+          "required":    true
         },
-        "ecmrs":               {
-          "type":     "array",
-          "items":    {
+        "ecmrs":           {
+          "type":        "array",
+          "description": "Provide an array of ecmrs, which will be automatically updated",
+          "items":       {
             "type": "string"
           },
-          "required": true
+          "required":    true
         },
-        "odoMeterReading":     {
-          "type":     "number",
-          "required": true
+        "odoMeterReading": {
+          "type":        "number",
+          "description": "Provide ode meter in integer format",
+          "required":    true
         },
-        "plateNumber":         {
-          "type":     "string",
-          "required": true
-        },
-        "registrationCountry": {
-          "type":     "string",
-          "required": false
+        "plateNumber":     {
+          "type":        "string",
+          "description": "Provide a plateNumber",
+          "required":    true
         }
       }
     },
-    "EcmrStatus": {
-      "type": "string",
-      "enum": [
+    "EcmrStatus":             {
+      "type":        "string",
+      "description": "Select the correct ecmr status",
+      "enum":        [
         "CREATED",
         "LOADED",
         "IN_TRANSIT",
@@ -2102,216 +2438,231 @@
         "CONFIRMED_DELIVERED"
       ]
     },
-    "ECMR":       {
+    "CreateECMRs":            {
       "type":        "object",
       "description": "description",
       "properties":  {
-        "ecmrID":                   {
-          "type":     "string",
-          "required": true
-        },
-        "status":                   {
-          "$ref":     "#/definitions/EcmrStatus",
-          "required": true
-        },
-        "creation":                 {
-          "$ref":     "#/definitions/Creation",
-          "required": true
-        },
-        "loading":                  {
-          "$ref":     "#/definitions/Loading",
-          "required": true
-        },
-        "delivery":                 {
-          "$ref":     "#/definitions/Delivery",
-          "required": true
-        },
-        "owner":                    {
+        "orderID": {
           "type":        "string",
-          "description": "The id of the legal owner org",
+          "description": "Provide the correct orderID",
+          "example":     "ORDER1",
           "required":    true
         },
-        "source":                   {
-          "type":        "string",
-          "description": "The id of the compound org",
-          "required":    true
-        },
-        "transporter":              {
-          "type":        "string",
-          "description": "The id of the transporter user",
-          "required":    false
-        },
-        "carrier":                  {
-          "type":        "string",
-          "description": "The id of the carrier org",
-          "required":    true
-        },
-        "recipientOrg":             {
-          "type":        "string",
-          "description": "The id of the recipient org",
-          "required":    true
-        },
-        "recipient":                {
-          "type":        "string",
-          "description": "The id of the recipient user",
-          "required":    false
-        },
-        "issueDate":                {
-          "type":     "number",
-          "required": true
-        },
-        "issuedBy":                 {
-          "type":        "string",
-          "description": "The id of the Legal Owner org who issued the ECMR",
-          "required":    true
-        },
-        "carrierComments":          {
-          "type":     "string",
-          "required": true
-        },
-        "goods":                    {
-          "type":     "array",
-          "items":    {
-            "$ref": "#/definitions/Good"
+        "ecmrs":   {
+          "description": "Returns an array of ecmrs",
+          "$ref":        "#/definitions/ECMR"
+        }
+      }
+    },
+    "ECMR":                   {
+      "type":  "array",
+      "items": {
+        "description": "Array of ecmrs",
+        "properties":  {
+          "ecmrID":                 {
+            "type":        "string",
+            "description": "Provide a unique ecmrID",
+            "example":     "ECMRID",
+            "required":    true
           },
-          "required": true
-        },
-        "legalOwnerInstructions":   {
-          "type":     "string",
-          "required": true
-        },
-        "paymentInstructions":      {
-          "type":     "string",
-          "required": true
-        },
-        "payOnDelivery":            {
-          "type":     "string",
-          "required": true
-        },
-        "documents":                {
-          "type":     "string",
-          "required": false
-        },
-        "compoundSignature":        {
-          "$ref":     "#/definitions/Signature",
-          "required": false
-        },
-        "carrierLoadingSignature":  {
-          "$ref":     "#/definitions/Signature",
-          "required": false
-        },
-        "carrierDeliverySignature": {
-          "$ref":     "#/definitions/Signature",
-          "required": false
-        },
-        "recipientSignature":       {
-          "$ref":     "#/definitions/Signature",
-          "required": false
+          "status":                 {
+            "$ref":        "#/definitions/EcmrStatus",
+            "description": "Select the correct ecmr status",
+            "required":    true
+          },
+          "agreementTerms":         {
+            "type":        "string",
+            "description": "Provide agreement terms",
+            "required":    "true"
+          },
+          "agreementTermsSec":      {
+            "type":        "string",
+            "description": "Provide sec agreement terms",
+            "required":    "true"
+          },
+          "legalOwnerRef":          {
+            "type":        "string",
+            "description": "Provide the Legal Owner reference",
+            "required":    "true"
+          },
+          "carrierRef":             {
+            "type":        "string",
+            "description": "Provide the Carrier reference",
+            "required":    "true"
+          },
+          "recipientRef":           {
+            "type":        "string",
+            "description": "Provide the Recipient reference",
+            "required":    "true"
+          },
+          "orderID":                {
+            "type":        "string",
+            "description": "Provide the corresponding orderID",
+            "example":     "ORDER1",
+            "required":    "true"
+          },
+          "issuedBy":               {
+            "type":        "string",
+            "description": "Provide the issuedBy identity",
+            "example":     "koopman",
+            "required":    "true"
+          },
+          "creation":               {
+            "$ref":        "#/definitions/Creation",
+            "description": "Returns a creation object",
+            "required":    true
+          },
+          "loading":                {
+            "$ref":        "#/definitions/Loading",
+            "description": "Returns a loading object",
+            "required":    true
+          },
+          "delivery":               {
+            "$ref":        "#/definitions/Delivery",
+            "description": "Returns a delivery object",
+            "required":    true
+          },
+          "owner":                  {
+            "type":        "string",
+            "description": "Provide ID of the Legal Owner organization",
+            "example":     "leaseplan",
+            "required":    true
+          },
+          "source":                 {
+            "type":        "string",
+            "description": "Provide ID of the Compound organization",
+            "example":     "amsterdamcompound",
+            "required":    true
+          },
+          "transporter":            {
+            "type":        "string",
+            "description": "Provide ID of the Transporter user",
+            "example":     "harry@koopman.org",
+            "required":    false
+          },
+          "carrier":                {
+            "type":        "string",
+            "description": "Provide ID of the Carrier organization",
+            "example":     "koopman",
+            "required":    true
+          },
+          "recipientOrg":           {
+            "type":        "string",
+            "description": "Provide ID of the Recipient organization",
+            "example":     "cardealer",
+            "required":    true
+          },
+          "recipient":              {
+            "type":        "string",
+            "description": "Provide ID of the Recipient user",
+            "example":     "rob@cardealåer.org",
+            "required":    false
+          },
+          "issueDate":              {
+            "type":        "number",
+            "description": "Provide an issue date in integer format",
+            "required":    true
+          },
+          "carrierComments":        {
+            "type":        "string",
+            "description": "Provide Carrier Comments",
+            "required":    true
+          },
+          "goods":                  {
+            "type":     "array",
+            "items":    {
+              "$ref":        "#/definitions/Good",
+              "description": "Returns an array of goods"
+            },
+            "required": true
+          },
+          "legalOwnerInstructions": {
+            "type":        "string",
+            "description": "Provide Legal Owner instructions",
+            "required":    true
+          },
+          "paymentInstructions":    {
+            "type":        "string",
+            "description": "Provide Payment instructions",
+            "required":    true
+          },
+          "payOnDelivery":          {
+            "type":     "string",
+            "required": true
+          }
         }
       }
     },
-    "LegalOwnerOrg":    {
+    "organizationProperties": {
       "type":       "object",
       "properties": {
         "entityID": {
-          "type":     "string",
-          "required": true
+          "type":        "string",
+          "description": "Provide an entity ID",
+          "required":    true
         },
         "name":     {
-          "type":     "string",
-          "required": true
+          "type":        "string",
+          "description": "Provide a name",
+          "required":    true
         },
         "address":  {
-          "$ref":     "#/definitions/Address",
-          "required": true
+          "$ref":        "#/definitions/Address",
+          "description": "Returns an address object",
+          "required":    true
         }
       }
     },
-    "CompoundOrg":      {
-      "type":       "object",
-      "properties": {
-        "entityID": {
-          "type":     "string",
-          "required": true
-        },
-        "name":     {
-          "type":     "string",
-          "required": true
-        },
-        "address":  {
-          "$ref":     "#/definitions/Address",
-          "required": true
-        }
-      }
+    "LegalOwnerOrg":          {
+      "type": "object",
+      "$ref": "#/definitions/organizationProperties"
     },
-    "CarrierOrg":       {
-      "type":       "object",
-      "properties": {
-        "entityID": {
-          "type":     "string",
-          "required": true
-        },
-        "name":     {
-          "type":     "string",
-          "required": true
-        },
-        "address":  {
-          "$ref":     "#/definitions/Address",
-          "required": true
-        }
-      }
+    "CompoundOrg":            {
+      "type": "object",
+      "$ref": "#/definitions/organizationProperties"
     },
-    "RecipientOrg":     {
-      "type":       "object",
-      "properties": {
-        "entityID": {
-          "type":     "string",
-          "required": true
-        },
-        "name":     {
-          "type":     "string",
-          "required": true
-        },
-        "address":  {
-          "$ref":     "#/definitions/Address",
-          "required": true
-        }
-      }
+    "CarrierOrg":             {
+      "type": "object",
+      "$ref": "#/definitions/organizationProperties"
     },
-    "Good":             {
+    "RecipientOrg":           {
+      "type": "object",
+      "$ref": "#/definitions/organizationProperties"
+    },
+    "Good":                   {
       "type":       "object",
       "properties": {
-        "vehicle":               {
+        "vehicle":         {
           "$ref":     "#/definitions/Vehicle",
           "required": true
         },
-        "carrierLoadingRemark":  {
-          "$ref":     "#/definitions/Remark",
+        "loadingAddress":  {
+          "$ref":     "#/definitions/Address",
           "required": false
         },
-        "compoundRemark":        {
-          "$ref":     "#/definitions/Remark",
+        "deliveryAddress": {
+          "$ref":     "#/definitions/Address",
           "required": false
         },
-        "recipientRemark":       {
-          "$ref":     "#/definitions/Remark",
+        "pickupWindow":    {
+          "$ref":     "#/definitions/Window",
           "required": false
         },
-        "carrierDeliveryRemark": {
-          "$ref":     "#/definitions/Remark",
+        "deliveryWindow":  {
+          "$ref":     "#/definitions/Window",
           "required": false
         },
-        "description":           {
+        "description":     {
           "type":     "string",
           "required": false
         },
-        "weight":                {
+        "weight":          {
           "type":     "number",
           "required": false
         }
       }
     },
-    "Participant":      {
+    "userProperties":         {
       "type":       "object",
       "properties": {
         "$class":    {
@@ -2319,234 +2670,93 @@
           "required": true
         },
         "userID":    {
-          "type":     "string",
-          "required": true
+          "type":        "string",
+          "description": "Provide the unique userID",
+          "required":    true
         },
         "userName":  {
-          "type":     "string",
-          "required": true
+          "type":        "string",
+          "description": "Provide a username",
+          "required":    true
         },
         "firstName": {
-          "type":     "string",
-          "required": true
+          "type":        "string",
+          "description": "Provide a first name",
+          "required":    true
         },
         "lastName":  {
-          "type":     "string",
-          "required": true
+          "type":        "string",
+          "description": "Provide a last name",
+          "required":    true
         },
         "address":   {
-          "$ref":     "#/definitions/Address",
-          "required": true
+          "$ref":        "#/definitions/Address",
+          "description": "returns the address object",
+          "required":    true
         },
         "org":       {
           "type":        "string",
-          "description": "The id of the legal owner organization",
+          "description": "ID of the organization",
           "required":    true
         }
       }
     },
-    "LegalOwnerAdmin":  {
-      "type":       "object",
-      "properties": {
-        "userID":    {
-          "type":     "string",
-          "required": true
-        },
-        "userName":  {
-          "type":     "string",
-          "required": true
-        },
-        "firstName": {
-          "type":     "string",
-          "required": true
-        },
-        "lastName":  {
-          "type":     "string",
-          "required": true
-        },
-        "address":   {
-          "$ref":     "#/definitions/Address",
-          "required": true
-        },
-        "org":       {
-          "type":        "string",
-          "description": "The id of the legal owner organization",
-          "required":    true
-        }
-      }
+    "Participant":            {
+      "type": "object",
+      "$ref": "#/definitions/userProperties"
+
     },
-    "CompoundAdmin":    {
-      "type":       "object",
-      "properties": {
-        "userID":    {
-          "type":     "string",
-          "required": true
-        },
-        "userName":  {
-          "type":     "string",
-          "required": true
-        },
-        "firstName": {
-          "type":     "string",
-          "required": true
-        },
-        "lastName":  {
-          "type":     "string",
-          "required": true
-        },
-        "address":   {
-          "$ref":     "#/definitions/Address",
-          "required": true
-        },
-        "org":       {
-          "type":        "string",
-          "description": "The id of the compound organization",
-          "required":    true
-        }
-      }
+    "LegalOwnerAdmin":        {
+      "type": "object",
+      "$ref": "#/definitions/userProperties"
     },
-    "CarrierAdmin":     {
-      "type":       "object",
-      "properties": {
-        "userID":    {
-          "type":     "string",
-          "required": true
-        },
-        "userName":  {
-          "type":     "string",
-          "required": true
-        },
-        "firstName": {
-          "type":     "string",
-          "required": true
-        },
-        "lastName":  {
-          "type":     "string",
-          "required": true
-        },
-        "address":   {
-          "$ref":     "#/definitions/Address",
-          "required": true
-        },
-        "org":       {
-          "type":        "string",
-          "description": "The id of the Carrier organization",
-          "required":    true
-        }
-      }
+    "CompoundAdmin":          {
+      "type": "object",
+      "$ref": "#/definitions/userProperties"
     },
-    "CarrierMember":    {
-      "type":       "object",
-      "properties": {
-        "userID":    {
-          "type":     "string",
-          "required": true
-        },
-        "userName":  {
-          "type":     "string",
-          "required": true
-        },
-        "firstName": {
-          "type":     "string",
-          "required": true
-        },
-        "lastName":  {
-          "type":     "string",
-          "required": true
-        },
-        "address":   {
-          "$ref":     "#/definitions/Address",
-          "required": true
-        },
-        "org":       {
-          "type":        "string",
-          "description": "The id of the Carrier organization",
-          "required":    true
-        }
-      }
+    "CarrierAdmin":           {
+      "type": "object",
+      "$ref": "#/definitions/userProperties"
     },
-    "RecipientAdmin":   {
-      "type":       "object",
-      "properties": {
-        "userID":    {
-          "type":     "string",
-          "required": true
-        },
-        "userName":  {
-          "type":     "string",
-          "required": true
-        },
-        "firstName": {
-          "type":     "string",
-          "required": true
-        },
-        "lastName":  {
-          "type":     "string",
-          "required": true
-        },
-        "address":   {
-          "$ref":     "#/definitions/Address",
-          "required": true
-        },
-        "org":       {
-          "type":        "string",
-          "description": "The id of the Recipient organization",
-          "required":    true
-        }
-      }
+    "CarrierMember":          {
+      "type": "object",
+      "$ref": "#/definitions/userProperties"
     },
-    "RecipientMember":  {
-      "type":       "object",
-      "properties": {
-        "userID":    {
-          "type":     "string",
-          "required": true
-        },
-        "userName":  {
-          "type":     "string",
-          "required": true
-        },
-        "firstName": {
-          "type":     "string",
-          "required": true
-        },
-        "lastName":  {
-          "type":     "string",
-          "required": true
-        },
-        "address":   {
-          "$ref":     "#/definitions/Address",
-          "required": true
-        },
-        "org":       {
-          "type":        "string",
-          "description": "The id of the Recipient organization",
-          "required":    true
-        }
-      }
+    "RecipientAdmin":         {
+      "type": "object",
+      "$ref": "#/definitions/userProperties"
     },
-    "Signature":        {
+    "RecipientMember":        {
+      "type": "object",
+      "$ref": "#/definitions/userProperties"
+    },
+    "Signature":              {
       "type":       "object",
       "properties": {
         "certificate":   {
-          "type":     "string",
-          "required": true
+          "type":        "string",
+          "description": "The signature of the participant",
+          "required":    true
         },
         "latitude":      {
-          "type":     "number",
-          "required": false
+          "type":        "number",
+          "description": "Latitude in integers",
+          "required":    false
         },
         "longitude":     {
-          "type":     "string",
-          "required": true
+          "type":        "string",
+          "description": "Longitude in integers",
+          "required":    true
         },
         "ip":            {
-          "type":     "string",
-          "required": false
+          "type":        "string",
+          "description": "Unique IP address as a string",
+          "required":    false
         },
         "timestamp":     {
-          "type":     "number",
-          "required": true
+          "type":        "number",
+          "description": "Timestamp as an integer in milliseconds",
+          "required":    true
         },
         "generalRemark": {
           "$ref":        "#/definitions/Remark",
@@ -2555,121 +2765,222 @@
         }
       }
     },
-    "TransportOrder":   {
+    "TransportOrder":         {
       "type":        "object",
-      "description": "description",
+      "description": "description of the transportOrder",
       "properties":  {
-        "orderID":  {
-          "type":     "string",
-          "required": true
-        },
-        "status":   {
-          "$ref":     "#/definitions/OrderStatus",
-          "required": true
-        },
-        "creation": {
-          "$ref":     "#/definitions/Creation",
-          "required": true
-        },
-        "loading":  {
-          "$ref":     "#/definitions/Loading",
-          "required": true
-        },
-        "delivery": {
-          "$ref":     "#/definitions/Delivery",
-          "required": true
-        },
-        "owner":    {
+        "orderID":   {
           "type":        "string",
-          "description": "The id of the legal owner org",
+          "example":     "ORDER1",
+          "description": "Specify the unique orderID of the transportOrder",
           "required":    true
         },
-        "source":   {
-          "type":        "string",
-          "description": "The id of the compound org",
+        "status":    {
+          "$ref":        "#/definitions/OrderStatus",
+          "description": "Selects the open status for new transportOrders",
           "required":    true
         },
-        "carrier":  {
+        "owner":     {
           "type":        "string",
-          "description": "The id of the carrier org",
+          "example":     "leaseplan",
+          "description": "The ID of the Legal Owner organization. Make sure to change this if logged in with a different owner.",
           "required":    true
         },
-        "orderRef": {
+        "source":    {
+          "type":        "string",
+          "example":     "amsterdamcompound",
+          "description": "The ID of the Compound organization. Make sure to change this if logged in with a different source.",
+          "required":    true
+        },
+        "carrier":   {
+          "type":        "string",
+          "example":     "koopman",
+          "description": "The ID of the Carrier organization. Make sure to change this if logged in with a different Carrier.",
+          "required":    true
+        },
+        "orderRef":  {
           "type":        "string",
           "description": "External reference for legalOwner legacy system",
           "required":    true
         },
-        "issuedBy": {
-          "type":        "string",
-          "description": "The id of the Legal Owner org who issued the ECMR",
-          "required":    true
-        },
-        "goods":    {
+        "goods":     {
           "type":     "array",
           "items":    {
-            "$ref": "#/definitions/Good"
+            "$ref":        "#/definitions/Good",
+            "description": "Returns an array of goods"
           },
           "required": true
+        },
+        "issueDate": {
+          "type":        "number",
+          "description": "The date a transportOrder get issued",
+          "required":    true
+        },
+        "ecmrs":     {
+          "type":  "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
     },
-    "OrderStatus":      {
-      "type": "string",
-      "enum": [
+    "OrderStatus":            {
+      "type":        "string",
+      "description": "Order status as an enum",
+      "enum":        [
         "OPEN",
         "IN_PROGRESS",
         "COMPLETED",
         "CANCELLED"
       ]
     },
-    "LoginCredentials": {
+    "UpdateWindow":           {
       "type":       "object",
       "properties": {
-        "username": {
-          "type":     "string",
-          "required": true
+        "vin":        {
+          "type":        "string",
+          "description": "Unique VIN number as a string",
+          "example":     "183726339N",
+          "required":    false
         },
-        "password": {
-          "type":     "string",
-          "required": true
+        "orderID":    {
+          "type":        "string",
+          "description": "Unique orderID as a string",
+          "example":     "ORDER1",
+          "required":    false
+        },
+        "dateWindow": {
+          "type":  "array",
+          "items": {
+            "type":        "integer",
+            "description": "Provide two integer values in millisecond format",
+            "example":     "enter integer values",
+            "required":    false
+          }
         }
       }
     },
-    "LoginResponse":    {
+    "UpdateExpectedWindow":   {
+      "type":       "object",
+      "properties": {
+        "ecmrID":         {
+          "type":        "string",
+          "description": "Provide an existing ecmrID",
+          "example":     "enter correct ecmrID",
+          "required":    false
+        },
+        "expectedWindow": {
+          "type":  "array",
+          "items": {
+            "type":        "integer",
+            "description": "Provide two integer values in millisecond format",
+            "example":     "enter integer values",
+            "required":    false
+          }
+        }
+      }
+    },
+    "CancelECMR":             {
+      "type":       "object",
+      "properties": {
+        "ecmrID":       {
+          "type":        "string",
+          "description": "Provide an existing ecmrID for an ECMR that needs to be cancelled",
+          "required":    true
+        },
+        "cancellation": {
+          "$ref":        "#/definitions/Cancellation",
+          "description": "Returns the cancellation object",
+          "required":    true
+        }
+      }
+    },
+    "CancelTransportOrder":   {
+      "type":       "object",
+      "properties": {
+        "orderID":      {
+          "type":        "string",
+          "description": "Provide an existing orderID for a transportOrder that needs to be cancelled",
+          "required":    true
+        },
+        "cancellation": {
+          "$ref":        "#/definitions/Cancellation",
+          "description": "Returns the cancellation object",
+          "required":    true
+        }
+      }
+    },
+    "Cancellation":           {
+      "type":       "object",
+      "properties": {
+        "cancelledBy": {
+          "type":        "string",
+          "description": "Optional: provide identity of participant that is about to cancel",
+          "required":    true
+        },
+        "reason":      {
+          "type":        "string",
+          "description": "Provide a reason for cancellation",
+          "required":    true
+        }
+      }
+    },
+    "LoginCredentials":       {
+      "type":       "object",
+      "properties": {
+        "username": {
+          "type":        "string",
+          "description": "Provide a username",
+          "required":    true
+        },
+        "password": {
+          "type":        "string",
+          "description": "Provide a password",
+          "required":    true
+        }
+      }
+    },
+    "LoginResponse":          {
       "type":       "object",
       "properties": {
         "success": {
-          "type":     "boolean",
-          "required": true
+          "type":        "boolean",
+          "description": "Returns if a login was successful or not",
+          "required":    true
         },
         "token":   {
-          "type":     "string",
-          "required": true
+          "type":        "string",
+          "description": "Returns a unique token that is bound to the user logging in",
+          "required":    true
         },
         "user":    {
           "type":       "object",
           "properties": {
             "userID":    {
-              "type":     "string",
-              "required": true
+              "type":        "string",
+              "description": "Displays the userID",
+              "required":    true
             },
             "username":  {
-              "type":     "string",
-              "required": true
+              "type":        "string",
+              "description": "Displays the username",
+              "required":    true
             },
             "userEmail": {
-              "type":     "string",
-              "required": true
+              "type":        "string",
+              "description": "Displays the user email",
+              "required":    true
             },
             "role":      {
-              "type":     "string",
-              "required": true
+              "type":        "string",
+              "description": "Displays the user role",
+              "required":    true
             }
           }
         }
       }
     },
-    "Error":            {
+    "Error":                  {
       "type":       "object",
       "properties": {
         "description": {
