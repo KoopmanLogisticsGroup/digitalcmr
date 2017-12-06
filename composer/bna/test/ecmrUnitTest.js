@@ -39,6 +39,91 @@ describe('Admin of the network', () => {
   Network = new Network();
   Identity = new Identity();
 
+  const sampleGoods = [
+    {
+      "vehicle": {
+        "vin": "183726339N",
+        "manufacturer": "Audi",
+        "model": "A1",
+        "type": "sportback",
+        "ecmrs": [],
+        "odoMeterReading": 0,
+        "plateNumber": "AV198RX"
+      },
+      "description": "vehicle",
+      "weight": 1500,
+      "loadingAddress": {
+        "name": "loading address",
+        "street": "een straat",
+        "houseNumber": "41",
+        "city": "Groningen",
+        "zipCode": "7811 HC",
+        "country": "netherlands",
+        "latitude": 123,
+        "longitude": 124
+      },
+      "deliveryAddress": {
+        "name": "delivery adress",
+        "street": "een straat",
+        "houseNumber": "41",
+        "city": "Groningen",
+        "zipCode": "7811 HC",
+        "country": "netherlands",
+        "latitude": 123,
+        "longitude": 124
+      },
+      "pickupWindow": {
+        "startDate": 1502834400000,
+        "endDate": 1502834400000
+      },
+      "deliveryWindow": {
+        "startDate": 1502834400000,
+        "endDate": 1502834400000
+      }
+    },
+    {
+      "vehicle": {
+        "vin": "736182CHD28172",
+        "manufacturer": "Mercedes",
+        "model": "SLK",
+        "type": "Station",
+        "ecmrs": [],
+        "odoMeterReading": 0,
+        "plateNumber": "I827YE"
+      },
+      "description": "vehicle",
+      "weight": 1800,
+      "loadingAddress": {
+        "name": "loading address",
+        "street": "een straat",
+        "houseNumber": "41",
+        "city": "Groningen",
+        "zipCode": "7811 HC",
+        "country": "netherlands",
+        "latitude": 123,
+        "longitude": 124
+      },
+      "deliveryAddress": {
+        "name": "delivery adress",
+        "street": "een straat",
+        "houseNumber": "41",
+        "city": "Groningen",
+        "zipCode": "7811 HC",
+        "country": "netherlands",
+        "latitude": 123,
+        "longitude": 124
+      },
+      "pickupWindow": {
+        "startDate": 1502834400000,
+        "endDate": 1502834400000
+      },
+      "deliveryWindow": {
+        "startDate": 1502834400000,
+        "endDate": 1502834400000
+      }
+    }
+  ];
+
   // This is called before all tests are executed
   beforeEach(() => {
     // Initialize an in-memory file system, so we do not write any files to the actual file system
@@ -79,8 +164,8 @@ describe('Admin of the network', () => {
         // Create the CarrierMember
         const carrierMember = factory.newResource(Network.namespace, 'CarrierMember', Identity.userIDs.carrierMember);
         carrierMember.userName = 'harry';
-        carrierMember.firstName = 'harry';
-        carrierMember.lastName = 'harry';
+        carrierMember.firstName = 'Harry';
+        carrierMember.lastName = 'Koopman';
         carrierMember.address = builder.buildAddress();
         carrierMember.org = factory.newRelationship(Network.namespace, 'CarrierOrg', 'koopman');
 
@@ -166,19 +251,21 @@ describe('Admin of the network', () => {
       });
   });
 
-  it('should be able to submit transaction CreateECMR which creates a new ECMR and sets the status to CREATED', () => {
-    const transaction = factory.newTransaction(Network.namespace, 'CreateECMR');
-    transaction.ecmr = builder.buildECMR('new');
+  it('should be able to submit CreateECMRs transaction which creates an ECMR starting from a TransportOrder and sets status to CREATED', () => {
+    const transaction = factory.newTransaction(Network.namespace, 'CreateECMRs');
+    transaction.ecmrs = [builder.buildECMR('newECMR')];
+    transaction.ecmrs.orderID = 'to_create_ecmrs';
+    transaction.transportOrder = factory.newRelationship(Network.namespace, 'TransportOrder', 'to_create_ecmrs');
 
     return businessNetworkConnection.submitTransaction(transaction)
       .then(() => {
         return businessNetworkConnection.getAssetRegistry(Network.namespace + '.ECMR');
       })
       .then((assetRegistry) => {
-        return assetRegistry.get(transaction.ecmr.ecmrID);
+        return assetRegistry.getAll();
       })
-      .then((ecmr) => {
-        ecmr.$identifier.should.equal(transaction.ecmr.ecmrID);
+      .then((ecmrs) => {
+        ecmrs.find(ecmr => (ecmr.ecmrID === ecmrs[0].ecmrID && ecmr.orderID === ecmrs[0].orderID));
       });
   });
 
@@ -204,10 +291,12 @@ describe('Admin of the network', () => {
 
   it('should be able to submit UpdateEcmrStatusToLoaded which updates ECMR status from CREATED to LOADED', () => {
     let transaction = factory.newTransaction(Network.namespace, 'UpdateEcmrStatusToLoaded');
-    transaction.transportOrder = factory.newRelationship(Network.namespace, 'TransportOrder', 'to_create_ecmrs');
+    // transaction.transportOrder = factory.newRelationship(Network.namespace, 'TransportOrder', 'to_create_ecmrs');
+    factory = businessNetworkConnection.getBusinessNetwork().getFactory();
+
     transaction.ecmr = factory.newRelationship(Network.namespace, 'ECMR', 'created');
-    transaction.updatedEcmr = builder.buildECMR('updated');
-    transaction.updatedEcmr.compoundSignature = builder.buildSignature(Identity.userIDs.compoundAdmin);
+    transaction.goods = builder.buildGoods(sampleGoods);
+    // transaction.updatedEcmr.compoundSignature = builder.buildSignature(Identity.userIDs.compoundAdmin);
 
     return businessNetworkConnection.submitTransaction(transaction)
       .then(() => {

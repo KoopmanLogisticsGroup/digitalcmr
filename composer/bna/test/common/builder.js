@@ -97,6 +97,20 @@ Builder.prototype.buildGood = function buildGood() {
 };
 
 /**
+ * Build multiple goods concept
+ * @return {Promise} A promise that will be resolved when completed.
+ */
+Builder.prototype.buildGoods = function buildGoods(goods) {
+  let validatedObjects = [];
+
+  for (const good of goods) {
+    validatedObjects.push(this.buildGood(good));
+  }
+
+  return validatedObjects;
+}
+
+/**
  * Build Vehicle asset
  * @param {String} vin The vin of the vehicle
  * @return {Promise} A promise that will be resolved when completed.
