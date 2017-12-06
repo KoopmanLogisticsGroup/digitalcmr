@@ -3,7 +3,7 @@
 </div>
 <div class="row">
   <form>
-    <table class="ui padded unstackable structured table">
+    <table class="ui padded unstackable structured table accordion tot">
       <thead>
       <tr>
         <th>VIN</th>
@@ -16,51 +16,92 @@
         <th>INFO</th>
       </tr>
       </thead>
-      <tbody>
-      <tr *ngFor="let good of transportOrder?.goods">
-        <td>{{good?.vehicle?.vin}}</td>
-        <td>{{good?.vehicle?.plateNumber}}</td>
-        <td>{{good?.description}}</td>
-        <td>{{good?.weight}} kg</td>
-        <td>{{good?.vehicle?.odoMeterReading}}</td>
-        <td class="loadingWindow">
-          <span>{{good?.loadingAddress?.city}}</span>
-          <span> {{good?.pickupWindow.startDate | date: "dd-MM-yyyy HH:mm"}}</span>
-          <span> {{good?.pickupWindow.endDate | date: "dd-MM-yyyy HH:mm"}}</span>
+
+      <ng-container *ngFor="let good of transportOrder?.goods">
+        <tbody class="ui title">
+        <tr>
+          <td>{{good?.vehicle?.vin}}</td>
+          <td>{{good?.vehicle?.plateNumber}}</td>
+          <td>{{good?.description}}</td>
+          <td>{{good?.weight}} kg</td>
+          <td>{{good?.vehicle?.odoMeterReading}}</td>
+          <td>
           <div *ngFor="let ecmr of ecmrs">
             <div *ngFor="let ecmrGood of ecmr?.goods">
               <div *ngIf="good?.vehicle?.vin == ecmrGood?.vehicle?.vin">
-                <span> {{ecmr?.carrierLoadingSignature?.timestamp | date: "dd-MM-yyyy HH:mm"}} </span>
+                <span *ngIf="ecmr?.carrierLoadingSignature !== undefined; else bla">
+                <ng-template #bla>Pending Pickup</ng-template>
+                  Picked Up
+                </span>
               </div>
             </div>
           </div>
-        </td>
-        <td class="loadingWindow">
-          <span>{{good?.loadingAddress?.city}}</span>
-          <span> {{good?.deliveryWindow.startDate | date: "dd-MM-yyyy HH:mm"}}</span>
-          <span> {{good?.deliveryWindow.endDate | date: "dd-MM-yyyy HH:mm"}}</span>
-          <div *ngFor="let ecmr of ecmrs">
-            <div *ngFor="let ecmrGood of ecmr?.goods">
-              <div *ngIf="good?.vehicle?.vin == ecmrGood?.vehicle?.vin">
-                <span>{{ecmr?.carrierDeliverySignature?.timestamp | date: "dd-MM-yyyy HH:mm"}}</span>
+          </td>
+          <td>
+            <ng-container *ngFor="let ecmr of ecmrs">
+              <ng-container *ngFor="let ecmrGood of ecmr?.goods">
+                <ng-container *ngIf="good?.vehicle?.vin == ecmrGood?.vehicle?.vin">
+                  <ng-container *ngIf="ecmr?.carrierDeliverySignature !== undefined; else showNaN">
+                    <ng-template #showNaN><span>blaat</span></ng-template>
+                    <span>Delivered</span>
+                  </ng-container>
+                </ng-container>
+              </ng-container>
+            </ng-container>
+          </td>
+          <td>
+            <img class="view_more_order"/>
+          </td>
+        </tr>
+        </tbody>
+        <tbody class="ui content">
+        <tr>
+          <td><img class="orderStatePic" src="../../../../../../assets/img/icon_pickup_on.svg"/></td>
+          <td class="loadingWindowNames">
+            <span><strong>Pickup Location: </strong> </span>
+            <span><strong>Pickup Window: </strong> </span>
+            <span><strong>Pickup Signed: </strong> </span>
+          </td>
+          <td class="loadingWindow">
+            <span> {{good?.loadingAddress?.city}}</span>
+            <span> {{good?.pickupWindow.startDate | date: "dd-MM-yyyy (HH:mm)"}} to</span>
+            <span> {{good?.pickupWindow.endDate | date: "dd-MM-yyyy (HH:mm)"}}</span>
+            <ng-container *ngFor="let ecmr of ecmrs">
+              <ng-container *ngFor="let ecmrGood of ecmr?.goods">
+                <ng-container *ngIf="good?.vehicle?.vin == ecmrGood?.vehicle?.vin">
+                  <ng-container *ngIf="ecmr?.carrierPickupSignature?.timestamp !== undefined"></ng-container>
+                  <ng-template #delivery_na><span class="noStatus">{{ecmr?.ecmrID}} NaN</span></ng-template>
+                  <span
+                    class="statusSpan">{{ecmr?.carrierLoadingSignature?.timestamp | date: "dd-MM-yyyy (HH:mm)"}}</span>
+                </ng-container>
+              </ng-container>
+            </ng-container>
+          </td>
+          <td colspan="2"></td>
+          <td><img class="orderStatePic" src="../../../../../../assets/img/icon_receiver_off.svg"/></td>
+          <td class="loadingWindowNames">
+            <span><strong>Delivery Location: </strong> </span>
+            <span><strong>Delivery Window: </strong> </span>
+            <span><strong>Delivery Signed: </strong> </span>
+          </td>
+          <td class="loadingWindow">
+            <span>{{good?.deliveryAddress?.city}}</span>
+            <span>{{good?.deliveryWindow.startDate | date: "dd-MM-yyyy (HH:mm)"}} to</span>
+            <span> {{good?.deliveryWindow.endDate | date: "dd-MM-yyyy (HH:mm)"}}</span>
+            <div *ngFor="let ecmr of ecmrs">
+              <div *ngFor="let ecmrGood of ecmr?.goods">
+                <div *ngIf="good?.vehicle?.vin == ecmrGood?.vehicle?.vin">
+                  <ng-container *ngIf="ecmr?.carrierDeliverySignature"></ng-container>
+                  <span
+                    class="statusSpan">{{ecmr?.carrierDeliverySignature?.timestamp | date: "dd-MM-yyyy (HH:mm)"}}</span>
+                </div>
               </div>
             </div>
-          </div>
-        </td>
-        <td>
-          <div class="ui accordion">
-            <div class="title">
-              <i class="dropdown icon"></i>
-              What is a dog?
-            </div>
-            <div class="content">
-              <p class="transition hidden">A dog is a type of domesticated animal. Known for its loyalty and
-                faithfulness, it can be found as a welcome guest in many households across the world.</p>
-            </div>
-          </div>
-        </td>
-      </tr>
-      </tbody>
+          </td>
+        </tr>
+        </tbody>
+      </ng-container>
     </table>
   </form>
 </div>
+

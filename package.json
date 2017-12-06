@@ -30,5 +30,8 @@
   },
   "pre-commit":      [
     "validate-commit"
-  ]
+  ],
+  "dependencies":    {
+    "semantic-ui-accordion": "^2.2.12"
+  }
 }

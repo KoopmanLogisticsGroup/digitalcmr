@@ -12,5 +12,9 @@ export class TransportorderGoodsComponent implements OnInit {
   @Input() public ecmrs: Ecmr[];
 
   public ngOnInit(): void {
+    $('.ui.accordion')
+      .accordion();
+
+    $('.noStatus').text('blaat');
   }
 }
