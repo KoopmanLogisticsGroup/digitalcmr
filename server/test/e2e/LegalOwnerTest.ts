@@ -48,8 +48,8 @@ describe('A legal owner admin can', () => {
 
   it('not create ECMRs', (done) => {
     const payload: CreateEcmrs = {
-      ecmrs:            ecmrs,
-      transportOrderID: ecmrs[0].orderID
+      ecmrs:   ecmrs,
+      orderID: ecmrs[0].orderID
     };
 
     server
@@ -284,7 +284,7 @@ describe('A legal owner admin can', () => {
       });
   });
 
-  it('get a specific transport order by transportOrderID', (done) => {
+  it('get a specific transport order by orderID', (done) => {
     server
       .get('/api/v1/transportOrder/orderID/12345567890')
       .set('x-access-token', token)

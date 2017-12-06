@@ -87,7 +87,7 @@ function updateEcmrStatusToInTransit(tx) {
   }
 
   if (!tx.ecmr.compoundSignature) {
-    throw new Error('[UpdateEcmrStatusToInTransit] Transaction is not valid. Attempt to set the status on IN_TRANSIT before the compound admin signature');
+    throw new Error('[UpdateEcmrStatusToInTransit] Transaction is not valid. Attempt to set the status on IN_TRANSIT before the compound admin signed');
   }
 
   var factory = getFactory();
@@ -136,7 +136,7 @@ function updateEcmrStatusToDelivered(tx) {
     throw new Error('[UpdateEcmrStatusToDelivered] Transaction is not valid. Attempt to set the status on DELIVERED before the compound admin signed!');
   }
   if (!tx.ecmr.carrierLoadingSignature) {
-    throw new Error('[UpdateEcmrStatusToDelivered] Transaction is not valid. Attempt to set the status on DELIVERED before the transporter signed for the loading!');
+    throw new Error('[UpdateEcmrStatusToDelivered] Transaction is not valid. Attempt to set the status on DELIVERED before the transporter signed for loading!');
   }
 
   var factory = getFactory();
@@ -190,10 +190,10 @@ function updateEcmrStatusToConfirmedDelivered(tx) {
     throw new Error('[UpdateEcmrStatusToConfirmedDelivered] Transaction is not valid. Attempt to set the status on CONFIRMED_DELIVERED before the compound admin signed!');
   }
   if (!tx.ecmr.carrierLoadingSignature) {
-    throw new Error('[UpdateEcmrStatusToConfirmedDelivered] Transaction is not valid. Attempt to set the status on CONFIRMED_DELIVERED before the transporter signed for the loading!');
+    throw new Error('[UpdateEcmrStatusToConfirmedDelivered] Transaction is not valid. Attempt to set the status on CONFIRMED_DELIVERED before the transporter signed for loading!');
   }
   if (!tx.ecmr.carrierDeliverySignature) {
-    throw new Error('[UpdateEcmrStatusToConfirmedDelivered] Transaction is not valid. Attempt to set the status on CONFIRMED_DELIVERED before the transporter signed for the delivery!');
+    throw new Error('[UpdateEcmrStatusToConfirmedDelivered] Transaction is not valid. Attempt to set the status on CONFIRMED_DELIVERED before the transporter signed for delivery!');
   }
 
   var factory = getFactory();

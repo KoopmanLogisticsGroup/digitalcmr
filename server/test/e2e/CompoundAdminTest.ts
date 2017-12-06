@@ -137,8 +137,8 @@ describe('A Compound Admin can', () => {
     const ecmrs = [Builder.buildECMR('randomEcmr')];
 
     const payload: CreateEcmrs = {
-      ecmrs:            ecmrs,
-      transportOrderID: ecmrs[0].orderID
+      ecmrs:   ecmrs,
+      orderID: ecmrs[0].orderID
     };
 
     server
