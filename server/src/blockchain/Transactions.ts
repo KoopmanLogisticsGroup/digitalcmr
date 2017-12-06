@@ -14,7 +14,6 @@ export enum Transaction {
   UpdateTransportOrderDeliveryWindow   = 'UpdateTransportOrderDeliveryWindow',
   UpdateTransportOrderStatusToCancelled = 'UpdateTransportOrderStatusToCancelled',
   CreateVehicles                        = 'CreateVehicles',
-  CreateVehicle                         = 'CreateVehicle',
   CreateCarrierOrg                      = 'CreateCarrierOrg',
   CreateCompoundOrg                     = 'CreateCompoundOrg',
   CreateLegalOwnerOrg                   = 'CreateLegalOwnerOrg',

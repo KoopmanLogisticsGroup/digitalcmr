@@ -12,7 +12,7 @@ export class EcmrTransactor implements TransactionCreator {
 
     if (transactionName === Transaction.CreateEcmrs) {
       transaction.ecmrs          = await EcmrBuilder.buildECMRs(factory, namespace, data.ecmrs, identity);
-      transaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', data.transportOrderID);
+      transaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', data.orderID);
     } else if (transactionName === Transaction.UpdateEcmrStatusToLoaded || transactionName === Transaction.UpdateEcmrStatusToInTransit) {
       transaction.ecmr      = factory.newRelationship(namespace, 'ECMR', data.ecmrID);
       transaction.goods     = EcmrBuilder.buildGoods(factory, namespace, data.goods);
