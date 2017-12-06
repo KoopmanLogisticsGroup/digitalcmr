@@ -1,23 +1,26 @@
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class SearchService {
   searchData$: Observable<any>;
   private searchDataSubject: Subject<any>;
 
-  filterEcmr$: Observable<any>;
-  private filterEcmrSubject: Subject<any>;
+  private callHeaderComponentToClearSearchBar = new Subject<any>();
+          componentCalled$                    = this.callHeaderComponentToClearSearchBar.asObservable();
 
   constructor() {
     this.searchDataSubject = new Subject();
-    this.filterEcmrSubject = new Subject();
     this.searchData$       = this.searchDataSubject.asObservable();
-    this.filterEcmr$       = this.filterEcmrSubject.asObservable();
   }
 
   public searchData(data: Observable<any>): void {
     this.searchDataSubject.next(data);
+  }
+
+  public clearSearchBar(): void {
+    this.callHeaderComponentToClearSearchBar.next();
   }
 }

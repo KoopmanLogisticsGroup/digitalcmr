@@ -4,9 +4,15 @@
     <div class="header">CANCEL TRANSPORT ORDER</div>
     <div class="content">
       <p>You are about to cancel the Transport Order</p>
+      <form class="ui form">
+        <div class="field">
+          <textarea *ngIf="transportOrder" name="cancellationReason"
+                    [(ngModel)]="transportOrderCancelled.cancellation.reason"
+                    placeholder="Enter the reason why you want to cancel a Transport Order" maxlength="136"></textarea>
+        </div>
+      </form>
       <div class="buttons ui button_position">
-        <button class="ui primary button" (click)="close()" type="submit">CANCEL</button>
-        <button id="submitButton" class="ui primary button" (click)="onSubmit()" type="submit">CONFIRM</button>
+        <button class="ui primary button" (click)="onSubmit()" type="submit">CONFIRM</button>
       </div>
     </div>
   </div>

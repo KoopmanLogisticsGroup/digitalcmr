@@ -6,10 +6,12 @@ import {TransportOrder} from '../../src/interfaces/transportOrder.interface';
 import {Ecmr, EcmrStatus} from '../../src/interfaces/ecmr.interface';
 import {Address} from '../../src/interfaces/address.interface';
 import {PickupWindow} from '../../src/interfaces/pickupWindow.interface';
+import {EcmrCancellation, TransportOrderCancellation} from '../../src/interfaces/cancellation.interface';
 
 const server = supertest.agent('http://localhost:8080');
 const should = chai.should();
 let token: string;
+let transportOrder: TransportOrder;
 let updateEcmr: Ecmr;
 
 const ok = (res) => {
@@ -87,6 +89,9 @@ const buildTransportOrder = (): TransportOrder => {
 
 describe('An Recipient member can', () => {
   before((done) => {
+    transportOrder = buildTransportOrder();
+    updateEcmr     = buildECMR('ecmr1');
+
     const loginParams = {
       'username': 'rob@cardealer.org',
       'password': 'passw0rd'
@@ -278,6 +283,31 @@ describe('An Recipient member can', () => {
       });
   });
 
+  it('not cancel an ECMR', (done) => {
+    let cancel = <EcmrCancellation> {
+      'ecmrID':       updateEcmr.ecmrID,
+      'cancellation': {
+        'cancelledBy': 'rob@cardealer.org',
+        'reason':      'no reason',
+        'date':        123
+      }
+    };
+
+    server
+      .put('/api/v1/ECMR/cancel')
+      .set('x-access-token', token)
+      .send(cancel)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
   it('get all vehicles', (done) => {
     server
       .get('/api/v1/vehicle/')
@@ -415,6 +445,31 @@ describe('An Recipient member can', () => {
       });
   });
 
+  it('not cancel a transportOrder', (done) => {
+    let cancel = <TransportOrderCancellation> {
+      'orderID':      transportOrder.orderID,
+      'cancellation': {
+        'cancelledBy': 'lapo@leaseplan.org',
+        'date':        123,
+        'reason':      'invalid order'
+      }
+    };
+
+    server
+      .put('/api/v1/transportOrder/cancel')
+      .set('x-access-token', token)
+      .send(cancel)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
   it('not update a delivery window of a transport order', (done) => {
     const pickupWindow: PickupWindow = {
       orderID:    '12345567890',
@@ -426,6 +481,27 @@ describe('An Recipient member can', () => {
       .put('/api/v1/transportOrder/updateDeliveryWindow')
       .set('x-access-token', token)
       .send(pickupWindow)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
+  it('can not update an expectedDeliveryWindow of an ECMR with a status other than IN_TRANSIT', (done) => {
+    const expectedWindow = {
+      ecmrID:         'A1234567890',
+      expectedWindow: [7247832478934, 212213821321]
+    };
+
+    server
+      .put('/api/v1/ECMR/updateExpectedDeliveryWindow')
+      .set('x-access-token', token)
+      .send(expectedWindow)
       .expect(500)
       .end((err: Error) => {
         if (err) {

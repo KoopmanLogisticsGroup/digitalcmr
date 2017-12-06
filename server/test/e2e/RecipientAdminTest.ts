@@ -75,7 +75,7 @@ const buildECMR = (ecmrID: string): Ecmr => {
 
 const buildTransportOrder = (): TransportOrder => {
   return <TransportOrder> {
-    orderID:   String(new Date().getMilliseconds()),
+    orderID:   String(new Date().getTime()),
     carrier:   'koopman',
     source:    'amsterdamcompound',
     goods:     [],
@@ -89,6 +89,8 @@ const buildTransportOrder = (): TransportOrder => {
 
 describe('A Recipient Admin can', () => {
   before((done) => {
+    updateEcmr = buildECMR('ecmr1');
+
     const loginParams = {
       'username': 'clara@cardealer.org',
       'password': 'passw0rd'
@@ -244,12 +246,12 @@ describe('A Recipient Admin can', () => {
   });
 
   it('not update an ECMR from DELIVERED to CONFIRMED_DELIVERED', (done) => {
-    const transportOrder  = buildECMR('F1234567890');
-    transportOrder.status = EcmrStatus.ConfirmedDelivered;
+    const ecmr  = buildECMR('F1234567890');
+    ecmr.status = EcmrStatus.ConfirmedDelivered;
     server
       .post('/api/v1/transportOrder')
       .set('x-access-token', token)
-      .send(transportOrder)
+      .send(ecmr)
       .expect(500)
       .end((err: Error) => {
         if (err) {
@@ -409,6 +411,27 @@ describe('A Recipient Admin can', () => {
       .put('/api/v1/transportOrder/updateDeliveryWindow')
       .set('x-access-token', token)
       .send(pickupWindow)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
+  it('can not update an expectedDeliveryWindow of an ECMR with a status other than IN_TRANSIT', (done) => {
+    const expectedWindow = {
+      ecmrID:         'A1234567890',
+      expectedWindow: [7247832478934, 212213821321]
+    };
+
+    server
+      .put('/api/v1/ECMR/updateExpectedDeliveryWindow')
+      .set('x-access-token', token)
+      .send(expectedWindow)
       .expect(500)
       .end((err: Error) => {
         if (err) {

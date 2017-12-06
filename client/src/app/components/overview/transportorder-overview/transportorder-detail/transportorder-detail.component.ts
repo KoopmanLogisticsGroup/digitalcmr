@@ -26,6 +26,13 @@ export class TransportorderDetailComponent implements OnInit {
     LegalOwnerAdmin: 'LegalOwnerAdmin'
   };
 
+  public TransportOrderStatus = {
+    Open:       'OPEN',
+    InProgress: 'IN_PROGRESS',
+    Completed:  'COMPLETED',
+    Cancelled:  'CANCELLED'
+  };
+
   public constructor(private route: ActivatedRoute,
                      private transportOrderService: TransportOrderService,
                      private authenticationService: AuthenticationService,

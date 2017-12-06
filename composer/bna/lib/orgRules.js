@@ -25,7 +25,7 @@ function createLegalOwnerOrg(tx) {
         throw new Error('[CreateLegalOwnerOrg] An error occurred while adding all the assets in the registry: ' + error);
       });
     }).catch(function (error) {
-      throw new Error('[CreateLegalOwnerOrg] An error occurred while saving the LegalOwnerOrg asset', error);
+      throw new Error('[CreateLegalOwnerOrg] An error occurred while saving the LegalOwnerOrg asset' + error);
     });
 
 }
@@ -43,7 +43,7 @@ function createCompoundOrg(tx) {
         throw new Error('[CreateCompoundOrg] An error occurred while adding all the assets in the registry: ' + error);
       });
     }).catch(function (error) {
-      throw new Error('[CreateCompoundOrg] An error occurred while saving the CompoundOrg asset', error);
+      throw new Error('[CreateCompoundOrg] An error occurred while saving the CompoundOrg asset' + error);
     });
 
 }
@@ -62,7 +62,7 @@ function createCarrierOrg(tx) {
         throw error;
       });
     }).catch(function (error) {
-      console.log('[CreateCarrierOrg] An error occurred while saving the CarrierOrg asset', error);
+      console.log('[CreateCarrierOrg] An error occurred while saving the CarrierOrg asset' + error);
       throw error;
     });
 
