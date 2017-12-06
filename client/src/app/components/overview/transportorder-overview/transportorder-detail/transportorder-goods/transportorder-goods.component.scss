@@ -93,7 +93,7 @@ ol {
     }
   }
 
-  span.statusSpan {
+  span.status_span {
     color: #108043;
   }
 
@@ -103,16 +103,17 @@ ol {
   }
 }
 
-.loadingWindowNames {
+.go_to_ecmr {
+  content: url("../../../../../../assets/icons/search_icon.svg");
+}
+
+.loading_window_names {
   span {
     display:    block;
-    text-align: right;
     color:      #637381;
-
     &:nth-child(2n+2) {
       padding-top: 15px;
     }
-
     &:nth-child(2n+3) {
       padding-top: 30px;
     }

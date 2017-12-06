@@ -26,16 +26,16 @@
           <td>{{good?.weight}} kg</td>
           <td>{{good?.vehicle?.odoMeterReading}}</td>
           <td>
-          <div *ngFor="let ecmr of ecmrs">
-            <div *ngFor="let ecmrGood of ecmr?.goods">
-              <div *ngIf="good?.vehicle?.vin == ecmrGood?.vehicle?.vin">
+            <div *ngFor="let ecmr of ecmrs">
+              <div *ngFor="let ecmrGood of ecmr?.goods">
+                <div *ngIf="good?.vehicle?.vin == ecmrGood?.vehicle?.vin">
                 <span *ngIf="ecmr?.carrierLoadingSignature !== undefined; else bla">
                 <ng-template #bla>Pending Pickup</ng-template>
                   Picked Up
                 </span>
+                </div>
               </div>
             </div>
-          </div>
           </td>
           <td>
             <ng-container *ngFor="let ecmr of ecmrs">
@@ -57,7 +57,7 @@
         <tbody class="ui content">
         <tr>
           <td><img class="orderStatePic" src="../../../../../../assets/img/icon_pickup_on.svg"/></td>
-          <td class="loadingWindowNames">
+          <td class="loading_window_names">
             <span><strong>Pickup Location: </strong> </span>
             <span><strong>Pickup Window: </strong> </span>
             <span><strong>Pickup Signed: </strong> </span>
@@ -72,14 +72,14 @@
                   <ng-container *ngIf="ecmr?.carrierPickupSignature?.timestamp !== undefined"></ng-container>
                   <ng-template #delivery_na><span class="noStatus">{{ecmr?.ecmrID}} NaN</span></ng-template>
                   <span
-                    class="statusSpan">{{ecmr?.carrierLoadingSignature?.timestamp | date: "dd-MM-yyyy (HH:mm)"}}</span>
+                    class="status_span">{{ecmr?.carrierLoadingSignature?.timestamp | date: "dd-MM-yyyy (HH:mm)"}}</span>
                 </ng-container>
               </ng-container>
             </ng-container>
           </td>
           <td colspan="2"></td>
           <td><img class="orderStatePic" src="../../../../../../assets/img/icon_receiver_off.svg"/></td>
-          <td class="loadingWindowNames">
+          <td class="loading_window_names">
             <span><strong>Delivery Location: </strong> </span>
             <span><strong>Delivery Window: </strong> </span>
             <span><strong>Delivery Signed: </strong> </span>
@@ -93,11 +93,15 @@
                 <div *ngIf="good?.vehicle?.vin == ecmrGood?.vehicle?.vin">
                   <ng-container *ngIf="ecmr?.carrierDeliverySignature"></ng-container>
                   <span
-                    class="statusSpan">{{ecmr?.carrierDeliverySignature?.timestamp | date: "dd-MM-yyyy (HH:mm)"}}</span>
+                    class="status_span">{{ecmr?.carrierDeliverySignature?.timestamp | date: "dd-MM-yyyy (HH:mm)"}}</span>
                 </div>
               </div>
             </div>
           </td>
+        </tr>
+        <tr>
+          <td colspan="8" class="right aligned">Go to ECMR <img class="go_to_ecmr"
+                                                                [routerLink]="selectECMR(good?.vehicle?.vin)"></td>
         </tr>
         </tbody>
       </ng-container>

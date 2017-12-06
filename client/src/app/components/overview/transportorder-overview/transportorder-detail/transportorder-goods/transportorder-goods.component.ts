@@ -17,4 +17,19 @@ export class TransportorderGoodsComponent implements OnInit {
 
     $('.noStatus').text('blaat');
   }
+
+  public selectECMR(vin) {
+    let ecmrID = '';
+
+    if (this.ecmrs) {
+      for (const ecmr of this.ecmrs) {
+        for (const good of ecmr.goods) {
+          if (good.vehicle.vin === vin) {
+            ecmrID = ecmr.ecmrID;
+          }
+        }
+      }
+    }
+    return '/ecmr/' + ecmrID;
+  }
 }
