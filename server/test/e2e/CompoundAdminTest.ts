@@ -400,7 +400,7 @@ describe('A Compound Admin can', () => {
       });
   });
 
-  it('cannot get a TransportOrderby orderID', (done) => {
+  it('cannot get a TransportOrder by orderID', (done) => {
     server
       .get(`${baseEndPoint}/transportOrder/orderID/12345567890`)
       .set('x-access-token', token)
@@ -454,7 +454,7 @@ describe('A Compound Admin can', () => {
       });
   });
 
-  it('cannot update a estimatedPickupWindow of a TransportOrder', (done) => {
+  it('cannot update an estimatedPickupWindow of a TransportOrder', (done) => {
     const pickupWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
@@ -501,7 +501,7 @@ describe('A Compound Admin can', () => {
       });
   });
 
-  it('not update a estimatedDeliveryWindow of a TransportOrder', (done) => {
+  it('not update an estimatedDeliveryWindow of a TransportOrder', (done) => {
     const deliveryWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
@@ -523,7 +523,7 @@ describe('A Compound Admin can', () => {
       });
   });
 
-  it('not update a estimatedPickupWindow of a TransportOrder', (done) => {
+  it('not update an estimatedPickupWindow of a TransportOrder', (done) => {
     const pickupWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',

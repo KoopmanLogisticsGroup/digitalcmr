@@ -381,7 +381,7 @@ describe('A Recipient Admin can', () => {
       });
   });
 
-  it('not update a estimatedPickupWindow of a TransportOrder', (done) => {
+  it('not update an estimatedPickupWindow of a TransportOrder', (done) => {
     const pickupWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
@@ -402,7 +402,7 @@ describe('A Recipient Admin can', () => {
       });
   });
 
-  it('not update a estimatedDeliveryWindow of a TransportOrder', (done) => {
+  it('not update an estimatedDeliveryWindow of a TransportOrder', (done) => {
     const deliveryWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',

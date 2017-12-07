@@ -251,7 +251,7 @@ describe('An Recipient member can', () => {
       ecmrID:    'H1234567890',
       orderID:   updateEcmr.orderID,
       goods:     updateEcmr.goods,
-      signature: Builder.buildSignature('clara@cardealer.org')
+      signature: Builder.buildSignature('rob@cardealer.org')
     };
 
     server
@@ -274,7 +274,7 @@ describe('An Recipient member can', () => {
       ecmrID:    updateEcmr.ecmrID,
       orderID:   updateEcmr.orderID,
       goods:     updateEcmr.goods,
-      signature: Builder.buildSignature('clara@cardealer.org')
+      signature: Builder.buildSignature('rob@cardealer.org')
     };
 
     server
@@ -433,7 +433,7 @@ describe('An Recipient member can', () => {
       });
   });
 
-  it('not update a estimatedPickupWindow of a TransportOrder', (done) => {
+  it('not update an estimatedPickupWindow of a TransportOrder', (done) => {
     const pickupWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
@@ -479,7 +479,7 @@ describe('An Recipient member can', () => {
       });
   });
 
-  it('not update a estimatedDeliveryWindow of a TransportOrder', (done) => {
+  it('not update an estimatedDeliveryWindow of a TransportOrder', (done) => {
     const deliveryWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
@@ -501,7 +501,7 @@ describe('An Recipient member can', () => {
       });
   });
 
-  it('not update a estimatedPickupWindow of a TransportOrder', (done) => {
+  it('not update an estimatedPickupWindow of a TransportOrder', (done) => {
     const pickWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
