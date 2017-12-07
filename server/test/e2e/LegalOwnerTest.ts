@@ -3,7 +3,6 @@ import '../../node_modules/mocha';
 import * as chai from 'chai';
 import {TransportOrder} from '../../src/interfaces/transportOrder.interface';
 import {Ecmr, EcmrStatus} from '../../src/interfaces/ecmr.interface';
-import {PickupWindow} from '../../src/interfaces/pickupWindow.interface';
 import {Builder} from './common/Builder';
 import {StatusCode} from './common/StatusCode';
 import {Response} from 'superagent';
@@ -247,7 +246,7 @@ describe('A legal owner admin can', () => {
       });
   });
 
-  it('create a transport order', (done) => {
+  it('create a TransportOrder', (done) => {
     server
       .post('/api/v1/transportOrder/')
       .set('x-access-token', token)
@@ -266,7 +265,7 @@ describe('A legal owner admin can', () => {
       });
   });
 
-  it('get all transport orders where his org is the owner', (done) => {
+  it('get all TransportOrders where his org is the owner', (done) => {
     server
       .get('/api/v1/transportOrder')
       .set('x-access-token', token)
@@ -284,7 +283,7 @@ describe('A legal owner admin can', () => {
       });
   });
 
-  it('get a specific transport order by orderID', (done) => {
+  it('get a specific TransportOrder by orderID', (done) => {
     server
       .get('/api/v1/transportOrder/orderID/12345567890')
       .set('x-access-token', token)
@@ -302,7 +301,7 @@ describe('A legal owner admin can', () => {
       });
   });
 
-  it('get a specific transport order by status', (done) => {
+  it('get a specific TransportOrder by status', (done) => {
     server
       .get(`/api/v1/transportOrder/status/${transportOrder.status}`)
       .set('x-access-token', token)
@@ -345,7 +344,7 @@ describe('A legal owner admin can', () => {
       });
   });
 
-  it('get a specific transport order based on vin', (done) => {
+  it('get a specific TransportOrder based on vin', (done) => {
     server
       .get('/api/v1/transportOrder/vin/183726339N')
       .set('x-access-token', token)
@@ -363,7 +362,7 @@ describe('A legal owner admin can', () => {
       });
   });
 
-  it('not create a transport order for another legal owner org', (done) => {
+  it('not create a TransportOrder for another legal owner org', (done) => {
     const wrongTransportOrder = Builder.buildTransportOrder();
     wrongTransportOrder.owner = 'notLeaseplan';
 
@@ -384,8 +383,8 @@ describe('A legal owner admin can', () => {
       });
   });
 
-  it('update the pickup window of a transport order', (done) => {
-    const pickupWindow: PickupWindow = {
+  it('update the expectedPickupWindow of a TransportOrder with status CREATED', (done) => {
+    const pickupWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
       dateWindow: [1010101010, 2020202020]
@@ -407,8 +406,8 @@ describe('A legal owner admin can', () => {
       });
   });
 
-  it('update a delivery window of a transport order', (done) => {
-    const pickupWindow: PickupWindow = {
+  it('update the expectedDeliveryWindow of a TransportOrder with status IN_TRANSIT', (done) => {
+    const pickupWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
       dateWindow: [1010101010, 2020202020]
@@ -429,9 +428,31 @@ describe('A legal owner admin can', () => {
       });
   });
 
-  it('can not update an expectedDeliveryWindow of an ECMR with a status other than IN_TRANSIT', (done) => {
+  it('can not update an expectedPickupWindow of an ECMR', (done) => {
     const expectedWindow = {
       ecmrID:         'A1234567890',
+      expectedWindow: [7247832478934, 212213821321]
+    };
+
+    server
+      .put('/api/v1/ECMR/updateExpectedPickupWindow')
+      .set('x-access-token', token)
+      .send(expectedWindow)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+
+        done(err);
+      });
+  });
+
+  it('can not update an expectedDeliveryWindow of an ECMR', (done) => {
+    const expectedWindow = {
+      ecmrID:         'E1234567890',
       expectedWindow: [7247832478934, 212213821321]
     };
 

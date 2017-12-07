@@ -7,7 +7,6 @@ import {StatusCode} from './common/StatusCode';
 import {Response} from 'superagent';
 import {Builder} from './common/Builder';
 import {Vehicle} from '../../src/interfaces/vehicle.interface';
-import {PickupWindow} from '../../src/interfaces/pickupWindow.interface';
 import {TransportOrderStatus, TransportOrder} from '../../src/interfaces/transportOrder.interface';
 import {CreateEcmrs} from '../../src/interfaces/createEcmrs.interface';
 import {TransportOrderCancellation} from '../../src/interfaces/cancellation.interface';
@@ -183,25 +182,24 @@ describe('A Compound Admin can', () => {
       });
   });
 
-  it('submit an update status from CREATED to LOADED', (done) => {
-    const payload = <UpdateEcmrStatus> {
-      ecmrID:    updateEcmr.ecmrID,
+  it('not submit an update status from CREATED to LOADED', (done) => {
+    const updateTransaction = {
+      ecmrID:    'A1234567890',
+      orderID:   updateEcmr.orderID,
       goods:     updateEcmr.goods,
       signature: Builder.buildSignature('willem@amsterdamcompound.org')
     };
-
     server
-      .put(`${baseEndPoint}/ECMR/status/${EcmrStatus.Loaded}`)
+      .put('/api/v1/ECMR/status/LOADED')
       .set('x-access-token', token)
-      .send(payload)
-      .expect(200)
+      .send(updateTransaction)
+      .expect(StatusCode.ok)
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
 
           return done(err);
         }
-
         done(err);
       });
   });
@@ -384,7 +382,7 @@ describe('A Compound Admin can', () => {
       });
   });
 
-  it('cannot create a transport order', (done) => {
+  it('cannot create a TransportOrder', (done) => {
     const transportOrder = Builder.buildTransportOrder();
 
     server
@@ -402,7 +400,7 @@ describe('A Compound Admin can', () => {
       });
   });
 
-  it('cannot get a transport orderby orderID', (done) => {
+  it('cannot get a TransportOrder by orderID', (done) => {
     server
       .get(`${baseEndPoint}/transportOrder/orderID/12345567890`)
       .set('x-access-token', token)
@@ -456,8 +454,8 @@ describe('A Compound Admin can', () => {
       });
   });
 
-  it('cannot update a pickup window of a transport order', (done) => {
-    const pickupWindow: PickupWindow = {
+  it('cannot update an estimatedPickupWindow of a TransportOrder', (done) => {
+    const pickupWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
       dateWindow: [1010101010, 2020202020]
@@ -503,8 +501,8 @@ describe('A Compound Admin can', () => {
       });
   });
 
-  it('not update a delivery window of a transport order', (done) => {
-    const pickupWindow: PickupWindow = {
+  it('not update an estimatedDeliveryWindow of a TransportOrder', (done) => {
+    const deliveryWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
       dateWindow: [1010101010, 2020202020]
@@ -512,6 +510,28 @@ describe('A Compound Admin can', () => {
 
     server
       .put(`${baseEndPoint}/transportOrder/updateDeliveryWindow`)
+      .set('x-access-token', token)
+      .send(deliveryWindow)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
+  it('not update an estimatedPickupWindow of a TransportOrder', (done) => {
+    const pickupWindow = {
+      orderID:    '12345567890',
+      vin:        '183726339N',
+      dateWindow: [1010101010, 2020202020]
+    };
+
+    server
+      .put(`${baseEndPoint}/transportOrder/updatePickupWindow`)
       .set('x-access-token', token)
       .send(pickupWindow)
       .expect(500)
@@ -525,7 +545,7 @@ describe('A Compound Admin can', () => {
       });
   });
 
-  it('can not update an expectedDeliveryWindow of an ECMR with a status other than IN_TRANSIT', (done) => {
+  it('can not update an expectedDeliveryWindow of an ECMR', (done) => {
     const expectedWindow = {
       ecmrID:         'A1234567890',
       expectedWindow: [7247832478934, 212213821321]
@@ -533,6 +553,27 @@ describe('A Compound Admin can', () => {
 
     server
       .put('/api/v1/ECMR/updateExpectedDeliveryWindow')
+      .set('x-access-token', token)
+      .send(expectedWindow)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
+  it('can not update an expectedPickupWindow of an ECMR', (done) => {
+    const expectedWindow = {
+      ecmrID:         'A1234567890',
+      expectedWindow: [7247832478934, 212213821321]
+    };
+
+    server
+      .put('/api/v1/ECMR/updateExpectedPickupWindow')
       .set('x-access-token', token)
       .send(expectedWindow)
       .expect(500)
