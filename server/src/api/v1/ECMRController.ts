@@ -74,7 +74,7 @@ export class ECMRController {
     return await this.ecmrTransactor.getEcmrsByPlateNumber(this.transactionHandler, identity, Config.settings.composer.profile, plateNumber);
   }
 
-  @Post('/')
+  @Post('/createECMRs')
   public async create(@Body() data: CreateEcmrs, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
