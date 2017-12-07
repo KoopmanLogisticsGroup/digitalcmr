@@ -542,50 +542,6 @@ describe('A Carrier member can', () => {
       });
   });
 
-  it('not update a estimatedPickupWindow of a TransportOrder', (done) => {
-    const pickupWindow = {
-      orderID:    '12345567890',
-      vin:        '183726339N',
-      dateWindow: [1010101010, 2020202020]
-    };
-
-    server
-      .put('/api/v1/transportOrder/updatePickupWindow')
-      .set('x-access-token', token)
-      .send(pickupWindow)
-      .expect(500)
-      .end((err: Error) => {
-        if (err) {
-          console.log(err.stack);
-
-          return done(err);
-        }
-        done(err);
-      });
-  });
-
-  it('not update a estimatedDeliveryWindow of a TransportOrder', (done) => {
-    const deliveryWindow = {
-      orderID:    '12345567890',
-      vin:        '183726339N',
-      dateWindow: [1010101010, 2020202020]
-    };
-
-    server
-      .put('/api/v1/transportOrder/updateDeliveryWindow')
-      .set('x-access-token', token)
-      .send(deliveryWindow)
-      .expect(500)
-      .end((err: Error) => {
-        if (err) {
-          console.log(err.stack);
-
-          return done(err);
-        }
-        done(err);
-      });
-  });
-
   it('not cancel a transportOrder', (done) => {
     let cancel = <TransportOrderCancellation> {
       'orderID':      transportOrder.orderID,
