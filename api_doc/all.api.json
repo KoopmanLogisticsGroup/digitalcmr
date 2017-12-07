@@ -19,7 +19,7 @@
     "application/json"
   ],
   "paths":               {
-    "/login":                                           {
+    "/login":                               {
       "post": {
         "x-swagger-router-controller": "AuthController",
         "operationId":                 "login",
@@ -55,10 +55,10 @@
         }
       }
     },
-    "/transportOrder/":                                 {
+    "/transportOrder/":                     {
       "post": {
         "x-swagger-router-controller": "TransportOrderController",
-        "operationId":                 "create",
+        "operationId":                 "createTransportOrder",
         "summary":                     "Create a new Transport Order",
         "description":                 "Creates a new transportOrder and saves it to the blockchain, if the user has the right permissions.\n",
         "consumes":                    [
@@ -296,7 +296,7 @@
         }
       }
     },
-    "/transportOrder/updateDeliveryWindow":             {
+    "/transportOrder/updateDeliveryWindow": {
       "put": {
         "x-swagger-router-controller": "TransportOrderController",
         "operationId":                 "updateDeliveryWindow",
@@ -339,10 +339,10 @@
         }
       }
     },
-    "/transportOrder/cancel":                           {
+    "/transportOrder/cancel":               {
       "put": {
         "x-swagger-router-controller": "TransportOrderController",
-        "operationId":                 "update",
+        "operationId":                 "cancelTransportOrder",
         "summary":                     "Update the status of an existing TransportOrder to cancelled",
         "description":                 "Updates the status of an existing TransportOrder to cancelled and saves it to the blockchain, if the user has the proper permissions.\n",
         "consumes":                    [
@@ -382,12 +382,12 @@
         }
       }
     },
-    "/ECMR/":                                           {
+    "/ECMR/createECMRs":                    {
       "post": {
         "x-swagger-router-controller": "ECMRController",
-        "operationId":                 "create",
-        "summary":                     "Create a new ECMR",
-        "description":                 "Creates a new ECMR and saves it to the blockchain, if the user has the proper permissions.\n",
+        "operationId":                 "CreateECMRs",
+        "summary":                     "Create new ECMR(s)",
+        "description":                 "Creates new ECMR(s) and saves it to the blockchain, if the user has the proper permissions.\n",
         "consumes":                    [
           "application/json"
         ],
@@ -423,12 +423,14 @@
             }
           }
         }
-      },
-      "put":  {
+      }
+    },
+    "/ECMR/status/LOADED":                  {
+      "put": {
         "x-swagger-router-controller": "ECMRController",
-        "operationId":                 "update",
-        "summary":                     "Update an existing ECMR",
-        "description":                 "Updates an existing ECMR and saves it to the blockchain, if the user has the proper permissions.\n",
+        "operationId":                 "updateEcmrStatusToLoaded",
+        "summary":                     "Update the status of an existing ECMR to LOADED",
+        "description":                 "Updates the status of an existing ECMR to LOADED and saves it to the blockchain, if the user has the proper permissions.\n",
         "consumes":                    [
           "application/json"
         ],
@@ -446,7 +448,7 @@
             "description": "Updates the ECMR object",
             "required":    true,
             "schema":      {
-              "$ref": "#/definitions/ECMR"
+              "$ref": "#/definitions/UpdateStatus"
             }
           }
         ],
@@ -454,7 +456,7 @@
           "200":     {
             "description": "The ECMR has been updated and written to the blockchain\n",
             "schema":      {
-              "$ref": "#/definitions/ECMR"
+              "$ref": "#/definitions/UpdateStatus"
             }
           },
           "default": {
@@ -464,8 +466,139 @@
             }
           }
         }
-      },
-      "get":  {
+      }
+    },
+    "/ECMR/status/IN_TRANSIT":              {
+      "put": {
+        "x-swagger-router-controller": "ECMRController",
+        "operationId":                 "updateEcmrStatusToInTransit",
+        "summary":                     "Update the status of an existing ECMR to IN_TRANSIT",
+        "description":                 "Updates the status of an existing ECMR to IN_TRANSIT and saves it to the blockchain, if the user has the proper permissions.\n",
+        "consumes":                    [
+          "application/json"
+        ],
+        "parameters":                  [
+          {
+            "name":        "x-access-token",
+            "in":          "header",
+            "description": "Provide authentication token",
+            "required":    true,
+            "type":        "string"
+          },
+          {
+            "name":        "ecmr",
+            "in":          "body",
+            "description": "Updates the ECMR object",
+            "required":    true,
+            "schema":      {
+              "$ref": "#/definitions/UpdateStatus"
+            }
+          }
+        ],
+        "responses":                   {
+          "200":     {
+            "description": "The ECMR has been updated and written to the blockchain\n",
+            "schema":      {
+              "$ref": "#/definitions/UpdateStatus"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema":      {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/ECMR/status/DELIVERED":               {
+      "put": {
+        "x-swagger-router-controller": "ECMRController",
+        "operationId":                 "updateEcmrStatusToDelivered",
+        "summary":                     "Update the status of an existing ECMR to DELIVERED",
+        "description":                 "Updates the status of an existing ECMR to DELIVERED and saves it to the blockchain, if the user has the proper permissions.\n",
+        "consumes":                    [
+          "application/json"
+        ],
+        "parameters":                  [
+          {
+            "name":        "x-access-token",
+            "in":          "header",
+            "description": "Provide authentication token",
+            "required":    true,
+            "type":        "string"
+          },
+          {
+            "name":        "ecmr",
+            "in":          "body",
+            "description": "Updates the ECMR object",
+            "required":    true,
+            "schema":      {
+              "$ref": "#/definitions/UpdateStatusWithTransportOrder"
+            }
+          }
+        ],
+        "responses":                   {
+          "200":     {
+            "description": "The ECMR has been updated and written to the blockchain\n",
+            "schema":      {
+              "$ref": "#/definitions/UpdateStatusWithTransportOrder"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema":      {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/ECMR/status/CONFIRMED_DELIVERED":     {
+      "put": {
+        "x-swagger-router-controller": "ECMRController",
+        "operationId":                 "updateEcmrStatusToConfirmedDelivered",
+        "summary":                     "Update the status of an existing ECMR to CONFIRMED_DELIVERED",
+        "description":                 "Updates the status of an existing ECMR to CONFIRMED_DELIVERED and saves it to the blockchain, if the user has the proper permissions.\n",
+        "consumes":                    [
+          "application/json"
+        ],
+        "parameters":                  [
+          {
+            "name":        "x-access-token",
+            "in":          "header",
+            "description": "Provide authentication token",
+            "required":    true,
+            "type":        "string"
+          },
+          {
+            "name":        "ecmr",
+            "in":          "body",
+            "description": "Updates the ECMR object",
+            "required":    true,
+            "schema":      {
+              "$ref": "#/definitions/UpdateStatusWithTransportOrder"
+            }
+          }
+        ],
+        "responses":                   {
+          "200":     {
+            "description": "The ECMR has been updated and written to the blockchain\n",
+            "schema":      {
+              "$ref": "#/definitions/UpdateStatusWithTransportOrder"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema":      {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/ECMR/":                               {
+      "get": {
         "x-swagger-router-controller": "ECMRController",
         "operationId":                 "getAllEcmrs",
         "summary":                     "Return the complete list of ECMRs",
@@ -748,7 +881,7 @@
         }
       }
     },
-    "/ECMR/updateExpectedDeliveryWindow/":              {
+    "/ECMR/updateExpectedDeliveryWindow/":  {
       "put": {
         "x-swagger-router-controller": "ECMRController",
         "operationId":                 "updateExpectedDeliveryWindow",
@@ -791,10 +924,10 @@
         }
       }
     },
-    "/organization/legalowner/":                        {
+    "/organization/legalowner/":            {
       "post": {
         "x-swagger-router-controller": "OrganizationController",
-        "operationId":                 "create",
+        "operationId":                 "createLegalOwner",
         "summary":                     "Create a new Legal Owner",
         "description":                 "Creates a new Legal Owner and saves it to the blockchain, if the user has the right permissions.\n",
         "consumes":                    [
@@ -907,7 +1040,7 @@
         }
       }
     },
-    "/organization/legalowner/name/{name}":             {
+    "/organization/legalowner/name/{name}": {
       "get": {
         "x-swagger-router-controller": "OrganizationController",
         "operationId":                 "getLegalOwnerOrgByName",
@@ -948,10 +1081,10 @@
         }
       }
     },
-    "/organization/compound/":                          {
+    "/organization/compound/":              {
       "post": {
         "x-swagger-router-controller": "OrganizationController",
-        "operationId":                 "create",
+        "operationId":                 "createCompound",
         "summary":                     "Create a new Compound Organization",
         "description":                 "Creates a new Compound Organization and saves it to the blockchain, if the user has the right permissions.\n",
         "consumes":                    [
@@ -1064,7 +1197,7 @@
         }
       }
     },
-    "/organization/compound/name/{name}":               {
+    "/organization/compound/name/{name}":   {
       "get": {
         "x-swagger-router-controller": "OrganizationController",
         "operationId":                 "getCompoundOrgByName",
@@ -1105,10 +1238,10 @@
         }
       }
     },
-    "/organization/carrier/":                           {
+    "/organization/carrier/":               {
       "post": {
         "x-swagger-router-controller": "OrganizationController",
-        "operationId":                 "create",
+        "operationId":                 "createCarrier",
         "summary":                     "Create a new Carrier Organization",
         "description":                 "Creates a new Carrier org and saves it to the blockchain, if the user has the right permissions.\n",
         "consumes":                    [
@@ -1221,7 +1354,7 @@
         }
       }
     },
-    "/organization/carrier/name/{name}":                {
+    "/organization/carrier/name/{name}":    {
       "get": {
         "x-swagger-router-controller": "OrganizationController",
         "operationId":                 "getCarrierOrgByName",
@@ -1262,10 +1395,10 @@
         }
       }
     },
-    "/organization/recipient/":                         {
+    "/organization/recipient/":             {
       "post": {
         "x-swagger-router-controller": "OrganizationController",
-        "operationId":                 "create",
+        "operationId":                 "createRecipient",
         "summary":                     "Create a new Recipient Organization",
         "description":                 "Creates a new Recipient organization and saves it to the blockchain, if the user has the right permissions.\n",
         "consumes":                    [
@@ -2354,7 +2487,7 @@
         }
       }
     },
-    "Creation":               {
+    "Creation":                       {
       "type":       "object",
       "properties": {
         "address": {
@@ -2369,7 +2502,7 @@
         }
       }
     },
-    "Remark":                 {
+    "Remark":                         {
       "type":       "object",
       "properties": {
         "comments":  {
@@ -2380,11 +2513,12 @@
         "isDamaged": {
           "type":        "boolean",
           "description": "Specify if a good is damaged with true or false",
+          "example":     false,
           "required":    false
         }
       }
     },
-    "Vehicle":                {
+    "Vehicle":                        {
       "type":       "object",
       "properties": {
         "vin":             {
@@ -2410,9 +2544,7 @@
         "ecmrs":           {
           "type":        "array",
           "description": "Provide an array of ecmrs, which will be automatically updated",
-          "items":       {
-            "type": "string"
-          },
+          "example":     [],
           "required":    true
         },
         "odoMeterReading": {
@@ -2427,7 +2559,7 @@
         }
       }
     },
-    "EcmrStatus":             {
+    "EcmrStatus":                     {
       "type":        "string",
       "description": "Select the correct ecmr status",
       "enum":        [
@@ -2438,9 +2570,9 @@
         "CONFIRMED_DELIVERED"
       ]
     },
-    "CreateECMRs":            {
+    "CreateECMRs":                    {
       "type":        "object",
-      "description": "description",
+      "description": "This API creates a new ECMR, or multiple ECMRs. Make sure there is an active transport order, otherwise an ECMR can not be created",
       "properties":  {
         "orderID": {
           "type":        "string",
@@ -2454,7 +2586,7 @@
         }
       }
     },
-    "ECMR":                   {
+    "ECMR":                           {
       "type":  "array",
       "items": {
         "description": "Array of ecmrs",
@@ -2704,7 +2836,6 @@
     "Participant":            {
       "type": "object",
       "$ref": "#/definitions/userProperties"
-
     },
     "LegalOwnerAdmin":        {
       "type": "object",
@@ -2765,7 +2896,7 @@
         }
       }
     },
-    "TransportOrder":         {
+    "TransportOrder":                 {
       "type":        "object",
       "description": "description of the transportOrder",
       "properties":  {
@@ -2817,14 +2948,12 @@
           "required":    true
         },
         "ecmrs":     {
-          "type":  "array",
-          "items": {
-            "type": "string"
-          }
+          "type":    "array",
+          "example": []
         }
       }
     },
-    "OrderStatus":            {
+    "OrderStatus":                    {
       "type":        "string",
       "description": "Order status as an enum",
       "enum":        [
@@ -2834,7 +2963,59 @@
         "CANCELLED"
       ]
     },
-    "UpdateWindow":           {
+    "UpdateStatus":                   {
+      "type":       "object",
+      "properties": {
+        "ecmrID":    {
+          "type":        "string",
+          "description": "Unique ecmrID number as a string",
+          "example":     "A1234567890",
+          "required":    false
+        },
+        "signature": {
+          "type":        "object",
+          "$ref":        "#/definitions/Signature",
+          "description": "Returns a signature object"
+        },
+        "goods":     {
+          "type":  "array",
+          "items": {
+            "$ref":        "#/definitions/Good",
+            "description": "Returns an array of goods"
+          }
+        }
+      }
+    },
+    "UpdateStatusWithTransportOrder": {
+      "type":       "object",
+      "properties": {
+        "orderID":   {
+          "type":        "string",
+          "description": "Unique orderID as a string",
+          "example":     "ORDER1",
+          "required":    false
+        },
+        "ecmrID":    {
+          "type":        "string",
+          "description": "Unique ecmrID as a string",
+          "example":     "A1234567890",
+          "required":    false
+        },
+        "signature": {
+          "type":        "object",
+          "$ref":        "#/definitions/Signature",
+          "description": "Returns a signature object"
+        },
+        "goods":     {
+          "type":  "array",
+          "items": {
+            "$ref":        "#/definitions/Good",
+            "description": "Returns an array of goods"
+          }
+        }
+      }
+    },
+    "UpdateWindow":                   {
       "type":       "object",
       "properties": {
         "vin":        {
