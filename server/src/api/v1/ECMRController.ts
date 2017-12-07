@@ -77,7 +77,6 @@ export class ECMRController {
   @Post('/')
   public async create(@Body() data: CreateEcmrs, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
-
     return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateEcmrs, data, new EcmrTransactor());
   }
 

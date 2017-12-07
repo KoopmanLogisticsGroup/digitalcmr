@@ -1,9 +1,8 @@
 import * as supertest from 'supertest';
 import '../../node_modules/mocha';
 import * as chai from 'chai';
-import {Ecmr} from '../../../client/src/app/interfaces/ecmr.interface';
+import {Ecmr} from '../../src/interfaces/ecmr.interface';
 import {TransportOrder} from '../../src/interfaces/transportOrder.interface';
-import {PickupWindow} from '../../src/interfaces/pickupWindow.interface';
 import {EcmrStatus} from '../../src/interfaces/ecmr.interface';
 import {StatusCode} from './common/StatusCode';
 import {Builder} from './common/Builder';
@@ -122,9 +121,33 @@ describe('A Carrier Admin can', () => {
       });
   });
 
-  it('can cancel an ECMR', (done) => {
+  it('create an ECMR', (done) => {
+    let ecmrList: Ecmr[] = [];
+    const ecmr: Ecmr     = Builder.buildECMR('ecmr1');
+    ecmrList.push(ecmr);
+    const ecmrs = {
+      orderID: '12345567890',
+      ecmrs:   ecmrList
+    };
+
+    server
+      .post('/api/v1/ECMR')
+      .set('x-access-token', token)
+      .send(ecmrs)
+      .expect(200)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
+  it('cancel an ECMR', (done) => {
     let cancel = <EcmrCancellation> {
-      'ecmrID':       updateEcmr.ecmrID,
+      'ecmrID':       'ecmr1',
       'cancellation': {
         'cancelledBy': 'pete@koopman.org',
         'reason':      'no reason',
@@ -147,29 +170,16 @@ describe('A Carrier Admin can', () => {
       });
   });
 
-  it('not create an ECMR', (done) => {
-    const ecmr = Builder.buildECMR('ecmr1');
-    server
-      .post('/api/v1/ECMR')
-      .set('x-access-token', token)
-      .send(ecmr)
-      .expect(500)
-      .end((err: Error) => {
-        if (err) {
-          console.log(err.stack);
-
-          return done(err);
-        }
-        done(err);
-      });
-  });
-
   it('not submit an update status from LOADED to IN_TRANSIT', (done) => {
-    updateEcmr.status = EcmrStatus.InTransit;
+    const updateTransaction = {
+      ecmrID:    updateEcmr.ecmrID,
+      goods:     updateEcmr.goods,
+      signature: Builder.buildSignature('harry@koopman.org')
+    };
     server
-      .put('/api/v1/ECMR/')
+      .put('/api/v1/ECMR/status/IN_TRANSIT')
       .set('x-access-token', token)
-      .send(updateEcmr)
+      .send(updateTransaction)
       .expect(500)
       .end((err: Error) => {
         if (err) {
@@ -182,11 +192,16 @@ describe('A Carrier Admin can', () => {
   });
 
   it('not submit an update status from IN_TRANSIT to DELIVERED', (done) => {
-    updateEcmr.status = EcmrStatus.Delivered;
+    const updateTransaction = {
+      ecmrID:    updateEcmr.ecmrID,
+      orderID:   updateEcmr.orderID,
+      goods:     updateEcmr.goods,
+      signature: Builder.buildSignature('harry@koopman.org')
+    };
     server
-      .put('/api/v1/ECMR')
+      .put('/api/v1/ECMR/status/DELIVERED')
       .set('x-access-token', token)
-      .send(updateEcmr)
+      .send(updateTransaction)
       .expect(500)
       .end((err: Error) => {
         if (err) {
@@ -332,7 +347,7 @@ describe('A Carrier Admin can', () => {
       });
   });
 
-  it('not create a transport order', (done) => {
+  it('not create a TransportOrder', (done) => {
     const transportOrder = Builder.buildTransportOrder();
     server
       .post('/api/v1/transportOrder')
@@ -349,7 +364,7 @@ describe('A Carrier Admin can', () => {
       });
   });
 
-  it('get a transport order', (done) => {
+  it('get a TransportOrder', (done) => {
     server
       .get('/api/v1/transportOrder')
       .set('x-access-token', token)
@@ -366,7 +381,7 @@ describe('A Carrier Admin can', () => {
       });
   });
 
-  it('get a specific transport order based on ID', (done) => {
+  it('get a specific TransportOrder based on ID', (done) => {
     server
       .get('/api/v1/transportOrder/orderID/12345567890')
       .set('x-access-token', token)
@@ -383,7 +398,7 @@ describe('A Carrier Admin can', () => {
       });
   });
 
-  it('get a specific transport order based on any status', (done) => {
+  it('get a specific TransportOrder based on any status', (done) => {
     server
       .get('/api/v1/transportOrder/status/IN_PROGRESS')
       .set('x-access-token', token)
@@ -425,7 +440,7 @@ describe('A Carrier Admin can', () => {
       });
   });
 
-  it('get a specific transport order based on vin', (done) => {
+  it('get a specific TransportOrder based on vin', (done) => {
     server
       .get('/api/v1/transportOrder/vin/183726339N')
       .set('x-access-token', token)
@@ -442,8 +457,8 @@ describe('A Carrier Admin can', () => {
       });
   });
 
-  it('not update a pickup window of a transport order', (done) => {
-    const pickupWindow: PickupWindow = {
+  it('not update a estimatedPickupWindow of a TransportOrder', (done) => {
+    const pickupWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
       dateWindow: [1010101010, 2020202020]
@@ -463,8 +478,8 @@ describe('A Carrier Admin can', () => {
       });
   });
 
-  it('not update a delivery window of a transport order', (done) => {
-    const pickupWindow: PickupWindow = {
+  it('not update a estimatedDeliveryWindow of a TransportOrder', (done) => {
+    const deliveryWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
       dateWindow: [1010101010, 2020202020]
@@ -473,7 +488,7 @@ describe('A Carrier Admin can', () => {
     server
       .put('/api/v1/transportOrder/updateDeliveryWindow')
       .set('x-access-token', token)
-      .send(pickupWindow)
+      .send(deliveryWindow)
       .expect(500)
       .end((err: Error) => {
         if (err) {
@@ -485,7 +500,7 @@ describe('A Carrier Admin can', () => {
       });
   });
 
-  it('can update an expectedPickupWindow of an ECMR', (done) => {
+  it('update an expectedPickupWindow of an ECMR', (done) => {
     const expectedWindow = {
       ecmrID:         'A1234567890',
       expectedWindow: [7247832478934, 212213821321]
@@ -506,7 +521,28 @@ describe('A Carrier Admin can', () => {
       });
   });
 
-  it('can update an expectedDeliveryWindow of an ECMR', (done) => {
+  it(' not update an expectedPickupWindow of an ECMR with a status other than CREATED', (done) => {
+    const expectedWindow = {
+      ecmrID:         'E1234567890',
+      expectedWindow: [7247832478934, 212213821321]
+    };
+
+    server
+      .put('/api/v1/ECMR/updateExpectedPickupWindow')
+      .set('x-access-token', token)
+      .send(expectedWindow)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
+  it(' update an expectedDeliveryWindow of an ECMR with status IN_TRANSIT', (done) => {
     const expectedWindow = {
       ecmrID:         'E1234567890',
       expectedWindow: [7247832478934, 212213821321]
@@ -527,7 +563,7 @@ describe('A Carrier Admin can', () => {
       });
   });
 
-  it('can not update an expectedDeliveryWindow of an ECMR with a status other than IN_TRANSIT', (done) => {
+  it(' not update an expectedDeliveryWindow of an ECMR with a status other than IN_TRANSIT', (done) => {
     const expectedWindow = {
       ecmrID:         'A1234567890',
       expectedWindow: [7247832478934, 212213821321]

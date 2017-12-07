@@ -5,8 +5,9 @@ import * as http from 'http';
 import {TransportOrder} from '../../src/interfaces/transportOrder.interface';
 import {Ecmr, EcmrStatus} from '../../src/interfaces/ecmr.interface';
 import {Address} from '../../src/interfaces/address.interface';
-import {PickupWindow} from '../../src/interfaces/pickupWindow.interface';
 import {EcmrCancellation, TransportOrderCancellation} from '../../src/interfaces/cancellation.interface';
+import {Builder} from './common/Builder';
+import {StatusCode} from './common/StatusCode';
 
 const server = supertest.agent('http://localhost:8080');
 const should = chai.should();
@@ -90,7 +91,6 @@ const buildTransportOrder = (): TransportOrder => {
 describe('An Recipient member can', () => {
   before((done) => {
     transportOrder = buildTransportOrder();
-    updateEcmr     = buildECMR('ecmr1');
 
     const loginParams = {
       'username': 'rob@cardealer.org',
@@ -134,7 +134,7 @@ describe('An Recipient member can', () => {
 
   it('get an ECMR by ecmrID', (done) => {
     server
-      .get('/api/v1/ECMR/ecmrID/D1234567890')
+      .get('/api/v1/ECMR/ecmrID/A1234567890')
       .set('x-access-token', token)
       .expect(ok)
       .end((err: Error, res) => {
@@ -247,13 +247,17 @@ describe('An Recipient member can', () => {
   });
 
   it('not update an ECMR from DELIVERED to Confirmed Delivered when his org is not recipient', (done) => {
-    const updateECMR     = buildECMR('F1234567890');
-    updateECMR.status    = EcmrStatus.ConfirmedDelivered;
-    updateECMR.recipient = 'notCarDealer';
+    const updateTransaction = {
+      ecmrID:    'H1234567890',
+      orderID:   updateEcmr.orderID,
+      goods:     updateEcmr.goods,
+      signature: Builder.buildSignature('clara@cardealer.org')
+    };
+
     server
       .post('/api/v1/ECMR')
       .set('x-access-token', token)
-      .send(updateECMR)
+      .send(updateTransaction)
       .expect(500)
       .end((err: Error) => {
         if (err) {
@@ -266,13 +270,18 @@ describe('An Recipient member can', () => {
   });
 
   it('update an ECMR from DELIVERED to CONFIRMED DELIVERED', (done) => {
-    const updateECMR  = buildECMR('ecmr1');
-    updateECMR.status = EcmrStatus.ConfirmedDelivered;
+    const updateTransaction = {
+      ecmrID:    updateEcmr.ecmrID,
+      orderID:   updateEcmr.orderID,
+      goods:     updateEcmr.goods,
+      signature: Builder.buildSignature('clara@cardealer.org')
+    };
+
     server
-      .put('/api/v1/ECMR')
+      .put('/api/v1/ECMR/status/CONFIRMED_DELIVERED')
       .set('x-access-token', token)
-      .send(updateECMR)
-      .expect(500)
+      .send(updateTransaction)
+      .expect(StatusCode.ok)
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
@@ -424,8 +433,8 @@ describe('An Recipient member can', () => {
       });
   });
 
-  it('not update a pickup window of a transport order', (done) => {
-    const pickupWindow: PickupWindow = {
+  it('not update a estimatedPickupWindow of a TransportOrder', (done) => {
+    const pickupWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
       dateWindow: [1010101010, 2020202020]
@@ -470,8 +479,8 @@ describe('An Recipient member can', () => {
       });
   });
 
-  it('not update a delivery window of a transport order', (done) => {
-    const pickupWindow: PickupWindow = {
+  it('not update a estimatedDeliveryWindow of a TransportOrder', (done) => {
+    const deliveryWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
       dateWindow: [1010101010, 2020202020]
@@ -480,7 +489,7 @@ describe('An Recipient member can', () => {
     server
       .put('/api/v1/transportOrder/updateDeliveryWindow')
       .set('x-access-token', token)
-      .send(pickupWindow)
+      .send(deliveryWindow)
       .expect(500)
       .end((err: Error) => {
         if (err) {
@@ -492,7 +501,29 @@ describe('An Recipient member can', () => {
       });
   });
 
-  it('can not update an expectedDeliveryWindow of an ECMR with a status other than IN_TRANSIT', (done) => {
+  it('not update a estimatedPickupWindow of a TransportOrder', (done) => {
+    const pickWindow = {
+      orderID:    '12345567890',
+      vin:        '183726339N',
+      dateWindow: [1010101010, 2020202020]
+    };
+
+    server
+      .put('/api/v1/transportOrder/updateDeliveryWindow')
+      .set('x-access-token', token)
+      .send(pickWindow)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
+  it('can not update an expectedDeliveryWindow of an ECMR', (done) => {
     const expectedWindow = {
       ecmrID:         'A1234567890',
       expectedWindow: [7247832478934, 212213821321]
@@ -500,6 +531,27 @@ describe('An Recipient member can', () => {
 
     server
       .put('/api/v1/ECMR/updateExpectedDeliveryWindow')
+      .set('x-access-token', token)
+      .send(expectedWindow)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
+  it('can not update an expectedPickupWindow of an ECMR', (done) => {
+    const expectedWindow = {
+      ecmrID:         'A1234567890',
+      expectedWindow: [7247832478934, 212213821321]
+    };
+
+    server
+      .put('/api/v1/ECMR/updateExpectedPickupWindow')
       .set('x-access-token', token)
       .send(expectedWindow)
       .expect(500)
