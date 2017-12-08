@@ -9,6 +9,7 @@ import {Response} from 'superagent';
 import {CreateEcmrs} from '../../src/interfaces/createEcmrs.interface';
 import {EcmrCancellation, TransportOrderCancellation} from '../../src/interfaces/cancellation.interface';
 
+const baseEndPoint = '/api/v1';
 const server = supertest.agent('http://localhost:8080');
 const should = chai.should();
 
@@ -27,7 +28,7 @@ describe('A legal owner admin can', () => {
     };
 
     server
-      .post('/api/v1/login')
+      .post(baseEndPoint  + '/login')
       .send(loginParams)
       .expect(StatusCode.ok)
       .expect('Content-Type', /json/)
@@ -52,7 +53,7 @@ describe('A legal owner admin can', () => {
     };
 
     server
-      .post('/api/v1/ECMR')
+      .post(baseEndPoint  + '/ECMR')
       .set('x-access-token', token)
       .send(payload)
       .expect('Content-Type', /json/)
@@ -70,7 +71,7 @@ describe('A legal owner admin can', () => {
 
   it('read all ECMRs for his organisation', (done) => {
     server
-      .get('/api/v1/ECMR')
+      .get(baseEndPoint  + '/ECMR')
       .set('x-access-token', token)
       .expect('Content-Type', /json/)
       .expect(200)
@@ -88,7 +89,7 @@ describe('A legal owner admin can', () => {
 
   it('get an ECMR by ecmrID', (done) => {
     server
-      .get('/api/v1/ECMR/ecmrID/D1234567890')
+      .get(baseEndPoint  + '/ECMR/ecmrID/D1234567890')
       .set('x-access-token', token)
       .expect(StatusCode.ok)
       .end((err: Error) => {
@@ -121,7 +122,7 @@ describe('A legal owner admin can', () => {
 
   it('not read ECMRs when is org is not the legal owner', (done) => {
     server
-      .get('/api/v1/ECMR/ecmrID/H1234567890')
+      .get(baseEndPoint  + '/ECMR/ecmrID/H1234567890')
       .set('x-access-token', token)
       .expect(200)
       .end((err: Error, res: Response) => {
@@ -138,7 +139,7 @@ describe('A legal owner admin can', () => {
 
   it('get all ECMRs containing a vehicle with the provided vin', (done) => {
     server
-      .get('/api/v1/ECMR/vehicle/vin/183726339N')
+      .get(baseEndPoint  + '/ECMR/vehicle/vin/183726339N')
       .set('x-access-token', token)
       .expect(StatusCode.ok)
       .end((err: Error, res: Response) => {
@@ -156,7 +157,7 @@ describe('A legal owner admin can', () => {
 
   it('get all ECMRs containing a vehicle with the plate number', (done) => {
     server
-      .get('/api/v1/ECMR/vehicle/plateNumber/AV198RX')
+      .get(baseEndPoint  + '/ECMR/vehicle/plateNumber/AV198RX')
       .set('x-access-token', token)
       .end((err: Error, res: Response) => {
         if (err) {
@@ -172,7 +173,7 @@ describe('A legal owner admin can', () => {
 
   it('get all vehicles', (done) => {
     server
-      .get('/api/v1/vehicle/')
+      .get(baseEndPoint  + '/vehicle/')
       .set('x-access-token', token)
       .expect(StatusCode.ok)
       .end((err: Error, res: Response) => {
@@ -189,7 +190,7 @@ describe('A legal owner admin can', () => {
 
   it('get vehicle by vin', (done) => {
     server
-      .get('/api/v1/vehicle/vin/183726339N')
+      .get(baseEndPoint  + '/vehicle/vin/183726339N')
       .set('x-access-token', token)
       .expect(StatusCode.ok)
       .end((err: Error, res: Response) => {
@@ -206,7 +207,7 @@ describe('A legal owner admin can', () => {
 
   it('get vehicle by plateNumber', (done) => {
     server
-      .get('/api/v1/vehicle/plateNumber/AV198RX')
+      .get(baseEndPoint  + '/vehicle/plateNumber/AV198RX')
       .set('x-access-token', token)
       .expect(StatusCode.ok)
       .end((err: Error, res: Response) => {
@@ -232,7 +233,7 @@ describe('A legal owner admin can', () => {
     };
 
     server
-      .put('/api/v1/ECMR/cancel')
+      .put(baseEndPoint  + '/ECMR/cancel')
       .set('x-access-token', token)
       .send(cancel)
       .expect(500)
@@ -248,7 +249,7 @@ describe('A legal owner admin can', () => {
 
   it('create a TransportOrder', (done) => {
     server
-      .post('/api/v1/transportOrder/')
+      .post(baseEndPoint  + '/transportOrder/')
       .set('x-access-token', token)
       .send(transportOrder)
       .expect(StatusCode.ok)
@@ -267,7 +268,7 @@ describe('A legal owner admin can', () => {
 
   it('get all TransportOrders where his org is the owner', (done) => {
     server
-      .get('/api/v1/transportOrder')
+      .get(baseEndPoint  + '/transportOrder')
       .set('x-access-token', token)
       .expect(StatusCode.ok)
       .expect('Content-Type', /json/)
@@ -285,7 +286,7 @@ describe('A legal owner admin can', () => {
 
   it('get a specific TransportOrder by orderID', (done) => {
     server
-      .get('/api/v1/transportOrder/orderID/12345567890')
+      .get(baseEndPoint  + '/transportOrder/orderID/12345567890')
       .set('x-access-token', token)
       .expect(StatusCode.ok)
       .expect('Content-Type', /json/)
@@ -330,7 +331,7 @@ describe('A legal owner admin can', () => {
     };
 
     server
-      .put('/api/v1/transportOrder/cancel')
+      .put(baseEndPoint  + '/transportOrder/cancel')
       .set('x-access-token', token)
       .send(cancel)
       .expect(200)
@@ -346,7 +347,7 @@ describe('A legal owner admin can', () => {
 
   it('get a specific TransportOrder based on vin', (done) => {
     server
-      .get('/api/v1/transportOrder/vin/183726339N')
+      .get(baseEndPoint  + '/transportOrder/vin/183726339N')
       .set('x-access-token', token)
       .expect(StatusCode.ok)
       .expect('Content-Type', /json/)
@@ -367,7 +368,7 @@ describe('A legal owner admin can', () => {
     wrongTransportOrder.owner = 'notLeaseplan';
 
     server
-      .post('/api/v1/transportOrder/')
+      .post(baseEndPoint  + '/transportOrder/')
       .set('x-access-token', token)
       .send(wrongTransportOrder)
       .expect('Content-Type', /json/)
@@ -391,7 +392,7 @@ describe('A legal owner admin can', () => {
     };
 
     server
-      .put('/api/v1/transportOrder/updatePickupWindow')
+      .put(baseEndPoint  + '/transportOrder/updatePickupWindow')
       .set('x-access-token', token)
       .send(pickupWindow)
       .expect(StatusCode.ok)
@@ -414,7 +415,7 @@ describe('A legal owner admin can', () => {
     };
 
     server
-      .put('/api/v1/transportOrder/updateDeliveryWindow')
+      .put(baseEndPoint  + '/transportOrder/updateDeliveryWindow')
       .set('x-access-token', token)
       .send(pickupWindow)
       .expect(StatusCode.ok)
@@ -435,7 +436,7 @@ describe('A legal owner admin can', () => {
     };
 
     server
-      .put('/api/v1/ECMR/updateExpectedPickupWindow')
+      .put(baseEndPoint  + '/ECMR/updateExpectedPickupWindow')
       .set('x-access-token', token)
       .send(expectedWindow)
       .expect(500)
@@ -457,7 +458,7 @@ describe('A legal owner admin can', () => {
     };
 
     server
-      .put('/api/v1/ECMR/updateExpectedDeliveryWindow')
+      .put(baseEndPoint  + '/ECMR/updateExpectedDeliveryWindow')
       .set('x-access-token', token)
       .send(expectedWindow)
       .expect(500)

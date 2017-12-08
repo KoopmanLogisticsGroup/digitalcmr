@@ -1,23 +1,30 @@
 import {BuilderUtils} from '../../blockchain/BuilderUtils';
 import {Identity} from '../Identity';
+import {Ecmr} from '../../../src/interfaces/ecmr.interface';
 
 export class EcmrBuilder {
-  public static buildECMR(factory: any, namespace: string, ecmr: any, identity: Identity): any {
-    let validatedObject = BuilderUtils.createResource(factory, namespace, 'ECMR', ecmr);
-    validatedObject.creation         = BuilderUtils.createConcept(factory, namespace, 'Creation', ecmr.creation);
-    validatedObject.creation.address = BuilderUtils.createConcept(factory, namespace, 'Address', ecmr.creation.address);
-    validatedObject.loading          = BuilderUtils.createConcept(factory, namespace, 'Loading', ecmr.loading);
-    validatedObject.loading.address  = BuilderUtils.createConcept(factory, namespace, 'Address', ecmr.loading.address);
-    validatedObject.delivery         = BuilderUtils.createConcept(factory, namespace, 'Delivery', ecmr.delivery);
-    validatedObject.delivery.address = BuilderUtils.createConcept(factory, namespace, 'Address', ecmr.delivery.address);
+  public static buildECMR(factory: any, namespace: string, ecmr: Ecmr, identity: Identity): any {
+    let validatedObject                    = BuilderUtils.createResource(factory, namespace, 'ECMR', ecmr);
+    validatedObject.creation               = BuilderUtils.createConcept(factory, namespace, 'Creation', ecmr.creation);
+    validatedObject.creation.address       = BuilderUtils.createConcept(factory, namespace, 'Address', ecmr.creation.address);
+    validatedObject.loading                = BuilderUtils.createConcept(factory, namespace, 'Loading', ecmr.loading);
+    validatedObject.loading.expectedWindow = BuilderUtils.createConcept(factory, namespace, 'DateWindow', ecmr.loading.expectedWindow);
+    validatedObject.loading.address        = BuilderUtils.createConcept(factory, namespace, 'Address', ecmr.loading.address);
+    validatedObject.delivery               = BuilderUtils.createConcept(factory, namespace, 'Delivery', ecmr.delivery);
+      validatedObject.delivery.expectedWindow = BuilderUtils.createConcept(factory, namespace, 'DateWindow', ecmr.delivery.expectedWindow);
+    validatedObject.delivery.address       = BuilderUtils.createConcept(factory, namespace, 'Address', ecmr.delivery.address);
 
-    validatedObject.owner        = BuilderUtils.createRelationship(factory, namespace, 'LegalOwnerOrg', ecmr.owner);
-    validatedObject.source       = BuilderUtils.createRelationship(factory, namespace, 'CompoundOrg', ecmr.source);
-    validatedObject.transporter  = BuilderUtils.createRelationship(factory, namespace, 'CarrierMember', ecmr.transporter);
+    validatedObject.owner  = BuilderUtils.createRelationship(factory, namespace, 'LegalOwnerOrg', ecmr.owner);
+    validatedObject.source = BuilderUtils.createRelationship(factory, namespace, 'CompoundOrg', ecmr.source);
+    if (ecmr.transporter) {
+      validatedObject.transporter = BuilderUtils.createRelationship(factory, namespace, 'CarrierMember', ecmr.transporter);
+    }
     validatedObject.carrier      = BuilderUtils.createRelationship(factory, namespace, 'CarrierOrg', ecmr.carrier);
     validatedObject.recipientOrg = BuilderUtils.createRelationship(factory, namespace, 'RecipientOrg', ecmr.recipientOrg);
-    validatedObject.recipient    = BuilderUtils.createRelationship(factory, namespace, 'RecipientMember', ecmr.recipient);
-    validatedObject.issuedBy     = BuilderUtils.createRelationship(factory, namespace, 'Entity', ecmr.issuedBy);
+    if (ecmr.recipient) {
+      validatedObject.recipient = BuilderUtils.createRelationship(factory, namespace, 'RecipientMember', ecmr.recipient);
+    }
+    validatedObject.issuedBy = BuilderUtils.createRelationship(factory, namespace, 'Entity', ecmr.issuedBy);
 
     if (ecmr.compoundSignature) {
       validatedObject.compoundSignature = EcmrBuilder.buildSignature(factory, namespace, ecmr.compoundSignature, identity);

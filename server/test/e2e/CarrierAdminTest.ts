@@ -2,12 +2,13 @@ import * as supertest from 'supertest';
 import '../../node_modules/mocha';
 import * as chai from 'chai';
 import {Ecmr} from '../../src/interfaces/ecmr.interface';
-import {TransportOrder} from '../../src/interfaces/transportOrder.interface';
+import {TransportOrder, TransportOrderStatus} from '../../src/interfaces/transportOrder.interface';
 import {EcmrStatus} from '../../src/interfaces/ecmr.interface';
 import {StatusCode} from './common/StatusCode';
 import {Builder} from './common/Builder';
 import {EcmrCancellation, TransportOrderCancellation} from '../../src/interfaces/cancellation.interface';
 
+const baseEndPoint = '/api/v1';
 const server = supertest.agent('http://localhost:8080');
 const should = chai.should();
 let token: string;
@@ -23,7 +24,7 @@ describe('A Carrier Admin can', () => {
     };
 
     server
-      .post('/api/v1/login')
+      .post(`${baseEndPoint}/login`)
       .send(loginParams)
       .expect(StatusCode.ok)
       .expect('Content-Type', /json/)
@@ -42,7 +43,7 @@ describe('A Carrier Admin can', () => {
 
   it('get the ECMRs linked to a vin', (done) => {
     server
-      .get('/api/v1/ECMR/vehicle/vin/183726339N')
+      .get(`${baseEndPoint}/ECMR/vehicle/vin/183726339N`)
       .set('x-access-token', token)
       .end((err: Error, res) => {
         if (err) {
@@ -58,7 +59,7 @@ describe('A Carrier Admin can', () => {
 
   it('get the ECMRs linked to a plate number', (done) => {
     server
-      .get('/api/v1/ECMR/vehicle/plateNumber/AV198RX')
+      .get(`${baseEndPoint}/ECMR/vehicle/plateNumber/AV198RX`)
       .set('x-access-token', token)
       .end((err: Error, res) => {
         if (err) {
@@ -74,7 +75,7 @@ describe('A Carrier Admin can', () => {
 
   it('get a specific ECMR by ecmrID', (done) => {
     server
-      .get('/api/v1/ECMR/ecmrID/A1234567890')
+      .get(`${baseEndPoint}/ECMR/ecmrID/A1234567890`)
       .set('x-access-token', token)
       .expect(StatusCode.ok)
       .end((err: Error, res) => {
@@ -90,7 +91,7 @@ describe('A Carrier Admin can', () => {
 
   it('read ECMRs where his org is the transporter and status is not created', (done) => {
     server
-      .get('/api/v1/ECMR')
+      .get(`${baseEndPoint}/ECMR`)
       .set('x-access-token', token)
       .expect(StatusCode.ok)
       .end((err: Error, res) => {
@@ -107,7 +108,7 @@ describe('A Carrier Admin can', () => {
 
   it('not read an ECMR where his org is not the source', (done) => {
     server
-      .get('/api/v1/ECMR/ecmrID/H1234567890')
+      .get(baseEndPoint + '/ECMR/ecmrID/H1234567890')
       .set('x-access-token', token)
       .expect(200)
       .end((err: Error, res) => {
@@ -131,7 +132,7 @@ describe('A Carrier Admin can', () => {
     };
 
     server
-      .post('/api/v1/ECMR')
+      .post(baseEndPoint + '/ECMR')
       .set('x-access-token', token)
       .send(ecmrs)
       .expect(200)
@@ -156,7 +157,7 @@ describe('A Carrier Admin can', () => {
     };
 
     server
-      .put('/api/v1/ECMR/cancel')
+      .put(baseEndPoint + '/ECMR/cancel')
       .set('x-access-token', token)
       .send(cancel)
       .expect(200)
@@ -171,13 +172,13 @@ describe('A Carrier Admin can', () => {
   });
 
   it('not submit an update status from LOADED to IN_TRANSIT', (done) => {
-    const updateTransaction = {
+    const updateTransaction  = {
       ecmrID:    updateEcmr.ecmrID,
       goods:     updateEcmr.goods,
       signature: Builder.buildSignature('harry@koopman.org')
     };
     server
-      .put('/api/v1/ECMR/status/IN_TRANSIT')
+      .put(baseEndPoint + '/ECMR/status/' + EcmrStatus.InTransit)
       .set('x-access-token', token)
       .send(updateTransaction)
       .expect(500)
@@ -199,7 +200,7 @@ describe('A Carrier Admin can', () => {
       signature: Builder.buildSignature('harry@koopman.org')
     };
     server
-      .put('/api/v1/ECMR/status/DELIVERED')
+      .put(baseEndPoint + '/ECMR/status/' + EcmrStatus.Delivered)
       .set('x-access-token', token)
       .send(updateTransaction)
       .expect(500)
@@ -215,7 +216,7 @@ describe('A Carrier Admin can', () => {
 
   it('get ecmr by status CREATED', (done) => {
     server
-      .get('/api/v1/ECMR/status/CREATED')
+      .get(baseEndPoint + '/ECMR/status/' + EcmrStatus.Created)
       .set('x-access-token', token)
       .end((err: Error, res) => {
         if (err) {
@@ -231,7 +232,7 @@ describe('A Carrier Admin can', () => {
 
   it('get ecmr by status LOADED', (done) => {
     server
-      .get('/api/v1/ECMR/status/LOADED')
+      .get(baseEndPoint + '/ECMR/status/' + EcmrStatus.Loaded)
       .set('x-access-token', token)
       .end((err: Error, res) => {
           if (err) {
@@ -249,7 +250,7 @@ describe('A Carrier Admin can', () => {
 
   it('get ecmr by status IN_TRANSIT', (done) => {
     server
-      .get('/api/v1/ECMR/status/IN_TRANSIT')
+      .get(baseEndPoint + '/ECMR/status/' + EcmrStatus.InTransit)
       .set('x-access-token', token)
       .end((err: Error, res) => {
           if (err) {
@@ -267,7 +268,7 @@ describe('A Carrier Admin can', () => {
 
   it('get ecmr by status DELIVERED', (done) => {
     server
-      .get('/api/v1/ECMR/status/DELIVERED')
+      .get(baseEndPoint + '/ECMR/status/' + EcmrStatus.Delivered)
       .set('x-access-token', token)
       .end((err: Error, res) => {
         if (err) {
@@ -283,7 +284,7 @@ describe('A Carrier Admin can', () => {
 
   it('get ecmr by status CONFIRMED_DELIVERED', (done) => {
     server
-      .get('/api/v1/ECMR/status/CONFIRMED_DELIVERED')
+      .get(baseEndPoint + '/ECMR/status/' + EcmrStatus.ConfirmedDelivered)
       .set('x-access-token', token)
       .end((err: Error, res) => {
         if (err) {
@@ -299,7 +300,7 @@ describe('A Carrier Admin can', () => {
 
   it('get all vehicles', (done) => {
     server
-      .get('/api/v1/vehicle')
+      .get(baseEndPoint + '/vehicle')
       .set('x-access-token', token)
       .expect(StatusCode.ok)
       .end((err: Error, res) => {
@@ -316,7 +317,7 @@ describe('A Carrier Admin can', () => {
 
   it('get a specific vehicle', (done) => {
     server
-      .get('/api/v1/vehicle/vin/183726339N')
+      .get(baseEndPoint + '/vehicle/vin/183726339N')
       .set('x-access-token', token)
       .expect(StatusCode.ok)
       .end((err: Error, res) => {
@@ -332,7 +333,7 @@ describe('A Carrier Admin can', () => {
 
   it('get a specific vehicle based on license plate', (done) => {
     server
-      .get('/api/v1/vehicle/plateNumber/AV198RX')
+      .get(baseEndPoint + '/vehicle/plateNumber/AV198RX')
       .set('x-access-token', token)
       .expect(StatusCode.ok)
       .end((err: Error, res) => {
@@ -350,7 +351,7 @@ describe('A Carrier Admin can', () => {
   it('not create a TransportOrder', (done) => {
     const transportOrder = Builder.buildTransportOrder();
     server
-      .post('/api/v1/transportOrder')
+      .post(baseEndPoint + '/transportOrder')
       .set('x-access-token', token)
       .send(transportOrder)
       .expect(500)
@@ -366,7 +367,7 @@ describe('A Carrier Admin can', () => {
 
   it('get a TransportOrder', (done) => {
     server
-      .get('/api/v1/transportOrder')
+      .get(baseEndPoint + '/transportOrder')
       .set('x-access-token', token)
       .expect(StatusCode.ok)
       .end((err: Error, res) => {
@@ -383,7 +384,7 @@ describe('A Carrier Admin can', () => {
 
   it('get a specific TransportOrder based on ID', (done) => {
     server
-      .get('/api/v1/transportOrder/orderID/12345567890')
+      .get(baseEndPoint + '/transportOrder/orderID/12345567890')
       .set('x-access-token', token)
       .expect(StatusCode.ok)
       .expect('Content-Type', /json/)
@@ -400,7 +401,7 @@ describe('A Carrier Admin can', () => {
 
   it('get a specific TransportOrder based on any status', (done) => {
     server
-      .get('/api/v1/transportOrder/status/IN_PROGRESS')
+      .get(baseEndPoint + '/transportOrder/status/' + TransportOrderStatus.InProgress)
       .set('x-access-token', token)
       .expect(StatusCode.ok)
       .expect('Content-Type', /json/)
@@ -426,7 +427,7 @@ describe('A Carrier Admin can', () => {
     };
 
     server
-      .put('/api/v1/transportOrder/cancel')
+      .put(baseEndPoint + '/transportOrder/cancel')
       .set('x-access-token', token)
       .send(cancel)
       .expect(500)
@@ -442,7 +443,7 @@ describe('A Carrier Admin can', () => {
 
   it('get a specific TransportOrder based on vin', (done) => {
     server
-      .get('/api/v1/transportOrder/vin/183726339N')
+      .get(baseEndPoint + '/transportOrder/vin/183726339N')
       .set('x-access-token', token)
       .expect(StatusCode.ok)
       .expect('Content-Type', /json/)
@@ -464,7 +465,7 @@ describe('A Carrier Admin can', () => {
       dateWindow: [1010101010, 2020202020]
     };
     server
-      .put('/api/v1/transportOrder/updatePickupWindow')
+      .put(baseEndPoint + '/transportOrder/updatePickupWindow')
       .set('x-access-token', token)
       .send(pickupWindow)
       .expect(500)
@@ -486,7 +487,7 @@ describe('A Carrier Admin can', () => {
     };
 
     server
-      .put('/api/v1/transportOrder/updateDeliveryWindow')
+      .put(baseEndPoint + '/transportOrder/updateDeliveryWindow')
       .set('x-access-token', token)
       .send(deliveryWindow)
       .expect(500)
@@ -507,7 +508,7 @@ describe('A Carrier Admin can', () => {
     };
 
     server
-      .put('/api/v1/ECMR/updateExpectedPickupWindow')
+      .put(baseEndPoint + '/ECMR/updateExpectedPickupWindow')
       .set('x-access-token', token)
       .send(expectedWindow)
       .expect(StatusCode.ok)
@@ -528,7 +529,7 @@ describe('A Carrier Admin can', () => {
     };
 
     server
-      .put('/api/v1/ECMR/updateExpectedPickupWindow')
+      .put(baseEndPoint + '/ECMR/updateExpectedPickupWindow')
       .set('x-access-token', token)
       .send(expectedWindow)
       .expect(500)
@@ -549,7 +550,7 @@ describe('A Carrier Admin can', () => {
     };
 
     server
-      .put('/api/v1/ECMR/updateExpectedDeliveryWindow')
+      .put(baseEndPoint + '/ECMR/updateExpectedDeliveryWindow')
       .set('x-access-token', token)
       .send(expectedWindow)
       .expect(StatusCode.ok)
@@ -570,7 +571,7 @@ describe('A Carrier Admin can', () => {
     };
 
     server
-      .put('/api/v1/ECMR/updateExpectedDeliveryWindow')
+      .put(baseEndPoint + '/ECMR/updateExpectedDeliveryWindow')
       .set('x-access-token', token)
       .send(expectedWindow)
       .expect(500)
