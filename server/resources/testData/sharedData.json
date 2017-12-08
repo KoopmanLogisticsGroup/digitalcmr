@@ -275,20 +275,18 @@
       "model":           "A1",
       "type":            "sportback",
       "ecmrs":           [
-        "A1234567890",
-        "B1234567890"
+        "C1234567890"
       ],
       "odoMeterReading": 0,
       "plateNumber":     "AV198RX"
     },
     {
       "$class":          "org.digitalcmr.Vehicle",
-      "vin":             "283726339N",
+      "vin":             "183726339B",
       "manufacturer":    "Audi",
       "model":           "A2",
       "type":            "sportback",
       "ecmrs":           [
-        "A1234567890",
         "B1234567890"
       ],
       "odoMeterReading": 2132,
@@ -296,65 +294,60 @@
     },
     {
       "$class":          "org.digitalcmr.Vehicle",
-      "vin":             "383726339N",
+      "vin":             "183726339D",
       "manufacturer":    "Audi",
       "model":           "A3",
       "type":            "sportback",
       "ecmrs":           [
-        "A1234567890",
-        "B1234567890"
+        "D1234567890"
       ],
       "odoMeterReading": 1231,
       "plateNumber":     "CV198RX"
     },
     {
       "$class":          "org.digitalcmr.Vehicle",
-      "vin":             "483726339N",
+      "vin":             "183726339E",
       "manufacturer":    "Audi",
       "model":           "A4",
       "type":            "sportback",
       "ecmrs":           [
-        "A1234567890",
-        "B1234567890"
+        "E1234567890"
       ],
       "odoMeterReading": 0,
       "plateNumber":     "DV198RX"
     },
     {
       "$class":          "org.digitalcmr.Vehicle",
-      "vin":             "583726339N",
+      "vin":             "183726339F",
       "manufacturer":    "Audi",
       "model":           "A5",
       "type":            "sportback",
       "ecmrs":           [
-        "A1234567890",
-        "B1234567890"
+        "F1234567890"
       ],
       "odoMeterReading": 12043,
       "plateNumber":     "EV198RX"
     },
     {
       "$class":          "org.digitalcmr.Vehicle",
-      "vin":             "683726339N",
+      "vin":             "183726339G",
       "manufacturer":    "Audi",
       "model":           "A6",
       "type":            "sportback",
       "ecmrs":           [
-        "A1234567890",
-        "B1234567890"
+        "G1234567890"
       ],
       "odoMeterReading": 578,
       "plateNumber":     "FV198RX"
     },
     {
       "$class":          "org.digitalcmr.Vehicle",
-      "vin":             "783726339N",
+      "vin":             "183726339F2",
       "manufacturer":    "Audi",
       "model":           "A7",
       "type":            "sportback",
       "ecmrs":           [
-        "A1234567890",
-        "B1234567890"
+        "F1234567890"
       ],
       "odoMeterReading": 0,
       "plateNumber":     "GV198RX"
@@ -614,7 +607,7 @@
           },
           "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
-            "vin":             "183726339F",
+            "vin":             "183726339B",
             "manufacturer":    "Audi",
             "model":           "A1",
             "type":            "sportback",
@@ -913,7 +906,7 @@
           },
           "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
-            "vin":             "183726339N",
+            "vin":             "183726339D",
             "manufacturer":    "Audi",
             "model":           "A1",
             "type":            "sportback",
@@ -1037,7 +1030,7 @@
           },
           "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
-            "vin":             "183726339N",
+            "vin":             "183726339P",
             "manufacturer":    "Audi",
             "model":           "A1",
             "type":            "sportback",
@@ -1161,7 +1154,7 @@
           },
           "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
-            "vin":             "183726339N",
+            "vin":             "183726339E",
             "manufacturer":    "Audi",
             "model":           "A1",
             "type":            "sportback",
@@ -1336,7 +1329,7 @@
           },
           "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
-            "vin":             "183726339N",
+            "vin":             "183726339F",
             "manufacturer":    "Audi",
             "model":           "A1",
             "type":            "sportback",
@@ -1430,7 +1423,7 @@
           },
           "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
-            "vin":             "183726339N",
+            "vin":             "183726339F2",
             "manufacturer":    "Audi",
             "model":           "A1",
             "type":            "sportback",
@@ -1609,7 +1602,7 @@
           },
           "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
-            "vin":             "183726339N",
+            "vin":             "183726339G",
             "manufacturer":    "Audi",
             "model":           "A1",
             "type":            "sportback",
@@ -1656,7 +1649,7 @@
           },
           "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
-            "vin":             "736182CHD28172",
+            "vin":             "736182CHD28172G",
             "manufacturer":    "Mercedes",
             "model":           "SLK",
             "type":            "Station",
@@ -1784,7 +1777,7 @@
           },
           "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
-            "vin":             "2131231414CN",
+            "vin":             "2131231414CB",
             "manufacturer":    "BMW",
             "model":           "X5",
             "type":            "sportsback",
@@ -1904,7 +1897,7 @@
           },
           "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
-            "vin":             "183726339N",
+            "vin":             "183726339I",
             "manufacturer":    "Audi",
             "model":           "A1",
             "type":            "sportback",
@@ -1998,7 +1991,7 @@
           },
           "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
-            "vin":             "183726339N",
+            "vin":             "183726339I2",
             "manufacturer":    "Audi",
             "model":           "A1",
             "type":            "sportback",
@@ -2195,7 +2188,7 @@
           }
         }
       ],
-      "status":    "OPEN",
+      "status":    "IN_PROGRESS",
       "issueDate": 1502834400000,
       "ecmrs":     [
         "B1234567890",
@@ -2236,12 +2229,12 @@
           },
           "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
-            "vin":             "183726339N",
+            "vin":             "183726339D",
             "manufacturer":    "Audi",
             "model":           "A1",
             "type":            "sportback",
             "ecmrs":           [
-              "C1234567890"
+              "D1234567890"
             ],
             "odoMeterReading": 0,
             "plateNumber":     "AV198RX"
@@ -2263,12 +2256,12 @@
           "$class":          "org.digitalcmr.Good",
           "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
-            "vin":             "736182CHD28172",
+            "vin":             "183726339E",
             "manufacturer":    "Mercedes",
             "model":           "SLK",
             "type":            "Station",
             "ecmrs":           [
-              "B1234567890"
+              "E1234567890"
             ],
             "odoMeterReading": 0,
             "plateNumber":     "I827YE"

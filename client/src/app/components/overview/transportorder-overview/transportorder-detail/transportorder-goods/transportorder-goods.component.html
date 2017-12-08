@@ -3,7 +3,7 @@
 </div>
 <div class="row">
   <form>
-    <table class="ui padded unstackable structured table accordion tot">
+    <table class="ui padded unstackable structured table accordion">
       <thead>
       <tr>
         <th>VIN</th>
@@ -29,10 +29,8 @@
             <div *ngFor="let ecmr of ecmrs">
               <div *ngFor="let ecmrGood of ecmr?.goods">
                 <div *ngIf="good?.vehicle?.vin == ecmrGood?.vehicle?.vin">
-                <span *ngIf="ecmr?.carrierLoadingSignature !== undefined; else bla">
-                <ng-template #bla>Pending Pickup</ng-template>
-                  Picked Up
-                </span>
+                  <span *ngIf="ecmr?.carrierLoadingSignature !== undefined; else showAwaiting"> Picked up </span>
+                  <ng-template #showAwaiting><span> Awaiting</span></ng-template>
                 </div>
               </div>
             </div>
@@ -41,10 +39,8 @@
             <ng-container *ngFor="let ecmr of ecmrs">
               <ng-container *ngFor="let ecmrGood of ecmr?.goods">
                 <ng-container *ngIf="good?.vehicle?.vin == ecmrGood?.vehicle?.vin">
-                  <ng-container *ngIf="ecmr?.carrierDeliverySignature !== undefined; else showNaN">
-                    <ng-template #showNaN><span>blaat</span></ng-template>
-                    <span>Delivered</span>
-                  </ng-container>
+                  <span *ngIf="ecmr?.carrierDeliverySignature !== undefined; else showAwaiting"> Delivered</span>
+                  <ng-template #showAwaiting><span>Awaiting</span></ng-template>
                 </ng-container>
               </ng-container>
             </ng-container>
@@ -69,10 +65,9 @@
             <ng-container *ngFor="let ecmr of ecmrs">
               <ng-container *ngFor="let ecmrGood of ecmr?.goods">
                 <ng-container *ngIf="good?.vehicle?.vin == ecmrGood?.vehicle?.vin">
-                  <ng-container *ngIf="ecmr?.carrierPickupSignature?.timestamp !== undefined"></ng-container>
-                  <ng-template #delivery_na><span class="noStatus">{{ecmr?.ecmrID}} NaN</span></ng-template>
-                  <span
-                    class="status_span">{{ecmr?.carrierLoadingSignature?.timestamp | date: "dd-MM-yyyy (HH:mm)"}}</span>
+                  <span [style.color]="signatureInTime(good.pickupWindow, ecmr?.carrierLoadingSignature)"
+                        *ngIf="ecmr?.carrierLoadingSignature !== undefined; else showNa"> {{ecmr?.carrierLoadingSignature?.timestamp | date: "dd-MM-yyyy (HH:mm)"}} </span>
+                  <ng-template #showNa><span><strong>Not signed off yet</strong></span></ng-template>
                 </ng-container>
               </ng-container>
             </ng-container>
@@ -91,9 +86,9 @@
             <div *ngFor="let ecmr of ecmrs">
               <div *ngFor="let ecmrGood of ecmr?.goods">
                 <div *ngIf="good?.vehicle?.vin == ecmrGood?.vehicle?.vin">
-                  <ng-container *ngIf="ecmr?.carrierDeliverySignature"></ng-container>
-                  <span
-                    class="status_span">{{ecmr?.carrierDeliverySignature?.timestamp | date: "dd-MM-yyyy (HH:mm)"}}</span>
+                  <span [style.color]="signatureInTime(good.deliveryWindow, ecmr?.carrierDeliverySignature)"
+                        *ngIf="ecmr?.carrierDeliverySignature !== undefined; else showNa"> {{ecmr?.carrierDeliverySignature?.timestamp | date: "dd-MM-yyyy (HH:mm)"}} </span>
+                  <ng-template #showNa><span><strong>Not signed off yet</strong></span></ng-template>
                 </div>
               </div>
             </div>

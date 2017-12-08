@@ -78,7 +78,7 @@ ol {
   span {
     display: block;
     color:   #919EAB;
-    opacity: 100%;
+    opacity: 100;
 
     &:nth-child(4n+2) {
       padding-top: 15px;
@@ -130,4 +130,8 @@ ol {
   text-align:  center;
   margin-top:  12%;
   margin-left: 10%;
+}
+
+.ui.table tr td {
+  border-top: 0;
 }
