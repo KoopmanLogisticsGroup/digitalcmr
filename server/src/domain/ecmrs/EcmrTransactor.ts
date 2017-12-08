@@ -7,17 +7,20 @@ import {Transaction} from '../../blockchain/Transactions';
 import {Query} from '../../blockchain/Queries';
 
 export class EcmrTransactor implements TransactionCreator {
-  public async invoke(factory: Factory, namespace: string, transactionName: string, data: any, identity: Identity, ip?: string): Promise<any> {
+  public async invoke(factory: Factory, namespace: string, transactionName: string, data: any, identity: Identity): Promise<any> {
     let transaction = factory.newTransaction(namespace, transactionName);
 
-    if (transactionName === Transaction.CreateEcmr) {
-      transaction.ecmr           = await EcmrBuilder.buildECMR(factory, namespace, data.ecmr, identity, ip);
+    if (transactionName === Transaction.CreateEcmrs) {
+      transaction.ecmrs          = await EcmrBuilder.buildECMRs(factory, namespace, data.ecmrs, identity);
       transaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', data.orderID);
-    } else if (transactionName === Transaction.CreateEcmrs) {
-      transaction.ecmrs          = await EcmrBuilder.buildECMRs(factory, namespace, data.ecmrs, identity, ip);
-      transaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', data.orderID);
-    } else if (transactionName === Transaction.UpdateEcmr) {
-      transaction.ecmr           = EcmrBuilder.buildECMR(factory, namespace, data, identity, ip);
+    } else if (transactionName === Transaction.UpdateEcmrStatusToLoaded || transactionName === Transaction.UpdateEcmrStatusToInTransit) {
+      transaction.ecmr      = factory.newRelationship(namespace, 'ECMR', data.ecmrID);
+      transaction.goods     = EcmrBuilder.buildGoods(factory, namespace, data.goods);
+      transaction.signature = EcmrBuilder.buildSignature(factory, namespace, data.signature, identity);
+    } else if (transactionName === Transaction.UpdateEcmrStatusToDelivered || transactionName === Transaction.UpdateEcmrStatusToConfirmedDelivered) {
+      transaction.ecmr           = factory.newRelationship(namespace, 'ECMR', data.ecmrID);
+      transaction.goods          = EcmrBuilder.buildGoods(factory, namespace, data.goods);
+      transaction.signature      = EcmrBuilder.buildSignature(factory, namespace, data.signature, identity);
       transaction.transportOrder = factory.newRelationship(namespace, 'TransportOrder', data.orderID);
     } else if (transactionName === Transaction.UpdateEcmrStatusToCancelled) {
       transaction.ecmr                     = factory.newRelationship(namespace, 'ECMR', data.ecmrID);

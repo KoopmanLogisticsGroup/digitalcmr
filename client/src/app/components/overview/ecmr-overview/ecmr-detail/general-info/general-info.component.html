@@ -9,7 +9,9 @@
     No estimated pickup window available yet.
   </p>
   <p *ngIf="ecmr?.status === EcmrStatus.InTransit && ecmr?.delivery?.expectedWindow">
-    Estimated delivery of goods between <strong><i>{{ecmr?.delivery?.expectedWindow?.startDate | date:'dd-MM-yyyy hh:mm'}} </i></strong> and <strong><i>{{ecmr?.delivery?.expectedWindow?.endDate | date:'dd-MM-yyyy hh:mm'}} </i></strong>
+    Estimated delivery of goods between <strong><i>{{ecmr?.delivery?.expectedWindow?.startDate | date:'dd-MM-yyyy
+    hh:mm'}} </i></strong> and <strong><i>{{ecmr?.delivery?.expectedWindow?.endDate | date:'dd-MM-yyyy
+    hh:mm'}} </i></strong>
   </p>
   <p *ngIf="ecmr?.status === EcmrStatus.InTransit && !ecmr?.delivery?.expectedWindow">
     No estimated delivery window available yet.

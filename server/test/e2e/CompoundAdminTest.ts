@@ -1,104 +1,28 @@
 import * as supertest from 'supertest';
 import '../../node_modules/mocha';
 import * as chai from 'chai';
-import * as http from 'http';
-import {TransportOrder} from '../../src/interfaces/transportOrder.interface';
 import {Ecmr, EcmrStatus} from '../../src/interfaces/ecmr.interface';
-import {Address} from '../../src/interfaces/address.interface';
-import {PickupWindow} from '../../src/interfaces/pickupWindow.interface';
+import {UpdateEcmrStatus} from '../../src/interfaces/updateEcmrStatus.interface';
+import {StatusCode} from './common/StatusCode';
+import {Response} from 'superagent';
+import {Builder} from './common/Builder';
+import {Vehicle} from '../../src/interfaces/vehicle.interface';
+import {TransportOrderStatus, TransportOrder} from '../../src/interfaces/transportOrder.interface';
+import {CreateEcmrs} from '../../src/interfaces/createEcmrs.interface';
 import {TransportOrderCancellation} from '../../src/interfaces/cancellation.interface';
 
 const server = supertest.agent('http://localhost:8080');
 const should = chai.should();
+
+const baseEndPoint = '/api/v1';
 let token: string;
 let transportOrder: TransportOrder;
 let updateEcmr: Ecmr;
 
-const ok = (res) => {
-  if (res.status !== 200) {
-    const status = http.STATUS_CODES[res.status];
-    return new Error(`Expected 200, got ${res.status} ${status} with message: ${res.body.message}`);
-  }
-};
-
-const buildAddress = (): Address => {
-  return <Address> {
-    name:        'name',
-    street:      'street',
-    houseNumber: 'housenumber',
-    city:        'city',
-    zipCode:     'zipcode',
-    country:     'country',
-    longitude:   0,
-    latitude:    0
-  };
-};
-
-const buildECMR = (ecmrID: string): Ecmr => {
-  return <Ecmr>{
-    ecmrID:                 ecmrID,
-    status:                 EcmrStatus.Created,
-    issueDate:              1502402400000,
-    agreementTerms:         'agreement terms here',
-    agreementTermsSec:      'agreement terms sec',
-    legalOwnerRef:          'ASD213123S',
-    carrierRef:             'H2238723VASD',
-    recipientRef:           'SDADHGA21312312',
-    orderID:                'AAAA123456',
-    creation:               {
-      address: buildAddress(),
-      date:    1502402400000
-    },
-    loading:                {
-      address:    buildAddress(),
-      actualDate: 1502402400000
-    },
-    delivery:               {
-      address:    buildAddress(),
-      actualDate: 1502488800000
-    },
-    owner:                  'leaseplan',
-    source:                 'amsterdamcompound',
-    transporter:            'harry@koopman.org',
-    carrier:                'koopman',
-    recipientOrg:           'cardealer',
-    recipient:              'rob@cardealer.org',
-    issuedBy:               'koopman',
-    carrierComments:        'No comments',
-    documents:              [],
-    goods:                  [],
-    legalOwnerInstructions: 'string',
-    paymentInstructions:    'string',
-    payOnDelivery:          'string'
-  };
-};
-
-const buildTransportOrder = (): TransportOrder => {
-  return <TransportOrder> {
-    orderID:   String(new Date().getTime()),
-    loading:   {
-      actualDate: 1502834400000,
-      address:    buildAddress(),
-    },
-    delivery:  {
-      actualDate: 1502834400000,
-      address:    buildAddress(),
-    },
-    carrier:   'koopman',
-    source:    'amsterdamcompound',
-    goods:     [],
-    status:    'OPEN',
-    issueDate: 1502834400000,
-    ecmrs:     [],
-    orderRef:  'ref',
-    owner:     'leaseplan'
-  };
-};
-
 describe('A Compound Admin can', () => {
   before((done) => {
-    transportOrder = buildTransportOrder();
-    updateEcmr     = buildECMR('ecmr1');
+    transportOrder = Builder.buildTransportOrder();
+    updateEcmr     = Builder.buildECMR('ecmr1');
 
     const loginParams = {
       'username': 'willem@amsterdamcompound.org',
@@ -106,9 +30,9 @@ describe('A Compound Admin can', () => {
     };
 
     server
-      .post('/api/v1/login')
+      .post(`${baseEndPoint}/login`)
       .send(loginParams)
-      .expect(ok)
+      .expect(StatusCode.ok)
       .expect('Content-Type', /json/)
       .expect(200)
       .end((err: Error, res) => {
@@ -125,25 +49,26 @@ describe('A Compound Admin can', () => {
 
   it('get the ECMRs linked to a vin', (done) => {
     server
-      .get('/api/v1/ECMR/vehicle/vin/183726339N')
+      .get(`${baseEndPoint}/ECMR/vehicle/vin/183726339N`)
       .set('x-access-token', token)
-      .end((err: Error, res) => {
+      .end((err: Error, res: Response) => {
         if (err) {
           console.log(err.stack);
 
           return done(err);
         }
-        should.exist(res.body.find((ecmr) => ecmr.ecmrID === 'A1234567890'));
-        should.exist(res.body.find((ecmr) => ecmr.ecmrID === 'B1234567890'));
+        should.exist(res.body.find((ecmr: Ecmr) => ecmr.ecmrID === 'A1234567890'));
+        should.exist(res.body.find((ecmr: Ecmr) => ecmr.ecmrID === 'B1234567890'));
+
         done(err);
       });
   });
 
   it('get the ECMRs linked to a plate number', (done) => {
     server
-      .get('/api/v1/ECMR/vehicle/plateNumber/AV198RX')
+      .get(`${baseEndPoint}/ECMR/vehicle/plateNumber/AV198RX`)
       .set('x-access-token', token)
-      .end((err: Error, res) => {
+      .end((err: Error, res: Response) => {
         if (err) {
           console.log(err.stack);
 
@@ -151,64 +76,74 @@ describe('A Compound Admin can', () => {
         }
         res.body[0].ecmrID.should.be.equal('A1234567890');
         res.body[1].ecmrID.should.be.equal('B1234567890');
+
         done(err);
       });
   });
 
-  it('get specific ECMRs by ecmrID', (done) => {
+  it('get an ECMR by ecmrID', (done) => {
     server
-      .get('/api/v1/ECMR/ecmrID/A1234567890')
+      .get(`${baseEndPoint}/ECMR/ecmrID/A1234567890`)
       .set('x-access-token', token)
-      .expect(ok)
-      .end((err: Error, res) => {
+      .expect(StatusCode.ok)
+      .end((err: Error, res: Response) => {
         if (err) {
           console.log(err.stack);
 
           return done(err);
         }
         updateEcmr = res.body;
+
         done(err);
       });
   });
 
   it('read ECMRs where his org is the source', (done) => {
     server
-      .get('/api/v1/ECMR')
+      .get(`${baseEndPoint}/ECMR`)
       .set('x-access-token', token)
-      .expect(ok)
-      .end((err: Error, res) => {
+      .expect(StatusCode.ok)
+      .end((err: Error, res: Response) => {
         if (err) {
           console.log(err.stack);
 
           return done(err);
         }
         res.body.length.should.be.greaterThan(0, 'no ECMRs were found.');
+
         done(err);
       });
   });
 
   it('not read an ECMR where his org is not the source', (done) => {
     server
-      .get('/api/v1/ECMR/ecmrID/H1234567890')
+      .get(`${baseEndPoint}/ECMR/ecmrID/H1234567890`)
       .set('x-access-token', token)
       .expect(200)
-      .end((err: Error, res) => {
+      .end((err: Error, res: Response) => {
         if (err) {
           console.log(err.stack);
 
           return done(err);
         }
         res.body.length.should.equal(0);
+
         done(err);
       });
   });
 
-  it('not create an ECMR', (done) => {
-    const ecmr = buildECMR('ecmr1');
+  it('not create ECMRs', (done) => {
+    const ecmrs = [Builder.buildECMR('randomEcmr')];
+
+    const payload: CreateEcmrs = {
+      ecmrs:   ecmrs,
+      orderID: ecmrs[0].orderID
+    };
+
     server
-      .post('/api/v1/ECMR')
+      .post(`${baseEndPoint}/ECMR`)
       .set('x-access-token', token)
-      .send(ecmr)
+      .send(payload)
       .expect('Content-Type', /json/)
       .expect(500)
       .end((err: Error) => {
@@ -217,6 +152,7 @@ describe('A Compound Admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
@@ -246,18 +182,18 @@ describe('A Compound Admin can', () => {
       });
   });
 
-  it('submit an update status from CREATED to LOADED', (done) => {
-    updateEcmr.status            = EcmrStatus.Loaded;
-    updateEcmr.compoundSignature = {
-      certificate: 'willem@amsterdamcompound.org',
-      timestamp:   0
+  it('not submit an update status from CREATED to LOADED', (done) => {
+    const updateTransaction = {
+      ecmrID:    'A1234567890',
+      orderID:   updateEcmr.orderID,
+      goods:     updateEcmr.goods,
+      signature: Builder.buildSignature('willem@amsterdamcompound.org')
     };
-
     server
-      .put('/api/v1/ECMR')
+      .put('/api/v1/ECMR/status/LOADED')
       .set('x-access-token', token)
-      .send(updateEcmr)
-      .expect(200)
+      .send(updateTransaction)
+      .expect(StatusCode.ok)
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
@@ -269,11 +205,16 @@ describe('A Compound Admin can', () => {
   });
 
   it('not update an ECMR when his org is not the source', (done) => {
-    updateEcmr.source = 'rotterdamCompound';
+    const payload = <UpdateEcmrStatus> {
+      ecmrID:    updateEcmr.ecmrID,
+      goods:     updateEcmr.goods,
+      signature: Builder.buildSignature('willem@amsterdamcompound.org')
+    };
+
     server
-      .put('/api/v1/ECMR')
+      .put(`${baseEndPoint}/ECMR/status/${EcmrStatus.Loaded}`)
       .set('x-access-token', token)
-      .send(updateEcmr)
+      .send(payload)
       .expect(500)
       .end((err: Error) => {
         if (err) {
@@ -285,75 +226,79 @@ describe('A Compound Admin can', () => {
       });
   });
 
-  it('get ecmr by status CREATED', (done) => {
+  it('can get ecmr by status CREATED', (done) => {
     server
-      .get('/api/v1/ECMR/status/CREATED')
+      .get(`${baseEndPoint}/ECMR/status/${EcmrStatus.Created}`)
       .set('x-access-token', token)
-      .end((err: Error, res) => {
+      .end((err: Error, res: Response) => {
         if (err) {
           console.log(err.stack);
 
           return done(err);
         }
         res.body.length.should.be.greaterThan(0, 'No CREATED ECMRs were found.');
-        should.exist(res.body.find(ecmr => ecmr.status === 'CREATED'));
+        should.exist(res.body.find((ecmr: Ecmr) => ecmr.status === EcmrStatus.Created));
+
         done(err);
       });
   });
 
-  it('get ecmr by status LOADED', (done) => {
+  it('can get ecmr by status LOADED', (done) => {
     server
-      .get('/api/v1/ECMR/status/LOADED')
+      .get(`${baseEndPoint}/ECMR/status/${EcmrStatus.Loaded}`)
       .set('x-access-token', token)
-      .end((err: Error, res) => {
+      .end((err: Error, res: Response) => {
           if (err) {
             console.log(err.stack);
 
             return done(err);
           }
         res.body.length.should.be.greaterThan(0, 'No LOADED ECMRs were found.');
-        should.exist(res.body.find(ecmr => ecmr.status === 'LOADED'));
+        should.exist(res.body.find((ecmr: Ecmr) => ecmr.status === EcmrStatus.Loaded));
+
         done(err);
         }
       );
   });
 
-  it('get ecmr by status IN_TRANSIT', (done) => {
+  it('can get ecmr by status IN_TRANSIT', (done) => {
     server
-      .get('/api/v1/ECMR/status/IN_TRANSIT')
+      .get(`${baseEndPoint}/ECMR/status/${EcmrStatus.InTransit}`)
       .set('x-access-token', token)
-      .end((err: Error, res) => {
+      .end((err: Error, res: Response) => {
           if (err) {
             console.log(err.stack);
 
             return done(err);
           }
         res.body.length.should.be.greaterThan(0, 'No IN_TRANSIT ECMRs were found.');
-        should.exist(res.body.find(ecmr => ecmr.status === 'IN_TRANSIT'));
+        should.exist(res.body.find((ecmr: Ecmr) => ecmr.status === EcmrStatus.InTransit));
+
         done(err);
         }
       );
   });
 
-  it('get ecmr by status DELIVERED', (done) => {
+  it('can get ecmr by status DELIVERED', (done) => {
     server
-      .get('/api/v1/ECMR/status/DELIVERED')
+      .get(`${baseEndPoint}/ECMR/status/${EcmrStatus.Delivered}`)
       .set('x-access-token', token)
-      .end((err: Error, res) => {
+      .end((err: Error, res: Response) => {
         if (err) {
           console.log(err.stack);
 
           return done(err);
         }
         res.body.length.should.be.greaterThan(0, 'No DELIVERED ECMRs were found.');
-        should.exist(res.body.find(ecmr => ecmr.status === 'DELIVERED'));
+        should.exist(res.body.find((ecmr: Ecmr) => ecmr.status === EcmrStatus.Delivered));
+
         done(err);
       });
   });
 
-  it('get ecmr by status CONFIRMED_DELIVERED', (done) => {
+  it('can get ecmr by status CONFIRMED_DELIVERED', (done) => {
     server
-      .get('/api/v1/ECMR/status/CONFIRMED_DELIVERED')
+      .get(`${baseEndPoint}/ECMR/status/${EcmrStatus.ConfirmedDelivered}`)
       .set('x-access-token', token)
       .end((err: Error, res) => {
         if (err) {
@@ -362,79 +307,86 @@ describe('A Compound Admin can', () => {
           return done(err);
         }
         res.body.length.should.be.greaterThan(0, 'No CONFIRMED_DELIVERED ECMRs were found.');
-        should.exist(res.body.find((ecmr) => ecmr.status === 'CONFIRMED_DELIVERED'));
+        should.exist(res.body.find((ecmr: Ecmr) => ecmr.status === EcmrStatus.ConfirmedDelivered));
+
         done(err);
       });
   });
 
-  it('not update an ECMR for his org and status is IN_TRANSIT', (done) => {
+  it('cannot update an ECMR for his org and if status is IN_TRANSIT', (done) => {
     updateEcmr.status = EcmrStatus.InTransit;
+
     server
-      .put('/api/v1/ECMR')
+      .put(`${baseEndPoint}/ECMR/status/${EcmrStatus.InTransit}`)
       .set('x-access-token', token)
       .send(updateEcmr)
       .expect(500)
       .end((err: Error) => {
         if (err) {
           console.log(err.stack);
+
           return done(err);
         }
         done(err);
       });
   });
 
-  it('get all vehicles', (done) => {
+  it('can get all vehicles', (done) => {
     server
-      .get('/api/v1/vehicle')
+      .get(`${baseEndPoint}/vehicle`)
       .set('x-access-token', token)
-      .expect(ok)
-      .end((err: Error, res) => {
+      .expect(StatusCode.ok)
+      .end((err: Error, res: Response) => {
         if (err) {
           console.log(err.stack);
 
           return done(err);
         }
-        should.exist(res.body.find((vehicle) => vehicle.plateNumber));
+        should.exist(res.body.find((vehicle: Vehicle) => vehicle.plateNumber));
+
         done(err);
       });
   });
 
-  it('get a specific vehicle based on vin', (done) => {
+  it('can get a vehicle by vin', (done) => {
     server
-      .get('/api/v1/vehicle/vin/183726339N')
+      .get(`${baseEndPoint}/vehicle/vin/183726339N`)
       .set('x-access-token', token)
-      .expect(ok)
-      .end((err: Error, res) => {
+      .expect(StatusCode.ok)
+      .end((err: Error, res: Response) => {
         if (err) {
           console.log(err.stack);
 
           return done(err);
         }
         res.body.vin.should.equal('183726339N');
+
         done(err);
       });
   });
 
-  it('get a specific vehicle based on license plate', (done) => {
+  it('can get a vehicle by license plate', (done) => {
     server
-      .get('/api/v1/vehicle/plateNumber/AV198RX')
+      .get(`${baseEndPoint}/vehicle/plateNumber/AV198RX`)
       .set('x-access-token', token)
-      .expect(ok)
-      .end((err: Error, res) => {
+      .expect(StatusCode.ok)
+      .end((err: Error, res: Response) => {
         if (err) {
           console.log(err.stack);
 
           return done(err);
         }
         res.body.plateNumber.should.equal('AV198RX');
+
         done(err);
       });
   });
 
-  it('not create a transport order', (done) => {
-    const transportOrder = buildTransportOrder();
+  it('cannot create a TransportOrder', (done) => {
+    const transportOrder = Builder.buildTransportOrder();
+
     server
-      .post('/api/v1/transportOrder')
+      .post(`${baseEndPoint}/transportOrder`)
       .set('x-access-token', token)
       .send(transportOrder)
       .expect(500)
@@ -448,65 +400,69 @@ describe('A Compound Admin can', () => {
       });
   });
 
-  it('not get a specific transport order based on ID', (done) => {
+  it('cannot get a TransportOrder by orderID', (done) => {
     server
-      .get('/api/v1/transportOrder/orderID/12345567890')
+      .get(`${baseEndPoint}/transportOrder/orderID/12345567890`)
       .set('x-access-token', token)
-      .expect(ok)
+      .expect(StatusCode.ok)
       .expect('Content-Type', /json/)
-      .end((err: Error, res) => {
+      .end((err: Error, res: Response) => {
         if (err) {
           console.log(err.stack);
 
           return done(err);
         }
         res.body.length.should.equal(0);
+
         done(err);
       });
   });
 
-  it('not get a specific transport order based on status', (done) => {
+  it('cannot get a transportOrder by status', (done) => {
     server
-      .get('/api/v1/transportOrder/status/IN_PROGRESS')
+      .get(`${baseEndPoint}/transportOrder/status/${TransportOrderStatus.InProgress}`)
       .set('x-access-token', token)
       .expect(200)
       .expect('Content-Type', /json/)
-      .end((err: Error, res) => {
+      .end((err: Error, res: Response) => {
         if (err) {
           console.log(err.stack);
 
           return done(err);
         }
         res.body.length.should.equal(0);
+
         done(err);
       });
   });
 
-  it('not get a specific transport order based on vin', (done) => {
+  it('cannot get a transportOrder by vin', (done) => {
     server
-      .get('/api/v1/transportOrder/vin/183726339N')
+      .get(`${baseEndPoint}/transportOrder/vin/183726339N`)
       .set('x-access-token', token)
-      .expect(ok)
+      .expect(StatusCode.ok)
       .expect('Content-Type', /json/)
-      .end((err: Error, res) => {
+      .end((err: Error, res: Response) => {
         if (err) {
           console.log(err.stack);
 
           return done(err);
         }
         res.body.length.should.equal(0);
+
         done(err);
       });
   });
 
-  it('not update a pickup window of a transport order', (done) => {
-    const pickupWindow: PickupWindow = {
+  it('cannot update an estimatedPickupWindow of a TransportOrder', (done) => {
+    const pickupWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
       dateWindow: [1010101010, 2020202020]
     };
+
     server
-      .put('/api/v1/transportOrder/updatePickupWindow')
+      .put(`${baseEndPoint}/transportOrder/updatePickupWindow`)
       .set('x-access-token', token)
       .send(pickupWindow)
       .expect(500)
@@ -545,15 +501,37 @@ describe('A Compound Admin can', () => {
       });
   });
 
-  it('not update a delivery window of a transport order', (done) => {
-    const pickupWindow: PickupWindow = {
+  it('not update an estimatedDeliveryWindow of a TransportOrder', (done) => {
+    const deliveryWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
       dateWindow: [1010101010, 2020202020]
     };
 
     server
-      .put('/api/v1/transportOrder/updateDeliveryWindow')
+      .put(`${baseEndPoint}/transportOrder/updateDeliveryWindow`)
+      .set('x-access-token', token)
+      .send(deliveryWindow)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
+  it('not update an estimatedPickupWindow of a TransportOrder', (done) => {
+    const pickupWindow = {
+      orderID:    '12345567890',
+      vin:        '183726339N',
+      dateWindow: [1010101010, 2020202020]
+    };
+
+    server
+      .put(`${baseEndPoint}/transportOrder/updatePickupWindow`)
       .set('x-access-token', token)
       .send(pickupWindow)
       .expect(500)
@@ -567,7 +545,7 @@ describe('A Compound Admin can', () => {
       });
   });
 
-  it('can not update an expectedDeliveryWindow of an ECMR with a status other than IN_TRANSIT', (done) => {
+  it('can not update an expectedDeliveryWindow of an ECMR', (done) => {
     const expectedWindow = {
       ecmrID:         'A1234567890',
       expectedWindow: [7247832478934, 212213821321]
@@ -575,6 +553,27 @@ describe('A Compound Admin can', () => {
 
     server
       .put('/api/v1/ECMR/updateExpectedDeliveryWindow')
+      .set('x-access-token', token)
+      .send(expectedWindow)
+      .expect(500)
+      .end((err: Error) => {
+        if (err) {
+          console.log(err.stack);
+
+          return done(err);
+        }
+        done(err);
+      });
+  });
+
+  it('can not update an expectedPickupWindow of an ECMR', (done) => {
+    const expectedWindow = {
+      ecmrID:         'A1234567890',
+      expectedWindow: [7247832478934, 212213821321]
+    };
+
+    server
+      .put('/api/v1/ECMR/updateExpectedPickupWindow')
       .set('x-access-token', token)
       .send(expectedWindow)
       .expect(500)
