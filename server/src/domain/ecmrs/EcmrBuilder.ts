@@ -11,7 +11,7 @@ export class EcmrBuilder {
     validatedObject.loading.expectedWindow = BuilderUtils.createConcept(factory, namespace, 'DateWindow', ecmr.loading.expectedWindow);
     validatedObject.loading.address        = BuilderUtils.createConcept(factory, namespace, 'Address', ecmr.loading.address);
     validatedObject.delivery               = BuilderUtils.createConcept(factory, namespace, 'Delivery', ecmr.delivery);
-    validatedObject.loading.expectedWindow = BuilderUtils.createConcept(factory, namespace, 'DateWindow', ecmr.loading.expectedWindow);
+      validatedObject.delivery.expectedWindow = BuilderUtils.createConcept(factory, namespace, 'DateWindow', ecmr.delivery.expectedWindow);
     validatedObject.delivery.address       = BuilderUtils.createConcept(factory, namespace, 'Address', ecmr.delivery.address);
 
     validatedObject.owner  = BuilderUtils.createRelationship(factory, namespace, 'LegalOwnerOrg', ecmr.owner);
