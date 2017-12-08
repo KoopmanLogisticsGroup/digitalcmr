@@ -124,7 +124,7 @@ describe('An Recipient member can', () => {
   it('not create an ECMR', (done) => {
     const ecmr = buildECMR('ecmr1');
     server
-      .post(baseEndPoint + '/ECMR')
+      .post(baseEndPoint + '/ECMR/createECMRs')
       .set('x-access-token', token)
       .send(ecmr)
       .expect(500)
@@ -235,7 +235,7 @@ describe('An Recipient member can', () => {
       });
   });
 
-  it('not create an ECMR', (done) => {
+  it('not create an TransportOrder', (done) => {
     const transportOrder = buildECMR('ecmrRecipient');
     server
       .post(baseEndPoint + '/transportOrder')

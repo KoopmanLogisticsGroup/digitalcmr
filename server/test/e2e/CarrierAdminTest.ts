@@ -58,8 +58,7 @@ describe('A Carrier Admin can', () => {
 
           return done(err);
         }
-        should.exist(res.body.find(ecmr => ecmr.ecmrID === 'A1234567890'));
-        should.exist(res.body.find(ecmr => ecmr.ecmrID === 'B1234567890'));
+        should.exist(res.body.find(ecmr => ecmr.ecmrID === 'C1234567890'));
 
         done(err);
       });
@@ -75,8 +74,7 @@ describe('A Carrier Admin can', () => {
 
           return done(err);
         }
-        should.exist(res.body.find(ecmr => ecmr.ecmrID === 'A1234567890'));
-        should.exist(res.body.find(ecmr => ecmr.ecmrID === 'B1234567890'));
+        should.exist(res.body.find(ecmr => ecmr.ecmrID === 'C1234567890'));
 
         done(err);
       });
@@ -135,9 +133,7 @@ describe('A Carrier Admin can', () => {
   });
 
   it('create an ECMR', (done) => {
-    let ecmrList: Ecmr[] = [];
-    const ecmr: Ecmr     = Builder.buildECMR('ecmr1');
-    ecmrList.push(ecmr);
+    let ecmrList: Ecmr[] = [Builder.buildECMR('ecmr1')];
 
     const ecmrs: CreateEcmrs = {
       orderID: '12345567890',
@@ -145,7 +141,7 @@ describe('A Carrier Admin can', () => {
     };
 
     server
-      .post(baseEndPoint + '/ECMR')
+      .post(baseEndPoint + '/ECMR/createECMRs')
       .set('x-access-token', token)
       .send(ecmrs)
       .expect(200)
@@ -162,11 +158,11 @@ describe('A Carrier Admin can', () => {
 
   it('cancel an ECMR', (done) => {
     let cancel: EcmrCancellation = {
-      'ecmrID':       'ecmr1',
-      'cancellation': {
-        'cancelledBy': 'pete@koopman.org',
-        'reason':      'no reason',
-        'date':        123
+      ecmrID:       'ecmr1',
+      cancellation: {
+        cancelledBy: 'pete@koopman.org',
+        reason:      'no reason',
+        date:        123
       }
     };
 
@@ -260,10 +256,10 @@ describe('A Carrier Admin can', () => {
 
             return done(err);
           }
-        res.body.length.should.be.greaterThan(0, 'No LOADED ECMRs were found.');
-        should.exist(res.body.find((ecmr: Ecmr) => ecmr.status === EcmrStatus.Loaded));
+          res.body.length.should.be.greaterThan(0, 'No LOADED ECMRs were found.');
+          should.exist(res.body.find((ecmr: Ecmr) => ecmr.status === EcmrStatus.Loaded));
 
-        done(err);
+          done(err);
         }
       );
   });
@@ -278,10 +274,10 @@ describe('A Carrier Admin can', () => {
 
             return done(err);
           }
-        res.body.length.should.be.greaterThan(0, 'No IN_TRANSIT ECMRs were found.');
-        should.exist(res.body.find((ecmr: Ecmr) => ecmr.status === EcmrStatus.InTransit));
+          res.body.length.should.be.greaterThan(0, 'No IN_TRANSIT ECMRs were found.');
+          should.exist(res.body.find((ecmr: Ecmr) => ecmr.status === EcmrStatus.InTransit));
 
-        done(err);
+          done(err);
         }
       );
   });
@@ -492,7 +488,11 @@ describe('A Carrier Admin can', () => {
     const pickupWindow: PickupWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
-      dateWindow: [1010101010, 2020202020]
+      dateWindow: {
+        startDate: 1010101010,
+        endDate:   2020202020
+      }
+
     };
     server
       .put(baseEndPoint + '/transportOrder/updatePickupWindow')
@@ -513,7 +513,10 @@ describe('A Carrier Admin can', () => {
     const deliveryWindow: DeliveryWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
-      dateWindow: [1010101010, 2020202020]
+      dateWindow: <DateWindow> {
+        startDate: 1010101010,
+        endDate:   2020202020
+      }
     };
 
     server

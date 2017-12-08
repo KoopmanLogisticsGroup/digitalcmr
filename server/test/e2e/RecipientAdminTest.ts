@@ -122,7 +122,7 @@ describe('A Recipient Admin can', () => {
   it('not create an ECMR', (done) => {
     const ecmr = buildECMR('ecmr1');
     server
-      .post(baseEndPoint + '/ECMR')
+      .post(baseEndPoint + '/ECMR/createECMRs')
       .set('x-access-token', token)
       .send(ecmr)
       .expect(500)
@@ -182,8 +182,7 @@ describe('A Recipient Admin can', () => {
 
           return done(err);
         }
-        should.exist(res.body.find(ecmr => ecmr.ecmrID === 'A1234567890'));
-        should.exist(res.body.find(ecmr => ecmr.ecmrID === 'B1234567890'));
+        should.exist(res.body.find(ecmr => ecmr.ecmrID === 'C1234567890'));
 
         done(err);
       });
@@ -199,8 +198,7 @@ describe('A Recipient Admin can', () => {
 
           return done(err);
         }
-        should.exist(res.body.find(ecmr => ecmr.ecmrID === 'A1234567890'));
-        should.exist(res.body.find(ecmr => ecmr.ecmrID === 'B1234567890'));
+        should.exist(res.body.find(ecmr => ecmr.ecmrID === 'C1234567890'));
 
         done(err);
       });
@@ -235,24 +233,6 @@ describe('A Recipient Admin can', () => {
           return done(err);
         }
         should.exist(res.body.find(ecmr => ecmr.status === 'DELIVERED'));
-
-        done(err);
-      });
-  });
-
-  it('not create an ECMR', (done) => {
-    const transportOrder = buildECMR('ecmrRecipient');
-    server
-      .post(baseEndPoint + '/transportOrder')
-      .set('x-access-token', token)
-      .send(transportOrder)
-      .expect(500)
-      .end((err: Error) => {
-        if (err) {
-          console.log(err.stack);
-
-          return done(err);
-        }
 
         done(err);
       });

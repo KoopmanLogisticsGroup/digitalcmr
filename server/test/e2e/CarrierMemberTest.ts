@@ -100,7 +100,7 @@ describe('A Carrier member can', () => {
     const ecmr = Builder.buildECMR('ecmr1');
 
     server
-      .post(baseEndPoint + '/ECMR')
+      .post(baseEndPoint + '/ECMR/createECMRs')
       .set('x-access-token', token)
       .send(ecmr)
       .expect(500)
@@ -303,10 +303,10 @@ describe('A Carrier member can', () => {
 
             return done(err);
           }
-        res.body.length.should.be.greaterThan(0, 'No IN_TRANSIT ECMRs were found.');
-        should.exist(res.body.find((ecmr: Ecmr) => ecmr.status === EcmrStatus.InTransit));
+          res.body.length.should.be.greaterThan(0, 'No IN_TRANSIT ECMRs were found.');
+          should.exist(res.body.find((ecmr: Ecmr) => ecmr.status === EcmrStatus.InTransit));
 
-        done(err);
+          done(err);
         }
       );
   });
@@ -526,7 +526,10 @@ describe('A Carrier member can', () => {
     const pickupWindow: PickupWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
-      dateWindow: [1010101010, 2020202020]
+      dateWindow: {
+        startDate: 1010101010,
+        endDate:   2020202020
+      }
     };
 
     server
@@ -549,7 +552,10 @@ describe('A Carrier member can', () => {
     const deliveryWindow: DeliveryWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
-      dateWindow: [1010101010, 2020202020]
+      dateWindow: {
+        startDate: 1010101010,
+        endDate:   2020202020
+      }
     };
 
     server

@@ -57,8 +57,7 @@ describe('A Compound Admin can', () => {
 
           return done(err);
         }
-        should.exist(res.body.find((ecmr: Ecmr) => ecmr.ecmrID === 'A1234567890'));
-        should.exist(res.body.find((ecmr: Ecmr) => ecmr.ecmrID === 'B1234567890'));
+        should.exist(res.body.find((ecmr: Ecmr) => ecmr.ecmrID === 'C1234567890'));
 
         done(err);
       });
@@ -74,8 +73,7 @@ describe('A Compound Admin can', () => {
 
           return done(err);
         }
-        res.body[0].ecmrID.should.be.equal('A1234567890');
-        res.body[1].ecmrID.should.be.equal('B1234567890');
+        res.body[0].ecmrID.should.be.equal('C1234567890');
 
         done(err);
       });
@@ -100,7 +98,7 @@ describe('A Compound Admin can', () => {
 
   it('read ECMRs where his org is the source', (done) => {
     server
-      .get(`${baseEndPoint}/ECMR`)
+      .get(`${baseEndPoint}/ECMR/`)
       .set('x-access-token', token)
       .expect(StatusCode.ok)
       .end((err: Error, res: Response) => {
@@ -141,10 +139,9 @@ describe('A Compound Admin can', () => {
     };
 
     server
-      .post(`${baseEndPoint}/ECMR`)
+      .post(`${baseEndPoint}/ECMR/CreateECMRs`)
       .set('x-access-token', token)
       .send(payload)
-      .expect('Content-Type', /json/)
       .expect(500)
       .end((err: Error) => {
         if (err) {
