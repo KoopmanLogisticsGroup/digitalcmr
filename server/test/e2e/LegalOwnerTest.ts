@@ -7,11 +7,14 @@ import {Builder} from './common/Builder';
 import {StatusCode} from './common/StatusCode';
 import {Response} from 'superagent';
 import {CreateEcmrs} from '../../src/interfaces/createEcmrs.interface';
-import {EcmrCancellation, TransportOrderCancellation} from '../../src/interfaces/cancellation.interface';
+import {Cancellation, EcmrCancellation, TransportOrderCancellation} from '../../src/interfaces/cancellation.interface';
+import {ExpectedWindow} from '../../src/interfaces/expectedWindow.interface';
+import {PickupWindow} from '../../src/interfaces/pickupWindow.interface';
+import {DateWindow} from '../../src/interfaces/dateWindow.interface';
 
 const baseEndPoint = '/api/v1';
-const server = supertest.agent('http://localhost:8080');
-const should = chai.should();
+const server       = supertest.agent('http://localhost:8080');
+const should       = chai.should();
 
 let transportOrder: TransportOrder;
 let token: string;
@@ -167,6 +170,7 @@ describe('A legal owner admin can', () => {
         }
         should.exist(res.body.find((ecmr: Ecmr) => ecmr.ecmrID === 'A1234567890'));
         should.exist(res.body.find((ecmr: Ecmr) => ecmr.ecmrID === 'B1234567890'));
+
         done(err);
       });
   });
@@ -223,12 +227,12 @@ describe('A legal owner admin can', () => {
   });
 
   it('not cancel an ECMR', (done) => {
-    let cancel = <EcmrCancellation> {
-      'ecmrID':       ecmrs[0].ecmrID,
-      'cancellation': {
-        'cancelledBy': 'lapo@leaseplan.org',
-        'reason':      'no reason',
-        'date':        123
+    let cancel: EcmrCancellation = {
+      ecmrID:       ecmrs[0].ecmrID,
+      cancellation: <Cancellation> {
+        cancelledBy: 'lapo@leaseplan.org',
+        reason:      'no reason',
+        date:        123
       }
     };
 
@@ -243,6 +247,7 @@ describe('A legal owner admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
@@ -321,12 +326,12 @@ describe('A legal owner admin can', () => {
   });
 
   it('cancel a transportOrder', (done) => {
-    let cancel = <TransportOrderCancellation> {
-      'orderID':      transportOrder.orderID,
-      'cancellation': {
-        'cancelledBy': 'lapo@leaseplan.org',
-        'date':        123,
-        'reason':      'invalid order'
+    let cancel: TransportOrderCancellation = {
+      orderID:      transportOrder.orderID,
+      cancellation: <Cancellation> {
+        cancelledBy: 'lapo@leaseplan.org',
+        date:        123,
+        reason:      'invalid order'
       }
     };
 
@@ -341,6 +346,7 @@ describe('A legal owner admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
@@ -385,10 +391,13 @@ describe('A legal owner admin can', () => {
   });
 
   it('update the expectedPickupWindow of a TransportOrder with status CREATED', (done) => {
-    const pickupWindow = {
+    const pickupWindow: PickupWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
-      dateWindow: [1010101010, 2020202020]
+      dateWindow: <DateWindow> {
+        startDate: 1010101010,
+        endDate:   2020202020
+      }
     };
 
     server
@@ -408,10 +417,13 @@ describe('A legal owner admin can', () => {
   });
 
   it('update the expectedDeliveryWindow of a TransportOrder with status IN_TRANSIT', (done) => {
-    const pickupWindow = {
+    const pickupWindow: PickupWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
-      dateWindow: [1010101010, 2020202020]
+      dateWindow: <DateWindow> {
+        startDate: 1010101010,
+        endDate:   2020202020
+      }
     };
 
     server
@@ -425,14 +437,18 @@ describe('A legal owner admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
 
   it('can not update an expectedPickupWindow of an ECMR', (done) => {
-    const expectedWindow = {
+    const expectedWindow: ExpectedWindow = {
       ecmrID:         'A1234567890',
-      expectedWindow: [7247832478934, 212213821321]
+      expectedWindow: <DateWindow> {
+        startDate: 1010101010,
+        endDate:   2020202020
+      }
     };
 
     server
@@ -452,9 +468,12 @@ describe('A legal owner admin can', () => {
   });
 
   it('can not update an expectedDeliveryWindow of an ECMR', (done) => {
-    const expectedWindow = {
+    const expectedWindow: ExpectedWindow = {
       ecmrID:         'E1234567890',
-      expectedWindow: [7247832478934, 212213821321]
+      expectedWindow: <DateWindow> {
+        startDate: 1010101010,
+        endDate:   2020202020
+      }
     };
 
     server

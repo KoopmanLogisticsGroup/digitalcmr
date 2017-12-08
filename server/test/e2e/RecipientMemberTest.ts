@@ -5,9 +5,14 @@ import * as http from 'http';
 import {TransportOrder, TransportOrderStatus} from '../../src/interfaces/transportOrder.interface';
 import {Ecmr, EcmrStatus} from '../../src/interfaces/ecmr.interface';
 import {Address} from '../../src/interfaces/address.interface';
-import {EcmrCancellation, TransportOrderCancellation} from '../../src/interfaces/cancellation.interface';
+import {Cancellation, EcmrCancellation, TransportOrderCancellation} from '../../src/interfaces/cancellation.interface';
 import {Builder} from './common/Builder';
 import {StatusCode} from './common/StatusCode';
+import {DeliveryWindow} from '../../src/interfaces/deliveryWindow.interface';
+import {PickupWindow} from '../../src/interfaces/pickupWindow.interface';
+import {ExpectedWindow} from '../../src/interfaces/expectedWindow.interface';
+import {DateWindow} from '../../src/interfaces/dateWindow.interface';
+import {UpdateEcmrStatus} from '../../src/interfaces/updateEcmrStatus.interface';
 
 const server = supertest.agent('http://localhost:8080');
 const should = chai.should();
@@ -16,7 +21,7 @@ let transportOrder: TransportOrder;
 let updateEcmr: Ecmr;
 
 const baseEndPoint = '/api/v1';
-const ok = (res) => {
+const ok           = (res) => {
   if (res.status !== 200) {
     const status = http.STATUS_CODES[res.status];
     return new Error(`Expected 200, got ${res.status} ${status} with message: ${res.body.message}`);
@@ -271,7 +276,7 @@ describe('An Recipient member can', () => {
   });
 
   it('update an ECMR from DELIVERED to CONFIRMED DELIVERED', (done) => {
-    const updateTransaction = {
+    const updateTransaction: UpdateEcmrStatus = {
       ecmrID:    updateEcmr.ecmrID,
       orderID:   updateEcmr.orderID,
       goods:     updateEcmr.goods,
@@ -295,11 +300,11 @@ describe('An Recipient member can', () => {
 
   it('not cancel an ECMR', (done) => {
     let cancel = <EcmrCancellation> {
-      'ecmrID':       updateEcmr.ecmrID,
-      'cancellation': {
-        'cancelledBy': 'rob@cardealer.org',
-        'reason':      'no reason',
-        'date':        123
+      ecmrID:       updateEcmr.ecmrID,
+      cancellation: <Cancellation> {
+        cancelledBy: 'rob@cardealer.org',
+        reason:      'no reason',
+        date:        123
       }
     };
 
@@ -435,10 +440,13 @@ describe('An Recipient member can', () => {
   });
 
   it('not update an estimatedPickupWindow of a TransportOrder', (done) => {
-    const pickupWindow = {
+    const pickupWindow: PickupWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
-      dateWindow: [1010101010, 2020202020]
+      dateWindow: <DateWindow> {
+        startDate: 1010101010,
+        endDate:   2020202020
+      }
     };
     server
       .put(baseEndPoint + '/transportOrder/updatePickupWindow')
@@ -456,12 +464,12 @@ describe('An Recipient member can', () => {
   });
 
   it('not cancel a transportOrder', (done) => {
-    let cancel = <TransportOrderCancellation> {
-      'orderID':      transportOrder.orderID,
-      'cancellation': {
-        'cancelledBy': 'lapo@leaseplan.org',
-        'date':        123,
-        'reason':      'invalid order'
+    const cancel: TransportOrderCancellation = {
+      orderID:      transportOrder.orderID,
+      cancellation: <Cancellation> {
+        cancelledBy: 'lapo@leaseplan.org',
+        date:        123,
+        reason:      'invalid order'
       }
     };
 
@@ -476,15 +484,19 @@ describe('An Recipient member can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
 
   it('not update an estimatedDeliveryWindow of a TransportOrder', (done) => {
-    const deliveryWindow = {
+    const deliveryWindow: DeliveryWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
-      dateWindow: [1010101010, 2020202020]
+      dateWindow: <DateWindow> {
+        startDate: 1010101010,
+        endDate:   2020202020
+      }
     };
 
     server
@@ -498,15 +510,19 @@ describe('An Recipient member can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
 
   it('not update an estimatedPickupWindow of a TransportOrder', (done) => {
-    const pickWindow = {
+    const pickWindow: PickupWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
-      dateWindow: [1010101010, 2020202020]
+      dateWindow: <DateWindow> {
+        startDate: 1010101010,
+        endDate:   2020202020
+      }
     };
 
     server
@@ -520,14 +536,18 @@ describe('An Recipient member can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
 
   it('can not update an expectedDeliveryWindow of an ECMR', (done) => {
-    const expectedWindow = {
+    const expectedWindow: ExpectedWindow = {
       ecmrID:         'A1234567890',
-      expectedWindow: [7247832478934, 212213821321]
+      expectedWindow: <DateWindow> {
+        startDate: 1010101010,
+        endDate:   2020202020
+      }
     };
 
     server
@@ -541,6 +561,7 @@ describe('An Recipient member can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
@@ -548,7 +569,10 @@ describe('An Recipient member can', () => {
   it('can not update an expectedPickupWindow of an ECMR', (done) => {
     const expectedWindow = {
       ecmrID:         'A1234567890',
-      expectedWindow: [7247832478934, 212213821321]
+      expectedWindow: <DateWindow> {
+        startDate: 1010101010,
+        endDate:   2020202020
+      }
     };
 
     server
@@ -562,6 +586,7 @@ describe('An Recipient member can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });

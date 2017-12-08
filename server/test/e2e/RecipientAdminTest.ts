@@ -6,10 +6,15 @@ import {TransportOrder, TransportOrderStatus} from '../../src/interfaces/transpo
 import {Ecmr, EcmrStatus} from '../../src/interfaces/ecmr.interface';
 import {Address} from '../../src/interfaces/address.interface';
 import {Builder} from './common/Builder';
+import {ExpectedWindow} from '../../src/interfaces/expectedWindow.interface';
+import {DeliveryWindow} from '../../src/interfaces/deliveryWindow.interface';
+import {PickupWindow} from '../../src/interfaces/pickupWindow.interface';
+import {DateWindow} from '../../src/interfaces/dateWindow.interface';
+import {UpdateEcmrStatus} from '../../src/interfaces/updateEcmrStatus.interface';
 
-const server = supertest.agent('http://localhost:8080');
+const server       = supertest.agent('http://localhost:8080');
 const baseEndPoint = '/api/v1';
-const should = chai.should();
+const should       = chai.should();
 let token: string;
 let updateEcmr: Ecmr;
 
@@ -109,6 +114,7 @@ describe('A Recipient Admin can', () => {
         }
         should.exist(res.body.token);
         token = res.body.token;
+
         done(err);
       });
   });
@@ -126,6 +132,7 @@ describe('A Recipient Admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
@@ -142,6 +149,7 @@ describe('A Recipient Admin can', () => {
           return done(err);
         }
         res.body.length.should.be.greaterThan(0, 'no ECMRs were found.');
+
         done(err);
       });
   });
@@ -158,6 +166,7 @@ describe('A Recipient Admin can', () => {
           return done(err);
         }
         res.body.length.should.equal(0);
+
         done(err);
       });
   });
@@ -175,6 +184,7 @@ describe('A Recipient Admin can', () => {
         }
         should.exist(res.body.find(ecmr => ecmr.ecmrID === 'A1234567890'));
         should.exist(res.body.find(ecmr => ecmr.ecmrID === 'B1234567890'));
+
         done(err);
       });
   });
@@ -191,6 +201,7 @@ describe('A Recipient Admin can', () => {
         }
         should.exist(res.body.find(ecmr => ecmr.ecmrID === 'A1234567890'));
         should.exist(res.body.find(ecmr => ecmr.ecmrID === 'B1234567890'));
+
         done(err);
       });
   });
@@ -207,6 +218,7 @@ describe('A Recipient Admin can', () => {
           return done(err);
         }
         updateEcmr = res.body;
+
         done(err);
       });
   });
@@ -223,6 +235,7 @@ describe('A Recipient Admin can', () => {
           return done(err);
         }
         should.exist(res.body.find(ecmr => ecmr.status === 'DELIVERED'));
+
         done(err);
       });
   });
@@ -240,12 +253,13 @@ describe('A Recipient Admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
 
   it('not update an ECMR from DELIVERED to CONFIRMED_DELIVERED', (done) => {
-    const updateTransaction = {
+    const updateTransaction: UpdateEcmrStatus = {
       ecmrID:    'A1234567890',
       goods:     updateEcmr.goods,
       signature: Builder.buildSignature('rob@cardealer.org')
@@ -262,6 +276,7 @@ describe('A Recipient Admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
@@ -278,6 +293,7 @@ describe('A Recipient Admin can', () => {
           return done(err);
         }
         res.body.length.should.be.greaterThan(0);
+
         done(err);
       });
   });
@@ -294,6 +310,7 @@ describe('A Recipient Admin can', () => {
           return done(err);
         }
         res.body.vin.should.equal('183726339N');
+
         done(err);
       });
   });
@@ -310,6 +327,7 @@ describe('A Recipient Admin can', () => {
           return done(err);
         }
         res.body.plateNumber.should.equal('AV198RX');
+
         done(err);
       });
   });
@@ -327,6 +345,7 @@ describe('A Recipient Admin can', () => {
           return done(err);
         }
         res.body.length.should.equal(0);
+
         done(err);
       });
   });
@@ -344,6 +363,7 @@ describe('A Recipient Admin can', () => {
           return done(err);
         }
         res.body.length.should.equal(0);
+
         done(err);
       });
   });
@@ -361,6 +381,7 @@ describe('A Recipient Admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
@@ -378,15 +399,19 @@ describe('A Recipient Admin can', () => {
           return done(err);
         }
         res.body.length.should.equal(0);
+
         done(err);
       });
   });
 
   it('not update an estimatedPickupWindow of a TransportOrder', (done) => {
-    const pickupWindow = {
+    const pickupWindow: PickupWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
-      dateWindow: [1010101010, 2020202020]
+      dateWindow: <DateWindow> {
+        startDate: 1010101010,
+        endDate:   2020202020
+      }
     };
     server
       .put(baseEndPoint + '/transportOrder/updatePickupWindow')
@@ -399,15 +424,19 @@ describe('A Recipient Admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
 
   it('not update an estimatedDeliveryWindow of a TransportOrder', (done) => {
-    const deliveryWindow = {
+    const deliveryWindow: DeliveryWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
-      dateWindow: [1010101010, 2020202020]
+      dateWindow: <DateWindow> {
+        startDate: 1010101010,
+        endDate:   2020202020
+      }
     };
 
     server
@@ -421,14 +450,18 @@ describe('A Recipient Admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
 
   it('can not update an expectedPickupWindow of an ECMR', (done) => {
-    const expectedWindow = {
+    const expectedWindow: ExpectedWindow = {
       ecmrID:         'A1234567890',
-      expectedWindow: [7247832478934, 212213821321]
+      expectedWindow: <DateWindow> {
+        startDate: 1010101010,
+        endDate:   2020202020
+      }
     };
 
     server
@@ -442,14 +475,18 @@ describe('A Recipient Admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
 
   it('can not update an expectedDeliveryWindow of an ECMR', (done) => {
-    const expectedWindow = {
+    const expectedWindow: ExpectedWindow = {
       ecmrID:         'A1234567890',
-      expectedWindow: [7247832478934, 212213821321]
+      expectedWindow: <DateWindow> {
+        startDate: 1010101010,
+        endDate:   2020202020
+      }
     };
 
     server
@@ -463,6 +500,7 @@ describe('A Recipient Admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
