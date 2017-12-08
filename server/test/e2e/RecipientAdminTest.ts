@@ -2,13 +2,19 @@ import * as supertest from 'supertest';
 import '../../node_modules/mocha';
 import * as chai from 'chai';
 import * as http from 'http';
-import {TransportOrder} from '../../src/interfaces/transportOrder.interface';
+import {TransportOrder, TransportOrderStatus} from '../../src/interfaces/transportOrder.interface';
 import {Ecmr, EcmrStatus} from '../../src/interfaces/ecmr.interface';
 import {Address} from '../../src/interfaces/address.interface';
 import {Builder} from './common/Builder';
+import {ExpectedWindow} from '../../src/interfaces/expectedWindow.interface';
+import {DeliveryWindow} from '../../src/interfaces/deliveryWindow.interface';
+import {PickupWindow} from '../../src/interfaces/pickupWindow.interface';
+import {DateWindow} from '../../src/interfaces/dateWindow.interface';
+import {UpdateEcmrStatus} from '../../src/interfaces/updateEcmrStatus.interface';
 
-const server = supertest.agent('http://localhost:8080');
-const should = chai.should();
+const server       = supertest.agent('http://localhost:8080');
+const baseEndPoint = '/api/v1';
+const should       = chai.should();
 let token: string;
 let updateEcmr: Ecmr;
 
@@ -95,7 +101,7 @@ describe('A Recipient Admin can', () => {
     };
 
     server
-      .post('/api/v1/login')
+      .post(baseEndPoint + '/login')
       .send(loginParams)
       .expect(ok)
       .expect('Content-Type', /json/)
@@ -108,6 +114,7 @@ describe('A Recipient Admin can', () => {
         }
         should.exist(res.body.token);
         token = res.body.token;
+
         done(err);
       });
   });
@@ -115,7 +122,7 @@ describe('A Recipient Admin can', () => {
   it('not create an ECMR', (done) => {
     const ecmr = buildECMR('ecmr1');
     server
-      .post('/api/v1/ECMR')
+      .post(baseEndPoint + '/ECMR')
       .set('x-access-token', token)
       .send(ecmr)
       .expect(500)
@@ -125,13 +132,14 @@ describe('A Recipient Admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
 
   it('read ECMRs when his org is the recipient', (done) => {
     server
-      .get('/api/v1/ECMR')
+      .get(baseEndPoint + '/ECMR')
       .set('x-access-token', token)
       .expect(ok)
       .end((err: Error, res) => {
@@ -141,13 +149,14 @@ describe('A Recipient Admin can', () => {
           return done(err);
         }
         res.body.length.should.be.greaterThan(0, 'no ECMRs were found.');
+
         done(err);
       });
   });
 
   it('not read an ECMR where his org is not the recipient', (done) => {
     server
-      .get('/api/v1/ECMR/ecmrID/H1234567890')
+      .get(baseEndPoint + '/ECMR/ecmrID/H1234567890')
       .set('x-access-token', token)
       .expect(200)
       .end((err: Error, res) => {
@@ -157,13 +166,14 @@ describe('A Recipient Admin can', () => {
           return done(err);
         }
         res.body.length.should.equal(0);
+
         done(err);
       });
   });
 
   it('get all ECMRs containing a vehicle with the provided vin', (done) => {
     server
-      .get('/api/v1/ECMR/vehicle/vin/183726339N')
+      .get(baseEndPoint + '/ECMR/vehicle/vin/183726339N')
       .set('x-access-token', token)
       .expect(ok)
       .end((err: Error, res) => {
@@ -174,13 +184,14 @@ describe('A Recipient Admin can', () => {
         }
         should.exist(res.body.find(ecmr => ecmr.ecmrID === 'A1234567890'));
         should.exist(res.body.find(ecmr => ecmr.ecmrID === 'B1234567890'));
+
         done(err);
       });
   });
 
   it('get all ECMRs containing a vehicle with the plate number', (done) => {
     server
-      .get('/api/v1/ECMR/vehicle/plateNumber/AV198RX')
+      .get(baseEndPoint + '/ECMR/vehicle/plateNumber/AV198RX')
       .set('x-access-token', token)
       .end((err: Error, res) => {
         if (err) {
@@ -190,13 +201,14 @@ describe('A Recipient Admin can', () => {
         }
         should.exist(res.body.find(ecmr => ecmr.ecmrID === 'A1234567890'));
         should.exist(res.body.find(ecmr => ecmr.ecmrID === 'B1234567890'));
+
         done(err);
       });
   });
 
   it('get an ECMR by ecmrID', (done) => {
     server
-      .get('/api/v1/ECMR/ecmrID/D1234567890')
+      .get(baseEndPoint + '/ECMR/ecmrID/D1234567890')
       .set('x-access-token', token)
       .expect(ok)
       .end((err: Error, res) => {
@@ -206,13 +218,14 @@ describe('A Recipient Admin can', () => {
           return done(err);
         }
         updateEcmr = res.body;
+
         done(err);
       });
   });
 
   it('get an ECMR by status', (done) => {
     server
-      .get('/api/v1/ECMR/status/DELIVERED')
+      .get(baseEndPoint + '/ECMR/status/' + EcmrStatus.Delivered)
       .set('x-access-token', token)
       .expect(ok)
       .end((err: Error, res) => {
@@ -222,6 +235,7 @@ describe('A Recipient Admin can', () => {
           return done(err);
         }
         should.exist(res.body.find(ecmr => ecmr.status === 'DELIVERED'));
+
         done(err);
       });
   });
@@ -229,7 +243,7 @@ describe('A Recipient Admin can', () => {
   it('not create an ECMR', (done) => {
     const transportOrder = buildECMR('ecmrRecipient');
     server
-      .post('/api/v1/transportOrder')
+      .post(baseEndPoint + '/transportOrder')
       .set('x-access-token', token)
       .send(transportOrder)
       .expect(500)
@@ -239,19 +253,20 @@ describe('A Recipient Admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
 
   it('not update an ECMR from DELIVERED to CONFIRMED_DELIVERED', (done) => {
-    const updateTransaction = {
+    const updateTransaction: UpdateEcmrStatus = {
       ecmrID:    'A1234567890',
       goods:     updateEcmr.goods,
       signature: Builder.buildSignature('rob@cardealer.org')
     };
 
     server
-      .post('/api/v1/transportOrder')
+      .post(baseEndPoint + '/transportOrder')
       .set('x-access-token', token)
       .send(updateTransaction)
       .expect(500)
@@ -261,13 +276,14 @@ describe('A Recipient Admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
 
   it('get all vehicles', (done) => {
     server
-      .get('/api/v1/vehicle/')
+      .get(baseEndPoint + '/vehicle/')
       .set('x-access-token', token)
       .expect(ok)
       .end((err: Error, res) => {
@@ -277,13 +293,14 @@ describe('A Recipient Admin can', () => {
           return done(err);
         }
         res.body.length.should.be.greaterThan(0);
+
         done(err);
       });
   });
 
   it('get vehicle by vin', (done) => {
     server
-      .get('/api/v1/vehicle/vin/183726339N')
+      .get(baseEndPoint + '/vehicle/vin/183726339N')
       .set('x-access-token', token)
       .expect(ok)
       .end((err: Error, res) => {
@@ -293,13 +310,14 @@ describe('A Recipient Admin can', () => {
           return done(err);
         }
         res.body.vin.should.equal('183726339N');
+
         done(err);
       });
   });
 
   it('get vehicle by plateNumber', (done) => {
     server
-      .get('/api/v1/vehicle/plateNumber/AV198RX')
+      .get(baseEndPoint + '/vehicle/plateNumber/AV198RX')
       .set('x-access-token', token)
       .expect(ok)
       .end((err: Error, res) => {
@@ -309,13 +327,14 @@ describe('A Recipient Admin can', () => {
           return done(err);
         }
         res.body.plateNumber.should.equal('AV198RX');
+
         done(err);
       });
   });
 
   it('not get a specific TransportOrder based on ID', (done) => {
     server
-      .get('/api/v1/transportOrder/orderID/12345567890')
+      .get(baseEndPoint + '/transportOrder/orderID/12345567890')
       .set('x-access-token', token)
       .expect(ok)
       .expect('Content-Type', /json/)
@@ -326,13 +345,14 @@ describe('A Recipient Admin can', () => {
           return done(err);
         }
         res.body.length.should.equal(0);
+
         done(err);
       });
   });
 
   it('not get a specific TransportOrder based on status', (done) => {
     server
-      .get('/api/v1/transportOrder/status/IN_PROGRESS')
+      .get(baseEndPoint + '/transportOrder/status/' + TransportOrderStatus.InProgress)
       .set('x-access-token', token)
       .expect(200)
       .expect('Content-Type', /json/)
@@ -343,6 +363,7 @@ describe('A Recipient Admin can', () => {
           return done(err);
         }
         res.body.length.should.equal(0);
+
         done(err);
       });
   });
@@ -350,7 +371,7 @@ describe('A Recipient Admin can', () => {
   it('not create a TransportOrder', (done) => {
     const transportOrder = buildTransportOrder();
     server
-      .post('/api/v1/transportOrder')
+      .post(baseEndPoint + '/transportOrder')
       .set('x-access-token', token)
       .send(transportOrder)
       .expect(500)
@@ -360,13 +381,14 @@ describe('A Recipient Admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
 
   it('not get a specific TransportOrder based on vin', (done) => {
     server
-      .get('/api/v1/transportOrder/vin/183726339N')
+      .get(baseEndPoint + '/transportOrder/vin/183726339N')
       .set('x-access-token', token)
       .expect(ok)
       .expect('Content-Type', /json/)
@@ -377,18 +399,22 @@ describe('A Recipient Admin can', () => {
           return done(err);
         }
         res.body.length.should.equal(0);
+
         done(err);
       });
   });
 
   it('not update an estimatedPickupWindow of a TransportOrder', (done) => {
-    const pickupWindow = {
+    const pickupWindow: PickupWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
-      dateWindow: [1010101010, 2020202020]
+      dateWindow: <DateWindow> {
+        startDate: 1010101010,
+        endDate:   2020202020
+      }
     };
     server
-      .put('/api/v1/transportOrder/updatePickupWindow')
+      .put(baseEndPoint + '/transportOrder/updatePickupWindow')
       .set('x-access-token', token)
       .send(pickupWindow)
       .expect(500)
@@ -398,19 +424,23 @@ describe('A Recipient Admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
 
   it('not update an estimatedDeliveryWindow of a TransportOrder', (done) => {
-    const deliveryWindow = {
+    const deliveryWindow: DeliveryWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
-      dateWindow: [1010101010, 2020202020]
+      dateWindow: <DateWindow> {
+        startDate: 1010101010,
+        endDate:   2020202020
+      }
     };
 
     server
-      .put('/api/v1/transportOrder/updateDeliveryWindow')
+      .put(baseEndPoint + '/transportOrder/updateDeliveryWindow')
       .set('x-access-token', token)
       .send(deliveryWindow)
       .expect(500)
@@ -420,18 +450,22 @@ describe('A Recipient Admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
 
   it('can not update an expectedPickupWindow of an ECMR', (done) => {
-    const expectedWindow = {
+    const expectedWindow: ExpectedWindow = {
       ecmrID:         'A1234567890',
-      expectedWindow: [7247832478934, 212213821321]
+      expectedWindow: <DateWindow> {
+        startDate: 1010101010,
+        endDate:   2020202020
+      }
     };
 
     server
-      .put('/api/v1/ECMR/updateExpectedPickupWindow')
+      .put(baseEndPoint + '/ECMR/updateExpectedPickupWindow')
       .set('x-access-token', token)
       .send(expectedWindow)
       .expect(500)
@@ -441,18 +475,22 @@ describe('A Recipient Admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
 
   it('can not update an expectedDeliveryWindow of an ECMR', (done) => {
-    const expectedWindow = {
+    const expectedWindow: ExpectedWindow = {
       ecmrID:         'A1234567890',
-      expectedWindow: [7247832478934, 212213821321]
+      expectedWindow: <DateWindow> {
+        startDate: 1010101010,
+        endDate:   2020202020
+      }
     };
 
     server
-      .put('/api/v1/ECMR/updateExpectedDeliveryWindow')
+      .put(baseEndPoint + '/ECMR/updateExpectedDeliveryWindow')
       .set('x-access-token', token)
       .send(expectedWindow)
       .expect(500)
@@ -462,6 +500,7 @@ describe('A Recipient Admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });

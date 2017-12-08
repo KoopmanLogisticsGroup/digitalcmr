@@ -2,12 +2,17 @@ import * as supertest from 'supertest';
 import '../../node_modules/mocha';
 import * as chai from 'chai';
 import * as http from 'http';
-import {TransportOrder} from '../../src/interfaces/transportOrder.interface';
+import {TransportOrder, TransportOrderStatus} from '../../src/interfaces/transportOrder.interface';
 import {Ecmr, EcmrStatus} from '../../src/interfaces/ecmr.interface';
 import {Address} from '../../src/interfaces/address.interface';
-import {EcmrCancellation, TransportOrderCancellation} from '../../src/interfaces/cancellation.interface';
+import {Cancellation, EcmrCancellation, TransportOrderCancellation} from '../../src/interfaces/cancellation.interface';
 import {Builder} from './common/Builder';
 import {StatusCode} from './common/StatusCode';
+import {DeliveryWindow} from '../../src/interfaces/deliveryWindow.interface';
+import {PickupWindow} from '../../src/interfaces/pickupWindow.interface';
+import {ExpectedWindow} from '../../src/interfaces/expectedWindow.interface';
+import {DateWindow} from '../../src/interfaces/dateWindow.interface';
+import {UpdateEcmrStatus} from '../../src/interfaces/updateEcmrStatus.interface';
 
 const server = supertest.agent('http://localhost:8080');
 const should = chai.should();
@@ -15,7 +20,8 @@ let token: string;
 let transportOrder: TransportOrder;
 let updateEcmr: Ecmr;
 
-const ok = (res) => {
+const baseEndPoint = '/api/v1';
+const ok           = (res) => {
   if (res.status !== 200) {
     const status = http.STATUS_CODES[res.status];
     return new Error(`Expected 200, got ${res.status} ${status} with message: ${res.body.message}`);
@@ -98,7 +104,7 @@ describe('An Recipient member can', () => {
     };
 
     server
-      .post('/api/v1/login')
+      .post(baseEndPoint + '/login')
       .send(loginParams)
       .expect(ok)
       .expect('Content-Type', /json/)
@@ -118,7 +124,7 @@ describe('An Recipient member can', () => {
   it('not create an ECMR', (done) => {
     const ecmr = buildECMR('ecmr1');
     server
-      .post('/api/v1/ECMR')
+      .post(baseEndPoint + '/ECMR')
       .set('x-access-token', token)
       .send(ecmr)
       .expect(500)
@@ -134,7 +140,7 @@ describe('An Recipient member can', () => {
 
   it('get an ECMR by ecmrID', (done) => {
     server
-      .get('/api/v1/ECMR/ecmrID/A1234567890')
+      .get(baseEndPoint + '/ECMR/ecmrID/A1234567890')
       .set('x-access-token', token)
       .expect(ok)
       .end((err: Error, res) => {
@@ -150,7 +156,7 @@ describe('An Recipient member can', () => {
 
   it('get an ECMR by status', (done) => {
     server
-      .get('/api/v1/ECMR/status/DELIVERED')
+      .get(baseEndPoint + '/ECMR/status/' + EcmrStatus.Delivered)
       .set('x-access-token', token)
       .expect(ok)
       .end((err: Error, res) => {
@@ -166,7 +172,7 @@ describe('An Recipient member can', () => {
 
   it('read ECMRs where his org is the recipient', (done) => {
     server
-      .get('/api/v1/ECMR')
+      .get(baseEndPoint + '/ECMR')
       .set('x-access-token', token)
       .expect(ok)
       .end((err: Error, res) => {
@@ -182,7 +188,7 @@ describe('An Recipient member can', () => {
 
   it('not read an ECMR where his org is not the recipient', (done) => {
     server
-      .get('/api/v1/ECMR/ecmrID/H1234567890')
+      .get(baseEndPoint + '/ECMR/ecmrID/H1234567890')
       .set('x-access-token', token)
       .expect(200)
       .end((err: Error, res) => {
@@ -198,7 +204,7 @@ describe('An Recipient member can', () => {
 
   it('get all ECMRs containing a vehicle with the provided vin', (done) => {
     server
-      .get('/api/v1/ECMR/vehicle/vin/183726339N')
+      .get(baseEndPoint + '/ECMR/vehicle/vin/183726339N')
       .set('x-access-token', token)
       .expect(ok)
       .end((err: Error, res) => {
@@ -215,7 +221,7 @@ describe('An Recipient member can', () => {
 
   it('get all ECMRs containing a vehicle with the plate number', (done) => {
     server
-      .get('/api/v1/ECMR/vehicle/plateNumber/AV198RX')
+      .get(baseEndPoint + '/ECMR/vehicle/plateNumber/AV198RX')
       .set('x-access-token', token)
       .end((err: Error, res) => {
         if (err) {
@@ -232,7 +238,7 @@ describe('An Recipient member can', () => {
   it('not create an ECMR', (done) => {
     const transportOrder = buildECMR('ecmrRecipient');
     server
-      .post('/api/v1/transportOrder')
+      .post(baseEndPoint + '/transportOrder')
       .set('x-access-token', token)
       .send(transportOrder)
       .expect(500)
@@ -255,7 +261,7 @@ describe('An Recipient member can', () => {
     };
 
     server
-      .post('/api/v1/ECMR')
+      .post(baseEndPoint + '/ECMR')
       .set('x-access-token', token)
       .send(updateTransaction)
       .expect(500)
@@ -270,7 +276,7 @@ describe('An Recipient member can', () => {
   });
 
   it('update an ECMR from DELIVERED to CONFIRMED DELIVERED', (done) => {
-    const updateTransaction = {
+    const updateTransaction: UpdateEcmrStatus = {
       ecmrID:    updateEcmr.ecmrID,
       orderID:   updateEcmr.orderID,
       goods:     updateEcmr.goods,
@@ -278,7 +284,7 @@ describe('An Recipient member can', () => {
     };
 
     server
-      .put('/api/v1/ECMR/status/CONFIRMED_DELIVERED')
+      .put(baseEndPoint + '/ECMR/status/' + EcmrStatus.ConfirmedDelivered)
       .set('x-access-token', token)
       .send(updateTransaction)
       .expect(StatusCode.ok)
@@ -294,16 +300,16 @@ describe('An Recipient member can', () => {
 
   it('not cancel an ECMR', (done) => {
     let cancel = <EcmrCancellation> {
-      'ecmrID':       updateEcmr.ecmrID,
-      'cancellation': {
-        'cancelledBy': 'rob@cardealer.org',
-        'reason':      'no reason',
-        'date':        123
+      ecmrID:       updateEcmr.ecmrID,
+      cancellation: <Cancellation> {
+        cancelledBy: 'rob@cardealer.org',
+        reason:      'no reason',
+        date:        123
       }
     };
 
     server
-      .put('/api/v1/ECMR/cancel')
+      .put(baseEndPoint + '/ECMR/cancel')
       .set('x-access-token', token)
       .send(cancel)
       .expect(500)
@@ -319,7 +325,7 @@ describe('An Recipient member can', () => {
 
   it('get all vehicles', (done) => {
     server
-      .get('/api/v1/vehicle/')
+      .get(baseEndPoint + '/vehicle/')
       .set('x-access-token', token)
       .expect(ok)
       .end((err: Error, res) => {
@@ -335,7 +341,7 @@ describe('An Recipient member can', () => {
 
   it('get vehicle by vin', (done) => {
     server
-      .get('/api/v1/vehicle/vin/183726339N')
+      .get(baseEndPoint + '/vehicle/vin/183726339N')
       .set('x-access-token', token)
       .expect(ok)
       .end((err: Error, res) => {
@@ -351,7 +357,7 @@ describe('An Recipient member can', () => {
 
   it('get vehicle by plateNumber', (done) => {
     server
-      .get('/api/v1/vehicle/plateNumber/AV198RX')
+      .get(baseEndPoint + '/vehicle/plateNumber/AV198RX')
       .set('x-access-token', token)
       .expect(ok)
       .end((err: Error, res) => {
@@ -367,7 +373,7 @@ describe('An Recipient member can', () => {
 
   it('not get a specific transport order based on ID', (done) => {
     server
-      .get('/api/v1/transportOrder/orderID/12345567890')
+      .get(baseEndPoint + '/transportOrder/orderID/12345567890')
       .set('x-access-token', token)
       .expect(ok)
       .expect('Content-Type', /json/)
@@ -384,7 +390,7 @@ describe('An Recipient member can', () => {
 
   it('not get a specific transport order based on status', (done) => {
     server
-      .get('/api/v1/transportOrder/status/IN_PROGRESS')
+      .get(baseEndPoint + '/transportOrder/status/' + TransportOrderStatus.InProgress)
       .set('x-access-token', token)
       .expect(200)
       .expect('Content-Type', /json/)
@@ -401,7 +407,7 @@ describe('An Recipient member can', () => {
 
   it('not get a specific transport order based on vin', (done) => {
     server
-      .get('/api/v1/transportOrder/vin/183726339N')
+      .get(baseEndPoint + '/transportOrder/vin/183726339N')
       .set('x-access-token', token)
       .expect(ok)
       .expect('Content-Type', /json/)
@@ -419,7 +425,7 @@ describe('An Recipient member can', () => {
   it('not create a transport order', (done) => {
     const transportOrder = buildTransportOrder();
     server
-      .post('/api/v1/transportOrder')
+      .post(baseEndPoint + '/transportOrder')
       .set('x-access-token', token)
       .send(transportOrder)
       .expect(500)
@@ -434,13 +440,16 @@ describe('An Recipient member can', () => {
   });
 
   it('not update an estimatedPickupWindow of a TransportOrder', (done) => {
-    const pickupWindow = {
+    const pickupWindow: PickupWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
-      dateWindow: [1010101010, 2020202020]
+      dateWindow: <DateWindow> {
+        startDate: 1010101010,
+        endDate:   2020202020
+      }
     };
     server
-      .put('/api/v1/transportOrder/updatePickupWindow')
+      .put(baseEndPoint + '/transportOrder/updatePickupWindow')
       .set('x-access-token', token)
       .send(pickupWindow)
       .expect(500)
@@ -455,17 +464,17 @@ describe('An Recipient member can', () => {
   });
 
   it('not cancel a transportOrder', (done) => {
-    let cancel = <TransportOrderCancellation> {
-      'orderID':      transportOrder.orderID,
-      'cancellation': {
-        'cancelledBy': 'lapo@leaseplan.org',
-        'date':        123,
-        'reason':      'invalid order'
+    const cancel: TransportOrderCancellation = {
+      orderID:      transportOrder.orderID,
+      cancellation: <Cancellation> {
+        cancelledBy: 'lapo@leaseplan.org',
+        date:        123,
+        reason:      'invalid order'
       }
     };
 
     server
-      .put('/api/v1/transportOrder/cancel')
+      .put(baseEndPoint + '/transportOrder/cancel')
       .set('x-access-token', token)
       .send(cancel)
       .expect(500)
@@ -475,19 +484,23 @@ describe('An Recipient member can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
 
   it('not update an estimatedDeliveryWindow of a TransportOrder', (done) => {
-    const deliveryWindow = {
+    const deliveryWindow: DeliveryWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
-      dateWindow: [1010101010, 2020202020]
+      dateWindow: <DateWindow> {
+        startDate: 1010101010,
+        endDate:   2020202020
+      }
     };
 
     server
-      .put('/api/v1/transportOrder/updateDeliveryWindow')
+      .put(baseEndPoint + '/transportOrder/updateDeliveryWindow')
       .set('x-access-token', token)
       .send(deliveryWindow)
       .expect(500)
@@ -497,19 +510,23 @@ describe('An Recipient member can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
 
   it('not update an estimatedPickupWindow of a TransportOrder', (done) => {
-    const pickWindow = {
+    const pickWindow: PickupWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
-      dateWindow: [1010101010, 2020202020]
+      dateWindow: <DateWindow> {
+        startDate: 1010101010,
+        endDate:   2020202020
+      }
     };
 
     server
-      .put('/api/v1/transportOrder/updateDeliveryWindow')
+      .put(baseEndPoint + '/transportOrder/updateDeliveryWindow')
       .set('x-access-token', token)
       .send(pickWindow)
       .expect(500)
@@ -519,18 +536,22 @@ describe('An Recipient member can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
 
   it('can not update an expectedDeliveryWindow of an ECMR', (done) => {
-    const expectedWindow = {
+    const expectedWindow: ExpectedWindow = {
       ecmrID:         'A1234567890',
-      expectedWindow: [7247832478934, 212213821321]
+      expectedWindow: <DateWindow> {
+        startDate: 1010101010,
+        endDate:   2020202020
+      }
     };
 
     server
-      .put('/api/v1/ECMR/updateExpectedDeliveryWindow')
+      .put(baseEndPoint + '/ECMR/updateExpectedDeliveryWindow')
       .set('x-access-token', token)
       .send(expectedWindow)
       .expect(500)
@@ -540,6 +561,7 @@ describe('An Recipient member can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
@@ -547,11 +569,14 @@ describe('An Recipient member can', () => {
   it('can not update an expectedPickupWindow of an ECMR', (done) => {
     const expectedWindow = {
       ecmrID:         'A1234567890',
-      expectedWindow: [7247832478934, 212213821321]
+      expectedWindow: <DateWindow> {
+        startDate: 1010101010,
+        endDate:   2020202020
+      }
     };
 
     server
-      .put('/api/v1/ECMR/updateExpectedPickupWindow')
+      .put(baseEndPoint + '/ECMR/updateExpectedPickupWindow')
       .set('x-access-token', token)
       .send(expectedWindow)
       .expect(500)
@@ -561,6 +586,7 @@ describe('An Recipient member can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });

@@ -7,10 +7,14 @@ import {Builder} from './common/Builder';
 import {StatusCode} from './common/StatusCode';
 import {Response} from 'superagent';
 import {CreateEcmrs} from '../../src/interfaces/createEcmrs.interface';
-import {EcmrCancellation, TransportOrderCancellation} from '../../src/interfaces/cancellation.interface';
+import {Cancellation, EcmrCancellation, TransportOrderCancellation} from '../../src/interfaces/cancellation.interface';
+import {ExpectedWindow} from '../../src/interfaces/expectedWindow.interface';
+import {PickupWindow} from '../../src/interfaces/pickupWindow.interface';
+import {DateWindow} from '../../src/interfaces/dateWindow.interface';
 
-const server = supertest.agent('http://localhost:8080');
-const should = chai.should();
+const baseEndPoint = '/api/v1';
+const server       = supertest.agent('http://localhost:8080');
+const should       = chai.should();
 
 let transportOrder: TransportOrder;
 let token: string;
@@ -27,7 +31,7 @@ describe('A legal owner admin can', () => {
     };
 
     server
-      .post('/api/v1/login')
+      .post(baseEndPoint + '/login')
       .send(loginParams)
       .expect(StatusCode.ok)
       .expect('Content-Type', /json/)
@@ -52,7 +56,7 @@ describe('A legal owner admin can', () => {
     };
 
     server
-      .post('/api/v1/ECMR')
+      .post(baseEndPoint + '/ECMR')
       .set('x-access-token', token)
       .send(payload)
       .expect('Content-Type', /json/)
@@ -70,7 +74,7 @@ describe('A legal owner admin can', () => {
 
   it('read all ECMRs for his organisation', (done) => {
     server
-      .get('/api/v1/ECMR')
+      .get(baseEndPoint + '/ECMR')
       .set('x-access-token', token)
       .expect('Content-Type', /json/)
       .expect(200)
@@ -88,7 +92,7 @@ describe('A legal owner admin can', () => {
 
   it('get an ECMR by ecmrID', (done) => {
     server
-      .get('/api/v1/ECMR/ecmrID/D1234567890')
+      .get(baseEndPoint + '/ECMR/ecmrID/D1234567890')
       .set('x-access-token', token)
       .expect(StatusCode.ok)
       .end((err: Error) => {
@@ -121,7 +125,7 @@ describe('A legal owner admin can', () => {
 
   it('not read ECMRs when is org is not the legal owner', (done) => {
     server
-      .get('/api/v1/ECMR/ecmrID/H1234567890')
+      .get(baseEndPoint + '/ECMR/ecmrID/H1234567890')
       .set('x-access-token', token)
       .expect(200)
       .end((err: Error, res: Response) => {
@@ -138,7 +142,7 @@ describe('A legal owner admin can', () => {
 
   it('get all ECMRs containing a vehicle with the provided vin', (done) => {
     server
-      .get('/api/v1/ECMR/vehicle/vin/183726339N')
+      .get(baseEndPoint + '/ECMR/vehicle/vin/183726339N')
       .set('x-access-token', token)
       .expect(StatusCode.ok)
       .end((err: Error, res: Response) => {
@@ -156,7 +160,7 @@ describe('A legal owner admin can', () => {
 
   it('get all ECMRs containing a vehicle with the plate number', (done) => {
     server
-      .get('/api/v1/ECMR/vehicle/plateNumber/AV198RX')
+      .get(baseEndPoint + '/ECMR/vehicle/plateNumber/AV198RX')
       .set('x-access-token', token)
       .end((err: Error, res: Response) => {
         if (err) {
@@ -166,13 +170,14 @@ describe('A legal owner admin can', () => {
         }
         should.exist(res.body.find((ecmr: Ecmr) => ecmr.ecmrID === 'A1234567890'));
         should.exist(res.body.find((ecmr: Ecmr) => ecmr.ecmrID === 'B1234567890'));
+
         done(err);
       });
   });
 
   it('get all vehicles', (done) => {
     server
-      .get('/api/v1/vehicle/')
+      .get(baseEndPoint + '/vehicle/')
       .set('x-access-token', token)
       .expect(StatusCode.ok)
       .end((err: Error, res: Response) => {
@@ -189,7 +194,7 @@ describe('A legal owner admin can', () => {
 
   it('get vehicle by vin', (done) => {
     server
-      .get('/api/v1/vehicle/vin/183726339N')
+      .get(baseEndPoint + '/vehicle/vin/183726339N')
       .set('x-access-token', token)
       .expect(StatusCode.ok)
       .end((err: Error, res: Response) => {
@@ -206,7 +211,7 @@ describe('A legal owner admin can', () => {
 
   it('get vehicle by plateNumber', (done) => {
     server
-      .get('/api/v1/vehicle/plateNumber/AV198RX')
+      .get(baseEndPoint + '/vehicle/plateNumber/AV198RX')
       .set('x-access-token', token)
       .expect(StatusCode.ok)
       .end((err: Error, res: Response) => {
@@ -222,17 +227,17 @@ describe('A legal owner admin can', () => {
   });
 
   it('not cancel an ECMR', (done) => {
-    let cancel = <EcmrCancellation> {
-      'ecmrID':       ecmrs[0].ecmrID,
-      'cancellation': {
-        'cancelledBy': 'lapo@leaseplan.org',
-        'reason':      'no reason',
-        'date':        123
+    let cancel: EcmrCancellation = {
+      ecmrID:       ecmrs[0].ecmrID,
+      cancellation: <Cancellation> {
+        cancelledBy: 'lapo@leaseplan.org',
+        reason:      'no reason',
+        date:        123
       }
     };
 
     server
-      .put('/api/v1/ECMR/cancel')
+      .put(baseEndPoint + '/ECMR/cancel')
       .set('x-access-token', token)
       .send(cancel)
       .expect(500)
@@ -242,13 +247,14 @@ describe('A legal owner admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
 
   it('create a TransportOrder', (done) => {
     server
-      .post('/api/v1/transportOrder/')
+      .post(baseEndPoint + '/transportOrder/')
       .set('x-access-token', token)
       .send(transportOrder)
       .expect(StatusCode.ok)
@@ -267,7 +273,7 @@ describe('A legal owner admin can', () => {
 
   it('get all TransportOrders where his org is the owner', (done) => {
     server
-      .get('/api/v1/transportOrder')
+      .get(baseEndPoint + '/transportOrder')
       .set('x-access-token', token)
       .expect(StatusCode.ok)
       .expect('Content-Type', /json/)
@@ -285,7 +291,7 @@ describe('A legal owner admin can', () => {
 
   it('get a specific TransportOrder by orderID', (done) => {
     server
-      .get('/api/v1/transportOrder/orderID/12345567890')
+      .get(baseEndPoint + '/transportOrder/orderID/12345567890')
       .set('x-access-token', token)
       .expect(StatusCode.ok)
       .expect('Content-Type', /json/)
@@ -320,17 +326,17 @@ describe('A legal owner admin can', () => {
   });
 
   it('cancel a transportOrder', (done) => {
-    let cancel = <TransportOrderCancellation> {
-      'orderID':      transportOrder.orderID,
-      'cancellation': {
-        'cancelledBy': 'lapo@leaseplan.org',
-        'date':        123,
-        'reason':      'invalid order'
+    let cancel: TransportOrderCancellation = {
+      orderID:      transportOrder.orderID,
+      cancellation: <Cancellation> {
+        cancelledBy: 'lapo@leaseplan.org',
+        date:        123,
+        reason:      'invalid order'
       }
     };
 
     server
-      .put('/api/v1/transportOrder/cancel')
+      .put(baseEndPoint + '/transportOrder/cancel')
       .set('x-access-token', token)
       .send(cancel)
       .expect(200)
@@ -340,13 +346,14 @@ describe('A legal owner admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
 
   it('get a specific TransportOrder based on vin', (done) => {
     server
-      .get('/api/v1/transportOrder/vin/183726339N')
+      .get(baseEndPoint + '/transportOrder/vin/183726339N')
       .set('x-access-token', token)
       .expect(StatusCode.ok)
       .expect('Content-Type', /json/)
@@ -367,7 +374,7 @@ describe('A legal owner admin can', () => {
     wrongTransportOrder.owner = 'notLeaseplan';
 
     server
-      .post('/api/v1/transportOrder/')
+      .post(baseEndPoint + '/transportOrder/')
       .set('x-access-token', token)
       .send(wrongTransportOrder)
       .expect('Content-Type', /json/)
@@ -384,14 +391,17 @@ describe('A legal owner admin can', () => {
   });
 
   it('update the expectedPickupWindow of a TransportOrder with status CREATED', (done) => {
-    const pickupWindow = {
+    const pickupWindow: PickupWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
-      dateWindow: [1010101010, 2020202020]
+      dateWindow: <DateWindow> {
+        startDate: 1010101010,
+        endDate:   2020202020
+      }
     };
 
     server
-      .put('/api/v1/transportOrder/updatePickupWindow')
+      .put(baseEndPoint + '/transportOrder/updatePickupWindow')
       .set('x-access-token', token)
       .send(pickupWindow)
       .expect(StatusCode.ok)
@@ -407,14 +417,17 @@ describe('A legal owner admin can', () => {
   });
 
   it('update the expectedDeliveryWindow of a TransportOrder with status IN_TRANSIT', (done) => {
-    const pickupWindow = {
+    const pickupWindow: PickupWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
-      dateWindow: [1010101010, 2020202020]
+      dateWindow: <DateWindow> {
+        startDate: 1010101010,
+        endDate:   2020202020
+      }
     };
 
     server
-      .put('/api/v1/transportOrder/updateDeliveryWindow')
+      .put(baseEndPoint + '/transportOrder/updateDeliveryWindow')
       .set('x-access-token', token)
       .send(pickupWindow)
       .expect(StatusCode.ok)
@@ -424,18 +437,22 @@ describe('A legal owner admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
 
   it('can not update an expectedPickupWindow of an ECMR', (done) => {
-    const expectedWindow = {
+    const expectedWindow: ExpectedWindow = {
       ecmrID:         'A1234567890',
-      expectedWindow: [7247832478934, 212213821321]
+      expectedWindow: <DateWindow> {
+        startDate: 1010101010,
+        endDate:   2020202020
+      }
     };
 
     server
-      .put('/api/v1/ECMR/updateExpectedPickupWindow')
+      .put(baseEndPoint + '/ECMR/updateExpectedPickupWindow')
       .set('x-access-token', token)
       .send(expectedWindow)
       .expect(500)
@@ -451,13 +468,16 @@ describe('A legal owner admin can', () => {
   });
 
   it('can not update an expectedDeliveryWindow of an ECMR', (done) => {
-    const expectedWindow = {
+    const expectedWindow: ExpectedWindow = {
       ecmrID:         'E1234567890',
-      expectedWindow: [7247832478934, 212213821321]
+      expectedWindow: <DateWindow> {
+        startDate: 1010101010,
+        endDate:   2020202020
+      }
     };
 
     server
-      .put('/api/v1/ECMR/updateExpectedDeliveryWindow')
+      .put(baseEndPoint + '/ECMR/updateExpectedDeliveryWindow')
       .set('x-access-token', token)
       .send(expectedWindow)
       .expect(500)

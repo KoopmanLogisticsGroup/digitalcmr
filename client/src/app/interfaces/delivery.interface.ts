@@ -1,7 +1,8 @@
 import {Address} from './address.interface';
+import {DateWindow} from './dateWindow.interface';
 
 export interface Delivery {
   address: Address;
-  expectedWindow?: number;
+  expectedWindow?: DateWindow;
   actualDate?: number;
 }

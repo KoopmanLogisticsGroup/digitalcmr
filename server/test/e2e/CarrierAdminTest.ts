@@ -2,14 +2,21 @@ import * as supertest from 'supertest';
 import '../../node_modules/mocha';
 import * as chai from 'chai';
 import {Ecmr} from '../../src/interfaces/ecmr.interface';
-import {TransportOrder} from '../../src/interfaces/transportOrder.interface';
+import {TransportOrder, TransportOrderStatus} from '../../src/interfaces/transportOrder.interface';
 import {EcmrStatus} from '../../src/interfaces/ecmr.interface';
 import {StatusCode} from './common/StatusCode';
 import {Builder} from './common/Builder';
 import {EcmrCancellation, TransportOrderCancellation} from '../../src/interfaces/cancellation.interface';
+import {CreateEcmrs} from '../../src/interfaces/createEcmrs.interface';
+import {UpdateEcmrStatus} from '../../src/interfaces/updateEcmrStatus.interface';
+import {PickupWindow} from '../../src/interfaces/pickupWindow.interface';
+import {DeliveryWindow} from '../../src/interfaces/deliveryWindow.interface';
+import {ExpectedWindow} from '../../src/interfaces/expectedWindow.interface';
+import {DateWindow} from '../../../client/src/app/interfaces/dateWindow.interface';
 
-const server = supertest.agent('http://localhost:8080');
-const should = chai.should();
+const baseEndPoint = '/api/v1';
+const server       = supertest.agent('http://localhost:8080');
+const should       = chai.should();
 let token: string;
 let transportOrder: TransportOrder;
 let updateEcmr: Ecmr;
@@ -23,7 +30,7 @@ describe('A Carrier Admin can', () => {
     };
 
     server
-      .post('/api/v1/login')
+      .post(`${baseEndPoint}/login`)
       .send(loginParams)
       .expect(StatusCode.ok)
       .expect('Content-Type', /json/)
@@ -36,13 +43,14 @@ describe('A Carrier Admin can', () => {
         }
         should.exist(res.body.token);
         token = res.body.token;
+
         done(err);
       });
   });
 
   it('get the ECMRs linked to a vin', (done) => {
     server
-      .get('/api/v1/ECMR/vehicle/vin/183726339N')
+      .get(`${baseEndPoint}/ECMR/vehicle/vin/183726339N`)
       .set('x-access-token', token)
       .end((err: Error, res) => {
         if (err) {
@@ -52,13 +60,14 @@ describe('A Carrier Admin can', () => {
         }
         should.exist(res.body.find(ecmr => ecmr.ecmrID === 'A1234567890'));
         should.exist(res.body.find(ecmr => ecmr.ecmrID === 'B1234567890'));
+
         done(err);
       });
   });
 
   it('get the ECMRs linked to a plate number', (done) => {
     server
-      .get('/api/v1/ECMR/vehicle/plateNumber/AV198RX')
+      .get(`${baseEndPoint}/ECMR/vehicle/plateNumber/AV198RX`)
       .set('x-access-token', token)
       .end((err: Error, res) => {
         if (err) {
@@ -68,13 +77,14 @@ describe('A Carrier Admin can', () => {
         }
         should.exist(res.body.find(ecmr => ecmr.ecmrID === 'A1234567890'));
         should.exist(res.body.find(ecmr => ecmr.ecmrID === 'B1234567890'));
+
         done(err);
       });
   });
 
   it('get a specific ECMR by ecmrID', (done) => {
     server
-      .get('/api/v1/ECMR/ecmrID/A1234567890')
+      .get(`${baseEndPoint}/ECMR/ecmrID/A1234567890`)
       .set('x-access-token', token)
       .expect(StatusCode.ok)
       .end((err: Error, res) => {
@@ -84,13 +94,14 @@ describe('A Carrier Admin can', () => {
           return done(err);
         }
         updateEcmr = res.body;
+
         done(err);
       });
   });
 
   it('read ECMRs where his org is the transporter and status is not created', (done) => {
     server
-      .get('/api/v1/ECMR')
+      .get(`${baseEndPoint}/ECMR`)
       .set('x-access-token', token)
       .expect(StatusCode.ok)
       .end((err: Error, res) => {
@@ -101,13 +112,14 @@ describe('A Carrier Admin can', () => {
         }
         res.body.length.should.be.greaterThan(0, 'No ECMRs were found for carrier org');
         should.exist(res.body.find(ecmr => ecmr.carrier === 'resource:org.digitalcmr.CarrierOrg#koopman'));
+
         done(err);
       });
   });
 
   it('not read an ECMR where his org is not the source', (done) => {
     server
-      .get('/api/v1/ECMR/ecmrID/H1234567890')
+      .get(baseEndPoint + '/ECMR/ecmrID/H1234567890')
       .set('x-access-token', token)
       .expect(200)
       .end((err: Error, res) => {
@@ -117,6 +129,7 @@ describe('A Carrier Admin can', () => {
           return done(err);
         }
         res.body.length.should.equal(0);
+
         done(err);
       });
   });
@@ -125,13 +138,14 @@ describe('A Carrier Admin can', () => {
     let ecmrList: Ecmr[] = [];
     const ecmr: Ecmr     = Builder.buildECMR('ecmr1');
     ecmrList.push(ecmr);
-    const ecmrs = {
+
+    const ecmrs: CreateEcmrs = {
       orderID: '12345567890',
       ecmrs:   ecmrList
     };
 
     server
-      .post('/api/v1/ECMR')
+      .post(baseEndPoint + '/ECMR')
       .set('x-access-token', token)
       .send(ecmrs)
       .expect(200)
@@ -141,12 +155,13 @@ describe('A Carrier Admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
 
   it('cancel an ECMR', (done) => {
-    let cancel = <EcmrCancellation> {
+    let cancel: EcmrCancellation = {
       'ecmrID':       'ecmr1',
       'cancellation': {
         'cancelledBy': 'pete@koopman.org',
@@ -156,7 +171,7 @@ describe('A Carrier Admin can', () => {
     };
 
     server
-      .put('/api/v1/ECMR/cancel')
+      .put(baseEndPoint + '/ECMR/cancel')
       .set('x-access-token', token)
       .send(cancel)
       .expect(200)
@@ -166,18 +181,20 @@ describe('A Carrier Admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
 
   it('not submit an update status from LOADED to IN_TRANSIT', (done) => {
-    const updateTransaction = {
+    const updateTransaction: UpdateEcmrStatus = {
       ecmrID:    updateEcmr.ecmrID,
       goods:     updateEcmr.goods,
       signature: Builder.buildSignature('harry@koopman.org')
     };
+
     server
-      .put('/api/v1/ECMR/status/IN_TRANSIT')
+      .put(baseEndPoint + '/ECMR/status/' + EcmrStatus.InTransit)
       .set('x-access-token', token)
       .send(updateTransaction)
       .expect(500)
@@ -187,19 +204,21 @@ describe('A Carrier Admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
 
   it('not submit an update status from IN_TRANSIT to DELIVERED', (done) => {
-    const updateTransaction = {
+    const updateTransaction: UpdateEcmrStatus = {
       ecmrID:    updateEcmr.ecmrID,
       orderID:   updateEcmr.orderID,
       goods:     updateEcmr.goods,
       signature: Builder.buildSignature('harry@koopman.org')
     };
+
     server
-      .put('/api/v1/ECMR/status/DELIVERED')
+      .put(baseEndPoint + '/ECMR/status/' + EcmrStatus.Delivered)
       .set('x-access-token', token)
       .send(updateTransaction)
       .expect(500)
@@ -209,13 +228,14 @@ describe('A Carrier Admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
 
   it('get ecmr by status CREATED', (done) => {
     server
-      .get('/api/v1/ECMR/status/CREATED')
+      .get(baseEndPoint + '/ECMR/status/' + EcmrStatus.Created)
       .set('x-access-token', token)
       .end((err: Error, res) => {
         if (err) {
@@ -224,14 +244,15 @@ describe('A Carrier Admin can', () => {
           return done(err);
         }
         res.body.length.should.be.greaterThan(0, 'No CREATED ECMRs were found.');
-        should.exist(res.body.find(ecmr => ecmr.status === EcmrStatus.Created));
+        should.exist(res.body.find((ecmr: Ecmr) => ecmr.status === EcmrStatus.Created));
+
         done(err);
       });
   });
 
   it('get ecmr by status LOADED', (done) => {
     server
-      .get('/api/v1/ECMR/status/LOADED')
+      .get(baseEndPoint + '/ECMR/status/' + EcmrStatus.Loaded)
       .set('x-access-token', token)
       .end((err: Error, res) => {
           if (err) {
@@ -240,7 +261,7 @@ describe('A Carrier Admin can', () => {
             return done(err);
           }
         res.body.length.should.be.greaterThan(0, 'No LOADED ECMRs were found.');
-        should.exist(res.body.find(ecmr => ecmr.status === EcmrStatus.Loaded));
+        should.exist(res.body.find((ecmr: Ecmr) => ecmr.status === EcmrStatus.Loaded));
 
         done(err);
         }
@@ -249,7 +270,7 @@ describe('A Carrier Admin can', () => {
 
   it('get ecmr by status IN_TRANSIT', (done) => {
     server
-      .get('/api/v1/ECMR/status/IN_TRANSIT')
+      .get(baseEndPoint + '/ECMR/status/' + EcmrStatus.InTransit)
       .set('x-access-token', token)
       .end((err: Error, res) => {
           if (err) {
@@ -258,7 +279,7 @@ describe('A Carrier Admin can', () => {
             return done(err);
           }
         res.body.length.should.be.greaterThan(0, 'No IN_TRANSIT ECMRs were found.');
-        should.exist(res.body.find(ecmr => ecmr.status === EcmrStatus.InTransit));
+        should.exist(res.body.find((ecmr: Ecmr) => ecmr.status === EcmrStatus.InTransit));
 
         done(err);
         }
@@ -267,7 +288,7 @@ describe('A Carrier Admin can', () => {
 
   it('get ecmr by status DELIVERED', (done) => {
     server
-      .get('/api/v1/ECMR/status/DELIVERED')
+      .get(baseEndPoint + '/ECMR/status/' + EcmrStatus.Delivered)
       .set('x-access-token', token)
       .end((err: Error, res) => {
         if (err) {
@@ -276,14 +297,15 @@ describe('A Carrier Admin can', () => {
           return done(err);
         }
         res.body.length.should.be.greaterThan(0, 'No DELIVERED ECMRs were found.');
-        should.exist(res.body.find(ecmr => ecmr.status === EcmrStatus.Delivered));
+        should.exist(res.body.find((ecmr: Ecmr) => ecmr.status === EcmrStatus.Delivered));
+
         done(err);
       });
   });
 
   it('get ecmr by status CONFIRMED_DELIVERED', (done) => {
     server
-      .get('/api/v1/ECMR/status/CONFIRMED_DELIVERED')
+      .get(baseEndPoint + '/ECMR/status/' + EcmrStatus.ConfirmedDelivered)
       .set('x-access-token', token)
       .end((err: Error, res) => {
         if (err) {
@@ -292,14 +314,15 @@ describe('A Carrier Admin can', () => {
           return done(err);
         }
         res.body.length.should.be.greaterThan(0, 'No CONFIRMED_DELIVERED ECMRs were found.');
-        should.exist(res.body.find(ecmr => ecmr.status === EcmrStatus.ConfirmedDelivered));
+        should.exist(res.body.find((ecmr: Ecmr) => ecmr.status === EcmrStatus.ConfirmedDelivered));
+
         done(err);
       });
   });
 
   it('get all vehicles', (done) => {
     server
-      .get('/api/v1/vehicle')
+      .get(baseEndPoint + '/vehicle')
       .set('x-access-token', token)
       .expect(StatusCode.ok)
       .end((err: Error, res) => {
@@ -316,7 +339,7 @@ describe('A Carrier Admin can', () => {
 
   it('get a specific vehicle', (done) => {
     server
-      .get('/api/v1/vehicle/vin/183726339N')
+      .get(baseEndPoint + '/vehicle/vin/183726339N')
       .set('x-access-token', token)
       .expect(StatusCode.ok)
       .end((err: Error, res) => {
@@ -326,13 +349,14 @@ describe('A Carrier Admin can', () => {
           return done(err);
         }
         res.body.vin.should.equal('183726339N');
+
         done(err);
       });
   });
 
   it('get a specific vehicle based on license plate', (done) => {
     server
-      .get('/api/v1/vehicle/plateNumber/AV198RX')
+      .get(baseEndPoint + '/vehicle/plateNumber/AV198RX')
       .set('x-access-token', token)
       .expect(StatusCode.ok)
       .end((err: Error, res) => {
@@ -343,6 +367,7 @@ describe('A Carrier Admin can', () => {
         }
         should.exist(res.body);
         res.body.plateNumber.should.equal('AV198RX');
+
         done(err);
       });
   });
@@ -350,7 +375,7 @@ describe('A Carrier Admin can', () => {
   it('not create a TransportOrder', (done) => {
     const transportOrder = Builder.buildTransportOrder();
     server
-      .post('/api/v1/transportOrder')
+      .post(baseEndPoint + '/transportOrder')
       .set('x-access-token', token)
       .send(transportOrder)
       .expect(500)
@@ -360,13 +385,14 @@ describe('A Carrier Admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
 
   it('get a TransportOrder', (done) => {
     server
-      .get('/api/v1/transportOrder')
+      .get(baseEndPoint + '/transportOrder')
       .set('x-access-token', token)
       .expect(StatusCode.ok)
       .end((err: Error, res) => {
@@ -377,13 +403,14 @@ describe('A Carrier Admin can', () => {
         }
         res.body.length.should.be.greaterThan(0);
         should.exist(res.body.find(transportOrder => transportOrder.orderID === '12345567890'));
+
         done(err);
       });
   });
 
   it('get a specific TransportOrder based on ID', (done) => {
     server
-      .get('/api/v1/transportOrder/orderID/12345567890')
+      .get(baseEndPoint + '/transportOrder/orderID/12345567890')
       .set('x-access-token', token)
       .expect(StatusCode.ok)
       .expect('Content-Type', /json/)
@@ -394,13 +421,14 @@ describe('A Carrier Admin can', () => {
           return done(err);
         }
         should.exist(res.body.orderID === '12345567890');
+
         done(err);
       });
   });
 
   it('get a specific TransportOrder based on any status', (done) => {
     server
-      .get('/api/v1/transportOrder/status/IN_PROGRESS')
+      .get(baseEndPoint + '/transportOrder/status/' + TransportOrderStatus.InProgress)
       .set('x-access-token', token)
       .expect(StatusCode.ok)
       .expect('Content-Type', /json/)
@@ -411,6 +439,7 @@ describe('A Carrier Admin can', () => {
           return done(err);
         }
         res.body.length.should.be.greaterThan(0);
+
         done(err);
       });
   });
@@ -426,7 +455,7 @@ describe('A Carrier Admin can', () => {
     };
 
     server
-      .put('/api/v1/transportOrder/cancel')
+      .put(baseEndPoint + '/transportOrder/cancel')
       .set('x-access-token', token)
       .send(cancel)
       .expect(500)
@@ -436,13 +465,14 @@ describe('A Carrier Admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
 
   it('get a specific TransportOrder based on vin', (done) => {
     server
-      .get('/api/v1/transportOrder/vin/183726339N')
+      .get(baseEndPoint + '/transportOrder/vin/183726339N')
       .set('x-access-token', token)
       .expect(StatusCode.ok)
       .expect('Content-Type', /json/)
@@ -453,18 +483,19 @@ describe('A Carrier Admin can', () => {
           return done(err);
         }
         res.body.length.should.be.greaterThan(0);
+
         done(err);
       });
   });
 
   it('not update an estimatedPickupWindow of a TransportOrder', (done) => {
-    const pickupWindow = {
+    const pickupWindow: PickupWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
       dateWindow: [1010101010, 2020202020]
     };
     server
-      .put('/api/v1/transportOrder/updatePickupWindow')
+      .put(baseEndPoint + '/transportOrder/updatePickupWindow')
       .set('x-access-token', token)
       .send(pickupWindow)
       .expect(500)
@@ -479,14 +510,14 @@ describe('A Carrier Admin can', () => {
   });
 
   it('not update an estimatedDeliveryWindow of a TransportOrder', (done) => {
-    const deliveryWindow = {
+    const deliveryWindow: DeliveryWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
       dateWindow: [1010101010, 2020202020]
     };
 
     server
-      .put('/api/v1/transportOrder/updateDeliveryWindow')
+      .put(baseEndPoint + '/transportOrder/updateDeliveryWindow')
       .set('x-access-token', token)
       .send(deliveryWindow)
       .expect(500)
@@ -496,18 +527,22 @@ describe('A Carrier Admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
 
   it('update an expectedPickupWindow of an ECMR', (done) => {
-    const expectedWindow = {
+    const expectedWindow: ExpectedWindow = {
       ecmrID:         'A1234567890',
-      expectedWindow: [7247832478934, 212213821321]
+      expectedWindow: <DateWindow> {
+        startDate: 7247832478934,
+        endDate:   212213821321
+      }
     };
 
     server
-      .put('/api/v1/ECMR/updateExpectedPickupWindow')
+      .put(baseEndPoint + '/ECMR/updateExpectedPickupWindow')
       .set('x-access-token', token)
       .send(expectedWindow)
       .expect(StatusCode.ok)
@@ -517,18 +552,22 @@ describe('A Carrier Admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
 
   it(' not update an expectedPickupWindow of an ECMR with a status other than CREATED', (done) => {
-    const expectedWindow = {
+    const expectedWindow: ExpectedWindow = {
       ecmrID:         'E1234567890',
-      expectedWindow: [7247832478934, 212213821321]
+      expectedWindow: <DateWindow> {
+        startDate: 7247832478934,
+        endDate:   212213821321
+      }
     };
 
     server
-      .put('/api/v1/ECMR/updateExpectedPickupWindow')
+      .put(baseEndPoint + '/ECMR/updateExpectedPickupWindow')
       .set('x-access-token', token)
       .send(expectedWindow)
       .expect(500)
@@ -538,18 +577,22 @@ describe('A Carrier Admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
 
   it(' update an expectedDeliveryWindow of an ECMR with status IN_TRANSIT', (done) => {
-    const expectedWindow = {
+    const expectedWindow: ExpectedWindow = {
       ecmrID:         'E1234567890',
-      expectedWindow: [7247832478934, 212213821321]
+      expectedWindow: <DateWindow> {
+        startDate: 7247832478934,
+        endDate:   212213821321
+      }
     };
 
     server
-      .put('/api/v1/ECMR/updateExpectedDeliveryWindow')
+      .put(baseEndPoint + '/ECMR/updateExpectedDeliveryWindow')
       .set('x-access-token', token)
       .send(expectedWindow)
       .expect(StatusCode.ok)
@@ -559,18 +602,22 @@ describe('A Carrier Admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
 
   it(' not update an expectedDeliveryWindow of an ECMR with a status other than IN_TRANSIT', (done) => {
-    const expectedWindow = {
+    const expectedWindow: ExpectedWindow = {
       ecmrID:         'A1234567890',
-      expectedWindow: [7247832478934, 212213821321]
+      expectedWindow: <DateWindow> {
+        startDate: 7247832478934,
+        endDate:   212213821321
+      }
     };
 
     server
-      .put('/api/v1/ECMR/updateExpectedDeliveryWindow')
+      .put(baseEndPoint + '/ECMR/updateExpectedDeliveryWindow')
       .set('x-access-token', token)
       .send(expectedWindow)
       .expect(500)
@@ -580,6 +627,7 @@ describe('A Carrier Admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });

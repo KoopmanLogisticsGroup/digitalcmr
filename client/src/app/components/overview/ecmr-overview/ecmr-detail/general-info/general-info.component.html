@@ -2,16 +2,14 @@
   <div class="column">CMR {{ecmr?.ecmrID}}</div>
 </div>
 <div class="row top_line_styling">
-  <p *ngIf="ecmr?.status === EcmrStatus.Created && ecmr?.loading?.expectedWindow"> Estimated pickup of goods between
-    <strong><i>{{ecmr?.loading?.expectedWindow?.startDate | date:'dd-MM-yyyy hh:mm'}} </i></strong> and
-    <strong><i>{{ecmr?.loading?.expectedWindow?.endDate | date:'dd-MM-yyyy hh:mm'}} </i></strong></p>
+  <p *ngIf="ecmr?.status === EcmrStatus.Created && ecmr?.loading?.expectedWindow">
+    Estimated pickup of goods between <strong><i>{{ecmr?.loading?.expectedWindow?.startDate | date:'dd-MM-yyyy hh:mm'}} </i></strong> and <strong><i>{{ecmr?.loading?.expectedWindow?.endDate | date:'dd-MM-yyyy hh:mm'}} </i></strong>
+  </p>
   <p *ngIf="ecmr?.status === EcmrStatus.Created && !ecmr?.loading?.expectedWindow">
-    No estimated pickup window available. {{ecmr?.loading?.expectedDate?.startDate}}
+    No estimated pickup window available yet.
   </p>
   <p *ngIf="ecmr?.status === EcmrStatus.InTransit && ecmr?.delivery?.expectedWindow">
-    Estimated delivery of goods between
-    <strong><i>{{ecmr?.delivery?.expectedWindow?.startDate | date:'dd-MM-yyyy hh:mm'}} </i></strong> and
-    <strong><i>{{ecmr?.delivery?.expectedWindow?.endDate | date:'dd-MM-yyyy hh:mm'}} </i></strong>
+    Estimated delivery of goods between <strong><i>{{ecmr?.delivery?.expectedWindow?.startDate | date:'dd-MM-yyyy HH:mm'}} </i></strong> and <strong><i>{{ecmr?.delivery?.expectedWindow?.endDate | date:'dd-MM-yyyy HH:mm'}} </i></strong>
   </p>
   <p *ngIf="ecmr?.status === EcmrStatus.InTransit && !ecmr?.delivery?.expectedWindow">
     No estimated delivery window available yet.
@@ -42,7 +40,7 @@
         </div>
       </div>
       <span><b>Signed by:</b> {{ecmr?.owner?.split('#')[1]}}</span>
-      <span><b>Date:</b> {{ecmr?.creation?.date | date:'dd-MM-yyyy'}} ({{ecmr?.creation?.date | date:'hh:mm'}})</span>
+      <span><b>Date:</b> {{ecmr?.creation?.date | date:'dd-MM-yyyy'}} ({{ecmr?.creation?.date | date:'HH:mm'}})</span>
     </div>
     <div class="comment_info">
       <div class="image_text">
@@ -65,7 +63,7 @@
           </div>
         </div>
         <span><b>Signed by:</b> {{ecmr?.compoundSignature?.certificate?.split('#')[1].split('@')[0]}}</span>
-        <span><b>Date:</b>{{ecmr?.compoundSignature?.timestamp | date:'dd-MM-yyyy'}} ({{ecmr?.compoundSignature?.timestamp | date:'hh:mm'}})</span>
+        <span><b>Date:</b>{{ecmr?.compoundSignature?.timestamp | date:'dd-MM-yyyy'}} ({{ecmr?.compoundSignature?.timestamp | date:'HH:mm'}})</span>
       </div>
     </div>
     <div class="comment_info">
@@ -89,7 +87,7 @@
           </div>
         </div>
         <span><b>Signed by:</b> {{ecmr?.carrierLoadingSignature?.certificate?.split('#')[1].split('@')[0]}}</span>
-        <span><b>Date:</b> {{ecmr?.carrierLoadingSignature?.timestamp | date:'dd-MM-yyyy'}} ({{ecmr?.carrierLoadingSignature?.timestamp | date:'hh:mm'}})</span>
+        <span><b>Date:</b> {{ecmr?.carrierLoadingSignature?.timestamp | date:'dd-MM-yyyy'}} ({{ecmr?.carrierLoadingSignature?.timestamp | date:'HH:mm'}})</span>
       </div>
     </div>
     <div class="comment_info">
@@ -114,7 +112,7 @@
           </div>
         </div>
         <span><b>Signed by:</b>{{ecmr?.recipientSignature?.certificate?.split('#')[1].split('@')[0]}}</span>
-        <span><b>Date:</b>{{ecmr?.recipientSignature?.timestamp | date:'dd-MM-yyyy'}} ({{ecmr?.recipientSignature?.timestamp | date:'hh:mm'}})</span>
+        <span><b>Date:</b>{{ecmr?.recipientSignature?.timestamp | date:'dd-MM-yyyy'}} ({{ecmr?.recipientSignature?.timestamp | date:'HH:mm'}})</span>
       </div>
     </div>
     <div class="comment_info">

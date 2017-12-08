@@ -8,7 +8,7 @@
   },
   "scripts":      {
     "start":     "node_modules/.bin/nodemon server.js",
-    "test":      "npm run test-unit && npm run test-e2e",
+    "test":      "npm run test-unit",
     "test-e2e":  "node_modules/.bin/mocha --timeout 15000 -r ts-node/register test/e2e/*.ts",
     "test-unit": "node_modules/.bin/mocha -r ts-node/register test/unit/*.ts",
     "lint":      "node_modules/.bin/tslint --fix -c tslint.json -e 'src/sdk/**' 'src/**/*.ts'"

@@ -4,15 +4,15 @@ import {Ecmr} from '../../../src/interfaces/ecmr.interface';
 
 export class EcmrBuilder {
   public static buildECMR(factory: any, namespace: string, ecmr: Ecmr, identity: Identity): any {
-    let validatedObject                    = BuilderUtils.createResource(factory, namespace, 'ECMR', ecmr);
-    validatedObject.creation               = BuilderUtils.createConcept(factory, namespace, 'Creation', ecmr.creation);
-    validatedObject.creation.address       = BuilderUtils.createConcept(factory, namespace, 'Address', ecmr.creation.address);
-    validatedObject.loading                = BuilderUtils.createConcept(factory, namespace, 'Loading', ecmr.loading);
-    validatedObject.loading.expectedWindow = BuilderUtils.createConcept(factory, namespace, 'DateWindow', ecmr.loading.expectedWindow);
-    validatedObject.loading.address        = BuilderUtils.createConcept(factory, namespace, 'Address', ecmr.loading.address);
-    validatedObject.delivery               = BuilderUtils.createConcept(factory, namespace, 'Delivery', ecmr.delivery);
-      validatedObject.delivery.expectedWindow = BuilderUtils.createConcept(factory, namespace, 'DateWindow', ecmr.delivery.expectedWindow);
-    validatedObject.delivery.address       = BuilderUtils.createConcept(factory, namespace, 'Address', ecmr.delivery.address);
+    let validatedObject                     = BuilderUtils.createResource(factory, namespace, 'ECMR', ecmr);
+    validatedObject.creation                = BuilderUtils.createConcept(factory, namespace, 'Creation', ecmr.creation);
+    validatedObject.creation.address        = BuilderUtils.createConcept(factory, namespace, 'Address', ecmr.creation.address);
+    validatedObject.loading                 = BuilderUtils.createConcept(factory, namespace, 'Loading', ecmr.loading);
+    validatedObject.loading.expectedWindow  = BuilderUtils.createConcept(factory, namespace, 'DateWindow', ecmr.loading.expectedWindow);
+    validatedObject.loading.address         = BuilderUtils.createConcept(factory, namespace, 'Address', ecmr.loading.address);
+    validatedObject.delivery                = BuilderUtils.createConcept(factory, namespace, 'Delivery', ecmr.delivery);
+    validatedObject.delivery.expectedWindow = BuilderUtils.createConcept(factory, namespace, 'DateWindow', ecmr.delivery.expectedWindow);
+    validatedObject.delivery.address        = BuilderUtils.createConcept(factory, namespace, 'Address', ecmr.delivery.address);
 
     validatedObject.owner  = BuilderUtils.createRelationship(factory, namespace, 'LegalOwnerOrg', ecmr.owner);
     validatedObject.source = BuilderUtils.createRelationship(factory, namespace, 'CompoundOrg', ecmr.source);
