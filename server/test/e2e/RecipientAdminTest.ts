@@ -122,7 +122,7 @@ describe('A Recipient Admin can', () => {
   it('not create an ECMR', (done) => {
     const ecmr = buildECMR('ecmr1');
     server
-      .post(baseEndPoint + '/ECMR')
+      .post(baseEndPoint + '/ECMR/createECMRs')
       .set('x-access-token', token)
       .send(ecmr)
       .expect(500)
@@ -182,8 +182,7 @@ describe('A Recipient Admin can', () => {
 
           return done(err);
         }
-        should.exist(res.body.find(ecmr => ecmr.ecmrID === 'A1234567890'));
-        should.exist(res.body.find(ecmr => ecmr.ecmrID === 'B1234567890'));
+        should.exist(res.body.find(ecmr => ecmr.ecmrID === 'C1234567890'));
 
         done(err);
       });
@@ -199,8 +198,7 @@ describe('A Recipient Admin can', () => {
 
           return done(err);
         }
-        should.exist(res.body.find(ecmr => ecmr.ecmrID === 'A1234567890'));
-        should.exist(res.body.find(ecmr => ecmr.ecmrID === 'B1234567890'));
+        should.exist(res.body.find(ecmr => ecmr.ecmrID === 'C1234567890'));
 
         done(err);
       });
@@ -240,24 +238,6 @@ describe('A Recipient Admin can', () => {
       });
   });
 
-  it('not create an ECMR', (done) => {
-    const transportOrder = buildECMR('ecmrRecipient');
-    server
-      .post(baseEndPoint + '/transportOrder')
-      .set('x-access-token', token)
-      .send(transportOrder)
-      .expect(500)
-      .end((err: Error) => {
-        if (err) {
-          console.log(err.stack);
-
-          return done(err);
-        }
-
-        done(err);
-      });
-  });
-
   it('not update an ECMR from DELIVERED to CONFIRMED_DELIVERED', (done) => {
     const updateTransaction: UpdateEcmrStatus = {
       ecmrID:    'A1234567890',
@@ -266,7 +246,7 @@ describe('A Recipient Admin can', () => {
     };
 
     server
-      .post(baseEndPoint + '/transportOrder')
+      .put(baseEndPoint + '/ECMR/status/' + EcmrStatus.ConfirmedDelivered)
       .set('x-access-token', token)
       .send(updateTransaction)
       .expect(500)
@@ -457,7 +437,7 @@ describe('A Recipient Admin can', () => {
 
   it('can not update an expectedPickupWindow of an ECMR', (done) => {
     const expectedWindow: ExpectedWindow = {
-      ecmrID:         'A1234567890',
+      ecmrID:         'B1234567890',
       expectedWindow: <DateWindow> {
         startDate: 1010101010,
         endDate:   2020202020

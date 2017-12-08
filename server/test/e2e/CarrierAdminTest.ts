@@ -14,12 +14,13 @@ import {DeliveryWindow} from '../../src/interfaces/deliveryWindow.interface';
 import {ExpectedWindow} from '../../src/interfaces/expectedWindow.interface';
 import {DateWindow} from '../../../client/src/app/interfaces/dateWindow.interface';
 
-const baseEndPoint = '/api/v1';
-const server       = supertest.agent('http://localhost:8080');
-const should       = chai.should();
+const baseEndPoint     = '/api/v1';
+const server           = supertest.agent('http://localhost:8080');
+const should           = chai.should();
 let token: string;
 let transportOrder: TransportOrder;
 let updateEcmr: Ecmr;
+let ecmrToRemove: Ecmr = Builder.buildECMR(new Date().getTime().toString());
 
 describe('A Carrier Admin can', () => {
   before((done) => {
@@ -58,8 +59,7 @@ describe('A Carrier Admin can', () => {
 
           return done(err);
         }
-        should.exist(res.body.find(ecmr => ecmr.ecmrID === 'A1234567890'));
-        should.exist(res.body.find(ecmr => ecmr.ecmrID === 'B1234567890'));
+        should.exist(res.body.find(ecmr => ecmr.ecmrID === 'C1234567890'));
 
         done(err);
       });
@@ -75,8 +75,7 @@ describe('A Carrier Admin can', () => {
 
           return done(err);
         }
-        should.exist(res.body.find(ecmr => ecmr.ecmrID === 'A1234567890'));
-        should.exist(res.body.find(ecmr => ecmr.ecmrID === 'B1234567890'));
+        should.exist(res.body.find(ecmr => ecmr.ecmrID === 'C1234567890'));
 
         done(err);
       });
@@ -135,19 +134,15 @@ describe('A Carrier Admin can', () => {
   });
 
   it('create an ECMR', (done) => {
-    let ecmrList: Ecmr[] = [];
-    const ecmr: Ecmr     = Builder.buildECMR('ecmr1');
-    ecmrList.push(ecmr);
-
-    const ecmrs: CreateEcmrs = {
+    const payload: CreateEcmrs = {
       orderID: '12345567890',
-      ecmrs:   ecmrList
+      ecmrs:   [ecmrToRemove]
     };
 
     server
-      .post(baseEndPoint + '/ECMR')
+      .post(baseEndPoint + '/ECMR/createECMRs')
       .set('x-access-token', token)
-      .send(ecmrs)
+      .send(payload)
       .expect(200)
       .end((err: Error) => {
         if (err) {
@@ -162,11 +157,11 @@ describe('A Carrier Admin can', () => {
 
   it('cancel an ECMR', (done) => {
     let cancel: EcmrCancellation = {
-      'ecmrID':       'ecmr1',
-      'cancellation': {
-        'cancelledBy': 'pete@koopman.org',
-        'reason':      'no reason',
-        'date':        123
+      ecmrID:       ecmrToRemove.ecmrID,
+      cancellation: {
+        cancelledBy: 'pete@koopman.org',
+        reason:      'no reason',
+        date:        123
       }
     };
 
@@ -260,10 +255,10 @@ describe('A Carrier Admin can', () => {
 
             return done(err);
           }
-        res.body.length.should.be.greaterThan(0, 'No LOADED ECMRs were found.');
-        should.exist(res.body.find((ecmr: Ecmr) => ecmr.status === EcmrStatus.Loaded));
+          res.body.length.should.be.greaterThan(0, 'No LOADED ECMRs were found.');
+          should.exist(res.body.find((ecmr: Ecmr) => ecmr.status === EcmrStatus.Loaded));
 
-        done(err);
+          done(err);
         }
       );
   });
@@ -278,10 +273,10 @@ describe('A Carrier Admin can', () => {
 
             return done(err);
           }
-        res.body.length.should.be.greaterThan(0, 'No IN_TRANSIT ECMRs were found.');
-        should.exist(res.body.find((ecmr: Ecmr) => ecmr.status === EcmrStatus.InTransit));
+          res.body.length.should.be.greaterThan(0, 'No IN_TRANSIT ECMRs were found.');
+          should.exist(res.body.find((ecmr: Ecmr) => ecmr.status === EcmrStatus.InTransit));
 
-        done(err);
+          done(err);
         }
       );
   });
@@ -492,7 +487,11 @@ describe('A Carrier Admin can', () => {
     const pickupWindow: PickupWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
-      dateWindow: [1010101010, 2020202020]
+      dateWindow: {
+        startDate: 1010101010,
+        endDate:   2020202020
+      }
+
     };
     server
       .put(baseEndPoint + '/transportOrder/updatePickupWindow')
@@ -513,7 +512,10 @@ describe('A Carrier Admin can', () => {
     const deliveryWindow: DeliveryWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
-      dateWindow: [1010101010, 2020202020]
+      dateWindow: <DateWindow> {
+        startDate: 1010101010,
+        endDate:   2020202020
+      }
     };
 
     server
@@ -557,7 +559,7 @@ describe('A Carrier Admin can', () => {
       });
   });
 
-  it(' not update an expectedPickupWindow of an ECMR with a status other than CREATED', (done) => {
+  it('not update an expectedPickupWindow of an ECMR with a status other than CREATED', (done) => {
     const expectedWindow: ExpectedWindow = {
       ecmrID:         'E1234567890',
       expectedWindow: <DateWindow> {
@@ -582,7 +584,7 @@ describe('A Carrier Admin can', () => {
       });
   });
 
-  it(' update an expectedDeliveryWindow of an ECMR with status IN_TRANSIT', (done) => {
+  it('update an expectedDeliveryWindow of an ECMR with status IN_TRANSIT', (done) => {
     const expectedWindow: ExpectedWindow = {
       ecmrID:         'E1234567890',
       expectedWindow: <DateWindow> {
@@ -607,9 +609,9 @@ describe('A Carrier Admin can', () => {
       });
   });
 
-  it(' not update an expectedDeliveryWindow of an ECMR with a status other than IN_TRANSIT', (done) => {
+  it('not update an expectedDeliveryWindow of an ECMR with a status other than IN_TRANSIT', (done) => {
     const expectedWindow: ExpectedWindow = {
-      ecmrID:         'A1234567890',
+      ecmrID:         'B1234567890',
       expectedWindow: <DateWindow> {
         startDate: 7247832478934,
         endDate:   212213821321

@@ -56,10 +56,9 @@ describe('A legal owner admin can', () => {
     };
 
     server
-      .post(baseEndPoint + '/ECMR')
+      .post(baseEndPoint + '/ECMR/createECMRs')
       .set('x-access-token', token)
       .send(payload)
-      .expect('Content-Type', /json/)
       .expect(500)
       .end((err: Error) => {
         if (err) {
@@ -151,8 +150,7 @@ describe('A legal owner admin can', () => {
 
           return done(err);
         }
-        should.exist(res.body.find((ecmr: Ecmr) => ecmr.ecmrID === 'A1234567890'));
-        should.exist(res.body.find((ecmr: Ecmr) => ecmr.ecmrID === 'B1234567890'));
+        should.exist(res.body.find((ecmr: Ecmr) => ecmr.ecmrID === 'C1234567890'));
 
         done(err);
       });
@@ -168,8 +166,7 @@ describe('A legal owner admin can', () => {
 
           return done(err);
         }
-        should.exist(res.body.find((ecmr: Ecmr) => ecmr.ecmrID === 'A1234567890'));
-        should.exist(res.body.find((ecmr: Ecmr) => ecmr.ecmrID === 'B1234567890'));
+        should.exist(res.body.find((ecmr: Ecmr) => ecmr.ecmrID === 'C1234567890'));
 
         done(err);
       });

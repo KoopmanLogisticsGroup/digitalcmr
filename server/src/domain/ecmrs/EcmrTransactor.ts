@@ -31,8 +31,8 @@ export class EcmrTransactor implements TransactionCreator {
     } else if ((transactionName === Transaction.UpdateExpectedPickupWindow) || (transactionName === Transaction.UpdateExpectedDeliveryWindow)) {
       transaction.ecmr                     = factory.newRelationship(namespace, 'ECMR', data.ecmrID);
       transaction.expectedWindow           = factory.newConcept(namespace, 'DateWindow');
-      transaction.expectedWindow.startDate = data.expectedWindow[0];
-      transaction.expectedWindow.endDate   = data.expectedWindow[1];
+      transaction.expectedWindow.startDate = data.expectedWindow.startDate;
+      transaction.expectedWindow.endDate   = data.expectedWindow.endDate;
     }
 
     return transaction;
