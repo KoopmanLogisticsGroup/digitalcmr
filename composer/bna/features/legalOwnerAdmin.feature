@@ -129,4 +129,4 @@ Feature: LegalOwnerAdmin feature test
         """
           {"$class": "org.digitalcmr.UpdateExpectedDeliveryWindow", "ecmr": "E1234567890", "expectedWindow": {"startDate": "7247832478934","endDate": "212213821321" }}
         """
-    Then I should get an error
+    Then I should get an error matching /does not have 'CREATE' access to resource/
