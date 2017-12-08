@@ -19,6 +19,9 @@ import {IdentityManager} from '../blockchain/IdentityManager';
 import {TransportOrder} from '../interfaces/transportOrder.interface';
 import {TransportOrderTransactor} from '../domain/transportOrder/TransportOrderTransactor';
 import {Transaction} from '../blockchain/Transactions';
+import {CreateEcmrs} from '../interfaces/createEcmrs.interface';
+import {Ecmr} from '../interfaces/ecmr.interface';
+import {Vehicle} from '../interfaces/vehicle.interface';
 
 export class TestData {
   private logger: LoggerInstance         = Container.get(LoggerFactory).get('TestData');
@@ -155,12 +158,12 @@ export class TestData {
     });
   }
 
-  private async addVehicles(vehicles: any[]): Promise<any> {
+  private async addVehicles(vehicles: Vehicle[]): Promise<any> {
     return this.transactionHandler.invoke(TestData.adminIdentity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateVehicles, vehicles, new VehicleTransactor());
   }
 
-  private async addEcmrs(ecmrs: any[]): Promise<any> {
-    return this.transactionHandler.invoke(TestData.adminIdentity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateEcmrs, {
+  private async addEcmrs(ecmrs: Ecmr[]): Promise<any> {
+    return this.transactionHandler.invoke(TestData.adminIdentity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateEcmrs, <CreateEcmrs>{
       'orderID': ecmrs[0].orderID,
       'ecmrs':   ecmrs
     }, new EcmrTransactor());

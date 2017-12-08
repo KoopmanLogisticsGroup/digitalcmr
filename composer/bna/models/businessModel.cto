@@ -219,10 +219,6 @@ transaction UpdateTransportOrderDeliveryWindow {
   o String vin
 }
 
-transaction CreateECMR {
-  o ECMR ecmr
-}
-
 transaction CreateLegalOwnerOrg {
   o LegalOwnerOrg legalOwnerOrg
 }
@@ -248,21 +244,35 @@ transaction CreateECMRs {
   o ECMR[] ecmrs
 }
 
-transaction UpdateECMR {
-  --> TransportOrder transportOrder
-  o ECMR ecmr
-}
-
 transaction UpdateEcmrStatusToLoaded {
-  --> TransportOrder transportOrder
   --> ECMR ecmr
-  o ECMR updatedEcmr
+  o Good[] goods
+  o Signature signature
 }
 
 transaction UpdateEcmrStatusToInTransit {
+  --> ECMR ecmr
+  o Good[] goods
+  o Signature signature
+}
+
+transaction UpdateEcmrStatusToDelivered {
   --> TransportOrder transportOrder
   --> ECMR ecmr
-  o ECMR updatedEcmr
+  o Good[] goods
+  o Signature signature
+}
+
+transaction UpdateEcmrStatusToConfirmedDelivered {
+  --> TransportOrder transportOrder
+  --> ECMR ecmr
+  o Good[] goods
+  o Signature signature
+}
+
+transaction UpdateECMRStatusToCancelled {
+  --> ECMR ecmr
+  o Cancellation cancellation
 }
 
 transaction UpdateExpectedDeliveryWindow {
@@ -273,23 +283,6 @@ transaction UpdateExpectedDeliveryWindow {
 transaction UpdateExpectedPickupWindow {
   --> ECMR ecmr
   o DateWindow expectedWindow
-}
-
-transaction UpdateEcmrStatusToDelivered {
-  --> TransportOrder transportOrder
-  --> ECMR ecmr
-  o ECMR updatedEcmr
-}
-
-transaction UpdateEcmrStatusToConfirmedDelivered {
-  --> TransportOrder transportOrder
-  --> ECMR ecmr
-  o ECMR updatedEcmr
-}
-
-transaction UpdateECMRStatusToCancelled {
-  --> ECMR ecmr
-  o Cancellation cancellation
 }
 
 transaction UpdateTransportOrderStatusToCancelled {

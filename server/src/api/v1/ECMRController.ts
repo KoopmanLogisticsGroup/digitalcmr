@@ -16,11 +16,12 @@ import {Identity} from '../../domain/Identity';
 import {Config} from '../../config/index';
 import {EcmrTransactor} from '../../domain/ecmrs/EcmrTransactor';
 import {Transaction} from '../../blockchain/Transactions';
-import {Ecmr} from '../../interfaces/ecmr.interface';
 import {Query} from '../../blockchain/Queries';
 import {ExpectedWindow} from '../../interfaces/expectedWindow.interface';
+import {UpdateEcmrStatus} from '../../interfaces/updateEcmrStatus.interface';
 import {EcmrCancellation} from '../../interfaces/cancellation.interface';
-import {isUndefined} from 'util';
+import {Signature} from '../../interfaces/signature.interface';
+import {CreateEcmrs} from '../../interfaces/createEcmrs.interface';
 
 @JsonController('/ECMR')
 @UseBefore(UserAuthenticatorMiddleware)
@@ -73,19 +74,71 @@ export class ECMRController {
     return await this.ecmrTransactor.getEcmrsByPlateNumber(this.transactionHandler, identity, Config.settings.composer.profile, plateNumber);
   }
 
-  @Post('/')
-  public async create(@Body() data: any, @Req() request: any): Promise<any> {
+  @Post('/createECMRs')
+  public async create(@Body() data: CreateEcmrs, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
     return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateEcmrs, data, new EcmrTransactor());
   }
 
-  @Put('/')
-  public async update(@Body() ecmr: Ecmr, @Req() request: any): Promise<any> {
+  @Put('/status/LOADED')
+  public async updateEcmrStatusToLoaded(@Body() data: UpdateEcmrStatus, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
-    const ip                 = request.ip;
 
-    return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateEcmr, ecmr, new EcmrTransactor());
+    data.signature = <Signature> {
+      timestamp:     new Date().getTime(),
+      ip:            request.ip.toString(),
+      latitude:      Math.random() < 0.5 ? ((1 - Math.random()) * (90 - (-90)) + -90) : (Math.random() * (90 - (-90)) + (-90)),
+      longitude:     Math.random() < 0.5 ? ((1 - Math.random()) * (180 - (-180)) + -180) : (Math.random() * (180 - (-180)) + (-180)),
+      generalRemark: data.signature && data.signature.generalRemark
+    };
+
+    return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateEcmrStatusToLoaded, data, new EcmrTransactor());
+  }
+
+  @Put('/status/IN_TRANSIT')
+  public async updateEcmrStatusToInTransit(@Body() data: UpdateEcmrStatus, @Req() request: any): Promise<any> {
+    const identity: Identity = new JSONWebToken(request).getIdentity();
+
+    data.signature = <Signature> {
+      timestamp:     new Date().getTime(),
+      ip:            request.ip.toString(),
+      latitude:      Math.random() < 0.5 ? ((1 - Math.random()) * (90 - (-90)) + -90) : (Math.random() * (90 - (-90)) + (-90)),
+      longitude:     Math.random() < 0.5 ? ((1 - Math.random()) * (180 - (-180)) + -180) : (Math.random() * (180 - (-180)) + (-180)),
+      generalRemark: data.signature && data.signature.generalRemark
+    };
+
+    return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateEcmrStatusToInTransit, data, new EcmrTransactor());
+  }
+
+  @Put('/status/DELIVERED')
+  public async updateEcmrStatusToDelivered(@Body() data: UpdateEcmrStatus, @Req() request: any): Promise<any> {
+    const identity: Identity = new JSONWebToken(request).getIdentity();
+
+    data.signature = <Signature> {
+      timestamp:     new Date().getTime(),
+      ip:            request.ip.toString(),
+      latitude:      Math.random() < 0.5 ? ((1 - Math.random()) * (90 - (-90)) + -90) : (Math.random() * (90 - (-90)) + (-90)),
+      longitude:     Math.random() < 0.5 ? ((1 - Math.random()) * (180 - (-180)) + -180) : (Math.random() * (180 - (-180)) + (-180)),
+      generalRemark: data.signature && data.signature.generalRemark
+    };
+
+    return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateEcmrStatusToDelivered, data, new EcmrTransactor());
+  }
+
+  @Put('/status/CONFIRMED_DELIVERED')
+  public async updateEcmrStatusToConfirmedDelivered(@Body() data: UpdateEcmrStatus, @Req() request: any): Promise<any> {
+    const identity: Identity = new JSONWebToken(request).getIdentity();
+
+    data.signature = <Signature> {
+      timestamp:     new Date().getTime(),
+      ip:            request.ip.toString(),
+      latitude:      Math.random() < 0.5 ? ((1 - Math.random()) * (90 - (-90)) + -90) : (Math.random() * (90 - (-90)) + (-90)),
+      longitude:     Math.random() < 0.5 ? ((1 - Math.random()) * (180 - (-180)) + -180) : (Math.random() * (180 - (-180)) + (-180)),
+      generalRemark: data.signature && data.signature.generalRemark
+    };
+
+    return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateEcmrStatusToConfirmedDelivered, data, new EcmrTransactor());
   }
 
   @Put('/cancel')

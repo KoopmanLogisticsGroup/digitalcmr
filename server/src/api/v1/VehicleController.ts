@@ -52,6 +52,6 @@ export class ECMRController {
   public async create(@Body() vehicle: Vehicle, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateVehicle, vehicle, new VehicleTransactor());
+    return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateVehicles, vehicle, new VehicleTransactor());
   }
 }

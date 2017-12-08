@@ -438,7 +438,12 @@
           "latitude":    43.1927,
           "longitude":   23.3249
         },
-        "actualDate": 1502488800000
+        "actualDate": 1502488800000,
+        "expectedWindow": {
+          "$class": "org.digitalcmr.DateWindow",
+          "startDate": 1502834400000,
+          "endDate": 1502834400000
+        }
       },
       "delivery":               {
         "$class":     "org.digitalcmr.Delivery",
@@ -453,7 +458,12 @@
           "latitude":    51.917153,
           "longitude":   4.474623
         },
-        "actualDate": 1502834400000
+        "actualDate": 1502834400000,
+        "expectedWindow": {
+          "$class": "org.digitalcmr.DateWindow",
+          "startDate": 1502834400000,
+          "endDate": 1502834400000
+        }
       },
       "owner":                  "leaseplan",
       "source":                 "amsterdamcompound",
@@ -558,7 +568,12 @@
           "latitude":    52.377698,
           "longitude":   4.896555
         },
-        "actualDate": 1502402400000
+        "actualDate": 1502402400000,
+        "expectedWindow": {
+          "$class": "org.digitalcmr.DateWindow",
+          "startDate": 1502834400000,
+          "endDate": 1502834400000
+        }
       },
       "delivery":               {
         "$class":     "org.digitalcmr.Delivery",
@@ -573,7 +588,12 @@
           "latitude":    51.917153,
           "longitude":   4.474623
         },
-        "actualDate": 1502488800000
+        "actualDate": 1502488800000,
+        "expectedWindow": {
+          "$class": "org.digitalcmr.DateWindow",
+          "startDate": 1502834400000,
+          "endDate": 1502834400000
+        }
       },
       "owner":                  "leaseplan",
       "source":                 "amsterdamcompound",
@@ -725,7 +745,12 @@
           "latitude":    52.377698,
           "longitude":   4.896555
         },
-        "actualDate": 1502143200000
+        "actualDate": 1502143200000,
+        "expectedWindow": {
+          "$class": "org.digitalcmr.DateWindow",
+          "startDate": 1502834400000,
+          "endDate": 1502834400000
+        }
       },
       "delivery":                 {
         "$class":     "org.digitalcmr.Delivery",
@@ -740,7 +765,12 @@
           "latitude":    51.917153,
           "longitude":   4.474623
         },
-        "actualDate": 1502229600000
+        "actualDate": 1502229600000,
+        "expectedWindow": {
+          "$class": "org.digitalcmr.DateWindow",
+          "startDate": 1502834400000,
+          "endDate": 1502834400000
+        }
       },
       "owner":                    "leaseplan",
       "source":                   "amsterdamcompound",
@@ -857,7 +887,12 @@
           "latitude":    52.377698,
           "longitude":   4.896555
         },
-        "actualDate": 1502229600000
+        "actualDate": 1502229600000,
+        "expectedWindow": {
+          "$class": "org.digitalcmr.DateWindow",
+          "startDate": 1502834400000,
+          "endDate": 1502834400000
+        }
       },
       "delivery":               {
         "$class":     "org.digitalcmr.Delivery",
@@ -872,7 +907,12 @@
           "latitude":    51.917153,
           "longitude":   4.474623
         },
-        "actualDate": 1502920800000
+        "actualDate": 1502920800000,
+        "expectedWindow": {
+          "$class": "org.digitalcmr.DateWindow",
+          "startDate": 1502834400000,
+          "endDate": 1502834400000
+        }
       },
       "owner":                  "leaseplan",
       "source":                 "amsterdamcompound",
@@ -981,7 +1021,12 @@
           "latitude":    52.377698,
           "longitude":   4.896555
         },
-        "actualDate": 1502229600000
+        "actualDate": 1502229600000,
+        "expectedWindow": {
+          "$class": "org.digitalcmr.DateWindow",
+          "startDate": 1502834400000,
+          "endDate": 1502834400000
+        }
       },
       "delivery":               {
         "$class":     "org.digitalcmr.Delivery",
@@ -996,7 +1041,12 @@
           "latitude":    51.917153,
           "longitude":   4.474623
         },
-        "actualDate": 1502920800000
+        "actualDate": 1502920800000,
+        "expectedWindow": {
+          "$class": "org.digitalcmr.DateWindow",
+          "startDate": 1502834400000,
+          "endDate": 1502834400000
+        }
       },
       "owner":                  "leaseplan",
       "source":                 "amsterdamcompound",
@@ -1105,7 +1155,12 @@
           "latitude":    52.377698,
           "longitude":   4.896555
         },
-        "actualDate": 1502229600000
+        "actualDate": 1502229600000,
+        "expectedWindow": {
+          "$class": "org.digitalcmr.DateWindow",
+          "startDate": 1502834400000,
+          "endDate": 1502834400000
+        }
       },
       "delivery":                {
         "$class":     "org.digitalcmr.Delivery",
@@ -1120,7 +1175,12 @@
           "latitude":    51.917153,
           "longitude":   4.474623
         },
-        "actualDate": 1502920800000
+        "actualDate": 1502920800000,
+        "expectedWindow": {
+          "$class": "org.digitalcmr.DateWindow",
+          "startDate": 1502834400000,
+          "endDate": 1502834400000
+        }
       },
       "owner":                   "leaseplan",
       "source":                  "amsterdamcompound",
@@ -1280,7 +1340,12 @@
           "latitude":    52.377698,
           "longitude":   4.896555
         },
-        "actualDate": 1502229600000
+        "actualDate": 1502229600000,
+        "expectedWindow": {
+          "$class": "org.digitalcmr.DateWindow",
+          "startDate": 1502834400000,
+          "endDate": 1502834400000
+        }
       },
       "delivery":                 {
         "$class":     "org.digitalcmr.Delivery",
@@ -1295,7 +1360,12 @@
           "latitude":    51.917153,
           "longitude":   4.474623
         },
-        "actualDate": 1502920800000
+        "actualDate": 1502920800000,
+        "expectedWindow": {
+          "$class": "org.digitalcmr.DateWindow",
+          "startDate": 1502834400000,
+          "endDate": 1502834400000
+        }
       },
       "owner":                    "leaseplan",
       "source":                   "amsterdamcompound",
@@ -1553,7 +1623,12 @@
           "latitude":    52.377698,
           "longitude":   4.896555
         },
-        "actualDate": 1502402400000
+        "actualDate": 1502402400000,
+        "expectedWindow": {
+          "$class": "org.digitalcmr.DateWindow",
+          "startDate": 1502834400000,
+          "endDate": 1502834400000
+        }
       },
       "delivery":                {
         "$class":     "org.digitalcmr.Delivery",
@@ -1568,7 +1643,12 @@
           "latitude":    51.917153,
           "longitude":   4.474623
         },
-        "actualDate": 1502488800000
+        "actualDate": 1502488800000,
+        "expectedWindow": {
+          "$class": "org.digitalcmr.DateWindow",
+          "startDate": 1502834400000,
+          "endDate": 1502834400000
+        }
       },
       "owner":                   "leaseplan",
       "source":                  "amsterdamcompound",
@@ -1728,7 +1808,12 @@
           "latitude":    43.1927,
           "longitude":   23.3249
         },
-        "actualDate": 1502488800000
+        "actualDate": 1502488800000,
+        "expectedWindow": {
+          "$class": "org.digitalcmr.DateWindow",
+          "startDate": 1502834400000,
+          "endDate": 1502834400000
+        }
       },
       "delivery":               {
         "$class":     "org.digitalcmr.Delivery",
@@ -1743,7 +1828,12 @@
           "latitude":    51.917153,
           "longitude":   4.474623
         },
-        "actualDate": 1502834400000
+        "actualDate": 1502834400000,
+        "expectedWindow": {
+          "$class": "org.digitalcmr.DateWindow",
+          "startDate": 1502834400000,
+          "endDate": 1502834400000
+        }
       },
       "owner":                  "notLeaseplan",
       "source":                 "notAmsterdamcompound",
@@ -1848,7 +1938,12 @@
           "latitude":    52.377698,
           "longitude":   4.896555
         },
-        "actualDate": 1502229600000
+        "actualDate": 1502229600000,
+        "expectedWindow": {
+          "$class": "org.digitalcmr.DateWindow",
+          "startDate": 1502834400000,
+          "endDate": 1502834400000
+        }
       },
       "delivery":                 {
         "$class":     "org.digitalcmr.Delivery",
@@ -1863,7 +1958,12 @@
           "latitude":    51.917153,
           "longitude":   4.474623
         },
-        "actualDate": 1502920800000
+        "actualDate": 1502920800000,
+        "expectedWindow": {
+          "$class": "org.digitalcmr.DateWindow",
+          "startDate": 1502834400000,
+          "endDate": 1502834400000
+        }
       },
       "owner":                    "leaseplan",
       "source":                   "amsterdamcompound",

@@ -1,119 +1,114 @@
 import {BuilderUtils} from '../../blockchain/BuilderUtils';
 import {Identity} from '../Identity';
+import {Ecmr} from '../../../src/interfaces/ecmr.interface';
 
 export class EcmrBuilder {
-  public static buildECMR(factory: any, namespace: string, ecmr: any, identity: Identity, ip?: any): any {
-    let validatedObject = BuilderUtils.createResource(factory, namespace, 'ECMR', ecmr);
+  public static buildECMR(factory: any, namespace: string, ecmr: Ecmr, identity: Identity): any {
+    let validatedObject                    = BuilderUtils.createResource(factory, namespace, 'ECMR', ecmr);
+    validatedObject.creation               = BuilderUtils.createConcept(factory, namespace, 'Creation', ecmr.creation);
+    validatedObject.creation.address       = BuilderUtils.createConcept(factory, namespace, 'Address', ecmr.creation.address);
+    validatedObject.loading                = BuilderUtils.createConcept(factory, namespace, 'Loading', ecmr.loading);
+    validatedObject.loading.expectedWindow = BuilderUtils.createConcept(factory, namespace, 'DateWindow', ecmr.loading.expectedWindow);
+    validatedObject.loading.address        = BuilderUtils.createConcept(factory, namespace, 'Address', ecmr.loading.address);
+    validatedObject.delivery               = BuilderUtils.createConcept(factory, namespace, 'Delivery', ecmr.delivery);
+      validatedObject.delivery.expectedWindow = BuilderUtils.createConcept(factory, namespace, 'DateWindow', ecmr.delivery.expectedWindow);
+    validatedObject.delivery.address       = BuilderUtils.createConcept(factory, namespace, 'Address', ecmr.delivery.address);
 
-    validatedObject.creation         = BuilderUtils.createConcept(factory, namespace, 'Creation', ecmr.creation);
-    validatedObject.creation.address = BuilderUtils.createConcept(factory, namespace, 'Address', ecmr.creation.address);
-    validatedObject.loading          = BuilderUtils.createConcept(factory, namespace, 'Loading', ecmr.loading);
-    validatedObject.loading.address  = BuilderUtils.createConcept(factory, namespace, 'Address', ecmr.loading.address);
-    validatedObject.delivery         = BuilderUtils.createConcept(factory, namespace, 'Delivery', ecmr.delivery);
-    validatedObject.delivery.address = BuilderUtils.createConcept(factory, namespace, 'Address', ecmr.delivery.address);
-
-    validatedObject.owner        = BuilderUtils.createRelationship(factory, namespace, 'LegalOwnerOrg', ecmr.owner);
-    validatedObject.source       = BuilderUtils.createRelationship(factory, namespace, 'CompoundOrg', ecmr.source);
-    validatedObject.transporter  = BuilderUtils.createRelationship(factory, namespace, 'CarrierMember', ecmr.transporter);
+    validatedObject.owner  = BuilderUtils.createRelationship(factory, namespace, 'LegalOwnerOrg', ecmr.owner);
+    validatedObject.source = BuilderUtils.createRelationship(factory, namespace, 'CompoundOrg', ecmr.source);
+    if (ecmr.transporter) {
+      validatedObject.transporter = BuilderUtils.createRelationship(factory, namespace, 'CarrierMember', ecmr.transporter);
+    }
     validatedObject.carrier      = BuilderUtils.createRelationship(factory, namespace, 'CarrierOrg', ecmr.carrier);
     validatedObject.recipientOrg = BuilderUtils.createRelationship(factory, namespace, 'RecipientOrg', ecmr.recipientOrg);
-    validatedObject.recipient    = BuilderUtils.createRelationship(factory, namespace, 'RecipientMember', ecmr.recipient);
-    validatedObject.issuedBy     = BuilderUtils.createRelationship(factory, namespace, 'Entity', ecmr.issuedBy);
+    if (ecmr.recipient) {
+      validatedObject.recipient = BuilderUtils.createRelationship(factory, namespace, 'RecipientMember', ecmr.recipient);
+    }
+    validatedObject.issuedBy = BuilderUtils.createRelationship(factory, namespace, 'Entity', ecmr.issuedBy);
 
     if (ecmr.compoundSignature) {
-      validatedObject.compoundSignature             = BuilderUtils.createConcept(factory, namespace, 'Signature', ecmr.compoundSignature);
-      validatedObject.compoundSignature.certificate = BuilderUtils.createRelationship(factory, namespace, 'User', ecmr.compoundSignature.certificate || identity.userID);
-      if (ecmr.compoundSignature.generalRemark) {
-        validatedObject.compoundSignature.generalRemark = BuilderUtils.createConcept(factory, namespace, 'Remark', ecmr.compoundSignature.generalRemark);
-      }
-      if (ip) {
-        validatedObject.compoundSignature.ip = ip;
-      }
-
-      validatedObject.compoundSignature.timestamp = new Date().getTime();
+      validatedObject.compoundSignature = EcmrBuilder.buildSignature(factory, namespace, ecmr.compoundSignature, identity);
     }
 
     if (ecmr.carrierLoadingSignature) {
-      validatedObject.carrierLoadingSignature             = BuilderUtils.createConcept(factory, namespace, 'Signature', ecmr.carrierLoadingSignature);
-      validatedObject.carrierLoadingSignature.certificate = BuilderUtils.createRelationship(factory, namespace, 'User', ecmr.carrierLoadingSignature.certificate || identity.userID);
-      if (ecmr.carrierLoadingSignature.generalRemark) {
-        validatedObject.carrierLoadingSignature.generalRemark = BuilderUtils.createConcept(factory, namespace, 'Remark', ecmr.carrierLoadingSignature.generalRemark);
-      }
-      if (ip) {
-        validatedObject.carrierLoadingSignature.ip = ip;
-      }
-
-      validatedObject.carrierLoadingSignature.timestamp = new Date().getTime();
+      validatedObject.carrierLoadingSignature = EcmrBuilder.buildSignature(factory, namespace, ecmr.carrierLoadingSignature, identity);
     }
 
     if (ecmr.carrierDeliverySignature) {
-      validatedObject.carrierDeliverySignature             = BuilderUtils.createConcept(factory, namespace, 'Signature', ecmr.carrierDeliverySignature);
-      validatedObject.carrierDeliverySignature.certificate = BuilderUtils.createRelationship(factory, namespace, 'User', ecmr.carrierDeliverySignature.certificate || identity.userID);
-      if (ecmr.carrierDeliverySignature.generalRemark) {
-        validatedObject.carrierDeliverySignature.generalRemark = BuilderUtils.createConcept(factory, namespace, 'Remark', ecmr.carrierDeliverySignature.generalRemark);
-      }
-      if (ip) {
-        validatedObject.carrierDeliverySignature.ip = ip;
-      }
-
-      validatedObject.carrierDeliverySignature.timestamp = new Date().getTime();
+      validatedObject.carrierDeliverySignature = EcmrBuilder.buildSignature(factory, namespace, ecmr.carrierDeliverySignature, identity);
     }
 
     if (ecmr.recipientSignature) {
-      validatedObject.recipientSignature             = BuilderUtils.createConcept(factory, namespace, 'Signature', ecmr.recipientSignature);
-      validatedObject.recipientSignature.certificate = BuilderUtils.createRelationship(factory, namespace, 'User', ecmr.recipientSignature.certificate || identity.userID);
-      if (ecmr.recipientSignature.generalRemark) {
-        validatedObject.recipientSignature.generalRemark = BuilderUtils.createConcept(factory, namespace, 'Remark', ecmr.recipientSignature.generalRemark);
-      }
-      if (ip) {
-        validatedObject.recipientSignature.ip = ip;
-      }
-
-      validatedObject.recipientSignature.timestamp = new Date().getTime();
+      validatedObject.recipientSignature = EcmrBuilder.buildSignature(factory, namespace, ecmr.recipientSignature, identity);
     }
 
-    for (let i = 0; i < ecmr.goods.length; i++) {
-      validatedObject.goods[i]                 = BuilderUtils.createConcept(factory, namespace, 'Good', ecmr.goods[i]);
-      validatedObject.goods[i].pickupWindow    = BuilderUtils.createConcept(factory, namespace, 'DateWindow', ecmr.goods[i].pickupWindow);
-      validatedObject.goods[i].deliveryWindow  = BuilderUtils.createConcept(factory, namespace, 'DateWindow', ecmr.goods[i].deliveryWindow);
-      validatedObject.goods[i].loadingAddress  = BuilderUtils.createConcept(factory, namespace, 'Address', ecmr.goods[i].loadingAddress);
-      validatedObject.goods[i].deliveryAddress = BuilderUtils.createConcept(factory, namespace, 'Address', ecmr.goods[i].deliveryAddress);
-      if (ecmr.goods[i].compoundRemark) {
-        validatedObject.goods[i].compoundRemark           = BuilderUtils.createConcept(factory, namespace, 'Remark', ecmr.goods[i].compoundRemark);
-        validatedObject.goods[i].compoundRemark.comments  = ecmr.goods[i].compoundRemark.comments;
-        validatedObject.goods[i].compoundRemark.isDamaged = ecmr.goods[i].compoundRemark.isDamaged;
-      }
-
-      if (ecmr.goods[i].carrierLoadingRemark) {
-        validatedObject.goods[i].carrierLoadingRemark           = BuilderUtils.createConcept(factory, namespace, 'Remark', ecmr.goods[i].carrierLoadingRemark);
-        validatedObject.goods[i].carrierLoadingRemark.comments  = ecmr.goods[i].carrierLoadingRemark.comments;
-        validatedObject.goods[i].carrierLoadingRemark.isDamaged = ecmr.goods[i].carrierLoadingRemark.isDamaged;
-      }
-
-      if (ecmr.goods[i].carrierDeliveryRemark) {
-        validatedObject.goods[i].carrierDeliveryRemark           = BuilderUtils.createConcept(factory, namespace, 'Remark', ecmr.goods[i].carrierDeliveryRemark);
-        validatedObject.goods[i].carrierDeliveryRemark.comments  = ecmr.goods[i].carrierDeliveryRemark.comments;
-        validatedObject.goods[i].carrierDeliveryRemark.isDamaged = ecmr.goods[i].carrierDeliveryRemark.isDamaged;
-      }
-
-      if (ecmr.goods[i].recipientRemark) {
-        validatedObject.goods[i].recipientRemark           = BuilderUtils.createConcept(factory, namespace, 'Remark', ecmr.goods[i].recipientRemark);
-        validatedObject.goods[i].recipientRemark.comments  = ecmr.goods[i].recipientRemark.comments;
-        validatedObject.goods[i].recipientRemark.isDamaged = ecmr.goods[i].recipientRemark.isDamaged;
-      }
-      validatedObject.goods[i].vehicle = BuilderUtils.createResource(factory, namespace, 'Vehicle', ecmr.goods[i].vehicle);
-    }
+    validatedObject.goods = EcmrBuilder.buildGoods(factory, namespace, ecmr.goods);
 
     return validatedObject;
   }
 
-  public static async buildECMRs(factory: any, namespace: string, ecmrs: any, identity: Identity, ip?: any): Promise<any> {
+  public static async buildECMRs(factory: any, namespace: string, ecmrs: any, identity: Identity): Promise<any> {
     let validatedObjects: any = [];
 
     for (const ecmr of ecmrs) {
-      validatedObjects.push(this.buildECMR(factory, namespace, ecmr, identity, ip));
+      validatedObjects.push(this.buildECMR(factory, namespace, ecmr, identity));
     }
 
     return validatedObjects;
+  }
+
+  public static buildGood(factory: any, namespace: string, good: any): any {
+    let validatedObject             = BuilderUtils.createConcept(factory, namespace, 'Good', good);
+    validatedObject.pickupWindow    = BuilderUtils.createConcept(factory, namespace, 'DateWindow', good.pickupWindow);
+    validatedObject.deliveryWindow  = BuilderUtils.createConcept(factory, namespace, 'DateWindow', good.deliveryWindow);
+    validatedObject.loadingAddress  = BuilderUtils.createConcept(factory, namespace, 'Address', good.loadingAddress);
+    validatedObject.deliveryAddress = BuilderUtils.createConcept(factory, namespace, 'Address', good.deliveryAddress);
+    if (good.compoundRemark) {
+      validatedObject.compoundRemark           = BuilderUtils.createConcept(factory, namespace, 'Remark', good.compoundRemark);
+      validatedObject.compoundRemark.comments  = good.compoundRemark.comments;
+      validatedObject.compoundRemark.isDamaged = good.compoundRemark.isDamaged;
+    }
+
+    if (good.carrierLoadingRemark) {
+      validatedObject.carrierLoadingRemark           = BuilderUtils.createConcept(factory, namespace, 'Remark', good.carrierLoadingRemark);
+      validatedObject.carrierLoadingRemark.comments  = good.carrierLoadingRemark.comments;
+      validatedObject.carrierLoadingRemark.isDamaged = good.carrierLoadingRemark.isDamaged;
+    }
+
+    if (good.carrierDeliveryRemark) {
+      validatedObject.carrierDeliveryRemark           = BuilderUtils.createConcept(factory, namespace, 'Remark', good.carrierDeliveryRemark);
+      validatedObject.carrierDeliveryRemark.comments  = good.carrierDeliveryRemark.comments;
+      validatedObject.carrierDeliveryRemark.isDamaged = good.carrierDeliveryRemark.isDamaged;
+    }
+
+    if (good.recipientRemark) {
+      validatedObject.recipientRemark           = BuilderUtils.createConcept(factory, namespace, 'Remark', good.recipientRemark);
+      validatedObject.recipientRemark.comments  = good.recipientRemark.comments;
+      validatedObject.recipientRemark.isDamaged = good.recipientRemark.isDamaged;
+    }
+    validatedObject.vehicle = BuilderUtils.createResource(factory, namespace, 'Vehicle', good.vehicle);
+
+    return validatedObject;
+  }
+
+  public static buildGoods(factory: any, namespace: string, goods: any): any {
+    let validatedObjects: any = [];
+
+    for (const good of goods) {
+      validatedObjects.push(EcmrBuilder.buildGood(factory, namespace, good));
+    }
+
+    return validatedObjects;
+  }
+
+  public static buildSignature(factory: any, namespace: string, signature: any, identity: Identity): any {
+    let validatedObject         = BuilderUtils.createConcept(factory, namespace, 'Signature', signature);
+    validatedObject.certificate = BuilderUtils.createRelationship(factory, namespace, 'User', signature.certificate || identity.userID);
+
+    if (signature.generalRemark) {
+      validatedObject.generalRemark = BuilderUtils.createConcept(factory, namespace, 'Remark', signature.generalRemark);
+    }
+
+    return validatedObject;
   }
 }

@@ -97,6 +97,20 @@ Builder.prototype.buildGood = function buildGood() {
 };
 
 /**
+ * Build multiple goods concept
+ * @return {Promise} A promise that will be resolved when completed.
+ */
+Builder.prototype.buildGoods = function buildGoods(goods) {
+  let validatedObjects = [];
+
+  for (const good of goods) {
+    validatedObjects.push(this.buildGood(good));
+  }
+
+  return validatedObjects;
+}
+
+/**
  * Build Vehicle asset
  * @param {String} vin The vin of the vehicle
  * @return {Promise} A promise that will be resolved when completed.
@@ -115,11 +129,11 @@ Builder.prototype.buildVehicle = function buildVehicle(vin) {
 
 /**
  * Build TransportOrder asset
- * @param {String} transportOrderID The ID of the trasportOrder
+ * @param {String} orderID The ID of the trasportOrder
  * @return {Promise} A promise that will be resolved when completed.
  */
-Builder.prototype.buildTransportOrder = function buildTransportOrder(transportOrderID) {
-  let transportOrder = this.factory.newResource(Network.namespace, 'TransportOrder', transportOrderID);
+Builder.prototype.buildTransportOrder = function buildTransportOrder(orderID) {
+  let transportOrder = this.factory.newResource(Network.namespace, 'TransportOrder', orderID);
   transportOrder.owner = this.factory.newRelationship(Network.namespace, 'LegalOwnerOrg', 'lapo@leaseplan.org');
   transportOrder.source = this.factory.newRelationship(Network.namespace, 'CompoundOrg', 'amsterdamcompound');
   transportOrder.carrier = this.factory.newRelationship(Network.namespace, 'CarrierOrg', 'koopman');

@@ -10,20 +10,11 @@ rule SystemACL {
     action: ALLOW
 }
 
-rule EveryBodyCanReadVehicles {
+rule EverybodyCanReadVehicles {
     description:  "Allow everybody to read vehicle data"
     participant: "org.hyperledger.composer.system.Participant"
     operation: READ
     resource: "org.digitalcmr.Vehicle"
-    action: ALLOW
-}
-
-rule EverybodyCanReadOrganizationInUpdateECMR {
-    description: "Allow Participant to READ other participants in UpdateECMR"
-    participant: "org.hyperledger.composer.system.Participant"
-    operation: READ
-    resource: "org.digitalcmr.Entity"
-    transaction: "org.digitalcmr.UpdateECMR"
     action: ALLOW
 }
 
@@ -53,49 +44,49 @@ rule LegalOwnerAdminCanCreateTransactionCreateTransportOrder {
 }
 
 rule LegalOwnerAdminCanSubmitTransactionCreateTransportOrder {
-  description: "Allow LegalOwnerAdmin to CREATE a TransportOrder using the CreateTransportOrder transaction"
-  participant(p): "org.digitalcmr.LegalOwnerAdmin"
-  operation: CREATE
-  resource(r): "org.digitalcmr.TransportOrder"
-  transaction: "org.digitalcmr.CreateTransportOrder"
-  condition: (r.owner.getIdentifier() == p.org.getIdentifier())
-  action: ALLOW
+    description: "Allow LegalOwnerAdmin to CREATE a TransportOrder using the CreateTransportOrder transaction"
+    participant(p): "org.digitalcmr.LegalOwnerAdmin"
+    operation: CREATE
+    resource(r): "org.digitalcmr.TransportOrder"
+    transaction: "org.digitalcmr.CreateTransportOrder"
+    condition: (r.owner.getIdentifier() == p.org.getIdentifier())
+    action: ALLOW
 }
 
 rule LegalOwnerAdminCanCreateTransactionUpdateTransportOrderPickupWindow {
-  description: "Allow LegalOwnerAdmin to CREATE a transaction to update the pickup window of a TransportOrder"
-  participant: "org.digitalcmr.LegalOwnerAdmin"
-  operation: CREATE
-  resource: "org.digitalcmr.UpdateTransportOrderPickupWindow"
-  action: ALLOW
+    description: "Allow LegalOwnerAdmin to CREATE a transaction to update the pickup window of a TransportOrder"
+    participant: "org.digitalcmr.LegalOwnerAdmin"
+    operation: CREATE
+    resource: "org.digitalcmr.UpdateTransportOrderPickupWindow"
+    action: ALLOW
 }
 
 rule LegalOwnerAdminCanSubmitTransactionUpdateTransportOrderPickupWindow {
-  description: "Allow LegalOwnerAdmin to submit an UpdateTransportOrderPickupWindow transaction to UPDATE a TransportOrder"
-  participant(p): "org.digitalcmr.LegalOwnerAdmin"
-  operation: UPDATE
-  resource(r): "org.digitalcmr.TransportOrder"
-  transaction: "org.digitalcmr.UpdateTransportOrderPickupWindow"
-  condition: (r.owner.getIdentifier() == p.org.getIdentifier())
-  action: ALLOW
+    description: "Allow LegalOwnerAdmin to submit an UpdateTransportOrderPickupWindow transaction to UPDATE a TransportOrder"
+    participant(p): "org.digitalcmr.LegalOwnerAdmin"
+    operation: UPDATE
+    resource(r): "org.digitalcmr.TransportOrder"
+    transaction: "org.digitalcmr.UpdateTransportOrderPickupWindow"
+    condition: (r.owner.getIdentifier() == p.org.getIdentifier())
+    action: ALLOW
 }
 
 rule LegalOwnerAdminCanCreateTransactionUpdateTransportOrderDeliveryWindow {
-  description: "Allow LegalOwnerAdmin to CREATE a transaction to update the Delivery window of a TransportOrder"
-  participant: "org.digitalcmr.LegalOwnerAdmin"
-  operation: CREATE
-  resource: "org.digitalcmr.UpdateTransportOrderDeliveryWindow"
-  action: ALLOW
+    description: "Allow LegalOwnerAdmin to CREATE a transaction to update the Delivery window of a TransportOrder"
+    participant: "org.digitalcmr.LegalOwnerAdmin"
+    operation: CREATE
+    resource: "org.digitalcmr.UpdateTransportOrderDeliveryWindow"
+    action: ALLOW
 }
 
 rule LegalOwnerAdminCanSubmitTransactionUpdateTransportOrderDeliveryWindow {
-  description: "Allow LegalOwnerAdmin to submit an UpdateTransportOrderDeliveryWindow transaction to UPDATE a TransportOrder"
-  participant(p): "org.digitalcmr.LegalOwnerAdmin"
-  operation: UPDATE
-  resource(r): "org.digitalcmr.TransportOrder"
-  transaction: "org.digitalcmr.UpdateTransportOrderDeliveryWindow"
-  condition: (r.owner.getIdentifier() == p.org.getIdentifier())
-  action: ALLOW
+    description: "Allow LegalOwnerAdmin to submit an UpdateTransportOrderDeliveryWindow transaction to UPDATE a TransportOrder"
+    participant(p): "org.digitalcmr.LegalOwnerAdmin"
+    operation: UPDATE
+    resource(r): "org.digitalcmr.TransportOrder"
+    transaction: "org.digitalcmr.UpdateTransportOrderDeliveryWindow"
+    condition: (r.owner.getIdentifier() == p.org.getIdentifier())
+    action: ALLOW
 }
 
 rule LegalOwnerAdminCanReadAndCreateECMR {
@@ -103,24 +94,6 @@ rule LegalOwnerAdminCanReadAndCreateECMR {
     participant(p): "org.digitalcmr.LegalOwnerAdmin"
     operation: READ, CREATE
     resource(r): "org.digitalcmr.ECMR"
-    condition: (r.owner.getIdentifier() == p.org.getIdentifier())
-    action: ALLOW
-}
-
-rule LegalOwnerAdminCanCreateECMRCreateTransaction {
-    description: "Allow LegalOwnerAdmin to CREATE an ECMR create transaction"
-    participant: "org.digitalcmr.LegalOwnerAdmin"
-    operation: CREATE
-    resource: "org.digitalcmr.CreateECMR"
-    action: ALLOW
-}
-
-rule LegalOwnerAdminCanSubmitCreateECMR {
-    description: "Allow LegalOwnerAdmin to Submit a CreateECMR transaction for his organization"
-    participant(p): "org.digitalcmr.LegalOwnerAdmin"
-    operation: CREATE
-    resource(r): "org.digitalcmr.ECMR"
-    transaction: "org.digitalcmr.CreateECMR"
     condition: (r.owner.getIdentifier() == p.org.getIdentifier())
     action: ALLOW
 }
@@ -156,20 +129,20 @@ rule CompoundAdminCanReadECMR {
     action: ALLOW
 }
 
-rule CompoundAdminCanCreateECMRUpdateTransaction {
-    description: "Allow LegalOwnerAdmin to CREATE an UpdateECMR transaction"
+rule CompoundAdminCanCreateUpdateEcmrStatusToLoadedTransaction {
+    description: "Allow CompoundAdmin to CREATE an UpdateEcmrStatusToLoaded transaction"
     participant: "org.digitalcmr.CompoundAdmin"
     operation: CREATE
-    resource: "org.digitalcmr.UpdateECMR"
+    resource: "org.digitalcmr.UpdateEcmrStatusToLoaded"
     action: ALLOW
 }
 
-rule CompoundAdminCanSubmitUpdateECMR {
-    description: "Allow CompoundAdmin to Submit an UpdateECMR transaction for his organization and status LOADED"
+rule CompoundAdminCanSubmitUpdateEcmrStatusToLoaded {
+    description: "Allow CompoundAdmin to submit an UpdateEcmrStatusToLoaded transaction for his organization when ECMR status is CREATED"
     participant(p): "org.digitalcmr.CompoundAdmin"
     operation: UPDATE
     resource(r): "org.digitalcmr.ECMR"
-    transaction(tx): "org.digitalcmr.UpdateECMR"
+    transaction(tx): "org.digitalcmr.UpdateEcmrStatusToLoaded"
     condition: (r.source.getIdentifier() == p.org.getIdentifier() && r.status == "CREATED")
     action: ALLOW
 }
@@ -205,23 +178,6 @@ rule CarrierAdminCanCreateECMR {
     action: ALLOW
 }
 
-rule CarrierAdminCanCreateECMRCreateTransaction {
-    description: "Allow CarrierAdmin to CREATE an CreateECMR transaction"
-    participant: "org.digitalcmr.CarrierAdmin"
-    operation: CREATE
-    resource: "org.digitalcmr.CreateECMR"
-    action: ALLOW
-}
-
-rule CarrierAdminCanSubmitCreateECMR {
-    description: "Allow CarrierAdmin to Submit a CreateECMR transaction for his organization"
-    participant(p): "org.digitalcmr.CarrierAdmin"
-    operation: CREATE
-    resource(r): "org.digitalcmr.ECMR"
-    transaction: "org.digitalcmr.CreateECMR"
-    condition: (r.carrier.getIdentifier() == p.org.getIdentifier())
-    action: ALLOW
-}
 
 rule CarrierAdminCanCreateECMRsCreateTransaction {
     description: "Allow CarrierAdmin to submit a CreateECMRs transaction"
@@ -242,39 +198,39 @@ rule CarrierAdminCanSubmitCreateECMRs {
 }
 
 rule CarrierAdminCanCreateUpdateExpectedPickupWindow {
-  description: "Allow CarrierAdmin to create an UpdateExpectedPickupWindow transaction"
-  participant: "org.digitalcmr.CarrierAdmin"
-  operation: CREATE
-  resource: "org.digitalcmr.UpdateExpectedPickupWindow"
-  action: ALLOW
+    description: "Allow CarrierAdmin to create an UpdateExpectedPickupWindow transaction"
+    participant: "org.digitalcmr.CarrierAdmin"
+    operation: CREATE
+    resource: "org.digitalcmr.UpdateExpectedPickupWindow"
+    action: ALLOW
 }
 
 rule CarrierAdminCanSubmitUpdateExpectedPickupWindowTransaction {
-  description: "Allow CarrierAdmin to submit an UpdateExpectedPickupWindow transaction for an ECMR where his org is the carrier and status of ECMR is IN_TRANSIT"
-  participant(p): "org.digitalcmr.CarrierAdmin"
-  operation: UPDATE
-  resource(r): "org.digitalcmr.ECMR"
-  transaction(tx): "org.digitalcmr.UpdateExpectedPickupWindow"
-  condition: (r.carrier.getIdentifier() == p.org.getIdentifier() && r.status == "CREATED")
-  action: ALLOW
+    description: "Allow CarrierAdmin to submit an UpdateExpectedPickupWindow transaction for an ECMR where his org is the carrier and status of ECMR is IN_TRANSIT"
+    participant(p): "org.digitalcmr.CarrierAdmin"
+    operation: UPDATE
+    resource(r): "org.digitalcmr.ECMR"
+    transaction(tx): "org.digitalcmr.UpdateExpectedPickupWindow"
+    condition: (r.carrier.getIdentifier() == p.org.getIdentifier() && r.status == "CREATED")
+    action: ALLOW
 }
 
 rule CarrierAdminCanCreateUpdateExpectedDeliveryWindow {
-  description: "Allow CarrierAdmin to create an UpdateExpectedDeliveryWindow transaction"
-  participant: "org.digitalcmr.CarrierAdmin"
-  operation: CREATE
-  resource: "org.digitalcmr.UpdateExpectedDeliveryWindow"
-  action: ALLOW
+    description: "Allow CarrierAdmin to create an UpdateExpectedDeliveryWindow transaction"
+    participant: "org.digitalcmr.CarrierAdmin"
+    operation: CREATE
+    resource: "org.digitalcmr.UpdateExpectedDeliveryWindow"
+    action: ALLOW
 }
 
 rule CarrierAdminCanSubmitUpdateExpectedDeliveryWindowTransaction {
-  description: "Allow CarrierAdmin to submit an UpdateExpectedDeliveryWindow transaction for an ECMR where his org is the carrier and status of ECMR is IN_TRANSIT"
-  participant(p): "org.digitalcmr.CarrierAdmin"
-  operation: UPDATE
-  resource(r): "org.digitalcmr.ECMR"
-  transaction(tx): "org.digitalcmr.UpdateExpectedDeliveryWindow"
-  condition: (r.carrier.getIdentifier() == p.org.getIdentifier() && r.status == "IN_TRANSIT")
-  action: ALLOW
+    description: "Allow CarrierAdmin to submit an UpdateExpectedDeliveryWindow transaction for an ECMR where his org is the carrier and status of ECMR is IN_TRANSIT"
+    participant(p): "org.digitalcmr.CarrierAdmin"
+    operation: UPDATE
+    resource(r): "org.digitalcmr.ECMR"
+    transaction(tx): "org.digitalcmr.UpdateExpectedDeliveryWindow"
+    condition: (r.carrier.getIdentifier() == p.org.getIdentifier() && r.status == "IN_TRANSIT")
+    action: ALLOW
 }
 
 rule CarrierAdminCanUpdateTransportOrder {
@@ -327,30 +283,38 @@ rule CarrierMemberCanReadTransportOrder {
     action: ALLOW
 }
 
-rule CarrierMemberCreateECMRUpdateTransaction {
-    description: "Allow CarrierMember to CREATE an UpdateECMR transaction"
+rule CarrierMemberCreateUpdateEcmrStatusToInTransitTransaction {
+    description: "Allow CarrierMember to CREATE an UpdateEcmrStatusToInTransit transaction"
     participant: "org.digitalcmr.CarrierMember"
     operation: CREATE
-    resource: "org.digitalcmr.UpdateECMR"
+    resource: "org.digitalcmr.UpdateEcmrStatusToInTransit"
     action: ALLOW
 }
 
-rule CarrierMemberCanSubmitUpdateECMRForLoading {
-    description: "Allow CarrierMember to Submit an UpdateECMR transaction for his organization when ECMR status is LOADED"
+rule CarrierMemberCanSubmitUpdateEcmrStatusToInTransit {
+    description: "Allow CarrierMember to submit an UpdateEcmrStatusToInTransit transaction for his organization when ECMR status is LOADED"
     participant(p): "org.digitalcmr.CarrierMember"
     operation: UPDATE
     resource(r): "org.digitalcmr.ECMR"
-    transaction(tx): "org.digitalcmr.UpdateECMR"
+    transaction(tx): "org.digitalcmr.UpdateEcmrStatusToInTransit"
     condition: (r.transporter.getIdentifier() == p.getIdentifier() && r.status == "LOADED")
     action: ALLOW
 }
 
-rule CarrierMemberCanSubmitUpdateECMRForDelivery {
-    description: "Allow CarrierMember to Submit an UpdateECMR transaction for his organization when ECMR status is IN_TRANSIT"
+rule CarrierMemberCreateUpdateEcmrStatusToDeliveredTransaction {
+    description: "Allow CarrierMember to CREATE an UpdateEcmrStatusToDelivered transaction"
+    participant: "org.digitalcmr.CarrierMember"
+    operation: CREATE
+    resource: "org.digitalcmr.UpdateEcmrStatusToDelivered"
+    action: ALLOW
+}
+
+rule CarrierMemberCanSubmitUpdateEcmrStatusToDelivered {
+    description: "Allow CarrierMember to Submit an UpdateEcmrStatusToDelivered transaction for his organization when ECMR status is IN_TRANSIT"
     participant(p): "org.digitalcmr.CarrierMember"
     operation: UPDATE
     resource(r): "org.digitalcmr.ECMR"
-    transaction(tx): "org.digitalcmr.UpdateECMR"
+    transaction(tx): "org.digitalcmr.UpdateEcmrStatusToDelivered"
     condition: (r.transporter.getIdentifier() == p.getIdentifier() && r.status == "IN_TRANSIT")
     action: ALLOW
 }
@@ -386,20 +350,20 @@ rule RecipientMemberCanReadHisECMR {
     action: ALLOW
 }
 
-rule RecipientMemberCanCreateECMRUpdateTransaction {
-    description: "Allow RecipientMember to CREATE an UpdateECMR transaction"
+rule RecipientMemberCanCreateUpdateEcmrStatusToConfirmedDeliveredTransaction {
+    description: "Allow RecipientMember to CREATE an UpdateEcmrStatusToConfirmedDelivered transaction"
     participant: "org.digitalcmr.RecipientMember"
     operation: CREATE
-    resource: "org.digitalcmr.UpdateECMR"
+    resource: "org.digitalcmr.UpdateEcmrStatusToConfirmedDelivered"
     action: ALLOW
 }
 
-rule RecipientMemberCanSubmitUpdateECMRForConfirmed {
-    description: "Allow RecipientMember to Submit an UpdateECMR transaction for his organization when ECMR status is LOADED"
+rule RecipientMemberCanSubmitUpdateEcmrStatusToConfirmedDelivered {
+    description: "Allow RecipientMember to Submit an UpdateEcmrStatusToConfirmedDelivered transaction for his organization when ECMR status is DELIVERED"
     participant(p): "org.digitalcmr.RecipientMember"
     operation: UPDATE
     resource(r): "org.digitalcmr.ECMR"
-    transaction(tx): "org.digitalcmr.UpdateECMR"
-    condition: (r.recipient.getIdentifier() == p.getIdentifier() && r.status == "DELIVERED" && tx.ecmr.status == "CONFIRMED_DELIVERED")
+    transaction(tx): "org.digitalcmr.UpdateEcmrStatusToConfirmedDelivered"
+    condition: (r.recipient.getIdentifier() == p.getIdentifier() && r.status == "DELIVERED")
     action: ALLOW
 }
