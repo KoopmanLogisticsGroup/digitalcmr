@@ -612,7 +612,7 @@ describe('A Carrier Admin can', () => {
 
   it(' not update an expectedDeliveryWindow of an ECMR with a status other than IN_TRANSIT', (done) => {
     const expectedWindow: ExpectedWindow = {
-      ecmrID:         'A1234567890',
+      ecmrID:         'B1234567890',
       expectedWindow: <DateWindow> {
         startDate: 7247832478934,
         endDate:   212213821321

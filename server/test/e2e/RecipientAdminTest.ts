@@ -246,7 +246,7 @@ describe('A Recipient Admin can', () => {
     };
 
     server
-      .post(baseEndPoint + '/transportOrder')
+      .put(baseEndPoint + '/ECMR/status/' + EcmrStatus.ConfirmedDelivered)
       .set('x-access-token', token)
       .send(updateTransaction)
       .expect(500)
@@ -437,7 +437,7 @@ describe('A Recipient Admin can', () => {
 
   it('can not update an expectedPickupWindow of an ECMR', (done) => {
     const expectedWindow: ExpectedWindow = {
-      ecmrID:         'A1234567890',
+      ecmrID:         'B1234567890',
       expectedWindow: <DateWindow> {
         startDate: 1010101010,
         endDate:   2020202020
