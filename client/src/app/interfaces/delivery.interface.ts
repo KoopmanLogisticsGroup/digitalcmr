@@ -2,6 +2,6 @@ import {Address} from './address.interface';
 
 export interface Delivery {
   address: Address;
-  expectedDate?: number;
+  expectedWindow?: number;
   actualDate?: number;
 }
