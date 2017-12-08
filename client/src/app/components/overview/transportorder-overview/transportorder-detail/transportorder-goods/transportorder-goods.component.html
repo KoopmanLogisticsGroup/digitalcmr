@@ -52,20 +52,21 @@
         </tbody>
         <tbody class="ui content">
         <tr>
-          <td><img class="orderStatePic" src="../../../../../../assets/img/icon_pickup_on.svg"/></td>
+          <td><img class="order_state_pic" src="../../../../../../assets/img/icon_pickup_on.svg"/></td>
           <td class="loading_window_names">
             <span><strong>Pickup Location: </strong> </span>
             <span><strong>Pickup Window: </strong> </span>
             <span><strong>Pickup Signed: </strong> </span>
           </td>
-          <td class="loadingWindow">
+          <td class="loading_window">
             <span> {{good?.loadingAddress?.city}}</span>
             <span> {{good?.pickupWindow.startDate | date: "dd-MM-yyyy (HH:mm)"}} to</span>
             <span> {{good?.pickupWindow.endDate | date: "dd-MM-yyyy (HH:mm)"}}</span>
             <ng-container *ngFor="let ecmr of ecmrs">
               <ng-container *ngFor="let ecmrGood of ecmr?.goods">
                 <ng-container *ngIf="good?.vehicle?.vin == ecmrGood?.vehicle?.vin">
-                  <span [style.color]="signatureInTime(good.pickupWindow, ecmr?.carrierLoadingSignature)"
+                  <span [ngClass]="{'signature_in_time': signatureInTime(good.deliveryWindow, ecmr?.carrierDeliverySignature),
+                  'signature_in_delay': !signatureInTime(good.deliveryWindow, ecmr?.carrierDeliverySignature)}"
                         *ngIf="ecmr?.carrierLoadingSignature !== undefined; else showNa"> {{ecmr?.carrierLoadingSignature?.timestamp | date: "dd-MM-yyyy (HH:mm)"}} </span>
                   <ng-template #showNa><span><strong>Not signed off yet</strong></span></ng-template>
                 </ng-container>
@@ -73,20 +74,21 @@
             </ng-container>
           </td>
           <td colspan="2"></td>
-          <td><img class="orderStatePic" src="../../../../../../assets/img/icon_receiver_off.svg"/></td>
+          <td><img class="order_state_pic" src="../../../../../../assets/img/icon_receiver_off.svg"/></td>
           <td class="loading_window_names">
             <span><strong>Delivery Location: </strong> </span>
             <span><strong>Delivery Window: </strong> </span>
             <span><strong>Delivery Signed: </strong> </span>
           </td>
-          <td class="loadingWindow">
+          <td class="loading_window">
             <span>{{good?.deliveryAddress?.city}}</span>
             <span>{{good?.deliveryWindow.startDate | date: "dd-MM-yyyy (HH:mm)"}} to</span>
             <span> {{good?.deliveryWindow.endDate | date: "dd-MM-yyyy (HH:mm)"}}</span>
             <div *ngFor="let ecmr of ecmrs">
               <div *ngFor="let ecmrGood of ecmr?.goods">
                 <div *ngIf="good?.vehicle?.vin == ecmrGood?.vehicle?.vin">
-                  <span [style.color]="signatureInTime(good.deliveryWindow, ecmr?.carrierDeliverySignature)"
+                  <span [ngClass]="{'signature_in_time': signatureInTime(good.deliveryWindow, ecmr?.carrierDeliverySignature),
+                  'signature_in_delay': !signatureInTime(good.deliveryWindow, ecmr?.carrierDeliverySignature)}"
                         *ngIf="ecmr?.carrierDeliverySignature !== undefined; else showNa"> {{ecmr?.carrierDeliverySignature?.timestamp | date: "dd-MM-yyyy (HH:mm)"}} </span>
                   <ng-template #showNa><span><strong>Not signed off yet</strong></span></ng-template>
                 </div>

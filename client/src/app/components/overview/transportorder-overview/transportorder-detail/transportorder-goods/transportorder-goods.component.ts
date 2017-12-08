@@ -37,10 +37,6 @@ export class TransportorderGoodsComponent implements OnInit {
   }
 
   public signatureInTime(dateWindow: DateWindow, signature: Signature) {
-    if (signature.timestamp >= dateWindow.startDate && signature.timestamp <= dateWindow.endDate) {
-      return '#108043';
-    } else {
-      return '#BF0711';
-    }
+    return (signature.timestamp >= dateWindow.startDate && signature.timestamp <= dateWindow.endDate);
   }
 }

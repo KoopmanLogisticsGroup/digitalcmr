@@ -74,7 +74,7 @@ ol {
   -webkit-padding-start: 0;
 }
 
-.loadingWindow {
+.loading_window {
   span {
     display: block;
     color:   #919EAB;
@@ -88,16 +88,16 @@ ol {
       padding-bottom: 15px;
     }
 
-    &:nth-child(3n+5) {
+    &.signature_in_time {
       color: #108043;
+    }
+
+    &.signature_in_delay {
+      color: #BF0711;
     }
   }
 
-  span.status_span {
-    color: #108043;
-  }
-
-  img.pickupPic {
+  img.pickup_pic {
     width:  1000px;
     height: 1000px;
   }
@@ -124,7 +124,7 @@ ol {
   display: table-row-group;
 }
 
-.orderStatePic {
+.order_state_pic {
   height:      75px;
   width:       75px;
   text-align:  center;
