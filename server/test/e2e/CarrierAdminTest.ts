@@ -14,12 +14,13 @@ import {DeliveryWindow} from '../../src/interfaces/deliveryWindow.interface';
 import {ExpectedWindow} from '../../src/interfaces/expectedWindow.interface';
 import {DateWindow} from '../../../client/src/app/interfaces/dateWindow.interface';
 
-const baseEndPoint = '/api/v1';
-const server       = supertest.agent('http://localhost:8080');
-const should       = chai.should();
+const baseEndPoint     = '/api/v1';
+const server           = supertest.agent('http://localhost:8080');
+const should           = chai.should();
 let token: string;
 let transportOrder: TransportOrder;
 let updateEcmr: Ecmr;
+let ecmrToRemove: Ecmr = Builder.buildECMR(new Date().getTime().toString());
 
 describe('A Carrier Admin can', () => {
   before((done) => {
@@ -133,17 +134,15 @@ describe('A Carrier Admin can', () => {
   });
 
   it('create an ECMR', (done) => {
-    let ecmrList: Ecmr[] = [Builder.buildECMR('ecmr1')];
-
-    const ecmrs: CreateEcmrs = {
+    const payload: CreateEcmrs = {
       orderID: '12345567890',
-      ecmrs:   ecmrList
+      ecmrs:   [ecmrToRemove]
     };
 
     server
       .post(baseEndPoint + '/ECMR/createECMRs')
       .set('x-access-token', token)
-      .send(ecmrs)
+      .send(payload)
       .expect(200)
       .end((err: Error) => {
         if (err) {
@@ -158,7 +157,7 @@ describe('A Carrier Admin can', () => {
 
   it('cancel an ECMR', (done) => {
     let cancel: EcmrCancellation = {
-      ecmrID:       'ecmr1',
+      ecmrID:       ecmrToRemove.ecmrID,
       cancellation: {
         cancelledBy: 'pete@koopman.org',
         reason:      'no reason',
@@ -560,7 +559,7 @@ describe('A Carrier Admin can', () => {
       });
   });
 
-  it(' not update an expectedPickupWindow of an ECMR with a status other than CREATED', (done) => {
+  it('not update an expectedPickupWindow of an ECMR with a status other than CREATED', (done) => {
     const expectedWindow: ExpectedWindow = {
       ecmrID:         'E1234567890',
       expectedWindow: <DateWindow> {
@@ -585,7 +584,7 @@ describe('A Carrier Admin can', () => {
       });
   });
 
-  it(' update an expectedDeliveryWindow of an ECMR with status IN_TRANSIT', (done) => {
+  it('update an expectedDeliveryWindow of an ECMR with status IN_TRANSIT', (done) => {
     const expectedWindow: ExpectedWindow = {
       ecmrID:         'E1234567890',
       expectedWindow: <DateWindow> {
@@ -610,7 +609,7 @@ describe('A Carrier Admin can', () => {
       });
   });
 
-  it(' not update an expectedDeliveryWindow of an ECMR with a status other than IN_TRANSIT', (done) => {
+  it('not update an expectedDeliveryWindow of an ECMR with a status other than IN_TRANSIT', (done) => {
     const expectedWindow: ExpectedWindow = {
       ecmrID:         'B1234567890',
       expectedWindow: <DateWindow> {
