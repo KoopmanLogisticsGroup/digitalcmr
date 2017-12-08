@@ -7,10 +7,16 @@ import {EcmrStatus} from '../../src/interfaces/ecmr.interface';
 import {StatusCode} from './common/StatusCode';
 import {Builder} from './common/Builder';
 import {EcmrCancellation, TransportOrderCancellation} from '../../src/interfaces/cancellation.interface';
+import {CreateEcmrs} from '../../src/interfaces/createEcmrs.interface';
+import {UpdateEcmrStatus} from '../../src/interfaces/updateEcmrStatus.interface';
+import {PickupWindow} from '../../src/interfaces/pickupWindow.interface';
+import {DeliveryWindow} from '../../src/interfaces/deliveryWindow.interface';
+import {ExpectedWindow} from '../../src/interfaces/expectedWindow.interface';
+import {DateWindow} from '../../../client/src/app/interfaces/dateWindow.interface';
 
 const baseEndPoint = '/api/v1';
-const server = supertest.agent('http://localhost:8080');
-const should = chai.should();
+const server       = supertest.agent('http://localhost:8080');
+const should       = chai.should();
 let token: string;
 let transportOrder: TransportOrder;
 let updateEcmr: Ecmr;
@@ -37,6 +43,7 @@ describe('A Carrier Admin can', () => {
         }
         should.exist(res.body.token);
         token = res.body.token;
+
         done(err);
       });
   });
@@ -53,6 +60,7 @@ describe('A Carrier Admin can', () => {
         }
         should.exist(res.body.find(ecmr => ecmr.ecmrID === 'A1234567890'));
         should.exist(res.body.find(ecmr => ecmr.ecmrID === 'B1234567890'));
+
         done(err);
       });
   });
@@ -69,6 +77,7 @@ describe('A Carrier Admin can', () => {
         }
         should.exist(res.body.find(ecmr => ecmr.ecmrID === 'A1234567890'));
         should.exist(res.body.find(ecmr => ecmr.ecmrID === 'B1234567890'));
+
         done(err);
       });
   });
@@ -85,6 +94,7 @@ describe('A Carrier Admin can', () => {
           return done(err);
         }
         updateEcmr = res.body;
+
         done(err);
       });
   });
@@ -102,6 +112,7 @@ describe('A Carrier Admin can', () => {
         }
         res.body.length.should.be.greaterThan(0, 'No ECMRs were found for carrier org');
         should.exist(res.body.find(ecmr => ecmr.carrier === 'resource:org.digitalcmr.CarrierOrg#koopman'));
+
         done(err);
       });
   });
@@ -118,6 +129,7 @@ describe('A Carrier Admin can', () => {
           return done(err);
         }
         res.body.length.should.equal(0);
+
         done(err);
       });
   });
@@ -126,7 +138,8 @@ describe('A Carrier Admin can', () => {
     let ecmrList: Ecmr[] = [];
     const ecmr: Ecmr     = Builder.buildECMR('ecmr1');
     ecmrList.push(ecmr);
-    const ecmrs = {
+
+    const ecmrs: CreateEcmrs = {
       orderID: '12345567890',
       ecmrs:   ecmrList
     };
@@ -142,12 +155,13 @@ describe('A Carrier Admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
 
   it('cancel an ECMR', (done) => {
-    let cancel = <EcmrCancellation> {
+    let cancel: EcmrCancellation = {
       'ecmrID':       'ecmr1',
       'cancellation': {
         'cancelledBy': 'pete@koopman.org',
@@ -167,16 +181,18 @@ describe('A Carrier Admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
 
   it('not submit an update status from LOADED to IN_TRANSIT', (done) => {
-    const updateTransaction  = {
+    const updateTransaction: UpdateEcmrStatus = {
       ecmrID:    updateEcmr.ecmrID,
       goods:     updateEcmr.goods,
       signature: Builder.buildSignature('harry@koopman.org')
     };
+
     server
       .put(baseEndPoint + '/ECMR/status/' + EcmrStatus.InTransit)
       .set('x-access-token', token)
@@ -188,17 +204,19 @@ describe('A Carrier Admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
 
   it('not submit an update status from IN_TRANSIT to DELIVERED', (done) => {
-    const updateTransaction = {
+    const updateTransaction: UpdateEcmrStatus = {
       ecmrID:    updateEcmr.ecmrID,
       orderID:   updateEcmr.orderID,
       goods:     updateEcmr.goods,
       signature: Builder.buildSignature('harry@koopman.org')
     };
+
     server
       .put(baseEndPoint + '/ECMR/status/' + EcmrStatus.Delivered)
       .set('x-access-token', token)
@@ -210,6 +228,7 @@ describe('A Carrier Admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
@@ -225,7 +244,8 @@ describe('A Carrier Admin can', () => {
           return done(err);
         }
         res.body.length.should.be.greaterThan(0, 'No CREATED ECMRs were found.');
-        should.exist(res.body.find(ecmr => ecmr.status === EcmrStatus.Created));
+        should.exist(res.body.find((ecmr: Ecmr) => ecmr.status === EcmrStatus.Created));
+
         done(err);
       });
   });
@@ -241,7 +261,7 @@ describe('A Carrier Admin can', () => {
             return done(err);
           }
         res.body.length.should.be.greaterThan(0, 'No LOADED ECMRs were found.');
-        should.exist(res.body.find(ecmr => ecmr.status === EcmrStatus.Loaded));
+        should.exist(res.body.find((ecmr: Ecmr) => ecmr.status === EcmrStatus.Loaded));
 
         done(err);
         }
@@ -259,7 +279,7 @@ describe('A Carrier Admin can', () => {
             return done(err);
           }
         res.body.length.should.be.greaterThan(0, 'No IN_TRANSIT ECMRs were found.');
-        should.exist(res.body.find(ecmr => ecmr.status === EcmrStatus.InTransit));
+        should.exist(res.body.find((ecmr: Ecmr) => ecmr.status === EcmrStatus.InTransit));
 
         done(err);
         }
@@ -277,7 +297,8 @@ describe('A Carrier Admin can', () => {
           return done(err);
         }
         res.body.length.should.be.greaterThan(0, 'No DELIVERED ECMRs were found.');
-        should.exist(res.body.find(ecmr => ecmr.status === EcmrStatus.Delivered));
+        should.exist(res.body.find((ecmr: Ecmr) => ecmr.status === EcmrStatus.Delivered));
+
         done(err);
       });
   });
@@ -293,7 +314,8 @@ describe('A Carrier Admin can', () => {
           return done(err);
         }
         res.body.length.should.be.greaterThan(0, 'No CONFIRMED_DELIVERED ECMRs were found.');
-        should.exist(res.body.find(ecmr => ecmr.status === EcmrStatus.ConfirmedDelivered));
+        should.exist(res.body.find((ecmr: Ecmr) => ecmr.status === EcmrStatus.ConfirmedDelivered));
+
         done(err);
       });
   });
@@ -327,6 +349,7 @@ describe('A Carrier Admin can', () => {
           return done(err);
         }
         res.body.vin.should.equal('183726339N');
+
         done(err);
       });
   });
@@ -344,6 +367,7 @@ describe('A Carrier Admin can', () => {
         }
         should.exist(res.body);
         res.body.plateNumber.should.equal('AV198RX');
+
         done(err);
       });
   });
@@ -361,6 +385,7 @@ describe('A Carrier Admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
@@ -378,6 +403,7 @@ describe('A Carrier Admin can', () => {
         }
         res.body.length.should.be.greaterThan(0);
         should.exist(res.body.find(transportOrder => transportOrder.orderID === '12345567890'));
+
         done(err);
       });
   });
@@ -395,6 +421,7 @@ describe('A Carrier Admin can', () => {
           return done(err);
         }
         should.exist(res.body.orderID === '12345567890');
+
         done(err);
       });
   });
@@ -412,6 +439,7 @@ describe('A Carrier Admin can', () => {
           return done(err);
         }
         res.body.length.should.be.greaterThan(0);
+
         done(err);
       });
   });
@@ -437,6 +465,7 @@ describe('A Carrier Admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
@@ -454,12 +483,13 @@ describe('A Carrier Admin can', () => {
           return done(err);
         }
         res.body.length.should.be.greaterThan(0);
+
         done(err);
       });
   });
 
   it('not update an estimatedPickupWindow of a TransportOrder', (done) => {
-    const pickupWindow = {
+    const pickupWindow: PickupWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
       dateWindow: [1010101010, 2020202020]
@@ -480,7 +510,7 @@ describe('A Carrier Admin can', () => {
   });
 
   it('not update an estimatedDeliveryWindow of a TransportOrder', (done) => {
-    const deliveryWindow = {
+    const deliveryWindow: DeliveryWindow = {
       orderID:    '12345567890',
       vin:        '183726339N',
       dateWindow: [1010101010, 2020202020]
@@ -497,14 +527,18 @@ describe('A Carrier Admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
 
   it('update an expectedPickupWindow of an ECMR', (done) => {
-    const expectedWindow = {
+    const expectedWindow: ExpectedWindow = {
       ecmrID:         'A1234567890',
-      expectedWindow: [7247832478934, 212213821321]
+      expectedWindow: <DateWindow> {
+        startDate: 7247832478934,
+        endDate:   212213821321
+      }
     };
 
     server
@@ -518,14 +552,18 @@ describe('A Carrier Admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
 
   it(' not update an expectedPickupWindow of an ECMR with a status other than CREATED', (done) => {
-    const expectedWindow = {
+    const expectedWindow: ExpectedWindow = {
       ecmrID:         'E1234567890',
-      expectedWindow: [7247832478934, 212213821321]
+      expectedWindow: <DateWindow> {
+        startDate: 7247832478934,
+        endDate:   212213821321
+      }
     };
 
     server
@@ -539,14 +577,18 @@ describe('A Carrier Admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
 
   it(' update an expectedDeliveryWindow of an ECMR with status IN_TRANSIT', (done) => {
-    const expectedWindow = {
+    const expectedWindow: ExpectedWindow = {
       ecmrID:         'E1234567890',
-      expectedWindow: [7247832478934, 212213821321]
+      expectedWindow: <DateWindow> {
+        startDate: 7247832478934,
+        endDate:   212213821321
+      }
     };
 
     server
@@ -560,14 +602,18 @@ describe('A Carrier Admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
 
   it(' not update an expectedDeliveryWindow of an ECMR with a status other than IN_TRANSIT', (done) => {
-    const expectedWindow = {
+    const expectedWindow: ExpectedWindow = {
       ecmrID:         'A1234567890',
-      expectedWindow: [7247832478934, 212213821321]
+      expectedWindow: <DateWindow> {
+        startDate: 7247832478934,
+        endDate:   212213821321
+      }
     };
 
     server
@@ -581,6 +627,7 @@ describe('A Carrier Admin can', () => {
 
           return done(err);
         }
+
         done(err);
       });
   });
