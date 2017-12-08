@@ -190,7 +190,7 @@ describe('A Compound Admin can', () => {
       signature: Builder.buildSignature('willem@amsterdamcompound.org')
     };
     server
-      .put('/api/v1/ECMR/status/' + EcmrStatus.Loaded)
+        .put('/api/v1/ECMR/status/' + EcmrStatus.Loaded)
       .set('x-access-token', token)
       .send(updateTransaction)
       .expect(StatusCode.ok)

@@ -3,6 +3,6 @@ import {DateWindow} from './dateWindow.interface';
 
 export interface Delivery {
   address: Address;
-  expectedWindow?: DateWindow;
+    expectedWindow?: DateWindow;
   actualDate?: number;
 }
