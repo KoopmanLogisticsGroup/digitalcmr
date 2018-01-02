@@ -1,14 +1,135 @@
 # Bluemix deployment guidelines
+Note that the current configuration is valid for:
+- Hyperledger Fabric v1.0.x
+- Hyperledger Composer v0.13.x
 
 ## Create a Kubernetes cluster
-First follow this guide to set up a k8s (kubernetes) cluster on Bluemix:
+This guide will allow you to set up a k8s (kubernetes) cluster on Bluemix.
+The following steps are based on: [Develop in a cloud sandbox IBM Blockchain Platform](https://ibm-blockchain.github.io/).
 
-1. [Develop in a cloud sandbox IBM Blockchain Platform](https://ibm-blockchain.github.io/)
+### Why do I get?
+The Simple Install will bring up the following components:
+- A pre-configured Fabric (blockchain runtime):
+  - 3 Fabric CAs (one apiece for the orderer org and two peer orgs)
+  - Orderer node (running "solo")
+  - 2 Fabric peer nodes (one apiece for each peer org - org1 & org2)
+- Composer Playground (UI for creating and deploying Business Networks to Fabric)
+- The basic-sample-network deployed
 
+### Prepare required CLIs and plugins
+First, we will download and add the CLIs and plugins that we need to interact with the IBM Container Service. If you do not already have `zip` and `unzip`, install them now.
+
+- Download and install [kubectl CLI](https://kubernetes.io/docs/tasks/kubectl/install/). If you have `brew` installed: `brew install kubernetes-cli kubectl`
+- Download and install the [Bluemix CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/download_cli.html#download_install)
+- Add the bluemix plugins repo
+```bash
+bx plugin repo-add bluemix https://plugins.ng.bluemix.net
+```
+Note: If you get the following error, it means that the repository bluemix already exists on your computer. Thus, you can ignore the error and move to the next step.
+```bash
+Plug-in repo named ‘bluemix’ already exists. Try a different name.
+```
+- Add the container service plugin
+```bash
+bx plugin install container-service -r bluemix
+```
+
+## Setup a cluster
+Now, we will use those CLIs and plugins to create a cluster on the IBM Container Service. Use these steps to setup a cluster named blockchain on IBM Container Service. For more information about how to use the [bluemix cli](https://console.bluemix.net/docs/cli/reference/bluemix_cli/bx_cli.html#bluemix_cli).
+
+
+- Point Bluemix CLI to production API
+```bash
+bx api api.ng.bluemix.net
+```
 Note: The API used in the guide are for US. If you want to set up a cluster in any other location you need to specify the right API address.
 
 e.g. For UK: **api.eu-gb.bluemix.net**
-2. Stop at section: **Simple Install**
+
+- Login to Bluemix
+```bash
+bx login
+```
+
+- Create a cluster on IBM Container Service
+This will create a **free cluster** on the IBM Container Service.
+```bash
+bx cs cluster-create --name YOURCLUSTERNAME
+```
+
+- Wait for the cluster to be ready
+Issue the following command to ascertain the status of your cluster:
+```bash
+bx cs clusters
+```
+The process goes through the following lifecycle - `requesting –> pending –> deploying –> normal`. Initially you will see something similar to the following:
+```bash
+Name              ID                                 State       Created                    Workers
+YOURCLUSTERNAME   7fb45431d9a54d2293bae421988b0080   deploying   2017-05-09T14:55:09+0000   0
+```
+Wait for the State to change to normal. Note that this can take upwards of 15-30 minutes. If it takes more than 30 minutes, there is an inner issue on the IBM Container Service.
+
+You should see the following output when the cluster is ready:
+```bash
+$ bx cs clusters
+Listing clusters...
+OK
+Name              ID                                 State    Created                    Workers
+YOURCLUSTERNAME   0783c15e421749a59e2f5b7efdd351d1   normal   2017-05-09T16:13:11+0000   1
+```
+Use the following syntax to inspect on the status of the workers: Command:
+```bash
+bx cs workers YOURCLUSTERNAME
+```
+The expected response is as follows:
+```bash
+$ bx cs workers YOURCLUSTERNAME
+Listing cluster workers...
+OK
+ID                                                 Public IP       Private IP       Machine Type   State    Status
+kube-dal10-pa0783c15e421749a59e2f5b7efdd351d1-w1   169.48.140.48   10.176.190.176   free           normal   Ready
+```
+- Configure kubectl to use the cluster
+Issue the following command to download the configuration for your cluster:
+```bash
+bx cs cluster-config YOURCLUSTERNAME
+```
+Expected output:
+```bash
+Downloading cluster config for YOURCLUSTERNAME
+OK
+The configuration for YOURCLUSTERNAME was downloaded successfully. Export environment variables to start using Kubernetes.
+
+export KUBECONFIG=/home/*****/.bluemix/plugins/container-service/clusters/blockchain/kube-config-prod-dal10-blockchain.yml
+```
+The export command in the output must be run as a separate command along with the `KUBECONFIG` information that followed it.
+
+(Replace this example with the output from running the step above!)
+```bash
+$ export KUBECONFIG=/home/*****/.bluemix/plugins/container-service/clusters/blockchain/kube-config-prod-dal10-blockchain.yml
+```
+
+**Congratulations!**
+
+You have successfully created the blockchain cluster on IBM Container Service. Next, you will deploy the Developer Environment.
+
+### Helpful commands for kubectl
+```bash
+# To get the logs of a component, use -f to follow the logs
+kubectl logs $(kubectl get pods | grep <component> | awk '{print $1}')
+# Example
+kubectl logs $(kubectl get pods | grep org1peer1 | awk '{print $1}')
+
+# To get into a running container
+kubectl exec -ti $(kubectl get pods | grep <component> | awk '{print $1}') bash
+# Example
+kubectl exec -ti $(kubectl get pods | grep ordererca | awk '{print $1}') bash
+
+# To get kubernetes UI
+kubectl proxy
+
+# On the browser go to 127.0.0.1:8001/ui
+```
 
 ## Deploy the blockchain network
 1. Navigate to the `scripts` sub-directory:
@@ -80,7 +201,7 @@ Now you can run your application.
 **Note: Before spinning up the application, be sure you have the following:**
 - Your server holds the correct addresses of the blockchain network under `server/resources/connectionProfiles/production`
 - Your client holds the correct address to your remote server in `client/src/environments/environment.prod.ts`
-1. Navigate to the `create` sub-directory:
+1. Navigate to the `scripts` sub-directory:
 ```bash
 cd cs-offerings/free/scripts
 ```
@@ -107,7 +228,7 @@ cd cs-offerings/free/scripts
 ```
 
 ## Run the Composer-Rest-Server
-1. Navigate to the `create` sub-directory:
+1. Navigate to the `scripts` sub-directory:
 ```bash
 cd cs-offerings/free/scripts/
 ```
@@ -159,3 +280,8 @@ Error: Error trying to ping. Error: Error trying to query business network. Erro
 ```
 
 **S:** You have been too fast and you need to cleanup your environment and restart. Apparently there is a 5 minutes time delay on the certs generated. So if you try using a cert before 5 minutes there is a chance it would be invalid. Apparently this is fixed in fabric v1.0.3.
+
+## References
+[Develop in a cloud sandbox IBM Blockchain Platform](https://ibm-blockchain.github.io/)
+
+[Bluemix Containers - Registry Getting Started](https://console.bluemix.net/containers-kubernetes/home/registryGettingStarted)
