@@ -47,9 +47,8 @@ function updateEcmrStatusToLoaded(tx) {
   var factory = getFactory();
   var currentParticipant = getCurrentParticipant() && getCurrentParticipant().getIdentifier();
 
-  // TODO only for test purposes
   if (typeof currentParticipant === 'undefined' || !currentParticipant) {
-    currentParticipant = tx.signature.certificate;
+    throw new Error('[UpdateEcmrStatusToLoaded] Participant is not authenticated');
   }
 
   tx.ecmr.status = EcmrStatus.Loaded;
@@ -93,9 +92,8 @@ function updateEcmrStatusToInTransit(tx) {
   var factory = getFactory();
   var currentParticipant = getCurrentParticipant() && getCurrentParticipant().getIdentifier();
 
-  // TODO only for test purposes
   if (typeof currentParticipant === 'undefined' || !currentParticipant) {
-    currentParticipant = tx.signature.certificate;
+    throw new Error('[UpdateEcmrStatusToInTransit] Participant is not authenticated');
   }
 
   tx.ecmr.status = EcmrStatus.InTransit;
@@ -142,9 +140,8 @@ function updateEcmrStatusToDelivered(tx) {
   var factory = getFactory();
   var currentParticipant = getCurrentParticipant() && getCurrentParticipant().getIdentifier();
 
-  // TODO only for test purposes
   if (typeof currentParticipant === 'undefined' || !currentParticipant) {
-    currentParticipant = tx.signature.certificate;
+    throw new Error('[UpdateEcmrStatusToDelivered] Participant is not authenticated');
   }
 
   tx.ecmr.status = EcmrStatus.Delivered;
@@ -199,9 +196,8 @@ function updateEcmrStatusToConfirmedDelivered(tx) {
   var factory = getFactory();
   var currentParticipant = getCurrentParticipant() && getCurrentParticipant().getIdentifier();
 
-  // TODO only for test purposes
   if (typeof currentParticipant === 'undefined' || !currentParticipant) {
-    currentParticipant = tx.signature.certificate;
+    throw new Error('[UpdateEcmrStatusToConfirmedDelivered] Participant is not authenticated');
   }
 
   tx.ecmr.status = EcmrStatus.ConfirmedDelivered;
@@ -238,9 +234,8 @@ function updateECMRStatusToCancelled(tx) {
   var factory = getFactory();
   var currentParticipant = getCurrentParticipant() && getCurrentParticipant().getIdentifier();
 
-  // TODO only for test purposes
   if (typeof currentParticipant === 'undefined' || !currentParticipant) {
-    currentParticipant = 'network_admin';
+    throw new Error('[UpdateECMRStatusToCancelled] Participant is not authenticated');
   }
 
   // Get the asset registry for the asset.
