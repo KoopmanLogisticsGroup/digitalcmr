@@ -52,7 +52,7 @@ describe('As admin of the network, ', () => {
         // Establish an admin connection. The user ID must be admin. The user secret is
         // ignored, but only when the tests are executed using the embedded (in-memory)
         // runtime.
-        return adminConnection.connect(Network.connectionProfile, Identity.userIDs.admin, 'randomString');
+        return adminConnection.connect(Network.connectionProfile, Identity.users.admin.userID, Identity.users.admin.userSecret);
       })
       .then(() => {
         // Generate a business network definition from the project directory.
@@ -69,7 +69,7 @@ describe('As admin of the network, ', () => {
         businessNetworkConnection.on('event', (event) => {
           events.push(event);
         });
-        return businessNetworkConnection.connect(Network.connectionProfile, Network.networkName, Identity.userIDs.admin, 'randomString');
+        return businessNetworkConnection.connect(Network.connectionProfile, Network.networkName, Identity.users.admin.userID, Identity.users.admin.userSecret);
       })
       .then(() => {
 
@@ -100,7 +100,6 @@ describe('As admin of the network, ', () => {
         return assetRegistry.get('vehicle3');
       })
       .then((vehicle) => {
-        console.log(vehicle);
         vehicle.$identifier.should.equal('vehicle3');
       });
   });

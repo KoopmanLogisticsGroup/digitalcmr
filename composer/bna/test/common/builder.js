@@ -29,8 +29,8 @@ Builder.prototype.buildAddress = function buildAddress() {
   address.city = 'city';
   address.zipCode = 'zipcode';
   address.country = 'country';
-  address.latitude = Math.random() < 0.5 ? ((1 - Math.random()) * (90 - (-90)) + -90) : (Math.random() * (90 - (-90)) + (-90));
-  address.longitude = Math.random() < 0.5 ? ((1 - Math.random()) * (180 - (-180)) + -180) : (Math.random() * (180 - (-180)) + (-180));
+  address.latitude = this.calcLatitude();
+  address.longitude = this.calcLongitude();
 
   return address;
 };
@@ -157,6 +157,14 @@ Builder.prototype.buildSignature = function buildSignature(certificate) {
   signature.timestamp = new Date().getTime();
 
   return signature;
+};
+
+Builder.prototype.calcLatitude = function calcLatitude() {
+  return Math.random() < 0.5 ? ((1 - Math.random()) * (90 - (-90)) + -90) : (Math.random() * (90 - (-90)) + (-90));
+};
+
+Builder.prototype.calcLongitude = function calcLongitude() {
+  return Math.random() < 0.5 ? ((1 - Math.random()) * (180 - (-180)) + -180) : (Math.random() * (180 - (-180)) + (-180));
 };
 
 Builder.prototype.constructor = Builder;

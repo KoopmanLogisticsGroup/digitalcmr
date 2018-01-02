@@ -135,8 +135,8 @@ function updateTransportOrderStatusToCancelled(tx) {
   var factory = getFactory();
   var currentParticipant = getCurrentParticipant() && getCurrentParticipant().getIdentifier();
 
-  if (currentParticipant == undefined || null) {
-    currentParticipant = 'network_admin';
+  if (typeof currentParticipant === 'undefined' || !currentParticipant) {
+    throw new Error('[UpdateTransportOrderStatusToCancelled] Participant is not authenticated');
   }
 
   // Get the asset registry for the asset.
