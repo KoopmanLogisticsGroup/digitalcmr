@@ -1,8 +1,12 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {EcmrService} from '../../../../../services/ecmr.service';
 import {AuthenticationService} from '../../../../../services/authentication.service';
-import {Ecmr} from '../../../../../interfaces/ecmr.interface';
+import {Ecmr, EcmrStatus} from '../../../../../interfaces/ecmr.interface';
 import * as GeoLib from 'geolib';
+import PositionAsDecimal = geolib.PositionAsDecimal;
+import {Address} from '../../../../../interfaces/address.interface';
+import {Signature} from '../../../../../interfaces/signature.interface';
+import {UpdateEcmrStatus} from '../../../../../interfaces/updateEcmrStatus.interface';
 
 @Component({
   selector:    'app-sign-off-modal',
@@ -12,6 +16,7 @@ import * as GeoLib from 'geolib';
 
 export class SignOffModalComponent implements OnInit {
   @Input() ecmr: Ecmr;
+  private signature: Signature = <Signature>{};
 
   public EcmrStatus = {
     Created:            'CREATED',
@@ -39,7 +44,6 @@ export class SignOffModalComponent implements OnInit {
     this.ecmr = ecmr;
     $('#signoff_modal.ui.modal').modal('show');
     $('#signoff_modal.ui.modal').parent().css({'background-color': 'rgba(0,0,0,0.7)'});
-    this.simulateCoordinates();
   }
 
   public close(): void {
@@ -48,65 +52,39 @@ export class SignOffModalComponent implements OnInit {
 
   public onSubmit(): void {
     $('#submitButton').addClass('basic loading');
-    this.ecmrService.updateEcmr(this.ecmr).subscribe(result => {
+    this.simulateCoordinates();
+    this.setGeneralRemark();
+    const updateEcmrStatus: UpdateEcmrStatus = {
+      ecmrID:    this.ecmr.ecmrID,
+      goods:     this.ecmr.goods,
+      signature: this.signature,
+      orderID:   this.ecmr.orderID
+    };
+
+    this.ecmrService.updateEcmr(updateEcmrStatus, this.ecmr.status).subscribe(result => {
       $('#signoff_modal.ui.modal').modal('hide');
       $('#signoff_modal.ui.modal').modal('hide');
       location.reload();
     });
   }
 
-  public getUserRole(): string {
-    return this.authenticationService.isAuthenticated() ? JSON.parse(localStorage.getItem('currentUser')).user.role : '';
-  }
-
   private simulateCoordinates(): void {
     switch (this.getUserRole()) {
       case this.User.CompoundAdmin: {
-        const start                           = {
-          latitude:  this.ecmr.loading.address.latitude,
-          longitude: this.ecmr.loading.address.longitude
-        };
-        const signaturePoint                  = GeoLib.computeDestinationPoint(
-          start,
-          Math.abs(Math.random() * 500),
-          Math.abs(Math.random() * 180),
-          undefined
-        );
-        this.ecmr.compoundSignature.latitude  = signaturePoint.latitude;
-        this.ecmr.compoundSignature.longitude = signaturePoint.longitude;
+        const signaturePoint: PositionAsDecimal = this.generateSignaturePoint(this.ecmr.loading.address);
+        this.ecmr.compoundSignature.latitude    = signaturePoint.latitude;
+        this.ecmr.compoundSignature.longitude   = signaturePoint.longitude;
+
         break;
       }
 
       case this.User.CarrierMember: {
-
-        if (this.ecmr.status === this.EcmrStatus.Loaded) {
-          const start          = {
-            latitude:  this.ecmr.loading.address.latitude,
-            longitude: this.ecmr.loading.address.longitude
-          };
-          const signaturePoint = GeoLib.computeDestinationPoint(
-            start,
-            Math.abs(Math.random() * 500),
-            Math.abs(Math.random() * 180),
-            undefined
-          );
-
+        if (this.ecmr.status === EcmrStatus.Loaded) {
+          const signaturePoint: PositionAsDecimal     = this.generateSignaturePoint(this.ecmr.loading.address);
           this.ecmr.carrierLoadingSignature.latitude  = signaturePoint.latitude;
           this.ecmr.carrierLoadingSignature.longitude = signaturePoint.longitude;
-        }
-
-        if (this.ecmr.status === this.EcmrStatus.InTransit) {
-          const start          = {
-            latitude:  this.ecmr.delivery.address.latitude,
-            longitude: this.ecmr.delivery.address.longitude
-          };
-          const signaturePoint = GeoLib.computeDestinationPoint(
-            start,
-            Math.abs(Math.random() * 500),
-            Math.abs(Math.random() * 180),
-            undefined
-          );
-
+        } else if (this.ecmr.status === EcmrStatus.InTransit) {
+          const signaturePoint: PositionAsDecimal      = this.generateSignaturePoint(this.ecmr.delivery.address);
           this.ecmr.carrierDeliverySignature.latitude  = signaturePoint.latitude;
           this.ecmr.carrierDeliverySignature.longitude = signaturePoint.longitude;
         }
@@ -115,30 +93,68 @@ export class SignOffModalComponent implements OnInit {
       }
 
       case this.User.RecipientMember: {
-        const start          = {
-          latitude:  this.ecmr.delivery.address.latitude,
-          longitude: this.ecmr.delivery.address.longitude
-        };
-        const signaturePoint = GeoLib.computeDestinationPoint(
-          start,
-          Math.abs(Math.random() * 500),
-          Math.abs(Math.random() * 180),
-          undefined
-        );
+        const signaturePoint: PositionAsDecimal = this.generateSignaturePoint(this.ecmr.delivery.address);
+        this.ecmr.recipientSignature.latitude   = signaturePoint.latitude;
+        this.ecmr.recipientSignature.longitude  = signaturePoint.longitude;
 
-        this.ecmr.recipientSignature.latitude  = signaturePoint.latitude;
-        this.ecmr.recipientSignature.longitude = signaturePoint.longitude;
         break;
       }
 
       default: {
         break;
       }
+    }
+  }
 
+  private generateSignaturePoint(address: Address): PositionAsDecimal {
+    const start          = {
+      latitude:  address.latitude,
+      longitude: address.longitude
+    };
+    const signaturePoint = GeoLib.computeDestinationPoint(
+      start,
+      Math.abs(Math.random() * 500),
+      Math.abs(Math.random() * 180),
+      undefined
+    );
+
+    return signaturePoint;
+  }
+
+  private setGeneralRemark(): void {
+    switch (this.getUserRole()) {
+      case this.User.CompoundAdmin: {
+        this.signature.generalRemark = this.ecmr.compoundSignature.generalRemark;
+
+        break;
+      }
+      case this.User.CarrierMember: {
+        if (this.ecmr.status === EcmrStatus.Loaded) {
+          this.signature.generalRemark = this.ecmr.carrierLoadingSignature.generalRemark;
+        } else if (this.ecmr.status === EcmrStatus.InTransit) {
+          this.signature.generalRemark = this.ecmr.carrierDeliverySignature.generalRemark;
+        }
+
+        break;
+      }
+
+      case this.User.RecipientMember: {
+        this.signature.generalRemark = this.ecmr.recipientSignature.generalRemark;
+
+        break;
+      }
+
+      default: {
+        break;
+      }
     }
   }
 
   public checkUser(activeUser, ecmrStatus): boolean {
     return this.getUserRole() === activeUser && (this.ecmr ? this.ecmr.status === ecmrStatus : false);
+  }
+
+  public getUserRole(): string {
+    return this.authenticationService.isAuthenticated() ? JSON.parse(localStorage.getItem('currentUser')).user.role : '';
   }
 }
