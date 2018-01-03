@@ -24,7 +24,7 @@
 <img class="progress_bar"
      *ngIf="ecmr?.status === EcmrStatus.Delivered || ecmr?.status === EcmrStatus.ConfirmedDelivered"
      src="../../../../../../assets/img/progress-indicator-04.svg"
-     [ngClass]="{'selectedImg1' : selectedImage[0] || getUserRole() === User.LegalOwnerAdmin, 'selectedImg2' : selectedImage[1], 'selectedImg3' : selectedImage[2], 'selectedImg4' : selectedImage[3]}"/>
+     [ngClass]="{'selectedImg1' : selectedImage[0] || getUserRole() === UserRole.LegalOwnerAdmin, 'selectedImg2' : selectedImage[1], 'selectedImg3' : selectedImage[2], 'selectedImg4' : selectedImage[3]}"/>
 <div class="row titles">GENERAL INFORMATION</div>
 <div class="ui four column padded doubling unstackable grid general_info">
   <div class="column" [ngClass]="{'completed': ecmr?.status === EcmrStatus.Delivered || ecmr?.status === EcmrStatus.ConfirmedDelivered, 'active': selectedColumns[0],
@@ -62,8 +62,8 @@
             <span>{{ecmr?.creation?.address?.zipCode}}, {{ecmr?.creation?.address?.city}}</span>
           </div>
         </div>
-        <span><b>Signed by:</b> {{ecmr?.compoundSignature?.certificate?.split('#')[1].split('@')[0]}}</span>
-        <span><b>Date:</b>{{ecmr?.compoundSignature?.timestamp | date:'dd-MM-yyyy'}} ({{ecmr?.compoundSignature?.timestamp | date:'HH:mm'}})</span>
+        <span *ngIf="ecmr?.compoundSignature?.certificate"><b>Signed by:</b> {{ecmr?.compoundSignature?.certificate?.split('#')[1].split('@')[0]}}</span>
+        <span *ngIf="ecmr?.compoundSignature?.timestamp"><b>Date:</b> {{ecmr?.compoundSignature?.timestamp | date:'dd-MM-yyyy'}} ({{ecmr?.compoundSignature?.timestamp | date:'HH:mm'}})</span>
       </div>
     </div>
     <div class="comment_info">
@@ -86,15 +86,22 @@
             <span>{{ecmr?.creation?.address?.zipCode}}, {{ecmr?.creation?.address?.city}}</span>
           </div>
         </div>
-        <span><b>Signed by:</b> {{ecmr?.carrierLoadingSignature?.certificate?.split('#')[1].split('@')[0]}}</span>
-        <span><b>Date:</b> {{ecmr?.carrierLoadingSignature?.timestamp | date:'dd-MM-yyyy'}} ({{ecmr?.carrierLoadingSignature?.timestamp | date:'HH:mm'}})</span>
-      </div>
-    </div>
-    <div class="comment_info">
-      <div class="image_text">
-        <img class="comment_overview comment_icon"/>
-        <span>{{ ecmr?.carrierLoadingSignature?.generalRemark?.comments }}</span>
-        <span>{{ ecmr?.carrierDeliverySignature?.generalRemark?.comments }}</span>
+        <span *ngIf="ecmr?.carrierLoadingSignature?.certificate"><b>Signed by:</b> {{ecmr?.carrierLoadingSignature?.certificate?.split('#')[1].split('@')[0]}}</span>
+        <span *ngIf="ecmr?.carrierLoadingSignature?.timestamp"><b>Date:</b> {{ecmr?.carrierLoadingSignature?.timestamp | date:'dd-MM-yyyy'}} ({{ecmr?.carrierLoadingSignature?.timestamp | date:'HH:mm'}})</span>
+        <div class="comment_info">
+          <div class="image_text">
+            <img class="comment_overview comment_icon"/>
+            <span>{{ ecmr?.carrierLoadingSignature?.generalRemark?.comments }}</span>
+          </div>
+        </div>
+        <span *ngIf="ecmr?.carrierDeliverySignature?.certificate"><b>Signed by:</b> {{ecmr?.carrierDeliverySignature?.certificate?.split('#')[1].split('@')[0]}}</span>
+        <span *ngIf="ecmr?.carrierDeliverySignature?.timestamp"><b>Date:</b> {{ecmr?.carrierDeliverySignature?.timestamp | date:'dd-MM-yyyy'}} ({{ecmr?.carrierDeliverySignature?.timestamp | date:'HH:mm'}})</span>
+        <div class="comment_info">
+          <div class="image_text">
+            <img class="comment_overview comment_icon"/>
+            <span>{{ ecmr?.carrierDeliverySignature?.generalRemark?.comments }}</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -111,8 +118,8 @@
             <span>{{ecmr?.delivery?.address.zipCode}}, {{ecmr?.delivery?.address.city}}</span>
           </div>
         </div>
-        <span><b>Signed by:</b>{{ecmr?.recipientSignature?.certificate?.split('#')[1].split('@')[0]}}</span>
-        <span><b>Date:</b>{{ecmr?.recipientSignature?.timestamp | date:'dd-MM-yyyy'}} ({{ecmr?.recipientSignature?.timestamp | date:'HH:mm'}})</span>
+        <span *ngIf="ecmr?.recipientSignature?.certificate"><b>Signed by:</b> {{ecmr?.recipientSignature?.certificate?.split('#')[1].split('@')[0]}}</span>
+        <span *ngIf="ecmr?.recipientSignature?.timestamp"><b>Date:</b> {{ecmr?.recipientSignature?.timestamp | date:'dd-MM-yyyy'}} ({{ecmr?.recipientSignature?.timestamp | date:'HH:mm'}})</span>
       </div>
     </div>
     <div class="comment_info">

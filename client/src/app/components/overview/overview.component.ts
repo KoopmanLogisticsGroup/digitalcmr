@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../services/authentication.service';
+import {UserRole} from '../../interfaces/user.blockchain.interface';
 
 @Component({
   selector:    'app-overview',
@@ -9,8 +10,7 @@ import {AuthenticationService} from '../../services/authentication.service';
 export class OverviewComponent implements OnInit {
   public ecmrOverview: boolean;
   public transportOrderOverview: boolean;
-
-  public User = {
+  public UserRole = {
     CompoundAdmin:   'CompoundAdmin',
     CarrierMember:   'CarrierMember',
     RecipientMember: 'RecipientMember',
@@ -21,7 +21,7 @@ export class OverviewComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    if (this.getUserRole() === this.User.LegalOwnerAdmin) {
+    if (this.getUserRole() === UserRole.LegalOwnerAdmin) {
       this.ecmrOverview           = false;
       this.transportOrderOverview = true;
     } else {

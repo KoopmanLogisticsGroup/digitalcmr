@@ -19,13 +19,20 @@ export class TransportorderDetailComponent implements OnInit {
   public transportOrder: TransportOrder;
   public ecmrs: Ecmr[];
 
-  public User = {
+  public UserRole             = {
     CompoundAdmin:   'CompoundAdmin',
     CarrierMember:   'CarrierMember',
     RecipientMember: 'RecipientMember',
     LegalOwnerAdmin: 'LegalOwnerAdmin'
   };
-
+  public EcmrStatus           = {
+    Created:            'CREATED',
+    Loaded:             'LOADED',
+    InTransit:          'IN_TRANSIT',
+    Delivered:          'DELIVERED',
+    ConfirmedDelivered: 'CONFIRMED_DELIVERED',
+    Cancelled:          'CANCELLED'
+  };
   public TransportOrderStatus = {
     Open:       'OPEN',
     InProgress: 'IN_PROGRESS',

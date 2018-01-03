@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {EcmrService} from '../../../../../services/ecmr.service';
 import {AuthenticationService} from '../../../../../services/authentication.service';
 import {Ecmr, EcmrStatus} from '../../../../../interfaces/ecmr.interface';
+import {UserRole} from '../../../../../interfaces/user.blockchain.interface';
 import * as GeoLib from 'geolib';
 import PositionAsDecimal = geolib.PositionAsDecimal;
 import {Address} from '../../../../../interfaces/address.interface';
@@ -17,20 +18,19 @@ import {UpdateEcmrStatus} from '../../../../../interfaces/updateEcmrStatus.inter
 export class SignOffModalComponent implements OnInit {
   @Input() ecmr: Ecmr;
   private signature: Signature = <Signature>{};
-
-  public EcmrStatus = {
-    Created:            'CREATED',
-    Loaded:             'LOADED',
-    InTransit:          'IN_TRANSIT',
-    Delivered:          'DELIVERED',
-    ConfirmedDelivered: 'CONFIRMED_DELIVERED'
-  };
-
-  public User = {
+  public UserRole              = {
     CompoundAdmin:   'CompoundAdmin',
     CarrierMember:   'CarrierMember',
     RecipientMember: 'RecipientMember',
     LegalOwnerAdmin: 'LegalOwnerAdmin'
+  };
+  public EcmrStatus            = {
+    Created:            'CREATED',
+    Loaded:             'LOADED',
+    InTransit:          'IN_TRANSIT',
+    Delivered:          'DELIVERED',
+    ConfirmedDelivered: 'CONFIRMED_DELIVERED',
+    Cancelled:          'CANCELLED'
   };
 
   public constructor(private ecmrService: EcmrService,
@@ -70,7 +70,7 @@ export class SignOffModalComponent implements OnInit {
 
   private simulateCoordinates(): void {
     switch (this.getUserRole()) {
-      case this.User.CompoundAdmin: {
+      case UserRole.CompoundAdmin: {
         const signaturePoint: PositionAsDecimal = this.generateSignaturePoint(this.ecmr.loading.address);
         this.ecmr.compoundSignature.latitude    = signaturePoint.latitude;
         this.ecmr.compoundSignature.longitude   = signaturePoint.longitude;
@@ -78,7 +78,7 @@ export class SignOffModalComponent implements OnInit {
         break;
       }
 
-      case this.User.CarrierMember: {
+      case UserRole.CarrierMember: {
         if (this.ecmr.status === EcmrStatus.Loaded) {
           const signaturePoint: PositionAsDecimal     = this.generateSignaturePoint(this.ecmr.loading.address);
           this.ecmr.carrierLoadingSignature.latitude  = signaturePoint.latitude;
@@ -92,7 +92,7 @@ export class SignOffModalComponent implements OnInit {
         break;
       }
 
-      case this.User.RecipientMember: {
+      case UserRole.RecipientMember: {
         const signaturePoint: PositionAsDecimal = this.generateSignaturePoint(this.ecmr.delivery.address);
         this.ecmr.recipientSignature.latitude   = signaturePoint.latitude;
         this.ecmr.recipientSignature.longitude  = signaturePoint.longitude;
@@ -123,12 +123,13 @@ export class SignOffModalComponent implements OnInit {
 
   private setGeneralRemark(): void {
     switch (this.getUserRole()) {
-      case this.User.CompoundAdmin: {
+      case UserRole.CompoundAdmin: {
         this.signature.generalRemark = this.ecmr.compoundSignature.generalRemark;
 
         break;
       }
-      case this.User.CarrierMember: {
+
+      case UserRole.CarrierMember: {
         if (this.ecmr.status === EcmrStatus.Loaded) {
           this.signature.generalRemark = this.ecmr.carrierLoadingSignature.generalRemark;
         } else if (this.ecmr.status === EcmrStatus.InTransit) {
@@ -138,7 +139,7 @@ export class SignOffModalComponent implements OnInit {
         break;
       }
 
-      case this.User.RecipientMember: {
+      case UserRole.RecipientMember: {
         this.signature.generalRemark = this.ecmr.recipientSignature.generalRemark;
 
         break;
@@ -150,8 +151,8 @@ export class SignOffModalComponent implements OnInit {
     }
   }
 
-  public checkUser(activeUser, ecmrStatus): boolean {
-    return this.getUserRole() === activeUser && (this.ecmr ? this.ecmr.status === ecmrStatus : false);
+  public checkUser(activeUser: string, ecmrStatus: EcmrStatus): boolean {
+    return this.getUserRole() === activeUser && this.ecmr && this.ecmr.status === ecmrStatus;
   }
 
   public getUserRole(): string {

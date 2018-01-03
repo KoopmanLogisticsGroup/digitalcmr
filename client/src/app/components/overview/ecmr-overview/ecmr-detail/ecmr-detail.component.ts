@@ -2,8 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {EcmrService} from '../../../../services/ecmr.service';
 import {ActivatedRoute} from '@angular/router';
 import {NavbarService} from '../../../../services/navbar.service';
-import {Ecmr} from '../../../../interfaces/ecmr.interface';
+import {Ecmr, EcmrStatus} from '../../../../interfaces/ecmr.interface';
 import {Signature} from '../../../../interfaces/signature.interface';
+import {UserRole} from '../../../../interfaces/user.blockchain.interface';
 
 @Component({
   selector:    'app-ecmr-detail',
@@ -16,20 +17,6 @@ export class EcmrDetailComponent implements OnInit {
   public ecmrID: string;
   public ecmr: Ecmr;
   public selectedColumns: boolean[];
-  public EcmrStatus = {
-    Created:            'CREATED',
-    Loaded:             'LOADED',
-    InTransit:          'IN_TRANSIT',
-    Delivered:          'DELIVERED',
-    ConfirmedDelivered: 'CONFIRMED_DELIVERED'
-  };
-
-  public User = {
-    CompoundAdmin:   'CompoundAdmin',
-    CarrierMember:   'CarrierMember',
-    RecipientMember: 'RecipientMember',
-    LegalOwnerAdmin: 'LegalOwnerAdmin'
-  };
 
   public constructor(private route: ActivatedRoute,
                      private ecmrService: EcmrService,
@@ -46,41 +33,41 @@ export class EcmrDetailComponent implements OnInit {
           this.ecmr     = ecmr;
           this.userRole = JSON.parse(localStorage.getItem('currentUser')).user.role;
           switch (this.ecmr.status) {
-            case this.EcmrStatus.Created: {
+            case EcmrStatus.Created: {
               this.selectedColumns[0] = true;
               break;
             }
-            case this.EcmrStatus.Loaded: {
+            case EcmrStatus.Loaded: {
               this.selectedColumns[1] = true;
               break;
             }
-            case this.EcmrStatus.InTransit: {
+            case EcmrStatus.InTransit: {
               this.selectedColumns[2] = true;
               break;
             }
-            case this.EcmrStatus.Delivered: {
-              if (this.userRole === this.User.LegalOwnerAdmin) {
+            case EcmrStatus.Delivered: {
+              if (this.userRole === UserRole.LegalOwnerAdmin) {
                 this.selectedColumns[0] = true;
                 break;
               }
               this.selectedColumns[3] = true;
               break;
             }
-            case this.EcmrStatus.ConfirmedDelivered: {
+            case EcmrStatus.ConfirmedDelivered: {
               this.selectedColumns[3] = true;
               break;
             }
           }
           this.instantiateRemarks();
-          if (this.userRole === this.User.CompoundAdmin && !this.ecmr.compoundSignature) {
+          if (this.userRole === UserRole.CompoundAdmin && !this.ecmr.compoundSignature) {
             this.ecmr.compoundSignature = this.placeEmptySignature();
-          } else if (this.userRole === this.User.CarrierMember && this.ecmr.status === this.EcmrStatus.Loaded
+          } else if (this.userRole === UserRole.CarrierMember && this.ecmr.status === EcmrStatus.Loaded
             && !this.ecmr.carrierDeliverySignature) {
             this.ecmr.carrierLoadingSignature = this.placeEmptySignature();
-          } else if (this.userRole === this.User.CarrierMember && this.ecmr.status === this.EcmrStatus.InTransit
+          } else if (this.userRole === UserRole.CarrierMember && this.ecmr.status === EcmrStatus.InTransit
             && !this.ecmr.carrierDeliverySignature) {
             this.ecmr.carrierDeliverySignature = this.placeEmptySignature();
-          } else if (this.userRole === this.User.RecipientMember && !this.ecmr.recipientSignature) {
+          } else if (this.userRole === UserRole.RecipientMember && !this.ecmr.recipientSignature) {
             this.ecmr.recipientSignature = this.placeEmptySignature();
           }
         });

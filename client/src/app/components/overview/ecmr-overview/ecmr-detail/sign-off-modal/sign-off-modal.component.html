@@ -7,22 +7,22 @@
             <form class="ui form">
                 <div class="field">
                     <label>General Remark</label>
-                  <div *ngIf="checkUser(User.CompoundAdmin, EcmrStatus.Created)">
+                  <div *ngIf="checkUser(UserRole.CompoundAdmin, EcmrStatus.Created)">
                         <textarea *ngIf="ecmr" name="generalRemarks"
                                   [(ngModel)]="ecmr.compoundSignature.generalRemark.comments"
                                   placeholder="Enter your general remarks here..." maxlength="136"></textarea>
                     </div>
-                  <div *ngIf="checkUser(User.CarrierMember, EcmrStatus.Loaded)">
+                  <div *ngIf="checkUser(UserRole.CarrierMember, EcmrStatus.Loaded)">
                         <textarea *ngIf="ecmr" name="generalRemarks"
                                   [(ngModel)]="ecmr.carrierLoadingSignature.generalRemark.comments"
                                   placeholder="Enter your general remarks here..." maxlength="136"></textarea>
                     </div>
-                  <div *ngIf="checkUser(User.CarrierMember, EcmrStatus.InTransit)">
+                  <div *ngIf="checkUser(UserRole.CarrierMember, EcmrStatus.InTransit)">
                         <textarea *ngIf="ecmr" name="generalRemarks"
                                   [(ngModel)]="ecmr.carrierDeliverySignature.generalRemark.comments"
                                   placeholder="Enter your general remarks here..." maxlength="136"></textarea>
                     </div>
-                  <div *ngIf="checkUser(User.RecipientMember, EcmrStatus.Delivered)">
+                  <div *ngIf="checkUser(UserRole.RecipientMember, EcmrStatus.Delivered)">
                         <textarea *ngIf="ecmr" name="generalRemarks"
                                   [(ngModel)]="ecmr.recipientSignature.generalRemark.comments"
                                   placeholder="Enter your general remarks here..." maxlength="136"></textarea>
