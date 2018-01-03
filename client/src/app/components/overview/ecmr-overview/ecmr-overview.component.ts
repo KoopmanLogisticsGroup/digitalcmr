@@ -1,9 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {EcmrService} from '../../../services/ecmr.service';
-import {Ecmr} from '../../../interfaces/ecmr.interface';
+import {Ecmr, EcmrStatus} from '../../../interfaces/ecmr.interface';
 import {AuthenticationService} from '../../../services/authentication.service';
 import {NavbarService} from '../../../services/navbar.service';
 import {SearchService} from '../../../services/search.service';
+import {UserRole} from '../../../interfaces/user.blockchain.interface';
 
 @Component({
   selector:    'app-ecmr-overview',
@@ -18,26 +19,25 @@ export class EcmrOverviewComponent implements OnInit {
   public searchBarData: string;
   public filteredEcmrs: Ecmr[];
 
-  public EcmrStatus = {
-    Created:            'CREATED',
-    Loaded:             'LOADED',
-    InTransit:          'IN_TRANSIT',
-    Delivered:          'DELIVERED',
-    ConfirmedDelivered: 'CONFIRMED_DELIVERED'
-  };
-
-  public User = {
-    CompoundAdmin:   'CompoundAdmin',
-    CarrierMember:   'CarrierMember',
-    RecipientMember: 'RecipientMember',
-    LegalOwnerAdmin: 'LegalOwnerAdmin'
-  };
-
   public viewStatus = {
     Open:       'OPEN',
     New:        'NEW',
     InProgress: 'IN_PROGRESS',
     Completed:  'COMPLETED'
+  };
+  public UserRole   = {
+    CompoundAdmin:   'CompoundAdmin',
+    CarrierMember:   'CarrierMember',
+    RecipientMember: 'RecipientMember',
+    LegalOwnerAdmin: 'LegalOwnerAdmin'
+  };
+  public EcmrStatus = {
+    Created:            'CREATED',
+    Loaded:             'LOADED',
+    InTransit:          'IN_TRANSIT',
+    Delivered:          'DELIVERED',
+    ConfirmedDelivered: 'CONFIRMED_DELIVERED',
+    Cancelled:          'CANCELLED'
   };
 
   public constructor(private ecmrService: EcmrService,
@@ -55,27 +55,27 @@ export class EcmrOverviewComponent implements OnInit {
     this.nav.show();
     this.ecmrService.getAllEcmrs().subscribe((ecmrs: Ecmr[]) => {
       this.ecmrs         = ecmrs;
-      this.filteredEcmrs = this.ecmrs.filter(ecmr => ecmr.status.toUpperCase() === this.EcmrStatus.Created);
+      this.filteredEcmrs = this.ecmrs.filter(ecmr => ecmr.status.toUpperCase() === EcmrStatus.Created);
       this.firstView();
     });
   }
 
   private firstView(): void {
-    if (this.getUserRole() === 'amsterdamcompound') {
+    if (this.getUserRole() === UserRole.CompoundAdmin) {
       this.currentView = this.viewStatus.Open;
-    } else if (this.getUserRole() === this.User.CarrierMember || this.getUserRole() === this.User.RecipientMember) {
+    } else if (this.getUserRole() === UserRole.CarrierMember || this.getUserRole() === UserRole.RecipientMember) {
       this.currentView   = this.viewStatus.InProgress;
       this.filteredEcmrs = this.ecmrs.filter(ecmr => {
-        if (this.currentView === this.viewStatus.InProgress && (ecmr.status === this.EcmrStatus.Loaded
-            || ecmr.status === this.EcmrStatus.InTransit)) {
+        if (this.currentView === this.viewStatus.InProgress && (ecmr.status === EcmrStatus.Loaded
+            || ecmr.status === EcmrStatus.InTransit)) {
           return ecmr;
         }
       });
-    } else if (this.getUserRole() === this.User.LegalOwnerAdmin) {
+    } else if (this.getUserRole() === UserRole.LegalOwnerAdmin) {
       this.currentView   = this.viewStatus.Completed;
       this.filteredEcmrs = this.ecmrs.filter(ecmr => {
-        if (this.currentView === this.viewStatus.Completed && (ecmr.status === this.EcmrStatus.Delivered ||
-            ecmr.status === this.EcmrStatus.ConfirmedDelivered)) {
+        if (this.currentView === this.viewStatus.Completed && (ecmr.status === EcmrStatus.Delivered ||
+            ecmr.status === EcmrStatus.ConfirmedDelivered)) {
           return ecmr;
         }
       });
@@ -89,11 +89,11 @@ export class EcmrOverviewComponent implements OnInit {
   public setCurrentView(view: string): void {
     this.currentView   = view;
     this.filteredEcmrs = this.ecmrs.filter(ecmr => {
-      if ((this.currentView === this.viewStatus.Open && ecmr.status === this.EcmrStatus.Created) ||
-        (this.currentView === this.viewStatus.InProgress && (ecmr.status === this.EcmrStatus.Loaded ||
-          ecmr.status === this.EcmrStatus.InTransit) ||
-          (this.currentView === this.viewStatus.Completed && (ecmr.status === this.EcmrStatus.Delivered ||
-            ecmr.status === this.EcmrStatus.ConfirmedDelivered)))) {
+      if ((this.currentView === this.viewStatus.Open && ecmr.status === EcmrStatus.Created) ||
+        (this.currentView === this.viewStatus.InProgress && (ecmr.status === EcmrStatus.Loaded ||
+          ecmr.status === EcmrStatus.InTransit) ||
+          (this.currentView === this.viewStatus.Completed && (ecmr.status === EcmrStatus.Delivered ||
+            ecmr.status === EcmrStatus.ConfirmedDelivered)))) {
         return ecmr;
       }
     });
@@ -126,15 +126,15 @@ export class EcmrOverviewComponent implements OnInit {
   }
 
   public returnStatus(ecmr: any): string {
-    if (ecmr && ecmr.status === this.EcmrStatus.Created) {
+    if (ecmr && ecmr.status === EcmrStatus.Created) {
       return 'open_status';
-    } else if (ecmr && ecmr.status === this.EcmrStatus.Loaded) {
+    } else if (ecmr && ecmr.status === EcmrStatus.Loaded) {
       return 'awaiting_status';
-    } else if (ecmr && ecmr.status === this.EcmrStatus.InTransit) {
+    } else if (ecmr && ecmr.status === EcmrStatus.InTransit) {
       return 'transit_status';
-    } else if (ecmr && ecmr.status === this.EcmrStatus.Delivered) {
+    } else if (ecmr && ecmr.status === EcmrStatus.Delivered) {
       return 'completed_status';
-    } else if (ecmr && ecmr.status === this.EcmrStatus.ConfirmedDelivered) {
+    } else if (ecmr && ecmr.status === EcmrStatus.ConfirmedDelivered) {
       return 'confirmed_status';
     }
   }

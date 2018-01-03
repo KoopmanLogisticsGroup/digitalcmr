@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../../../../services/authentication.service';
-import {Ecmr} from '../../../../../interfaces/ecmr.interface';
+import {Ecmr, EcmrStatus} from '../../../../../interfaces/ecmr.interface';
 
 @Component({
   selector:    'app-general-info',
@@ -13,20 +13,19 @@ export class GeneralInfoComponent implements OnInit {
 
   public selectedImage: boolean[];
   public selectedColumnIs: number;
-
+  public UserRole   = {
+    CompoundAdmin:   'CompoundAdmin',
+    CarrierMember:   'CarrierMember',
+    RecipientMember: 'RecipientMember',
+    LegalOwnerAdmin: 'LegalOwnerAdmin'
+  };
   public EcmrStatus = {
     Created:            'CREATED',
     Loaded:             'LOADED',
     InTransit:          'IN_TRANSIT',
     Delivered:          'DELIVERED',
-    ConfirmedDelivered: 'CONFIRMED_DELIVERED'
-  };
-
-  public User = {
-    CompoundAdmin:   'CompoundAdmin',
-    CarrierMember:   'CarrierMember',
-    RecipientMember: 'RecipientMember',
-    LegalOwnerAdmin: 'LegalOwnerAdmin'
+    ConfirmedDelivered: 'CONFIRMED_DELIVERED',
+    Cancelled:          'CANCELLED'
   };
 
   public constructor(private authenticationService: AuthenticationService) {
@@ -38,7 +37,7 @@ export class GeneralInfoComponent implements OnInit {
   }
 
   public selectColumn(number: number): void {
-    if (this.ecmr.status === this.EcmrStatus.Delivered || this.ecmr.status === this.EcmrStatus.ConfirmedDelivered) {
+    if (this.ecmr.status === EcmrStatus.Delivered || this.ecmr.status === EcmrStatus.ConfirmedDelivered) {
       this.selectedImage.forEach((val, index) => {
         if (number === index) {
           this.selectedImage[index]   = true;

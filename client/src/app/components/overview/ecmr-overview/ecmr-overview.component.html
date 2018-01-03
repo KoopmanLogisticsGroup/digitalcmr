@@ -20,14 +20,14 @@
     </div>
     <div *ngIf="searchBarData === ''">
       <div class="ui pointing secondary menu">
-        <div *ngIf="(getUserRole() === User.CompoundAdmin)">
+        <div *ngIf="(getUserRole() === UserRole.CompoundAdmin)">
           <a class="item" data-tab="first" (click)="setCurrentView(viewStatus.Open)"
              [ngClass]="{'active' : currentView === viewStatus.Open ? true : false}">OPEN</a></div>
         <a class="item" data-tab="second" (click)="setCurrentView(viewStatus.InProgress)"
-           *ngIf="getUserRole() === User.CompoundAdmin || getUserRole() === User.CarrierMember || getUserRole() === User.RecipientMember"
+           *ngIf="getUserRole() === UserRole.CompoundAdmin || getUserRole() === UserRole.CarrierMember || getUserRole() === UserRole.RecipientMember"
            [ngClass]="{'active' : currentView === viewStatus.InProgress ? true : false}">IN PROGRESS</a>
         <a class="item" data-tab="third" (click)="setCurrentView(viewStatus.Completed)"
-           *ngIf="getUserRole() === User.CompoundAdmin || getUserRole() === User.LegalOwnerAdmin || getUserRole() === User.CarrierMember || getUserRole() === User.RecipientMember"
+           *ngIf="getUserRole() === UserRole.CompoundAdmin || getUserRole() === UserRole.LegalOwnerAdmin || getUserRole() === UserRole.CarrierMember || getUserRole() === UserRole.RecipientMember"
            [ngClass]="{'active' : currentView === viewStatus.Completed ? true : false}">COMPLETED</a>
       </div>
     </div>
@@ -68,7 +68,7 @@
             </td>
             <td class="responsive_image"><img class="centered_content exclamation_mark_icon"
                                               *ngIf="isDamaged(ecmr)"/></td>
-            <td><span [ngClass]="returnStatus(ecmr && ecmr)">
+            <td><span [ngClass]="returnStatus(ecmr)">
 
                           {{ecmr?.status === EcmrStatus.Created ? 'New CMR' :
                             ecmr?.status === EcmrStatus.Loaded ? 'Awaiting Carrier' :
