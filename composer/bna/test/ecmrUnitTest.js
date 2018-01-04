@@ -19,7 +19,7 @@ const BusinessNetworkConnection = require('composer-client').BusinessNetworkConn
 const BusinessNetworkDefinition = require('composer-common').BusinessNetworkDefinition;
 const path = require('path');
 const chai = require('chai');
-chai.should();
+var should = require('chai').should();
 chai.use(require('chai-as-promised'));
 const bfs_fs = BrowserFS.BFSRequire('fs');
 const BusinessModel = require('./common/businessModel');
@@ -191,10 +191,11 @@ describe('Admin of the network', () => {
       // prepare the test environment
       .then(() => {
         let ecmrList = [];
+        let ecmr = builder.buildECMR('created');
+        ecmr.orderID = 'to_create_ecmrs';
+        ecmrList.push(ecmr);
 
-        ecmrList.push(builder.buildECMR('created'));
-
-        let ecmr = builder.buildECMR('loaded');
+        ecmr = builder.buildECMR('loaded');
         ecmr.status = BusinessModel.ecmrStatus.Loaded;
         ecmr.compoundSignature = builder.buildSignature(Identity.users.compoundAdmin.userID);
         ecmrList.push(ecmr);
@@ -290,18 +291,30 @@ describe('Admin of the network', () => {
       .then(() => {
         const transportOrders = [builder.buildTransportOrder('to_create_ecmrs')];
 
-        return businessNetworkConnection.getAssetRegistry('org.digitalcmr.TransportOrder')
+        return businessNetworkConnection.getAssetRegistry(Network.namespace + '.TransportOrder')
           .then((assetRegistry) => {
             return assetRegistry.addAll(transportOrders);
           }).catch((error) => {
             throw new Error('An error occurred while adding all the orders to the registry: ' + error);
+          });
+      })
+      .then(() => {
+        const vehicles = [builder.buildVehicle('VIN12345678')];
+
+        return businessNetworkConnection.getAssetRegistry(Network.namespace + '.Vehicle')
+          .then((assetRegistry) => {
+            return assetRegistry.addAll(vehicles);
+          }).catch((error) => {
+            throw new Error('An error occurred while adding all the vehicles to the registry: ' + error);
           });
       });
   });
 
   it('should be able to submit CreateECMRs transaction which creates an ECMR starting from a TransportOrder and sets status to CREATED', () => {
     const transaction = factory.newTransaction(Network.namespace, 'CreateECMRs');
-    transaction.ecmrs = [builder.buildECMR('newECMR')];
+    let currentEcmr = builder.buildECMR('newEcmr');
+    currentEcmr.orderID = 'to_create_ecmrs';
+    transaction.ecmrs = [currentEcmr];
     transaction.ecmrs.orderID = 'to_create_ecmrs';
     transaction.transportOrder = factory.newRelationship(Network.namespace, 'TransportOrder', 'to_create_ecmrs');
 
@@ -310,10 +323,32 @@ describe('Admin of the network', () => {
         return businessNetworkConnection.getAssetRegistry(Network.namespace + '.ECMR');
       })
       .then((assetRegistry) => {
-        return assetRegistry.getAll();
+        return assetRegistry.get(transaction.ecmrs[0].getIdentifier());
       })
-      .then((ecmrs) => {
-        ecmrs.find(ecmr => (ecmr.ecmrID === ecmrs[0].ecmrID && ecmr.orderID === ecmrs[0].orderID));
+      // ecmr should exist
+      .then((ecmr) => {
+        currentEcmr = ecmr;
+        ecmr.orderID.should.equal(transaction.ecmrs.orderID);
+      })
+      // transportOrder should be updated
+      .then(() => {
+        return businessNetworkConnection.getAssetRegistry(Network.namespace + '.TransportOrder');
+      })
+      .then((assetRegistry) => {
+        return assetRegistry.get(currentEcmr.orderID);
+      })
+      .then((transportOrder) => {
+        transportOrder.status.should.equal(BusinessModel.orderStatus.InProgress);
+      })
+      // all the vin into the ecmr should have a reference to the ecmr
+      .then(() => {
+        return businessNetworkConnection.getAssetRegistry(Network.namespace + '.Vehicle');
+      })
+      .then((assetRegistry) => {
+        return assetRegistry.get(currentEcmr.goods[0].vehicle.$identifier);
+      })
+      .then((vehicle) => {
+        should.exist(vehicle.ecmrs.find(ecmr => ecmr.$identifier === currentEcmr.ecmrID));
       });
   });
 
