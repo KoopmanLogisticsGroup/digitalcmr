@@ -19,7 +19,7 @@ const BusinessNetworkConnection = require('composer-client').BusinessNetworkConn
 const BusinessNetworkDefinition = require('composer-common').BusinessNetworkDefinition;
 const path = require('path');
 const chai = require('chai');
-var should = require('chai').should();
+const should = require('chai').should();
 chai.use(require('chai-as-promised'));
 const bfs_fs = BrowserFS.BFSRequire('fs');
 const BusinessModel = require('./common/businessModel');
