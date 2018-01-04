@@ -50,3 +50,37 @@ function updateRegistrationCountry(tx) {
       throw new Error('[UpdateRegistrationCountry] An error occurred while updating the Vehicle asset: ' + error);
     });
 }
+
+function updateEcmrListInVin(ecmrs) {
+  var vins = [], ecmr, good;
+  var factory = getFactory();
+
+  return getAssetRegistry('org.digitalcmr.Vehicle')
+    .then(function (assetRegistry) {
+      for (var i = 0; i < ecmrs.length; i++) {
+        ecmr = ecmrs[i];
+
+        for (var j = 0; j < ecmr.goods.length; j++) {
+          good = ecmr.goods[j];
+
+          return assetRegistry.get(good.vehicle.$identifier)
+            .catch(function (error) {
+              throw new Error('[updateEcmrListInVin] An error occurred while retrieving the vin asset: ' + error);
+            })
+            .then(function (vin) {
+              vin.ecmrs.push(factory.newRelationship('org.digitalcmr', 'ECMR', ecmr.$identifier));
+              vins.push(vin);
+
+              if ((i + 1 === ecmrs.length) && (j + 1 === ecmr.goods.length)) {
+                return assetRegistry.updateAll(vins)
+                  .catch(function (error) {
+                    throw new Error('[updateEcmrListInVin] An error occurred while updating the registry asset: ' + error);
+                  });
+              }
+            });
+        }
+      }
+    }).catch(function (error) {
+      throw new Error('[updateEcmrListInVin] An error occurred while retrieving the Vehicle registry: ' + error);
+    });
+}

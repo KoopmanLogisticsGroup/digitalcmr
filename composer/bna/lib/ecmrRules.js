@@ -24,6 +24,7 @@ function createECMRs(tx) {
       return assetRegistry.addAll(tx.ecmrs)
         .then(function () {
           updateTransportOrderToInProgress(tx);
+          updateEcmrListInVin(tx.ecmrs);
         })
         .catch(function (error) {
           throw new Error('[CreateECMRs] An error occurred while addAll ECMRs: ' + error);
@@ -279,8 +280,7 @@ function updateExpectedPickupWindow(tx) {
         .catch(function (error) {
           throw new Error('[UpdateExpectedPickupWindow] An error occurred while updating the registry asset: ' + error);
         });
-    })
-    .catch(function (error) {
+    }).catch(function (error) {
       throw new Error('[UpdateExpectedPickupWindow] An error occurred while getting the asset registry: ' + error);
     });
 }
@@ -300,9 +300,10 @@ function updateExpectedDeliveryWindow(tx) {
 
   return getAssetRegistry('org.digitalcmr.ECMR')
     .then(function (assetRegistry) {
-      assetRegistry.update(tx.ecmr).catch(function (error) {
-        throw new Error('[UpdateExpectedDeliveryWindow] An error occurred while updating the registry asset: ' + error)
-      });
+      assetRegistry.update(tx.ecmr)
+        .catch(function (error) {
+          throw new Error('[UpdateExpectedDeliveryWindow] An error occurred while updating the registry asset: ' + error)
+        });
     }).catch(function (error) {
       throw new Error('[UpdateExpectedDeliveryWindow] An error occurred while getting the asset registry: ' + error);
     });
