@@ -362,8 +362,9 @@ rule RecipientMemberCanSubmitUpdateEcmrStatusToConfirmedDelivered {
 rule RecipientMemberCanUpdateTransportOrder {
     description: "Allow RecipientMember to UPDATE a TransportOrder for his organization only if the current TransportOrder status is IN_PROGRESS"
     participant(p): "org.digitalcmr.RecipientMember"
-    operation: UPDATE
+    operation: READ, UPDATE
     resource(r): "org.digitalcmr.TransportOrder"
-    condition: (r.status == "IN_PROGRESS")
+    transaction(tx): "org.digitalcmr.UpdateEcmrStatusToConfirmedDelivered"
+    condition: (r.status == "IN_PROGRESS" && tx.ecmr.recipient.getIdentifier() == p.getIdentifier() && tx.ecmr.status == "DELIVERED")
     action: ALLOW
 }

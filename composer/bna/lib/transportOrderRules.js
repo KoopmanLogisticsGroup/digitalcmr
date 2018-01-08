@@ -94,8 +94,8 @@ function updateTransportOrderStatusToCompleted(transportOrder) {
   }
 
   transportOrder.goods = transportOrder.goods.sort(sortByVin);
-  var ecmr;
 
+  var ecmr;
   for (var i = 0; i < transportOrder.ecmrs.length; i++) {
     ecmr = transportOrder.ecmrs[i];
     ecmr.goods = ecmr.goods.sort(sortByVin);
@@ -131,6 +131,7 @@ function sortByVin(a, b) {
   if (a.vehicle.$identifier < b.vehicle.$identifier) {
     return -1;
   }
+
   return 0;
 }
 

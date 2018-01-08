@@ -235,11 +235,10 @@ function updateEcmrStatusToConfirmedDelivered(tx) {
       return assetRegistry.update(tx.ecmr)
         .catch(function (error) {
           throw new Error('[UpdateEcmrStatusToConfirmedDelivered] An error occurred while updating the registry asset: ' + error);
+        })
+        .then(function () {
+          updateTransportOrderStatusToCompleted(tx.transportOrder);
         });
-      // TODO orderID not present in registry error to fix
-      // .then(function () {
-      //   updateTransportOrderStatusToCompleted(tx.transportOrder);
-      // });
     }).catch(function (error) {
       throw new Error('[UpdateEcmrStatusToConfirmedDelivered] An error occurred while getting the asset Registry: ' + error);
     });
