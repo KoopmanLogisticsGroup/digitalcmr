@@ -3,7 +3,7 @@
   "info":                {
     "title":       "Digital CMR APIs",
     "description": "APIs for managing the digital CMR",
-    "version":     "1.3.0"
+    "version":     "1.3.1"
   },
   "host":                "159.8.76.83:31001",
   "schemes":             [
@@ -19,7 +19,7 @@
     "application/json"
   ],
   "paths":               {
-    "/login":                               {
+    "/login":                                           {
       "post": {
         "x-swagger-router-controller": "AuthController",
         "operationId":                 "login",
@@ -55,7 +55,7 @@
         }
       }
     },
-    "/transportOrder/":                     {
+    "/transportOrder/":                                 {
       "post": {
         "x-swagger-router-controller": "TransportOrderController",
         "operationId":                 "createTransportOrder",
@@ -296,7 +296,7 @@
         }
       }
     },
-    "/transportOrder/updateDeliveryWindow": {
+    "/transportOrder/updateDeliveryWindow":             {
       "put": {
         "x-swagger-router-controller": "TransportOrderController",
         "operationId":                 "updateDeliveryWindow",
@@ -339,7 +339,7 @@
         }
       }
     },
-    "/transportOrder/cancel":               {
+    "/transportOrder/cancel":                           {
       "put": {
         "x-swagger-router-controller": "TransportOrderController",
         "operationId":                 "cancelTransportOrder",
@@ -382,7 +382,7 @@
         }
       }
     },
-    "/ECMR/createECMRs":                    {
+    "/ECMR/createECMRs":                                {
       "post": {
         "x-swagger-router-controller": "ECMRController",
         "operationId":                 "CreateECMRs",
@@ -425,7 +425,7 @@
         }
       }
     },
-    "/ECMR/status/LOADED":                  {
+    "/ECMR/status/LOADED":                              {
       "put": {
         "x-swagger-router-controller": "ECMRController",
         "operationId":                 "updateEcmrStatusToLoaded",
@@ -468,7 +468,7 @@
         }
       }
     },
-    "/ECMR/status/IN_TRANSIT":              {
+    "/ECMR/status/IN_TRANSIT":                          {
       "put": {
         "x-swagger-router-controller": "ECMRController",
         "operationId":                 "updateEcmrStatusToInTransit",
@@ -511,7 +511,7 @@
         }
       }
     },
-    "/ECMR/status/DELIVERED":               {
+    "/ECMR/status/DELIVERED":                           {
       "put": {
         "x-swagger-router-controller": "ECMRController",
         "operationId":                 "updateEcmrStatusToDelivered",
@@ -554,7 +554,7 @@
         }
       }
     },
-    "/ECMR/status/CONFIRMED_DELIVERED":     {
+    "/ECMR/status/CONFIRMED_DELIVERED":                 {
       "put": {
         "x-swagger-router-controller": "ECMRController",
         "operationId":                 "updateEcmrStatusToConfirmedDelivered",
@@ -597,7 +597,7 @@
         }
       }
     },
-    "/ECMR/":                               {
+    "/ECMR/":                                           {
       "get": {
         "x-swagger-router-controller": "ECMRController",
         "operationId":                 "getAllEcmrs",
@@ -881,7 +881,7 @@
         }
       }
     },
-    "/ECMR/updateExpectedDeliveryWindow/":  {
+    "/ECMR/updateExpectedDeliveryWindow/":              {
       "put": {
         "x-swagger-router-controller": "ECMRController",
         "operationId":                 "updateExpectedDeliveryWindow",
@@ -924,7 +924,7 @@
         }
       }
     },
-    "/organization/legalowner/":            {
+    "/organization/legalowner/":                        {
       "post": {
         "x-swagger-router-controller": "OrganizationController",
         "operationId":                 "createLegalOwner",
@@ -1040,7 +1040,7 @@
         }
       }
     },
-    "/organization/legalowner/name/{name}": {
+    "/organization/legalowner/name/{name}":             {
       "get": {
         "x-swagger-router-controller": "OrganizationController",
         "operationId":                 "getLegalOwnerOrgByName",
@@ -1081,7 +1081,7 @@
         }
       }
     },
-    "/organization/compound/":              {
+    "/organization/compound/":                          {
       "post": {
         "x-swagger-router-controller": "OrganizationController",
         "operationId":                 "createCompound",
@@ -1197,7 +1197,7 @@
         }
       }
     },
-    "/organization/compound/name/{name}":   {
+    "/organization/compound/name/{name}":               {
       "get": {
         "x-swagger-router-controller": "OrganizationController",
         "operationId":                 "getCompoundOrgByName",
@@ -1238,7 +1238,7 @@
         }
       }
     },
-    "/organization/carrier/":               {
+    "/organization/carrier/":                           {
       "post": {
         "x-swagger-router-controller": "OrganizationController",
         "operationId":                 "createCarrier",
@@ -1354,7 +1354,7 @@
         }
       }
     },
-    "/organization/carrier/name/{name}":    {
+    "/organization/carrier/name/{name}":                {
       "get": {
         "x-swagger-router-controller": "OrganizationController",
         "operationId":                 "getCarrierOrgByName",
@@ -1395,7 +1395,7 @@
         }
       }
     },
-    "/organization/recipient/":             {
+    "/organization/recipient/":                         {
       "post": {
         "x-swagger-router-controller": "OrganizationController",
         "operationId":                 "createRecipient",
@@ -2395,7 +2395,7 @@
     }
   },
   "definitions":         {
-    "Address":                {
+    "Address":                        {
       "type":       "object",
       "properties": {
         "name":        {
@@ -2440,24 +2440,7 @@
         }
       }
     },
-    "Window":                 {
-      "type":       "object",
-      "properties": {
-        "startDate": {
-          "type":        "number",
-          "description": "Provide the correct start date in integers",
-          "example":     1502834400000,
-          "required":    false
-        },
-        "endDate":   {
-          "type":        "number",
-          "description": "Provide the correct end date in integers",
-          "example":     1502834400000,
-          "required":    false
-        }
-      }
-    },
-    "Delivery":               {
+    "Delivery":                       {
       "type":       "object",
       "properties": {
         "address":    {
@@ -2472,7 +2455,7 @@
         }
       }
     },
-    "Loading":                {
+    "Loading":                        {
       "type":       "object",
       "properties": {
         "address":    {
@@ -2725,7 +2708,7 @@
         }
       }
     },
-    "organizationProperties": {
+    "organizationProperties":         {
       "type":       "object",
       "properties": {
         "entityID": {
@@ -2745,23 +2728,23 @@
         }
       }
     },
-    "LegalOwnerOrg":          {
+    "LegalOwnerOrg":                  {
       "type": "object",
       "$ref": "#/definitions/organizationProperties"
     },
-    "CompoundOrg":            {
+    "CompoundOrg":                    {
       "type": "object",
       "$ref": "#/definitions/organizationProperties"
     },
-    "CarrierOrg":             {
+    "CarrierOrg":                     {
       "type": "object",
       "$ref": "#/definitions/organizationProperties"
     },
-    "RecipientOrg":           {
+    "RecipientOrg":                   {
       "type": "object",
       "$ref": "#/definitions/organizationProperties"
     },
-    "Good":                   {
+    "Good":                           {
       "type":       "object",
       "properties": {
         "vehicle":         {
@@ -2777,11 +2760,11 @@
           "required": false
         },
         "pickupWindow":    {
-          "$ref":     "#/definitions/Window",
+          "$ref":     "#/definitions/DateWindow",
           "required": false
         },
         "deliveryWindow":  {
-          "$ref":     "#/definitions/Window",
+          "$ref":     "#/definitions/DateWindow",
           "required": false
         },
         "description":     {
@@ -2794,7 +2777,7 @@
         }
       }
     },
-    "userProperties":         {
+    "userProperties":                 {
       "type":       "object",
       "properties": {
         "$class":    {
@@ -2833,35 +2816,35 @@
         }
       }
     },
-    "Participant":            {
+    "Participant":                    {
       "type": "object",
       "$ref": "#/definitions/userProperties"
     },
-    "LegalOwnerAdmin":        {
+    "LegalOwnerAdmin":                {
       "type": "object",
       "$ref": "#/definitions/userProperties"
     },
-    "CompoundAdmin":          {
+    "CompoundAdmin":                  {
       "type": "object",
       "$ref": "#/definitions/userProperties"
     },
-    "CarrierAdmin":           {
+    "CarrierAdmin":                   {
       "type": "object",
       "$ref": "#/definitions/userProperties"
     },
-    "CarrierMember":          {
+    "CarrierMember":                  {
       "type": "object",
       "$ref": "#/definitions/userProperties"
     },
-    "RecipientAdmin":         {
+    "RecipientAdmin":                 {
       "type": "object",
       "$ref": "#/definitions/userProperties"
     },
-    "RecipientMember":        {
+    "RecipientMember":                {
       "type": "object",
       "$ref": "#/definitions/userProperties"
     },
-    "Signature":              {
+    "Signature":                      {
       "type":       "object",
       "properties": {
         "certificate":   {
@@ -3007,11 +2990,28 @@
           "description": "Returns a signature object"
         },
         "goods":     {
-          "type":  "array",
-          "items": {
-            "$ref":        "#/definitions/Good",
-            "description": "Returns an array of goods"
+          "type":        "array",
+          "description": "Returns an array of goods",
+          "items":       {
+            "$ref": "#/definitions/Good"
           }
+        }
+      }
+    },
+    "DateWindow":                     {
+      "type":       "object",
+      "properties": {
+        "startDate": {
+          "type":        "number",
+          "description": "Start date of the window in UNIX timestamp",
+          "example":     "1512082800000",
+          "required":    true
+        },
+        "endDate":   {
+          "type":        "number",
+          "description": "End date of the window in UNIX timestamp",
+          "example":     "1514674800000",
+          "required":    true
         }
       }
     },
@@ -3031,17 +3031,12 @@
           "required":    false
         },
         "dateWindow": {
-          "type":  "array",
-          "items": {
-            "type":        "integer",
-            "description": "Provide two integer values in millisecond format",
-            "example":     "enter integer values",
-            "required":    false
-          }
+          "$ref":     "#/definitions/DateWindow",
+          "required": true
         }
       }
     },
-    "UpdateExpectedWindow":   {
+    "UpdateExpectedWindow":           {
       "type":       "object",
       "properties": {
         "ecmrID":         {
@@ -3051,17 +3046,12 @@
           "required":    false
         },
         "expectedWindow": {
-          "type":  "array",
-          "items": {
-            "type":        "integer",
-            "description": "Provide two integer values in millisecond format",
-            "example":     "enter integer values",
-            "required":    false
-          }
+          "$ref":     "#/definitions/DateWindow",
+          "required": true
         }
       }
     },
-    "CancelECMR":             {
+    "CancelECMR":                     {
       "type":       "object",
       "properties": {
         "ecmrID":       {
@@ -3076,7 +3066,7 @@
         }
       }
     },
-    "CancelTransportOrder":   {
+    "CancelTransportOrder":           {
       "type":       "object",
       "properties": {
         "orderID":      {
@@ -3091,7 +3081,7 @@
         }
       }
     },
-    "Cancellation":           {
+    "Cancellation":                   {
       "type":       "object",
       "properties": {
         "cancelledBy": {
@@ -3106,7 +3096,7 @@
         }
       }
     },
-    "LoginCredentials":       {
+    "LoginCredentials":               {
       "type":       "object",
       "properties": {
         "username": {
@@ -3121,7 +3111,7 @@
         }
       }
     },
-    "LoginResponse":          {
+    "LoginResponse":                  {
       "type":       "object",
       "properties": {
         "success": {
@@ -3161,7 +3151,7 @@
         }
       }
     },
-    "Error":                  {
+    "Error":                          {
       "type":       "object",
       "properties": {
         "description": {
