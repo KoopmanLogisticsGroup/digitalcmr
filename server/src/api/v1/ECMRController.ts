@@ -22,6 +22,7 @@ import {UpdateEcmrStatus} from '../../interfaces/updateEcmrStatus.interface';
 import {EcmrCancellation} from '../../interfaces/cancellation.interface';
 import {Signature} from '../../interfaces/signature.interface';
 import {CreateEcmrs} from '../../interfaces/createEcmrs.interface';
+import {EcmrStatus} from '../../interfaces/ecmr.interface';
 
 @JsonController('/ECMR')
 @UseBefore(UserAuthenticatorMiddleware)
@@ -81,7 +82,7 @@ export class ECMRController {
     return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateEcmrs, data, new EcmrTransactor());
   }
 
-  @Put('/status/LOADED')
+  @Put('/status/' + EcmrStatus.Loaded)
   public async updateEcmrStatusToLoaded(@Body() data: UpdateEcmrStatus, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
@@ -96,7 +97,7 @@ export class ECMRController {
     return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateEcmrStatusToLoaded, data, new EcmrTransactor());
   }
 
-  @Put('/status/IN_TRANSIT')
+  @Put('/status/' + EcmrStatus.InTransit)
   public async updateEcmrStatusToInTransit(@Body() data: UpdateEcmrStatus, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
@@ -111,7 +112,7 @@ export class ECMRController {
     return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateEcmrStatusToInTransit, data, new EcmrTransactor());
   }
 
-  @Put('/status/DELIVERED')
+  @Put('/status/' + EcmrStatus.Delivered)
   public async updateEcmrStatusToDelivered(@Body() data: UpdateEcmrStatus, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
@@ -126,7 +127,7 @@ export class ECMRController {
     return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateEcmrStatusToDelivered, data, new EcmrTransactor());
   }
 
-  @Put('/status/CONFIRMED_DELIVERED')
+  @Put('/status/' + EcmrStatus.ConfirmedDelivered)
   public async updateEcmrStatusToConfirmedDelivered(@Body() data: UpdateEcmrStatus, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 

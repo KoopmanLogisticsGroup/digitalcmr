@@ -52,35 +52,56 @@ function updateRegistrationCountry(tx) {
 }
 
 function updateEcmrListInVin(ecmrs) {
-  var vins = [], ecmr, good;
-  var factory = getFactory();
+  var ecmr, good;
+  var promises = [];
 
-  return getAssetRegistry('org.digitalcmr.Vehicle')
+  getAssetRegistry('org.digitalcmr.Vehicle')
     .then(function (assetRegistry) {
       for (var i = 0; i < ecmrs.length; i++) {
         ecmr = ecmrs[i];
 
         for (var j = 0; j < ecmr.goods.length; j++) {
           good = ecmr.goods[j];
-
-          return assetRegistry.get(good.vehicle.$identifier)
-            .catch(function (error) {
-              throw new Error('[updateEcmrListInVin] An error occurred while retrieving the vin asset: ' + error);
-            })
-            .then(function (vin) {
-              vin.ecmrs.push(factory.newRelationship('org.digitalcmr', 'ECMR', ecmr.$identifier));
-              vins.push(vin);
-
-              if ((i + 1 === ecmrs.length) && (j + 1 === ecmr.goods.length)) {
-                return assetRegistry.updateAll(vins)
-                  .catch(function (error) {
-                    throw new Error('[updateEcmrListInVin] An error occurred while updating the registry asset: ' + error);
-                  });
-              }
-            });
+          promises.push(retrieveAndUpdateVin(assetRegistry, good, ecmr.$identifier));
         }
       }
+
+      return Promise.all(promises);
+      // TODO inspect why this construct does not work properly. updateAll would be computationally better than single update.
+      // .then(function (vins) {
+      //   return assetRegistry.updateAll(vins)
+      //     .catch(function (error) {
+      //       throw new Error('[updateEcmrListInVin] An error occurred while updating the registry asset: ' + error);
+      //     });
+      // });
     }).catch(function (error) {
-      throw new Error('[updateEcmrListInVin] An error occurred while retrieving the Vehicle registry: ' + error);
-    });
+    throw new Error('[updateEcmrListInVin] An error occurred while retrieving the Vehicle registry: ' + error);
+  });
+}
+
+function retrieveAndUpdateVin(assetRegistry, good, ecmrID) {
+  var factory = getFactory();
+
+  return new Promise(function (resolve, reject) {
+    return assetRegistry.get(good.vehicle.$identifier)
+      .catch(function (error) {
+        reject(new Error('[updateEcmrListInVin] An error occurred while retrieving the vin asset: ' + error));
+      })
+      .then(function (vin) {
+        var ecmrSet = new Set(vin.ecmrs.map(function (ecmr) {
+          return ecmr.$identifier;
+        }));
+
+        if (!ecmrSet.has(ecmrID)) {
+          vin.ecmrs.push(factory.newRelationship('org.digitalcmr', 'ECMR', ecmrID));
+        }
+
+        assetRegistry.update(vin)
+          .then(function () {
+            resolve();
+          });
+      });
+  }).catch(function (error) {
+    throw new Error('[updateEcmrListInVin] An error occurred while retrieving the Vehicle registry: ' + error);
+  });
 }

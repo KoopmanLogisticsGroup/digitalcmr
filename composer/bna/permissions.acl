@@ -319,15 +319,6 @@ rule CarrierMemberCanSubmitUpdateEcmrStatusToDelivered {
     action: ALLOW
 }
 
-rule CarrierMemberCanUpdateTransportOrder {
-    description: "Allow CarrierMember to UPDATE a TransportOrder for his organization only if the current TransportOrder status is IN_PROGRESS"
-    participant(p): "org.digitalcmr.CarrierMember"
-    operation: UPDATE
-    resource(r): "org.digitalcmr.TransportOrder"
-    condition: (r.carrier.getIdentifier() == p.org.getIdentifier() && r.status == "IN_PROGRESS")
-    action: ALLOW
-}
-
 /**
  * Recipient permission list
  */
@@ -365,5 +356,15 @@ rule RecipientMemberCanSubmitUpdateEcmrStatusToConfirmedDelivered {
     resource(r): "org.digitalcmr.ECMR"
     transaction(tx): "org.digitalcmr.UpdateEcmrStatusToConfirmedDelivered"
     condition: (r.recipient.getIdentifier() == p.getIdentifier() && r.status == "DELIVERED")
+    action: ALLOW
+}
+
+rule RecipientMemberCanUpdateTransportOrder {
+    description: "Allow RecipientMember to UPDATE a TransportOrder for his organization only if the current TransportOrder status is IN_PROGRESS"
+    participant(p): "org.digitalcmr.RecipientMember"
+    operation: READ, UPDATE
+    resource(r): "org.digitalcmr.TransportOrder"
+    transaction(tx): "org.digitalcmr.UpdateEcmrStatusToConfirmedDelivered"
+    condition: (r.status == "IN_PROGRESS" && tx.ecmr.recipient.getIdentifier() == p.getIdentifier() && tx.ecmr.status == "DELIVERED")
     action: ALLOW
 }

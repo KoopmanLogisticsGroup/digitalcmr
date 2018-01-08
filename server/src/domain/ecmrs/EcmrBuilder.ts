@@ -1,6 +1,7 @@
 import {BuilderUtils} from '../../blockchain/BuilderUtils';
 import {Identity} from '../Identity';
 import {Ecmr} from '../../../src/interfaces/ecmr.interface';
+import {VehicleBuilder} from '../vehicles/VehicleBuilder';
 
 export class EcmrBuilder {
   public static buildECMR(factory: any, namespace: string, ecmr: Ecmr, identity: Identity): any {
@@ -94,7 +95,7 @@ export class EcmrBuilder {
       validatedObject.recipientRemark.comments  = good.recipientRemark.comments;
       validatedObject.recipientRemark.isDamaged = good.recipientRemark.isDamaged;
     }
-    validatedObject.vehicle = BuilderUtils.createResource(factory, namespace, 'Vehicle', good.vehicle);
+    validatedObject.vehicle = VehicleBuilder.buildVehicle(factory, namespace, good.vehicle);
 
     return validatedObject;
   }

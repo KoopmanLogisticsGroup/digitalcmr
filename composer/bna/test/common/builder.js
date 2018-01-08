@@ -60,7 +60,7 @@ Builder.prototype.buildECMR = function buildECMR(ecmrID) {
   ecmr.issuedBy = this.factory.newRelationship(Network.namespace, 'Entity', 'leaseplan');
   ecmr.issueDate = 0;
   ecmr.carrierComments = 'comments';
-  ecmr.goods = [this.buildGood()];
+  ecmr.goods = [];
   ecmr.legalOwnerInstructions = 'instructions';
   ecmr.paymentInstructions = 'instructions';
   ecmr.payOnDelivery = 'payondelivery';
@@ -77,11 +77,12 @@ Builder.prototype.buildECMR = function buildECMR(ecmrID) {
 
 /**
  * Build Good concept
+ * @param {String} vin The VIN of the vehicle to connect
  * @return {Promise} A promise that will be resolved when completed.
  */
-Builder.prototype.buildGood = function buildGood() {
+Builder.prototype.buildGood = function buildGood(vin) {
   let good = this.factory.newConcept(Network.namespace, 'Good');
-  good.vehicle = this.buildVehicle('VIN12345678');
+  good.vehicle = this.buildVehicle(vin);
   good.pickupWindow = this.factory.newConcept(Network.namespace, 'DateWindow');
   good.deliveryWindow = this.factory.newConcept(Network.namespace, 'DateWindow');
   good.deliveryWindow.startDate = 0;
@@ -95,20 +96,6 @@ Builder.prototype.buildGood = function buildGood() {
 
   return good;
 };
-
-/**
- * Build multiple goods concept
- * @return {Promise} A promise that will be resolved when completed.
- */
-Builder.prototype.buildGoods = function buildGoods(goods) {
-  let validatedObjects = [];
-
-  for (const good of goods) {
-    validatedObjects.push(this.buildGood(good));
-  }
-
-  return validatedObjects;
-}
 
 /**
  * Build Vehicle asset
@@ -137,10 +124,10 @@ Builder.prototype.buildTransportOrder = function buildTransportOrder(orderID) {
   transportOrder.owner = this.factory.newRelationship(Network.namespace, 'LegalOwnerOrg', 'lapo@leaseplan.org');
   transportOrder.source = this.factory.newRelationship(Network.namespace, 'CompoundOrg', 'amsterdamcompound');
   transportOrder.carrier = this.factory.newRelationship(Network.namespace, 'CarrierOrg', 'koopman');
-  transportOrder.goods = [this.buildGood()];
+  transportOrder.goods = [];
   transportOrder.issueDate = 0;
   transportOrder.status = BusinessModel.orderStatus.Open;
-  transportOrder.ecmrs = [this.factory.newRelationship(Network.namespace, 'ECMR', this.buildECMR('ecmr12345'))];
+  transportOrder.ecmrs = [];
   transportOrder.orderRef = 'orderRef';
 
   return transportOrder;

@@ -270,140 +270,207 @@
   "vehicles":        [
     {
       "$class":          "org.digitalcmr.Vehicle",
-      "vin":             "183726339N",
+      "vin":             "A12345VIN",
       "manufacturer":    "Audi",
       "model":           "A1",
       "type":            "sportback",
-      "ecmrs":           [
-        "C1234567890"
-      ],
+      "ecmrs":           [],
       "odoMeterReading": 0,
       "plateNumber":     "AV198RX"
     },
     {
       "$class":          "org.digitalcmr.Vehicle",
-      "vin":             "183726339B",
+      "vin":             "B12345VIN",
       "manufacturer":    "Audi",
       "model":           "A2",
       "type":            "sportback",
-      "ecmrs":           [
-        "B1234567890"
-      ],
+      "ecmrs":           [],
       "odoMeterReading": 2132,
       "plateNumber":     "BV198RX"
     },
     {
       "$class":          "org.digitalcmr.Vehicle",
-      "vin":             "183726339D",
+      "vin":             "C12345VIN",
       "manufacturer":    "Audi",
       "model":           "A3",
       "type":            "sportback",
-      "ecmrs":           [
-        "D1234567890"
-      ],
+      "ecmrs":           [],
       "odoMeterReading": 1231,
       "plateNumber":     "CV198RX"
     },
     {
       "$class":          "org.digitalcmr.Vehicle",
-      "vin":             "183726339E",
+      "vin":             "D12345VIN",
       "manufacturer":    "Audi",
       "model":           "A4",
       "type":            "sportback",
-      "ecmrs":           [
-        "E1234567890"
-      ],
+      "ecmrs":           [],
       "odoMeterReading": 0,
       "plateNumber":     "DV198RX"
     },
     {
       "$class":          "org.digitalcmr.Vehicle",
-      "vin":             "183726339F",
+      "vin":             "E12345VIN",
       "manufacturer":    "Audi",
       "model":           "A5",
       "type":            "sportback",
-      "ecmrs":           [
-        "F1234567890"
-      ],
+      "ecmrs":           [],
       "odoMeterReading": 12043,
       "plateNumber":     "EV198RX"
     },
     {
       "$class":          "org.digitalcmr.Vehicle",
-      "vin":             "183726339G",
+      "vin":             "F12345VIN",
       "manufacturer":    "Audi",
       "model":           "A6",
       "type":            "sportback",
-      "ecmrs":           [
-        "G1234567890"
-      ],
+      "ecmrs":           [],
       "odoMeterReading": 578,
       "plateNumber":     "FV198RX"
     },
     {
       "$class":          "org.digitalcmr.Vehicle",
-      "vin":             "183726339F2",
+      "vin":             "G12345VIN",
       "manufacturer":    "Audi",
       "model":           "A7",
       "type":            "sportback",
-      "ecmrs":           [
-        "F1234567890"
-      ],
+      "ecmrs":           [],
       "odoMeterReading": 0,
       "plateNumber":     "GV198RX"
     },
     {
       "$class":          "org.digitalcmr.Vehicle",
-      "vin":             "883726339N",
+      "vin":             "H12345VIN",
       "manufacturer":    "Audi",
       "model":           "A8",
       "type":            "sportback",
-      "ecmrs":           [
-        "A1234567890",
-        "B1234567890"
-      ],
+      "ecmrs":           [],
       "odoMeterReading": 0,
       "plateNumber":     "HV198RX"
     },
     {
       "$class":          "org.digitalcmr.Vehicle",
-      "vin":             "983726339N",
+      "vin":             "I12345VIN",
       "manufacturer":    "Audi",
       "model":           "A9",
       "type":            "sportback",
-      "ecmrs":           [
-        "A1234567890",
-        "B1234567890"
-      ],
+      "ecmrs":           [],
       "odoMeterReading": 12319,
       "plateNumber":     "IV198RX"
     },
     {
       "$class":          "org.digitalcmr.Vehicle",
-      "vin":             "103726339N",
+      "vin":             "J12345VIN",
       "manufacturer":    "Audi",
       "model":           "A10",
       "type":            "sportback",
-      "ecmrs":           [
-        "A1234567890",
-        "B1234567890"
-      ],
+      "ecmrs":           [],
       "odoMeterReading": 20000,
+      "plateNumber":     "JV198RX"
+    },
+    {
+      "$class":          "org.digitalcmr.Vehicle",
+      "vin":             "K12345VIN",
+      "manufacturer":    "Audi",
+      "model":           "A10",
+      "type":            "sportback",
+      "ecmrs":           [],
+      "odoMeterReading": 234000,
+      "plateNumber":     "JV198RX"
+    },
+    {
+      "$class":          "org.digitalcmr.Vehicle",
+      "vin":             "L12345VIN",
+      "manufacturer":    "Audi",
+      "model":           "A10",
+      "type":            "sportback",
+      "ecmrs":           [],
+      "odoMeterReading": 13005,
+      "plateNumber":     "JV198RX"
+    },
+    {
+      "$class":          "org.digitalcmr.Vehicle",
+      "vin":             "M12345VIN",
+      "manufacturer":    "Audi",
+      "model":           "A10",
+      "type":            "sportback",
+      "ecmrs":           [],
+      "odoMeterReading": 20030,
+      "plateNumber":     "JV198RX"
+    },
+    {
+      "$class":          "org.digitalcmr.Vehicle",
+      "vin":             "N12345VIN",
+      "manufacturer":    "Audi",
+      "model":           "A10",
+      "type":            "sportback",
+      "ecmrs":           [],
+      "odoMeterReading": 55000,
+      "plateNumber":     "JV198RX"
+    },
+    {
+      "$class":          "org.digitalcmr.Vehicle",
+      "vin":             "O12345VIN",
+      "manufacturer":    "Audi",
+      "model":           "A10",
+      "type":            "sportback",
+      "ecmrs":           [],
+      "odoMeterReading": 0,
+      "plateNumber":     "JV198RX"
+    },
+    {
+      "$class":          "org.digitalcmr.Vehicle",
+      "vin":             "P12345VIN",
+      "manufacturer":    "Audi",
+      "model":           "A10",
+      "type":            "sportback",
+      "ecmrs":           [],
+      "odoMeterReading": 0,
+      "plateNumber":     "JV198RX"
+    },
+    {
+      "$class":          "org.digitalcmr.Vehicle",
+      "vin":             "Q12345VIN",
+      "manufacturer":    "Audi",
+      "model":           "A10",
+      "type":            "sportback",
+      "ecmrs":           [],
+      "odoMeterReading": 0,
+      "plateNumber":     "JV198RX"
+    },
+    {
+      "$class":          "org.digitalcmr.Vehicle",
+      "vin":             "R12345VIN",
+      "manufacturer":    "Audi",
+      "model":           "A10",
+      "type":            "sportback",
+      "ecmrs":           [],
+      "odoMeterReading": 100,
+      "plateNumber":     "JV198RX"
+    },
+    {
+      "$class":          "org.digitalcmr.Vehicle",
+      "vin":             "S12345VIN",
+      "manufacturer":    "Audi",
+      "model":           "A10",
+      "type":            "sportback",
+      "ecmrs":           [],
+      "odoMeterReading": 200,
       "plateNumber":     "JV198RX"
     }
   ],
   "ecmrs":           [
     {
-      "$class":            "org.digitalcmr.ECMR",
-      "ecmrID":            "A1234567890",
-      "status":            "CREATED",
-      "agreementTerms":    "agreement terms here",
-      "agreementTermsSec": "agreement terms sec",
-      "legalOwnerRef":     "ASD213123S",
-      "carrierRef":        "H2238723VASD",
-      "recipientRef":      "SDADHGA21312312",
-      "orderID":           "ORDER12345",
-      "creation":          {
+      "$class":                 "org.digitalcmr.ECMR",
+      "ecmrID":                 "A12345ECMR",
+      "status":                 "CREATED",
+      "agreementTerms":         "agreement terms here",
+      "agreementTermsSec":      "agreement terms sec",
+      "legalOwnerRef":          "ASD213123S",
+      "carrierRef":             "H2238723VASD",
+      "recipientRef":           "SDADHGA21312312",
+      "orderID":                "A12345ORDER",
+      "creation":               {
         "$class":  "org.digitalcmr.Creation",
         "address": {
           "$class":      "org.digitalcmr.Address",
@@ -467,9 +534,7 @@
       "issueDate":              0,
       "issuedBy":               "koopman",
       "carrierComments":        "",
-      "documents":              [
-        "doc1"
-      ],
+      "documents":              [],
       "goods":                  [
         {
           "$class":          "org.digitalcmr.Good",
@@ -497,11 +562,13 @@
           },
           "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
-            "vin":             "2131231414CN",
+            "vin":             "A12345VIN",
             "manufacturer":    "BMW",
             "model":           "X5",
             "type":            "sportsback",
-            "ecmrs":           [],
+            "ecmrs":           [
+              "A12345ECMR"
+            ],
             "odoMeterReading": 0,
             "plateNumber":     "O291RX"
           },
@@ -525,14 +592,14 @@
     },
     {
       "$class":                 "org.digitalcmr.ECMR",
-      "ecmrID":                 "B1234567890",
+      "ecmrID":                 "B12345ECMR",
       "status":                 "CREATED",
       "agreementTerms":         "agreement terms here",
       "agreementTermsSec":      "agreement terms sec",
       "legalOwnerRef":          "ASD213123S",
       "carrierRef":             "H2238723VASD",
       "recipientRef":           "SDADHGA21312312",
-      "orderID":                "12345567890",
+      "orderID":                "A12345ORDER",
       "creation":               {
         "$class":  "org.digitalcmr.Creation",
         "address": {
@@ -627,11 +694,13 @@
           },
           "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
-            "vin":             "183726339B",
+            "vin":             "B12345VIN",
             "manufacturer":    "Audi",
             "model":           "A1",
             "type":            "sportback",
-            "ecmrs":           [],
+            "ecmrs":           [
+              "B12345ECMR"
+            ],
             "odoMeterReading": 0,
             "plateNumber":     "AV198RX"
           },
@@ -674,11 +743,13 @@
           },
           "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
-            "vin":             "736182CHD28172",
+            "vin":             "C12345VIN",
             "manufacturer":    "Mercedes",
             "model":           "SLK",
             "type":            "Station",
-            "ecmrs":           [],
+            "ecmrs":           [
+              "B12345ECMR"
+            ],
             "odoMeterReading": 0,
             "plateNumber":     "I827YE"
           },
@@ -702,14 +773,14 @@
     },
     {
       "$class":                   "org.digitalcmr.ECMR",
-      "ecmrID":                   "C1234567890",
+      "ecmrID":                   "C12345ECMR",
       "status":                   "DELIVERED",
       "agreementTerms":           "agreement terms here",
       "agreementTermsSec":        "agreement terms sec",
       "legalOwnerRef":            "ASD213123S",
       "carrierRef":               "H2238723VASD",
       "recipientRef":             "SDADHGA21312312",
-      "orderID":                  "12345567890",
+      "orderID":                  "A12345ORDER",
       "creation":                 {
         "$class":  "org.digitalcmr.Creation",
         "address": {
@@ -774,9 +845,7 @@
       "issueDate":                0,
       "issuedBy":                 "koopman",
       "carrierComments":          "No comments",
-      "documents":                [
-        "doc1"
-      ],
+      "documents":                [],
       "goods":                    [
         {
           "$class":          "org.digitalcmr.Good",
@@ -804,11 +873,13 @@
           },
           "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
-            "vin":             "183726339N",
+            "vin":             "D12345VIN",
             "manufacturer":    "Audi",
             "model":           "A1",
             "type":            "sportback",
-            "ecmrs":           [],
+            "ecmrs":           [
+              "C12345ECMR"
+            ],
             "odoMeterReading": 0,
             "plateNumber":     "AV198RX"
           },
@@ -843,16 +914,16 @@
       }
     },
     {
-      "$class":            "org.digitalcmr.ECMR",
-      "ecmrID":            "D1234567890",
-      "status":            "LOADED",
-      "agreementTerms":    "agreement terms here",
-      "agreementTermsSec": "agreement terms sec",
-      "legalOwnerRef":     "ASD213123S",
-      "carrierRef":        "H2238723VASD",
-      "recipientRef":      "SDADHGA21312312",
-      "orderID":           "ORDER12345",
-      "creation":          {
+      "$class":                 "org.digitalcmr.ECMR",
+      "ecmrID":                 "D12345ECMR",
+      "status":                 "LOADED",
+      "agreementTerms":         "agreement terms here",
+      "agreementTermsSec":      "agreement terms sec",
+      "legalOwnerRef":          "ASD213123S",
+      "carrierRef":             "H2238723VASD",
+      "recipientRef":           "SDADHGA21312312",
+      "orderID":                "A12345ORDER",
+      "creation":               {
         "$class":  "org.digitalcmr.Creation",
         "address": {
           "$class":      "org.digitalcmr.Address",
@@ -916,9 +987,7 @@
       "issueDate":              0,
       "issuedBy":               "koopman",
       "carrierComments":        "No comments",
-      "documents":              [
-        "doc1"
-      ],
+      "documents":              [],
       "goods":                  [
         {
           "$class":          "org.digitalcmr.Good",
@@ -946,11 +1015,13 @@
           },
           "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
-            "vin":             "183726339D",
+            "vin":             "E12345VIN",
             "manufacturer":    "Audi",
             "model":           "A1",
             "type":            "sportback",
-            "ecmrs":           [],
+            "ecmrs":           [
+              "D12345ECMR"
+            ],
             "odoMeterReading": 0,
             "plateNumber":     "AV198RX"
           },
@@ -971,22 +1042,22 @@
       "legalOwnerInstructions": "string",
       "paymentInstructions":    "string",
       "payOnDelivery":          "string",
-      "compoundSignature": {
+      "compoundSignature":      {
         "certificate": "willem@amsterdamcompound.org",
         "timestamp":   0
       }
     },
     {
-      "$class":            "org.digitalcmr.ECMR",
-      "ecmrID":            "P1234567890",
-      "status":            "LOADED",
-      "agreementTerms":    "agreement terms here",
-      "agreementTermsSec": "agreement terms sec",
-      "legalOwnerRef":     "ASD213123S",
-      "carrierRef":        "H2238723VASD",
-      "recipientRef":      "SDADHGA21312312",
-      "orderID":           "ORDER12345",
-      "creation":          {
+      "$class":                 "org.digitalcmr.ECMR",
+      "ecmrID":                 "E12345ECMR",
+      "status":                 "LOADED",
+      "agreementTerms":         "agreement terms here",
+      "agreementTermsSec":      "agreement terms sec",
+      "legalOwnerRef":          "ASD213123S",
+      "carrierRef":             "H2238723VASD",
+      "recipientRef":           "SDADHGA21312312",
+      "orderID":                "A12345ORDER",
+      "creation":               {
         "$class":  "org.digitalcmr.Creation",
         "address": {
           "$class":      "org.digitalcmr.Address",
@@ -1050,9 +1121,7 @@
       "issueDate":              0,
       "issuedBy":               "koopman",
       "carrierComments":        "No comments",
-      "documents":              [
-        "doc1"
-      ],
+      "documents":              [],
       "goods":                  [
         {
           "$class":          "org.digitalcmr.Good",
@@ -1080,11 +1149,13 @@
           },
           "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
-            "vin":             "183726339P",
+            "vin":             "F12345VIN",
             "manufacturer":    "Audi",
             "model":           "A1",
             "type":            "sportback",
-            "ecmrs":           [],
+            "ecmrs":           [
+              "E12345ECMR"
+            ],
             "odoMeterReading": 0,
             "plateNumber":     "AV198RX"
           },
@@ -1105,21 +1176,21 @@
       "legalOwnerInstructions": "string",
       "paymentInstructions":    "string",
       "payOnDelivery":          "string",
-      "compoundSignature": {
+      "compoundSignature":      {
         "certificate": "willem@amsterdamcompound.org",
         "timestamp":   0
       }
     },
     {
       "$class":                  "org.digitalcmr.ECMR",
-      "ecmrID":                  "E1234567890",
+      "ecmrID":                  "F12345ECMR",
       "status":                  "IN_TRANSIT",
       "agreementTerms":          "agreement terms here",
       "agreementTermsSec":       "agreement terms sec",
       "legalOwnerRef":           "ASD213123S",
       "carrierRef":              "H2238723VASD",
       "recipientRef":            "SDADHGA21312312",
-      "orderID":                 "ORDER12345",
+      "orderID":                 "B12345ORDER",
       "creation":                {
         "$class":  "org.digitalcmr.Creation",
         "address": {
@@ -1184,9 +1255,7 @@
       "issueDate":               0,
       "issuedBy":                "koopman",
       "carrierComments":         "",
-      "documents":               [
-        "doc1"
-      ],
+      "documents":               [],
       "goods":                   [
         {
           "$class":          "org.digitalcmr.Good",
@@ -1214,11 +1283,13 @@
           },
           "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
-            "vin":             "183726339E",
+            "vin":             "G12345VIN",
             "manufacturer":    "Audi",
             "model":           "A1",
             "type":            "sportback",
-            "ecmrs":           [],
+            "ecmrs":           [
+              "F12345ECMR"
+            ],
             "odoMeterReading": 0,
             "plateNumber":     "AV198RX"
           },
@@ -1261,11 +1332,13 @@
           },
           "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
-            "vin":             "37316231GA",
+            "vin":             "H12345VIN",
             "manufacturer":    "Mercedes",
             "model":           "Benz",
             "type":            "sportback",
-            "ecmrs":           [],
+            "ecmrs":           [
+              "F12345ECMR"
+            ],
             "odoMeterReading": 0,
             "plateNumber":     "M238KA"
           },
@@ -1297,14 +1370,14 @@
     },
     {
       "$class":                   "org.digitalcmr.ECMR",
-      "ecmrID":                   "F1234567890",
+      "ecmrID":                   "G12345ECMR",
       "status":                   "DELIVERED",
       "agreementTerms":           "agreement terms here",
       "agreementTermsSec":        "agreement terms sec",
       "legalOwnerRef":            "ASD213123S",
       "carrierRef":               "H2238723VASD",
       "recipientRef":             "SDADHGA21312312",
-      "orderID":                  "ORDER12345",
+      "orderID":                  "B12345ORDER",
       "creation":                 {
         "$class":  "org.digitalcmr.Creation",
         "address": {
@@ -1369,9 +1442,7 @@
       "issueDate":                0,
       "issuedBy":                 "koopman",
       "carrierComments":          "",
-      "documents":                [
-        "doc1"
-      ],
+      "documents":                [],
       "goods":                    [
         {
           "$class":          "org.digitalcmr.Good",
@@ -1399,11 +1470,13 @@
           },
           "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
-            "vin":             "183726339F",
+            "vin":             "I12345VIN",
             "manufacturer":    "Audi",
             "model":           "A1",
             "type":            "sportback",
-            "ecmrs":           [],
+            "ecmrs":           [
+              "G12345ECMR"
+            ],
             "odoMeterReading": 0,
             "plateNumber":     "AV198RX"
           },
@@ -1446,11 +1519,13 @@
           },
           "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
-            "vin":             "DS8281321",
+            "vin":             "J12345VIN",
             "manufacturer":    "Mercedes",
             "model":           "Benz",
             "type":            "sportback",
-            "ecmrs":           [],
+            "ecmrs":           [
+              "G12345ECMR"
+            ],
             "odoMeterReading": 0,
             "plateNumber":     "M238KA"
           },
@@ -1493,11 +1568,13 @@
           },
           "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
-            "vin":             "183726339F2",
+            "vin":             "K12345VIN",
             "manufacturer":    "Audi",
             "model":           "A1",
             "type":            "sportback",
-            "ecmrs":           [],
+            "ecmrs":           [
+              "G12345ECMR"
+            ],
             "odoMeterReading": 0,
             "plateNumber":     "AV198RX"
           },
@@ -1540,11 +1617,13 @@
           },
           "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
-            "vin":             "8762178623GA",
+            "vin":             "L12345VIN",
             "manufacturer":    "Mercedes",
             "model":           "Benz",
             "type":            "sportback",
-            "ecmrs":           [],
+            "ecmrs":           [
+              "G12345ECMR"
+            ],
             "odoMeterReading": 0,
             "plateNumber":     "M238KA"
           },
@@ -1580,14 +1659,14 @@
     },
     {
       "$class":                  "org.digitalcmr.ECMR",
-      "ecmrID":                  "G1234567890",
+      "ecmrID":                  "H12345ECMR",
       "status":                  "IN_TRANSIT",
       "agreementTerms":          "agreement terms here",
       "agreementTermsSec":       "agreement terms sec",
       "legalOwnerRef":           "ASD213123S",
       "carrierRef":              "H2238723VASD",
       "recipientRef":            "SDADHGA21312312",
-      "orderID":                 "ORDER12345",
+      "orderID":                 "B12345ORDER",
       "creation":                {
         "$class":  "org.digitalcmr.Creation",
         "address": {
@@ -1682,11 +1761,13 @@
           },
           "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
-            "vin":             "183726339G",
+            "vin":             "M12345VIN",
             "manufacturer":    "Audi",
             "model":           "A1",
             "type":            "sportback",
-            "ecmrs":           [],
+            "ecmrs":           [
+              "H12345ECMR"
+            ],
             "odoMeterReading": 0,
             "plateNumber":     "AV198RX"
           },
@@ -1729,11 +1810,13 @@
           },
           "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
-            "vin":             "736182CHD28172G",
+            "vin":             "N12345VIN",
             "manufacturer":    "Mercedes",
             "model":           "SLK",
             "type":            "Station",
-            "ecmrs":           [],
+            "ecmrs":           [
+              "H12345ECMR"
+            ],
             "odoMeterReading": 0,
             "plateNumber":     "I827YE"
           },
@@ -1765,14 +1848,14 @@
     },
     {
       "$class":                 "org.digitalcmr.ECMR",
-      "ecmrID":                 "H1234567890",
+      "ecmrID":                 "I12345ECMR",
       "status":                 "CREATED",
       "agreementTerms":         "agreement terms here",
       "agreementTermsSec":      "agreement terms sec",
       "legalOwnerRef":          "ASD213123S",
       "carrierRef":             "H2238723VASD",
       "recipientRef":           "SDADHGA21312312",
-      "orderID":                "ORDER12345",
+      "orderID":                "B12345ORDER",
       "creation":               {
         "$class":  "org.digitalcmr.Creation",
         "address": {
@@ -1837,9 +1920,7 @@
       "issueDate":              0,
       "issuedBy":               "notKoopman",
       "carrierComments":        "",
-      "documents":              [
-        "doc1"
-      ],
+      "documents":              [],
       "goods":                  [
         {
           "$class":          "org.digitalcmr.Good",
@@ -1867,11 +1948,13 @@
           },
           "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
-            "vin":             "2131231414CB",
+            "vin":             "O12345VIN",
             "manufacturer":    "BMW",
             "model":           "X5",
             "type":            "sportsback",
-            "ecmrs":           [],
+            "ecmrs":           [
+              "I12345ECMR"
+            ],
             "odoMeterReading": 0,
             "plateNumber":     "O291RX"
           },
@@ -1894,16 +1977,16 @@
       "payOnDelivery":          "string"
     },
     {
-      "$class":            "org.digitalcmr.ECMR",
-      "ecmrID":            "I1234567890",
-      "status":            "CONFIRMED_DELIVERED",
-      "agreementTerms":    "agreement terms here",
-      "agreementTermsSec": "agreement terms sec",
-      "legalOwnerRef":     "ASD213123S",
-      "carrierRef":        "H2238723VASD",
-      "recipientRef":      "SDADHGA21312312",
-      "orderID":           "ORDER12345",
-      "creation":          {
+      "$class":                   "org.digitalcmr.ECMR",
+      "ecmrID":                   "J12345ECMR",
+      "status":                   "CONFIRMED_DELIVERED",
+      "agreementTerms":           "agreement terms here",
+      "agreementTermsSec":        "agreement terms sec",
+      "legalOwnerRef":            "ASD213123S",
+      "carrierRef":               "H2238723VASD",
+      "recipientRef":             "SDADHGA21312312",
+      "orderID":                  "B12345ORDER",
+      "creation":                 {
         "$class":  "org.digitalcmr.Creation",
         "address": {
           "$class":      "org.digitalcmr.Address",
@@ -1967,9 +2050,7 @@
       "issueDate":                0,
       "issuedBy":                 "koopman",
       "carrierComments":          "",
-      "documents":                [
-        "doc1"
-      ],
+      "documents":                [],
       "goods":                    [
         {
           "$class":          "org.digitalcmr.Good",
@@ -1997,11 +2078,13 @@
           },
           "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
-            "vin":             "183726339I",
+            "vin":             "P12345VIN",
             "manufacturer":    "Audi",
             "model":           "A1",
             "type":            "sportback",
-            "ecmrs":           [],
+            "ecmrs":           [
+              "J12345ECMR"
+            ],
             "odoMeterReading": 0,
             "plateNumber":     "AV198RX"
           },
@@ -2044,11 +2127,13 @@
           },
           "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
-            "vin":             "DS8281321",
+            "vin":             "Q12345VIN",
             "manufacturer":    "Mercedes",
             "model":           "Benz",
             "type":            "sportback",
-            "ecmrs":           [],
+            "ecmrs":           [
+              "J12345ECMR"
+            ],
             "odoMeterReading": 0,
             "plateNumber":     "M238KA"
           },
@@ -2091,11 +2176,13 @@
           },
           "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
-            "vin":             "183726339I2",
+            "vin":             "R12345VIN",
             "manufacturer":    "Audi",
             "model":           "A1",
             "type":            "sportback",
-            "ecmrs":           [],
+            "ecmrs":           [
+              "J12345ECMR"
+            ],
             "odoMeterReading": 0,
             "plateNumber":     "AV198RX"
           },
@@ -2138,11 +2225,13 @@
           },
           "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
-            "vin":             "8762178623GA",
+            "vin":             "S12345VIN",
             "manufacturer":    "Mercedes",
             "model":           "Benz",
             "type":            "sportback",
-            "ecmrs":           [],
+            "ecmrs":           [
+              "J12345ECMR"
+            ],
             "odoMeterReading": 0,
             "plateNumber":     "M238KA"
           },
@@ -2184,7 +2273,7 @@
   "transportOrders": [
     {
       "$class":    "org.digitalcmr.TransportOrder",
-      "orderID":   "12345567890",
+      "orderID":   "A12345ORDER",
       "owner":     "leaseplan",
       "source":    "amsterdamcompound",
       "carrier":   "koopman",
@@ -2215,12 +2304,12 @@
           },
           "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
-            "vin":             "183726339N",
+            "vin":             "A12345VIN",
             "manufacturer":    "Audi",
             "model":           "A1",
             "type":            "sportback",
             "ecmrs":           [
-              "C1234567890"
+              "A12345ECMR"
             ],
             "odoMeterReading": 0,
             "plateNumber":     "AV198RX"
@@ -2242,12 +2331,12 @@
           "$class":          "org.digitalcmr.Good",
           "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
-            "vin":             "736182CHD28172",
+            "vin":             "B12345VIN",
             "manufacturer":    "Mercedes",
             "model":           "SLK",
             "type":            "Station",
             "ecmrs":           [
-              "B1234567890"
+              "B12345ECMR"
             ],
             "odoMeterReading": 0,
             "plateNumber":     "I827YE"
@@ -2285,20 +2374,219 @@
             "country":     "netherlands",
             "longitude":   124,
             "latitude":    123
+          }
+        },
+        {
+          "$class":          "org.digitalcmr.Good",
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "vehicle":         {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "C12345VIN",
+            "manufacturer":    "Mercedes",
+            "model":           "SLK",
+            "type":            "Station",
+            "ecmrs":           [
+              "B12345ECMR"
+            ],
+            "odoMeterReading": 0,
+            "plateNumber":     "I827YE"
+          },
+          "description":     "vehicle",
+          "weight":          1800,
+          "pickupWindow":    {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow":  {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          }
+        },
+        {
+          "$class":          "org.digitalcmr.Good",
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "vehicle":         {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "D12345VIN",
+            "manufacturer":    "Audi",
+            "model":           "A1",
+            "type":            "sportback",
+            "ecmrs":           [
+              "C12345ECMR"
+            ],
+            "odoMeterReading": 0,
+            "plateNumber":     "AV198RX"
+          },
+          "description":     "vehicle",
+          "weight":          1500,
+          "pickupWindow":    {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow":  {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          }
+        },
+        {
+          "$class":          "org.digitalcmr.Good",
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "vehicle":         {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "E12345VIN",
+            "manufacturer":    "Audi",
+            "model":           "A1",
+            "type":            "sportback",
+            "ecmrs":           [
+              "D12345ECMR"
+            ],
+            "odoMeterReading": 0,
+            "plateNumber":     "AV198RX"
+          },
+          "description":     "vehicle",
+          "weight":          1500,
+          "pickupWindow":    {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow":  {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          }
+        },
+        {
+          "$class":          "org.digitalcmr.Good",
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "vehicle":         {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "F12345VIN",
+            "manufacturer":    "Audi",
+            "model":           "A1",
+            "type":            "sportback",
+            "ecmrs":           [
+              "E12345ECMR"
+            ],
+            "odoMeterReading": 0,
+            "plateNumber":     "AV198RX"
+          },
+          "description":     "vehicle",
+          "weight":          1500,
+          "pickupWindow":    {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow":  {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
           }
         }
       ],
       "status":    "IN_PROGRESS",
       "issueDate": 1502834400000,
       "ecmrs":     [
-        "B1234567890",
-        "C1234567890"
+        "A12345ECMR",
+        "B12345ECMR",
+        "C12345ECMR",
+        "D12345ECMR",
+        "E12345ECMR"
       ],
       "orderRef":  "ref"
     },
     {
       "$class":    "org.digitalcmr.TransportOrder",
-      "orderID":   "ORDER12345",
+      "orderID":   "B12345ORDER",
       "owner":     "leaseplan",
       "source":    "amsterdamcompound",
       "carrier":   "koopman",
@@ -2329,12 +2617,12 @@
           },
           "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
-            "vin":             "183726339D",
+            "vin":             "G12345VIN",
             "manufacturer":    "Audi",
             "model":           "A1",
             "type":            "sportback",
             "ecmrs":           [
-              "D1234567890"
+              "F12345ECMR"
             ],
             "odoMeterReading": 0,
             "plateNumber":     "AV198RX"
@@ -2354,30 +2642,6 @@
         },
         {
           "$class":          "org.digitalcmr.Good",
-          "vehicle":         {
-            "$class":          "org.digitalcmr.Vehicle",
-            "vin":             "183726339E",
-            "manufacturer":    "Mercedes",
-            "model":           "SLK",
-            "type":            "Station",
-            "ecmrs":           [
-              "E1234567890"
-            ],
-            "odoMeterReading": 0,
-            "plateNumber":     "I827YE"
-          },
-          "description":     "vehicle",
-          "weight":          1800,
-          "pickupWindow":    {
-            "$class":    "org.digitalcmr.DateWindow",
-            "startDate": 1502834400000,
-            "endDate":   1502834400000
-          },
-          "deliveryWindow":  {
-            "$class":    "org.digitalcmr.DateWindow",
-            "startDate": 1502834400000,
-            "endDate":   1502834400000
-          },
           "loadingAddress":  {
             "$class":      "org.digitalcmr.Address",
             "name":        "loading address",
@@ -2399,12 +2663,581 @@
             "country":     "netherlands",
             "longitude":   124,
             "latitude":    123
+          },
+          "vehicle":         {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "H12345VIN",
+            "manufacturer":    "Mercedes",
+            "model":           "Benz",
+            "type":            "sportback",
+            "ecmrs":           [
+              "F12345ECMR"
+            ],
+            "odoMeterReading": 0,
+            "plateNumber":     "M238KA"
+          },
+          "description":     "vehicle",
+          "weight":          1500,
+          "pickupWindow":    {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow":  {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          }
+        },
+        {
+          "$class":          "org.digitalcmr.Good",
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "vehicle":         {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "I12345VIN",
+            "manufacturer":    "Audi",
+            "model":           "A1",
+            "type":            "sportback",
+            "ecmrs":           [
+              "G12345ECMR"
+            ],
+            "odoMeterReading": 0,
+            "plateNumber":     "AV198RX"
+          },
+          "description":     "vehicle",
+          "weight":          1500,
+          "pickupWindow":    {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow":  {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          }
+        },
+        {
+          "$class":          "org.digitalcmr.Good",
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "vehicle":         {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "J12345VIN",
+            "manufacturer":    "Mercedes",
+            "model":           "Benz",
+            "type":            "sportback",
+            "ecmrs":           [
+              "G12345ECMR"
+            ],
+            "odoMeterReading": 0,
+            "plateNumber":     "M238KA"
+          },
+          "description":     "vehicle",
+          "weight":          1500,
+          "pickupWindow":    {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow":  {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          }
+        },
+        {
+          "$class":          "org.digitalcmr.Good",
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "vehicle":         {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "K12345VIN",
+            "manufacturer":    "Audi",
+            "model":           "A1",
+            "type":            "sportback",
+            "ecmrs":           [
+              "G12345ECMR"
+            ],
+            "odoMeterReading": 0,
+            "plateNumber":     "AV198RX"
+          },
+          "description":     "vehicle",
+          "weight":          1500,
+          "pickupWindow":    {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow":  {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          }
+        },
+        {
+          "$class":          "org.digitalcmr.Good",
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "vehicle":         {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "L12345VIN",
+            "manufacturer":    "Mercedes",
+            "model":           "Benz",
+            "type":            "sportback",
+            "ecmrs":           [
+              "G12345ECMR"
+            ],
+            "odoMeterReading": 0,
+            "plateNumber":     "M238KA"
+          },
+          "description":     "vehicle",
+          "weight":          1500,
+          "pickupWindow":    {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow":  {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          }
+        },
+        {
+          "$class":          "org.digitalcmr.Good",
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "vehicle":         {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "M12345VIN",
+            "manufacturer":    "Audi",
+            "model":           "A1",
+            "type":            "sportback",
+            "ecmrs":           [
+              "H12345ECMR"
+            ],
+            "odoMeterReading": 0,
+            "plateNumber":     "AV198RX"
+          },
+          "description":     "vehicle",
+          "weight":          1500,
+          "pickupWindow":    {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow":  {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          }
+        },
+        {
+          "$class":          "org.digitalcmr.Good",
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "vehicle":         {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "N12345VIN",
+            "manufacturer":    "Mercedes",
+            "model":           "SLK",
+            "type":            "Station",
+            "ecmrs":           [
+              "H12345ECMR"
+            ],
+            "odoMeterReading": 0,
+            "plateNumber":     "I827YE"
+          },
+          "description":     "vehicle",
+          "weight":          1800,
+          "pickupWindow":    {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow":  {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          }
+        },
+        {
+          "$class":          "org.digitalcmr.Good",
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "vehicle":         {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "O12345VIN",
+            "manufacturer":    "BMW",
+            "model":           "X5",
+            "type":            "sportsback",
+            "ecmrs":           [
+              "I12345ECMR"
+            ],
+            "odoMeterReading": 0,
+            "plateNumber":     "O291RX"
+          },
+          "description":     "vehicle",
+          "weight":          1900,
+          "pickupWindow":    {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow":  {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          }
+        },
+        {
+          "$class":          "org.digitalcmr.Good",
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "vehicle":         {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "P12345VIN",
+            "manufacturer":    "Audi",
+            "model":           "A1",
+            "type":            "sportback",
+            "ecmrs":           [
+              "J12345ECMR"
+            ],
+            "odoMeterReading": 0,
+            "plateNumber":     "AV198RX"
+          },
+          "description":     "vehicle",
+          "weight":          1500,
+          "pickupWindow":    {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow":  {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          }
+        },
+        {
+          "$class":          "org.digitalcmr.Good",
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "vehicle":         {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "Q12345VIN",
+            "manufacturer":    "Mercedes",
+            "model":           "Benz",
+            "type":            "sportback",
+            "ecmrs":           [
+              "J12345ECMR"
+            ],
+            "odoMeterReading": 0,
+            "plateNumber":     "M238KA"
+          },
+          "description":     "vehicle",
+          "weight":          1500,
+          "pickupWindow":    {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow":  {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          }
+        },
+        {
+          "$class":          "org.digitalcmr.Good",
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "vehicle":         {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "R12345VIN",
+            "manufacturer":    "Audi",
+            "model":           "A1",
+            "type":            "sportback",
+            "ecmrs":           [
+              "J12345ECMR"
+            ],
+            "odoMeterReading": 0,
+            "plateNumber":     "AV198RX"
+          },
+          "description":     "vehicle",
+          "weight":          1500,
+          "pickupWindow":    {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow":  {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          }
+        },
+        {
+          "$class":          "org.digitalcmr.Good",
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "vehicle":         {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "S12345VIN",
+            "manufacturer":    "Mercedes",
+            "model":           "Benz",
+            "type":            "sportback",
+            "ecmrs":           [
+              "J12345ECMR"
+            ],
+            "odoMeterReading": 0,
+            "plateNumber":     "M238KA"
+          },
+          "description":     "vehicle",
+          "weight":          1500,
+          "pickupWindow":    {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow":  {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
           }
         }
       ],
       "status":    "IN_PROGRESS",
       "issueDate": 1502834400000,
-      "ecmrs":     [],
+      "ecmrs":     [
+        "F12345ECMR",
+        "G12345ECMR",
+        "H12345ECMR",
+        "I12345ECMR",
+        "J12345ECMR"
+      ],
       "orderRef":  "ref"
     }
   ]

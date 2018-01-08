@@ -39,90 +39,7 @@ describe('Admin of the network', () => {
   Network = new Network();
   Identity = new Identity();
 
-  const sampleGoods = [
-    {
-      "vehicle": {
-        "vin": "183726339N",
-        "manufacturer": "Audi",
-        "model": "A1",
-        "type": "sportback",
-        "ecmrs": [],
-        "odoMeterReading": 0,
-        "plateNumber": "AV198RX"
-      },
-      "description": "vehicle",
-      "weight": 1500,
-      "loadingAddress": {
-        "name": "loading address",
-        "street": "een straat",
-        "houseNumber": "41",
-        "city": "Groningen",
-        "zipCode": "7811 HC",
-        "country": "netherlands",
-        "latitude": 123,
-        "longitude": 124
-      },
-      "deliveryAddress": {
-        "name": "delivery adress",
-        "street": "een straat",
-        "houseNumber": "41",
-        "city": "Groningen",
-        "zipCode": "7811 HC",
-        "country": "netherlands",
-        "latitude": 123,
-        "longitude": 124
-      },
-      "pickupWindow": {
-        "startDate": 1502834400000,
-        "endDate": 1502834400000
-      },
-      "deliveryWindow": {
-        "startDate": 1502834400000,
-        "endDate": 1502834400000
-      }
-    },
-    {
-      "vehicle": {
-        "vin": "736182CHD28172",
-        "manufacturer": "Mercedes",
-        "model": "SLK",
-        "type": "Station",
-        "ecmrs": [],
-        "odoMeterReading": 0,
-        "plateNumber": "I827YE"
-      },
-      "description": "vehicle",
-      "weight": 1800,
-      "loadingAddress": {
-        "name": "loading address",
-        "street": "een straat",
-        "houseNumber": "41",
-        "city": "Groningen",
-        "zipCode": "7811 HC",
-        "country": "netherlands",
-        "latitude": 123,
-        "longitude": 124
-      },
-      "deliveryAddress": {
-        "name": "delivery adress",
-        "street": "een straat",
-        "houseNumber": "41",
-        "city": "Groningen",
-        "zipCode": "7811 HC",
-        "country": "netherlands",
-        "latitude": 123,
-        "longitude": 124
-      },
-      "pickupWindow": {
-        "startDate": 1502834400000,
-        "endDate": 1502834400000
-      },
-      "deliveryWindow": {
-        "startDate": 1502834400000,
-        "endDate": 1502834400000
-      }
-    }
-  ];
+  let ecmrList = [];
 
   // This is called before all tests are executed
   beforeEach(() => {
@@ -165,7 +82,7 @@ describe('Admin of the network', () => {
         const carrierMember = factory.newResource(Network.namespace, 'CarrierMember', Identity.users.carrierMember.userID);
         carrierMember.userName = 'harry';
         carrierMember.firstName = 'Harry';
-        carrierMember.lastName = 'Koopman';
+        carrierMember.lastName = 'Smith';
         carrierMember.address = builder.buildAddress();
         carrierMember.org = factory.newRelationship(Network.namespace, 'CarrierOrg', 'koopman');
 
@@ -190,9 +107,9 @@ describe('Admin of the network', () => {
       })
       // prepare the test environment
       .then(() => {
-        let ecmrList = [];
         let ecmr = builder.buildECMR('created');
         ecmr.orderID = 'to_create_ecmrs';
+        ecmr.goods = [builder.buildGood('vin1')];
         ecmrList.push(ecmr);
 
         ecmr = builder.buildECMR('loaded');
@@ -238,47 +155,20 @@ describe('Admin of the network', () => {
         ecmr.carrierLoadingSignature = builder.buildSignature(Identity.users.carrierMember.userID);
         ecmrList.push(ecmr);
 
-        ecmr = builder.buildECMR('delivered');
+        ecmr = builder.buildECMR('delivered_good');
         ecmr.compoundSignature = builder.buildSignature(Identity.users.compoundAdmin.userID);
         ecmr.carrierLoadingSignature = builder.buildSignature(Identity.users.carrierMember.userID);
         ecmr.carrierDeliverySignature = builder.buildSignature(Identity.users.carrierMember.userID);
         ecmr.status = BusinessModel.ecmrStatus.Delivered;
+        ecmr.goods = [builder.buildGood('vin1')];
         ecmrList.push(ecmr);
 
-        ecmr = builder.buildECMR('ecmr3');
-        ecmr.status = BusinessModel.ecmrStatus.InTransit;
+        ecmr = builder.buildECMR('delivered_bad');
         ecmr.compoundSignature = builder.buildSignature(Identity.users.compoundAdmin.userID);
         ecmr.carrierLoadingSignature = builder.buildSignature(Identity.users.carrierMember.userID);
-        ecmrList.push(ecmr);
-
-        ecmr = builder.buildECMR('ecmr5');
-        ecmr.status = BusinessModel.ecmrStatus.InTransit;
-        ecmrList.push(ecmr);
-
-        ecmr = builder.buildECMR('ecmr6');
-        ecmr.compoundSignature = builder.buildSignature(Identity.users.compoundAdmin.userID);
-        ecmr.status = BusinessModel.ecmrStatus.InTransit;
-        ecmrList.push(ecmr);
-
-        ecmr = builder.buildECMR('ecmr7');
-        ecmr.compoundSignature = builder.buildSignature(Identity.users.compoundAdmin.userID);
-        ecmr.carrierLoadingSignature = builder.buildSignature(Identity.users.carrierMember.userID);
+        ecmr.carrierDeliverySignature = builder.buildSignature(Identity.users.carrierMember.userID);
         ecmr.status = BusinessModel.ecmrStatus.Delivered;
-        ecmrList.push(ecmr);
-
-        ecmr = builder.buildECMR('ecmr12');
-        ecmr.status = BusinessModel.ecmrStatus.Delivered;
-        ecmrList.push(ecmr);
-
-        ecmr = builder.buildECMR('ecmr13');
-        ecmr.status = BusinessModel.ecmrStatus.Delivered;
-        ecmr.compoundSignature = builder.buildSignature(Identity.users.compoundAdmin.userID);
-        ecmrList.push(ecmr);
-
-        ecmr = builder.buildECMR('ecmr14');
-        ecmr.status = BusinessModel.ecmrStatus.Delivered;
-        ecmr.compoundSignature = builder.buildSignature(Identity.users.compoundAdmin.userID);
-        ecmr.carrierLoadingSignature = builder.buildSignature(Identity.users.carrierMember.userID);
+        ecmr.goods = [builder.buildGood('vin2')];
         ecmrList.push(ecmr);
 
         return businessNetworkConnection.getAssetRegistry(Network.namespace + '.ECMR')
@@ -289,7 +179,16 @@ describe('Admin of the network', () => {
           });
       })
       .then(() => {
-        const transportOrders = [builder.buildTransportOrder('to_create_ecmrs')];
+        const transportOrders = [builder.buildTransportOrder('to_create_ecmrs'), builder.buildTransportOrder('to_set_completed'), builder.buildTransportOrder('not_to_set_completed')];
+        transportOrders[0].ecmrs = [factory.newRelationship(Network.namespace, 'ECMR', 'created')];
+        transportOrders[0].goods = [builder.buildGood('vin2'), builder.buildGood('vin1')];
+        // testing with 2 ecmrs with same vehicles IDs but inverted order
+        transportOrders[1].ecmrs = [factory.newRelationship(Network.namespace, 'ECMR', 'delivered_good')];
+        transportOrders[1].goods = [builder.buildGood('vin1')];
+        // testing with 2 ecmrs with same number of vehicles and different vehicle IDs
+        transportOrders[2].ecmrs = [factory.newRelationship(Network.namespace, 'ECMR', 'delivered_bad')];
+        transportOrders[2].ecmrs.push(factory.newRelationship(Network.namespace, 'ECMR', 'delivered_good'));
+        transportOrders[2].goods = [builder.buildGood('vin1'), builder.buildGood('vin3')];
 
         return businessNetworkConnection.getAssetRegistry(Network.namespace + '.TransportOrder')
           .then((assetRegistry) => {
@@ -299,7 +198,7 @@ describe('Admin of the network', () => {
           });
       })
       .then(() => {
-        const vehicles = [builder.buildVehicle('VIN12345678')];
+        const vehicles = [builder.buildVehicle('vin1'), builder.buildVehicle('vin2'), builder.buildVehicle('vin3')];
 
         return businessNetworkConnection.getAssetRegistry(Network.namespace + '.Vehicle')
           .then((assetRegistry) => {
@@ -313,9 +212,8 @@ describe('Admin of the network', () => {
   it('should be able to submit CreateECMRs transaction which creates an ECMR starting from a TransportOrder and sets status to CREATED', () => {
     const transaction = factory.newTransaction(Network.namespace, 'CreateECMRs');
     let currentEcmr = builder.buildECMR('newEcmr');
-    currentEcmr.orderID = 'to_create_ecmrs';
+    currentEcmr.goods = [builder.buildGood('vin1'), builder.buildGood('vin2')];
     transaction.ecmrs = [currentEcmr];
-    transaction.ecmrs.orderID = 'to_create_ecmrs';
     transaction.transportOrder = factory.newRelationship(Network.namespace, 'TransportOrder', 'to_create_ecmrs');
 
     return businessNetworkConnection.submitTransaction(transaction)
@@ -328,7 +226,7 @@ describe('Admin of the network', () => {
       // ecmr should exist
       .then((ecmr) => {
         currentEcmr = ecmr;
-        ecmr.orderID.should.equal(transaction.ecmrs.orderID);
+        ecmr.orderID.should.equal('to_create_ecmrs');
       })
       // transportOrder should be updated
       .then(() => {
@@ -349,14 +247,24 @@ describe('Admin of the network', () => {
       })
       .then((vehicle) => {
         should.exist(vehicle.ecmrs.find(ecmr => ecmr.$identifier === currentEcmr.ecmrID));
-      });
+      })
+      .then(() => {
+        return businessNetworkConnection.getAssetRegistry(Network.namespace + '.Vehicle');
+      })
+      .then((assetRegistry) => {
+        return assetRegistry.get(currentEcmr.goods[1].vehicle.$identifier);
+      })
+      .then((vehicle) => {
+        should.exist(vehicle.ecmrs.find(ecmr => ecmr.$identifier === currentEcmr.ecmrID));
+      })
   });
 
   it('should be able to submit CreateECMRs which creates multiple ECMRs starting from a TransportOrder', () => {
-    const ecmrs = [builder.buildECMR('1'), builder.buildECMR('2')];
-    [ecmrs[0].orderID, ecmrs[1].orderID] = ['to_create_ecmrs', 'to_create_ecmrs'];
+    var currentEcmrs = [builder.buildECMR('1'), builder.buildECMR('2')];
+    currentEcmrs[0].goods = [builder.buildGood('vin1')];
+    currentEcmrs[1].goods = [builder.buildGood('vin2')];
     const transaction = factory.newTransaction(Network.namespace, 'CreateECMRs');
-    transaction.ecmrs = ecmrs;
+    transaction.ecmrs = currentEcmrs;
     transaction.transportOrder = factory.newRelationship(Network.namespace, 'TransportOrder', 'to_create_ecmrs');
 
     return businessNetworkConnection.submitTransaction(transaction)
@@ -367,15 +275,46 @@ describe('Admin of the network', () => {
         return assetRegistry.getAll();
       })
       .then((ecmrs) => {
-        ecmrs.find(ecmr => (ecmr.ecmrID === ecmrs[0].ecmrID && ecmr.orderID === ecmrs[0].orderID));
-        ecmrs.find(ecmr => (ecmr.ecmrID === ecmrs[1].ecmrID && ecmr.orderID === ecmrs[1].orderID));
+        currentEcmrs = ecmrs;
+        should.exist(currentEcmrs.find(ecmr => (ecmr.ecmrID === currentEcmrs[0].ecmrID && ecmr.orderID === currentEcmrs[0].orderID)));
+        should.exist(currentEcmrs.find(ecmr => (ecmr.ecmrID === currentEcmrs[1].ecmrID && ecmr.orderID === currentEcmrs[1].orderID)));
+      })
+      // transportOrder should be updated
+      .then(() => {
+        return businessNetworkConnection.getAssetRegistry(Network.namespace + '.TransportOrder');
+      })
+      .then((assetRegistry) => {
+        return assetRegistry.get(currentEcmrs[0].orderID);
+      })
+      .then((transportOrder) => {
+        transportOrder.status.should.equal(BusinessModel.orderStatus.InProgress);
+      })
+      // all the vin into the ecmr should have a reference to the ecmr
+      .then(() => {
+        return businessNetworkConnection.getAssetRegistry(Network.namespace + '.Vehicle');
+      })
+      .then((assetRegistry) => {
+        return assetRegistry.get(currentEcmrs[0].goods[0].vehicle.$identifier);
+      })
+      .then((vehicle) => {
+        should.exist(vehicle.ecmrs.find(ecmr => ecmr.$identifier === currentEcmrs[0].ecmrID));
+      })
+      // all the vin into the ecmr should have a reference to the ecmr
+      .then(() => {
+        return businessNetworkConnection.getAssetRegistry(Network.namespace + '.Vehicle');
+      })
+      .then((assetRegistry) => {
+        return assetRegistry.get(currentEcmrs[1].goods[0].vehicle.$identifier);
+      })
+      .then((vehicle) => {
+        should.exist(vehicle.ecmrs.find(ecmr => ecmr.$identifier === currentEcmrs[1].ecmrID));
       });
   });
 
   it('should be able to submit UpdateEcmrStatusToLoaded which updates ECMR status from CREATED to LOADED', () => {
     const transaction = factory.newTransaction(Network.namespace, 'UpdateEcmrStatusToLoaded');
     transaction.ecmr = factory.newRelationship(Network.namespace, 'ECMR', 'created');
-    transaction.goods = builder.buildGoods(sampleGoods);
+    transaction.goods = [builder.buildGood('vin1')];
     transaction.signature = builder.buildSignature(Identity.users.compoundAdmin);
 
     return businessNetworkConnection.submitTransaction(transaction)
@@ -394,7 +333,7 @@ describe('Admin of the network', () => {
   it('should be able to submit UpdateEcmrStatusToInTransit which updates ECMR status from LOADED to IN_TRANSIT', () => {
     const transaction = factory.newTransaction(Network.namespace, 'UpdateEcmrStatusToInTransit');
     transaction.ecmr = factory.newRelationship(Network.namespace, 'ECMR', 'loaded');
-    transaction.goods = builder.buildGoods(sampleGoods);
+    transaction.goods = [builder.buildGood('vin1')];
     transaction.signature = builder.buildSignature(Identity.users.carrierMember);
 
     return businessNetworkConnection.submitTransaction(transaction)
@@ -413,7 +352,7 @@ describe('Admin of the network', () => {
   it('should be able to submit UpdateEcmrStatusToDelivered which updates ECMR status from IN_TRANSIT to DELIVERED', () => {
     const transaction = factory.newTransaction(Network.namespace, 'UpdateEcmrStatusToDelivered');
     transaction.ecmr = factory.newRelationship(Network.namespace, 'ECMR', 'in_transit');
-    transaction.goods = builder.buildGoods(sampleGoods);
+    transaction.goods = [builder.buildGood('vin1')];
     transaction.signature = builder.buildSignature(Identity.users.carrierMember);
     transaction.transportOrder = factory.newRelationship(Network.namespace, 'TransportOrder', 'to_create_ecmrs');
 
@@ -430,22 +369,62 @@ describe('Admin of the network', () => {
       .should.be.rejectedWith(/Participant is not authenticated/);
   });
 
-  it('should be able to submit UpdateEcmrStatusToConfirmedDelivered which updates ECMR status from DELIVERED to CONFIRMED_DELIVERED', () => {
+  it('should be able to submit UpdateEcmrStatusToConfirmedDelivered which updates ECMR status from DELIVERED to CONFIRMED_DELIVERED ' +
+    'and to UPDATE the TransportOrder status to COMPLETED', () => {
     const transaction = factory.newTransaction(Network.namespace, 'UpdateEcmrStatusToConfirmedDelivered');
-    transaction.ecmr = factory.newRelationship(Network.namespace, 'ECMR', 'delivered');
-    transaction.goods = builder.buildGoods(sampleGoods);
+    transaction.ecmr = factory.newRelationship(Network.namespace, 'ECMR', 'delivered_good');
+    transaction.goods = [builder.buildGood('vin1')];
     transaction.signature = builder.buildSignature(Identity.users.recipientAdmin);
-    transaction.transportOrder = factory.newRelationship(Network.namespace, 'TransportOrder', 'to_create_ecmrs');
+    transaction.transportOrder = factory.newRelationship(Network.namespace, 'TransportOrder', 'to_set_completed');
 
     return businessNetworkConnection.submitTransaction(transaction)
       // .then(() => {
-      //   return businessNetworkConnection.getAssetRegistry(Network.namespace + '.ECMR')
-      //     .then((assetRegistry) => {
-      //       return assetRegistry.get('delivered');
-      //     })
-      //     .then((updatedECMR) => {
-      //       updatedECMR.status.should.equal(BusinessModel.ecmrStatus.ConfirmedDelivered);
-      //     });
+      //   return businessNetworkConnection.getAssetRegistry(Network.namespace + '.ECMR');
+      // })
+      // .then((assetRegistry) => {
+      //   return assetRegistry.get('delivered_good');
+      // })
+      // .then((updatedECMR) => {
+      //   updatedECMR.status.should.equal(BusinessModel.ecmrStatus.ConfirmedDelivered);
+      // })
+      // .then(() => {
+      //   return businessNetworkConnection.getAssetRegistry(Network.namespace + '.TransportOrder');
+      // })
+      // .then((assetRegistry) => {
+      //   return assetRegistry.get('to_set_completed');
+      // })
+      // .then((transportOrder) => {
+      //   transportOrder.status.should.equal(BusinessModel.orderStatus.Completed);
+      // });
+      .should.be.rejectedWith(/Participant is not authenticated/);
+  });
+
+  it('should be able to submit UpdateEcmrStatusToConfirmedDelivered which updates ECMR status from DELIVERED to CONFIRMED_DELIVERED ' +
+    'but NOT to UPDATE the TransportOrder status to COMPLETED', () => {
+    const transaction = factory.newTransaction(Network.namespace, 'UpdateEcmrStatusToConfirmedDelivered');
+    transaction.ecmr = factory.newRelationship(Network.namespace, 'ECMR', 'delivered_bad');
+    transaction.goods = [builder.buildGood('vin1')];
+    transaction.signature = builder.buildSignature(Identity.users.recipientAdmin);
+    transaction.transportOrder = factory.newRelationship(Network.namespace, 'TransportOrder', 'not_to_set_completed');
+
+    return businessNetworkConnection.submitTransaction(transaction)
+      // .then(() => {
+      //   return businessNetworkConnection.getAssetRegistry(Network.namespace + '.ECMR');
+      // })
+      // .then((assetRegistry) => {
+      //   return assetRegistry.get('delivered_bad');
+      // })
+      // .then((updatedECMR) => {
+      //   updatedECMR.status.should.equal(BusinessModel.ecmrStatus.ConfirmedDelivered);
+      // })
+      // .then(() => {
+      //   return businessNetworkConnection.getAssetRegistry(Network.namespace + '.TransportOrder');
+      // })
+      // .then((assetRegistry) => {
+      //   return assetRegistry.get('not_to_set_completed');
+      // })
+      // .then((transportOrder) => {
+      //   transportOrder.status.should.equal(BusinessModel.orderStatus.Open);
       // });
       .should.be.rejectedWith(/Participant is not authenticated/);
   });
@@ -453,7 +432,7 @@ describe('Admin of the network', () => {
   it('should not be able to update ECMR status to IN_TRANSIT when status is not LOADED', () => {
     const transaction = factory.newTransaction(Network.namespace, 'UpdateEcmrStatusToInTransit');
     transaction.ecmr = factory.newRelationship(Network.namespace, 'ECMR', 'created');
-    transaction.goods = builder.buildGoods(sampleGoods);
+    transaction.goods = [builder.buildGood('vin1')];
     transaction.signature = builder.buildSignature(Identity.users.carrierMember);
 
     return businessNetworkConnection.submitTransaction(transaction)
@@ -463,7 +442,7 @@ describe('Admin of the network', () => {
   it('should not be able to update ECMR status to DELIVERED when status is not IN_TRANSIT', () => {
     const transaction = factory.newTransaction(Network.namespace, 'UpdateEcmrStatusToDelivered');
     transaction.ecmr = factory.newRelationship(Network.namespace, 'ECMR', 'loaded');
-    transaction.goods = builder.buildGoods(sampleGoods);
+    transaction.goods = [builder.buildGood('vin1')];
     transaction.signature = builder.buildSignature(Identity.users.carrierMember);
     transaction.transportOrder = factory.newRelationship(Network.namespace, 'TransportOrder', 'to_create_ecmrs');
 
@@ -474,7 +453,7 @@ describe('Admin of the network', () => {
   it('should not be able to update ECMR status to CONFIRMED_DELIVERED when status is not DELIVERED', () => {
     const transaction = factory.newTransaction(Network.namespace, 'UpdateEcmrStatusToConfirmedDelivered');
     transaction.ecmr = factory.newRelationship(Network.namespace, 'ECMR', 'in_transit');
-    transaction.goods = builder.buildGoods(sampleGoods);
+    transaction.goods = [builder.buildGood('vin1')];
     transaction.signature = builder.buildSignature(Identity.users.carrierMember);
     transaction.transportOrder = factory.newRelationship(Network.namespace, 'TransportOrder', 'to_create_ecmrs');
 
@@ -485,7 +464,7 @@ describe('Admin of the network', () => {
   it('should not be able to update ECMR status to IN_TRANSIT when status is LOADED without compound signature', () => {
     const transaction = factory.newTransaction(Network.namespace, 'UpdateEcmrStatusToInTransit');
     transaction.ecmr = factory.newRelationship(Network.namespace, 'ECMR', 'loaded_without_compound_signature');
-    transaction.goods = builder.buildGoods(sampleGoods);
+    transaction.goods = [builder.buildGood('vin1')];
     transaction.signature = builder.buildSignature(Identity.users.carrierMember);
 
     return businessNetworkConnection.submitTransaction(transaction)
@@ -495,7 +474,7 @@ describe('Admin of the network', () => {
   it('should not be able to update ECMR status to DELIVERED when status is IN_TRANSIT without compound signature', () => {
     const transaction = factory.newTransaction(Network.namespace, 'UpdateEcmrStatusToDelivered');
     transaction.ecmr = factory.newRelationship(Network.namespace, 'ECMR', 'in_transit_without_compound_signature');
-    transaction.goods = builder.buildGoods(sampleGoods);
+    transaction.goods = [builder.buildGood('vin1')];
     transaction.signature = builder.buildSignature(Identity.users.carrierMember);
     transaction.transportOrder = factory.newRelationship(Network.namespace, 'TransportOrder', 'to_create_ecmrs');
 
@@ -506,7 +485,7 @@ describe('Admin of the network', () => {
   it('should not be able to update ECMR status to DELIVERED when status is IN_TRANSIT without transporter signature', () => {
     const transaction = factory.newTransaction(Network.namespace, 'UpdateEcmrStatusToDelivered');
     transaction.ecmr = factory.newRelationship(Network.namespace, 'ECMR', 'in_transit_without_transporter_signature');
-    transaction.goods = builder.buildGoods(sampleGoods);
+    transaction.goods = [builder.buildGood('vin1')];
     transaction.signature = builder.buildSignature(Identity.users.carrierMember);
     transaction.transportOrder = factory.newRelationship(Network.namespace, 'TransportOrder', 'to_create_ecmrs');
 
@@ -517,7 +496,7 @@ describe('Admin of the network', () => {
   it('should not be able to update ECMR status to CONFIRMED_DELIVERED before compound admin signed', () => {
     const transaction = factory.newTransaction(Network.namespace, 'UpdateEcmrStatusToConfirmedDelivered');
     transaction.ecmr = factory.newRelationship(Network.namespace, 'ECMR', 'delivered_without_compound_signature');
-    transaction.goods = builder.buildGoods(sampleGoods);
+    transaction.goods = [builder.buildGood('vin1')];
     transaction.signature = builder.buildSignature(Identity.users.carrierMember);
     transaction.transportOrder = factory.newRelationship(Network.namespace, 'TransportOrder', 'to_create_ecmrs');
 
@@ -528,7 +507,7 @@ describe('Admin of the network', () => {
   it('should not be able to update ECMR status to CONFIRMED_DELIVERED before transporter signed for loading', () => {
     const transaction = factory.newTransaction(Network.namespace, 'UpdateEcmrStatusToConfirmedDelivered');
     transaction.ecmr = factory.newRelationship(Network.namespace, 'ECMR', 'delivered_without_carrier_loading_signature');
-    transaction.goods = builder.buildGoods(sampleGoods);
+    transaction.goods = [builder.buildGood('vin1')];
     transaction.signature = builder.buildSignature(Identity.users.carrierMember);
     transaction.transportOrder = factory.newRelationship(Network.namespace, 'TransportOrder', 'to_create_ecmrs');
 
@@ -539,7 +518,7 @@ describe('Admin of the network', () => {
   it('should not be able to update ECMR status to CONFIRMED_DELIVERED before transporter signed for delivery', () => {
     const transaction = factory.newTransaction(Network.namespace, 'UpdateEcmrStatusToConfirmedDelivered');
     transaction.ecmr = factory.newRelationship(Network.namespace, 'ECMR', 'delivered_without_carrier_delivery_signature');
-    transaction.goods = builder.buildGoods(sampleGoods);
+    transaction.goods = [builder.buildGood('vin1')];
     transaction.signature = builder.buildSignature(Identity.users.carrierMember);
     transaction.transportOrder = factory.newRelationship(Network.namespace, 'TransportOrder', 'to_create_ecmrs');
 
@@ -608,7 +587,7 @@ describe('Admin of the network', () => {
 
   it('should be able to update the expectedDeliveryWindow of an ECMR which status is IN_TRANSIT', () => {
     let updateExpectedDeliveryWindowTransaction = factory.newTransaction(Network.namespace, 'UpdateExpectedDeliveryWindow');
-    updateExpectedDeliveryWindowTransaction.ecmr = factory.newRelationship(Network.namespace, 'ECMR', 'ecmr3');
+    updateExpectedDeliveryWindowTransaction.ecmr = factory.newRelationship(Network.namespace, 'ECMR', 'in_transit');
     updateExpectedDeliveryWindowTransaction.expectedWindow = factory.newConcept(Network.namespace, 'DateWindow');
     updateExpectedDeliveryWindowTransaction.expectedWindow.startDate = 1;
     updateExpectedDeliveryWindowTransaction.expectedWindow.endDate = 2;
@@ -617,7 +596,7 @@ describe('Admin of the network', () => {
       .then(() => {
         return businessNetworkConnection.getAssetRegistry(Network.namespace + '.ECMR')
           .then((assetRegistry) => {
-            return assetRegistry.get('ecmr3')
+            return assetRegistry.get('in_transit')
               .then((ecmr) => {
                 ecmr.delivery.expectedWindow.startDate.should.equal(1);
                 ecmr.delivery.expectedWindow.endDate.should.equal(2);
@@ -642,4 +621,5 @@ describe('Admin of the network', () => {
     return businessNetworkConnection.submitTransaction(updateExpectedDeliveryWindowTransaction)
       .should.be.rejectedWith(/Transaction is not valid. Attempting to set an ExpectedDeliveryWindow when status is not IN_TRANSIT. Actual status:/);
   });
+
 });
