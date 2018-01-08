@@ -89,7 +89,7 @@ OK
 ID                                                 Public IP       Private IP       Machine Type   State    Status
 kube-dal10-pa0783c15e421749a59e2f5b7efdd351d1-w1   169.48.140.48   10.176.190.176   free           normal   Ready
 ```
-- Configure kubectl to use the cluster
+- Configure `kubectl` to use the cluster
 Issue the following command to download the configuration for your cluster:
 ```bash
 bx cs cluster-config YOURCLUSTERNAME
