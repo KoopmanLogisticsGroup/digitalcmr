@@ -8,7 +8,7 @@ export class VehicleTransactor implements TransactionCreator {
     let transaction = factory.newTransaction(namespace, transactionName);
 
     if (transactionName === Transaction.CreateVehicles) {
-      transaction.vehicles = VehicleBuilder.buildCreateVehicles(factory, namespace, resources);
+      transaction.vehicles = VehicleBuilder.buildVehicles(factory, namespace, resources);
     }
 
     return transaction;

@@ -78,6 +78,7 @@ describe('As admin of the network, ', () => {
         builder = new Builder(factory);
 
         let transportOrder = builder.buildTransportOrder('12345567890');
+        transportOrder.goods = [builder.buildGood('VIN12345678')];
 
         return businessNetworkConnection.getAssetRegistry(Network.namespace + '.TransportOrder')
           .then((assetRegistry) => {

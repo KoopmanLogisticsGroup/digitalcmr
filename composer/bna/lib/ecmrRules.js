@@ -19,8 +19,24 @@
  * @transaction
  */
 function createECMRs(tx) {
+  var totalEcmrsGoods = tx.ecmrs
+    .map(function (ecmr) {
+      return ecmr.goods.length;
+    }).reduce(function (prev, curr) {
+      return prev + curr;
+    });
+
+  if (tx.transportOrder.goods.length !== +totalEcmrsGoods) {
+    throw new Error('[CreateECMRs] The number of goods mismatch between TransportOrder ' + tx.transportOrder.orderID + ' and ECMRs. ' + tx.transportOrder.goods.length + ' !== ' + +totalEcmrsGoods);
+  }
+
   return getAssetRegistry('org.digitalcmr.ECMR')
     .then(function (assetRegistry) {
+      // maintain relationship with transport order
+      tx.ecmrs.forEach(function (ecmr) {
+        ecmr.orderID = tx.transportOrder.$identifier;
+      });
+
       return assetRegistry.addAll(tx.ecmrs)
         .then(function () {
           updateTransportOrderToInProgress(tx);
@@ -162,9 +178,6 @@ function updateEcmrStatusToDelivered(tx) {
   return getAssetRegistry('org.digitalcmr.ECMR')
     .then(function (assetRegistry) {
       return assetRegistry.update(tx.ecmr)
-        .then(function () {
-          updateTransportOrderStatusToCompleted(tx.transportOrder);
-        })
         .catch(function (error) {
           throw new Error('[UpdateEcmrStatusToDelivered] An error occurred while updating the registry asset: ' + error);
         });
@@ -198,6 +211,9 @@ function updateEcmrStatusToConfirmedDelivered(tx) {
   var currentParticipant = getCurrentParticipant() && getCurrentParticipant().getIdentifier();
 
   if (typeof currentParticipant === 'undefined' || !currentParticipant) {
+    // KEEP DISABLE FOR PRODUCTION - enable ONLY for unit test
+    // currentParticipant = 'admin';
+
     throw new Error('[UpdateEcmrStatusToConfirmedDelivered] Participant is not authenticated');
   }
 
@@ -220,6 +236,10 @@ function updateEcmrStatusToConfirmedDelivered(tx) {
         .catch(function (error) {
           throw new Error('[UpdateEcmrStatusToConfirmedDelivered] An error occurred while updating the registry asset: ' + error);
         });
+      // TODO orderID not present in registry error to fix
+      // .then(function () {
+      //   updateTransportOrderStatusToCompleted(tx.transportOrder);
+      // });
     }).catch(function (error) {
       throw new Error('[UpdateEcmrStatusToConfirmedDelivered] An error occurred while getting the asset Registry: ' + error);
     });

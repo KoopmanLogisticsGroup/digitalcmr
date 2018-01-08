@@ -2,17 +2,17 @@ import {Factory} from 'composer-common';
 import {BuilderUtils} from '../../blockchain/BuilderUtils';
 
 export class VehicleBuilder {
-  public static buildCreateVehicles(factory: Factory, namespace: string, vehicles: any[]): any {
+  public static buildVehicles(factory: Factory, namespace: string, vehicles: any[]): any {
     let validatedObjects: any[] = [];
 
     for (const vehicle of vehicles) {
-      validatedObjects.push(this.buildCreateVehicle(factory, namespace, vehicle));
+      validatedObjects.push(this.buildVehicle(factory, namespace, vehicle));
     }
 
     return validatedObjects;
   }
 
-  public static buildCreateVehicle(factory: Factory, namespace: string, vehicle: any): any {
+  public static buildVehicle(factory: Factory, namespace: string, vehicle: any): any {
     let validatedObject = BuilderUtils.createResource(factory, namespace, 'Vehicle', vehicle);
 
     for (let j = 0; j < vehicle.ecmrs.length; j++) {

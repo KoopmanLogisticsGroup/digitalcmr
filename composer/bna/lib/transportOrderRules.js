@@ -51,8 +51,11 @@ function createTransportOrders(tx) {
 function updateTransportOrderToInProgress(tx) {
   tx.transportOrder.status = TransportOrderStatus.InProgress;
 
-  // Adds the created ECMR resource to the array of ECMRs by checking if orderIDs are corresponding
-  tx.transportOrder.ecmrs = tx.ecmrs;
+  var factory = getFactory();
+  var ecmrIDs = tx.ecmrs.map(function (ecmr) {
+    return factory.newRelationship('org.digitalcmr', 'ECMR', ecmr.$identifier)
+  });
+  tx.transportOrder.ecmrs = ecmrIDs;
 
   return getAssetRegistry('org.digitalcmr.TransportOrder')
     .then(function (assetRegistry) {
@@ -66,6 +69,48 @@ function updateTransportOrderToInProgress(tx) {
 }
 
 function updateTransportOrderStatusToCompleted(transportOrder) {
+  var confirmedEcmrs = transportOrder.ecmrs
+    .filter(function (ecmr) {
+      return ecmr.status === EcmrStatus.ConfirmedDelivered
+    });
+
+  if (confirmedEcmrs.length !== transportOrder.ecmrs.length) {
+    console.log('[updateTransportOrderStatusToCompleted] The number of ECMRs in CONFIRMED_DELIVERED are not equal to the total in TransportOrder. ' + confirmedEcmrs.length + ' !== ' + transportOrder.ecmrs.length);
+    return '[updateTransportOrderStatusToCompleted] The number of ECMRs in CONFIRMED_DELIVERED are not equal to the total in TransportOrder. ' + confirmedEcmrs.length + ' !== ' + transportOrder.ecmrs.length;
+  }
+
+  // compare transportOrder.goods against ecmrs[i].goods
+  // return in case the number of goods do not match
+  var totalEcmrsGoods = transportOrder.ecmrs
+    .map(function (ecmr) {
+      return ecmr.goods.length;
+    }).reduce(function (prev, curr) {
+      return prev + curr;
+    });
+
+  if (transportOrder.goods.length !== +totalEcmrsGoods) {
+    console.log('[updateTransportOrderStatusToCompleted] The number of goods mismatch between TransportOrder and ECMRs');
+    return '[updateTransportOrderStatusToCompleted] The number of goods mismatch between TransportOrder and ECMRs';
+  }
+
+  transportOrder.goods = transportOrder.goods.sort(sortByVin);
+  var ecmr;
+
+  for (var i = 0; i < transportOrder.ecmrs.length; i++) {
+    ecmr = transportOrder.ecmrs[i];
+    ecmr.goods = ecmr.goods.sort(sortByVin);
+
+    for (var j = 0; j < ecmr.goods.length; j++) {
+      // there is a mismatch of vin number or there is a cancellation
+      if ((ecmr.goods[j].vehicle.$identifier !== transportOrder.goods[i + j].vehicle.$identifier) ||
+        ((ecmr.goods[j].vehicle.$identifier === transportOrder.goods[i + j].vehicle.$identifier) &&
+          (!ecmr.goods[j].cancellation && typeof ecmr.goods[j].cancellation !== 'undefined'))) {
+        console.log('[updateTransportOrderStatusToCompleted] Goods mismatch or goods delivering is not completed');
+        return '[updateTransportOrderStatusToCompleted] Goods mismatch or goods delivering is not completed';
+      }
+    }
+  }
+
   transportOrder.status = TransportOrderStatus.Completed;
 
   return getAssetRegistry('org.digitalcmr.TransportOrder')
@@ -77,6 +122,16 @@ function updateTransportOrderStatusToCompleted(transportOrder) {
     }).catch(function (error) {
       throw new Error('[UpdateTransportOrderStatusToCompleted] An error occurred while updating the TransportOrder asset: ' + error);
     });
+}
+
+function sortByVin(a, b) {
+  if (a.vehicle.$identifier > b.vehicle.$identifier) {
+    return 1;
+  }
+  if (a.vehicle.$identifier < b.vehicle.$identifier) {
+    return -1;
+  }
+  return 0;
 }
 
 /**

@@ -27,6 +27,7 @@ export class TestData {
   private logger: LoggerInstance         = Container.get(LoggerFactory).get('TestData');
   private static adminIdentity: Identity = {userID: 'admin', userSecret: 'adminpw'};
   private businessNetworkHandler: BusinessNetworkHandler;
+  private transportOrderIDs: string[]    = ['A12345ORDER', 'B12345ORDER'];
 
   public constructor(private transactionHandler: TransactionHandler,
                      private dataService: DataService,
@@ -163,9 +164,14 @@ export class TestData {
   }
 
   private async addEcmrs(ecmrs: Ecmr[]): Promise<any> {
+    await this.transactionHandler.invoke(TestData.adminIdentity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateEcmrs, <CreateEcmrs>{
+      'orderID': this.transportOrderIDs[0],
+      'ecmrs':   ecmrs.filter(ecmr => ecmr.orderID === this.transportOrderIDs[0])
+    }, new EcmrTransactor());
+
     return this.transactionHandler.invoke(TestData.adminIdentity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateEcmrs, <CreateEcmrs>{
-      'orderID': ecmrs[0].orderID,
-      'ecmrs':   ecmrs
+      'orderID': this.transportOrderIDs[1],
+      'ecmrs':   ecmrs.filter(ecmr => ecmr.orderID === this.transportOrderIDs[1])
     }, new EcmrTransactor());
   }
 
