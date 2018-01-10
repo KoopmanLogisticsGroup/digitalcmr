@@ -396,7 +396,7 @@ describe('Admin of the network', () => {
       // .then((transportOrder) => {
       //   transportOrder.status.should.equal(BusinessModel.orderStatus.Completed);
       // });
-      .should.be.rejectedWith(/Participant is not authenticated/);
+      .should.be.rejectedWith(/No permissions/);
   });
 
   it('should be able to submit UpdateEcmrStatusToConfirmedDelivered which updates ECMR status from DELIVERED to CONFIRMED_DELIVERED ' +
@@ -426,7 +426,7 @@ describe('Admin of the network', () => {
       // .then((transportOrder) => {
       //   transportOrder.status.should.equal(BusinessModel.orderStatus.Open);
       // });
-      .should.be.rejectedWith(/Participant is not authenticated/);
+      .should.be.rejectedWith(/No permissions/);
   });
 
   it('should not be able to update ECMR status to IN_TRANSIT when status is not LOADED', () => {
@@ -458,7 +458,7 @@ describe('Admin of the network', () => {
     transaction.transportOrder = factory.newRelationship(Network.namespace, 'TransportOrder', 'to_create_ecmrs');
 
     return businessNetworkConnection.submitTransaction(transaction)
-      .should.be.rejectedWith(/Trying to set status CONFIRMED_DELIVERED to an ECMR with status: IN_TRANSIT/);
+      .should.be.rejectedWith(/No permissions/);
   });
 
   it('should not be able to update ECMR status to IN_TRANSIT when status is LOADED without compound signature', () => {
@@ -501,7 +501,7 @@ describe('Admin of the network', () => {
     transaction.transportOrder = factory.newRelationship(Network.namespace, 'TransportOrder', 'to_create_ecmrs');
 
     return businessNetworkConnection.submitTransaction(transaction)
-      .should.be.rejectedWith(/Attempt to set the status on CONFIRMED_DELIVERED before the compound admin signed!/);
+      .should.be.rejectedWith(/No permissions/);
   });
 
   it('should not be able to update ECMR status to CONFIRMED_DELIVERED before transporter signed for loading', () => {
@@ -512,7 +512,7 @@ describe('Admin of the network', () => {
     transaction.transportOrder = factory.newRelationship(Network.namespace, 'TransportOrder', 'to_create_ecmrs');
 
     return businessNetworkConnection.submitTransaction(transaction)
-      .should.be.rejectedWith(/Attempt to set the status on CONFIRMED_DELIVERED before the transporter signed for loading!/);
+      .should.be.rejectedWith(/No permissions/);
   });
 
   it('should not be able to update ECMR status to CONFIRMED_DELIVERED before transporter signed for delivery', () => {
@@ -523,7 +523,7 @@ describe('Admin of the network', () => {
     transaction.transportOrder = factory.newRelationship(Network.namespace, 'TransportOrder', 'to_create_ecmrs');
 
     return businessNetworkConnection.submitTransaction(transaction)
-      .should.be.rejectedWith(/Attempt to set the status on CONFIRMED_DELIVERED before the transporter signed for delivery!/);
+      .should.be.rejectedWith(/No permissions/);
   });
 
   it('should be able to submit UpdateECMRStatusToCancelled and cancel an ECMR', () => {
