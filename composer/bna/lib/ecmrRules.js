@@ -193,6 +193,13 @@ function updateEcmrStatusToDelivered(tx) {
  * @transaction
  */
 function updateEcmrStatusToConfirmedDelivered(tx) {
+  var factory = getFactory();
+  var currentParticipant = getCurrentParticipant() && getCurrentParticipant().getIdentifier();
+
+  if (tx.ecmr.recipient.getIdentifier() !== currentParticipant) {
+    throw new Error('[UpdateEcmrStatusToConfirmedDelivered] No permissions to execute this action');
+  }
+
   if (tx.ecmr.status !== EcmrStatus.Delivered) {
     throw new Error('[UpdateEcmrStatusToConfirmedDelivered] Invalid transaction. Trying to set status CONFIRMED_DELIVERED to an ECMR with status: ' + tx.ecmr.status);
   }
@@ -207,12 +214,9 @@ function updateEcmrStatusToConfirmedDelivered(tx) {
     throw new Error('[UpdateEcmrStatusToConfirmedDelivered] Transaction is not valid. Attempt to set the status on CONFIRMED_DELIVERED before the transporter signed for delivery!');
   }
 
-  var factory = getFactory();
-  var currentParticipant = getCurrentParticipant() && getCurrentParticipant().getIdentifier();
-
   if (typeof currentParticipant === 'undefined' || !currentParticipant) {
     // KEEP DISABLE FOR PRODUCTION - enable ONLY for unit test
-    // currentParticipant = 'admin';
+    // currentParticipant = 'rob@cardealer.org';
 
     throw new Error('[UpdateEcmrStatusToConfirmedDelivered] Participant is not authenticated');
   }

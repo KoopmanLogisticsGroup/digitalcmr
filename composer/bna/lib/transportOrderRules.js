@@ -19,6 +19,7 @@
  * @transaction
  */
 function createTransportOrder(tx) {
+  // TODO check whether the VINs exist or not and throw an error in that case
   return getAssetRegistry('org.digitalcmr.TransportOrder')
     .then(function (assetRegistry) {
       return assetRegistry.add(tx.transportOrder)
@@ -101,6 +102,7 @@ function updateTransportOrderStatusToCompleted(transportOrder) {
     ecmr.goods = ecmr.goods.sort(sortByVin);
 
     for (var j = 0; j < ecmr.goods.length; j++) {
+      console.log('ecmr', ecmr.$identifier);
       // there is a mismatch of vin number or there is a cancellation
       if ((ecmr.goods[j].vehicle.$identifier !== transportOrder.goods[i + j].vehicle.$identifier) ||
         ((ecmr.goods[j].vehicle.$identifier === transportOrder.goods[i + j].vehicle.$identifier) &&
