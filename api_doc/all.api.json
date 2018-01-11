@@ -3,7 +3,7 @@
   "info":                {
     "title":       "Digital CMR APIs",
     "description": "APIs for managing the digital CMR",
-    "version":     "1.3.1"
+    "version":     "1.3.2"
   },
   "host":                "159.8.76.83:31001",
   "schemes":             [
@@ -443,7 +443,7 @@
             "type":        "string"
           },
           {
-            "name":        "ecmr",
+            "name":        "object",
             "in":          "body",
             "description": "Updates the ECMR object",
             "required":    true,
@@ -486,7 +486,7 @@
             "type":        "string"
           },
           {
-            "name":        "ecmr",
+            "name":        "object",
             "in":          "body",
             "description": "Updates the ECMR object",
             "required":    true,
@@ -529,7 +529,7 @@
             "type":        "string"
           },
           {
-            "name":        "ecmr",
+            "name":        "object",
             "in":          "body",
             "description": "Updates the ECMR object",
             "required":    true,
@@ -572,7 +572,7 @@
             "type":        "string"
           },
           {
-            "name":        "ecmr",
+            "name":        "object",
             "in":          "body",
             "description": "Updates the ECMR object",
             "required":    true,
@@ -655,12 +655,10 @@
         ],
         "responses":                   {
           "200":     {
-            "description": "The list contains the ECMR. It is empty if an ECMR with the provided id does not exist, or if the user has no permission to read the ECMR\n",
+            "description": "It will return the ECMR object. It is empty if an ECMR with the provided ID does not exist, or if the user has no permission to read the ECMR\n",
             "schema":      {
-              "type":  "array",
-              "items": {
-                "$ref": "#/definitions/ECMR"
-              }
+              "type": "object",
+              "$ref": "#/definitions/ECMR"
             }
           },
           "default": {
@@ -2565,146 +2563,146 @@
         },
         "ecmrs":   {
           "description": "Returns an array of ecmrs",
-          "$ref":        "#/definitions/ECMR"
+          "type":        "array",
+          "items":       {
+            "$ref": "#/definitions/ECMR"
+          }
         }
       }
     },
     "ECMR":                           {
-      "type":  "array",
-      "items": {
-        "description": "Array of ecmrs",
-        "properties":  {
-          "ecmrID":                 {
-            "type":        "string",
-            "description": "Provide a unique ecmrID",
-            "example":     "ECMRID",
-            "required":    true
+      "description": "Array of ecmrs",
+      "properties":  {
+        "ecmrID":                 {
+          "type":        "string",
+          "description": "Provide a unique ecmrID",
+          "example":     "ECMRID",
+          "required":    true
+        },
+        "status":                 {
+          "$ref":        "#/definitions/EcmrStatus",
+          "description": "Select the correct ecmr status",
+          "required":    true
+        },
+        "agreementTerms":         {
+          "type":        "string",
+          "description": "Provide agreement terms",
+          "required":    "true"
+        },
+        "agreementTermsSec":      {
+          "type":        "string",
+          "description": "Provide sec agreement terms",
+          "required":    "true"
+        },
+        "legalOwnerRef":          {
+          "type":        "string",
+          "description": "Provide the Legal Owner reference",
+          "required":    "true"
+        },
+        "carrierRef":             {
+          "type":        "string",
+          "description": "Provide the Carrier reference",
+          "required":    "true"
+        },
+        "recipientRef":           {
+          "type":        "string",
+          "description": "Provide the Recipient reference",
+          "required":    "true"
+        },
+        "orderID":                {
+          "type":        "string",
+          "description": "Provide the corresponding orderID",
+          "example":     "ORDER1",
+          "required":    "true"
+        },
+        "issuedBy":               {
+          "type":        "string",
+          "description": "Provide the issuedBy identity",
+          "example":     "koopman",
+          "required":    "true"
+        },
+        "creation":               {
+          "$ref":        "#/definitions/Creation",
+          "description": "Returns a creation object",
+          "required":    true
+        },
+        "loading":                {
+          "$ref":        "#/definitions/Loading",
+          "description": "Returns a loading object",
+          "required":    true
+        },
+        "delivery":               {
+          "$ref":        "#/definitions/Delivery",
+          "description": "Returns a delivery object",
+          "required":    true
+        },
+        "owner":                  {
+          "type":        "string",
+          "description": "Provide ID of the Legal Owner organization",
+          "example":     "leaseplan",
+          "required":    true
+        },
+        "source":                 {
+          "type":        "string",
+          "description": "Provide ID of the Compound organization",
+          "example":     "amsterdamcompound",
+          "required":    true
+        },
+        "transporter":            {
+          "type":        "string",
+          "description": "Provide ID of the Transporter user",
+          "example":     "harry@koopman.org",
+          "required":    false
+        },
+        "carrier":                {
+          "type":        "string",
+          "description": "Provide ID of the Carrier organization",
+          "example":     "koopman",
+          "required":    true
+        },
+        "recipientOrg":           {
+          "type":        "string",
+          "description": "Provide ID of the Recipient organization",
+          "example":     "cardealer",
+          "required":    true
+        },
+        "recipient":              {
+          "type":        "string",
+          "description": "Provide ID of the Recipient user",
+          "example":     "rob@cardealåer.org",
+          "required":    false
+        },
+        "issueDate":              {
+          "type":        "number",
+          "description": "Provide an issue date in integer format",
+          "required":    true
+        },
+        "carrierComments":        {
+          "type":        "string",
+          "description": "Provide Carrier Comments",
+          "required":    true
+        },
+        "goods":                  {
+          "type":     "array",
+          "items":    {
+            "$ref":        "#/definitions/Good",
+            "description": "Returns an array of goods"
           },
-          "status":                 {
-            "$ref":        "#/definitions/EcmrStatus",
-            "description": "Select the correct ecmr status",
-            "required":    true
-          },
-          "agreementTerms":         {
-            "type":        "string",
-            "description": "Provide agreement terms",
-            "required":    "true"
-          },
-          "agreementTermsSec":      {
-            "type":        "string",
-            "description": "Provide sec agreement terms",
-            "required":    "true"
-          },
-          "legalOwnerRef":          {
-            "type":        "string",
-            "description": "Provide the Legal Owner reference",
-            "required":    "true"
-          },
-          "carrierRef":             {
-            "type":        "string",
-            "description": "Provide the Carrier reference",
-            "required":    "true"
-          },
-          "recipientRef":           {
-            "type":        "string",
-            "description": "Provide the Recipient reference",
-            "required":    "true"
-          },
-          "orderID":                {
-            "type":        "string",
-            "description": "Provide the corresponding orderID",
-            "example":     "ORDER1",
-            "required":    "true"
-          },
-          "issuedBy":               {
-            "type":        "string",
-            "description": "Provide the issuedBy identity",
-            "example":     "koopman",
-            "required":    "true"
-          },
-          "creation":               {
-            "$ref":        "#/definitions/Creation",
-            "description": "Returns a creation object",
-            "required":    true
-          },
-          "loading":                {
-            "$ref":        "#/definitions/Loading",
-            "description": "Returns a loading object",
-            "required":    true
-          },
-          "delivery":               {
-            "$ref":        "#/definitions/Delivery",
-            "description": "Returns a delivery object",
-            "required":    true
-          },
-          "owner":                  {
-            "type":        "string",
-            "description": "Provide ID of the Legal Owner organization",
-            "example":     "leaseplan",
-            "required":    true
-          },
-          "source":                 {
-            "type":        "string",
-            "description": "Provide ID of the Compound organization",
-            "example":     "amsterdamcompound",
-            "required":    true
-          },
-          "transporter":            {
-            "type":        "string",
-            "description": "Provide ID of the Transporter user",
-            "example":     "harry@koopman.org",
-            "required":    false
-          },
-          "carrier":                {
-            "type":        "string",
-            "description": "Provide ID of the Carrier organization",
-            "example":     "koopman",
-            "required":    true
-          },
-          "recipientOrg":           {
-            "type":        "string",
-            "description": "Provide ID of the Recipient organization",
-            "example":     "cardealer",
-            "required":    true
-          },
-          "recipient":              {
-            "type":        "string",
-            "description": "Provide ID of the Recipient user",
-            "example":     "rob@cardealåer.org",
-            "required":    false
-          },
-          "issueDate":              {
-            "type":        "number",
-            "description": "Provide an issue date in integer format",
-            "required":    true
-          },
-          "carrierComments":        {
-            "type":        "string",
-            "description": "Provide Carrier Comments",
-            "required":    true
-          },
-          "goods":                  {
-            "type":     "array",
-            "items":    {
-              "$ref":        "#/definitions/Good",
-              "description": "Returns an array of goods"
-            },
-            "required": true
-          },
-          "legalOwnerInstructions": {
-            "type":        "string",
-            "description": "Provide Legal Owner instructions",
-            "required":    true
-          },
-          "paymentInstructions":    {
-            "type":        "string",
-            "description": "Provide Payment instructions",
-            "required":    true
-          },
-          "payOnDelivery":          {
-            "type":     "string",
-            "required": true
-          }
+          "required": true
+        },
+        "legalOwnerInstructions": {
+          "type":        "string",
+          "description": "Provide Legal Owner instructions",
+          "required":    true
+        },
+        "paymentInstructions":    {
+          "type":        "string",
+          "description": "Provide Payment instructions",
+          "required":    true
+        },
+        "payOnDelivery":          {
+          "type":     "string",
+          "required": true
         }
       }
     },
