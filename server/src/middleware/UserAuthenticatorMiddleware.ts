@@ -20,7 +20,7 @@ export class UserAuthenticatorMiddleware {
   }
 
   private failAuthentication(response: any, message: string): void {
-    response.status(403).json(<AuthenticationResponse>{
+    response.status(401).json(<AuthenticationResponse>{
       success: false,
       message: message
     });

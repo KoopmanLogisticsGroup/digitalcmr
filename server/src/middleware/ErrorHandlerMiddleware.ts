@@ -5,7 +5,7 @@ import {LoggerInstance} from 'winston';
 
 @Middleware({type: 'after'})
 export class ErrorHandlerMiddleware implements ExpressErrorMiddlewareInterface {
-  private logger: LoggerInstance = Container.get(LoggerFactory).get('Request Error');
+  private logger: LoggerInstance = Container.get(LoggerFactory).get('RequestErrorHandler');
 
   public error(error: any, request: any, response: any, next: (err: any) => any): void {
     if (error.body && error.body.error) {
@@ -18,7 +18,7 @@ export class ErrorHandlerMiddleware implements ExpressErrorMiddlewareInterface {
       error.statusCode = 500;
     }
 
-    this.logger.debug(error.message);
+    this.logger.debug(error);
     response.status(error.statusCode).send({
       message: error.message
     });

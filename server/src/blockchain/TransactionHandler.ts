@@ -24,7 +24,9 @@ export class TransactionHandler {
       throw error;
     }
 
-    return this.businessNetworkHandler.disconnect();
+    await this.businessNetworkHandler.disconnect();
+
+    return this.businessNetworkHandler.getSerializer(transaction);
   }
 
   public async get(identity: Identity, connectionProfile: string, assetRegistry: string, resourceID: string): Promise<any> {
