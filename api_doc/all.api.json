@@ -339,7 +339,7 @@
         }
       }
     },
-    "/transportOrder/cancel":                           {
+    "/transportOrder/cancel": {
       "put": {
         "x-swagger-router-controller": "TransportOrderController",
         "operationId":                 "cancelTransportOrder",
@@ -382,7 +382,7 @@
         }
       }
     },
-    "/ECMR/createECMRs":                                {
+    "/ECMR/":                 {
       "post": {
         "x-swagger-router-controller": "ECMRController",
         "operationId":                 "CreateECMRs",

@@ -140,7 +140,7 @@ describe('A Carrier Admin can', () => {
     };
 
     server
-      .post(baseEndPoint + '/ECMR/createECMRs')
+      .post(baseEndPoint + '/ECMR/')
       .set('x-access-token', token)
       .send(payload)
       .expect(200)

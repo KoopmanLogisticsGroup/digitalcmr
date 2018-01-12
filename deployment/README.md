@@ -10,9 +10,9 @@ The following steps are based on: [Develop in a cloud sandbox IBM Blockchain Pla
 ### Why do I get?
 The Simple Install will bring up the following components:
 - A pre-configured Fabric (blockchain runtime):
-  - 3 Fabric CAs (one apiece for the orderer org and two peer orgs)
+  - 1 Fabric CA
   - Orderer node (running "solo")
-  - 2 Fabric peer nodes (one apiece for each peer org - org1 & org2)
+  - 2 Fabric peer nodes (one apiece for each peer org - org1 & org2 running on couchdb)
 - Composer Playground (UI for creating and deploying Business Networks to Fabric)
 - The basic-sample-network deployed
 

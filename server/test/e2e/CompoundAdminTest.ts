@@ -139,7 +139,7 @@ describe('A Compound Admin can', () => {
     };
 
     server
-      .post(`${baseEndPoint}/ECMR/CreateECMRs`)
+      .post(`${baseEndPoint}/ECMR/`)
       .set('x-access-token', token)
       .send(payload)
       .expect(500)

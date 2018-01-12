@@ -47,6 +47,6 @@ export class TransactionHandler {
 
     await this.businessNetworkHandler.disconnect();
 
-    return (queryReturnType === QueryReturnType.Single && result.length === 1) ? result[0] : result;
+    return (queryReturnType === QueryReturnType.Single) ? result[0] : result;
   }
 }
