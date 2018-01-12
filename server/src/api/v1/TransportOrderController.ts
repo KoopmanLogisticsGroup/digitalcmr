@@ -63,9 +63,10 @@ export class TransportOrderController {
   public async create(@Body() transportOrder: TransportOrder, @Req() request: Request): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
     transportOrder.orderID   = shortid.generate();
-    await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateTransportOrder, transportOrder, new TransportOrderTransactor());
 
-    return {orderID: transportOrder.orderID};
+    const transaction: any = await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateTransportOrder, transportOrder, new TransportOrderTransactor());
+
+    return transaction.transportOrder;
   }
 
   @Put('/updatePickupWindow')

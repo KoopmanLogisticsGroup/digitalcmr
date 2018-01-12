@@ -18,7 +18,7 @@ export class ErrorHandlerMiddleware implements ExpressErrorMiddlewareInterface {
       error.statusCode = 500;
     }
 
-    this.logger.debug(error.message);
+    this.logger.debug(error);
     response.status(error.statusCode).send({
       message: error.message
     });
