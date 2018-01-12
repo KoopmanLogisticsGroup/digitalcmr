@@ -100,7 +100,7 @@ describe('A Carrier member can', () => {
     const ecmr = Builder.buildECMR('ecmr1');
 
     server
-      .post(baseEndPoint + '/ECMR/createECMRs')
+      .post(baseEndPoint + '/ECMR/')
       .set('x-access-token', token)
       .send(ecmr)
       .expect(500)

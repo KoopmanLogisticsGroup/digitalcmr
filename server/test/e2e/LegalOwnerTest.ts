@@ -56,7 +56,7 @@ describe('A legal owner admin can', () => {
     };
 
     server
-      .post(baseEndPoint + '/ECMR/createECMRs')
+      .post(baseEndPoint + '/ECMR/')
       .set('x-access-token', token)
       .send(payload)
       .expect(500)

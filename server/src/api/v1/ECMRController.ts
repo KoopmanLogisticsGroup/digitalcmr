@@ -23,6 +23,7 @@ import {EcmrCancellation} from '../../interfaces/cancellation.interface';
 import {Signature} from '../../interfaces/signature.interface';
 import {CreateEcmrs} from '../../interfaces/createEcmrs.interface';
 import {EcmrStatus} from '../../interfaces/ecmr.interface';
+import * as shortid from 'shortid';
 
 @JsonController('/ECMR')
 @UseBefore(UserAuthenticatorMiddleware)
@@ -75,11 +76,17 @@ export class ECMRController {
     return await this.ecmrTransactor.getEcmrsByPlateNumber(this.transactionHandler, identity, Config.settings.composer.profile, plateNumber);
   }
 
-  @Post('/createECMRs')
+  @Post('/')
   public async create(@Body() data: CreateEcmrs, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateEcmrs, data, new EcmrTransactor());
+    for (const ecmr of data.ecmrs) {
+      ecmr.ecmrID = shortid.generate();
+    }
+
+    const transaction: any = await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateEcmrs, data, new EcmrTransactor());
+
+    return transaction.ecmrs;
   }
 
   @Put('/status/' + EcmrStatus.Loaded)
