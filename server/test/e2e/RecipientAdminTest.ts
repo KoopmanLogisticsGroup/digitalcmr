@@ -65,8 +65,8 @@ const buildECMR = (ecmrID: string): Ecmr => {
     source:                 'amsterdamcompound',
     transporter:            'harry@koopman.org',
     carrier:                'koopman',
-    recipientOrg:           'cardealer',
-    recipient:              'rob@cardealer.org',
+    recipient:              'cardealer',
+    recipientMember:        'rob@cardealer.org',
     issuedBy:               'koopman',
     carrierComments:        'No comments',
     documents:              [

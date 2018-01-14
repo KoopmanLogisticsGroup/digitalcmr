@@ -17,7 +17,7 @@ export interface Ecmr {
   owner: string;
   source: string;
   carrier: string;
-  recipientOrg: string;
+  recipient: string;
   carrierComments: String;
   creation: Creation;
   loading: Loading;
@@ -35,7 +35,7 @@ export interface Ecmr {
   orderID: string;
   cancellation?: Cancellation;
   transporter?: string;
-  recipient?: string;
+  recipientMember?: string;
 }
 
 export enum EcmrStatus {

@@ -196,7 +196,7 @@ function updateEcmrStatusToConfirmedDelivered(tx) {
   var factory = getFactory();
   var currentParticipant = getCurrentParticipant() && getCurrentParticipant().getIdentifier();
 
-  if (tx.ecmr.recipient.getIdentifier() !== currentParticipant) {
+  if (tx.ecmr.recipientMember.getIdentifier() !== currentParticipant) {
     throw new Error('[UpdateEcmrStatusToConfirmedDelivered] No permissions to execute this action');
   }
 

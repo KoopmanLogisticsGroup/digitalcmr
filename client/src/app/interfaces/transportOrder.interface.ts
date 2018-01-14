@@ -1,14 +1,9 @@
 import {Good} from './good.interface';
-import {Loading} from './loading.interface';
-import {Delivery} from './delivery.interface';
 import {Cancellation} from './cancellation.interface';
 
 export interface TransportOrder {
   orderID: string;
-  loading: Loading;
-  delivery: Delivery;
   owner: string;
-  source: string;
   carrier: string;
   goods: Good[];
   status: string;
@@ -16,4 +11,11 @@ export interface TransportOrder {
   ecmrs: string[];
   orderRef: string;
   cancellation?: Cancellation;
+}
+
+export enum TransportOrderStatus {
+  Open       = 'OPEN',
+  InProgress = 'IN_PROGRESS',
+  Completed  = 'COMPLETED',
+  Cancelled  = 'CANCELLED'
 }

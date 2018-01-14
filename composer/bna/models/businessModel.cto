@@ -11,7 +11,6 @@ namespace org.digitalcmr
 asset TransportOrder identified by orderID {
   o String orderID
   --> LegalOwnerOrg owner
-  --> CompoundOrg source
   --> CarrierOrg carrier
   o Good[] goods
   o OrderStatus status
@@ -33,7 +32,9 @@ asset ECMR identified by ecmrID {
   --> LegalOwnerOrg owner
   --> CompoundOrg source
   --> CarrierOrg carrier
-  --> RecipientOrg recipientOrg
+  --> RecipientOrg recipient
+  --> RecipientMember recipientMember optional
+  --> CarrierMember transporter optional
   o String carrierComments
   o Loading loading
   o Delivery delivery
@@ -50,8 +51,6 @@ asset ECMR identified by ecmrID {
   o EcmrStatus status
   o String orderID
   o Cancellation cancellation optional
-  --> CarrierMember transporter optional
-  --> RecipientMember recipient optional
 }
 
 abstract asset Entity identified by entityID {
@@ -170,6 +169,8 @@ concept Good {
   o DateWindow pickupWindow
   o DateWindow deliveryWindow
   o Cancellation cancellation optional
+  --> CompoundOrg source
+  --> RecipientOrg recipient
 }
 
 concept Remark {

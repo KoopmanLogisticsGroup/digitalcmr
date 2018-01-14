@@ -17,4 +17,6 @@ export interface Good {
   loadingAddress: Address;
   deliveryAddress: Address;
   cancellation?: Cancellation;
+  source: string;
+  recipient: string;
 }

@@ -470,7 +470,7 @@
       "carrierRef":             "H2238723VASD",
       "recipientRef":           "SDADHGA21312312",
       "orderID":                "A12345ORDER",
-      "creation":               {
+      "creation":        {
         "$class":  "org.digitalcmr.Creation",
         "address": {
           "$class":      "org.digitalcmr.Address",
@@ -485,9 +485,9 @@
         },
         "date":    1502402400000
       },
-      "loading":                {
-        "$class":     "org.digitalcmr.Loading",
-        "address":    {
+      "loading":         {
+        "$class":         "org.digitalcmr.Loading",
+        "address":        {
           "$class":      "org.digitalcmr.Address",
           "name":        "Amsterdam Compound",
           "street":      "Compoundstraat",
@@ -498,16 +498,16 @@
           "latitude":    43.1927,
           "longitude":   23.3249
         },
-        "actualDate": 1502488800000,
+        "actualDate":     1502488800000,
         "expectedWindow": {
-          "$class": "org.digitalcmr.DateWindow",
+          "$class":    "org.digitalcmr.DateWindow",
           "startDate": 1502834400000,
-          "endDate": 1502834400000
+          "endDate":   1502834400000
         }
       },
-      "delivery":               {
-        "$class":     "org.digitalcmr.Delivery",
-        "address":    {
+      "delivery":        {
+        "$class":         "org.digitalcmr.Delivery",
+        "address":        {
           "$class":      "org.digitalcmr.Address",
           "name":        "Rob el Caro",
           "street":      "De straat",
@@ -518,26 +518,28 @@
           "latitude":    51.917153,
           "longitude":   4.474623
         },
-        "actualDate": 1502834400000,
+        "actualDate":     1502834400000,
         "expectedWindow": {
-          "$class": "org.digitalcmr.DateWindow",
+          "$class":    "org.digitalcmr.DateWindow",
           "startDate": 1502834400000,
-          "endDate": 1502834400000
+          "endDate":   1502834400000
         }
       },
-      "owner":                  "leaseplan",
-      "source":                 "amsterdamcompound",
-      "transporter":            "harry@koopman.org",
-      "carrier":                "koopman",
-      "recipientOrg":           "cardealer",
-      "recipient":              "rob@cardealer.org",
-      "issueDate":              0,
-      "issuedBy":               "koopman",
-      "carrierComments":        "",
-      "documents":              [],
-      "goods":                  [
+      "owner":           "leaseplan",
+      "source":          "amsterdamcompound",
+      "transporter":     "harry@koopman.org",
+      "carrier":         "koopman",
+      "recipient":       "cardealer",
+      "recipientMember": "rob@cardealer.org",
+      "issueDate":       0,
+      "issuedBy":        "koopman",
+      "carrierComments": "",
+      "documents":       [],
+      "goods":           [
         {
           "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
           "loadingAddress":  {
             "$class":      "org.digitalcmr.Address",
             "name":        "loading address",
@@ -600,7 +602,7 @@
       "carrierRef":             "H2238723VASD",
       "recipientRef":           "SDADHGA21312312",
       "orderID":                "A12345ORDER",
-      "creation":               {
+      "creation":        {
         "$class":  "org.digitalcmr.Creation",
         "address": {
           "$class":      "org.digitalcmr.Address",
@@ -615,9 +617,9 @@
         },
         "date":    1502402400000
       },
-      "loading":                {
-        "$class":     "org.digitalcmr.Loading",
-        "address":    {
+      "loading":         {
+        "$class":         "org.digitalcmr.Loading",
+        "address":        {
           "$class":      "org.digitalcmr.Address",
           "name":        "Amsterdam Compound",
           "street":      "compenstraat",
@@ -628,16 +630,16 @@
           "latitude":    52.377698,
           "longitude":   4.896555
         },
-        "actualDate": 1502402400000,
+        "actualDate":     1502402400000,
         "expectedWindow": {
-          "$class": "org.digitalcmr.DateWindow",
+          "$class":    "org.digitalcmr.DateWindow",
           "startDate": 1502834400000,
-          "endDate": 1502834400000
+          "endDate":   1502834400000
         }
       },
-      "delivery":               {
-        "$class":     "org.digitalcmr.Delivery",
-        "address":    {
+      "delivery":        {
+        "$class":         "org.digitalcmr.Delivery",
+        "address":        {
           "$class":      "org.digitalcmr.Address",
           "name":        "Rob Carman",
           "street":      "autostraat",
@@ -648,28 +650,30 @@
           "latitude":    51.917153,
           "longitude":   4.474623
         },
-        "actualDate": 1502488800000,
+        "actualDate":     1502488800000,
         "expectedWindow": {
-          "$class": "org.digitalcmr.DateWindow",
+          "$class":    "org.digitalcmr.DateWindow",
           "startDate": 1502834400000,
-          "endDate": 1502834400000
+          "endDate":   1502834400000
         }
       },
-      "owner":                  "leaseplan",
-      "source":                 "amsterdamcompound",
-      "transporter":            "harry@koopman.org",
-      "carrier":                "koopman",
-      "recipientOrg":           "cardealer",
-      "recipient":              "rob@cardealer.org",
-      "issueDate":              0,
-      "issuedBy":               "koopman",
-      "carrierComments":        "No comments",
-      "documents":              [
+      "owner":           "leaseplan",
+      "source":          "amsterdamcompound",
+      "transporter":     "harry@koopman.org",
+      "carrier":         "koopman",
+      "recipient":       "cardealer",
+      "recipientMember": "rob@cardealer.org",
+      "issueDate":       0,
+      "issuedBy":        "koopman",
+      "carrierComments": "No comments",
+      "documents":       [
         "doc1"
       ],
-      "goods":                  [
+      "goods":           [
         {
           "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
           "loadingAddress":  {
             "$class":      "org.digitalcmr.Address",
             "name":        "loading address",
@@ -719,6 +723,8 @@
         },
         {
           "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
           "loadingAddress":  {
             "$class":      "org.digitalcmr.Address",
             "name":        "loading address",
@@ -797,8 +803,8 @@
         "date":    1502143200000
       },
       "loading":                  {
-        "$class":     "org.digitalcmr.Loading",
-        "address":    {
+        "$class":         "org.digitalcmr.Loading",
+        "address":        {
           "$class":      "org.digitalcmr.Address",
           "name":        "Amsterdam Compound",
           "street":      "compenstraat",
@@ -809,16 +815,16 @@
           "latitude":    52.377698,
           "longitude":   4.896555
         },
-        "actualDate": 1502143200000,
+        "actualDate":     1502143200000,
         "expectedWindow": {
-          "$class": "org.digitalcmr.DateWindow",
+          "$class":    "org.digitalcmr.DateWindow",
           "startDate": 1502834400000,
-          "endDate": 1502834400000
+          "endDate":   1502834400000
         }
       },
       "delivery":                 {
-        "$class":     "org.digitalcmr.Delivery",
-        "address":    {
+        "$class":         "org.digitalcmr.Delivery",
+        "address":        {
           "$class":      "org.digitalcmr.Address",
           "name":        "James Carman",
           "street":      "Carstreet",
@@ -829,19 +835,19 @@
           "latitude":    51.917153,
           "longitude":   4.474623
         },
-        "actualDate": 1502229600000,
+        "actualDate":     1502229600000,
         "expectedWindow": {
-          "$class": "org.digitalcmr.DateWindow",
+          "$class":    "org.digitalcmr.DateWindow",
           "startDate": 1502834400000,
-          "endDate": 1502834400000
+          "endDate":   1502834400000
         }
       },
       "owner":                    "leaseplan",
       "source":                   "amsterdamcompound",
       "transporter":              "harry@koopman.org",
       "carrier":                  "koopman",
-      "recipientOrg":             "cardealer",
-      "recipient":                "rob@cardealer.org",
+      "recipient":                "cardealer",
+      "recipientMember":          "rob@cardealer.org",
       "issueDate":                0,
       "issuedBy":                 "koopman",
       "carrierComments":          "No comments",
@@ -849,6 +855,8 @@
       "goods":                    [
         {
           "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
           "loadingAddress":  {
             "$class":      "org.digitalcmr.Address",
             "name":        "loading address",
@@ -902,15 +910,15 @@
       "payOnDelivery":            "string",
       "compoundSignature":        {
         "certificate": "willem@amsterdamcompound.org",
-        "timestamp":   0
+        "timestamp":   1502834400000
       },
       "carrierLoadingSignature":  {
         "certificate": "harry@koopman.org",
-        "timestamp":   0
+        "timestamp":   1502834400000
       },
       "carrierDeliverySignature": {
         "certificate": "harry@koopman.org",
-        "timestamp":   0
+        "timestamp":   1502834400000
       }
     },
     {
@@ -939,8 +947,8 @@
         "date":    1502229600000
       },
       "loading":                {
-        "$class":     "org.digitalcmr.Loading",
-        "address":    {
+        "$class":         "org.digitalcmr.Loading",
+        "address":        {
           "$class":      "org.digitalcmr.Address",
           "name":        "Amsterdam Compound",
           "street":      "compenstraat",
@@ -951,16 +959,16 @@
           "latitude":    52.377698,
           "longitude":   4.896555
         },
-        "actualDate": 1502229600000,
+        "actualDate":     1502229600000,
         "expectedWindow": {
-          "$class": "org.digitalcmr.DateWindow",
+          "$class":    "org.digitalcmr.DateWindow",
           "startDate": 1502834400000,
-          "endDate": 1502834400000
+          "endDate":   1502834400000
         }
       },
       "delivery":               {
-        "$class":     "org.digitalcmr.Delivery",
-        "address":    {
+        "$class":         "org.digitalcmr.Delivery",
+        "address":        {
           "$class":      "org.digitalcmr.Address",
           "name":        "Rob Carman",
           "street":      "autostraat",
@@ -971,19 +979,19 @@
           "latitude":    51.917153,
           "longitude":   4.474623
         },
-        "actualDate": 1502920800000,
+        "actualDate":     1502920800000,
         "expectedWindow": {
-          "$class": "org.digitalcmr.DateWindow",
+          "$class":    "org.digitalcmr.DateWindow",
           "startDate": 1502834400000,
-          "endDate": 1502834400000
+          "endDate":   1502834400000
         }
       },
       "owner":                  "leaseplan",
       "source":                 "amsterdamcompound",
       "transporter":            "harry@koopman.org",
       "carrier":                "koopman",
-      "recipientOrg":           "cardealer",
-      "recipient":              "rob@cardealer.org",
+      "recipient":              "cardealer",
+      "recipientMember":        "rob@cardealer.org",
       "issueDate":              0,
       "issuedBy":               "koopman",
       "carrierComments":        "No comments",
@@ -991,6 +999,8 @@
       "goods":                  [
         {
           "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
           "loadingAddress":  {
             "$class":      "org.digitalcmr.Address",
             "name":        "loading address",
@@ -1044,7 +1054,7 @@
       "payOnDelivery":          "string",
       "compoundSignature":      {
         "certificate": "willem@amsterdamcompound.org",
-        "timestamp":   0
+        "timestamp":   1502834400000
       }
     },
     {
@@ -1073,8 +1083,8 @@
         "date":    1502229600000
       },
       "loading":                {
-        "$class":     "org.digitalcmr.Loading",
-        "address":    {
+        "$class":         "org.digitalcmr.Loading",
+        "address":        {
           "$class":      "org.digitalcmr.Address",
           "name":        "Amsterdam Compound",
           "street":      "compenstraat",
@@ -1085,16 +1095,16 @@
           "latitude":    52.377698,
           "longitude":   4.896555
         },
-        "actualDate": 1502229600000,
+        "actualDate":     1502229600000,
         "expectedWindow": {
-          "$class": "org.digitalcmr.DateWindow",
+          "$class":    "org.digitalcmr.DateWindow",
           "startDate": 1502834400000,
-          "endDate": 1502834400000
+          "endDate":   1502834400000
         }
       },
       "delivery":               {
-        "$class":     "org.digitalcmr.Delivery",
-        "address":    {
+        "$class":         "org.digitalcmr.Delivery",
+        "address":        {
           "$class":      "org.digitalcmr.Address",
           "name":        "Rob Carman",
           "street":      "autostraat",
@@ -1105,19 +1115,19 @@
           "latitude":    51.917153,
           "longitude":   4.474623
         },
-        "actualDate": 1502920800000,
+        "actualDate":     1502920800000,
         "expectedWindow": {
-          "$class": "org.digitalcmr.DateWindow",
+          "$class":    "org.digitalcmr.DateWindow",
           "startDate": 1502834400000,
-          "endDate": 1502834400000
+          "endDate":   1502834400000
         }
       },
       "owner":                  "leaseplan",
       "source":                 "amsterdamcompound",
       "transporter":            "harry@koopman.org",
       "carrier":                "koopman",
-      "recipientOrg":           "cardealer",
-      "recipient":              "rob@cardealer.org",
+      "recipient":              "cardealer",
+      "recipientMember":        "rob@cardealer.org",
       "issueDate":              0,
       "issuedBy":               "koopman",
       "carrierComments":        "No comments",
@@ -1125,6 +1135,8 @@
       "goods":                  [
         {
           "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
           "loadingAddress":  {
             "$class":      "org.digitalcmr.Address",
             "name":        "loading address",
@@ -1178,7 +1190,7 @@
       "payOnDelivery":          "string",
       "compoundSignature":      {
         "certificate": "willem@amsterdamcompound.org",
-        "timestamp":   0
+        "timestamp":   1502834400000
       }
     },
     {
@@ -1207,8 +1219,8 @@
         "date":    1502229600000
       },
       "loading":                 {
-        "$class":     "org.digitalcmr.Loading",
-        "address":    {
+        "$class":         "org.digitalcmr.Loading",
+        "address":        {
           "$class":      "org.digitalcmr.Address",
           "name":        "Eindhoven Compound",
           "street":      "Compound Eindhoven",
@@ -1219,16 +1231,16 @@
           "latitude":    52.377698,
           "longitude":   4.896555
         },
-        "actualDate": 1502229600000,
+        "actualDate":     1502229600000,
         "expectedWindow": {
-          "$class": "org.digitalcmr.DateWindow",
+          "$class":    "org.digitalcmr.DateWindow",
           "startDate": 1502834400000,
-          "endDate": 1502834400000
+          "endDate":   1502834400000
         }
       },
       "delivery":                {
-        "$class":     "org.digitalcmr.Delivery",
-        "address":    {
+        "$class":         "org.digitalcmr.Delivery",
+        "address":        {
           "$class":      "org.digitalcmr.Address",
           "name":        "Rob Carman",
           "street":      "autostraat",
@@ -1239,19 +1251,19 @@
           "latitude":    51.917153,
           "longitude":   4.474623
         },
-        "actualDate": 1502920800000,
+        "actualDate":     1502920800000,
         "expectedWindow": {
-          "$class": "org.digitalcmr.DateWindow",
+          "$class":    "org.digitalcmr.DateWindow",
           "startDate": 1502834400000,
-          "endDate": 1502834400000
+          "endDate":   1502834400000
         }
       },
       "owner":                   "leaseplan",
       "source":                  "amsterdamcompound",
       "transporter":             "harry@koopman.org",
       "carrier":                 "koopman",
-      "recipientOrg":            "cardealer",
-      "recipient":               "rob@cardealer.org",
+      "recipient":               "cardealer",
+      "recipientMember":         "rob@cardealer.org",
       "issueDate":               0,
       "issuedBy":                "koopman",
       "carrierComments":         "",
@@ -1259,6 +1271,8 @@
       "goods":                   [
         {
           "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
           "loadingAddress":  {
             "$class":      "org.digitalcmr.Address",
             "name":        "loading address",
@@ -1308,6 +1322,8 @@
         },
         {
           "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
           "loadingAddress":  {
             "$class":      "org.digitalcmr.Address",
             "name":        "loading address",
@@ -1361,11 +1377,11 @@
       "payOnDelivery":           "string",
       "compoundSignature":       {
         "certificate": "willem@amsterdamcompound.org",
-        "timestamp":   0
+        "timestamp":   1502834400000
       },
       "carrierLoadingSignature": {
         "certificate": "harry@koopman.org",
-        "timestamp":   0
+        "timestamp":   1502834400000
       }
     },
     {
@@ -1394,8 +1410,8 @@
         "date":    1502229600000
       },
       "loading":                  {
-        "$class":     "org.digitalcmr.Loading",
-        "address":    {
+        "$class":         "org.digitalcmr.Loading",
+        "address":        {
           "$class":      "org.digitalcmr.Address",
           "name":        "Eindhoven Compound",
           "street":      "Compound Eindhoven",
@@ -1406,16 +1422,16 @@
           "latitude":    52.377698,
           "longitude":   4.896555
         },
-        "actualDate": 1502229600000,
+        "actualDate":     1502229600000,
         "expectedWindow": {
-          "$class": "org.digitalcmr.DateWindow",
+          "$class":    "org.digitalcmr.DateWindow",
           "startDate": 1502834400000,
-          "endDate": 1502834400000
+          "endDate":   1502834400000
         }
       },
       "delivery":                 {
-        "$class":     "org.digitalcmr.Delivery",
-        "address":    {
+        "$class":         "org.digitalcmr.Delivery",
+        "address":        {
           "$class":      "org.digitalcmr.Address",
           "name":        "Rob Carman",
           "street":      "autostraat",
@@ -1426,19 +1442,19 @@
           "latitude":    51.917153,
           "longitude":   4.474623
         },
-        "actualDate": 1502920800000,
+        "actualDate":     1502920800000,
         "expectedWindow": {
-          "$class": "org.digitalcmr.DateWindow",
+          "$class":    "org.digitalcmr.DateWindow",
           "startDate": 1502834400000,
-          "endDate": 1502834400000
+          "endDate":   1502834400000
         }
       },
       "owner":                    "leaseplan",
       "source":                   "amsterdamcompound",
       "transporter":              "harry@koopman.org",
       "carrier":                  "koopman",
-      "recipientOrg":             "cardealer",
-      "recipient":                "rob@cardealer.org",
+      "recipient":                "cardealer",
+      "recipientMember":          "rob@cardealer.org",
       "issueDate":                0,
       "issuedBy":                 "koopman",
       "carrierComments":          "",
@@ -1446,6 +1462,8 @@
       "goods":                    [
         {
           "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
           "loadingAddress":  {
             "$class":      "org.digitalcmr.Address",
             "name":        "loading address",
@@ -1495,6 +1513,8 @@
         },
         {
           "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
           "loadingAddress":  {
             "$class":      "org.digitalcmr.Address",
             "name":        "loading address",
@@ -1544,6 +1564,8 @@
         },
         {
           "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
           "loadingAddress":  {
             "$class":      "org.digitalcmr.Address",
             "name":        "loading address",
@@ -1593,6 +1615,8 @@
         },
         {
           "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
           "loadingAddress":  {
             "$class":      "org.digitalcmr.Address",
             "name":        "loading address",
@@ -1646,15 +1670,15 @@
       "payOnDelivery":            "string",
       "compoundSignature":        {
         "certificate": "willem@amsterdamcompound.org",
-        "timestamp":   0
+        "timestamp":   1502834400000
       },
       "carrierLoadingSignature":  {
         "certificate": "harry@koopman.org",
-        "timestamp":   0
+        "timestamp":   1502834400000
       },
       "carrierDeliverySignature": {
         "certificate": "harry@koopman.org",
-        "timestamp":   0
+        "timestamp":   1502834400000
       }
     },
     {
@@ -1683,8 +1707,8 @@
         "date":    1502402400000
       },
       "loading":                 {
-        "$class":     "org.digitalcmr.Loading",
-        "address":    {
+        "$class":         "org.digitalcmr.Loading",
+        "address":        {
           "$class":      "org.digitalcmr.Address",
           "name":        "Amsterdam Compound",
           "street":      "compenstraat",
@@ -1695,16 +1719,16 @@
           "latitude":    52.377698,
           "longitude":   4.896555
         },
-        "actualDate": 1502402400000,
+        "actualDate":     1502402400000,
         "expectedWindow": {
-          "$class": "org.digitalcmr.DateWindow",
+          "$class":    "org.digitalcmr.DateWindow",
           "startDate": 1502834400000,
-          "endDate": 1502834400000
+          "endDate":   1502834400000
         }
       },
       "delivery":                {
-        "$class":     "org.digitalcmr.Delivery",
-        "address":    {
+        "$class":         "org.digitalcmr.Delivery",
+        "address":        {
           "$class":      "org.digitalcmr.Address",
           "name":        "Rob Carman",
           "street":      "autostraat",
@@ -1715,19 +1739,19 @@
           "latitude":    51.917153,
           "longitude":   4.474623
         },
-        "actualDate": 1502488800000,
+        "actualDate":     1502488800000,
         "expectedWindow": {
-          "$class": "org.digitalcmr.DateWindow",
+          "$class":    "org.digitalcmr.DateWindow",
           "startDate": 1502834400000,
-          "endDate": 1502834400000
+          "endDate":   1502834400000
         }
       },
       "owner":                   "leaseplan",
       "source":                  "amsterdamcompound",
       "transporter":             "harry@koopman.org",
       "carrier":                 "koopman",
-      "recipientOrg":            "cardealer",
-      "recipient":               "rob@cardealer.org",
+      "recipient":               "cardealer",
+      "recipientMember":         "rob@cardealer.org",
       "issueDate":               0,
       "issuedBy":                "koopman",
       "carrierComments":         "No comments",
@@ -1737,6 +1761,8 @@
       "goods":                   [
         {
           "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
           "loadingAddress":  {
             "$class":      "org.digitalcmr.Address",
             "name":        "loading address",
@@ -1786,6 +1812,8 @@
         },
         {
           "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
           "loadingAddress":  {
             "$class":      "org.digitalcmr.Address",
             "name":        "loading address",
@@ -1839,24 +1867,24 @@
       "payOnDelivery":           "string",
       "compoundSignature":       {
         "certificate": "willem@amsterdamcompound.org",
-        "timestamp":   0
+        "timestamp":   1502834400000
       },
       "carrierLoadingSignature": {
         "certificate": "harry@koopman.org",
-        "timestamp":   0
+        "timestamp":   1502834400000
       }
     },
     {
-      "$class":                 "org.digitalcmr.ECMR",
-      "ecmrID":                 "I12345ECMR",
-      "status":                 "CREATED",
-      "agreementTerms":         "agreement terms here",
-      "agreementTermsSec":      "agreement terms sec",
-      "legalOwnerRef":          "ASD213123S",
-      "carrierRef":             "H2238723VASD",
-      "recipientRef":           "SDADHGA21312312",
-      "orderID":                "B12345ORDER",
-      "creation":               {
+      "$class":            "org.digitalcmr.ECMR",
+      "ecmrID":            "I12345ECMR",
+      "status":            "CREATED",
+      "agreementTerms":    "agreement terms here",
+      "agreementTermsSec": "agreement terms sec",
+      "legalOwnerRef":     "ASD213123S",
+      "carrierRef":        "H2238723VASD",
+      "recipientRef":      "SDADHGA21312312",
+      "orderID":           "B12345ORDER",
+      "creation":          {
         "$class":  "org.digitalcmr.Creation",
         "address": {
           "$class":      "org.digitalcmr.Address",
@@ -1871,9 +1899,9 @@
         },
         "date":    1502402400000
       },
-      "loading":                {
-        "$class":     "org.digitalcmr.Loading",
-        "address":    {
+      "loading":           {
+        "$class":         "org.digitalcmr.Loading",
+        "address":        {
           "$class":      "org.digitalcmr.Address",
           "name":        "Amsterdam Compound",
           "street":      "Compoundstraat",
@@ -1884,16 +1912,16 @@
           "latitude":    43.1927,
           "longitude":   23.3249
         },
-        "actualDate": 1502488800000,
+        "actualDate":     1502488800000,
         "expectedWindow": {
-          "$class": "org.digitalcmr.DateWindow",
+          "$class":    "org.digitalcmr.DateWindow",
           "startDate": 1502834400000,
-          "endDate": 1502834400000
+          "endDate":   1502834400000
         }
       },
-      "delivery":               {
-        "$class":     "org.digitalcmr.Delivery",
-        "address":    {
+      "delivery":          {
+        "$class":         "org.digitalcmr.Delivery",
+        "address":        {
           "$class":      "org.digitalcmr.Address",
           "name":        "Rob el Caro",
           "street":      "De straat",
@@ -1904,26 +1932,28 @@
           "latitude":    51.917153,
           "longitude":   4.474623
         },
-        "actualDate": 1502834400000,
+        "actualDate":     1502834400000,
         "expectedWindow": {
-          "$class": "org.digitalcmr.DateWindow",
+          "$class":    "org.digitalcmr.DateWindow",
           "startDate": 1502834400000,
-          "endDate": 1502834400000
+          "endDate":   1502834400000
         }
       },
-      "owner":                  "notLeaseplan",
-      "source":                 "notAmsterdamcompound",
-      "transporter":            "notHarry@notKoopman.org",
-      "carrier":                "notKoopman",
-      "recipientOrg":           "notCardealer",
-      "recipient":              "notRob@notCardealer.org",
-      "issueDate":              0,
-      "issuedBy":               "notKoopman",
-      "carrierComments":        "",
-      "documents":              [],
-      "goods":                  [
+      "owner":             "notLeaseplan",
+      "source":            "notAmsterdamcompound",
+      "transporter":       "notHarry@notKoopman.org",
+      "carrier":           "notKoopman",
+      "recipient":         "notCardealer",
+      "recipientMember":   "notRob@notCardealer.org",
+      "issueDate":         0,
+      "issuedBy":          "notKoopman",
+      "carrierComments":   "",
+      "documents":         [],
+      "goods":             [
         {
           "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
           "loadingAddress":  {
             "$class":      "org.digitalcmr.Address",
             "name":        "loading address",
@@ -2002,8 +2032,8 @@
         "date":    1502229600000
       },
       "loading":                  {
-        "$class":     "org.digitalcmr.Loading",
-        "address":    {
+        "$class":         "org.digitalcmr.Loading",
+        "address":        {
           "$class":      "org.digitalcmr.Address",
           "name":        "Eindhoven Compound",
           "street":      "Compound Eindhoven",
@@ -2014,16 +2044,16 @@
           "latitude":    52.377698,
           "longitude":   4.896555
         },
-        "actualDate": 1502229600000,
+        "actualDate":     1502229600000,
         "expectedWindow": {
-          "$class": "org.digitalcmr.DateWindow",
+          "$class":    "org.digitalcmr.DateWindow",
           "startDate": 1502834400000,
-          "endDate": 1502834400000
+          "endDate":   1502834400000
         }
       },
       "delivery":                 {
-        "$class":     "org.digitalcmr.Delivery",
-        "address":    {
+        "$class":         "org.digitalcmr.Delivery",
+        "address":        {
           "$class":      "org.digitalcmr.Address",
           "name":        "Rob Carman",
           "street":      "autostraat",
@@ -2034,19 +2064,19 @@
           "latitude":    51.917153,
           "longitude":   4.474623
         },
-        "actualDate": 1502920800000,
+        "actualDate":     1502920800000,
         "expectedWindow": {
-          "$class": "org.digitalcmr.DateWindow",
+          "$class":    "org.digitalcmr.DateWindow",
           "startDate": 1502834400000,
-          "endDate": 1502834400000
+          "endDate":   1502834400000
         }
       },
       "owner":                    "leaseplan",
       "source":                   "amsterdamcompound",
       "transporter":              "harry@koopman.org",
       "carrier":                  "koopman",
-      "recipientOrg":             "cardealer",
-      "recipient":                "rob@cardealer.org",
+      "recipient":                "cardealer",
+      "recipientMember":          "rob@cardealer.org",
       "issueDate":                0,
       "issuedBy":                 "koopman",
       "carrierComments":          "",
@@ -2054,6 +2084,10 @@
       "goods":                    [
         {
           "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
           "loadingAddress":  {
             "$class":      "org.digitalcmr.Address",
             "name":        "loading address",
@@ -2103,6 +2137,10 @@
         },
         {
           "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
           "loadingAddress":  {
             "$class":      "org.digitalcmr.Address",
             "name":        "loading address",
@@ -2152,6 +2190,10 @@
         },
         {
           "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
           "loadingAddress":  {
             "$class":      "org.digitalcmr.Address",
             "name":        "loading address",
@@ -2201,6 +2243,10 @@
         },
         {
           "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
           "loadingAddress":  {
             "$class":      "org.digitalcmr.Address",
             "name":        "loading address",
@@ -2254,19 +2300,19 @@
       "payOnDelivery":            "string",
       "compoundSignature":        {
         "certificate": "willem@amsterdamcompound.org",
-        "timestamp":   0
+        "timestamp":   1502834400000
       },
       "carrierLoadingSignature":  {
         "certificate": "harry@koopman.org",
-        "timestamp":   0
+        "timestamp":   1502834400000
       },
       "carrierDeliverySignature": {
         "certificate": "harry@koopman.org",
-        "timestamp":   0
+        "timestamp":   1502834400000
       },
       "recipientSignature":       {
         "certificate": "rob@cardealer.org",
-        "timestamp":   0
+        "timestamp":   1502834400000
       }
     }
   ],
@@ -2275,11 +2321,12 @@
       "$class":    "org.digitalcmr.TransportOrder",
       "orderID":   "A12345ORDER",
       "owner":     "leaseplan",
-      "source":    "amsterdamcompound",
       "carrier":   "koopman",
       "goods":     [
         {
           "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
           "loadingAddress":  {
             "$class":      "org.digitalcmr.Address",
             "name":        "loading address",
@@ -2329,6 +2376,8 @@
         },
         {
           "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
           "vehicle":         {
             "$class":          "org.digitalcmr.Vehicle",
             "vin":             "B12345VIN",
@@ -2378,6 +2427,8 @@
         },
         {
           "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
           "loadingAddress":  {
             "$class":      "org.digitalcmr.Address",
             "name":        "loading address",
@@ -2427,6 +2478,8 @@
         },
         {
           "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
           "loadingAddress":  {
             "$class":      "org.digitalcmr.Address",
             "name":        "loading address",
@@ -2476,6 +2529,8 @@
         },
         {
           "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
           "loadingAddress":  {
             "$class":      "org.digitalcmr.Address",
             "name":        "loading address",
@@ -2525,6 +2580,8 @@
         },
         {
           "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
           "loadingAddress":  {
             "$class":      "org.digitalcmr.Address",
             "name":        "loading address",
@@ -2588,11 +2645,12 @@
       "$class":    "org.digitalcmr.TransportOrder",
       "orderID":   "B12345ORDER",
       "owner":     "leaseplan",
-      "source":    "amsterdamcompound",
       "carrier":   "koopman",
       "goods":     [
         {
           "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
           "loadingAddress":  {
             "$class":      "org.digitalcmr.Address",
             "name":        "loading address",
@@ -2642,6 +2700,8 @@
         },
         {
           "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
           "loadingAddress":  {
             "$class":      "org.digitalcmr.Address",
             "name":        "loading address",
@@ -2691,6 +2751,8 @@
         },
         {
           "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
           "loadingAddress":  {
             "$class":      "org.digitalcmr.Address",
             "name":        "loading address",
@@ -2740,6 +2802,8 @@
         },
         {
           "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
           "loadingAddress":  {
             "$class":      "org.digitalcmr.Address",
             "name":        "loading address",
@@ -2789,6 +2853,8 @@
         },
         {
           "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
           "loadingAddress":  {
             "$class":      "org.digitalcmr.Address",
             "name":        "loading address",
@@ -2838,6 +2904,8 @@
         },
         {
           "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
           "loadingAddress":  {
             "$class":      "org.digitalcmr.Address",
             "name":        "loading address",
@@ -2887,6 +2955,8 @@
         },
         {
           "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
           "loadingAddress":  {
             "$class":      "org.digitalcmr.Address",
             "name":        "loading address",
@@ -2936,6 +3006,8 @@
         },
         {
           "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
           "loadingAddress":  {
             "$class":      "org.digitalcmr.Address",
             "name":        "loading address",
@@ -2985,6 +3057,8 @@
         },
         {
           "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
           "loadingAddress":  {
             "$class":      "org.digitalcmr.Address",
             "name":        "loading address",
@@ -3034,6 +3108,8 @@
         },
         {
           "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
           "loadingAddress":  {
             "$class":      "org.digitalcmr.Address",
             "name":        "loading address",
@@ -3083,6 +3159,8 @@
         },
         {
           "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
           "loadingAddress":  {
             "$class":      "org.digitalcmr.Address",
             "name":        "loading address",
@@ -3132,6 +3210,8 @@
         },
         {
           "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
           "loadingAddress":  {
             "$class":      "org.digitalcmr.Address",
             "name":        "loading address",
@@ -3181,6 +3261,8 @@
         },
         {
           "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
           "loadingAddress":  {
             "$class":      "org.digitalcmr.Address",
             "name":        "loading address",
