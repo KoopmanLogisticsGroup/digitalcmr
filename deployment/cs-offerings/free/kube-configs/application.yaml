@@ -51,7 +51,7 @@ spec:
     imagePullPolicy: Always
     imagePullSecrets:
     - name: bluemix-uk-registry
-    command: ["sh", "-c", "ng serve -H 0.0.0.0 -e prod --disable-host-check"]
+    command: ["sh", "-c", "./node_modules/.bin/ng serve -H 0.0.0.0 -e prod --disable-host-check"]
 
 ---
 apiVersion: v1

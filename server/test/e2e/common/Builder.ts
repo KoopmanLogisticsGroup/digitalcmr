@@ -45,8 +45,8 @@ export class Builder {
       source:                 'amsterdamcompound',
       transporter:            'harry@koopman.org',
       carrier:                'koopman',
-      recipientOrg:           'cardealer',
-      recipient:              'rob@cardealer.org',
+      recipient:              'cardealer',
+      recipientMember:        'rob@cardealer.org',
       issuedBy:               'koopman',
       carrierComments:        'No comments',
       documents:              [],
@@ -74,7 +74,6 @@ export class Builder {
     return <TransportOrder> {
       orderID:   String(new Date().getTime()),
       carrier:   'koopman',
-      source:    'amsterdamcompound',
       goods:     [],
       status:    'OPEN',
       issueDate: 1502834400000,

@@ -58,11 +58,11 @@ query getEcmrsByOwner {
           WHERE (owner == _$owner)
 }
 
-query getEcmrsByCompound {
-  description: "Select all ECMRs based on their source compound"
+query getEcmrsBySource {
+  description: "Select all ECMRs based on their source"
   statement:
       SELECT org.digitalcmr.ECMR
-          WHERE (source == _$compound)
+          WHERE (source == _$source)
 }
 
 query getEcmrsByCarrier {
@@ -72,22 +72,15 @@ query getEcmrsByCarrier {
           WHERE (carrier == _$carrier)
 }
 
-query getEcmrsByCarrierMember {
+query getEcmrsByTransporter {
   description: "Select all ECMRs assigne to a specific transporter user"
   statement:
       SELECT org.digitalcmr.ECMR
         WHERE (transporter == _$transporter)
 }
 
-query getEcmrsByRecipientOrg {
-  description: "Select all ECMRs based on their recipient organization"
-  statement:
-      SELECT org.digitalcmr.ECMR
-          WHERE (recipientOrg == _$recipientOrg)
-}
-
-query getEcmrsByRecipientMember {
-  description: "Select all ECMRs based on their recipient member"
+query getEcmrsByRecipient {
+  description: "Select all ECMRs based on their recipient"
   statement:
       SELECT org.digitalcmr.ECMR
           WHERE (recipient == _$recipient)

@@ -11,7 +11,6 @@ namespace org.digitalcmr
 asset TransportOrder identified by orderID {
   o String orderID
   --> LegalOwnerOrg owner
-  --> CompoundOrg source
   --> CarrierOrg carrier
   o Good[] goods
   o OrderStatus status
@@ -33,7 +32,9 @@ asset ECMR identified by ecmrID {
   --> LegalOwnerOrg owner
   --> CompoundOrg source
   --> CarrierOrg carrier
-  --> RecipientOrg recipientOrg
+  --> RecipientOrg recipient
+  --> RecipientMember recipientMember optional
+  --> CarrierMember transporter optional
   o String carrierComments
   o Loading loading
   o Delivery delivery
@@ -50,8 +51,6 @@ asset ECMR identified by ecmrID {
   o EcmrStatus status
   o String orderID
   o Cancellation cancellation optional
-  --> CarrierMember transporter optional
-  --> RecipientMember recipient optional
 }
 
 abstract asset Entity identified by entityID {
@@ -170,6 +169,8 @@ concept Good {
   o DateWindow pickupWindow
   o DateWindow deliveryWindow
   o Cancellation cancellation optional
+  --> CompoundOrg source
+  --> RecipientOrg recipient
 }
 
 concept Remark {
@@ -195,6 +196,22 @@ concept DateWindow {
  * Transactions
  */
 
+transaction CreateLegalOwnerOrg {
+  o LegalOwnerOrg legalOwnerOrg
+}
+
+transaction CreateCompoundOrg {
+  o CompoundOrg compoundOrg
+}
+
+transaction CreateCarrierOrg {
+  o CarrierOrg carrierOrg
+}
+
+transaction CreateRecipientOrg {
+  o RecipientOrg recipientOrg
+}
+
 transaction CreateTransportOrder {
   o TransportOrder transportOrder
 }
@@ -219,24 +236,18 @@ transaction UpdateTransportOrderDeliveryWindow {
   o String vin
 }
 
-transaction CreateLegalOwnerOrg {
-  o LegalOwnerOrg legalOwnerOrg
-}
-
-transaction CreateCompoundOrg {
-  o CompoundOrg compoundOrg
-}
-
-transaction CreateCarrierOrg {
-  o CarrierOrg carrierOrg
-}
-
-transaction CreateRecipientOrg {
-  o RecipientOrg recipientOrg
+transaction UpdateTransportOrderStatusToCancelled {
+  --> TransportOrder transportOrder
+  o Cancellation cancellation
 }
 
 transaction CreateVehicles {
   o Vehicle[] vehicles
+}
+
+transaction UpdateRegistrationCountry {
+  --> Vehicle vehicle
+  o String registrationCountry
 }
 
 transaction CreateECMRs {
@@ -275,24 +286,14 @@ transaction UpdateECMRStatusToCancelled {
   o Cancellation cancellation
 }
 
-transaction UpdateExpectedDeliveryWindow {
-  --> ECMR ecmr
-  o DateWindow expectedWindow
-}
-
 transaction UpdateExpectedPickupWindow {
   --> ECMR ecmr
   o DateWindow expectedWindow
 }
 
-transaction UpdateTransportOrderStatusToCancelled {
-  --> TransportOrder transportOrder
-  o Cancellation cancellation
-}
-
-transaction UpdateRegistrationCountry {
-  --> Vehicle vehicle
-  o String registrationCountry
+transaction UpdateExpectedDeliveryWindow {
+  --> ECMR ecmr
+  o DateWindow expectedWindow
 }
 
 /**

@@ -26,15 +26,24 @@ function createECMRs(tx) {
       return prev + curr;
     });
 
-  if (tx.transportOrder.goods.length !== +totalEcmrsGoods) {
-    throw new Error('[CreateECMRs] The number of goods mismatch between TransportOrder ' + tx.transportOrder.orderID + ' and ECMRs. ' + tx.transportOrder.goods.length + ' !== ' + +totalEcmrsGoods);
+  if (tx.transportOrder.goods.length < +totalEcmrsGoods) {
+    throw new Error('[CreateECMRs] The total amount of goods of the ECMRs exceeds the total listed in the TransportOrder ' + tx.transportOrder.orderID + '.' + tx.transportOrder.goods.length + ' !== ' + +totalEcmrsGoods);
+  }
+
+  if (!validateVinIds(tx.transportOrder, tx.ecmrs)) {
+    throw new Error('[CreateECMRs] The VINs mismatch between TransportOrder ' + tx.transportOrder.orderID + ' and ECMRs.');
   }
 
   return getAssetRegistry('org.digitalcmr.ECMR')
     .then(function (assetRegistry) {
       // maintain relationship with transport order
       tx.ecmrs.forEach(function (ecmr) {
-        ecmr.orderID = tx.transportOrder.$identifier;
+        ecmr.orderID = tx.transportOrder.getIdentifier();
+        // empty signatures if there are
+        ecmr.compoundSignature = null;
+        ecmr.carrierLoadingSignature = null;
+        ecmr.carrierDeliverySignature = null;
+        ecmr.recipientSignature = null;
       });
 
       return assetRegistry.addAll(tx.ecmrs)
@@ -196,7 +205,7 @@ function updateEcmrStatusToConfirmedDelivered(tx) {
   var factory = getFactory();
   var currentParticipant = getCurrentParticipant() && getCurrentParticipant().getIdentifier();
 
-  if (tx.ecmr.recipient.getIdentifier() !== currentParticipant) {
+  if (tx.ecmr.recipientMember.getIdentifier() !== currentParticipant) {
     throw new Error('[UpdateEcmrStatusToConfirmedDelivered] No permissions to execute this action');
   }
 

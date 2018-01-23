@@ -296,7 +296,7 @@
         }
       }
     },
-    "/transportOrder/updateDeliveryWindow":             {
+    "/transportOrder/updateDeliveryWindow": {
       "put": {
         "x-swagger-router-controller": "TransportOrderController",
         "operationId":                 "updateDeliveryWindow",
@@ -339,7 +339,7 @@
         }
       }
     },
-    "/transportOrder/cancel": {
+    "/transportOrder/cancel":               {
       "put": {
         "x-swagger-router-controller": "TransportOrderController",
         "operationId":                 "cancelTransportOrder",
@@ -382,7 +382,7 @@
         }
       }
     },
-    "/ECMR/":                 {
+    "/ECMR/":                               {
       "post": {
         "x-swagger-router-controller": "ECMRController",
         "operationId":                 "CreateECMRs",
@@ -423,9 +423,41 @@
             }
           }
         }
+      },
+      "get":  {
+        "x-swagger-router-controller": "ECMRController",
+        "operationId":                 "getAllEcmrs",
+        "summary":                     "Return the complete list of ECMRs",
+        "description":                 "Returns the complete list of ECMRs, which the current user is allowed to read",
+        "parameters":                  [
+          {
+            "name":        "x-access-token",
+            "in":          "header",
+            "description": "Provide authentication token",
+            "required":    true,
+            "type":        "string"
+          }
+        ],
+        "responses":                   {
+          "200":     {
+            "description": "The list of ECMRs is returned\n",
+            "schema":      {
+              "type":  "array",
+              "items": {
+                "$ref": "#/definitions/ECMR"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema":      {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
       }
     },
-    "/ECMR/status/LOADED":                              {
+    "/ECMR/status/LOADED":                  {
       "put": {
         "x-swagger-router-controller": "ECMRController",
         "operationId":                 "updateEcmrStatusToLoaded",
@@ -586,40 +618,6 @@
             "description": "The ECMR has been updated and written to the blockchain\n",
             "schema":      {
               "$ref": "#/definitions/UpdateStatusWithTransportOrder"
-            }
-          },
-          "default": {
-            "description": "Unexpected error",
-            "schema":      {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        }
-      }
-    },
-    "/ECMR/":                                           {
-      "get": {
-        "x-swagger-router-controller": "ECMRController",
-        "operationId":                 "getAllEcmrs",
-        "summary":                     "Return the complete list of ECMRs",
-        "description":                 "Returns the complete list of ECMRs, which the current user is allowed to read",
-        "parameters":                  [
-          {
-            "name":        "x-access-token",
-            "in":          "header",
-            "description": "Provide authentication token",
-            "required":    true,
-            "type":        "string"
-          }
-        ],
-        "responses":                   {
-          "200":     {
-            "description": "The list of ECMRs is returned\n",
-            "schema":      {
-              "type":  "array",
-              "items": {
-                "$ref": "#/definitions/ECMR"
-              }
             }
           },
           "default": {
@@ -2642,42 +2640,42 @@
           "example":     "leaseplan",
           "required":    true
         },
-        "source":                 {
+        "source":          {
           "type":        "string",
           "description": "Provide ID of the Compound organization",
           "example":     "amsterdamcompound",
           "required":    true
         },
-        "transporter":            {
+        "transporter":     {
           "type":        "string",
           "description": "Provide ID of the Transporter user",
           "example":     "harry@koopman.org",
           "required":    false
         },
-        "carrier":                {
+        "carrier":         {
           "type":        "string",
           "description": "Provide ID of the Carrier organization",
           "example":     "koopman",
           "required":    true
         },
-        "recipientOrg":           {
+        "recipient":       {
           "type":        "string",
           "description": "Provide ID of the Recipient organization",
           "example":     "cardealer",
           "required":    true
         },
-        "recipient":              {
+        "recipientMember": {
           "type":        "string",
           "description": "Provide ID of the Recipient user",
           "example":     "rob@cardealåer.org",
           "required":    false
         },
-        "issueDate":              {
+        "issueDate":       {
           "type":        "number",
           "description": "Provide an issue date in integer format",
           "required":    true
         },
-        "carrierComments":        {
+        "carrierComments": {
           "type":        "string",
           "description": "Provide Carrier Comments",
           "required":    true
@@ -2745,6 +2743,18 @@
     "Good":                           {
       "type":       "object",
       "properties": {
+        "source":          {
+          "type":        "string",
+          "example":     "amsterdamcompound",
+          "description": "The ID of the Compound organization. Make sure to change this if logged in with a different source.",
+          "required":    true
+        },
+        "recipient":       {
+          "type":        "string",
+          "description": "Provide ID of the Recipient organization",
+          "example":     "cardealer",
+          "required":    true
+        },
         "vehicle":         {
           "$ref":     "#/definitions/Vehicle",
           "required": true
@@ -2896,12 +2906,6 @@
           "type":        "string",
           "example":     "leaseplan",
           "description": "The ID of the Legal Owner organization. Make sure to change this if logged in with a different owner.",
-          "required":    true
-        },
-        "source":    {
-          "type":        "string",
-          "example":     "amsterdamcompound",
-          "description": "The ID of the Compound organization. Make sure to change this if logged in with a different source.",
           "required":    true
         },
         "carrier":   {

@@ -93,6 +93,8 @@ Builder.prototype.buildGood = function buildGood(vin) {
   good.deliveryAddress = this.factory.newConcept(Network.namespace, 'Address');
   good.loadingAddress = this.buildAddress();
   good.deliveryAddress = this.buildAddress();
+  good.source = this.factory.newRelationship(Network.namespace, 'CompoundOrg', 'amsterdamcompound');
+  good.recipientOrg = this.factory.newRelationship(Network.namespace, 'RecipientOrg', 'cardealer');
 
   return good;
 };
@@ -121,8 +123,7 @@ Builder.prototype.buildVehicle = function buildVehicle(vin) {
  */
 Builder.prototype.buildTransportOrder = function buildTransportOrder(orderID) {
   let transportOrder = this.factory.newResource(Network.namespace, 'TransportOrder', orderID);
-  transportOrder.owner = this.factory.newRelationship(Network.namespace, 'LegalOwnerOrg', 'lapo@leaseplan.org');
-  transportOrder.source = this.factory.newRelationship(Network.namespace, 'CompoundOrg', 'amsterdamcompound');
+  transportOrder.owner = this.factory.newRelationship(Network.namespace, 'LegalOwnerOrg', 'leaseplan');
   transportOrder.carrier = this.factory.newRelationship(Network.namespace, 'CarrierOrg', 'koopman');
   transportOrder.goods = [];
   transportOrder.issueDate = 0;

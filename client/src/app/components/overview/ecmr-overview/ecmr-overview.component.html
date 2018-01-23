@@ -61,7 +61,7 @@
               <div class="center_content">{{ecmr?.goods.length}}</div>
             </td>
             <td>{{ecmr?.carrier?.split('#')[1] }}</td>
-            <td>{{ecmr?.recipient?.split('#')[1].split('@')[0]}}</td>
+            <td>{{ecmr?.recipientMember?.split('#')[1].split('@')[0]}}</td>
             <td class="responsive_image">
               <img class="centered_content comment_icon"
                    *ngIf="hasComments(ecmr)"/>

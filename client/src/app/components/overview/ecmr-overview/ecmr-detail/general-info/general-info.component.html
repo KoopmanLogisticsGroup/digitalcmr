@@ -3,13 +3,17 @@
 </div>
 <div class="row top_line_styling">
   <p *ngIf="ecmr?.status === EcmrStatus.Created && ecmr?.loading?.expectedWindow">
-    Estimated pickup of goods between <strong><i>{{ecmr?.loading?.expectedWindow?.startDate | date:'dd-MM-yyyy hh:mm'}} </i></strong> and <strong><i>{{ecmr?.loading?.expectedWindow?.endDate | date:'dd-MM-yyyy hh:mm'}} </i></strong>
+    Estimated pickup of goods between
+    <strong><i>{{ecmr?.loading?.expectedWindow?.startDate | date:'dd-MM-yyyy hh:mm'}} </i></strong> and
+    <strong><i>{{ecmr?.loading?.expectedWindow?.endDate | date:'dd-MM-yyyy hh:mm'}} </i></strong>
   </p>
   <p *ngIf="ecmr?.status === EcmrStatus.Created && !ecmr?.loading?.expectedWindow">
     No estimated pickup window available yet.
   </p>
   <p *ngIf="ecmr?.status === EcmrStatus.InTransit && ecmr?.delivery?.expectedWindow">
-    Estimated delivery of goods between <strong><i>{{ecmr?.delivery?.expectedWindow?.startDate | date:'dd-MM-yyyy HH:mm'}} </i></strong> and <strong><i>{{ecmr?.delivery?.expectedWindow?.endDate | date:'dd-MM-yyyy HH:mm'}} </i></strong>
+    Estimated delivery of goods between
+    <strong><i>{{ecmr?.delivery?.expectedWindow?.startDate | date:'dd-MM-yyyy HH:mm'}} </i></strong> and
+    <strong><i>{{ecmr?.delivery?.expectedWindow?.endDate | date:'dd-MM-yyyy HH:mm'}} </i></strong>
   </p>
   <p *ngIf="ecmr?.status === EcmrStatus.InTransit && !ecmr?.delivery?.expectedWindow">
     No estimated delivery window available yet.
@@ -44,7 +48,7 @@
     </div>
     <div class="comment_info">
       <div class="image_text">
-        <img class="comment_overview comment_icon"/>
+        <!--<img class="comment_overview comment_icon"/>-->
         <span></span>
       </div>
     </div>
@@ -68,7 +72,7 @@
     </div>
     <div class="comment_info">
       <div class="image_text">
-        <img class="comment_overview comment_icon"/>
+        <img *ngIf="ecmr?.compoundSignature?.generalRemark?.comments" class="comment_overview comment_icon"/>
         <span>{{ ecmr?.compoundSignature?.generalRemark?.comments }}</span>
       </div>
     </div>
@@ -90,7 +94,7 @@
         <span *ngIf="ecmr?.carrierLoadingSignature?.timestamp"><b>Date:</b> {{ecmr?.carrierLoadingSignature?.timestamp | date:'dd-MM-yyyy'}} ({{ecmr?.carrierLoadingSignature?.timestamp | date:'HH:mm'}})</span>
         <div class="comment_info">
           <div class="image_text">
-            <img class="comment_overview comment_icon"/>
+            <img *ngIf="ecmr?.carrierLoadingSignature?.generalRemark?.comments" class="comment_overview comment_icon"/>
             <span>{{ ecmr?.carrierLoadingSignature?.generalRemark?.comments }}</span>
           </div>
         </div>
@@ -98,7 +102,7 @@
         <span *ngIf="ecmr?.carrierDeliverySignature?.timestamp"><b>Date:</b> {{ecmr?.carrierDeliverySignature?.timestamp | date:'dd-MM-yyyy'}} ({{ecmr?.carrierDeliverySignature?.timestamp | date:'HH:mm'}})</span>
         <div class="comment_info">
           <div class="image_text">
-            <img class="comment_overview comment_icon"/>
+            <img *ngIf="ecmr?.carrierDeliverySignature?.generalRemark?.comments" lass="comment_overview comment_icon"/>
             <span>{{ ecmr?.carrierDeliverySignature?.generalRemark?.comments }}</span>
           </div>
         </div>
@@ -113,7 +117,7 @@
         <div class="image_text">
           <img class="address_image"/>
           <div class="address_info">
-            <span>{{ecmr?.recipient?.split('#')[1]}}</span>
+            <span>{{ecmr?.recipientMember?.split('#')[1]}}</span>
             <span>{{ecmr?.delivery?.address.street}} {{ecmr?.delivery?.address.houseNumber}}</span>
             <span>{{ecmr?.delivery?.address.zipCode}}, {{ecmr?.delivery?.address.city}}</span>
           </div>
@@ -124,7 +128,7 @@
     </div>
     <div class="comment_info">
       <div class="image_text">
-        <img class="comment_overview comment_icon"/>
+        <img *ngIf="ecmr?.recipientSignature?.generalRemark?.comments" class="comment_overview comment_icon"/>
         <span>{{ ecmr?.recipientSignature?.generalRemark?.comments }}</span>
       </div>
     </div>

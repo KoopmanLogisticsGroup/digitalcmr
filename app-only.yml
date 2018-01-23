@@ -36,8 +36,8 @@ services:
     ports:
       - "5985:5984"
 
-  api:
-    container_name: api
+  api_doc:
+    container_name: api_doc
     build: api_doc
     volumes:
       - ./api_doc:/docs/

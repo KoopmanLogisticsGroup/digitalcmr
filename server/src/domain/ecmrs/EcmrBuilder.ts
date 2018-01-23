@@ -28,10 +28,10 @@ export class EcmrBuilder {
     if (ecmr.transporter) {
       validatedObject.transporter = BuilderUtils.createRelationship(factory, namespace, 'CarrierMember', ecmr.transporter);
     }
-    validatedObject.carrier      = BuilderUtils.createRelationship(factory, namespace, 'CarrierOrg', ecmr.carrier);
-    validatedObject.recipientOrg = BuilderUtils.createRelationship(factory, namespace, 'RecipientOrg', ecmr.recipientOrg);
-    if (ecmr.recipient) {
-      validatedObject.recipient = BuilderUtils.createRelationship(factory, namespace, 'RecipientMember', ecmr.recipient);
+    validatedObject.carrier   = BuilderUtils.createRelationship(factory, namespace, 'CarrierOrg', ecmr.carrier);
+    validatedObject.recipient = BuilderUtils.createRelationship(factory, namespace, 'RecipientOrg', ecmr.recipient);
+    if (ecmr.recipientMember) {
+      validatedObject.recipientMember = BuilderUtils.createRelationship(factory, namespace, 'RecipientMember', ecmr.recipientMember);
     }
     validatedObject.issuedBy = BuilderUtils.createRelationship(factory, namespace, 'Entity', ecmr.issuedBy);
 
@@ -68,6 +68,8 @@ export class EcmrBuilder {
 
   public static buildGood(factory: any, namespace: string, good: any): any {
     let validatedObject             = BuilderUtils.createConcept(factory, namespace, 'Good', good);
+    validatedObject.source          = BuilderUtils.createRelationship(factory, namespace, 'CompoundOrg', good.source);
+    validatedObject.recipient       = BuilderUtils.createRelationship(factory, namespace, 'RecipientOrg', good.recipient);
     validatedObject.pickupWindow    = BuilderUtils.createConcept(factory, namespace, 'DateWindow', good.pickupWindow);
     validatedObject.deliveryWindow  = BuilderUtils.createConcept(factory, namespace, 'DateWindow', good.deliveryWindow);
     validatedObject.loadingAddress  = BuilderUtils.createConcept(factory, namespace, 'Address', good.loadingAddress);
