@@ -2,20 +2,6 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: couchdb-private
-  labels:
-    name: couchdb-private
-spec:
-  restartPolicy: "Always"
-  containers:
-  - name: couchdb-private
-    image: couchdb:1.7.0
-    imagePullPolicy: Always
-
----
-apiVersion: v1
-kind: Pod
-metadata:
   name: app-server
   labels:
     name: app-server
@@ -51,7 +37,7 @@ spec:
     imagePullPolicy: Always
     imagePullSecrets:
     - name: bluemix-uk-registry
-    command: ["sh", "-c", "./node_modules/.bin/ng serve -H 0.0.0.0 -e prod --disable-host-check"]
+    command: ["sh", "-c", "ng serve -H 0.0.0.0 -e prod --disable-host-check"]
 
 ---
 apiVersion: v1

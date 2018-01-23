@@ -1,0 +1,34 @@
+---
+kind: StatefulSet
+apiVersion: apps/v1beta1
+metadata:
+    name: couchdb-private
+spec:
+    serviceName: couchdb-private
+#    replicas: 1
+    template:
+        metadata:
+            labels:
+                tier: db
+        spec:
+            terminationGracePeriodSeconds: 10
+            containers:
+                - name: couchdb-private
+                  image: couchdb:1.7.0
+                  imagePullPolicy: Always
+                  ports:
+                    - containerPort: 5984
+                      name: http
+                  volumeMounts:
+                    - name: couchdb-private-data
+                      mountPath: /usr/local/var/lib/couchdb
+    volumeClaimTemplates:
+        - metadata:
+            name: couchdb-private-data
+          spec:
+              accessModes:
+                  - ReadWriteOnce
+              resources:
+                  requests:
+                      storage: 10M
+              storageClassName: ""

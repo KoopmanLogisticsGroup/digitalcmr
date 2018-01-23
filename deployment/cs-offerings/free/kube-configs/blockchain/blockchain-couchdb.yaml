@@ -359,6 +359,9 @@ spec:
         env:
         - name: DB_URL
           value: http://localhost:5984/member_db
+#        volumeMounts:
+#          - name: couch-db-persistent-storage
+#            mountPath: /opt/couchdb/data/
 
 ---
 apiVersion: extensions/v1beta1
@@ -378,3 +381,15 @@ spec:
         env:
         - name: DB_URL
           value: http://localhost:5984/member_db
+#        volumeMounts:
+#          - name: couch-db-persistent-storage
+#            mountPath: /opt/couchdb/data/
+#
+#volumeClaimTemplates:
+#- metadata:
+#    name: couch-db-persistent-storage
+#  spec:
+#    accessModes: [ "ReadWriteOnce" ]
+#    resources:
+#      requests:
+#        storage: 1Gi

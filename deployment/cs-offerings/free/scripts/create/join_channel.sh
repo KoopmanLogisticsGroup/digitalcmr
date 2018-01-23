@@ -1,9 +1,9 @@
 #!/bin/bash
 
 if [ "${PWD##*/}" == "create" ]; then
-    KUBECONFIG_FOLDER=${PWD}/../../kube-configs
+    KUBECONFIG_FOLDER=${PWD}/../../kube-configs/channels
 elif [ "${PWD##*/}" == "scripts" ]; then
-    KUBECONFIG_FOLDER=${PWD}/../kube-configs
+    KUBECONFIG_FOLDER=${PWD}/../kube-configs/channels
 else
     echo "Please run the script from 'scripts' or 'scripts/create' folder"
 fi

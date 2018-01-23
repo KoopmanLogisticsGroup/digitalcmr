@@ -1,9 +1,9 @@
 #!/bin/bash
 
 if [ "${PWD##*/}" == "create" ]; then
-    KUBECONFIG_FOLDER=${PWD}/../../kube-configs
+    KUBECONFIG_FOLDER=${PWD}/../../kube-configs/composer
 elif [ "${PWD##*/}" == "scripts" ]; then
-    KUBECONFIG_FOLDER=${PWD}/../kube-configs
+    KUBECONFIG_FOLDER=${PWD}/../kube-configs/composer
 else
     echo "Please run the script from 'scripts' or 'scripts/delete' folder"
 fi
