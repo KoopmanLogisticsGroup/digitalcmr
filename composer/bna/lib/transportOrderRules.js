@@ -54,7 +54,7 @@ function updateTransportOrderToInProgress(tx) {
 
   var factory = getFactory();
   var ecmrIDs = tx.ecmrs.map(function (ecmr) {
-    return factory.newRelationship('org.digitalcmr', 'ECMR', ecmr.$identifier)
+    return factory.newRelationship('org.digitalcmr', 'ECMR', ecmr.getIdentifier())
   });
   tx.transportOrder.ecmrs = ecmrIDs;
 
@@ -94,23 +94,9 @@ function updateTransportOrderStatusToCompleted(transportOrder) {
     return '[updateTransportOrderStatusToCompleted] The number of goods mismatch between TransportOrder and ECMRs';
   }
 
-  transportOrder.goods = transportOrder.goods.sort(sortByVin);
-
-  var ecmr;
-  for (var i = 0; i < transportOrder.ecmrs.length; i++) {
-    ecmr = transportOrder.ecmrs[i];
-    ecmr.goods = ecmr.goods.sort(sortByVin);
-
-    for (var j = 0; j < ecmr.goods.length; j++) {
-      console.log('ecmr', ecmr.$identifier);
-      // there is a mismatch of vin number or there is a cancellation
-      if ((ecmr.goods[j].vehicle.$identifier !== transportOrder.goods[i + j].vehicle.$identifier) ||
-        ((ecmr.goods[j].vehicle.$identifier === transportOrder.goods[i + j].vehicle.$identifier) &&
-          (!ecmr.goods[j].cancellation && typeof ecmr.goods[j].cancellation !== 'undefined'))) {
-        console.log('[updateTransportOrderStatusToCompleted] Goods mismatch or goods delivering is not completed');
-        return '[updateTransportOrderStatusToCompleted] Goods mismatch or goods delivering is not completed';
-      }
-    }
+  if (!validateVinIds(transportOrder, transportOrder.ecmrs)) {
+    console.log('[updateTransportOrderStatusToCompleted] Goods mismatch or goods delivering is not completed');
+    return '[updateTransportOrderStatusToCompleted] Goods mismatch or goods delivering is not completed';
   }
 
   transportOrder.status = TransportOrderStatus.Completed;
@@ -127,14 +113,37 @@ function updateTransportOrderStatusToCompleted(transportOrder) {
 }
 
 function sortByVin(a, b) {
-  if (a.vehicle.$identifier > b.vehicle.$identifier) {
+  if (a.vehicle.getIdentifier() > b.vehicle.getIdentifier()) {
     return 1;
   }
-  if (a.vehicle.$identifier < b.vehicle.$identifier) {
+  if (a.vehicle.getIdentifier() < b.vehicle.getIdentifier()) {
     return -1;
   }
 
   return 0;
+}
+
+function validateVinIds(transportOrder, ecmrs) {
+  transportOrder.goods = transportOrder.goods.sort(sortByVin);
+
+  var ecmr;
+  var counter = 0;
+  for (var i = 0; i < ecmrs.length; i++) {
+    ecmr = ecmrs[i];
+    ecmr.goods = ecmr.goods.sort(sortByVin);
+
+    for (var j = 0; j < ecmr.goods.length; j++) {
+      // there is a mismatch of vin number or there is a cancellation
+      if ((ecmr.goods[j].vehicle.getIdentifier() !== transportOrder.goods[counter].vehicle.getIdentifier()) ||
+        ((ecmr.goods[j].vehicle.getIdentifier() === transportOrder.goods[counter].vehicle.getIdentifier()) &&
+          (!ecmr.goods[j].cancellation && typeof ecmr.goods[j].cancellation !== 'undefined'))) {
+        return false;
+      }
+      counter++;
+    }
+  }
+
+  return true;
 }
 
 /**

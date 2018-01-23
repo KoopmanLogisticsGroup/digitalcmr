@@ -196,6 +196,22 @@ concept DateWindow {
  * Transactions
  */
 
+transaction CreateLegalOwnerOrg {
+  o LegalOwnerOrg legalOwnerOrg
+}
+
+transaction CreateCompoundOrg {
+  o CompoundOrg compoundOrg
+}
+
+transaction CreateCarrierOrg {
+  o CarrierOrg carrierOrg
+}
+
+transaction CreateRecipientOrg {
+  o RecipientOrg recipientOrg
+}
+
 transaction CreateTransportOrder {
   o TransportOrder transportOrder
 }
@@ -220,24 +236,18 @@ transaction UpdateTransportOrderDeliveryWindow {
   o String vin
 }
 
-transaction CreateLegalOwnerOrg {
-  o LegalOwnerOrg legalOwnerOrg
-}
-
-transaction CreateCompoundOrg {
-  o CompoundOrg compoundOrg
-}
-
-transaction CreateCarrierOrg {
-  o CarrierOrg carrierOrg
-}
-
-transaction CreateRecipientOrg {
-  o RecipientOrg recipientOrg
+transaction UpdateTransportOrderStatusToCancelled {
+  --> TransportOrder transportOrder
+  o Cancellation cancellation
 }
 
 transaction CreateVehicles {
   o Vehicle[] vehicles
+}
+
+transaction UpdateRegistrationCountry {
+  --> Vehicle vehicle
+  o String registrationCountry
 }
 
 transaction CreateECMRs {
@@ -276,24 +286,14 @@ transaction UpdateECMRStatusToCancelled {
   o Cancellation cancellation
 }
 
-transaction UpdateExpectedDeliveryWindow {
-  --> ECMR ecmr
-  o DateWindow expectedWindow
-}
-
 transaction UpdateExpectedPickupWindow {
   --> ECMR ecmr
   o DateWindow expectedWindow
 }
 
-transaction UpdateTransportOrderStatusToCancelled {
-  --> TransportOrder transportOrder
-  o Cancellation cancellation
-}
-
-transaction UpdateRegistrationCountry {
-  --> Vehicle vehicle
-  o String registrationCountry
+transaction UpdateExpectedDeliveryWindow {
+  --> ECMR ecmr
+  o DateWindow expectedWindow
 }
 
 /**

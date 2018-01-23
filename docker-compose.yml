@@ -49,8 +49,3 @@ services:
       - peer0.org1.example.com
       - couchdb
       - util
-
-  composer-rest-server:
-    extends:
-      file: composer/docker-compose.yml
-      service: composer-rest-server

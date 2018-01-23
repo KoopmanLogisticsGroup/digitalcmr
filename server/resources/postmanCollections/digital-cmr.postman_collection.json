@@ -901,6 +901,53 @@
       "response": []
     },
     {
+      "name":     "Carrier Admin - Update ECMR EstimatedPickupWindow",
+      "event":    [
+        {
+          "listen": "test",
+          "script": {
+            "id":   "4758d303-d672-4255-927c-1dd2780a4301",
+            "type": "text/javascript",
+            "exec": [
+              "tests[\"Status code is 200\"] = responseCode.code === 200;",
+              "",
+              "var jsonData = JSON.parse(responseBody);"
+            ]
+          }
+        }
+      ],
+      "request":  {
+        "method": "PUT",
+        "header": [
+          {
+            "key":   "x-access-token",
+            "value": "{{carrierAdminToken}}"
+          },
+          {
+            "key":   "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body":   {
+          "mode": "raw",
+          "raw":  "{\n  \"ecmrID\": \"{{ecmrID}}\",\n  \"expectedWindow\": {\n    \"startDate\": 0,\n    \"endDate\": 1\n  }\n}"
+        },
+        "url":    {
+          "raw":  "{{localhost}}{{clientPort}}/api/v1/ECMR/updateExpectedPickupWindow",
+          "host": [
+            "{{localhost}}{{clientPort}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "ECMR",
+            "updateExpectedPickupWindow"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
       "name":     "Legal Owner - GET ECMR",
       "event":    [
         {
@@ -2065,6 +2112,53 @@
           ]
         },
         "description": "Updates selected ecmr status to IN_TRANSIT"
+      },
+      "response": []
+    },
+    {
+      "name":     "Carrier Admin - Update ECMR EstimatedDeliveryWindow",
+      "event":    [
+        {
+          "listen": "test",
+          "script": {
+            "id":   "85b077ce-1aab-476a-bb15-f9782ea9847f",
+            "type": "text/javascript",
+            "exec": [
+              "tests[\"Status code is 200\"] = responseCode.code === 200;",
+              "",
+              "var jsonData = JSON.parse(responseBody);"
+            ]
+          }
+        }
+      ],
+      "request":  {
+        "method": "PUT",
+        "header": [
+          {
+            "key":   "x-access-token",
+            "value": "{{carrierAdminToken}}"
+          },
+          {
+            "key":   "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body":   {
+          "mode": "raw",
+          "raw":  "{\n  \"ecmrID\": \"{{ecmrID}}\",\n  \"expectedWindow\": {\n    \"startDate\": 0,\n    \"endDate\": 1\n  }\n}"
+        },
+        "url":    {
+          "raw":  "{{localhost}}{{clientPort}}/api/v1/ECMR/updateExpectedDeliveryWindow",
+          "host": [
+            "{{localhost}}{{clientPort}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "ECMR",
+            "updateExpectedDeliveryWindow"
+          ]
+        }
       },
       "response": []
     },

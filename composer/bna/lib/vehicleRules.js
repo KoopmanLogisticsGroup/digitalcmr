@@ -62,7 +62,7 @@ function updateEcmrListInVin(ecmrs) {
 
         for (var j = 0; j < ecmr.goods.length; j++) {
           good = ecmr.goods[j];
-          promises.push(retrieveAndUpdateVin(assetRegistry, good, ecmr.$identifier));
+          promises.push(retrieveAndUpdateVin(assetRegistry, good, ecmr.getIdentifier()));
         }
       }
 
@@ -83,13 +83,13 @@ function retrieveAndUpdateVin(assetRegistry, good, ecmrID) {
   var factory = getFactory();
 
   return new Promise(function (resolve, reject) {
-    return assetRegistry.get(good.vehicle.$identifier)
+    return assetRegistry.get(good.vehicle.getIdentifier())
       .catch(function (error) {
         reject(new Error('[updateEcmrListInVin] An error occurred while retrieving the vin asset: ' + error));
       })
       .then(function (vin) {
         var ecmrSet = new Set(vin.ecmrs.map(function (ecmr) {
-          return ecmr.$identifier;
+          return ecmr.getIdentifier();
         }));
 
         if (!ecmrSet.has(ecmrID)) {
