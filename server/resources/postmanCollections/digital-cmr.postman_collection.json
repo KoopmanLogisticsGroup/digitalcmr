@@ -7,6 +7,147 @@
   },
   "item": [
     {
+      "name":     "System Admin - Login",
+      "event":    [
+        {
+          "listen": "test",
+          "script": {
+            "id":   "5fe429fa-0420-4c18-9ddf-65483b3fb87e",
+            "type": "text/javascript",
+            "exec": [
+              "var jsonData = JSON.parse(responseBody);",
+              "",
+              "postman.setEnvironmentVariable(\"adminToken\", jsonData.token);",
+              "",
+              "tests[\"Status code is 200\"] = responseCode.code === 200;",
+              "tests[\"Authentication successful\"] = jsonData.success === true;",
+              "tests[\"Correct user\"] = jsonData.user[\"username\"] === \"admin\";"
+            ]
+          }
+        }
+      ],
+      "request":  {
+        "method": "POST",
+        "header": [
+          {
+            "key":   "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body":   {
+          "mode": "raw",
+          "raw":  "{\n  \"username\" : \"admin\",\n  \"password\" : \"@dm1nPassw0rd\"\n}"
+        },
+        "url":    {
+          "raw":  "{{localhost}}{{clientPort}}/api/v1/login",
+          "host": [
+            "{{localhost}}{{clientPort}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name":     "System Admin - Add participant",
+      "event":    [
+        {
+          "listen": "test",
+          "script": {
+            "id":   "fd09529a-568c-4fd0-a47d-7c679cc0f6cc",
+            "type": "text/javascript",
+            "exec": [
+              "var reqBody = JSON.parse(request.data);",
+              "",
+              "postman.setEnvironmentVariable(\"newUserID\", reqBody.username);",
+              "postman.setEnvironmentVariable(\"newUserPassword\", reqBody.password);",
+              "",
+              "tests[\"Status code is 200\"] = responseCode.code === 200;"
+            ]
+          }
+        }
+      ],
+      "request":  {
+        "method":      "POST",
+        "header":      [
+          {
+            "key":   "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key":   "x-access-token",
+            "value": "{{adminToken}}"
+          }
+        ],
+        "body":        {
+          "mode": "raw",
+          "raw":  "{\n\t\"username\": \"tom@koopman.org\",\n\t\"password\": \"veryDifficultPassw0rd\",\n\t\"firstName\": \"Tom\",\n\t\"lastName\": \"Hill\",\n\t\"orgType\": \"CarrierOrg\",\n\t\"orgID\": \"koopman\",\n\t\"role\": \"CarrierMember\",\n\t\"address\": {\n    \t\"name\": \"delivery adress\",\n        \"street\": \"een straat\",\n        \"houseNumber\": \"41\",\n        \"city\": \"Groningen\",\n        \"zipCode\": \"7811 HC\",\n        \"country\": \"netherlands\",\n        \"latitude\": 123,\n        \"longitude\": 124\n    }\n}"
+        },
+        "url":         {
+          "raw":  "{{localhost}}{{clientPort}}/api/v1/participant/",
+          "host": [
+            "{{localhost}}{{clientPort}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "participant",
+            ""
+          ]
+        },
+        "description": ""
+      },
+      "response": []
+    },
+    {
+      "name":     "New Participant - Login",
+      "event":    [
+        {
+          "listen": "test",
+          "script": {
+            "id":   "a1071f1a-cb25-42a4-ae6a-079a6314b1b0",
+            "type": "text/javascript",
+            "exec": [
+              "var jsonData = JSON.parse(responseBody);",
+              "",
+              "tests[\"Status code is 200\"] = responseCode.code === 200;",
+              "tests[\"Authentication successful\"] = jsonData.success === true;",
+              "tests[\"Correct user\"] = jsonData.user[\"username\"] === postman.getEnvironmentVariable(\"newUserID\");"
+            ]
+          }
+        }
+      ],
+      "request":  {
+        "method": "POST",
+        "header": [
+          {
+            "key":   "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body":   {
+          "mode": "raw",
+          "raw":  "{\n  \"username\" : \"{{newUserID}}\",\n  \"password\" : \"{{newUserPassword}}\"\n}"
+        },
+        "url":    {
+          "raw":  "{{localhost}}{{clientPort}}/api/v1/login",
+          "host": [
+            "{{localhost}}{{clientPort}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
       "name":     "Legal Owner Admin - Login",
       "event":    [
         {
@@ -48,6 +189,52 @@
             "login"
           ]
         }
+      },
+      "response": []
+    },
+    {
+      "name":     "Legal Owner Admin - Cannot add participant",
+      "event":    [
+        {
+          "listen": "test",
+          "script": {
+            "id":   "7cba086d-1df5-43a3-969b-4d7e1a4ef452",
+            "type": "text/javascript",
+            "exec": [
+              "tests[\"Status code is 500\"] = responseCode.code === 500;"
+            ]
+          }
+        }
+      ],
+      "request":  {
+        "method":      "POST",
+        "header":      [
+          {
+            "key":   "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key":   "x-access-token",
+            "value": "{{legalOwnerToken}}"
+          }
+        ],
+        "body":        {
+          "mode": "raw",
+          "raw":  "{\n\t\"username\": \"newuser\",\n\t\"password\": \"veryDifficultPassw0rd\",\n\t\"firstName\": \"firstName\",\n\t\"lastName\": \"lastName\",\n\t\"orgType\": \"CarrierOrg\",\n\t\"orgID\": \"koopman\",\n\t\"role\": \"CarrierMember\",\n\t\"address\": {\n    \t\"name\": \"delivery adress\",\n        \"street\": \"een straat\",\n        \"houseNumber\": \"41\",\n        \"city\": \"Groningen\",\n        \"zipCode\": \"7811 HC\",\n        \"country\": \"netherlands\",\n        \"latitude\": 123,\n        \"longitude\": 124\n    }\n}"
+        },
+        "url":         {
+          "raw":  "{{localhost}}{{clientPort}}/api/v1/participant/",
+          "host": [
+            "{{localhost}}{{clientPort}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "participant",
+            ""
+          ]
+        },
+        "description": ""
       },
       "response": []
     },
@@ -668,6 +855,52 @@
       "response": []
     },
     {
+      "name":     "Carrier Admin - Cannot add participant",
+      "event":    [
+        {
+          "listen": "test",
+          "script": {
+            "id":   "7cba086d-1df5-43a3-969b-4d7e1a4ef452",
+            "type": "text/javascript",
+            "exec": [
+              "tests[\"Status code is 500\"] = responseCode.code === 500;"
+            ]
+          }
+        }
+      ],
+      "request":  {
+        "method":      "POST",
+        "header":      [
+          {
+            "key":   "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key":   "x-access-token",
+            "value": "{{carrierAdminToken}}"
+          }
+        ],
+        "body":        {
+          "mode": "raw",
+          "raw":  "{\n\t\"username\": \"newuser\",\n\t\"password\": \"veryDifficultPassw0rd\",\n\t\"firstName\": \"firstName\",\n\t\"lastName\": \"lastName\",\n\t\"orgType\": \"CarrierOrg\",\n\t\"orgID\": \"koopman\",\n\t\"role\": \"CarrierMember\",\n\t\"address\": {\n    \t\"name\": \"delivery adress\",\n        \"street\": \"een straat\",\n        \"houseNumber\": \"41\",\n        \"city\": \"Groningen\",\n        \"zipCode\": \"7811 HC\",\n        \"country\": \"netherlands\",\n        \"latitude\": 123,\n        \"longitude\": 124\n    }\n}"
+        },
+        "url":         {
+          "raw":  "{{localhost}}{{clientPort}}/api/v1/participant/",
+          "host": [
+            "{{localhost}}{{clientPort}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "participant",
+            ""
+          ]
+        },
+        "description": ""
+      },
+      "response": []
+    },
+    {
       "name":     "Carrier Admin - GET TransportOrder",
       "event":    [
         {
@@ -1223,6 +1456,52 @@
       "response": []
     },
     {
+      "name":     "Compound Admin - Cannot add participant",
+      "event":    [
+        {
+          "listen": "test",
+          "script": {
+            "id":   "7cba086d-1df5-43a3-969b-4d7e1a4ef452",
+            "type": "text/javascript",
+            "exec": [
+              "tests[\"Status code is 500\"] = responseCode.code === 500;"
+            ]
+          }
+        }
+      ],
+      "request":  {
+        "method":      "POST",
+        "header":      [
+          {
+            "key":   "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key":   "x-access-token",
+            "value": "{{compoundToken}}"
+          }
+        ],
+        "body":        {
+          "mode": "raw",
+          "raw":  "{\n\t\"username\": \"newuser\",\n\t\"password\": \"veryDifficultPassw0rd\",\n\t\"firstName\": \"firstName\",\n\t\"lastName\": \"lastName\",\n\t\"orgType\": \"CarrierOrg\",\n\t\"orgID\": \"koopman\",\n\t\"role\": \"CarrierMember\",\n\t\"address\": {\n    \t\"name\": \"delivery adress\",\n        \"street\": \"een straat\",\n        \"houseNumber\": \"41\",\n        \"city\": \"Groningen\",\n        \"zipCode\": \"7811 HC\",\n        \"country\": \"netherlands\",\n        \"latitude\": 123,\n        \"longitude\": 124\n    }\n}"
+        },
+        "url":         {
+          "raw":  "{{localhost}}{{clientPort}}/api/v1/participant/",
+          "host": [
+            "{{localhost}}{{clientPort}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "participant",
+            ""
+          ]
+        },
+        "description": ""
+      },
+      "response": []
+    },
+    {
       "name":     "Compound Admin - Cannot Create ECMR(s) from TransportOrder",
       "event":    [
         {
@@ -1689,6 +1968,52 @@
             "login"
           ]
         }
+      },
+      "response": []
+    },
+    {
+      "name":     "Carrier Member - Cannot add participant",
+      "event":    [
+        {
+          "listen": "test",
+          "script": {
+            "id":   "7cba086d-1df5-43a3-969b-4d7e1a4ef452",
+            "type": "text/javascript",
+            "exec": [
+              "tests[\"Status code is 500\"] = responseCode.code === 500;"
+            ]
+          }
+        }
+      ],
+      "request":  {
+        "method":      "POST",
+        "header":      [
+          {
+            "key":   "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key":   "x-access-token",
+            "value": "{{carrierMemberToken}}"
+          }
+        ],
+        "body":        {
+          "mode": "raw",
+          "raw":  "{\n\t\"username\": \"newuser\",\n\t\"password\": \"veryDifficultPassw0rd\",\n\t\"firstName\": \"firstName\",\n\t\"lastName\": \"lastName\",\n\t\"orgType\": \"CarrierOrg\",\n\t\"orgID\": \"koopman\",\n\t\"role\": \"CarrierMember\",\n\t\"address\": {\n    \t\"name\": \"delivery adress\",\n        \"street\": \"een straat\",\n        \"houseNumber\": \"41\",\n        \"city\": \"Groningen\",\n        \"zipCode\": \"7811 HC\",\n        \"country\": \"netherlands\",\n        \"latitude\": 123,\n        \"longitude\": 124\n    }\n}"
+        },
+        "url":         {
+          "raw":  "{{localhost}}{{clientPort}}/api/v1/participant/",
+          "host": [
+            "{{localhost}}{{clientPort}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "participant",
+            ""
+          ]
+        },
+        "description": ""
       },
       "response": []
     },
@@ -2250,6 +2575,52 @@
             "login"
           ]
         }
+      },
+      "response": []
+    },
+    {
+      "name":     "Recipient Admin - Cannot add participant",
+      "event":    [
+        {
+          "listen": "test",
+          "script": {
+            "id":   "7cba086d-1df5-43a3-969b-4d7e1a4ef452",
+            "type": "text/javascript",
+            "exec": [
+              "tests[\"Status code is 500\"] = responseCode.code === 500;"
+            ]
+          }
+        }
+      ],
+      "request":  {
+        "method":      "POST",
+        "header":      [
+          {
+            "key":   "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key":   "x-access-token",
+            "value": "{{recipientToken}}"
+          }
+        ],
+        "body":        {
+          "mode": "raw",
+          "raw":  "{\n\t\"username\": \"newuser\",\n\t\"password\": \"veryDifficultPassw0rd\",\n\t\"firstName\": \"firstName\",\n\t\"lastName\": \"lastName\",\n\t\"orgType\": \"CarrierOrg\",\n\t\"orgID\": \"koopman\",\n\t\"role\": \"CarrierMember\",\n\t\"address\": {\n    \t\"name\": \"delivery adress\",\n        \"street\": \"een straat\",\n        \"houseNumber\": \"41\",\n        \"city\": \"Groningen\",\n        \"zipCode\": \"7811 HC\",\n        \"country\": \"netherlands\",\n        \"latitude\": 123,\n        \"longitude\": 124\n    }\n}"
+        },
+        "url":         {
+          "raw":  "{{localhost}}{{clientPort}}/api/v1/participant/",
+          "host": [
+            "{{localhost}}{{clientPort}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "participant",
+            ""
+          ]
+        },
+        "description": ""
       },
       "response": []
     },

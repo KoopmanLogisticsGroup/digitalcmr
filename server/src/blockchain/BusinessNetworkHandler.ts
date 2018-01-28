@@ -1,7 +1,7 @@
 import {Config} from '../config';
 import {BusinessNetworkConnection, ParticipantRegisty} from 'composer-client';
 import {BusinessNetworkDefinition} from 'composer-common';
-import {Identity} from '../domain/Identity';
+import {Identity} from '../interfaces/entity.inferface';
 
 export class BusinessNetworkHandler {
   private businessNetworkDefinition: BusinessNetworkDefinition;

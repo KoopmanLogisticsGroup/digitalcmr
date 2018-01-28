@@ -3,7 +3,7 @@
   "info":                {
     "title":       "Digital CMR APIs",
     "description": "APIs for managing the digital CMR",
-    "version":     "1.3.2"
+    "version":     "1.4.0"
   },
   "host":                "159.8.76.83:31001",
   "schemes":             [
@@ -19,7 +19,7 @@
     "application/json"
   ],
   "paths":               {
-    "/login":                                           {
+    "/login":                               {
       "post": {
         "x-swagger-router-controller": "AuthController",
         "operationId":                 "login",
@@ -253,7 +253,7 @@
         }
       }
     },
-    "/transportOrder/updatePickupWindow":               {
+    "/transportOrder/updatePickupWindow":   {
       "put": {
         "x-swagger-router-controller": "TransportOrderController",
         "operationId":                 "updatePickupWindow",
@@ -1703,7 +1703,7 @@
         }
       }
     },
-    "/participant/":                                    {
+    "/participant/":                        {
       "post": {
         "x-swagger-router-controller": "ParticipantController",
         "operationId":                 "addParticipant",
@@ -1723,20 +1723,18 @@
           {
             "name":        "participant",
             "in":          "body",
-            "description": "List of participants",
+            "description": "Participant object",
             "required":    true,
             "schema":      {
-              "$ref": "#/definitions/Participant"
+              "$ref": "#/definitions/UserInfo"
             }
           }
         ],
         "responses":                   {
           "200":     {
-            "description": "The participant(s) have been created and written to the blockchain\n",
-            "type":        "array",
-            "items":       {
-              "$ref": "#/definitions/Vehicle"
-            }
+            "description": "The participant have been created and written to the blockchain\n",
+            "type":        "object",
+            "$ref":        "#/definitions/UserInfo"
           },
           "default": {
             "description": "Unexpected error",
@@ -1747,7 +1745,7 @@
         }
       }
     },
-    "/participant/legalowner/admin/":                   {
+    "/participant/legalowner/admin/":       {
       "get": {
         "x-swagger-router-controller": "ParticipantController",
         "operationId":                 "getAllLegalOwnerAdmins",
@@ -2492,7 +2490,6 @@
         "isDamaged": {
           "type":        "boolean",
           "description": "Specify if a good is damaged with true or false",
-          "example":     false,
           "required":    false
         }
       }
@@ -2549,14 +2546,13 @@
         "CONFIRMED_DELIVERED"
       ]
     },
-    "CreateECMRs":                    {
+    "CreateECMRs":          {
       "type":        "object",
       "description": "This API creates a new ECMR, or multiple ECMRs. Make sure there is an active transport order, otherwise an ECMR can not be created",
       "properties":  {
         "orderID": {
           "type":        "string",
           "description": "Provide the correct orderID",
-          "example":     "ORDER1",
           "required":    true
         },
         "ecmrs":   {
@@ -2568,14 +2564,13 @@
         }
       }
     },
-    "ECMR":                           {
+    "ECMR":                 {
       "description": "Array of ecmrs",
       "properties":  {
         "ecmrID":                 {
           "type":        "string",
-          "description": "Provide a unique ecmrID",
-          "example":     "ECMRID",
-          "required":    true
+          "description": "Self-generated: Provide a unique ecmrID",
+          "required":    false
         },
         "status":                 {
           "$ref":        "#/definitions/EcmrStatus",
@@ -2610,7 +2605,6 @@
         "orderID":                {
           "type":        "string",
           "description": "Provide the corresponding orderID",
-          "example":     "ORDER1",
           "required":    "true"
         },
         "issuedBy":               {
@@ -2640,42 +2634,42 @@
           "example":     "leaseplan",
           "required":    true
         },
-        "source":          {
+        "source":                 {
           "type":        "string",
           "description": "Provide ID of the Compound organization",
           "example":     "amsterdamcompound",
           "required":    true
         },
-        "transporter":     {
+        "transporter":            {
           "type":        "string",
           "description": "Provide ID of the Transporter user",
           "example":     "harry@koopman.org",
           "required":    false
         },
-        "carrier":         {
+        "carrier":                {
           "type":        "string",
           "description": "Provide ID of the Carrier organization",
           "example":     "koopman",
           "required":    true
         },
-        "recipient":       {
+        "recipient":              {
           "type":        "string",
           "description": "Provide ID of the Recipient organization",
           "example":     "cardealer",
           "required":    true
         },
-        "recipientMember": {
+        "recipientMember":        {
           "type":        "string",
           "description": "Provide ID of the Recipient user",
           "example":     "rob@cardealåer.org",
           "required":    false
         },
-        "issueDate":       {
+        "issueDate":              {
           "type":        "number",
           "description": "Provide an issue date in integer format",
           "required":    true
         },
-        "carrierComments": {
+        "carrierComments":        {
           "type":        "string",
           "description": "Provide Carrier Comments",
           "required":    true
@@ -2740,7 +2734,7 @@
       "type": "object",
       "$ref": "#/definitions/organizationProperties"
     },
-    "Good":                           {
+    "Good":                 {
       "type":       "object",
       "properties": {
         "source":          {
@@ -2785,7 +2779,7 @@
         }
       }
     },
-    "userProperties":                 {
+    "Participant":          {
       "type":       "object",
       "properties": {
         "$class":    {
@@ -2795,11 +2789,13 @@
         "userID":    {
           "type":        "string",
           "description": "Provide the unique userID",
+          "example":     "tom@bigcompany.org",
           "required":    true
         },
         "userName":  {
           "type":        "string",
           "description": "Provide a username",
+          "example":     "tom123",
           "required":    true
         },
         "firstName": {
@@ -2820,39 +2816,108 @@
         "org":       {
           "type":        "string",
           "description": "ID of the organization",
+          "example":     "bigcompany",
           "required":    true
         }
       }
     },
-    "Participant":                    {
-      "type": "object",
-      "$ref": "#/definitions/userProperties"
+    "UserInfo":             {
+      "type":       "object",
+      "properties": {
+        "username":  {
+          "type":        "string",
+          "description": "Provide a username",
+          "example":     "tom@bigcompany.org",
+          "required":    true
+        },
+        "password":  {
+          "type":        "string",
+          "description": "Provide a password",
+          "example":     "superC0mplic@t3dPassword",
+          "required":    true
+        },
+        "firstName": {
+          "type":        "string",
+          "description": "Provide a first name",
+          "required":    true
+        },
+        "lastName":  {
+          "type":        "string",
+          "description": "Provide a last name",
+          "required":    true
+        },
+        "address":   {
+          "$ref":        "#/definitions/Address",
+          "description": "returns the address object",
+          "required":    true
+        },
+        "orgType":   {
+          "$ref":        "#/definitions/OrgType",
+          "description": "Type of the organization",
+          "example":     "CarrierOrg",
+          "required":    true
+        },
+        "orgID":     {
+          "type":        "string",
+          "description": "ID of the organization",
+          "example":     "koopman",
+          "required":    true
+        },
+        "role":      {
+          "$ref":        "#/definitions/Role",
+          "description": "Role of the user within the organization",
+          "example":     "CarrierMember",
+          "required":    true
+        }
+      }
     },
-    "LegalOwnerAdmin":                {
+    "LegalOwnerAdmin":      {
       "type": "object",
-      "$ref": "#/definitions/userProperties"
+      "$ref": "#/definitions/Participant"
     },
-    "CompoundAdmin":                  {
+    "CompoundAdmin":        {
       "type": "object",
-      "$ref": "#/definitions/userProperties"
+      "$ref": "#/definitions/Participant"
     },
-    "CarrierAdmin":                   {
+    "CarrierAdmin":         {
       "type": "object",
-      "$ref": "#/definitions/userProperties"
+      "$ref": "#/definitions/Participant"
     },
-    "CarrierMember":                  {
+    "CarrierMember":        {
       "type": "object",
-      "$ref": "#/definitions/userProperties"
+      "$ref": "#/definitions/Participant"
     },
-    "RecipientAdmin":                 {
+    "RecipientAdmin":       {
       "type": "object",
-      "$ref": "#/definitions/userProperties"
+      "$ref": "#/definitions/Participant"
     },
-    "RecipientMember":                {
+    "RecipientMember":      {
       "type": "object",
-      "$ref": "#/definitions/userProperties"
+      "$ref": "#/definitions/Participant"
     },
-    "Signature":                      {
+    "Role":                 {
+      "type":        "string",
+      "description": "List of all the participant roles (cap-sensitives)",
+      "enum":        [
+        "LegalOwnerAdmin",
+        "CarrierAdmin",
+        "CarrierMember",
+        "CompoundAdmin",
+        "RecipientAdmin",
+        "RecipientMember"
+      ]
+    },
+    "OrgType":              {
+      "type":        "string",
+      "description": "List of all the organization types (cap-sensitives)",
+      "enum":        [
+        "LegalOwnerOrg",
+        "CarrierOrg",
+        "CompoundOrg",
+        "RecipientOrg"
+      ]
+    },
+    "Signature":            {
       "type":       "object",
       "properties": {
         "certificate":   {
@@ -2887,15 +2952,14 @@
         }
       }
     },
-    "TransportOrder":                 {
+    "TransportOrder":       {
       "type":        "object",
       "description": "description of the transportOrder",
       "properties":  {
         "orderID":   {
           "type":        "string",
-          "example":     "ORDER1",
-          "description": "Specify the unique orderID of the transportOrder",
-          "required":    true
+          "description": "Self-generated: unique orderID of the transportOrder",
+          "required":    false
         },
         "status":    {
           "$ref":        "#/definitions/OrderStatus",
@@ -2954,7 +3018,6 @@
         "ecmrID":    {
           "type":        "string",
           "description": "Unique ecmrID number as a string",
-          "example":     "A1234567890",
           "required":    false
         },
         "signature": {
@@ -2977,13 +3040,11 @@
         "orderID":   {
           "type":        "string",
           "description": "Unique orderID as a string",
-          "example":     "ORDER1",
           "required":    false
         },
         "ecmrID":    {
           "type":        "string",
           "description": "Unique ecmrID as a string",
-          "example":     "A1234567890",
           "required":    false
         },
         "signature": {
@@ -3023,13 +3084,11 @@
         "vin":        {
           "type":        "string",
           "description": "Unique VIN number as a string",
-          "example":     "183726339N",
           "required":    false
         },
         "orderID":    {
           "type":        "string",
           "description": "Unique orderID as a string",
-          "example":     "ORDER1",
           "required":    false
         },
         "dateWindow": {
@@ -3044,7 +3103,6 @@
         "ecmrID":         {
           "type":        "string",
           "description": "Provide an existing ecmrID",
-          "example":     "enter correct ecmrID",
           "required":    false
         },
         "expectedWindow": {
@@ -3068,7 +3126,7 @@
         }
       }
     },
-    "CancelTransportOrder":           {
+    "CancelTransportOrder": {
       "type":       "object",
       "properties": {
         "orderID":      {
@@ -3083,7 +3141,7 @@
         }
       }
     },
-    "Cancellation":                   {
+    "Cancellation":         {
       "type":       "object",
       "properties": {
         "cancelledBy": {
@@ -3098,7 +3156,22 @@
         }
       }
     },
-    "LoginCredentials":               {
+    "Identity":             {
+      "type":       "object",
+      "properties": {
+        "userID":     {
+          "type":        "string",
+          "description": "The unique identifier of the blockchain user",
+          "required":    true
+        },
+        "userSecret": {
+          "type":        "string",
+          "description": "The password randomly generated by the CA and tied to the blockchain user",
+          "required":    true
+        }
+      }
+    },
+    "LoginCredentials":     {
       "type":       "object",
       "properties": {
         "username": {
@@ -3113,7 +3186,7 @@
         }
       }
     },
-    "LoginResponse":                  {
+    "LoginResponse":        {
       "type":       "object",
       "properties": {
         "success": {
@@ -3129,31 +3202,46 @@
         "user":    {
           "type":       "object",
           "properties": {
-            "userID":    {
-              "type":        "string",
-              "description": "Displays the userID",
-              "required":    true
-            },
             "username":  {
               "type":        "string",
               "description": "Displays the username",
               "required":    true
             },
-            "userEmail": {
+            "salt":      {
               "type":        "string",
-              "description": "Displays the user email",
+              "description": "Displays the salt needed to verify the password",
+              "required":    true
+            },
+            "hash":      {
+              "type":        "string",
+              "description": "Displays the hash needed to verify the password",
+              "required":    true
+            },
+            "firstName": {
+              "type":        "string",
+              "description": "Displays the firstname",
+              "required":    true
+            },
+            "lastName":  {
+              "type":        "string",
+              "description": "Displays the lastname",
               "required":    true
             },
             "role":      {
               "type":        "string",
               "description": "Displays the user role",
               "required":    true
+            },
+            "identity":  {
+              "$ref":        "#/definitions/Identity",
+              "description": "Displays the username",
+              "required":    true
             }
           }
         }
       }
     },
-    "Error":                          {
+    "Error":                {
       "type":       "object",
       "properties": {
         "description": {
