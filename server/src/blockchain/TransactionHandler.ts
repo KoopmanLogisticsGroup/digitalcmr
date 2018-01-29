@@ -1,7 +1,7 @@
 import {BusinessNetworkHandler} from './BusinessNetworkHandler';
 import {TransactionCreator} from './TransactionCreator';
-import {Identity} from '../domain/Identity';
 import {Factory} from 'composer-common';
+import {Identity} from '../interfaces/entity.inferface';
 
 export enum QueryReturnType {
   Multiple,
@@ -39,7 +39,7 @@ export class TransactionHandler {
     return this.businessNetworkHandler.getSerializer(rawResource);
   }
 
-  public async executeQuery(identity: Identity, connectionProfile: string, queryReturnType: QueryReturnType, queryName: string, parameters?: any): Promise<any> {
+  public async query(identity: Identity, connectionProfile: string, queryReturnType: QueryReturnType, queryName: string, parameters?: any): Promise<any> {
     await this.businessNetworkHandler.connect(identity, connectionProfile);
     const assets = await this.businessNetworkHandler.query(queryName, parameters);
 
