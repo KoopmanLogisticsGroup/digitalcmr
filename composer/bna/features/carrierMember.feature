@@ -14,13 +14,16 @@
 # Use a json formatter and minify
 # https://jsonformatter.org/
 
-Feature: CarrierMember feature test
+Feature: CarrierMember
 
   Background:
     Given I have deployed the business network definition ..
     And I have added the following participants of type org.digitalcmr.CarrierMember
       """
-        {"$class":"org.digitalcmr.CarrierMember", "userID": "harry@koopman.org", "userName": "willem", "firstName": "willem", "lastName": "compy", "address": {"$class": "org.digitalcmr.Address", "name": "willem compy", "street": "compenstraat", "houseNumber": "18", "city": "Amsterdam", "zipCode": "9867UG", "country": "Netherlands", "latitude": 52.2443, "longitude": 65.2323, "id":"id"},"org":"koopman"}
+      [
+        {"$class":"org.digitalcmr.CarrierMember", "userID": "harry@koopman.org", "userName": "willem", "firstName": "willem", "lastName": "compy", "address": {"$class": "org.digitalcmr.Address", "name": "willem compy", "street": "compenstraat", "houseNumber": "18", "city": "Amsterdam", "zipCode": "9867UG", "country": "Netherlands", "latitude": 52.2443, "longitude": 65.2323, "id":"id"},"org":"koopman"},
+        {"$class":"org.digitalcmr.CarrierAdmin","userID":"sam@koopman.org","userName": "sam", "firstName":"sam","lastName":"sam","address":{"$class":"org.digitalcmr.Address","name":"lapo kelkann","street":"leesenstraat","houseNumber":"20","city":"Utrecht","zipCode":"9867RF","country":"Netherlands", "latitude":"31231231.1231", "longitude":"31231231.1231", "id":"id"},"org":"leaseplan"}
+      ]
       """
     And I have issued the participant org.digitalcmr.CarrierMember#harry@koopman.org with the identity Harry
     And I have added the following assets of type org.digitalcmr.Vehicle
@@ -53,6 +56,12 @@ Feature: CarrierMember feature test
         {"$class":"org.digitalcmr.ECMR","ecmrID":"delivered","status":"DELIVERED","carrierDeliverySignature":{"certificate":"harry@koopman.org","timestamp":1512652279289,"generalRemark":{"comments":"something"}},"carrierLoadingSignature":{"certificate":"harry@koopman.org","timestamp":1512652279289,"generalRemark":{"comments":"something"}},"compoundSignature":{"certificate":"willem@amsterdamcompound.org","timestamp":1512652279289,"generalRemark":{"comments":"something"}},"agreementTerms":"agreement terms here","agreementTermsSec":"agreement terms sec","legalOwnerRef":"ASD213123S","carrierRef":"H2238723VASD","recipientRef":"SDADHGA21312312","orderID":"C12345ORDER","owner":"leaseplan","source":"amsterdamcompound","carrier":"koopman","recipient":"cardealer","transporter":"harry@koopman.org","recipientMember":"rob@cardealer.org","creation":{"$class":"org.digitalcmr.Creation","address":{"$class":"org.digitalcmr.Address","name":"Amsterdam Compound","street":"Compoundstraat","houseNumber":"21","city":"Assen","zipCode":"9976ZH","country":"Netherlands","latitude":52.377698,"longitude":4.896555},"date":1502402400000},"loading":{"$class":"org.digitalcmr.Loading","address":{"$class":"org.digitalcmr.Address","name":"Amsterdam Compound","street":"Compoundstraat","houseNumber":"21","city":"Assen","zipCode":"9976ZH","country":"Netherlands","latitude":43.1927,"longitude":23.3249},"actualDate":1502488800000},"delivery":{"$class":"org.digitalcmr.Delivery","address":{"$class":"org.digitalcmr.Address","name":"Rob el Caro","street":"De straat","houseNumber":"302","city":"Almere","zipCode":"6736AE","country":"Netherlands","latitude":51.917153,"longitude":4.474623},"actualDate":1502834400000},"issueDate":0,"issuedBy":"koopman","carrierComments":"","documents":[],"goods":[{"$class":"org.digitalcmr.Good","source":"amsterdamcompound","recipient":"cardealer","vehicle":{"$class":"org.digitalcmr.Vehicle","vin":"A12345VIN","manufacturer":"Mercedes","model":"SLK","type":"Station","ecmrs":[],"odoMeterReading":0,"plateNumber":"I827YE"},"description":"vehicle","weight":1800,"loadingAddress":{"$class":"org.digitalcmr.Address","name":"loading address","street":"een straat","houseNumber":"41","city":"Groningen","zipCode":"7811 HC","country":"netherlands","longitude":124,"latitude":123},"deliveryAddress":{"$class":"org.digitalcmr.Address","name":"delivery adress","street":"een straat","houseNumber":"41","city":"Groningen","zipCode":"7811 HC","country":"netherlands","longitude":124,"latitude":123},"pickupWindow":{"$class":"org.digitalcmr.DateWindow","startDate":"1502834400000","endDate":"1502834400000"},"deliveryWindow":{"startDate":"1502834400000","endDate":"1502834400000"}}],"legalOwnerInstructions":"string","paymentInstructions":"string","payOnDelivery":"string"}
       ]
       """
+    And I have added the following assets of type org.digitalcmr.Entity
+    """
+    [
+      {"$class":"org.digitalcmr.CarrierOrg","entityID":"newCompany","name":"string","address":{"name":"string","street":"string","houseNumber":"string","city":"string","zipCode":"string","country":"string","latitude":0,"longitude":0}}
+    ]
+    """
 
   Scenario: Harry should be able to read all of his ECMRs where he is transporter, his org is carrier and the status is anything but CREATED
     When I use the identity Harry
@@ -171,3 +180,33 @@ Feature: CarrierMember feature test
         {"$class":"org.digitalcmr.UpdateEcmrStatusToDelivered","transportOrder":"A12345ORDER","ecmr":"moveInTransit","signature":{"certificate":"something","timestamp":1512652279289,"generalRemark":{"comments":"something"}},"goods":[{"$class":"org.digitalcmr.Good","source":"amsterdamcompound","recipient":"cardealer","vehicle":{"$class":"org.digitalcmr.Vehicle","vin":"A12345VIN","manufacturer":"Mercedes","model":"SLK","type":"Station","ecmrs":[],"odoMeterReading":0,"plateNumber":"I827YE"},"description":"vehicle","weight":1800,"loadingAddress":{"$class":"org.digitalcmr.Address","name":"loading address","street":"een straat","houseNumber":"41","city":"Groningen","zipCode":"7811 HC","country":"netherlands","longitude":124,"latitude":123},"deliveryAddress":{"$class":"org.digitalcmr.Address","name":"delivery adress","street":"een straat","houseNumber":"41","city":"Groningen","zipCode":"7811 HC","country":"netherlands","longitude":124,"latitude":123},"pickupWindow":{"$class":"org.digitalcmr.DateWindow","startDate":"1502834400000","endDate":"1502834400000"},"deliveryWindow":{"startDate":"1502834400000","endDate":"1502834400000"}}]}
       """
     Then I should get an error matching /Invalid transaction. Trying to set status DELIVERED/
+
+  Scenario: Harry should not be able to add new participants
+    When I use the identity Harry
+    And I add the following participants of type org.digitalcmr.User
+      """
+        {"$class":"org.digitalcmr.CarrierMember","userID":"sam@leaseplan.org","userName": "sam", "firstName":"sam","lastName":"sam","address":{"$class":"org.digitalcmr.Address","name":"lapo kelkann","street":"leesenstraat","houseNumber":"20","city":"Utrecht","zipCode":"9867RF","country":"Netherlands", "latitude":"31231231.1231", "longitude":"31231231.1231", "id":"id"},"org":"leaseplan"}
+      """
+    Then I should get an error matching /does not have 'CREATE' access to resource/
+
+  Scenario: Harry should not be able to read other participants information
+    When I use the identity Harry
+    Then I should not have the following participants of type org.digitalcmr.User
+      """
+        {"$class":"org.digitalcmr.CarrierMember","userID":"sam@koopman.org","userName": "sam", "firstName":"sam","lastName":"sam","address":{"$class":"org.digitalcmr.Address","name":"lapo kelkann","street":"leesenstraat","houseNumber":"20","city":"Utrecht","zipCode":"9867RF","country":"Netherlands", "latitude":"31231231.1231", "longitude":"31231231.1231", "id":"id"},"org":"leaseplan"}
+      """
+
+  Scenario: Harry should not be able to add other organizations
+    When I use the identity Harry
+    And I add the following assets of type org.digitalcmr.Entity
+      """
+        {"$class":"org.digitalcmr.CarrierOrg","entityID":"newLegalOwnerOrg","name":"string","address":{"name":"string","street":"string","houseNumber":"string","city":"string","zipCode":"string","country":"string","latitude":0,"longitude":0}}
+      """
+    Then I should get an error matching /does not have 'CREATE' access to resource/
+
+  Scenario: Harry should not be able to read other organizations
+    When I use the identity Harry
+    Then I should not have the following assets of type org.digitalcmr.Entity
+      """
+        {"$class":"org.digitalcmr.CarrierOrg","entityID":"newCompany","name":"string","address":{"name":"string","street":"string","houseNumber":"string","city":"string","zipCode":"string","country":"string","latitude":0,"longitude":0}}
+      """
