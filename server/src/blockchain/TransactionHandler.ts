@@ -29,24 +29,14 @@ export class TransactionHandler {
     return this.businessNetworkHandler.getSerializer(transaction);
   }
 
-  public async get(identity: Identity, connectionProfile: string, assetRegistry: string, resourceID: string): Promise<any> {
-    await this.businessNetworkHandler.connect(identity, connectionProfile);
-    const resourceAssetRegistry = await this.businessNetworkHandler.getAssetRegistry(assetRegistry);
-
-    const rawResource = await resourceAssetRegistry.get(resourceID);
-    await this.businessNetworkHandler.disconnect();
-
-    return this.businessNetworkHandler.getSerializer(rawResource);
-  }
-
   public async query(identity: Identity, connectionProfile: string, queryReturnType: QueryReturnType, queryName: string, parameters?: any): Promise<any> {
     await this.businessNetworkHandler.connect(identity, connectionProfile);
     const assets = await this.businessNetworkHandler.query(queryName, parameters);
 
-    const result: any[] = assets.map(asset => this.businessNetworkHandler.getSerializer(asset));
+    let result: any[] = assets.map(asset => this.businessNetworkHandler.getSerializer(asset));
 
     await this.businessNetworkHandler.disconnect();
 
-    return (queryReturnType === QueryReturnType.Single) ? result[0] : result;
+    return (queryReturnType === QueryReturnType.Single) ? ((!result.length || typeof result === 'undefined') ? {} : result[0]) : result;
   }
 }

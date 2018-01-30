@@ -12,7 +12,7 @@
         {
           "listen": "test",
           "script": {
-            "id":   "5fe429fa-0420-4c18-9ddf-65483b3fb87e",
+            "id":   "d501c534-3dd4-43ca-97eb-dc789ced8f3c",
             "type": "text/javascript",
             "exec": [
               "var jsonData = JSON.parse(responseBody);",
@@ -21,7 +21,15 @@
               "",
               "tests[\"Status code is 200\"] = responseCode.code === 200;",
               "tests[\"Authentication successful\"] = jsonData.success === true;",
-              "tests[\"Correct user\"] = jsonData.user[\"username\"] === \"admin\";"
+              "tests[\"Correct user\"] = jsonData.user[\"username\"] === \"admin\";",
+              "",
+              "// needed for a full dry-run",
+              "postman.setEnvironmentVariable(\"randomParticipant\", new Date().getTime());",
+              "postman.setEnvironmentVariable(\"randomPassword\", new Date().getTime());",
+              "postman.setEnvironmentVariable(\"newLegalOwnerOrg\", new Date().getTime());",
+              "postman.setEnvironmentVariable(\"newCarrierOrg\", new Date().getTime());",
+              "postman.setEnvironmentVariable(\"newCompoundOrg\", new Date().getTime());",
+              "postman.setEnvironmentVariable(\"newRecipientOrg\", new Date().getTime());"
             ]
           }
         }
@@ -58,13 +66,10 @@
         {
           "listen": "test",
           "script": {
-            "id":   "fd09529a-568c-4fd0-a47d-7c679cc0f6cc",
+            "id":   "9ec15c0f-8550-42f8-8842-2431ec86ceb1",
             "type": "text/javascript",
             "exec": [
               "var reqBody = JSON.parse(request.data);",
-              "",
-              "postman.setEnvironmentVariable(\"newUserID\", reqBody.username);",
-              "postman.setEnvironmentVariable(\"newUserPassword\", reqBody.password);",
               "",
               "tests[\"Status code is 200\"] = responseCode.code === 200;"
             ]
@@ -85,7 +90,7 @@
         ],
         "body":        {
           "mode": "raw",
-          "raw":  "{\n\t\"username\": \"tom@koopman.org\",\n\t\"password\": \"veryDifficultPassw0rd\",\n\t\"firstName\": \"Tom\",\n\t\"lastName\": \"Hill\",\n\t\"orgType\": \"CarrierOrg\",\n\t\"orgID\": \"koopman\",\n\t\"role\": \"CarrierMember\",\n\t\"address\": {\n    \t\"name\": \"delivery adress\",\n        \"street\": \"een straat\",\n        \"houseNumber\": \"41\",\n        \"city\": \"Groningen\",\n        \"zipCode\": \"7811 HC\",\n        \"country\": \"netherlands\",\n        \"latitude\": 123,\n        \"longitude\": 124\n    }\n}"
+          "raw":  "{\n\t\"username\": \"{{randomParticipant}}\",\n\t\"password\": \"{{randomPassword}}\",\n\t\"firstName\": \"john\",\n\t\"lastName\": \"doe\",\n\t\"orgType\": \"CarrierOrg\",\n\t\"orgID\": \"koopman\",\n\t\"role\": \"CarrierMember\",\n\t\"address\": {\n    \t\"name\": \"delivery adress\",\n        \"street\": \"een straat\",\n        \"houseNumber\": \"41\",\n        \"city\": \"Groningen\",\n        \"zipCode\": \"7811 HC\",\n        \"country\": \"netherlands\",\n        \"latitude\": 123,\n        \"longitude\": 124\n    }\n}"
         },
         "url":         {
           "raw":  "{{localhost}}{{clientPort}}/api/v1/participant/",
@@ -104,19 +109,587 @@
       "response": []
     },
     {
+      "name":     "System Admin - Add LegalOwnerOrg",
+      "event":    [
+        {
+          "listen": "test",
+          "script": {
+            "id":   "6fb6e2b7-d4e1-4f1b-bede-e829cf528b05",
+            "type": "text/javascript",
+            "exec": [
+              "var reqBody = JSON.parse(request.data);",
+              "",
+              "tests[\"Status code is 200\"] = responseCode.code === 200;"
+            ]
+          }
+        }
+      ],
+      "request":  {
+        "method":      "POST",
+        "header":      [
+          {
+            "key":   "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key":   "x-access-token",
+            "value": "{{adminToken}}"
+          }
+        ],
+        "body":        {
+          "mode": "raw",
+          "raw":  "{\n  \"entityID\": \"{{newLegalOwnerOrg}}\",\n  \"name\": \"string\",\n  \"address\": {\n    \"name\": \"string\",\n    \"street\": \"string\",\n    \"houseNumber\": \"string\",\n    \"city\": \"string\",\n    \"zipCode\": \"string\",\n    \"country\": \"string\",\n    \"latitude\": 0,\n    \"longitude\": 0\n  }\n}"
+        },
+        "url":         {
+          "raw":  "{{localhost}}{{clientPort}}/api/v1/organization/legalowner",
+          "host": [
+            "{{localhost}}{{clientPort}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "organization",
+            "legalowner"
+          ]
+        },
+        "description": ""
+      },
+      "response": []
+    },
+    {
+      "name":     "System Admin - Get LegalOwnerOrg by ID",
+      "event":    [
+        {
+          "listen": "test",
+          "script": {
+            "id":   "a4d0d06e-cbf1-4e72-96e4-aa3195a69983",
+            "type": "text/javascript",
+            "exec": [
+              "tests[\"Status code is 200\"] = responseCode.code === 200;"
+            ]
+          }
+        }
+      ],
+      "request":  {
+        "method":      "GET",
+        "header":      [
+          {
+            "key":   "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key":   "x-access-token",
+            "value": "{{adminToken}}"
+          }
+        ],
+        "body":        {
+          "mode": "raw",
+          "raw":  "{\n  \"entityID\": \"legalowner1\",\n  \"name\": \"string\",\n  \"address\": {\n    \"name\": \"string\",\n    \"street\": \"string\",\n    \"houseNumber\": \"string\",\n    \"city\": \"string\",\n    \"zipCode\": \"string\",\n    \"country\": \"string\",\n    \"latitude\": 0,\n    \"longitude\": 0\n  }\n}"
+        },
+        "url":         {
+          "raw":  "{{localhost}}{{clientPort}}/api/v1/organization/legalowner/entityID/{{newLegalOwnerOrg}}",
+          "host": [
+            "{{localhost}}{{clientPort}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "organization",
+            "legalowner",
+            "entityID",
+            "{{newLegalOwnerOrg}}"
+          ]
+        },
+        "description": ""
+      },
+      "response": []
+    },
+    {
+      "name":     "System Admin - Get All LegalOwnerOrg",
+      "event":    [
+        {
+          "listen": "test",
+          "script": {
+            "id":   "a4d0d06e-cbf1-4e72-96e4-aa3195a69983",
+            "type": "text/javascript",
+            "exec": [
+              "tests[\"Status code is 200\"] = responseCode.code === 200;"
+            ]
+          }
+        }
+      ],
+      "request":  {
+        "method":      "GET",
+        "header":      [
+          {
+            "key":   "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key":   "x-access-token",
+            "value": "{{adminToken}}"
+          }
+        ],
+        "body":        {
+          "mode": "raw",
+          "raw":  "{\n  \"entityID\": \"legalowner1\",\n  \"name\": \"string\",\n  \"address\": {\n    \"name\": \"string\",\n    \"street\": \"string\",\n    \"houseNumber\": \"string\",\n    \"city\": \"string\",\n    \"zipCode\": \"string\",\n    \"country\": \"string\",\n    \"latitude\": 0,\n    \"longitude\": 0\n  }\n}"
+        },
+        "url":         {
+          "raw":  "{{localhost}}{{clientPort}}/api/v1/organization/legalowner",
+          "host": [
+            "{{localhost}}{{clientPort}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "organization",
+            "legalowner"
+          ]
+        },
+        "description": ""
+      },
+      "response": []
+    },
+    {
+      "name":     "System Admin - Add CompoundOrg",
+      "event":    [
+        {
+          "listen": "test",
+          "script": {
+            "id":   "fd3e2982-70f2-4f84-9eba-adedaf906846",
+            "type": "text/javascript",
+            "exec": [
+              "var reqBody = JSON.parse(request.data);",
+              "",
+              "tests[\"Status code is 200\"] = responseCode.code === 200;"
+            ]
+          }
+        }
+      ],
+      "request":  {
+        "method":      "POST",
+        "header":      [
+          {
+            "key":   "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key":   "x-access-token",
+            "value": "{{adminToken}}"
+          }
+        ],
+        "body":        {
+          "mode": "raw",
+          "raw":  "{\n  \"entityID\": \"{{newCompoundOrg}}\",\n  \"name\": \"string\",\n  \"address\": {\n    \"name\": \"string\",\n    \"street\": \"string\",\n    \"houseNumber\": \"string\",\n    \"city\": \"string\",\n    \"zipCode\": \"string\",\n    \"country\": \"string\",\n    \"latitude\": 0,\n    \"longitude\": 0\n  }\n}"
+        },
+        "url":         {
+          "raw":  "{{localhost}}{{clientPort}}/api/v1/organization/compound",
+          "host": [
+            "{{localhost}}{{clientPort}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "organization",
+            "compound"
+          ]
+        },
+        "description": ""
+      },
+      "response": []
+    },
+    {
+      "name":     "System Admin - Get CompoundOrg by ID",
+      "event":    [
+        {
+          "listen": "test",
+          "script": {
+            "id":   "719a2beb-91f6-449f-90c5-9167ed185466",
+            "type": "text/javascript",
+            "exec": [
+              "tests[\"Status code is 200\"] = responseCode.code === 200;"
+            ]
+          }
+        }
+      ],
+      "request":  {
+        "method":      "GET",
+        "header":      [
+          {
+            "key":   "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key":   "x-access-token",
+            "value": "{{adminToken}}"
+          }
+        ],
+        "body":        {
+          "mode": "raw",
+          "raw":  "{\n  \"entityID\": \"legalowner1\",\n  \"name\": \"string\",\n  \"address\": {\n    \"name\": \"string\",\n    \"street\": \"string\",\n    \"houseNumber\": \"string\",\n    \"city\": \"string\",\n    \"zipCode\": \"string\",\n    \"country\": \"string\",\n    \"latitude\": 0,\n    \"longitude\": 0\n  }\n}"
+        },
+        "url":         {
+          "raw":  "{{localhost}}{{clientPort}}/api/v1/organization/compound/entityID/{{newCompoundOrg}}",
+          "host": [
+            "{{localhost}}{{clientPort}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "organization",
+            "compound",
+            "entityID",
+            "{{newCompoundOrg}}"
+          ]
+        },
+        "description": ""
+      },
+      "response": []
+    },
+    {
+      "name":     "System Admin - Get All CompoundOrg",
+      "event":    [
+        {
+          "listen": "test",
+          "script": {
+            "id":   "719a2beb-91f6-449f-90c5-9167ed185466",
+            "type": "text/javascript",
+            "exec": [
+              "tests[\"Status code is 200\"] = responseCode.code === 200;"
+            ]
+          }
+        }
+      ],
+      "request":  {
+        "method":      "GET",
+        "header":      [
+          {
+            "key":   "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key":   "x-access-token",
+            "value": "{{adminToken}}"
+          }
+        ],
+        "body":        {
+          "mode": "raw",
+          "raw":  "{\n  \"entityID\": \"legalowner1\",\n  \"name\": \"string\",\n  \"address\": {\n    \"name\": \"string\",\n    \"street\": \"string\",\n    \"houseNumber\": \"string\",\n    \"city\": \"string\",\n    \"zipCode\": \"string\",\n    \"country\": \"string\",\n    \"latitude\": 0,\n    \"longitude\": 0\n  }\n}"
+        },
+        "url":         {
+          "raw":  "{{localhost}}{{clientPort}}/api/v1/organization/compound",
+          "host": [
+            "{{localhost}}{{clientPort}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "organization",
+            "compound"
+          ]
+        },
+        "description": ""
+      },
+      "response": []
+    },
+    {
+      "name":     "System Admin - Add CarrierOrg",
+      "event":    [
+        {
+          "listen": "test",
+          "script": {
+            "id":   "1230cf85-5a4b-4155-903e-f5bd38c3ec65",
+            "type": "text/javascript",
+            "exec": [
+              "var reqBody = JSON.parse(request.data);",
+              "",
+              "tests[\"Status code is 200\"] = responseCode.code === 200;"
+            ]
+          }
+        }
+      ],
+      "request":  {
+        "method":      "POST",
+        "header":      [
+          {
+            "key":   "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key":   "x-access-token",
+            "value": "{{adminToken}}"
+          }
+        ],
+        "body":        {
+          "mode": "raw",
+          "raw":  "{\n  \"entityID\": \"{{newCarrierOrg}}\",\n  \"name\": \"string\",\n  \"address\": {\n    \"name\": \"string\",\n    \"street\": \"string\",\n    \"houseNumber\": \"string\",\n    \"city\": \"string\",\n    \"zipCode\": \"string\",\n    \"country\": \"string\",\n    \"latitude\": 0,\n    \"longitude\": 0\n  }\n}"
+        },
+        "url":         {
+          "raw":  "{{localhost}}{{clientPort}}/api/v1/organization/carrier",
+          "host": [
+            "{{localhost}}{{clientPort}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "organization",
+            "carrier"
+          ]
+        },
+        "description": ""
+      },
+      "response": []
+    },
+    {
+      "name":     "System Admin - Get CarrierOrg by ID",
+      "event":    [
+        {
+          "listen": "test",
+          "script": {
+            "id":   "719a2beb-91f6-449f-90c5-9167ed185466",
+            "type": "text/javascript",
+            "exec": [
+              "tests[\"Status code is 200\"] = responseCode.code === 200;"
+            ]
+          }
+        }
+      ],
+      "request":  {
+        "method":      "GET",
+        "header":      [
+          {
+            "key":   "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key":   "x-access-token",
+            "value": "{{adminToken}}"
+          }
+        ],
+        "body":        {
+          "mode": "raw",
+          "raw":  "{\n  \"entityID\": \"legalowner1\",\n  \"name\": \"string\",\n  \"address\": {\n    \"name\": \"string\",\n    \"street\": \"string\",\n    \"houseNumber\": \"string\",\n    \"city\": \"string\",\n    \"zipCode\": \"string\",\n    \"country\": \"string\",\n    \"latitude\": 0,\n    \"longitude\": 0\n  }\n}"
+        },
+        "url":         {
+          "raw":  "{{localhost}}{{clientPort}}/api/v1/organization/carrier/entityID/{{newCarrierOrg}}",
+          "host": [
+            "{{localhost}}{{clientPort}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "organization",
+            "carrier",
+            "entityID",
+            "{{newCarrierOrg}}"
+          ]
+        },
+        "description": ""
+      },
+      "response": []
+    },
+    {
+      "name":     "System Admin - Get All CarrierOrg",
+      "event":    [
+        {
+          "listen": "test",
+          "script": {
+            "id":   "719a2beb-91f6-449f-90c5-9167ed185466",
+            "type": "text/javascript",
+            "exec": [
+              "tests[\"Status code is 200\"] = responseCode.code === 200;"
+            ]
+          }
+        }
+      ],
+      "request":  {
+        "method":      "GET",
+        "header":      [
+          {
+            "key":   "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key":   "x-access-token",
+            "value": "{{adminToken}}"
+          }
+        ],
+        "body":        {
+          "mode": "raw",
+          "raw":  "{\n  \"entityID\": \"legalowner1\",\n  \"name\": \"string\",\n  \"address\": {\n    \"name\": \"string\",\n    \"street\": \"string\",\n    \"houseNumber\": \"string\",\n    \"city\": \"string\",\n    \"zipCode\": \"string\",\n    \"country\": \"string\",\n    \"latitude\": 0,\n    \"longitude\": 0\n  }\n}"
+        },
+        "url":         {
+          "raw":  "{{localhost}}{{clientPort}}/api/v1/organization/carrier",
+          "host": [
+            "{{localhost}}{{clientPort}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "organization",
+            "carrier"
+          ]
+        },
+        "description": ""
+      },
+      "response": []
+    },
+    {
+      "name":     "System Admin - Add RecipientOrg",
+      "event":    [
+        {
+          "listen": "test",
+          "script": {
+            "id":   "6c619e8e-316f-498e-80cf-110f6d62490e",
+            "type": "text/javascript",
+            "exec": [
+              "var reqBody = JSON.parse(request.data);",
+              "",
+              "tests[\"Status code is 200\"] = responseCode.code === 200;"
+            ]
+          }
+        }
+      ],
+      "request":  {
+        "method":      "POST",
+        "header":      [
+          {
+            "key":   "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key":   "x-access-token",
+            "value": "{{adminToken}}"
+          }
+        ],
+        "body":        {
+          "mode": "raw",
+          "raw":  "{\n  \"entityID\": \"{{newRecipientOrg}}\",\n  \"name\": \"string\",\n  \"address\": {\n    \"name\": \"string\",\n    \"street\": \"string\",\n    \"houseNumber\": \"string\",\n    \"city\": \"string\",\n    \"zipCode\": \"string\",\n    \"country\": \"string\",\n    \"latitude\": 0,\n    \"longitude\": 0\n  }\n}"
+        },
+        "url":         {
+          "raw":  "{{localhost}}{{clientPort}}/api/v1/organization/recipient",
+          "host": [
+            "{{localhost}}{{clientPort}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "organization",
+            "recipient"
+          ]
+        },
+        "description": ""
+      },
+      "response": []
+    },
+    {
+      "name":     "System Admin - Get RecipientOrg by ID",
+      "event":    [
+        {
+          "listen": "test",
+          "script": {
+            "id":   "719a2beb-91f6-449f-90c5-9167ed185466",
+            "type": "text/javascript",
+            "exec": [
+              "tests[\"Status code is 200\"] = responseCode.code === 200;"
+            ]
+          }
+        }
+      ],
+      "request":  {
+        "method":      "GET",
+        "header":      [
+          {
+            "key":   "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key":   "x-access-token",
+            "value": "{{adminToken}}"
+          }
+        ],
+        "body":        {
+          "mode": "raw",
+          "raw":  "{\n  \"entityID\": \"legalowner1\",\n  \"name\": \"string\",\n  \"address\": {\n    \"name\": \"string\",\n    \"street\": \"string\",\n    \"houseNumber\": \"string\",\n    \"city\": \"string\",\n    \"zipCode\": \"string\",\n    \"country\": \"string\",\n    \"latitude\": 0,\n    \"longitude\": 0\n  }\n}"
+        },
+        "url":         {
+          "raw":  "{{localhost}}{{clientPort}}/api/v1/organization/recipient/entityID/{{newRecipientOrg}}",
+          "host": [
+            "{{localhost}}{{clientPort}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "organization",
+            "recipient",
+            "entityID",
+            "{{newRecipientOrg}}"
+          ]
+        },
+        "description": ""
+      },
+      "response": []
+    },
+    {
+      "name":     "System Admin - Get All RecipientOrg",
+      "event":    [
+        {
+          "listen": "test",
+          "script": {
+            "id":   "719a2beb-91f6-449f-90c5-9167ed185466",
+            "type": "text/javascript",
+            "exec": [
+              "tests[\"Status code is 200\"] = responseCode.code === 200;"
+            ]
+          }
+        }
+      ],
+      "request":  {
+        "method":      "GET",
+        "header":      [
+          {
+            "key":   "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key":   "x-access-token",
+            "value": "{{adminToken}}"
+          }
+        ],
+        "body":        {
+          "mode": "raw",
+          "raw":  "{\n  \"entityID\": \"legalowner1\",\n  \"name\": \"string\",\n  \"address\": {\n    \"name\": \"string\",\n    \"street\": \"string\",\n    \"houseNumber\": \"string\",\n    \"city\": \"string\",\n    \"zipCode\": \"string\",\n    \"country\": \"string\",\n    \"latitude\": 0,\n    \"longitude\": 0\n  }\n}"
+        },
+        "url":         {
+          "raw":  "{{localhost}}{{clientPort}}/api/v1/organization/recipient",
+          "host": [
+            "{{localhost}}{{clientPort}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "organization",
+            "recipient"
+          ]
+        },
+        "description": ""
+      },
+      "response": []
+    },
+    {
       "name":     "New Participant - Login",
       "event":    [
         {
           "listen": "test",
           "script": {
-            "id":   "a1071f1a-cb25-42a4-ae6a-079a6314b1b0",
+            "id":   "6d80a387-6f7b-4bb4-a40d-37da184f9776",
             "type": "text/javascript",
             "exec": [
               "var jsonData = JSON.parse(responseBody);",
               "",
               "tests[\"Status code is 200\"] = responseCode.code === 200;",
               "tests[\"Authentication successful\"] = jsonData.success === true;",
-              "tests[\"Correct user\"] = jsonData.user[\"username\"] === postman.getEnvironmentVariable(\"newUserID\");"
+              "tests[\"Correct user\"] = jsonData.user[\"username\"] === postman.getEnvironmentVariable(\"randomParticipant\");"
             ]
           }
         }
@@ -131,7 +704,7 @@
         ],
         "body":   {
           "mode": "raw",
-          "raw":  "{\n  \"username\" : \"{{newUserID}}\",\n  \"password\" : \"{{newUserPassword}}\"\n}"
+          "raw":  "{\n  \"username\" : \"{{randomParticipant}}\",\n  \"password\" : \"{{randomPassword}}\"\n}"
         },
         "url":    {
           "raw":  "{{localhost}}{{clientPort}}/api/v1/login",
@@ -193,6 +766,104 @@
       "response": []
     },
     {
+      "name":     "Legal Owner Admin - Cannot Get All LegalOwnerOrg",
+      "event":    [
+        {
+          "listen": "test",
+          "script": {
+            "id":   "00205e63-ee40-4236-92ef-1ad5b03e9965",
+            "type": "text/javascript",
+            "exec": [
+              "tests[\"Status code is 200\"] = responseCode.code === 200;"
+            ]
+          }
+        }
+      ],
+      "request":  {
+        "method":      "GET",
+        "header":      [
+          {
+            "key":   "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key":   "x-access-token",
+            "value": "{{legalOwnerToken}}"
+          }
+        ],
+        "body":        {
+          "mode": "raw",
+          "raw":  "{\n  \"entityID\": \"legalowner1\",\n  \"name\": \"string\",\n  \"address\": {\n    \"name\": \"string\",\n    \"street\": \"string\",\n    \"houseNumber\": \"string\",\n    \"city\": \"string\",\n    \"zipCode\": \"string\",\n    \"country\": \"string\",\n    \"latitude\": 0,\n    \"longitude\": 0\n  }\n}"
+        },
+        "url":         {
+          "raw":  "{{localhost}}{{clientPort}}/api/v1/organization/legalowner",
+          "host": [
+            "{{localhost}}{{clientPort}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "organization",
+            "legalowner"
+          ]
+        },
+        "description": ""
+      },
+      "response": []
+    },
+    {
+      "name":     "Legal Owner Admin - Cannot Get others LegalOwnerOrg by ID",
+      "event":    [
+        {
+          "listen": "test",
+          "script": {
+            "id":   "63d8f0e7-e150-4b2f-ad29-68c6c7be4092",
+            "type": "text/javascript",
+            "exec": [
+              "tests[\"Status code is 200\"] = responseCode.code === 200;",
+              "",
+              "var jsonData = JSON.parse(responseBody);",
+              "",
+              "tests[\"Empty object\"] = Object.keys(jsonData).length === 0;"
+            ]
+          }
+        }
+      ],
+      "request":  {
+        "method":      "GET",
+        "header":      [
+          {
+            "key":   "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key":   "x-access-token",
+            "value": "{{legalOwnerToken}}"
+          }
+        ],
+        "body":        {
+          "mode": "raw",
+          "raw":  "{\n  \"entityID\": \"legalowner1\",\n  \"name\": \"string\",\n  \"address\": {\n    \"name\": \"string\",\n    \"street\": \"string\",\n    \"houseNumber\": \"string\",\n    \"city\": \"string\",\n    \"zipCode\": \"string\",\n    \"country\": \"string\",\n    \"latitude\": 0,\n    \"longitude\": 0\n  }\n}"
+        },
+        "url":         {
+          "raw":  "{{localhost}}{{clientPort}}/api/v1/organization/legalowner/entityID/{{newLegalOwnerOrg}}",
+          "host": [
+            "{{localhost}}{{clientPort}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "organization",
+            "legalowner",
+            "entityID",
+            "{{newLegalOwnerOrg}}"
+          ]
+        },
+        "description": ""
+      },
+      "response": []
+    },
+    {
       "name":     "Legal Owner Admin - Cannot add participant",
       "event":    [
         {
@@ -232,6 +903,52 @@
             "v1",
             "participant",
             ""
+          ]
+        },
+        "description": ""
+      },
+      "response": []
+    },
+    {
+      "name":     "Legal Owner Admin - Cannot add LegalOwnerOrg",
+      "event":    [
+        {
+          "listen": "test",
+          "script": {
+            "id":   "7cba086d-1df5-43a3-969b-4d7e1a4ef452",
+            "type": "text/javascript",
+            "exec": [
+              "tests[\"Status code is 500\"] = responseCode.code === 500;"
+            ]
+          }
+        }
+      ],
+      "request":  {
+        "method":      "POST",
+        "header":      [
+          {
+            "key":   "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key":   "x-access-token",
+            "value": "{{legalOwnerToken}}"
+          }
+        ],
+        "body":        {
+          "mode": "raw",
+          "raw":  "{\n  \"entityID\": \"newLegalOwnerOrg\",\n  \"name\": \"string\",\n  \"address\": {\n    \"name\": \"string\",\n    \"street\": \"string\",\n    \"houseNumber\": \"string\",\n    \"city\": \"string\",\n    \"zipCode\": \"string\",\n    \"country\": \"string\",\n    \"latitude\": 0,\n    \"longitude\": 0\n  }\n}"
+        },
+        "url":         {
+          "raw":  "{{localhost}}{{clientPort}}/api/v1/organization/legalowner",
+          "host": [
+            "{{localhost}}{{clientPort}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "organization",
+            "legalowner"
           ]
         },
         "description": ""
@@ -572,6 +1289,7 @@
         {
           "listen": "test",
           "script": {
+            "id":   "3880d75a-0c44-4bcb-9369-b80da3457426",
             "type": "text/javascript",
             "exec": [
               "tests[\"Status code is 200\"] = responseCode.code === 200;",
@@ -1641,7 +2359,7 @@
         {
           "listen": "test",
           "script": {
-            "id":   "58dcc6cc-fdcf-43e9-b02f-c97b6c20197e",
+            "id":   "30612ed7-ec27-49d7-905d-ff26bb1e9d1d",
             "type": "text/javascript",
             "exec": [
               "tests[\"Status code is 200\"] = responseCode.code === 200;",
@@ -2855,13 +3573,13 @@
         {
           "listen": "test",
           "script": {
-            "id":   "1a500c17-1296-49f2-a074-c90bb821466b",
+            "id":   "e5f1ad63-f563-4cad-b58e-ff2aaa42c940",
             "type": "text/javascript",
             "exec": [
               "tests[\"Status code is 200\"] = responseCode.code === 200;",
               "",
               "var jsonData = JSON.parse(responseBody);",
-              "tests[\"is not able to get Transport Order\"] =  (jsonData === 200);"
+              "tests[\"Empty object\"] = Object.keys(jsonData).length === 0;"
             ]
           }
         }
