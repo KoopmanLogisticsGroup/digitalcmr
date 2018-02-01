@@ -9,27 +9,27 @@ else
 	exit
 fi
 
-echo "Deleting Persistent Services Private CouchDB"
-echo "Running: kubectl delete -f ${KUBECONFIG_FOLDER}/persistent-service.yaml"
-kubectl delete -f ${KUBECONFIG_FOLDER}/persistent-service.yaml
+echo "Deleting Persistent Services"
+echo "Running: kubectl delete -f ${KUBECONFIG_FOLDER}/persistent-services.yaml"
+kubectl delete -f ${KUBECONFIG_FOLDER}/persistent-services.yaml
 
-echo "Deleting StatefullSet CouchDB"
-echo "Running: kubectl delete -f ${KUBECONFIG_FOLDER}/private-couchdb-statefulset.yaml"
-kubectl delete -f ${KUBECONFIG_FOLDER}/private-couchdb-statefulset.yaml
+echo "Deleting Persistent StatefullSet"
+echo "Running: kubectl delete -f ${KUBECONFIG_FOLDER}/persistent-statefulsets.yaml"
+kubectl delete -f ${KUBECONFIG_FOLDER}/persistent-statefulsets.yaml
 
-echo "Checking if all pods are deleted"
+echo "Checking if all Persistent Services and Statefulsets are deleted"
 
-NUM_PENDING=$(kubectl get svc | grep couchdb | wc -l | awk '{print $1}')
+NUM_PENDING=$(kubectl get svc | grep persistent | wc -l | awk '{print $1}')
 while [ "${NUM_PENDING}" != "0" ]; do
-	echo "Waiting for all couchdb services to be deleted. Remaining = ${NUM_PENDING}"
-    NUM_PENDING=$(kubectl get svc | grep couchdb | wc -l | awk '{print $1}')
+	echo "Waiting for all persistent services to be deleted. Remaining = ${NUM_PENDING}"
+    NUM_PENDING=$(kubectl get svc | grep persistent | wc -l | awk '{print $1}')
 	sleep 1;
 done
 
-NUM_PENDING=$(kubectl get pvc | grep couchdb | wc -l | awk '{print $1}')
+NUM_PENDING=$(kubectl get statefulset | grep persistent | wc -l | awk '{print $1}')
 while [ "${NUM_PENDING}" != "0" ]; do
-	echo "Waiting for all couchdb pvc to be deleted. Remaining = ${NUM_PENDING}"
-    NUM_PENDING=$(kubectl get pvc | grep couchdb | wc -l | awk '{print $1}')
+	echo "Waiting for all persistent volume claims to be deleted. Remaining = ${NUM_PENDING}"
+    NUM_PENDING=$(kubectl get pvc | grep persistent | wc -l | awk '{print $1}')
 	sleep 1;
 done
 
