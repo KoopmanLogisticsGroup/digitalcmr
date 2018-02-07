@@ -1,6 +1,6 @@
 import {Request} from 'express';
 import * as jwt from 'jsonwebtoken';
-import {Identity} from '../../domain/Identity';
+import {Identity} from '../../interfaces/entity.inferface';
 
 export class JSONWebToken {
   private decodedToken: any;

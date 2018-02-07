@@ -6,7 +6,6 @@ import {LoggerInstance} from 'winston';
 import {DataService} from '../datasource/DataService';
 import {LoggerFactory} from './logger/LoggerFactory';
 import {TransactionHandler} from '../blockchain/TransactionHandler';
-import {Identity} from '../domain/Identity';
 import {Config} from '../config/index';
 import {LegalOwnerTransactor} from '../domain/orgs/legalOwner/LegalOwnerTransactor';
 import {CompoundTransactor} from '../domain/orgs/compound/CompoundTransactor';
@@ -22,6 +21,7 @@ import {Transaction} from '../blockchain/Transactions';
 import {CreateEcmrs} from '../interfaces/createEcmrs.interface';
 import {Ecmr} from '../interfaces/ecmr.interface';
 import {Vehicle} from '../interfaces/vehicle.interface';
+import {Identity, UserInfo} from '../interfaces/entity.inferface';
 
 export class TestData {
   private logger: LoggerInstance         = Container.get(LoggerFactory).get('TestData');
@@ -122,8 +122,10 @@ export class TestData {
     let identities: Identity[] = [];
 
     for (const entity of sharedData.entities) {
-      identities.push(await this.identityManager.addEntity(entity));
+      identities.push(await this.identityManager.addEntity(TestData.adminIdentity, entity));
     }
+
+    await this.addAdmin();
 
     return identities;
   }
@@ -179,34 +181,24 @@ export class TestData {
     return this.transactionHandler.invoke(TestData.adminIdentity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateTransportOrders, transportOrders, new TransportOrderTransactor());
   }
 
-  // private async addParticipants(): Promise<any> {
-  //   this.logger.info('[TestData] Adding participants');
-  //   let promises: Promise<any>[] = [];
-  //   for (let participant of participants) {
-  //     promises.push(UserTransactor.addUser(participant));
-  //   }
-  //
-  //   this.logger.debug('Adding admin user');
-  //
-  //   let adminUser: Participant = new Participant({
-  //     $class:    'org.hyperledger.composer.system.Participant',
-  //     org:       '',
-  //     userID:    'admin',
-  //     userName:  'admin',
-  //     password:  'passw0rd',
-  //     firstName: 'admin',
-  //     lastName:  'admin',
-  //     address:   {}
-  //   });
-  //
-  //   let identity = {
-  //     userSecret: 'adminpw'
-  //   };
-  //
-  //   promises.push(this.identityManager.addExistingUser(adminUser, identity));
-  //
-  //   return Promise.all(promises);
-  // }
+  private async addAdmin(): Promise<any> {
+    this.logger.debug('Adding admin user');
+
+    const adminUser: UserInfo = {
+      username:  'admin',
+      password:  '@dm1nPassw0rd',
+      firstName: 'admin',
+      lastName:  'admin',
+      role:      'admin'
+    };
+
+    const adminIdentity: Identity = {
+      userID:     'admin',
+      userSecret: 'adminpw'
+    };
+
+    return new IdentityManager('org.hyperledger.composer.system').addAdmin(adminIdentity, adminUser);
+  }
 
   private async addPrivateDataToDB(): Promise<any> {
     try {

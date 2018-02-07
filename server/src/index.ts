@@ -35,6 +35,7 @@ class App {
     Container.set(DataService, new DataService());
     Container.set(BusinessNetworkHandler, new BusinessNetworkHandler(new ComposerClient.BusinessNetworkConnection()));
     Container.set(TransactionHandler, new TransactionHandler(Container.get(BusinessNetworkHandler)));
+    Container.set(IdentityManager, new IdentityManager(Config.settings.composer.namespace));
     await this.addTestData();
 
     const apiPath                                              = Config.settings.apiPath;
@@ -59,7 +60,7 @@ class App {
   private async addTestData(): Promise<any> {
     return new TestData(Container.get(TransactionHandler),
       Container.get(DataService),
-      new IdentityManager(Config.settings.composer.namespace)).addTestData()
+      Container.get(IdentityManager)).addTestData()
       .catch((error: Error) => {
         return error;
       });

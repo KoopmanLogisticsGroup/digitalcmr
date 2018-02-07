@@ -17,14 +17,17 @@
 
   Feature: LegalOwnerAdmin
 
-  Background:
-    Given I have deployed the business network definition ..
-    And I have added the following participants of type org.digitalcmr.LegalOwnerAdmin
+    Background:
+      Given I have deployed the business network definition ..
+      And I have added the following participants of type org.digitalcmr.LegalOwnerAdmin
       """
-        {"$class":"org.digitalcmr.LegalOwnerAdmin","userID":"lapo@leaseplan.org","userName": "lapo", "firstName":"lapo","lastName":"kelkann","address":{"$class":"org.digitalcmr.Address","name":"lapo kelkann","street":"leesenstraat","houseNumber":"20","city":"Utrecht","zipCode":"9867RF","country":"Netherlands", "latitude":"31231231.1231", "longitude":"31231231.1231", "id":"id"},"org":"leaseplan"}
+      [
+        {"$class":"org.digitalcmr.LegalOwnerAdmin","userID":"lapo@leaseplan.org","userName": "lapo", "firstName":"lapo","lastName":"kelkann","address":{"$class":"org.digitalcmr.Address","name":"lapo kelkann","street":"leesenstraat","houseNumber":"20","city":"Utrecht","zipCode":"9867RF","country":"Netherlands", "latitude":"31231231.1231", "longitude":"31231231.1231", "id":"id"},"org":"leaseplan"},
+        {"$class":"org.digitalcmr.LegalOwnerAdmin","userID":"sam@leaseplan.org","userName": "lapo", "firstName":"lapo","lastName":"kelkann","address":{"$class":"org.digitalcmr.Address","name":"lapo kelkann","street":"leesenstraat","houseNumber":"20","city":"Utrecht","zipCode":"9867RF","country":"Netherlands", "latitude":"31231231.1231", "longitude":"31231231.1231", "id":"id"},"org":"leaseplan"}
+      ]
       """
-    And I have issued the participant org.digitalcmr.LegalOwnerAdmin#lapo@leaseplan.org with the identity Lapo
-    And I have added the following assets of type org.digitalcmr.TransportOrder
+      And I have issued the participant org.digitalcmr.LegalOwnerAdmin#lapo@leaseplan.org with the identity Lapo
+      And I have added the following assets of type org.digitalcmr.TransportOrder
       """
       [
         {"$class":"org.digitalcmr.TransportOrder","orderID":"A12345ORDER","status":"OPEN","owner":"leaseplan","carrier":"koopman","issueDate":0,"orderRef":"orderRef","goods":[{"$class":"org.digitalcmr.Good","source":"amsterdamcompound","recipient":"cardealer","vehicle":{"$class":"org.digitalcmr.Vehicle","vin":"A12345VIN","manufacturer":"Mercedes","model":"SLK","type":"Station","ecmrs":[],"odoMeterReading":0,"plateNumber":"I827YE"},"description":"vehicle","weight":1800,"loadingAddress":{"$class":"org.digitalcmr.Address","name":"loading address","street":"een straat","houseNumber":"41","city":"Groningen","zipCode":"7811 HC","country":"netherlands","longitude":124,"latitude":123},"deliveryAddress":{"$class":"org.digitalcmr.Address","name":"delivery adress","street":"een straat","houseNumber":"41","city":"Groningen","zipCode":"7811 HC","country":"netherlands","longitude":124,"latitude":123},"pickupWindow":{"$class":"org.digitalcmr.DateWindow","startDate":"1502834400000","endDate":"1502834400000"},"deliveryWindow":{"startDate":"1502834400000","endDate":"1502834400000"}}],"ecmrs":[]},
@@ -33,7 +36,7 @@
         {"$class":"org.digitalcmr.TransportOrder","orderID":"D12345ORDER","status":"OPEN","owner":"leaseplan","carrier":"koopman","issueDate":0,"orderRef":"orderRef","goods":[{"source":"amsterdamcompound","recipient":"cardealer","loadingAddress":{"name":"loading address","street":"een straat","houseNumber":"41","city":"Groningen","zipCode":"7811 HC","country":"netherlands","longitude":124,"latitude":123},"deliveryAddress":{"name":"delivery adress","street":"een straat","houseNumber":"41","city":"Groningen","zipCode":"7811 HC","country":"netherlands","longitude":124,"latitude":123},"vehicle":{"vin":"A12345VIN","manufacturer":"Audi","model":"A1","type":"sportback","ecmrs":[],"odoMeterReading":0,"plateNumber":"AV198RX"},"description":"vehicle","weight":1500,"pickupWindow":{"startDate":1502834400000,"endDate":1502834400000},"deliveryWindow":{"startDate":1502834400000,"endDate":1502834400000}},{"source":"amsterdamcompound","recipient":"cardealer","vehicle":{"vin":"B12345VIN","manufacturer":"Mercedes","model":"SLK","type":"Station","ecmrs":[],"odoMeterReading":0,"plateNumber":"I827YE"},"description":"vehicle","weight":1800,"pickupWindow":{"startDate":1502834400000,"endDate":1502834400000},"deliveryWindow":{"startDate":1502834400000,"endDate":1502834400000},"loadingAddress":{"name":"loading address","street":"een straat","houseNumber":"41","city":"Groningen","zipCode":"7811 HC","country":"netherlands","longitude":124,"latitude":123},"deliveryAddress":{"name":"delivery adress","street":"een straat","houseNumber":"41","city":"Groningen","zipCode":"7811 HC","country":"netherlands","longitude":124,"latitude":123}}],"ecmrs":[]}
       ]
       """
-    And I have added the following assets of type org.digitalcmr.ECMR
+      And I have added the following assets of type org.digitalcmr.ECMR
       """
       [
         {"$class":"org.digitalcmr.ECMR","ecmrID":"A12345ECMR","status":"CREATED","agreementTerms":"agreement terms here","agreementTermsSec":"agreement terms sec","legalOwnerRef":"ASD213123S","carrierRef":"H2238723VASD","recipientRef":"SDADHGA21312312","orderID":"A12345ORDER","owner":"leaseplan","source":"amsterdamcompound","carrier":"koopman","recipient":"cardealer","transporter":"harry@koopman.org","recipientMember":"rob@cardealer.org","creation":{"$class":"org.digitalcmr.Creation","address":{"$class":"org.digitalcmr.Address","name":"Amsterdam Compound","street":"Compoundstraat","houseNumber":"21","city":"Assen","zipCode":"9976ZH","country":"Netherlands","latitude":52.377698,"longitude":4.896555},"date":1502402400000},"loading":{"$class":"org.digitalcmr.Loading","address":{"$class":"org.digitalcmr.Address","name":"Amsterdam Compound","street":"Compoundstraat","houseNumber":"21","city":"Assen","zipCode":"9976ZH","country":"Netherlands","latitude":43.1927,"longitude":23.3249},"actualDate":1502488800000},"delivery":{"$class":"org.digitalcmr.Delivery","address":{"$class":"org.digitalcmr.Address","name":"Rob el Caro","street":"De straat","houseNumber":"302","city":"Almere","zipCode":"6736AE","country":"Netherlands","latitude":51.917153,"longitude":4.474623},"actualDate":1502834400000},"issueDate":0,"issuedBy":"koopman","carrierComments":"","documents":[],"goods":[{"$class":"org.digitalcmr.Good","source":"amsterdamcompound","recipient":"cardealer","vehicle":{"$class":"org.digitalcmr.Vehicle","vin":"A12345VIN","manufacturer":"Mercedes","model":"SLK","type":"Station","ecmrs":[],"odoMeterReading":0,"plateNumber":"I827YE"},"description":"vehicle","weight":1800,"loadingAddress":{"$class":"org.digitalcmr.Address","name":"loading address","street":"een straat","houseNumber":"41","city":"Groningen","zipCode":"7811 HC","country":"netherlands","longitude":124,"latitude":123},"deliveryAddress":{"$class":"org.digitalcmr.Address","name":"delivery adress","street":"een straat","houseNumber":"41","city":"Groningen","zipCode":"7811 HC","country":"netherlands","longitude":124,"latitude":123},"pickupWindow":{"$class":"org.digitalcmr.DateWindow","startDate":"1502834400000","endDate":"1502834400000"},"deliveryWindow":{"startDate":"1502834400000","endDate":"1502834400000"}}],"legalOwnerInstructions":"string","paymentInstructions":"string","payOnDelivery":"string"},
@@ -41,6 +44,12 @@
         {"$class":"org.digitalcmr.ECMR","ecmrID":"C12345ECMR","status":"LOADED","agreementTerms":"agreement terms here","agreementTermsSec":"agreement terms sec","legalOwnerRef":"ASD213123S","carrierRef":"H2238723VASD","recipientRef":"SDADHGA21312312","orderID":"C12345ORDER","owner":"leaseplan","source":"amsterdamcompound","carrier":"koopman","recipient":"cardealer","transporter":"harry@koopman.org","recipientMember":"rob@cardealer.org","creation":{"$class":"org.digitalcmr.Creation","address":{"$class":"org.digitalcmr.Address","name":"Amsterdam Compound","street":"Compoundstraat","houseNumber":"21","city":"Assen","zipCode":"9976ZH","country":"Netherlands","latitude":52.377698,"longitude":4.896555},"date":1502402400000},"loading":{"$class":"org.digitalcmr.Loading","address":{"$class":"org.digitalcmr.Address","name":"Amsterdam Compound","street":"Compoundstraat","houseNumber":"21","city":"Assen","zipCode":"9976ZH","country":"Netherlands","latitude":43.1927,"longitude":23.3249},"actualDate":1502488800000},"delivery":{"$class":"org.digitalcmr.Delivery","address":{"$class":"org.digitalcmr.Address","name":"Rob el Caro","street":"De straat","houseNumber":"302","city":"Almere","zipCode":"6736AE","country":"Netherlands","latitude":51.917153,"longitude":4.474623},"actualDate":1502834400000},"issueDate":0,"issuedBy":"koopman","carrierComments":"","documents":[],"goods":[{"$class":"org.digitalcmr.Good","source":"amsterdamcompound","recipient":"cardealer","vehicle":{"$class":"org.digitalcmr.Vehicle","vin":"A12345VIN","manufacturer":"Mercedes","model":"SLK","type":"Station","ecmrs":[],"odoMeterReading":0,"plateNumber":"I827YE"},"description":"vehicle","weight":1800,"loadingAddress":{"$class":"org.digitalcmr.Address","name":"loading address","street":"een straat","houseNumber":"41","city":"Groningen","zipCode":"7811 HC","country":"netherlands","longitude":124,"latitude":123},"deliveryAddress":{"$class":"org.digitalcmr.Address","name":"delivery adress","street":"een straat","houseNumber":"41","city":"Groningen","zipCode":"7811 HC","country":"netherlands","longitude":124,"latitude":123},"pickupWindow":{"$class":"org.digitalcmr.DateWindow","startDate":"1502834400000","endDate":"1502834400000"},"deliveryWindow":{"startDate":"1502834400000","endDate":"1502834400000"}}],"legalOwnerInstructions":"string","paymentInstructions":"string","payOnDelivery":"string"}
       ]
       """
+      And I have added the following assets of type org.digitalcmr.Entity
+    """
+    [
+      {"$class":"org.digitalcmr.LegalOwnerOrg","entityID":"newCompany","name":"string","address":{"name":"string","street":"string","houseNumber":"string","city":"string","zipCode":"string","country":"string","latitude":0,"longitude":0}}
+    ]
+    """
 
     Scenario: Lapo should be able to read all TransportOrders where he is the owner
       When I use the identity Lapo
@@ -173,10 +182,40 @@
       """
       Then I should get an error matching /does not have 'UPDATE' access to resource/
 
-    Scenario: Lapo should not be able to should to create ECMRs by using the CreateECMRs transaction
+    Scenario: Lapo should not be able to create ECMRs by using the CreateECMRs transaction
       When I use the identity Lapo
       And I submit the following transaction of type org.digitalcmr.CreateECMRs
       """
         {"$class":"org.digitalcmr.CreateECMRs","transportOrder":"D12345ORDER","ecmrs":[{"ecmrID":"ecmr1","status":"CREATED","agreementTerms":"agreement terms","agreementTermsSec":"sec agreement terms","legalOwnerRef":"453543","carrierRef":"123","recipientRef":"321","orderID":"","creation":{"address":{"name":"Amsterdam Compound","street":"compenstraat","houseNumber":"21","city":"Assen","zipCode":"9976ZH","country":"Netherlands","latitude":43.1927,"longitude":23.3249},"date":1502402400000},"loading":{"address":{"name":"Amsterdam Compound","street":"compenstraat","houseNumber":"21","city":"Amsterdam Zuid","zipCode":"9976ZH","country":"Netherlands","latitude":43.1927,"longitude":23.3249},"actualDate":1502402400000},"delivery":{"address":{"name":"Rob Carman","street":"autostraat","houseNumber":"12","city":"Rotterdam","zipCode":"9442KO","country":"Netherlands","latitude":51.4443,"longitude":60.3323},"actualDate":1502488800000},"owner":"leaseplan","source":"amsterdamcompound","transporter":"harry@koopman.org","carrier":"koopman","recipient":"cardealer","recipientMember":"rob@cardealer.org","issueDate":0,"issuedBy":"koopman","carrierComments":"No comments","documents":[],"goods":[{"source":"amsterdamcompound","recipient":"cardealer","loadingAddress":{"name":"loading address","street":"een straat","houseNumber":"41","city":"Groningen","zipCode":"7811 HC","country":"netherlands","longitude":124,"latitude":123},"deliveryAddress":{"name":"delivery adress","street":"een straat","houseNumber":"41","city":"Groningen","zipCode":"7811 HC","country":"netherlands","longitude":124,"latitude":123},"vehicle":{"vin":"A12345VIN","manufacturer":"Audi","model":"A1","type":"sportback","ecmrs":[],"odoMeterReading":0,"plateNumber":"AV198RX"},"description":"vehicle","weight":1500,"pickupWindow":{"startDate":1502834400000,"endDate":1502834400000},"deliveryWindow":{"startDate":1502834400000,"endDate":1502834400000}}],"legalOwnerInstructions":"string","paymentInstructions":"string","payOnDelivery":"string"},{"ecmrID":"ecmr2","status":"CREATED","agreementTerms":"agreement terms","agreementTermsSec":"sec agreement terms","legalOwnerRef":"453543","carrierRef":"123","recipientRef":"321","orderID":"","creation":{"address":{"name":"Amsterdam Compound","street":"compenstraat","houseNumber":"21","city":"Assen","zipCode":"9976ZH","country":"Netherlands","latitude":43.1927,"longitude":23.3249},"date":1502402400000},"loading":{"address":{"name":"Amsterdam Compound","street":"compenstraat","houseNumber":"21","city":"Amsterdam Zuid","zipCode":"9976ZH","country":"Netherlands","latitude":43.1927,"longitude":23.3249},"actualDate":1502402400000},"delivery":{"address":{"name":"Rob Carman","street":"autostraat","houseNumber":"12","city":"Rotterdam","zipCode":"9442KO","country":"Netherlands","latitude":51.4443,"longitude":60.3323},"actualDate":1502488800000},"owner":"leaseplan","source":"amsterdamcompound","transporter":"harry@koopman.org","carrier":"koopman","recipient":"cardealer","recipientMember":"rob@cardealer.org","issueDate":0,"issuedBy":"koopman","carrierComments":"No comments","documents":[],"goods":[{"source":"amsterdamcompound","recipient":"cardealer","vehicle":{"vin":"B12345VIN","manufacturer":"Mercedes","model":"SLK","type":"Station","ecmrs":[],"odoMeterReading":0,"plateNumber":"I827YE"},"description":"vehicle","weight":1800,"pickupWindow":{"startDate":1502834400000,"endDate":1502834400000},"deliveryWindow":{"startDate":1502834400000,"endDate":1502834400000},"loadingAddress":{"name":"loading address","street":"een straat","houseNumber":"41","city":"Groningen","zipCode":"7811 HC","country":"netherlands","longitude":124,"latitude":123},"deliveryAddress":{"name":"delivery adress","street":"een straat","houseNumber":"41","city":"Groningen","zipCode":"7811 HC","country":"netherlands","longitude":124,"latitude":123}}],"legalOwnerInstructions":"string","paymentInstructions":"string","payOnDelivery":"string"}]}
       """
       Then I should get an error matching /does not have 'CREATE' access to resource/
+
+    Scenario: Lapo should not be able to add new participants
+      When I use the identity Lapo
+      And I add the following participants of type org.digitalcmr.User
+      """
+        {"$class":"org.digitalcmr.LegalOwnerAdmin","userID":"sam@leaseplan.org","userName": "sam", "firstName":"sam","lastName":"sam","address":{"$class":"org.digitalcmr.Address","name":"lapo kelkann","street":"leesenstraat","houseNumber":"20","city":"Utrecht","zipCode":"9867RF","country":"Netherlands", "latitude":"31231231.1231", "longitude":"31231231.1231", "id":"id"},"org":"leaseplan"}
+      """
+      Then I should get an error matching /does not have 'CREATE' access to resource/
+
+    Scenario: Lapo should not be able to read other participants information
+      When I use the identity Lapo
+      Then I should not have the following participants of type org.digitalcmr.User
+      """
+        {"$class":"org.digitalcmr.LegalOwnerAdmin","userID":"sam@leaseplan.org","userName": "sam", "firstName":"sam","lastName":"sam","address":{"$class":"org.digitalcmr.Address","name":"lapo kelkann","street":"leesenstraat","houseNumber":"20","city":"Utrecht","zipCode":"9867RF","country":"Netherlands", "latitude":"31231231.1231", "longitude":"31231231.1231", "id":"id"},"org":"leaseplan"}
+      """
+
+    Scenario: Lapo should not be able to add other organizations
+      When I use the identity Lapo
+      And I add the following assets of type org.digitalcmr.Entity
+      """
+        {"$class":"org.digitalcmr.LegalOwnerOrg","entityID":"newLegalOwnerOrg","name":"string","address":{"name":"string","street":"string","houseNumber":"string","city":"string","zipCode":"string","country":"string","latitude":0,"longitude":0}}
+      """
+      Then I should get an error matching /does not have 'CREATE' access to resource/
+
+    Scenario: Lapo should not be able to read other organizations
+      When I use the identity Lapo
+      Then I should not have the following assets of type org.digitalcmr.Entity
+      """
+        {"$class":"org.digitalcmr.LegalOwnerOrg","entityID":"newCompany","name":"string","address":{"name":"string","street":"string","houseNumber":"string","city":"string","zipCode":"string","country":"string","latitude":0,"longitude":0}}
+      """

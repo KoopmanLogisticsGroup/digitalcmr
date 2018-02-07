@@ -18,6 +18,24 @@ rule EverybodyCanReadVehicles {
     action: ALLOW
 }
 
+rule EverybodyCanReadHimself {
+    description:  "Allow everybody to read his own data"
+    participant(p): "org.hyperledger.composer.system.Participant"
+    operation: READ
+    resource(r): "org.hyperledger.composer.system.Participant"
+    condition: (r.getIdentifier() == p.getIdentifier())
+    action: ALLOW
+}
+
+rule EverybodyCanReadHisOwnOrg {
+    description:  "Allow everybody to read his own organization data"
+    participant(p): "org.hyperledger.composer.system.Participant"
+    operation: READ
+    resource(r): "org.digitalcmr.Entity"
+    condition: (r.getIdentifier() == p.org.getIdentifier())
+    action: ALLOW
+}
+
 /**
  * Digital CMR permission list
  */

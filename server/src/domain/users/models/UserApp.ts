@@ -1,6 +1,6 @@
 import * as crypto from 'crypto';
-import {Identity} from '../../Identity';
 import {Password} from '../../../utils/authentication/Password';
+import {Identity} from '../../../interfaces/entity.inferface';
 
 export class UserApp {
   public username: string;

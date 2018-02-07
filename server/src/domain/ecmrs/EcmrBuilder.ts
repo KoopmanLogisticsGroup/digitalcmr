@@ -1,7 +1,7 @@
 import {BuilderUtils} from '../../blockchain/BuilderUtils';
-import {Identity} from '../Identity';
 import {Ecmr} from '../../../src/interfaces/ecmr.interface';
 import {VehicleBuilder} from '../vehicles/VehicleBuilder';
+import {Identity} from '../../interfaces/entity.inferface';
 
 export class EcmrBuilder {
   public static buildECMR(factory: any, namespace: string, ecmr: Ecmr, identity: Identity): any {

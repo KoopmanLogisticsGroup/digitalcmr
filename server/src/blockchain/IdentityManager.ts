@@ -4,17 +4,15 @@ import {Container} from 'typedi';
 import {DataService} from '../datasource/DataService';
 import {BusinessNetworkHandler} from './BusinessNetworkHandler';
 import {Factory} from 'composer-common';
-import {Identity} from '../domain/Identity';
-import {Entity} from '../domain/Entity';
-import {UserApp} from '../domain/users/models/UserApp';
 import {ParticipantCreator} from '../domain/participants/ParticipantCreator';
 import {Config} from '../config/index';
+import {Entity, Identity, UserInfo} from '../interfaces/entity.inferface';
+import {UserApp} from '../domain/users/models/UserApp';
 
 export class IdentityManager {
   private dataService: DataService;
   private businessNetworkHandler: BusinessNetworkHandler;
   private logger: LoggerInstance;
-  private static adminIdentity: Identity   = {userID: 'admin', userSecret: 'adminpw'};
   private static connectionProfile: string = Config.settings.composer.profile;
 
   public constructor(private namespace: string) {
@@ -23,10 +21,10 @@ export class IdentityManager {
     this.logger                 = Container.get(LoggerFactory).get('IdentityManager');
   }
 
-  public async addEntity(entity: Entity): Promise<any> {
+  public async addEntity(identity: Identity, entity: Entity): Promise<any> {
     this.logger.info('Adding entity: ', entity.participant[entity.participant.participantID]);
 
-    await this.businessNetworkHandler.connect(IdentityManager.adminIdentity, IdentityManager.connectionProfile);
+    await this.businessNetworkHandler.connect(identity, IdentityManager.connectionProfile);
     try {
       await this.addParticipant(entity.participant);
       this.logger.debug('Participant ' + entity.participant.$class + ' successfully added to Blockchain');
@@ -44,7 +42,7 @@ export class IdentityManager {
       entity.userApp.identity  = identity;
       this.logger.debug('Identity ' + entity.userApp.identity.userID + ' for participant ' + this.namespace + '.' + entity.participant.$class + '#' + entity.participant[entity.participant.participantID] + ' added with success to MSP');
     } catch (error) {
-      this.logger.error('It was not possible to add identity ' + entity.userApp.identity.userID + ' to Blockchain', error);
+      throw new Error('It was not possible to add identity ' + entity.userApp.username + ' to Blockchain ' + error);
     }
 
     try {
@@ -75,9 +73,22 @@ export class IdentityManager {
     return this.businessNetworkHandler.issueIdentity(this.namespace + '.' + participant.$class + '#' + participant[participant.participantID], userID);
   }
 
-  private async addUserToDB(userApp: UserApp): Promise<any> {
-    userApp = new UserApp(userApp);
+  private async addUserToDB(userInfo: UserInfo): Promise<any> {
+    const userApp = new UserApp(userInfo);
 
     return this.dataService.putDocument('users', userApp, userApp.username);
+  }
+
+  public async addAdmin(adminIdentity: Identity, adminUser: any): Promise<any> {
+    adminUser.identity = adminIdentity;
+
+    try {
+      await this.addUserToDB(adminUser);
+      this.logger.debug('User ' + adminUser.username + ' successfully added to DB');
+
+      this.logger.info('Entity: ' + adminUser.username + ' successfully added');
+    } catch (error) {
+      this.logger.error('It was not possible to add ' + adminUser.username + ' to DB', error);
+    }
   }
 }
