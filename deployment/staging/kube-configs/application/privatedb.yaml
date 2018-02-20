@@ -1,0 +1,41 @@
+---
+kind: StatefulSet
+apiVersion: apps/v1beta1
+metadata:
+    name: persistent-privatedb
+spec:
+    serviceName: persistent-privatedb
+    template:
+        metadata:
+            labels:
+                tier: db
+        spec:
+            terminationGracePeriodSeconds: 10
+            containers:
+                - name: persistent-privatedb
+                  image: couchdb:1.7.0
+                  imagePullPolicy: Always
+                  ports:
+                    - containerPort: 5984
+                      name: http
+                  volumeMounts:
+                    - name: privatedb-pv
+                      mountPath: /usr/local/var/lib/couchdb
+#                  env:
+#                    - name: COUCHDB_USER
+#                      value: admin
+#                    - name: COUCHDB_PASSWORD
+#                      valueFrom:
+#                          secretKeyRef:
+#                              name: couchdb-password
+#                              key: password
+    volumeClaimTemplates:
+        - metadata:
+            name: privatedb-pv
+          spec:
+              accessModes:
+                  - ReadWriteOnce
+              resources:
+                  requests:
+                      storage: 100M
+              storageClassName: ""

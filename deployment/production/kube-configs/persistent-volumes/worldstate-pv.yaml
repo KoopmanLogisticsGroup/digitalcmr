@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+    name: worldstate-pv
+spec:
+    capacity:
+        storage: 100M
+    accessModes:
+        - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Recycle
+    hostPath:
+        path: "/var/hyperledger/couchdb"

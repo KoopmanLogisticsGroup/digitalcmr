@@ -3,6 +3,7 @@ import {DefaultConfig} from './default.config';
 import {DevelopmentConfig} from './development.config';
 import {ProductionConfig} from './production.config';
 import {Settings} from './settings.interface';
+import {StagingConfig} from './staging.config';
 
 export class Config {
   private static NAMESPACE: string = 'app:config';
@@ -45,6 +46,9 @@ export class Config {
         break;
       case 'production':
         envSettings = ProductionConfig.settings;
+        break;
+      case 'staging':
+        envSettings = StagingConfig.settings;
         break;
       default:
         debug(this.NAMESPACE)(`WARNING: no environment settings for ${process.env.NODE_ENV}.`);
