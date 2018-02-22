@@ -2,7 +2,9 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-    name: ledger-pv
+    name: privatedb-pv
+    labels:
+      vol: privatedb-pv
 spec:
     capacity:
         storage: 100M
@@ -10,4 +12,4 @@ spec:
         - ReadWriteOnce
     persistentVolumeReclaimPolicy: Recycle
     hostPath:
-        path: "/var/hyperledger/ledger"
+        path: "/var/privatedb"

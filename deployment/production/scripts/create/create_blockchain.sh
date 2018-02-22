@@ -9,10 +9,8 @@ else
 fi
 
 echo "Creating PersistentVolumes for the blockchain network"
-echo "Running: kubectl apply -f ${KUBECONFIG_FOLDER}/../persistent-volumes/worldstate-pv.yaml"
-kubectl apply -f ${KUBECONFIG_FOLDER}/../persistent-volumes/worldstate-pv.yaml
-echo "Running: kubectl apply -f ${KUBECONFIG_FOLDER}/../persistent-volumes/ledger-pv.yaml"
-kubectl apply -f ${KUBECONFIG_FOLDER}/../persistent-volumes/ledger-pv.yaml
+echo "Running: kubectl apply -f ${KUBECONFIG_FOLDER}/../persistent-volumes/blockchain-pv.yaml"
+kubectl apply -f ${KUBECONFIG_FOLDER}/../persistent-volumes/blockchain-pv.yaml
 
 echo "Creating Services for blockchain network"
 if [ "${1}" == "--with-couchdb" ]; then

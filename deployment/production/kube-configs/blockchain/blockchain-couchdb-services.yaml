@@ -34,13 +34,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: blockchain-org1peer1
+  name:  blockchain-org1peer1
   labels:
-    run: blockchain-org1peer1
+    app:  blockchain-org1peer1
+    tier: org1peer1
 spec:
   type: NodePort
   selector:
-    name: org1peer1
+    tier: org1peer1
   ports:
   - protocol: TCP
     port: 5010
@@ -57,10 +58,11 @@ metadata:
   name: blockchain-org2peer1
   labels:
     run: blockchain-org2peer1
+    tier: org2peer1
 spec:
   type: NodePort
   selector:
-    name: org2peer1
+    tier: org2peer1
   ports:
   - protocol: TCP
     port: 5010
@@ -74,13 +76,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: blockchain-couchdb1
+  name:  blockchain-couchdb1
   labels:
-    run: blockchain-couchdb1
+    app:  blockchain-couchdb1
+    tier: couchdb1
 spec:
   type: NodePort
   selector:
-    name: couchdb1
+    tier: couchdb1
   ports:
   - protocol: TCP
     port: 5984
@@ -93,10 +96,11 @@ metadata:
   name: blockchain-couchdb2
   labels:
     run: blockchain-couchdb2
+    tier: couchdb2
 spec:
   type: NodePort
   selector:
-    name: couchdb2
+    tier: couchdb2
   ports:
   - protocol: TCP
     port: 5984

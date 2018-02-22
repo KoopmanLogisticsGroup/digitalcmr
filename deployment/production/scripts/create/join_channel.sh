@@ -14,7 +14,7 @@ if [ -z "${PEER_ADDRESS}" ]; then
 	echo "I will wait 5 seconds before continuing."
 	sleep 5
 fi
-PEER_ADDRESS=${PEER_ADDRESS:-blockchain-org1peer1:5010}
+PEER_ADDRESS=${PEER_ADDRESS:-blockchain-org1peer1-0:5010}
 
 # Default to "Org1MSP" if not defined
 if [ -z ${PEER_MSPID} ]; then
