@@ -21,7 +21,7 @@ cat << EOF > ~/.composer-connection-profiles/hlfv1/connection.json
        { "url" : "grpc://localhost:7050" }
     ],
     "ca": { "url": "http://localhost:7054", 
-            "name": "ca.org1.example.com"
+            "name": "ca.kpm-pon"
     },
     "peers": [
         {
@@ -31,7 +31,7 @@ cat << EOF > ~/.composer-connection-profiles/hlfv1/connection.json
     ],
     "keyValStore": "${HOME}/.composer-credentials",
     "channel": "composerchannel",
-    "mspID": "Org1MSP",
+    "mspID": "kpm-ponMSP",
     "timeout": "300"
 }
 EOF
