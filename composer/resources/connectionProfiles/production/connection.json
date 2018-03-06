@@ -17,6 +17,6 @@
   ],
   "keyValStore": "/home/composer/.composer-credentials",
   "channel":     "channel1",
-  "mspID":       "kpm-ponMSP",
+  "mspID":       "Org1MSP",
   "timeout":     "300"
 }
