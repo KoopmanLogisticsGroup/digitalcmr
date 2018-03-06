@@ -3,5 +3,3 @@ cryptogen generate --config=./crypto-config.yaml
 export FABRIC_CFG_PATH=$PWD
 configtxgen -profile TwoOrgsOrdererGenesis -outputBlock ./composer-genesis.block
 configtxgen -profile TwoOrgsChannel -outputCreateChannelTx ./composer-channel.tx -channelID composerchannel
-configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./crypto-config/shared/channel-artifacts/channel.tx -channelID composerchannel -asOrg kpm-pon
-rm configtx.yaml crypto-config.yaml
