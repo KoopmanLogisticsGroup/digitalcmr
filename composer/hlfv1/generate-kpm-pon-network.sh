@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 cd composer
 
+echo "removing old crypto"
 rm -rf crypto-config
 
-cp -r kpn-ponProfile/ .
+cp -r kpm-ponProfile/ .
 echo "creating crypto"
 cryptogen generate --config=./crypto-config.yaml
 export FABRIC_CFG_PATH=$PWD
