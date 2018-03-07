@@ -39,3 +39,7 @@ delete/delete_chaincode-instantiate.sh
 echo ""
 echo "=> DELETE_ALL: Wiping the shared folder empty"
 ./wipe_shared.sh
+
+echo ""
+echo "=> DELETE_ALL: Deleting persistent volumes and claims"
+delete/delete_persistent-volumes.sh

@@ -41,7 +41,8 @@ while [ "${NUMPENDING}" != "0" ]; do
     NUMPENDING=$(kubectl get deployments | grep blockchain | awk '{print $5}' | grep 0 | wc -l | awk '{print $1}')
 done
 
+TIMEOUT=30
 if [ "${1}" == "--with-couchdb" ]; then
-    echo "Waiting for 15 seconds for peers to settle, as we are running with couchdb"
-    sleep 15
+    echo "Waiting for $TIMEOUT seconds for peers to settle, as we are running with couchdb"
+    sleep $TIMEOUT
 fi

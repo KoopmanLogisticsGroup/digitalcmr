@@ -27,7 +27,7 @@ echo "Creating new Deployment"
 if [ "${1}" == "--with-couchdb" ]; then
     # Use the yaml file with couchdb
     echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/blockchain-couchdb.yaml"
-    kubectl create -f ${KUBECONFIG_FOLDER}/blockchain-couchdb.yaml
+    kubectl create -f ${KUBECONFIG_FOLDER}/blockchain-couchdb.yaml --validate=false
 else
     echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/blockchain.yaml"
     kubectl create -f ${KUBECONFIG_FOLDER}/blockchain.yaml
@@ -41,7 +41,8 @@ while [ "${NUMPENDING}" != "0" ]; do
     NUMPENDING=$(kubectl get deployments | grep blockchain | awk '{print $5}' | grep 0 | wc -l | awk '{print $1}')
 done
 
+TIMEOUT=30
 if [ "${1}" == "--with-couchdb" ]; then
-    echo "Waiting for 15 seconds for peers to settle, as we are running with couchdb"
-    sleep 15
+    echo "Waiting for $TIMEOUT seconds for peers to settle, as we are running with couchdb"
+    sleep $TIMEOUT
 fi
