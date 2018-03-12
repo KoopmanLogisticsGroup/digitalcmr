@@ -27,7 +27,7 @@ bx plugin repo-add bluemix https://plugins.ng.bluemix.net
 ```
 Note: If you get the following error, it means that the repository bluemix already exists on your computer. Thus, you can ignore the error and move to the next step.
 ```bash
-Plug-in repo named ‘bluemix’ already exists. Try a different name.
+Plug-in repo named 'bluemix' already exists. Try a different name.
 ```
 - Add the container service plugin
 ```bash
@@ -134,7 +134,7 @@ kubectl proxy
 ## Deploy the blockchain network
 1. Navigate to the `scripts` sub-directory:
 ```bash
-cd cs-offerings/free/scripts
+cd ./scripts
 ```
 2. Run the script to use couchdb as worldstate db for peers:
 ```bash
@@ -168,19 +168,26 @@ docker build -t digitalcmr_api_doc .
 ```
 ### Tag and push the images to Bluemix
 1. First set up a private Docker registry on your current organization if you do not have yet.
-[Bluemix Containers - Registry Getting Started](https://console.bluemix.net/containers-kubernetes/home/registryGettingStarted)
+[Bluemix Containers - Registry Getting Started](https://console.bluemix.net/containers-kubernetes/registry/start)
+```bash
+bx plugin update container-registry -r Bluemix
+bx cr login
+bx cr image-list
+```
 2. Tag your images as follows
 ```bash
-docker tag digitalcmr_client registry.eu-gb.bluemix.net/YOUR_SPACE_REGISTRY/digitalcmr_client
-docker tag digitalcmr_server registry.eu-gb.bluemix.net/YOUR_SPACE_REGISTRY/digitalcmr_server
-docker tag digitalcmr_api_doc registry.eu-gb.bluemix.net/YOUR_SPACE_REGISTRY/digitalcmr_api_doc
+export REGISTRY_BASEPATH=registry.eu-gb.bluemix.net
+export REGISTRY_SPACE=YOUR_SPACE_REGISTRY
+docker tag digitalcmr_client $REGISTRY_BASEPATH/$REGISTRY_SPACE/digitalcmr_client
+docker tag digitalcmr_server $REGISTRY_BASEPATH/$REGISTRY_SPACE/digitalcmr_server
+docker tag digitalcmr_api_doc $REGISTRY_BASEPATH/$REGISTRY_SPACE/digitalcmr_api_doc
 ```
 **Your Bluemix space has a specific limit of images/GBs, therefore we can avoid to push the private-db image and instead using the one from the official docker hub registry**
 3. Push all the images to your Bluemix private registry
 ```bash
-docker push registry.eu-gb.bluemix.net/YOUR_SPACE_REGISTRY/digitalcmr_client
-docker push registry.eu-gb.bluemix.net/YOUR_SPACE_REGISTRY/digitalcmr_server
-docker push registry.eu-gb.bluemix.net/YOUR_SPACE_REGISTRY/digitalcmr_api_doc
+docker push $REGISTRY_BASEPATH/$REGISTRY_SPACE/digitalcmr_client
+docker push $REGISTRY_BASEPATH/$REGISTRY_SPACE/digitalcmr_server
+docker push $REGISTRY_BASEPATH/$REGISTRY_SPACE/digitalcmr_api_doc
 ```
 ## Deploy your Business Network Archive
 1. Export the `.bna` containing all the rules of your business network
@@ -193,7 +200,7 @@ Your `.bna` will be under the `./composer/bna/dist` folder. Check it contains al
 3. In the section `hlfv1` go to `deploy` and select the `.bna`
 4. Wait until the operation is completed. Then your business network (chaincode container) is up and running
 
-**Note: Wait at least 5 min to be sure the admin user has been succesfully enrolled, otherwise you risk to comproise its certificate.**
+**Note: Wait at least 5 min to be sure the admin user has been successfully enrolled, otherwise you risk to compromise its certificate.**
 
 Now you can run your application.
 
@@ -203,7 +210,7 @@ Now you can run your application.
 - Your client holds the correct address to your remote server in `client/src/environments/environment.prod.ts`
 1. Navigate to the `scripts` sub-directory:
 ```bash
-cd cs-offerings/free/scripts
+cd ./scripts
 ```
 2. Run the script to create all the app services and pods
 ```bash
@@ -216,21 +223,21 @@ cd cs-offerings/free/scripts
 Instead, if you do not want to delete your previous blockchain network together with the ledger of all the transactions, then you could follow the steps below:
 1. Delete the application pods and services
 ```bash
-cd cs-offerings/free/scripts
+cd ./scripts
 ./delete/delete_application.sh
 ```
 2. Create new images of your application components and push to your remote private registry
 3. If you made any changes at your business network, export the new `.bna` and deploy it through the Composer Playground service (you could probably upgrade the previous version)
 4. Create again all the application pods and services
 ```bash
-cd cs-offerings/free/scripts
+cd ./scripts
 ./create/create_applicaton.sh
 ```
 
 ## Run the Composer-Rest-Server
 1. Navigate to the `scripts` sub-directory:
 ```bash
-cd cs-offerings/free/scripts/
+cd ./scripts
 ```
 2. Run the script to create all the app services and pods
 ```bash
@@ -243,7 +250,7 @@ cd cs-offerings/free/scripts/
 You can easily clean up all the k8s environment anytime using the `delete_all` script
 1. Navigate to the `scripts` sub-directory:
 ```bash
-cd cs-offerings/free/scripts
+cd ./scripts
 ```
 2. Run the script to create all the app services and pods
 ```bash
@@ -255,7 +262,7 @@ or, alternatively, you can delete a specific components using one of the script 
 1. Follow the steps in the section _Clean up the environment_
 2. Recreate the blockchain network
 ```bash
-cd cs-offerings/free/scripts
+cd ./scripts
 ./create_all.sh --with-couchdb
 ```
 3. Export the `.bna`
@@ -266,8 +273,22 @@ npm run prepublish
 4. Deploy the `.bna` through the Composer Playground service
 5. Create again all the application pods and services
 ```bash
-cd cs-offerings/free/scripts
+cd ./scripts
 ./create/create_applicaton.sh
+```
+
+## Useful commands
+### Create single service and pod
+e.g. client
+```bash
+kubectl create -f ${KUBECONFIG_FOLDER}/client-services.yaml
+kubectl create -f ${KUBECONFIG_FOLDER}/client.yaml --validate=false
+```
+### Delete single service and pod
+e.g. client
+```bash
+kubectl delete -f ${KUBECONFIG_FOLDER}/client-services.yaml
+kubectl delete -f ${KUBECONFIG_FOLDER}/client.yaml
 ```
 
 ## Troubleshooting
@@ -284,4 +305,4 @@ Error: Error trying to ping. Error: Error trying to query business network. Erro
 ## References
 [Develop in a cloud sandbox IBM Blockchain Platform](https://ibm-blockchain.github.io/)
 
-[Bluemix Containers - Registry Getting Started](https://console.bluemix.net/containers-kubernetes/home/registryGettingStarted)
+[Bluemix Containers - Registry Getting Started](https://console.bluemix.net/containers-kubernetes/registry/start)

@@ -1,0 +1,36 @@
+---
+kind: StatefulSet
+apiVersion: apps/v1beta1
+metadata:
+    name: privatedb
+spec:
+    serviceName: privatedb
+    template:
+        metadata:
+            labels:
+                tier: db
+        spec:
+            terminationGracePeriodSeconds: 10
+            containers:
+                - name: privatedb
+                  image: couchdb:1.7.0
+                  imagePullPolicy: Always
+                  ports:
+                    - containerPort: 5984
+                      name: http
+                  volumeMounts:
+                    - name: privatedb-pv
+                      mountPath: /usr/local/var/lib/couchdb
+    volumeClaimTemplates:
+        - metadata:
+            name: privatedb-pv
+          spec:
+              accessModes:
+                  - ReadWriteOnce
+              resources:
+                  requests:
+                      storage: 100M
+              selector:
+                matchLabels:
+                  vol: privatedb-pv
+              storageClassName: ""
