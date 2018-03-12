@@ -1,17 +1,16 @@
 import {Settings} from './settings.interface';
 
-export class ProductionConfig {
+export class StagingConfig {
   public static get settings(): Settings {
     return {
       composer:     {
-        url:       'http://159.8.76.83:31090/api',
-        profile:   'production',
+        url:       'http://159.122.179.221:31090/api',
+        profile:   'staging',
         network:   'digital-cmr-network',
         channel:   'channel1',
         namespace: 'org.digitalcmr'
       },
-      host:         process.env.VCAP_HOST || process.env.HOST || '',
-      port:         process.env.VCAP_PORT || process.env.PORT || '',
+      host:         '0.0.0.0',
       serverSecret: 'sUp4hS3cr37kE9c0D3',
       privateDB:    {
         host: 'persistent-privatedb',
