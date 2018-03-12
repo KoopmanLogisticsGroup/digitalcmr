@@ -23,7 +23,6 @@ export class DefaultConfig {
       },
       serverSecret: 'sUp4hS3cr37kE9c0D3',
       composer:     {
-        url:       '',
         channel:   '',
         profile:   '',
         network:   '',

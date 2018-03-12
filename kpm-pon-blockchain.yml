@@ -1,23 +1,49 @@
 version: '2'
 services:
-  ca.kpm-pon:
-    extends:
-      file: composer/hlfv1/composer/docker-compose-kpm-pon.yml
-      service: ca.kpm-pon
-
   orderer.kpm-pon:
     extends:
-      file: composer/hlfv1/composer/docker-compose-kpm-pon.yml
+      file: composer/hlfv1/composer/kpm-pon.yml
       service: orderer.kpm-pon
 
+  ca.kpm-pon:
+    extends:
+      file: composer/hlfv1/composer/kpm-pon.yml
+      service: ca.kpm-pon
+      
   peer0.kpm-pon:
     extends:
-      file: composer/hlfv1/composer/docker-compose-kpm-pon.yml
+      file: composer/hlfv1/composer/kpm-pon.yml
       service: peer0.kpm-pon
     depends_on:
       - orderer.kpm-pon
+      - couchdb-kpm-pon
     environment:
       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=digitalcmr_default
+
+  couchdb-kpm-pon:
+    extends:
+      file: composer/hlfv1/composer/kpm-pon.yml
+      service: couchdb-kpm-pon
+
+  ca.pon:
+    extends:
+      file: composer/hlfv1/composer/kpm-pon.yml
+      service: ca.pon
+      
+  peer0.pon:
+    extends:
+      file: composer/hlfv1/composer/kpm-pon.yml
+      service: peer0.pon
+    depends_on:
+      - orderer.kpm-pon
+      - couchdb-pon
+    environment:
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=digitalcmr_default
+
+  couchdb-pon:
+    extends:
+      file: composer/hlfv1/composer/kpm-pon.yml
+      service: couchdb-pon
 
   util:
     image: docker
@@ -34,14 +60,9 @@ services:
         echo 'Created channels! Exiting.'
         "
 
-  couchdb-kpm-pon:
-    extends:
-      file: composer/hlfv1/composer/docker-compose-kpm-pon.yml
-      service: couchdb-kpm-pon
-
   composer-cli:
     extends:
-      file: composer/docker-compose-kpm-pon.yml
+      file: composer/kpm-pon.yml
       service: composer-cli
     depends_on:
       - ca.kpm-pon

@@ -16,6 +16,7 @@ import {TransactionHandler} from './blockchain/TransactionHandler';
 import * as ComposerClient from 'composer-client';
 import {DataService} from './datasource/DataService';
 import {IdentityManager} from './blockchain/IdentityManager';
+import {UserInfo} from './interfaces/entity.inferface';
 
 class App {
   private loggerFactory: LoggerFactory = new LoggerFactory(Config.settings.winston, Config.settings.morgan);
@@ -36,7 +37,22 @@ class App {
     Container.set(BusinessNetworkHandler, new BusinessNetworkHandler(new ComposerClient.BusinessNetworkConnection()));
     Container.set(TransactionHandler, new TransactionHandler(Container.get(BusinessNetworkHandler)));
     Container.set(IdentityManager, new IdentityManager(Config.settings.composer.namespace));
-    await this.addTestData();
+
+    if (process.env.INIT) {
+      await this.addTestData();
+    }
+
+    if (process.env.NODE_ENV === 'pon') {
+      await new TestData(Container.get(TransactionHandler),
+        Container.get(DataService),
+        Container.get(IdentityManager)).addAdmin(<UserInfo> {
+        username:  'adminPon',
+        password:  '@dm1nPassw0rd',
+        firstName: 'adminPon',
+        lastName:  'adminPon',
+        role:      'adminPon'
+      });
+    }
 
     const apiPath                                              = Config.settings.apiPath;
     const routingControllersOptions: RoutingControllersOptions = {

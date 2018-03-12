@@ -1,10 +1,10 @@
 import {Settings} from './settings.interface';
 
-export class KpmPonConfig {
+export class PonConfig {
   public static get settings(): Settings {
     return {
       composer:     {
-        profile:   'kpm-pon',
+        profile:   'pon',
         network:   'digital-cmr-network',
         channel:   'composerchannel',
         namespace: 'org.digitalcmr'
@@ -12,7 +12,7 @@ export class KpmPonConfig {
       host:         '0.0.0.0',
       serverSecret: 'sUp4hS3cr37kE9c0D3',
       privateDB:    {
-        host: 'privatedb-kpm-pon',
+        host: 'privatedb-pon',
         port: '5984'
       }
     };

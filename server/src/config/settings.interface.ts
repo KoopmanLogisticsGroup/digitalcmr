@@ -4,7 +4,6 @@ import {Options} from 'morgan';
 export interface Settings {
   apiPath?: string;
   composer: {
-    url: string;
     channel: string;
     profile: string;
     network?: string;
