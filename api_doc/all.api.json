@@ -5,7 +5,7 @@
     "description": "APIs for managing the digital CMR",
     "version":     "1.4.0"
   },
-  "host":                "159.8.76.83:31001",
+  "host":                "159.122.174.172:31001",
   "schemes":             [
     "http"
   ],
