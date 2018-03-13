@@ -51,12 +51,15 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
       - peer0.kpm-pon
+      - peer0.pon
     command: >
       sh -c " \
         set -e; \
         sleep 10; \
         docker exec -e \"CORE_PEER_LOCALMSPID=kpm-ponMSP\" -e \"CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@kpm-pon/msp\" peer0.kpm-pon peer channel create -o orderer.kpm-pon:7050 -c composerchannel -f /etc/hyperledger/configtx/composer-channel.tx; \
         docker exec -e \"CORE_PEER_LOCALMSPID=kpm-ponMSP\" -e \"CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@kpm-pon/msp\" peer0.kpm-pon peer channel join -b composerchannel.block && \
+        docker exec -e \"CORE_PEER_LOCALMSPID=ponMSP\" -e \"CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@pon/msp\" peer0.pon peer channel fetch newest -o orderer.kpm-pon:7050 -c composerchannel && \
+        docker exec -e \"CORE_PEER_LOCALMSPID=ponMSP\" -e \"CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@pon/msp\" peer0.pon peer channel join -b composerchannel_newest.block && \
         echo 'Created channels! Exiting.'
         "
 
@@ -65,8 +68,11 @@ services:
       file: composer/kpm-pon.yml
       service: composer-cli
     depends_on:
+      - ca.pon
       - ca.kpm-pon
       - orderer.kpm-pon
       - peer0.kpm-pon
+      - peer0.pon
       - couchdb-kpm-pon
+      - couchdb-pon
       - util
