@@ -9,7 +9,7 @@ services:
     extends:
       file: composer/hlfv1/composer/kpm-pon.yml
       service: ca.kpm-pon
-      
+
   peer0.kpm-pon:
     extends:
       file: composer/hlfv1/composer/kpm-pon.yml
@@ -29,7 +29,7 @@ services:
     extends:
       file: composer/hlfv1/composer/kpm-pon.yml
       service: ca.pon
-      
+
   peer0.pon:
     extends:
       file: composer/hlfv1/composer/kpm-pon.yml
