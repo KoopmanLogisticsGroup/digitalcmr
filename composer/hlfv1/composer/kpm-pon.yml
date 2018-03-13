@@ -66,7 +66,8 @@ services:
       - 7053:7053
     volumes:
         - /var/run/:/host/var/run/
-        - ./kpm-pon-config/:/etc/hyperledger/configtx
+        - ./kpm-pon-config/composer-channel.tx:/etc/hyperledger/configtx/composer-channel.tx
+        - ./kpm-pon-config/composer-genesis.block:/etc/hyperledger/configtx/composer-genesis.block
         - ./kpm-pon-config/kpm-pon/crypto-config/peerOrganizations/kpm-pon/peers/peer0.kpm-pon/msp:/etc/hyperledger/peer/msp
         - ./kpm-pon-config/kpm-pon/crypto-config/peerOrganizations/kpm-pon/users:/etc/hyperledger/msp/users
 #    depends_on:
@@ -94,7 +95,8 @@ services:
       - 7153:7053
     volumes:
         - /var/run/:/host/var/run/
-        - ./kpm-pon-config/:/etc/hyperledger/configtx
+        - ./kpm-pon-config/composer-channel.tx:/etc/hyperledger/configtx/composer-channel.tx
+        - ./kpm-pon-config/composer-genesis.block:/etc/hyperledger/configtx/composer-genesis.block
         - ./kpm-pon-config/pon/crypto-config/peerOrganizations/pon/peers/peer0.pon/msp:/etc/hyperledger/peer/msp
         - ./kpm-pon-config/pon/crypto-config/peerOrganizations/pon/users:/etc/hyperledger/msp/users
 
