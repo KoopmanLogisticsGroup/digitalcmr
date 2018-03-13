@@ -125,7 +125,13 @@ export class TestData {
       identities.push(await this.identityManager.addEntity(TestData.adminIdentity, entity));
     }
 
-    await this.addAdmin();
+    await this.addAdmin(<UserInfo> {
+      username:  'admin',
+      password:  '@dm1nPassw0rd',
+      firstName: 'admin',
+      lastName:  'admin',
+      role:      'admin'
+    });
 
     return identities;
   }
@@ -181,16 +187,8 @@ export class TestData {
     return this.transactionHandler.invoke(TestData.adminIdentity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateTransportOrders, transportOrders, new TransportOrderTransactor());
   }
 
-  private async addAdmin(): Promise<any> {
+  public async addAdmin(adminUser: UserInfo): Promise<any> {
     this.logger.debug('Adding admin user');
-
-    const adminUser: UserInfo = {
-      username:  'admin',
-      password:  '@dm1nPassw0rd',
-      firstName: 'admin',
-      lastName:  'admin',
-      role:      'admin'
-    };
 
     const adminIdentity: Identity = {
       userID:     'admin',
