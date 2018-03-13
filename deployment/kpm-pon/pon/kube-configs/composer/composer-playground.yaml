@@ -2,20 +2,20 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: composer-playground
+  name: composer-playground.pon
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        name: composer-playground
+        name: composer-playground.pon
     spec:
       volumes:
       - name: composer-credentials
         hostPath:
           path: /composer
       containers:
-      - name: composer-playground
+      - name: composer-playground.pon
         image: hyperledger/composer-playground:0.13.2
         imagePullPolicy: Always
         env:
@@ -38,22 +38,22 @@ spec:
                   "type": "hlfv1",
                   "orderers": [
                       {
-                          "url": "grpc://blockchain-orderer:31010"
+                          "url": "grpc://blockchain-orderer.pon:31010"
                       }
                   ],
                   "ca": {
-                      "url": "http://blockchain-ca:7054",
-                      "name": "CA1"
+                      "url": "http://blockchain-ca.pon:7054",
+                      "name": "ca.pon"
                   },
                   "peers": [
                       {
-                          "requestURL": "grpc://blockchain-ponpeer:5010",
-                          "eventURL": "grpc://blockchain-ponpeer:5011"
+                          "requestURL": "grpc://blockchain-peer0.pon:5010",
+                          "eventURL": "grpc://blockchain-peer0.pon:5011"
                       }
                   ],
                   "keyValStore": "/home/composer/.hfc-key-store",
-                  "channel": "channel1",
-                  "mspID": "ponMSP",
+                  "channel": "composerchannel",
+                  "mspID": "kpm-ponMSP",
                   "timeout": 300
                 },
                 "credentials": null

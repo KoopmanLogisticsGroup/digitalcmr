@@ -16,7 +16,7 @@ spec:
   - name: composer-identity-import
     image: hyperledger/composer-cli:0.13.2
     imagePullPolicy: Always
-    command: ["sh", "-c", "composer identity import -p hlfv1 -u PeerAdmin -c /shared/crypto-config/peerOrganizations/kpm-pon/users/Admin@kpm-pon/msp/signcerts/Admin@kpm-pon-cert.pem -k /shared/crypto-config/peerOrganizations/kpm-pon/users/Admin@kpm-pon/msp/keystore/key.pem"]
+    command: ["sh", "-c", "composer identity import -p hlfv1 -u PeerAdmin -c /shared/crypto-config/peerOrganizations/pon/users/Admin@pon/msp/signcerts/Admin@pon-cert.pem -k /shared/crypto-config/peerOrganizations/pon/users/Admin@pon/msp/keystore/key.pem"]
     env:
     - name: COMPOSER_CONFIG
       value: >
@@ -27,22 +27,22 @@ spec:
               "type": "hlfv1",
               "orderers": [
                   {
-                      "url": "grpc://159.122.174.172:31010"
+                      "url": "grpc://blockchain-orderer.pon:31010"
                   }
               ],
               "ca": {
-                  "url": "http://blockchain-ponca:7054",
-                  "name": "CA1"
+                  "url": "http://blockchain-ca.pon:7054",
+                  "name": "ca.pon"
               },
               "peers": [
                   {
-                      "requestURL": "grpc://blockchain-ponpeer:5010",
-                      "eventURL": "grpc://blockchain-ponpeer:5011"
+                      "requestURL": "grpc://blockchain-peer0.pon:5010",
+                      "eventURL": "grpc://blockchain-peer0.pon:5011"
                   }
               ],
               "keyValStore": "/home/composer/.hfc-key-store",
-              "channel": "channel1",
-              "mspID": "ponMSP",
+              "channel": "composerchannel",
+              "mspID": "kpm-ponMSP",
               "timeout": "300"
             }
           },

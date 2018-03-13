@@ -2,14 +2,14 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-    name: privatedb-pv
+    name: privatedb-kpm-pon-pv
     labels:
-      vol: privatedb-pv
+      vol: privatedb-kpm-pon-pv
 spec:
     capacity:
-        storage: 100M
+        storage: 1G
     accessModes:
         - ReadWriteOnce
     persistentVolumeReclaimPolicy: Recycle
     hostPath:
-        path: "/var/privatedb"
+        path: "/var/privatedb-kpm-pon"

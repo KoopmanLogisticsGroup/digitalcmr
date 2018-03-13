@@ -2,15 +2,15 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: app-client
+  name: client-pon
   labels:
-    name: app-client
+    name: client-pon
 spec:
   restartPolicy: "Always"
   containers:
-  - name: app-client
+  - name: client-pon
     image: registry.eu-de.bluemix.net/apps/digitalcmr_client
     imagePullPolicy: Always
     imagePullSecrets:
     - name: bluemix-uk-registry
-    command: ["sh", "-c", "./node_modules/.bin/ng serve -H 0.0.0.0 -e stag --disable-host-check"]
+    command: ["sh", "-c", "./node_modules/.bin/ng serve -H 0.0.0.0 -e pon --disable-host-check"]
