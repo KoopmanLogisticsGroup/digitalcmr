@@ -2,17 +2,17 @@ version: '2'
 services:
   ca.org1.example.com:
     extends:
-      file: composer/hlfv1/composer/docker-compose.yml
+      file: composer/hlfv1/config/docker-compose.yml
       service: ca.org1.example.com
 
   orderer.example.com:
     extends:
-      file: composer/hlfv1/composer/docker-compose.yml
+      file: composer/hlfv1/config/docker-compose.yml
       service: orderer.example.com
 
   peer0.org1.example.com:
     extends:
-      file: composer/hlfv1/composer/docker-compose.yml
+      file: composer/hlfv1/config/docker-compose.yml
       service: peer0.org1.example.com
     depends_on:
       - orderer.example.com
@@ -36,7 +36,7 @@ services:
 
   couchdb:
     extends:
-      file: composer/hlfv1/composer/docker-compose.yml
+      file: composer/hlfv1/config/docker-compose.yml
       service: couchdb
 
   composer-cli:

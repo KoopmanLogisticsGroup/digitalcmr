@@ -29,7 +29,7 @@ spec:
     command: ["sh", "-c", "sleep 1 && while [ ! -f /shared/status_cryptogen_complete ]; do echo Waiting for cryptogen; sleep 1; done; cp /sampleconfig/configtx.yaml /shared/configtx.yaml; cd /shared/; configtxgen -profile TwoOrgsOrdererGenesis -outputBlock orderer.block && find /shared -type d | xargs chmod a+rx && find /shared -type f | xargs chmod a+r && touch /shared/status_configtxgen_complete && rm /shared/status_cryptogen_complete"]
     env:
      - name: PEERHOST1
-       value: blockchain-org1peer1
+       value: blockchain-peer0.pon
      - name: PEERPORT1
        value: "5010"
      - name: PEERHOST2
@@ -97,7 +97,7 @@ spec:
         - name: ORDERER_GENERAL_LOGLEVEL
           value: debug
         - name: ORDERER_GENERAL_LOCALMSPDIR
-          value: /shared/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/msp
+          value: /fabric-config/crypto-config/ordererOrganizations/pon/orderers/orderer.example.com/msp
         - name: ORDERER_GENERAL_LOCALMSPID
           value: OrdererMSP
         - name: ORDERER_GENERAL_GENESISMETHOD
@@ -137,9 +137,9 @@ spec:
         - name: CONFIGYAML
           value: /shared/cas/ca.yaml
         - name: FABRIC_CA_SERVER_CA_CERTFILE
-          value: /shared/crypto-config/ordererOrganizations/example.com/ca/ca.example.com-cert.pem
+          value: /fabric-config/crypto-config/ordererOrganizations/pon/ca/ca.example.com-cert.pem
         - name: FABRIC_CA_SERVER_CA_KEYFILE
-          value: /mnt/crypto-config/ordererOrganizations/example.com/ca/948030ba41c19d662d767eb6f0d8196ff95c87f8f838fc4b8951f886357d82e8_sk
+          value: /mnt/crypto-config/ordererOrganizations/pon/ca/948030ba41c19d662d767eb6f0d8196ff95c87f8f838fc4b8951f886357d82e8_sk
         - name: FABRIC_CA_SERVER_DEBUG
           value: "true"
         - name: FABRIC_CA_SERVER_TLS_ENABLED
@@ -164,7 +164,7 @@ spec:
     template:
         metadata:
             labels:
-                tier: peer0.pon-pon
+                tier: peer0.pon
                 vol: peer0.pon-pv
         spec:
             terminationGracePeriodSeconds: 10
@@ -176,7 +176,7 @@ spec:
               hostPath:
                 path: /var/run/docker.sock
             containers:
-                - name: org1peer1
+                - name: peer0.pon
                   image: ibmblockchain/fabric-peer:1.0.6
                   imagePullPolicy: Always
                   command: ["sh", "-c", "sleep 1 && while [ ! -f /shared/bootstrapped ]; do echo Waiting for bootstrap; sleep 1; done; peer node start --peer-defaultchain=false"]
@@ -210,7 +210,7 @@ spec:
                   - name: CORE_PEER_LOCALMSPID
                     value: kpm-ponMSP
                   - name: CORE_PEER_MSPCONFIGPATH
-                    value: /shared/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/msp/
+                    value: /fabric-config/crypto-config/peerOrganizations/kpm-pon/peers/peer0.pon/msp/
                   - name: CORE_LOGGING_LEVEL
                     value: debug
                   - name: CORE_LOGGING_PEER

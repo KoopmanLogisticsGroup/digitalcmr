@@ -2,17 +2,17 @@ version: '2'
 services:
   orderer.kpm-pon:
     extends:
-      file: composer/hlfv1/composer/kpm-pon.yml
+      file: composer/hlfv1/config/kpm-pon.yml
       service: orderer.kpm-pon
 
   ca.kpm-pon:
     extends:
-      file: composer/hlfv1/composer/kpm-pon.yml
+      file: composer/hlfv1/config/kpm-pon.yml
       service: ca.kpm-pon
 
   peer0.kpm-pon:
     extends:
-      file: composer/hlfv1/composer/kpm-pon.yml
+      file: composer/hlfv1/config/kpm-pon.yml
       service: peer0.kpm-pon
     depends_on:
       - orderer.kpm-pon
@@ -22,17 +22,17 @@ services:
 
   couchdb-kpm-pon:
     extends:
-      file: composer/hlfv1/composer/kpm-pon.yml
+      file: composer/hlfv1/config/kpm-pon.yml
       service: couchdb-kpm-pon
 
   ca.pon:
     extends:
-      file: composer/hlfv1/composer/kpm-pon.yml
+      file: composer/hlfv1/config/kpm-pon.yml
       service: ca.pon
 
   peer0.pon:
     extends:
-      file: composer/hlfv1/composer/kpm-pon.yml
+      file: composer/hlfv1/config/kpm-pon.yml
       service: peer0.pon
     depends_on:
       - orderer.kpm-pon
@@ -42,7 +42,7 @@ services:
 
   couchdb-pon:
     extends:
-      file: composer/hlfv1/composer/kpm-pon.yml
+      file: composer/hlfv1/config/kpm-pon.yml
       service: couchdb-pon
 
   util:

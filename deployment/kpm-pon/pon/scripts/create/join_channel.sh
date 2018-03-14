@@ -10,11 +10,11 @@ fi
 
 # Default to peer 1's address if not defined
 if [ -z "${PEER_ADDRESS}" ]; then
-	echo "PEER_ADDRESS not defined. I will use \"blockchain-org1peer1:5010\"."
+	echo "PEER_ADDRESS not defined. I will use \"blockchain-peer0.pon:5010\"."
 	echo "I will wait 5 seconds before continuing."
 	sleep 5
 fi
-PEER_ADDRESS=${PEER_ADDRESS:-blockchain-org1peer1-0:5010}
+PEER_ADDRESS=${PEER_ADDRESS:-blockchain-peer0.pon-0:5010}
 
 # Default to "Org1MSP" if not defined
 if [ -z ${PEER_MSPID} ]; then
@@ -34,11 +34,11 @@ CHANNEL_NAME=${CHANNEL_NAME:-channel1}
 
 # Default to "admin for peer1" if not defined
 if [ -z "${MSP_CONFIGPATH}" ]; then
-	echo "MSP_CONFIGPATH not defined. I will use \"/shared/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp\"."
+	echo "MSP_CONFIGPATH not defined. I will use \"/fabric-config/crypto-config/peerOrganizations/kpm-pon/users/Admin@org1.example.com/msp\"."
 	echo "I will wait 5 seconds before continuing."
 	sleep 5
 fi
-MSP_CONFIGPATH=${MSP_CONFIGPATH:-/shared/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp}
+MSP_CONFIGPATH=${MSP_CONFIGPATH:-/fabric-config/crypto-config/peerOrganizations/kpm-pon/users/Admin@org1.example.com/msp}
 
 echo "Deleting old channel pods if exists"
 echo "Running: ${KUBECONFIG_FOLDER}/../scripts/delete/delete_channel-pods.sh"

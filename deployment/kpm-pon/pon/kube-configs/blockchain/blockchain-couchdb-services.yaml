@@ -2,13 +2,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: blockchain-ca
+  name: blockchain-ca.pon
   labels:
-    run: blockchain-ca
+    run: blockchain-ca.pon
 spec:
   type: NodePort
   selector:
-    name: ca
+    name: ca.pon
   ports:
   - protocol: TCP
     port: 7054
@@ -18,13 +18,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: blockchain-orderer
+  name: blockchain-orderer.pon
   labels:
-    run: blockchain-orderer
+    run: blockchain-orderer.pon
 spec:
   type: NodePort
   selector:
-    name: orderer
+    name: orderer.pon
   ports:
   - protocol: TCP
     port: 31010
@@ -34,14 +34,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name:  blockchain-org1peer1
+  name:  blockchain-peer0.pon
   labels:
-    app:  blockchain-org1peer1
-    tier: org1peer1
+    app:  blockchain-peer0.pon
+    tier: peer0.pon
 spec:
   type: NodePort
   selector:
-    tier: org1peer1
+    tier: peer0.pon
   ports:
   - protocol: TCP
     port: 5010
@@ -55,54 +55,16 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: blockchain-org2peer1
+  name:  blockchain-peer0.pon.couchdb
   labels:
-    run: blockchain-org2peer1
-    tier: org2peer1
+    app:  blockchain-peer0.pon.couchdb
+    tier: peer0.pon.couchdb
 spec:
   type: NodePort
   selector:
-    tier: org2peer1
-  ports:
-  - protocol: TCP
-    port: 5010
-    nodePort: 30210
-    name: grpc
-  - protocol: TCP
-    port: 5011
-    nodePort: 30211
-    name: events
----
-apiVersion: v1
-kind: Service
-metadata:
-  name:  blockchain-couchdb1
-  labels:
-    app:  blockchain-couchdb1
-    tier: couchdb1
-spec:
-  type: NodePort
-  selector:
-    tier: couchdb1
+    tier: peer0.pon.couchdb
   ports:
   - protocol: TCP
     port: 5984
     nodePort: 30984
-    name: couchdb1
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: blockchain-couchdb2
-  labels:
-    run: blockchain-couchdb2
-    tier: couchdb2
-spec:
-  type: NodePort
-  selector:
-    tier: couchdb2
-  ports:
-  - protocol: TCP
-    port: 5984
-    nodePort: 31984
-    name: couchdb2
+    name: peer0.pon.couchdb

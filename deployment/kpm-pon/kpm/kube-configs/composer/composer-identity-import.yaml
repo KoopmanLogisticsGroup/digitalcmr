@@ -16,7 +16,7 @@ spec:
   - name: composer-identity-import
     image: hyperledger/composer-cli:0.13.2
     imagePullPolicy: Always
-    command: ["sh", "-c", "composer identity import -p hlfv1 -u PeerAdmin -c /shared/crypto-config/peerOrganizations/kpm-pon/users/Admin@kpm-pon/msp/signcerts/Admin@kpm-pon-cert.pem -k /shared/crypto-config/peerOrganizations/kpm-pon/users/Admin@kpm-pon/msp/keystore/key.pem"]
+    command: ["sh", "-c", "composer identity import -p hlfv1 -u PeerAdmin -c /fabric-config/crypto-config/peerOrganizations/kpm-pon/users/Admin@kpm-pon/msp/signcerts/Admin@kpm-pon-cert.pem -k /fabric-config/crypto-config/peerOrganizations/kpm-pon/users/Admin@kpm-pon/msp/keystore/key.pem"]
     env:
     - name: COMPOSER_CONFIG
       value: >

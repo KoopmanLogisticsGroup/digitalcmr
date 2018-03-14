@@ -18,7 +18,7 @@ PEER_MSPID="kpm-ponMSP" CHANNEL_NAME="channel1" create/create_channel.sh
 
 echo ""
 echo "=> CREATE_ALL: Running Join Channel on kpm-pon Peer1"
-CHANNEL_NAME="channel1" PEER_MSPID="kpm-ponMSP" PEER_ADDRESS="blockchain-kpm-ponpeer:5010" MSP_CONFIGPATH="/shared/crypto-config/peerOrganizations/kpm-pon/users/Admin@kpm-pon/msp" create/join_channel.sh
+CHANNEL_NAME="channel1" PEER_MSPID="kpm-ponMSP" PEER_ADDRESS="blockchain-kpm-ponpeer:5010" MSP_CONFIGPATH="/fabric-config/crypto-config/peerOrganizations/kpm-pon/users/Admin@kpm-pon/msp" create/join_channel.sh
 
 echo ""
 echo "=> CREATE_ALL: Creating composer playground"
