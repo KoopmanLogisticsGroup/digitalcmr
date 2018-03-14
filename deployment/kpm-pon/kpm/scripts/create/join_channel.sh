@@ -8,6 +8,11 @@ else
     echo "Please run the script from 'scripts' or 'scripts/create' folder"
 fi
 
+BASE_PATH=$(pwd)../../../../../config/kpm-pon-config
+KPM_PATH=$BASE_PATH/kpm
+CONTAINER_BASE_PATH=/fabric-config
+KPM_PEERS_PARTIAL_PATH=crypto-config/peerOrganizations/peers
+
 # Default to peer 1's address if not defined
 if [ -z "${PEER_ADDRESS}" ]; then
 	echo "PEER_ADDRESS not defined. I will use \"blockchain-peer0.kpm-pon:5010\"."
@@ -52,8 +57,11 @@ echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/join_channel.yaml"
 kubectl create -f ${KUBECONFIG_FOLDER}/join_channel.yaml
 
 while [ "$(kubectl get pod -a joinchannel | grep joinchannel | awk '{print $3}')" != "Completed" ]; do
+
+kubectl cp $KPM_PATH/$KPM_PEERS_PARTIAL_PATH/peer0.kpm-pon joinchannel:$CONTAINER_BASE_PATH/$KPM_PEERS_PARTIAL_PATH/peer0.kpm-pon
+kubectl cp $KPM_PATH/ joinchannel:$CONTAINER_BASE_PATH/
     echo "Waiting for joinchannel container to be Completed"
-    sleep 1;
+    sleep 5;
 done
 
 if [ "$(kubectl get pod -a joinchannel | grep joinchannel | awk '{print $3}')" == "Completed" ]; then

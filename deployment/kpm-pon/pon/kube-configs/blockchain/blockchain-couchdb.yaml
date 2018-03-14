@@ -6,54 +6,12 @@ metadata:
 spec:
   restartPolicy: "Never"
   volumes:
-  - name: shared
-    hostPath:
-      path: /tmp
   - name: dockersocket
     hostPath:
       path: /var/run/docker.sock
   - name: composer-credentials
     hostPath:
       path: /composer
-  containers:
-  - name: cryptogen
-    image: ibmblockchain/fabric-tools:1.0.6
-    imagePullPolicy: Always
-    command: ["sh", "-c", "cryptogen generate --config /sampleconfig/crypto-config.yaml && cp -r crypto-config /shared/ && for file in $(find /shared/ -iname *_sk); do dir=$(dirname $file); mv ${dir}/*_sk ${dir}/key.pem; done && find /shared -type d | xargs chmod a+rx && find /shared -type f | xargs chmod a+r && touch /shared/status_cryptogen_complete "]
-    volumeMounts:
-    - mountPath: /shared
-      name: shared
-  - name: configtxgen
-    image: ibmblockchain/fabric-tools:1.0.6
-    imagePullPolicy: Always
-    command: ["sh", "-c", "sleep 1 && while [ ! -f /shared/status_cryptogen_complete ]; do echo Waiting for cryptogen; sleep 1; done; cp /sampleconfig/configtx.yaml /shared/configtx.yaml; cd /shared/; configtxgen -profile TwoOrgsOrdererGenesis -outputBlock orderer.block && find /shared -type d | xargs chmod a+rx && find /shared -type f | xargs chmod a+r && touch /shared/status_configtxgen_complete && rm /shared/status_cryptogen_complete"]
-    env:
-     - name: PEERHOST1
-       value: blockchain-peer0.pon
-     - name: PEERPORT1
-       value: "5010"
-     - name: PEERHOST2
-       value: blockchain-org2peer1
-     - name: PEERPORT2
-       value: "5010"
-     - name: ORDERER_URL
-       value: blockchain-orderer:31010
-     - name: FABRIC_CFG_PATH
-       value: /shared
-    # - name: GODEBUG
-    #   value: "netdns=go"
-    volumeMounts:
-    - mountPath: /shared
-      name: shared
-  - name: bootstrap
-    image: ibmblockchain/fabric-tools:1.0.6
-    imagePullPolicy: Always
-    command: ["sh", "-c", "sleep 1 && while [ ! -f /shared/status_configtxgen_complete ]; do echo Waiting for configtxgen; sleep 1; done; cp -r /sampleconfig/cas /shared; touch /shared/bootstrapped && rm /shared/status_configtxgen_complete && mkdir -p /home/composer && chown 100 /home/composer && echo 'Done with bootstrapping'" ]
-    volumeMounts:
-    - mountPath: /shared
-      name: shared
-    - mountPath: /home
-      name: composer-credentials
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -72,48 +30,6 @@ spec:
           path: /tmp
 
       containers:
-      - name: orderer.pon
-        image: ibmblockchain/fabric-orderer:1.0.6
-        command: ["sh", "-c", "sleep 5 && while [ ! -f /shared/bootstrapped ]; do echo Waiting for bootstrap; sleep 1; done; orderer"]
-        env:
-        - name: ORDERER_CFG_PATH
-          value: /shared/
-        - name: ORDERER_GENERAL_LEDGERTYPE
-          value: file
-        - name: ORDERER_FILELEDGER_LOCATION
-          value: /mnt/ledger/orderer1
-        - name: ORDERER_GENERAL_BATCHTIMEOUT
-          value: 1s
-        - name: ORDERER_GENERAL_BATCHSIZE_MAXMESSAGECOUNT
-          value: "10"
-        - name: ORDERER_GENERAL_MAXWINDOWSIZE
-          value: "1000"
-        - name: ORDERER_GENERAL_ORDERERTYPE
-          value: solo
-        - name: ORDERER_GENERAL_LISTENADDRESS
-          value: 0.0.0.0
-        - name: ORDERER_GENERAL_LISTENPORT
-          value: "31010"
-        - name: ORDERER_GENERAL_LOGLEVEL
-          value: debug
-        - name: ORDERER_GENERAL_LOCALMSPDIR
-          value: /fabric-config/crypto-config/ordererOrganizations/pon/orderers/orderer.example.com/msp
-        - name: ORDERER_GENERAL_LOCALMSPID
-          value: OrdererMSP
-        - name: ORDERER_GENERAL_GENESISMETHOD
-          value: file
-        - name: ORDERER_GENERAL_GENESISFILE
-          value: /shared/orderer.block
-        - name: ORDERER_GENERAL_GENESISPROFILE
-          value: initial
-        - name: ORDERER_GENERAL_TLS_ENABLED
-          value: "false"
-        - name: GODEBUG
-          value: "netdns=go"
-        volumeMounts:
-        - mountPath: /shared
-          name: shared
----
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -125,21 +41,17 @@ spec:
       labels:
         name: ca.pon
     spec:
-      volumes:
-      - name: shared
-        hostPath:
-          path: /tmp
       containers:
       - name: ca.pon
         image: ibmblockchain/fabric-ca:1.0.6
-        command: ["sh", "-c", "sleep 1 && while [ ! -f /shared/bootstrapped ]; do echo Waiting for bootstrap; sleep 1; done; fabric-ca-server start -c ${CONFIGYAML}"]
+        command: ["sh", "-c", "sleep 1 && while [ ! -f /fabric-config/ ]; do echo Waiting for crypto config to be loaded; sleep 1; done; fabric-ca-server start -c ${CONFIGYAML}"]
         env:
         - name: CONFIGYAML
           value: /shared/cas/ca.yaml
         - name: FABRIC_CA_SERVER_CA_CERTFILE
-          value: /fabric-config/crypto-config/ordererOrganizations/pon/ca/ca.example.com-cert.pem
+          value: /fabric-config/crypto-config/peerOrganizations/ca/ca.pon-cert.pem
         - name: FABRIC_CA_SERVER_CA_KEYFILE
-          value: /mnt/crypto-config/ordererOrganizations/pon/ca/948030ba41c19d662d767eb6f0d8196ff95c87f8f838fc4b8951f886357d82e8_sk
+          value: /mnt/crypto-config/peerOrganizations/ca/b76ef2f0d4df95adec8501a85b09df153dd1d36c9982c98936b1878a28be321c_sk
         - name: FABRIC_CA_SERVER_DEBUG
           value: "true"
         - name: FABRIC_CA_SERVER_TLS_ENABLED
@@ -169,9 +81,6 @@ spec:
         spec:
             terminationGracePeriodSeconds: 10
             volumes:
-            - name: shared
-              hostPath:
-                path: /tmp
             - name: dockersocket
               hostPath:
                 path: /var/run/docker.sock
@@ -179,7 +88,7 @@ spec:
                 - name: peer0.pon
                   image: ibmblockchain/fabric-peer:1.0.6
                   imagePullPolicy: Always
-                  command: ["sh", "-c", "sleep 1 && while [ ! -f /shared/bootstrapped ]; do echo Waiting for bootstrap; sleep 1; done; peer node start --peer-defaultchain=false"]
+                  command: ["sh", "-c", "sleep 1 && while [ ! -f /fabric-config/ ]; do echo Waiting for crypto config to be loaded; sleep 1; done; peer node start --peer-defaultchain=false"]
                   env:
                   - name: CORE_PEER_ADDRESSAUTODETECT
                     value: "true"
@@ -210,7 +119,7 @@ spec:
                   - name: CORE_PEER_LOCALMSPID
                     value: kpm-ponMSP
                   - name: CORE_PEER_MSPCONFIGPATH
-                    value: /fabric-config/crypto-config/peerOrganizations/kpm-pon/peers/peer0.pon/msp/
+                    value: /fabric-config/crypto-config/peerOrganizations/peers/peer0.pon/msp/
                   - name: CORE_LOGGING_LEVEL
                     value: debug
                   - name: CORE_LOGGING_PEER
@@ -235,11 +144,11 @@ spec:
                   - name: CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS
                     value: blockchain-peer0.pon.couchdb:5984
                   - name: PEER_CFG_PATH
-                    value: peer_config/
+                    value: /fabric-config/crypto-config/peerOrganizations/peers/peer0.pon
                   - name: FABRIC_CFG_PATH
-                    value: /etc/hyperledger/fabric/
+                    value: /fabric-config/
                   - name: ORDERER_URL
-                    value: blockchain-orderer.pon:31010
+                    value: blockchain-orderer.kpm-pon:31010
                   - name: GODEBUG
                     value: "netdns=go"
                   volumeMounts:
