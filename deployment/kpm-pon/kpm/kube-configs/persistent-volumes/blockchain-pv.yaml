@@ -2,9 +2,9 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-    name: peer0.kpm-pon-pv
+    name: peer0-kpm-pon-pv
     labels:
-      vol: peer0.kpm-pon-pv
+      vol: peer0-kpm-pon-pv
 spec:
     capacity:
         storage: 1G
@@ -17,9 +17,9 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-    name: bc-peer0.kpm-pon.couchdb-pv
+    name: bc-peer0-kpm-pon-couchdb-pv
     labels:
-      vol: bc-peer0.kpm-pon.couchdb-pv
+      vol: bc-peer0-kpm-pon-couchdb-pv
 spec:
     capacity:
         storage: 1G

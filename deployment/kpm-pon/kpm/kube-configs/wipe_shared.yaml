@@ -17,7 +17,7 @@ spec:
   - name: wipeshared
     image: ibmblockchain/fabric-tools:1.0.6
     imagePullPolicy: Always
-    command: ["sh", "-c", "rm -rf /shared/* /home/*"]
+    command: ["sh", "-c", "rm -rf /home/*"]
     volumeMounts:
     - name: composer-credentials
       mountPath: /home

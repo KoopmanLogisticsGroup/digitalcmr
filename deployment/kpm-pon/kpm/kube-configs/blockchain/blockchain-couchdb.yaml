@@ -1,83 +1,36 @@
 ---
-apiVersion: v1
-kind: Pod
-metadata:
-  name: utils
-spec:
-  restartPolicy: "Never"
-  volumes:
-  - name: shared
-    hostPath:
-      path: /tmp
-  - name: dockersocket
-    hostPath:
-      path: /var/run/docker.sock
-  - name: composer-credentials
-    hostPath:
-      path: /composer
-  containers:
-  - name: cryptogen
-    image: ibmblockchain/fabric-tools:1.0.6
-    imagePullPolicy: Always
-    command: ["sh", "-c", "cryptogen generate --config /sampleconfig/crypto-config.yaml && cp -r crypto-config /shared/ && for file in $(find /shared/ -iname *_sk); do dir=$(dirname $file); mv ${dir}/*_sk ${dir}/key.pem; done && find /shared -type d | xargs chmod a+rx && find /shared -type f | xargs chmod a+r && touch /shared/status_cryptogen_complete "]
-    volumeMounts:
-    - mountPath: /shared
-      name: shared
-  - name: configtxgen
-    image: ibmblockchain/fabric-tools:1.0.6
-    imagePullPolicy: Always
-    command: ["sh", "-c", "sleep 1 && while [ ! -f /shared/status_cryptogen_complete ]; do echo Waiting for cryptogen; sleep 1; done; cp /sampleconfig/configtx.yaml /shared/configtx.yaml; cd /shared/; configtxgen -profile TwoOrgsOrdererGenesis -outputBlock orderer.block && find /shared -type d | xargs chmod a+rx && find /shared -type f | xargs chmod a+r && touch /shared/status_configtxgen_complete && rm /shared/status_cryptogen_complete"]
-    env:
-     - name: PEERHOST1
-       value: blockchain-peer0.kpm-pon
-     - name: PEERPORT1
-       value: "5010"
-     - name: PEERHOST2
-       value: blockchain-org2peer1
-     - name: PEERPORT2
-       value: "5010"
-     - name: ORDERER_URL
-       value: blockchain-orderer:31010
-     - name: FABRIC_CFG_PATH
-       value: /shared
-    # - name: GODEBUG
-    #   value: "netdns=go"
-    volumeMounts:
-    - mountPath: /shared
-      name: shared
-  - name: bootstrap
-    image: ibmblockchain/fabric-tools:1.0.6
-    imagePullPolicy: Always
-    command: ["sh", "-c", "sleep 1 && while [ ! -f /shared/status_configtxgen_complete ]; do echo Waiting for configtxgen; sleep 1; done; cp -r /sampleconfig/cas /shared; touch /shared/bootstrapped && rm /shared/status_configtxgen_complete && mkdir -p /home/composer && chown 100 /home/composer && echo 'Done with bootstrapping'" ]
-    volumeMounts:
-    - mountPath: /shared
-      name: shared
-    - mountPath: /home
-      name: composer-credentials
----
+#apiVersion: v1
+#kind: Pod
+#metadata:
+#  name: utils
+#spec:
+#  restartPolicy: "Never"
+#  volumes:
+#  - name: dockersocket
+#    hostPath:
+#      path: /var/run/docker.sock
+#  - name: composer-credentials
+#    hostPath:
+#      path: /composer
+#---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: blockchain-orderer.kpm-pon
+  name: blockchain-orderer-kpm-pon
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        name: orderer.kpm-pon
+        name: orderer-kpm-pon
     spec:
-      volumes:
-      - name: shared
-        hostPath:
-          path: /tmp
-
       containers:
-      - name: orderer.kpm-pon
+      - name: orderer-kpm-pon
         image: ibmblockchain/fabric-orderer:1.0.6
-        command: ["sh", "-c", "sleep 5 && while [ ! -f /shared/bootstrapped ]; do echo Waiting for bootstrap; sleep 1; done; orderer"]
+        command: ["sh", "-c", "sleep 5 && while [ ! -f /fabric-config/crypto-config/ordererOrganizations/orderers/ ]; do echo Waiting for crypto to be loaded; sleep 1; done; orderer"]
         env:
         - name: ORDERER_CFG_PATH
-          value: /shared/
+          value: /fabric-config
         - name: ORDERER_GENERAL_LEDGERTYPE
           value: file
         - name: ORDERER_FILELEDGER_LOCATION
@@ -97,49 +50,42 @@ spec:
         - name: ORDERER_GENERAL_LOGLEVEL
           value: debug
         - name: ORDERER_GENERAL_LOCALMSPDIR
-          value: /fabric-config/crypto-config/ordererOrganizations/kpm-pon/orderers/orderer.example.com/msp
+          value: /fabric-config/crypto-config/ordererOrganizations/orderers/orderer.kpm-pon/msp
         - name: ORDERER_GENERAL_LOCALMSPID
           value: OrdererMSP
         - name: ORDERER_GENERAL_GENESISMETHOD
           value: file
         - name: ORDERER_GENERAL_GENESISFILE
-          value: /shared/orderer.block
+          value: /fabric-config/composer-genesis.block
         - name: ORDERER_GENERAL_GENESISPROFILE
           value: initial
         - name: ORDERER_GENERAL_TLS_ENABLED
           value: "false"
         - name: GODEBUG
           value: "netdns=go"
-        volumeMounts:
-        - mountPath: /shared
-          name: shared
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: blockchain-ca.kpm-pon
+  name: blockchain-cakpm-pon
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        name: ca.kpm-pon
+        name: ca-kpm-pon
     spec:
-      volumes:
-      - name: shared
-        hostPath:
-          path: /tmp
       containers:
-      - name: ca.kpm-pon
+      - name: ca-kpm-pon
         image: ibmblockchain/fabric-ca:1.0.6
-        command: ["sh", "-c", "sleep 1 && while [ ! -f /shared/bootstrapped ]; do echo Waiting for bootstrap; sleep 1; done; fabric-ca-server start -c ${CONFIGYAML}"]
+        command: ["sh", "-c", "sleep 1 && while [ ! -f /fabric-config/crypto-config/ ]; do echo Waiting for crypto config to be loaded; sleep 1; done; fabric-ca-server start -c ${CONFIGYAML}"]
         env:
         - name: CONFIGYAML
           value: /shared/cas/ca.yaml
         - name: FABRIC_CA_SERVER_CA_CERTFILE
-          value: /fabric-config/crypto-config/ordererOrganizations/kpm-pon/ca/ca.example.com-cert.pem
+          value: /fabric-config/crypto-config/ordererOrganizations/ca/ca.kpm-pon-cert.pem
         - name: FABRIC_CA_SERVER_CA_KEYFILE
-          value: /mnt/crypto-config/ordererOrganizations/kpm-pon/ca/948030ba41c19d662d767eb6f0d8196ff95c87f8f838fc4b8951f886357d82e8_sk
+          value: /fabric-config/crypto-config/ordererOrganizations/ca/b76ef2f0d4df95adec8501a85b09df153dd1d36c9982c98936b1878a28be321c_sk
         - name: FABRIC_CA_SERVER_DEBUG
           value: "true"
         - name: FABRIC_CA_SERVER_TLS_ENABLED
@@ -150,49 +96,43 @@ spec:
           value: /certs/ca0a-key.pem
         - name: GODEBUG
           value: "netdns=go"
-        volumeMounts:
-        - mountPath: /shared
-          name: shared
 ---
 kind: StatefulSet
 apiVersion: apps/v1beta1
 metadata:
-    name: blockchain-peer0.kpm-pon
+    name: blockchain-peer0-kpm-pon
 spec:
-    serviceName: blockchain-peer0.kpm-pon
+    serviceName: blockchain-peer0-kpm-pon
     replicas: 1
     template:
         metadata:
             labels:
-                tier: peer0.kpm-pon
-                vol: peer0.kpm-pon-pv
+                tier: peer0-kpm-pon
+                vol: peer0-kpm-pon-pv
         spec:
             terminationGracePeriodSeconds: 10
             volumes:
-            - name: shared
-              hostPath:
-                path: /tmp
             - name: dockersocket
               hostPath:
                 path: /var/run/docker.sock
             containers:
-                - name: peer0.kpm-pon
+                - name: peer0-kpm-pon
                   image: ibmblockchain/fabric-peer:1.0.6
                   imagePullPolicy: Always
-                  command: ["sh", "-c", "sleep 1 && while [ ! -f /shared/bootstrapped ]; do echo Waiting for bootstrap; sleep 1; done; peer node start --peer-defaultchain=false"]
+                  command: ["sh", "-c", "sleep 1 && while [ ! -f /fabric-config/crypto-config/ ]; do echo Waiting for crypto config to be loaded; sleep 1; done; peer node start --peer-defaultchain=false"]
                   env:
                   - name: CORE_PEER_ADDRESSAUTODETECT
                     value: "true"
                   - name: CORE_PEER_NETWORKID
                     value: nid1
                   - name: CORE_PEER_ADDRESS
-                    value: blockchain-peer0.kpm-pon:5010
+                    value: blockchain-peer0-kpm-pon:5010
                   - name: CORE_PEER_LISTENADDRESS
                     value: 0.0.0.0:5010
                   - name: CORE_PEER_EVENTS_ADDRESS
                     value: 0.0.0.0:5011
                   - name: CORE_PEER_GOSSIP_BOOTSTRAP
-                    value: blockchain-peer0.kpm-pon:5010
+                    value: blockchain-peer0-kpm-pon:5010
                   - name: CORE_PEER_GOSSIP_ORGLEADER
                     value: "true"
                   - name: CORE_PEER_GOSSIP_SKIPHANDSHAKE
@@ -210,7 +150,7 @@ spec:
                   - name: CORE_PEER_LOCALMSPID
                     value: kpm-ponMSP
                   - name: CORE_PEER_MSPCONFIGPATH
-                    value: /fabric-config/crypto-config/peerOrganizations/kpm-pon/peers/peer0.kpm-pon/msp/
+                    value: /fabric-config/crypto-config/peerOrganizations/peers/peer0.kpm-pon/msp
                   - name: CORE_LOGGING_LEVEL
                     value: debug
                   - name: CORE_LOGGING_PEER
@@ -233,25 +173,25 @@ spec:
                     # value: goleveldb
                     value: CouchDB
                   - name: CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS
-                    value: blockchain-peer0.kpm-pon.couchdb:5984
+                    value: blockchain-peer0-kpm-pon-couchdb:5984
                   - name: PEER_CFG_PATH
-                    value: peer_config/
+                    value: /fabric-config/crypto-config/peerOrganizations/peers/peer0.kpm-pon
+#                    value: peer_config/
+# TODO:  not sure what to do here...
                   - name: FABRIC_CFG_PATH
-                    value: /etc/hyperledger/fabric/
+                    value: /fabric-config/
                   - name: ORDERER_URL
-                    value: blockchain-orderer.kpm-pon:31010
+                    value: blockchain-orderer-kpm-pon:31010
                   - name: GODEBUG
                     value: "netdns=go"
                   volumeMounts:
-                    - name: shared
-                      mountPath: /shared
                     - name: dockersocket
                       mountPath: /host/var/run/docker.sock
-                    - name: peer0.kpm-pon-pv
+                    - name: peer0-kpm-pon-pv
                       mountPath: /var/hyperledger/production
     volumeClaimTemplates:
         - metadata:
-            name: peer0.kpm-pon-pv
+            name: peer0-kpm-pon-pv
           spec:
               accessModes:
                   - ReadWriteOnce
@@ -260,35 +200,35 @@ spec:
                       storage: 1G
               selector:
                 matchLabels:
-                  vol: peer0.kpm-pon-pv
+                  vol: peer0-kpm-pon-pv
               storageClassName: ""
 ---
 kind: StatefulSet
 apiVersion: apps/v1beta1
 metadata:
-    name: blockchain-peer0.kpm-pon.couchdb
+    name: blockchain-peer0-kpm-pon-couchdb
 spec:
-    serviceName: blockchain-peer0.kpm-pon.couchdb
+    serviceName: blockchain-peer0-kpm-pon-couchdb
     replicas: 1
     template:
         metadata:
             labels:
-                tier: peer0.kpm-pon.couchdb
-                vol: bc-peer0.kpm-pon.couchdb-pv
+                tier: peer0-kpm-pon-couchdb
+                vol: bc-peer0-kpm-pon-couchdb-pv
         spec:
             terminationGracePeriodSeconds: 10
             containers:
-                - name: blockchain-peer0.kpm-pon.couchdb
+                - name: blockchain-peer0-kpm-pon-couchdb
                   image: ibmblockchain/fabric-couchdb:1.0.6
                   env:
                   - name: DB_URL
                     value: http://localhost:5984/member_db
                   volumeMounts:
-                    - name: bc-peer0.kpm-pon.couchdb-pv
+                    - name: bc-peer0-kpm-pon-couchdb-pv
                       mountPath: /opt/couchdb/data
     volumeClaimTemplates:
         - metadata:
-            name: bc-peer0.kpm-pon.couchdb-pv
+            name: bc-peer0-kpm-pon-couchdb-pv
           spec:
               accessModes:
                   - ReadWriteOnce
@@ -297,5 +237,5 @@ spec:
                       storage: 1G
               selector:
                 matchLabels:
-                  vol: bc-peer0.kpm-pon.couchdb-pv
+                  vol: bc-peer0-kpm-pon-couchdb-pv
               storageClassName: ""
