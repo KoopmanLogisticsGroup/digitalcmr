@@ -27,7 +27,7 @@ spec:
       containers:
       - name: orderer-kpm-pon
         image: ibmblockchain/fabric-orderer:1.0.6
-        command: ["sh", "-c", "sleep 5 && while [ ! -f /fabric-config/crypto-config/ordererOrganizations/orderers/ ]; do echo Waiting for crypto to be loaded; sleep 1; done; orderer"]
+        command: ["sh", "-c", "sleep 5 && while [ ! -f /fabric-config/composer-genesis.block ]; do echo Waiting for crypto to be loaded; sleep 1; done; orderer"]
         env:
         - name: ORDERER_CFG_PATH
           value: /fabric-config
@@ -63,6 +63,12 @@ spec:
           value: "false"
         - name: GODEBUG
           value: "netdns=go"
+        volumeMounts:
+          - name: orderer-fabric-config
+            mountPath: /fabric-config
+      volumes:
+        - name: orderer-fabric-config
+          emptyDir: {}
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -78,10 +84,10 @@ spec:
       containers:
       - name: ca-kpm-pon
         image: ibmblockchain/fabric-ca:1.0.6
-        command: ["sh", "-c", "sleep 1 && while [ ! -f /fabric-config/crypto-config/ ]; do echo Waiting for crypto config to be loaded; sleep 1; done; fabric-ca-server start -c ${CONFIGYAML}"]
+        command: ["sh", "-c", "sleep 1 && while [ ! -f /fabric-config/composer-genesis.block ]; do echo Waiting for crypto config to be loaded; sleep 1; done; fabric-ca-server start -c ${CONFIGYAML}"]
         env:
         - name: CONFIGYAML
-          value: /shared/cas/ca.yaml
+          value: /fabric-config/ca.yaml
         - name: FABRIC_CA_SERVER_CA_CERTFILE
           value: /fabric-config/crypto-config/ordererOrganizations/ca/ca.kpm-pon-cert.pem
         - name: FABRIC_CA_SERVER_CA_KEYFILE
@@ -96,6 +102,12 @@ spec:
           value: /certs/ca0a-key.pem
         - name: GODEBUG
           value: "netdns=go"
+        volumeMounts:
+          - name: ca-fabric-config
+            mountPath: /fabric-config
+      volumes:
+        - name: ca-fabric-config
+          emptyDir: {}
 ---
 kind: StatefulSet
 apiVersion: apps/v1beta1
@@ -115,11 +127,13 @@ spec:
             - name: dockersocket
               hostPath:
                 path: /var/run/docker.sock
+            - name: peer-fabric-config
+              emptyDir: {}
             containers:
                 - name: peer0-kpm-pon
                   image: ibmblockchain/fabric-peer:1.0.6
                   imagePullPolicy: Always
-                  command: ["sh", "-c", "sleep 1 && while [ ! -f /fabric-config/crypto-config/ ]; do echo Waiting for crypto config to be loaded; sleep 1; done; peer node start --peer-defaultchain=false"]
+                  command: ["sh", "-c", "sleep 1 && while [ ! -f /fabric-config/composer-genesis.block ]; do echo Waiting for crypto config to be loaded...; sleep 1; done; peer node start --peer-defaultchain=false"]
                   env:
                   - name: CORE_PEER_ADDRESSAUTODETECT
                     value: "true"
@@ -175,11 +189,11 @@ spec:
                   - name: CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS
                     value: blockchain-peer0-kpm-pon-couchdb:5984
                   - name: PEER_CFG_PATH
-                    value: /fabric-config/crypto-config/peerOrganizations/peers/peer0.kpm-pon
-#                    value: peer_config/
 # TODO:  not sure what to do here...
+#                    value: /fabric-config/crypto-config/peerOrganizations/peers/peer0.kpm-pon
+                    value: peer_config/
                   - name: FABRIC_CFG_PATH
-                    value: /fabric-config/
+                    value: /etc/hyperledger/fabric/
                   - name: ORDERER_URL
                     value: blockchain-orderer-kpm-pon:31010
                   - name: GODEBUG
@@ -189,6 +203,8 @@ spec:
                       mountPath: /host/var/run/docker.sock
                     - name: peer0-kpm-pon-pv
                       mountPath: /var/hyperledger/production
+                    - name: peer-fabric-config
+                      mountPath: /fabric-config
     volumeClaimTemplates:
         - metadata:
             name: peer0-kpm-pon-pv

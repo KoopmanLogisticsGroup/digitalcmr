@@ -8,6 +8,11 @@ else
     echo "Please run the script from 'scripts' or 'scripts/create' folder"
 fi
 
+BASE_PATH=$(pwd)../../../../../config/kpm-pon-config
+KPM_PATH=$BASE_PATH/kpm
+CONTAINER_BASE_PATH=/fabric-config
+KPM_PEERS_PARTIAL_PATH=crypto-config/peerOrganizations/peers
+
 # Default to "kpm-ponMSP" if not defined
 if [ -z ${PEER_MSPID} ]; then
 	echo "PEER_MSPID not defined. I will use \"kpm-ponMSP\"."
@@ -34,6 +39,11 @@ sed -e "s/%CHANNEL_NAME%/${CHANNEL_NAME}/g" -e "s/%PEER_MSPID%/${PEER_MSPID}/g" 
 echo "Creating createchannel pod"
 echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/create_channel.yaml"
 kubectl create -f ${KUBECONFIG_FOLDER}/create_channel.yaml
+
+sleep 5
+kubectl cp $KPM_PATH/crypto-config/ createchannel:$CONTAINER_BASE_PATH/
+kubectl cp $BASE_PATH/composer-channel.tx createchannel:$CONTAINER_BASE_PATH/composer-channel.tx
+kubectl cp $BASE_PATH/composer-genesis.block createchannel:$CONTAINER_BASE_PATH/composer-genesis.block
 
 while [ "$(kubectl get pod -a createchannel | grep createchannel | awk '{print $3}')" != "Completed" ]; do
     echo "Waiting for createchannel container to be Completed"

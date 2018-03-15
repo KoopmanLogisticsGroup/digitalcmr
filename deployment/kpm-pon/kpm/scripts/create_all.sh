@@ -16,36 +16,43 @@ CA_PARTIAL_PATH=crypto-config/ordererOrganizations/ca
 KPM_PEERS_PARTIAL_PATH=crypto-config/peerOrganizations/peers
 PON_PEERS_PARTIAL_PATH=crypto-config/peerOrganizations/peers
 
-
 echo ""
 echo "=> CREATE_ALL: Creating blockchain"
 create/create_blockchain.sh ${1}
 #
-#echo ""
-#echo "=> CREATE_ALL: Running Create Channel"
-#PEER_MSPID="kpm-ponMSP" CHANNEL_NAME="channel1" create/create_channel.sh
-
 # get pod names from k8s.
 ORDERER_POD_NAME=$(kubectl get pod -l name=orderer-kpm-pon -o name | sed 's/pods\///')
 CA_POD_NAME=$(kubectl get pod -l name=ca-kpm-pon -o name | sed 's/pods\///')
-PEER_POD_NAME=$(kubectl get pod -l name=ca-kpm-pon -o name | sed 's/pods\///')
+PEER_POD_NAME=$(kubectl get pod -l tier=peer0-kpm-pon -o name | sed 's/pods\///')
 
-sleep 30
-
+echo ""
+echo "=> CREATE_ALL: Copying crypto config into peer"
 # Copy crypto-config to peer0.kpm-pon container
-kubectl cp $KPM_PATH/$KPM_PEERS_PARTIAL_PATH/peer0.kpm-pon $PEER_POD_NAME:$CONTAINER_BASE_PATH/$KPM_PEERS_PARTIAL_PATH/peer0.kpm-pon
-kubectl cp $KPM_PATH/ $PEER_POD_NAME:$CONTAINER_BASE_PATH/
+kubectl cp $KPM_PATH/crypto-config/ $PEER_POD_NAME:$CONTAINER_BASE_PATH/
+kubectl cp $BASE_PATH/composer-channel.tx $PEER_POD_NAME:$CONTAINER_BASE_PATH/composer-channel.tx
+kubectl cp $BASE_PATH/composer-genesis.block $PEER_POD_NAME:$CONTAINER_BASE_PATH/composer-genesis.block
 
+echo "=> CREATE_ALL: Copying crypto config into orderer"
 # Copy crypto-config to orderer.kpm-pon container
-kubectl cp $KPM_PATH/$ORDERERS_PARTIAL_PATH/orderer.kpm-pon $ORDERER_POD_NAME:$CONTAINER_BASE_PATH/$ORDERERS_PARTIAL_PATH/orderer.kpm-pon
-kubectl cp $KPM_PATH/ $ORDERER_POD_NAME:$CONTAINER_BASE_PATH/
+kubectl cp $KPM_PATH/crypto-config/ $ORDERER_POD_NAME:$CONTAINER_BASE_PATH/
+kubectl cp $BASE_PATH/composer-channel.tx $ORDERER_POD_NAME:$CONTAINER_BASE_PATH/composer-channel.tx
+kubectl cp $BASE_PATH/composer-genesis.block $ORDERER_POD_NAME:$CONTAINER_BASE_PATH/composer-genesis.block
 
+echo "=> CREATE_ALL: Copying crypto config into ca"
 # Copy crypto-config to ca.kpm-pon container
-kubectl cp $KPM_PATH/ $CA_POD_NAME:$CONTAINER_BASE_PATH/
+kubectl cp $KPM_PATH/crypto-config/ $CA_POD_NAME:$CONTAINER_BASE_PATH/
+kubectl cp $BASE_PATH/cas/ca.yaml $CA_POD_NAME:$CONTAINER_BASE_PATH/ca.yaml
+kubectl cp $BASE_PATH/composer-channel.tx $CA_POD_NAME:$CONTAINER_BASE_PATH/composer-channel.tx
+kubectl cp $BASE_PATH/composer-genesis.block $CA_POD_NAME:$CONTAINER_BASE_PATH/composer-genesis.block
+echo "=> CREATE_ALL: done"
+
+echo ""
+echo "=> CREATE_ALL: Running Create Channel"
+PEER_MSPID="kpm-ponMSP" CHANNEL_NAME="composerchannel" create/create_channel.sh
 
 echo ""
 echo "=> CREATE_ALL: Running Join Channel on kpm-pon Peer1"
-CHANNEL_NAME="channel1" PEER_MSPID="kpm-ponMSP" PEER_ADDRESS="blockchain-kpm-ponpeer:5010" MSP_CONFIGPATH="/fabric-config/crypto-config/peerOrganizations/kpm-pon/users/Admin@kpm-pon/msp" create/join_channel.sh
+CHANNEL_NAME="composer-channel" PEER_MSPID="kpm-ponMSP" PEER_ADDRESS="blockchain-kpm-ponpeer:5010" MSP_CONFIGPATH="/fabric-config/crypto-config/peerOrganizations/users/Admin@kpm-pon/msp" create/join_channel.sh
 
 echo ""
 echo "=> CREATE_ALL: Creating composer playground"

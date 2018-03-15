@@ -55,13 +55,14 @@ sed -e "s/%PEER_ADDRESS%/${PEER_ADDRESS}/g" -e "s/%CHANNEL_NAME%/${CHANNEL_NAME}
 echo "Creating joinchannel pod"
 echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/join_channel.yaml"
 kubectl create -f ${KUBECONFIG_FOLDER}/join_channel.yaml
+sleep 5
+kubectl cp $KPM_PATH/crypto-config/ joinchannel:$CONTAINER_BASE_PATH/
+kubectl cp $BASE_PATH/composer-channel.tx joinchannel:$CONTAINER_BASE_PATH/composer-channel.tx
+kubectl cp $BASE_PATH/composer-genesis.block joinchannel:$CONTAINER_BASE_PATH/composer-genesis.block
 
 while [ "$(kubectl get pod -a joinchannel | grep joinchannel | awk '{print $3}')" != "Completed" ]; do
-
-kubectl cp $KPM_PATH/$KPM_PEERS_PARTIAL_PATH/peer0.kpm-pon joinchannel:$CONTAINER_BASE_PATH/$KPM_PEERS_PARTIAL_PATH/peer0.kpm-pon
-kubectl cp $KPM_PATH/ joinchannel:$CONTAINER_BASE_PATH/
     echo "Waiting for joinchannel container to be Completed"
-    sleep 5;
+    sleep 1;
 done
 
 if [ "$(kubectl get pod -a joinchannel | grep joinchannel | awk '{print $3}')" == "Completed" ]; then
