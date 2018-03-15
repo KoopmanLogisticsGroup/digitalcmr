@@ -16,7 +16,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: blockchain-orderer-kpm-pon
+  name: orderer-kpm-pon
 spec:
   replicas: 1
   template:
@@ -73,7 +73,7 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: blockchain-cakpm-pon
+  name: ca-kpm-pon
 spec:
   replicas: 1
   template:
@@ -112,9 +112,9 @@ spec:
 kind: StatefulSet
 apiVersion: apps/v1beta1
 metadata:
-    name: blockchain-peer0-kpm-pon
+    name: peer0-kpm-pon
 spec:
-    serviceName: blockchain-peer0-kpm-pon
+    serviceName: peer0-kpm-pon
     replicas: 1
     template:
         metadata:
@@ -140,13 +140,13 @@ spec:
                   - name: CORE_PEER_NETWORKID
                     value: nid1
                   - name: CORE_PEER_ADDRESS
-                    value: blockchain-peer0-kpm-pon:5010
+                    value: peer0-kpm-pon:5010
                   - name: CORE_PEER_LISTENADDRESS
                     value: 0.0.0.0:5010
                   - name: CORE_PEER_EVENTS_ADDRESS
                     value: 0.0.0.0:5011
                   - name: CORE_PEER_GOSSIP_BOOTSTRAP
-                    value: blockchain-peer0-kpm-pon:5010
+                    value: peer0-kpm-pon:5010
                   - name: CORE_PEER_GOSSIP_ORGLEADER
                     value: "true"
                   - name: CORE_PEER_GOSSIP_SKIPHANDSHAKE
@@ -187,7 +187,7 @@ spec:
                     # value: goleveldb
                     value: CouchDB
                   - name: CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS
-                    value: blockchain-peer0-kpm-pon-couchdb:5984
+                    value: peer0-kpm-pon-couchdb:5984
                   - name: PEER_CFG_PATH
 # TODO:  not sure what to do here...
 #                    value: /fabric-config/crypto-config/peerOrganizations/peers/peer0.kpm-pon
@@ -195,7 +195,7 @@ spec:
                   - name: FABRIC_CFG_PATH
                     value: /etc/hyperledger/fabric/
                   - name: ORDERER_URL
-                    value: blockchain-orderer-kpm-pon:31010
+                    value: orderer-kpm-pon:31010
                   - name: GODEBUG
                     value: "netdns=go"
                   volumeMounts:
@@ -222,9 +222,9 @@ spec:
 kind: StatefulSet
 apiVersion: apps/v1beta1
 metadata:
-    name: blockchain-peer0-kpm-pon-couchdb
+    name: peer0-kpm-pon-couchdb
 spec:
-    serviceName: blockchain-peer0-kpm-pon-couchdb
+    serviceName: peer0-kpm-pon-couchdb
     replicas: 1
     template:
         metadata:
@@ -234,7 +234,7 @@ spec:
         spec:
             terminationGracePeriodSeconds: 10
             containers:
-                - name: blockchain-peer0-kpm-pon-couchdb
+                - name: peer0-kpm-pon-couchdb
                   image: ibmblockchain/fabric-couchdb:1.0.6
                   env:
                   - name: DB_URL
