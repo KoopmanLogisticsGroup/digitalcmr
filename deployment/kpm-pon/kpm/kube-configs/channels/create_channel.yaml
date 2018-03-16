@@ -11,21 +11,6 @@ spec:
       path: /tmp
 
   containers:
-  - name: createchanneltx
-    image: ibmblockchain/fabric-tools:1.0.6
-    imagePullPolicy: Always
-    command: ["sh", "-c", "cd /shared && pwd && ls && configtxgen -profile TwoOrgsChannel -outputCreateChannelTx ${CHANNEL_NAME}.tx -channelID ${CHANNEL_NAME} && touch /shared/status_channeltx_complete "]
-    env:
-    - name: CHANNEL_NAME
-      value: DoesntMatter
-    - name: FABRIC_CFG_PATH
-      value: /shared
-    - name: GODEBUG
-      value: "netdns=go"
-    volumeMounts:
-    - mountPath: /shared
-      name: shared
-
   - name: createchannel
     image: ibmblockchain/fabric-peer:1.0.6
     imagePullPolicy: Always
@@ -34,7 +19,7 @@ spec:
     - name: CHANNEL_NAME
       value: composerchannel
     - name: ORDERER_URL
-      value: blockchain-orderer-kpm-pon:31010
+      value: 172.30.54.198:31010
     - name: CORE_PEER_ADDRESSAUTODETECT
       value: "false"
     - name: CORE_PEER_NETWORKID

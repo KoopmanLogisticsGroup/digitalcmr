@@ -50,7 +50,7 @@ echo "=> CREATE_ALL: done"
 
 echo ""
 echo "=> CREATE_ALL: Running Create Channel"
-PEER_MSPID="kpm-ponMSP" CHANNEL_NAME="composerchannel" create/create_channel.sh
+PEER_MSPID="kpm-ponMSP" ORDERER_ADDRESS=$(kubectl describe pod $ORDERER_POD_NAME | grep IP | sed -E 's/IP:[[:space:]]+//') CHANNEL_NAME="composerchannel" create/create_channel.sh
 
 echo ""
 echo "=> CREATE_ALL: Running Join Channel on kpm-pon Peer1"

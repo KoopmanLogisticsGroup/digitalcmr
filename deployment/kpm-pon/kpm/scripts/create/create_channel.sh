@@ -34,7 +34,7 @@ echo "Running: ${KUBECONFIG_FOLDER}/../scripts/delete/delete_channel-pods.sh"
 ${KUBECONFIG_FOLDER}/../scripts/delete/delete_channel-pods.sh
 
 echo "Preparing yaml file for create channel"
-sed -e "s/%CHANNEL_NAME%/${CHANNEL_NAME}/g" -e "s/%PEER_MSPID%/${PEER_MSPID}/g" ${KUBECONFIG_FOLDER}/create_channel.yaml.base > ${KUBECONFIG_FOLDER}/create_channel.yaml
+sed -e "s/%CHANNEL_NAME%/${CHANNEL_NAME}/g" -e "s/%PEER_MSPID%/${PEER_MSPID}/g"  -e "s/%ORDERER_ADDRESS%/${ORDERER_ADDRESS}/g" ${KUBECONFIG_FOLDER}/create_channel.yaml.base > ${KUBECONFIG_FOLDER}/create_channel.yaml
 
 echo "Creating createchannel pod"
 echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/create_channel.yaml"
