@@ -27,7 +27,7 @@ if [ -z "${CHANNEL_NAME}" ]; then
 	echo "I will wait 5 seconds before continuing."
 	sleep 5
 fi
-CHANNEL_NAME=${CHANNEL_NAME:-channel1}
+CHANNEL_NAME=${CHANNEL_NAME:-composerchannel}
 
 echo "Deleting old channel pods if exists"
 echo "Running: ${KUBECONFIG_FOLDER}/../scripts/delete/delete_channel-pods.sh"

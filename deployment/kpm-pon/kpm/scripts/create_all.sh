@@ -1,6 +1,8 @@
 #!/bin/bash
 
-if [ "${PWD##*/}" == "scripts" ]; then
+if [ "${PWD##*/}" == "create" ]; then
+	:
+elif [ "${PWD##*/}" == "scripts" ]; then
 	:
 else
     echo "Please run the script from 'scripts' or 'scripts/create' folder"
@@ -52,7 +54,7 @@ PEER_MSPID="kpm-ponMSP" CHANNEL_NAME="composerchannel" create/create_channel.sh
 
 echo ""
 echo "=> CREATE_ALL: Running Join Channel on kpm-pon Peer1"
-CHANNEL_NAME="composer-channel" PEER_MSPID="kpm-ponMSP" PEER_ADDRESS="peer0.kpm-pon:5010" MSP_CONFIGPATH="/fabric-config/crypto-config/peerOrganizations/users/Admin@kpm-pon/msp" create/join_channel.sh
+CHANNEL_NAME="composerchannel" PEER_MSPID="kpm-ponMSP" PEER_ADDRESS="peer0-kpm-pon:5010" MSP_CONFIGPATH="/fabric-config/crypto-config/peerOrganizations/users/Admin@kpm-pon/msp" create/join_channel.sh
 
 echo ""
 echo "=> CREATE_ALL: Creating composer playground"
