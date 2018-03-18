@@ -12,7 +12,7 @@ services:
       - "7054:7054"
     command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.kpm-pon-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/6588016630ff8de1b0c5f53a8c047391d91d466146dac6903d451c334a25324a_sk -b admin:adminpw -d'
     volumes:
-      - ./kpm-pon-config/kpm-pon/crypto-config/peerOrganizations/kpm-pon/ca/:/etc/hyperledger/fabric-ca-server-config
+      - ./kpm-pon-config/kpm/crypto-config/peerOrganizations/kpm-pon/ca/:/etc/hyperledger/fabric-ca-server-config
     container_name: ca.kpm-pon
 
   ca.pon:
@@ -43,7 +43,7 @@ services:
       - 7050:7050
     volumes:
         - ./kpm-pon-config/:/etc/hyperledger/configtx
-        - ./kpm-pon-config/kpm-pon/crypto-config/ordererOrganizations/kpm-pon/orderers/orderer.kpm-pon/msp:/etc/hyperledger/msp/orderer/msp
+        - ./kpm-pon-config/kpm/crypto-config/ordererOrganizations/kpm-pon/orderers/orderer.kpm-pon/msp:/etc/hyperledger/msp/orderer/msp
 
   peer0.kpm-pon:
     container_name: peer0.kpm-pon
@@ -68,8 +68,8 @@ services:
         - /var/run/:/host/var/run/
         - ./kpm-pon-config/composer-channel.tx:/etc/hyperledger/configtx/composer-channel.tx
         - ./kpm-pon-config/composer-genesis.block:/etc/hyperledger/configtx/composer-genesis.block
-        - ./kpm-pon-config/kpm-pon/crypto-config/peerOrganizations/kpm-pon/peers/peer0.kpm-pon/msp:/etc/hyperledger/peer/msp
-        - ./kpm-pon-config/kpm-pon/crypto-config/peerOrganizations/kpm-pon/users:/etc/hyperledger/msp/users
+        - ./kpm-pon-config/kpm/crypto-config/peerOrganizations/kpm-pon/peers/peer0.kpm-pon/msp:/etc/hyperledger/peer/msp
+        - ./kpm-pon-config/kpm/crypto-config/peerOrganizations/kpm-pon/users:/etc/hyperledger/msp/users
 #    depends_on:
 #      - orderer.kpm-pon
 #      - couchdb

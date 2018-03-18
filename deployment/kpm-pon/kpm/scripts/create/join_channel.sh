@@ -11,15 +11,16 @@ fi
 BASE_PATH=$(pwd)../../../../../config/kpm-pon-config
 KPM_PATH=$BASE_PATH/kpm
 CONTAINER_BASE_PATH=/fabric-config
-KPM_PEERS_PARTIAL_PATH=crypto-config/peerOrganizations/peers
+KPM_USERS_PARTIAL_PATH=crypto-config/peerOrganizations/kpm-pon/users/Admin@kpm-pon
+POD_NAME=joinchannel
 
-# Default to peer 1's address if not defined
+# Default to peer0's address if not defined
 if [ -z "${PEER_ADDRESS}" ]; then
-	echo "PEER_ADDRESS not defined. I will use \"blockchain-peer0.kpm-pon:5010\"."
+	echo "PEER_ADDRESS not defined. I will use \"peer0-kpm-pon:5010\"."
 	echo "I will wait 5 seconds before continuing."
 	sleep 5
 fi
-PEER_ADDRESS=${PEER_ADDRESS:-blockchain-peer0.kpm-pon:5010}
+PEER_ADDRESS=${PEER_ADDRESS:-peer0-kpm-pon:5010}
 
 # Default to "kpm-ponMSP" if not defined
 if [ -z ${PEER_MSPID} ]; then
@@ -37,13 +38,13 @@ if [ -z "${CHANNEL_NAME}" ]; then
 fi
 CHANNEL_NAME=${CHANNEL_NAME:-composerchannel}
 
-# Default to "admin for peer1" if not defined
+# Default to "admin for peer0" if not defined
 if [ -z "${MSP_CONFIGPATH}" ]; then
-	echo "MSP_CONFIGPATH not defined. I will use \"/fabric-config/crypto-config/peerOrganizations/kpm-pon/users/Admin@org1.example.com/msp\"."
+	echo "MSP_CONFIGPATH not defined. I will use \"/fabric-config/Admin@kpm-pon/msp\"."
 	echo "I will wait 5 seconds before continuing."
 	sleep 5
 fi
-MSP_CONFIGPATH=${MSP_CONFIGPATH:-/fabric-config/crypto-config/peerOrganizations/users/Admin@kpm-pon/msp}
+MSP_CONFIGPATH=${MSP_CONFIGPATH:-/fabric-config/Admin@kpm-pon/msp}
 
 echo "Deleting old channel pods if exists"
 echo "Running: ${KUBECONFIG_FOLDER}/../scripts/delete/delete_channel-pods.sh"
@@ -55,10 +56,13 @@ sed -e "s/%PEER_ADDRESS%/${PEER_ADDRESS}/g" -e "s/%CHANNEL_NAME%/${CHANNEL_NAME}
 echo "Creating joinchannel pod"
 echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/join_channel.yaml"
 kubectl create -f ${KUBECONFIG_FOLDER}/join_channel.yaml
-sleep 5
-kubectl cp $KPM_PATH/crypto-config/ joinchannel:$CONTAINER_BASE_PATH/
-kubectl cp $BASE_PATH/composer-channel.tx joinchannel:$CONTAINER_BASE_PATH/composer-channel.tx
-kubectl cp $BASE_PATH/composer-genesis.block joinchannel:$CONTAINER_BASE_PATH/composer-genesis.block
+
+sleep 10
+
+echo ""
+echo "=> CREATE_ALL: Copying crypto config into peer"
+# Copy crypto-config to peer0.kpm-pon container
+kubectl cp $KPM_PATH/$KPM_USERS_PARTIAL_PATH/ $POD_NAME:$CONTAINER_BASE_PATH/
 
 while [ "$(kubectl get pod -a joinchannel | grep joinchannel | awk '{print $3}')" != "Completed" ]; do
     echo "Waiting for joinchannel container to be Completed"

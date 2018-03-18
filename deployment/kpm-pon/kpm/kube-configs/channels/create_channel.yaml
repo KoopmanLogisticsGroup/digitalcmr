@@ -19,7 +19,7 @@ spec:
     - name: CHANNEL_NAME
       value: composerchannel
     - name: ORDERER_URL
-      value: 172.30.54.198:31010
+      value: orderer-kpm-pon:31010
     - name: CORE_PEER_ADDRESSAUTODETECT
       value: "false"
     - name: CORE_PEER_NETWORKID
@@ -27,7 +27,7 @@ spec:
     - name: CORE_PEER_LOCALMSPID
       value: kpm-ponMSP
     - name: CORE_PEER_MSPCONFIGPATH
-      value: /fabric-config/crypto-config/peerOrganizations/peers/peer0.kpm-pon/msp/
+      value: /fabric-config/msp
     - name: CORE_LOGGING_LEVEL
       value: debug
     - name: FABRIC_CFG_PATH

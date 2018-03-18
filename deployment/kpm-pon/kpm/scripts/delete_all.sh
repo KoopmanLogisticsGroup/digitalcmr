@@ -24,9 +24,9 @@ echo ""
 echo "=> DELETE_ALL: Deleting composer playground"
 delete/delete_composer-playground.sh
 
-echo ""
-echo "=> DELETE_ALL: Wiping the shared folder empty"
-wipe_shared.sh
+#echo ""
+#echo "=> DELETE_ALL: Wiping the shared folder empty"
+#./wipe_shared.sh
 
 echo ""
 echo "=> DELETE_ALL: Deleting persistent volumes and claims"

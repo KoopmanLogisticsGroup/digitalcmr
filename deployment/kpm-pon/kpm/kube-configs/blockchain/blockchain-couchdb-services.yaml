@@ -4,11 +4,11 @@ kind: Service
 metadata:
   name: ca-kpm-pon
   labels:
-    run: ca.kpm-pon
+    run: ca-kpm-pon
 spec:
   type: NodePort
   selector:
-    name: ca.kpm-pon
+    name: ca-kpm-pon
   ports:
   - protocol: TCP
     port: 7054
@@ -20,11 +20,11 @@ kind: Service
 metadata:
   name: orderer-kpm-pon
   labels:
-    run: orderer.kpm-pon
+    run: orderer-kpm-pon
 spec:
   type: NodePort
   selector:
-    name: orderer.kpm-pon
+    name: orderer-kpm-pon
   ports:
   - protocol: TCP
     port: 31010
@@ -36,12 +36,12 @@ kind: Service
 metadata:
   name:  peer0-kpm-pon
   labels:
-    app:  peer0.kpm-pon
-    tier: peer0.kpm-pon
+    app:  peer0-kpm-pon
+    tier: peer0-kpm-pon
 spec:
   type: NodePort
   selector:
-    tier: peer0.kpm-pon
+    tier: peer0-kpm-pon
   ports:
   - protocol: TCP
     port: 5010
