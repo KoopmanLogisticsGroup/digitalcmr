@@ -5,23 +5,19 @@ metadata:
   name: joinchannel
 spec:
   restartPolicy: "Never"
-  volumes:
-  - name: shared
-    hostPath:
-      path: /tmp
 
   containers:
   - name: joinchannel
-    image: ibmblockchain/fabric-peer:1.0.6
+    image: ibmblockchain/fabric-peer:1.0.0
     imagePullPolicy: Always
-    command: ["sh", "-c", "peer channel fetch newest -o ${ORDERER_URL} -c ${CHANNEL_NAME} && peer channel join -b ${CHANNEL_NAME}_newest.block "]
+    command: ["sh", "-c", "sleep 1 && while [ ! -d /fabric-config/Admin@pon ]; do echo Waiting for crypto config to be loaded; sleep 1; done; echo Waiting for 20 seconds; sleep 20; peer channel fetch newest -o ${ORDERER_URL} -c ${CHANNEL_NAME} && peer channel join -b ${CHANNEL_NAME}_newest.block"]
     env:
     - name: CHANNEL_NAME
       value: %CHANNEL_NAME%
     - name: CORE_PEER_NETWORKID
       value: nid1
     - name: ORDERER_URL
-      value: blockchain-orderer:31010
+      value: %ORDERER_ADDRESS%
     - name: CORE_PEER_ADDRESS
       value: %PEER_ADDRESS%
     - name: CORE_PEER_LOCALMSPID
@@ -35,5 +31,8 @@ spec:
     - name: GODEBUG
       value: "netdns=go"
     volumeMounts:
-    - mountPath: /shared
-      name: shared
+      - name: joinchannel-fabric-config
+        mountPath: /fabric-config
+  volumes:
+    - name: joinchannel-fabric-config
+      emptyDir: {}

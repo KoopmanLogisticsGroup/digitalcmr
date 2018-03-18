@@ -2,13 +2,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: blockchain-ca.pon
+  name: ca-pon
   labels:
-    run: blockchain-ca.pon
+    run: ca-pon
 spec:
   type: NodePort
   selector:
-    name: ca.pon
+    name: ca-pon
   ports:
   - protocol: TCP
     port: 7054
@@ -18,13 +18,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: blockchain-orderer.pon
+  name: orderer-pon
   labels:
-    run: blockchain-orderer.pon
+    run: orderer-pon
 spec:
   type: NodePort
   selector:
-    name: orderer.pon
+    name: orderer-pon
   ports:
   - protocol: TCP
     port: 31010
@@ -34,14 +34,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name:  blockchain-peer0.pon
+  name:  peer0-pon
   labels:
-    app:  blockchain-peer0.pon
-    tier: peer0.pon
+    app:  peer0-pon
+    tier: peer0-pon
 spec:
   type: NodePort
   selector:
-    tier: peer0.pon
+    tier: peer0-pon
   ports:
   - protocol: TCP
     port: 5010
@@ -55,16 +55,16 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name:  blockchain-peer0.pon.couchdb
+  name:  peer0-pon-couchdb
   labels:
-    app:  blockchain-peer0.pon.couchdb
-    tier: peer0.pon.couchdb
+    app:  peer0-pon-couchdb
+    tier: peer0-pon-couchdb
 spec:
   type: NodePort
   selector:
-    tier: peer0.pon.couchdb
+    tier: peer0-pon-couchdb
   ports:
   - protocol: TCP
     port: 5984
     nodePort: 30984
-    name: peer0.pon.couchdb
+    name: peer0-pon-couchdb
