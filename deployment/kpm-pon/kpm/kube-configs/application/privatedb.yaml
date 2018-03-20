@@ -20,7 +20,7 @@ spec:
                       name: http
                   volumeMounts:
                     - name: privatedb-kpm-pon-pv
-                      mountPath: /usr/local/var/lib/couchdb
+                      mountPath: /opt/couchdb/data
     volumeClaimTemplates:
         - metadata:
             name: privatedb-kpm-pon-pv

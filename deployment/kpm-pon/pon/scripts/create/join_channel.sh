@@ -8,7 +8,7 @@ else
     echo "Please run the script from 'scripts' or 'scripts/create' folder"
 fi
 
-BASE_PATH=$(pwd)../../../../../config/kpm-pon-config
+BASE_PATH=$(pwd)../../../../../composer/hlfv1/config/kpm-pon-config
 PON_PATH=$BASE_PATH/pon
 CONTAINER_BASE_PATH=/fabric-config
 PON_USERS_PARTIAL_PATH=crypto-config/peerOrganizations/pon/users/Admin@pon

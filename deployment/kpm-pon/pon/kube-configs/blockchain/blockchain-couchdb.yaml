@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: ca-pon
-        image: ibmblockchain/fabric-ca:1.0.0
+        image: ibmblockchain/fabric-ca:1.0.6
         command: ["sh", "-c", "sleep 1 && while [ ! -f /fabric-config/ca/ca.pon-cert.pem ]; do echo Waiting for crypto config to be loaded; sleep 1; done; fabric-ca-server start --ca.certfile /fabric-config/ca/ca.pon-cert.pem --ca.keyfile /fabric-config/ca/b76ef2f0d4df95adec8501a85b09df153dd1d36c9982c98936b1878a28be321c_sk -b admin:adminpw -d"]
         env:
 #        - name: FABRIC_CA_SERVER_CA_CERTFILE
@@ -58,7 +58,7 @@ spec:
               emptyDir: {}
             containers:
                 - name: peer0-pon
-                  image: ibmblockchain/fabric-peer:1.0.0
+                  image: ibmblockchain/fabric-peer:1.0.6
                   imagePullPolicy: Always
                   command: ["sh", "-c", "sleep 1 && while [ ! -f /fabric-config/composer-genesis.block ]; do echo Waiting for crypto config to be loaded...; sleep 1; done; peer node start --peer-defaultchain=false"]
                   env:
@@ -160,7 +160,7 @@ spec:
             terminationGracePeriodSeconds: 10
             containers:
                 - name: peer0-pon-couchdb
-                  image: ibmblockchain/fabric-couchdb:1.0.0
+                  image: ibmblockchain/fabric-couchdb:1.0.6
                   env:
                   - name: DB_URL
                     value: http://localhost:5984/member_db

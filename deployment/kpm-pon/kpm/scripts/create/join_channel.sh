@@ -1,5 +1,11 @@
 #!/bin/bash
 
+BASE_PATH=$(pwd)../../../../../composer/hlfv1/config/kpm-pon-config
+KPM_PATH=$BASE_PATH/kpm
+CONTAINER_BASE_PATH=/fabric-config
+KPM_USERS_PARTIAL_PATH=crypto-config/peerOrganizations/kpm-pon/users/Admin@kpm-pon
+POD_NAME=joinchannel
+
 if [ "${PWD##*/}" == "create" ]; then
     KUBECONFIG_FOLDER=${PWD}/../../kube-configs/channels
 elif [ "${PWD##*/}" == "scripts" ]; then
@@ -7,12 +13,6 @@ elif [ "${PWD##*/}" == "scripts" ]; then
 else
     echo "Please run the script from 'scripts' or 'scripts/create' folder"
 fi
-
-BASE_PATH=$(pwd)../../../../../config/kpm-pon-config
-KPM_PATH=$BASE_PATH/kpm
-CONTAINER_BASE_PATH=/fabric-config
-KPM_USERS_PARTIAL_PATH=crypto-config/peerOrganizations/kpm-pon/users/Admin@kpm-pon
-POD_NAME=joinchannel
 
 # Default to peer0's address if not defined
 if [ -z "${PEER_ADDRESS}" ]; then
@@ -46,12 +46,20 @@ if [ -z "${MSP_CONFIGPATH}" ]; then
 fi
 MSP_CONFIGPATH=${MSP_CONFIGPATH:-/fabric-config/Admin@kpm-pon/msp}
 
+# Default to "orderer-kpm-pon:31010" if not defined
+if [ -z "${ORDERER_ADDRESS}" ]; then
+	echo "ORDERER_ADDRESS not defined. I will use \"orderer-kpm-pon:31010\"."
+	echo "I will wait 5 seconds before continuing."
+	sleep 5
+fi
+ORDERER_ADDRESS=${ORDERER_ADDRESS:-orderer-kpm-pon:31010}
+
 echo "Deleting old channel pods if exists"
 echo "Running: ${KUBECONFIG_FOLDER}/../scripts/delete/delete_channel-pods.sh"
 ${KUBECONFIG_FOLDER}/../scripts/delete/delete_channel-pods.sh
 
 echo "Preparing yaml for joinchannel pod"
-sed -e "s/%PEER_ADDRESS%/${PEER_ADDRESS}/g" -e "s/%CHANNEL_NAME%/${CHANNEL_NAME}/g" -e "s/%PEER_MSPID%/${PEER_MSPID}/g" -e "s|%MSP_CONFIGPATH%|${MSP_CONFIGPATH}|g" ${KUBECONFIG_FOLDER}/join_channel.yaml.base > ${KUBECONFIG_FOLDER}/join_channel.yaml
+sed -e "s/%ORDERER_ADDRESS%/${ORDERER_ADDRESS}/g" -e "s/%PEER_ADDRESS%/${PEER_ADDRESS}/g" -e "s/%CHANNEL_NAME%/${CHANNEL_NAME}/g" -e "s/%PEER_MSPID%/${PEER_MSPID}/g" -e "s|%MSP_CONFIGPATH%|${MSP_CONFIGPATH}|g" ${KUBECONFIG_FOLDER}/join_channel.yaml.base > ${KUBECONFIG_FOLDER}/join_channel.yaml
 
 echo "Creating joinchannel pod"
 echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/join_channel.yaml"

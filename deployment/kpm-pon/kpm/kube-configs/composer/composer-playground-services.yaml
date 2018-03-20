@@ -3,13 +3,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: composer-playground.kpm-pon
+  name: composer-playground-kpm-pon
   labels:
-    run: composer-playground.kpm-pon
+    run: composer-playground-kpm-pon
 spec:
   type: NodePort
   selector:
-    name: composer-playground.kpm-pon
+    name: composer-playground-kpm-pon
   ports:
   - protocol: TCP
     port: 8080

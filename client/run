@@ -1,0 +1,31 @@
+#!/bin/bash -e
+# utlity script to copy at runtime server IP into client container before running it
+# way to use: docker run --name CONTAINER -p PORT IMAGE_CLIENT bash -c "./run CLIENT_PORT ENV SERVER_IP SERVER_PORT"
+# e.g.: docker run --name app -p 4200 -p 8080 image:tag bash -c "./run 4200 dev localhost 8080"
+
+CLIENT_PORT="$1"
+ENV="$2"
+SERVER_IP="$3"
+SERVER_PORT="$4"
+TARGET="src/environments/environment.$ENV.ts"
+if [ $ENV = "dev" ]; then
+    TARGET="src/environments/environment.ts"
+fi
+echo "### CONNECTING CLIENT TO SERVER ###"
+echo "Going to modify: $TARGET"
+echo "Client port: $1"
+echo "Server: $3:$4"
+
+# check for input
+if [ -z $ENV ] || [ -z $SERVER_IP ] || [ -z $SERVER_PORT ] || [ -z $CLIENT_PORT ];  then
+    echo "You have to specify CLIENT_PORT as first parameter, ENV as second, SERVER_IP as third and SERVER_PORT as fourth."
+    exit 1
+fi
+# check for target file
+if [ ! -f $TARGET ]; then
+    echo "File $TARGET does not exist"
+    exit 1
+fi
+
+sed -i "s/apiHost.*/apiHost: 'http:\/\/$SERVER_IP:$SERVER_PORT\/',/g" $TARGET
+./node_modules/.bin/ng serve -H 0.0.0.0 -p $CLIENT_PORT -e $ENV --disable-host-check

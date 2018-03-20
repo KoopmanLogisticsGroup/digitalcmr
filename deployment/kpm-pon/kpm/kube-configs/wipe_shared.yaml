@@ -9,9 +9,6 @@ spec:
   - name: composer-credentials
     hostPath:
       path: /composer
-  - name: shared
-    hostPath:
-      path: /tmp
 
   containers:
   - name: wipeshared
@@ -21,5 +18,3 @@ spec:
     volumeMounts:
     - name: composer-credentials
       mountPath: /home
-    - mountPath: /shared
-      name: shared

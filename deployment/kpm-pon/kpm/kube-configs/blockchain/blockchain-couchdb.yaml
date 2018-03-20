@@ -1,18 +1,4 @@
 ---
-#apiVersion: v1
-#kind: Pod
-#metadata:
-#  name: utils
-#spec:
-#  restartPolicy: "Never"
-#  volumes:
-#  - name: dockersocket
-#    hostPath:
-#      path: /var/run/docker.sock
-#  - name: composer-credentials
-#    hostPath:
-#      path: /composer
-#---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -26,7 +12,7 @@ spec:
     spec:
       containers:
       - name: orderer-kpm-pon
-        image: ibmblockchain/fabric-orderer:1.0.0
+        image: ibmblockchain/fabric-orderer:1.0.6
         command: ["sh", "-c", "sleep 5 && while [ ! -f /fabric-config/composer-genesis.block ]; do echo Waiting for crypto to be loaded; sleep 1; done; orderer"]
         env:
         - name: ORDERER_CFG_PATH
@@ -52,7 +38,7 @@ spec:
         - name: ORDERER_GENERAL_LOCALMSPDIR
           value: /fabric-config/msp
         - name: ORDERER_GENERAL_LOCALMSPID
-          value: OrdererMSP
+          value: kpmOrdererMSP
         - name: ORDERER_GENERAL_GENESISMETHOD
           value: file
         - name: ORDERER_GENERAL_GENESISFILE
@@ -83,7 +69,7 @@ spec:
     spec:
       containers:
       - name: ca-kpm-pon
-        image: ibmblockchain/fabric-ca:1.0.0
+        image: ibmblockchain/fabric-ca:1.0.6
         command: ["sh", "-c", "sleep 1 && while [ ! -f /fabric-config/ca/ca.kpm-pon-cert.pem ]; do echo Waiting for crypto config to be loaded; sleep 1; done; fabric-ca-server start --ca.certfile /fabric-config/ca/ca.kpm-pon-cert.pem --ca.keyfile /fabric-config/ca/6588016630ff8de1b0c5f53a8c047391d91d466146dac6903d451c334a25324a_sk -b admin:adminpw -d"]
         env:
 #        - name: FABRIC_CA_SERVER_CA_CERTFILE
@@ -129,7 +115,7 @@ spec:
               emptyDir: {}
             containers:
                 - name: peer0-kpm-pon
-                  image: ibmblockchain/fabric-peer:1.0.0
+                  image: ibmblockchain/fabric-peer:1.0.6
                   imagePullPolicy: Always
                   command: ["sh", "-c", "sleep 1 && while [ ! -f /fabric-config/composer-genesis.block ]; do echo Waiting for crypto config to be loaded...; sleep 1; done; peer node start --peer-defaultchain=false"]
                   env:
@@ -231,7 +217,7 @@ spec:
             terminationGracePeriodSeconds: 10
             containers:
                 - name: peer0-kpm-pon-couchdb
-                  image: ibmblockchain/fabric-couchdb:1.0.0
+                  image: ibmblockchain/fabric-couchdb:1.0.6
                   env:
                   - name: DB_URL
                     value: http://localhost:5984/member_db

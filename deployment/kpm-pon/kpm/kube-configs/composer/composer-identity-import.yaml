@@ -2,21 +2,39 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: composer-identity-import-kpm
+  name: utils
 spec:
   restartPolicy: "Never"
   volumes:
   - name: composer-credentials
     hostPath:
       path: /composer
-  - name: shared
-    hostPath:
-      path: /tmp
   containers:
-  - name: composer-identity-import-kpm
+  - name: bootstrap
+    image: ibmblockchain/fabric-tools:1.0.6
+    imagePullPolicy: Always
+    command: ["sh", "-c", "sleep 1 && mkdir -p /home/composer && chown 100 /home/composer && echo 'Done with bootstrapping'" ]
+    volumeMounts:
+    - mountPath: /home
+      name: composer-credentials
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: composer-identity-import-kpm-pon
+spec:
+  restartPolicy: "Never"
+  volumes:
+  - name: composer-credentials
+    hostPath:
+      path: /composer
+  - name: composer-identity-fabric-config
+    emptyDir: {}
+  containers:
+  - name: composer-identity-import-kpm-pon
     image: hyperledger/composer-cli:0.13.2
     imagePullPolicy: Always
-    command: ["sh", "-c", "sleep 1 && while [ ! -f /fabric-config/ ]; do echo Waiting for hyperledgerData; sleep 1; done; composer identity import -p hlfv1 -u PeerAdmin -c /fabric-config/crypto-config/peerOrganizations/users/Admin@kpm-pon/msp/signcerts/Admin@kpm-pon-cert.pem -k /fabric-config/crypto-config/peerOrganizations/users/Admin@kpm-pon/msp/keystore/key.pem"]
+    command: ["sh", "-c", "sleep 1 && while [ ! -d /fabric-config/Admin@kpm-pon ]; do echo Waiting for identity dataa; sleep 1; done; composer identity import -p hlfv1 -u PeerAdmin -c /fabric-config/Admin@kpm-pon/msp/signcerts/Admin@kpm-pon-cert.pem -k /fabric-config/Admin@kpm-pon/msp/keystore/5f33a8da3b835489fe5838aee615f52663e187b308ef908686fc60bdd9b73242_sk && echo 'Done with importing identity'"]
     env:
     - name: COMPOSER_CONFIG
       value: >
@@ -27,17 +45,17 @@ spec:
               "type": "hlfv1",
               "orderers": [
                   {
-                      "url": "grpc://blockchain-orderer.kpm-pon:31010"
+                      "url": "grpc://orderer-kpm-pon:31010"
                   }
               ],
               "ca": {
-                  "url": "http://blockchain-ca.kpm-pon:7054",
-                  "name": "ca.kpm-pon"
+                  "url": "http://ca-kpm-pon:7054",
+                  "name": "ca-kpm-pon"
               },
               "peers": [
                   {
-                      "requestURL": "grpc://blockchain-peer0.kpm-pon:5010",
-                      "eventURL": "grpc://blockchain-peer0.kpm-pon:5011"
+                      "requestURL": "grpc://peer0-kpm-pon:5010",
+                      "eventURL": "grpc://peer0-kpm-pon:5011"
                   }
               ],
               "keyValStore": "/home/composer/.hfc-key-store",
@@ -56,6 +74,6 @@ spec:
     volumeMounts:
     - name: composer-credentials
       mountPath: /home
-    - name: shared
-      mountPath: /shared
+    - name: composer-identity-fabric-config
+      mountPath: /fabric-config
       

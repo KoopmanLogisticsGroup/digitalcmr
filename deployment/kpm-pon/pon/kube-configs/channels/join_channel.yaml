@@ -8,7 +8,7 @@ spec:
 
   containers:
   - name: joinchannel
-    image: ibmblockchain/fabric-peer:1.0.0
+    image: ibmblockchain/fabric-peer:1.0.6
     imagePullPolicy: Always
     command: ["sh", "-c", "sleep 1 && while [ ! -d /fabric-config/Admin@pon ]; do echo Waiting for crypto config to be loaded; sleep 1; done; echo Waiting for 20 seconds; sleep 20; peer channel fetch newest -o ${ORDERER_URL} -c ${CHANNEL_NAME} && peer channel join -b ${CHANNEL_NAME}_newest.block"]
     env:

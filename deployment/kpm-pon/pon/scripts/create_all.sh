@@ -9,7 +9,7 @@ else
 fi
 
 
-BASE_PATH=$(pwd)../../../../../config/kpm-pon-config
+BASE_PATH=$(pwd)../../../../../composer/hlfv1/config/kpm-pon-config
 PON_PATH=$BASE_PATH/pon
 CONTAINER_BASE_PATH=/fabric-config
 PON_CA_PARTIAL_PATH=crypto-config/peerOrganizations/pon/ca
@@ -36,7 +36,3 @@ echo "=> CREATE_ALL: done"
 echo ""
 echo "=> CREATE_ALL: Running Join Channel on pon Peer0"
 ORDERER_ADDRESS="159.122.174.172:31010" CHANNEL_NAME="composerchannel" PEER_MSPID="ponMSP" PEER_ADDRESS="peer0-pon:5010" MSP_CONFIGPATH="/fabric-config/Admin@pon/msp" create/join_channel.sh
-
-#echo ""
-#echo "=> CREATE_ALL: Creating composer playground"
-#create/create_composer-playground.sh

@@ -18,7 +18,7 @@ Profiles:
         Orderer:
             <<: *OrdererDefaults
             Organizations:
-                - *OrdererOrg
+                - *kpmOrderer
         Consortiums:
             ComposerConsortium:
                 Organizations:
@@ -44,16 +44,16 @@ Organizations:
 
     # SampleOrg defines an MSP using the sampleconfig.  It should never be used
     # in production but may be used as a template for other definitions
-    - &OrdererOrg
+    - &kpmOrderer
         # DefaultOrg defines the organization which is used in the sampleconfig
         # of the fabric.git development environment
-        Name: OrdererOrg
+        Name: kpmOrderer
 
         # ID to load the MSP definition as
-        ID: OrdererMSP
+        ID: kpmOrdererMSP
 
         # MSPDir is the filesystem path which contains the MSP configuration
-        MSPDir: kpm-pon/crypto-config/ordererOrganizations/kpm-pon/msp
+        MSPDir: kpm/crypto-config/ordererOrganizations/kpm-pon/msp
 
         # turn off security for the channel
         AdminPrincipal: Role.MEMBER
@@ -66,7 +66,7 @@ Organizations:
         # ID to load the MSP definition as
         ID: kpm-ponMSP
 
-        MSPDir: kpm-pon/crypto-config/peerOrganizations/kpm-pon/msp
+        MSPDir: kpm/crypto-config/peerOrganizations/kpm-pon/msp
 
         # turn off security for the peer
         AdminPrincipal: Role.MEMBER
@@ -75,7 +75,7 @@ Organizations:
             # AnchorPeers defines the location of peers which can be used
             # for cross org gossip communication.  Note, this value is only
             # encoded in the genesis block in the Application section context
-            - Host: peer0.kpm-pon
+            - Host: peer0-kpm-pon
               Port: 7051
 
     - &pon
@@ -95,7 +95,7 @@ Organizations:
             # AnchorPeers defines the location of peers which can be used
             # for cross org gossip communication.  Note, this value is only
             # encoded in the genesis block in the Application section context
-            - Host: peer0.pon
+            - Host: peer0-pon
               Port: 7051
 
 ################################################################################
@@ -113,7 +113,7 @@ Orderer: &OrdererDefaults
     OrdererType: solo
 
     Addresses:
-        - orderer.kpm-pon:7050
+        - orderer-kpm-pon:7050
 
     # Batch Timeout: The amount of time to wait before creating a batch
     BatchTimeout: 2s
