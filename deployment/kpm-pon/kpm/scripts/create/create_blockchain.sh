@@ -14,13 +14,13 @@ kubectl apply -f ${KUBECONFIG_FOLDER}/../persistent-volumes/blockchain-pv.yaml
 
 echo "Creating Services for blockchain network"
 # Use the yaml file with couchdb
-echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/blockchain-couchdb-services.yaml"
-kubectl create -f ${KUBECONFIG_FOLDER}/blockchain-couchdb-services.yaml
+echo "Running: kubectl apply -f ${KUBECONFIG_FOLDER}/blockchain-couchdb-services.yaml"
+kubectl apply -f ${KUBECONFIG_FOLDER}/blockchain-couchdb-services.yaml
 
 echo "Creating new Deployment"
 # Use the yaml file with couchdb
-echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/blockchain-couchdb.yaml"
-kubectl create -f ${KUBECONFIG_FOLDER}/blockchain-couchdb.yaml --validate=false
+echo "Running: kubectl apply -f ${KUBECONFIG_FOLDER}/blockchain-couchdb.yaml"
+kubectl apply -f ${KUBECONFIG_FOLDER}/blockchain-couchdb.yaml --validate=false
 
 echo "Checking if all deployments are ready"
 
@@ -30,6 +30,6 @@ while [ "${NUMPENDING}" != "0" ]; do
     NUMPENDING=$(kubectl get pods | grep kpm | awk '{print $5}' | grep 0 | wc -l | awk '{print $1}')
 done
 
-TIMEOUT=15
+TIMEOUT=30
 echo "Waiting for $TIMEOUT seconds for peers to settle, as we are running with couchdb"
 sleep $TIMEOUT

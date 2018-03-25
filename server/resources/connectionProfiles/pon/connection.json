@@ -2,7 +2,7 @@
   "type":        "hlfv1",
   "orderers":    [
     {
-      "url": "grpc://orderer-kpm-pon:7050"
+      "url": "grpc://159.122.177.125:31010"
     }
   ],
   "ca":          {

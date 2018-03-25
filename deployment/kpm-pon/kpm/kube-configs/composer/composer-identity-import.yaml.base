@@ -45,7 +45,7 @@ spec:
               "type": "hlfv1",
               "orderers": [
                   {
-                      "url": "grpc://orderer-kpm-pon:7050"
+                      "url": "grpc://%ORDERER_ADDRESS%"
                   }
               ],
               "ca": {

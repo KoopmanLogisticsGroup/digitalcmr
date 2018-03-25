@@ -46,17 +46,17 @@ if [ -z "${MSP_CONFIGPATH}" ]; then
 fi
 MSP_CONFIGPATH=${MSP_CONFIGPATH:-/fabric-config/Admin@kpm-pon/msp}
 
-# Default to "orderer-kpm-pon:31010" if not defined
+# Default to "orderer-kpm-pon:7050" if not defined
 if [ -z "${ORDERER_ADDRESS}" ]; then
-	echo "ORDERER_ADDRESS not defined. I will use \"orderer-kpm-pon:31010\"."
+	echo "ORDERER_ADDRESS not defined. I will use \"orderer-kpm-pon:7050\"."
 	echo "I will wait 5 seconds before continuing."
 	sleep 5
 fi
-ORDERER_ADDRESS=${ORDERER_ADDRESS:-orderer-kpm-pon:31010}
+ORDERER_ADDRESS=${ORDERER_ADDRESS:-orderer-kpm-pon:7050}
 
 echo "Deleting old channel pods if exists"
 echo "Running: ${KUBECONFIG_FOLDER}/../scripts/delete/delete_channel-pods.sh"
-${KUBECONFIG_FOLDER}/../scripts/delete/delete_channel-pods.sh
+${KUBECONFIG_FOLDER}/../../scripts/delete/delete_channel-pods.sh
 
 echo "Preparing yaml for joinchannel pod"
 sed -e "s/%ORDERER_ADDRESS%/${ORDERER_ADDRESS}/g" -e "s/%PEER_ADDRESS%/${PEER_ADDRESS}/g" -e "s/%CHANNEL_NAME%/${CHANNEL_NAME}/g" -e "s/%PEER_MSPID%/${PEER_MSPID}/g" -e "s|%MSP_CONFIGPATH%|${MSP_CONFIGPATH}|g" ${KUBECONFIG_FOLDER}/join_channel.yaml.base > ${KUBECONFIG_FOLDER}/join_channel.yaml
@@ -65,7 +65,9 @@ echo "Creating joinchannel pod"
 echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/join_channel.yaml"
 kubectl create -f ${KUBECONFIG_FOLDER}/join_channel.yaml
 
-sleep 10
+TIMEOUT=15
+echo "Waiting for $TIMEOUT seconds for pod to settle"
+sleep $TIMEOUT
 
 echo ""
 echo "=> CREATE_ALL: Copying crypto config into peer"

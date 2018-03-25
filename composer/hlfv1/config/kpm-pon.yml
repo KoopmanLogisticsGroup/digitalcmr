@@ -10,7 +10,7 @@ services:
 #      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/52da9f2222ce0c6133e0c3ad5565d8af0acea880058c45f372cc2b45334cb52e_sk
     ports:
       - "7054:7054"
-    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.kpm-pon-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/52da9f2222ce0c6133e0c3ad5565d8af0acea880058c45f372cc2b45334cb52e_sk -b admin:adminpw -d'
+    command: sh -c 'fabric-ca-server start --ca.name ca-kpm-pon --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.kpm-pon-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/52da9f2222ce0c6133e0c3ad5565d8af0acea880058c45f372cc2b45334cb52e_sk -b admin:adminpw -d'
     volumes:
       - ./kpm-pon-config/kpm/crypto-config/peerOrganizations/kpm-pon/ca/:/etc/hyperledger/fabric-ca-server-config
     container_name: ca-kpm-pon
@@ -22,7 +22,7 @@ services:
       - FABRIC_CA_SERVER_CA_NAME=ca-pon
     ports:
       - "7154:7054"
-    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.pon-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/bf54b768f361e4a2eb0654ec8a8d2b03befaa358581963ce1632263e5f00cf86_sk -b admin:adminpw -d'
+    command: sh -c 'fabric-ca-server start --ca.name ca-pon --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.pon-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/bf54b768f361e4a2eb0654ec8a8d2b03befaa358581963ce1632263e5f00cf86_sk -b admin:adminpw -d'
     volumes:
       - ./kpm-pon-config/pon/crypto-config/peerOrganizations/pon/ca/:/etc/hyperledger/fabric-ca-server-config
     container_name: ca-pon
@@ -31,7 +31,7 @@ services:
     container_name: orderer-kpm-pon
     image: hyperledger/fabric-orderer:x86_64-1.0.0
     environment:
-      - ORDERER_GENERAL_LOGLEVEL=info
+      - ORDERER_GENERAL_LOGLEVEL=debug
       - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
       - ORDERER_GENERAL_GENESISMETHOD=file
       - ORDERER_GENERAL_GENESISFILE=/etc/hyperledger/configtx/composer-genesis.block

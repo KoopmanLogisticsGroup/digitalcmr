@@ -17,9 +17,9 @@ spec:
     command: ["sh", "-c", "sleep 1 && while [ ! -f /fabric-config/composer-channel.tx ]; do echo Waiting for crypto config to be loaded; sleep 2; done; peer channel create -o ${ORDERER_URL} -c ${CHANNEL_NAME} -f /fabric-config/composer-channel.tx"]
     env:
     - name: CHANNEL_NAME
-      value: composerchannel
+      value: DoesntMatter
     - name: ORDERER_URL
-      value: orderer-kpm-pon:31010
+      value: DoesntMatter
     - name: CORE_PEER_ADDRESSAUTODETECT
       value: "false"
     - name: CORE_PEER_NETWORKID

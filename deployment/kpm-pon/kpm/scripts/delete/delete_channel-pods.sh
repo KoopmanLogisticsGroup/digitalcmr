@@ -13,8 +13,8 @@ PEER_ADDRESS="DoesntMatter"
 CHANNEL_NAME="DoesntMatter"
 PEER_MSPID="DoesntMatter"
 ORDERER_ADDRESS="DoesntMatter"
-# Delete Create Channel Pod
 
+# Delete Create Channel Pod
 echo "Preparing yaml for createchannel pod for deletion"
 sed -e "s/%PEER_ADDRESS%/${PEER_ADDRESS}/g" -e "s/%CHANNEL_NAME%/${CHANNEL_NAME}/g" -e "s/%PEER_MSPID%/${PEER_MSPID}/g" -e "s/%ORDERER_ADDRESS%/${ORDERER_ADDRESS}/g" ${KUBECONFIG_FOLDER}/create_channel.yaml.base > ${KUBECONFIG_FOLDER}/create_channel.yaml
 

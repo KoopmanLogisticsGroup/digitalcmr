@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# The env variables don't matter as we are deleting pods
+ORDERER_ADDRESS="DoesntMatter"
+
 if [ "${PWD##*/}" == "create" ]; then
     KUBECONFIG_FOLDER=${PWD}/../../kube-configs/composer
 elif [ "${PWD##*/}" == "scripts" ]; then
@@ -7,6 +10,9 @@ elif [ "${PWD##*/}" == "scripts" ]; then
 else
     echo "Please run the script from 'scripts' or 'scripts/delete' folder"
 fi
+
+echo "Preparing yaml file for composer identity import"
+sed -e "s/%ORDERER_ADDRESS%/${ORDERER_ADDRESS}/g" ${KUBECONFIG_FOLDER}/composer-identity-import.yaml.base > ${KUBECONFIG_FOLDER}/composer-identity-import.yaml
 
 echo "Deleting composer-identity-import pod"
 echo "Running: kubectl delete -f ${KUBECONFIG_FOLDER}/composer-identity-import.yaml"
@@ -16,6 +22,9 @@ while [ "$(kubectl get svc | grep composer-identity-import | wc -l | awk '{print
 	echo "Waiting for composer-identity-import pod to be deleted"
 	sleep 1;
 done
+
+echo "Preparing yaml file for composer playground"
+sed -e "s/%ORDERER_ADDRESS%/${ORDERER_ADDRESS}/g" ${KUBECONFIG_FOLDER}/composer-playground.yaml.base > ${KUBECONFIG_FOLDER}/composer-playground.yaml
 
 echo "Deleting Composer Playground pod"
 echo "Running: kubectl delete -f ${KUBECONFIG_FOLDER}/composer-playground.yaml"

@@ -12,7 +12,7 @@ spec:
         - ReadWriteOnce
     persistentVolumeReclaimPolicy: Recycle
     hostPath:
-        path: "/var/peer0.pon"
+        path: "/var/peer0-pon"
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -27,4 +27,4 @@ spec:
         - ReadWriteOnce
     persistentVolumeReclaimPolicy: Recycle
     hostPath:
-        path: "/var/peer0.pon.couchdb"
+        path: "/var/peer0-pon-couchdb"

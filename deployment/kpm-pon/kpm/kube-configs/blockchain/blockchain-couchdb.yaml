@@ -32,7 +32,7 @@ spec:
         - name: ORDERER_GENERAL_LISTENADDRESS
           value: 0.0.0.0
         - name: ORDERER_GENERAL_LISTENPORT
-          value: "31010"
+          value: "7050"
         - name: ORDERER_GENERAL_LOGLEVEL
           value: debug
         - name: ORDERER_GENERAL_LOCALMSPDIR
@@ -70,12 +70,12 @@ spec:
       containers:
       - name: ca-kpm-pon
         image: ibmblockchain/fabric-ca:1.0.6
-        command: ["sh", "-c", "sleep 1 && while [ ! -f /fabric-config/ca/ca.kpm-pon-cert.pem ]; do echo Waiting for crypto config to be loaded; sleep 1; done; fabric-ca-server start --ca.certfile /fabric-config/ca/ca.kpm-pon-cert.pem --ca.keyfile /fabric-config/ca/6588016630ff8de1b0c5f53a8c047391d91d466146dac6903d451c334a25324a_sk -b admin:adminpw -d"]
+        command: ["sh", "-c", "sleep 1 && while [ ! -f /fabric-config/ca/ca.kpm-pon-cert.pem ]; do echo Waiting for crypto config to be loaded; sleep 1; done; fabric-ca-server start --ca.name ca-kpm-pon --ca.certfile /fabric-config/ca/ca.kpm-pon-cert.pem --ca.keyfile /fabric-config/ca/52da9f2222ce0c6133e0c3ad5565d8af0acea880058c45f372cc2b45334cb52e_sk -b admin:adminpw -d"]
         env:
 #        - name: FABRIC_CA_SERVER_CA_CERTFILE
 #          value: /fabric-config/ca/ca.kpm-pon-cert.pem
 #        - name: FABRIC_CA_SERVER_CA_KEYFILE
-#          value: /fabric-config/ca/6588016630ff8de1b0c5f53a8c047391d91d466146dac6903d451c334a25324a_sk
+#          value: /fabric-config/ca/52da9f2222ce0c6133e0c3ad5565d8af0acea880058c45f372cc2b45334cb52e_sk
         - name: FABRIC_CA_SERVER_DEBUG
           value: "true"
         - name: FABRIC_CA_SERVER_TLS_ENABLED
@@ -83,7 +83,7 @@ spec:
 #        - name: FABRIC_CA_SERVER_TLS_CERTFILE
 #          value: /fabric-config/ca/ca.kpm-pon-cert.pem
 #        - name: FABRIC_CA_SERVER_TLS_KEYFILE
-#          value: /fabric-config/ca/6588016630ff8de1b0c5f53a8c047391d91d466146dac6903d451c334a25324a_sk
+#          value: /fabric-config/ca/52da9f2222ce0c6133e0c3ad5565d8af0acea880058c45f372cc2b45334cb52e_sk
         - name: GODEBUG
           value: "netdns=go"
         volumeMounts:
@@ -117,7 +117,7 @@ spec:
                 - name: peer0-kpm-pon
                   image: ibmblockchain/fabric-peer:1.0.6
                   imagePullPolicy: Always
-                  command: ["sh", "-c", "sleep 1 && while [ ! -f /fabric-config/composer-genesis.block ]; do echo Waiting for crypto config to be loaded...; sleep 1; done; peer node start --peer-defaultchain=false"]
+                  command: ["sh", "-c", "sleep 1 && while [ ! -d /fabric-config/msp ]; do echo Waiting for crypto config to be loaded...; sleep 1; done; peer node start --peer-defaultchain=false"]
                   env:
                   - name: CORE_PEER_ADDRESSAUTODETECT
                     value: "true"
@@ -177,7 +177,7 @@ spec:
                   - name: FABRIC_CFG_PATH
                     value: /etc/hyperledger/fabric/
                   - name: ORDERER_URL
-                    value: orderer-kpm-pon:31010
+                    value: orderer-kpm-pon:7050
                   - name: GODEBUG
                     value: "netdns=go"
                   volumeMounts:

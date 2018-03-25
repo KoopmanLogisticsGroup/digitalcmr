@@ -9,17 +9,27 @@ spec:
   - name: composer-credentials
     hostPath:
       path: /composer
-  - name: shared
+  - name: peer0-pon-pv
     hostPath:
-      path: /tmp
+      path: "/var/peer0-pon"
+  - name: bc-peer0-pon-couchdb-pv
+    hostPath:
+      path: "/var/peer0-pon-couchdb"
+  - name: privatedb-pon-pv
+    hostPath:
+      path: "/var/privatedb-pon"
 
   containers:
   - name: wipeshared
     image: ibmblockchain/fabric-tools:1.0.6
     imagePullPolicy: Always
-    command: ["sh", "-c", "rm -rf /shared/* /home/*"]
+    command: ["sh", "-c", "rm -rf /home/* /privatedb-pon/* /peer0-pon/* /peer0-pon-couchdb/*"]
     volumeMounts:
     - name: composer-credentials
       mountPath: /home
-    - mountPath: /shared
-      name: shared
+    - name: privatedb-pon-pv
+      mountPath: /privatedb-pon
+    - name: peer0-pon-pv
+      mountPath: /peer0-pon
+    - name: bc-peer0-pon-couchdb-pv
+      mountPath: /peer0-pon-couchdb

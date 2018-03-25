@@ -9,7 +9,7 @@ spec:
   restartPolicy: "Always"
   containers:
   - name: api-pon
-    image: registry.eu-de.bluemix.net/apps/digitalcmr_api_doc
+    image: registry.eu-gb.bluemix.net/apps/digitalcmr_api_doc
     imagePullPolicy: Always
     imagePullSecrets:
     - name: bluemix-uk-registry

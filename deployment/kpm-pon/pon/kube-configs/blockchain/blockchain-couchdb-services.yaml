@@ -18,22 +18,6 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: orderer-pon
-  labels:
-    run: orderer-pon
-spec:
-  type: NodePort
-  selector:
-    name: orderer-pon
-  ports:
-  - protocol: TCP
-    port: 31010
-    nodePort: 31010
-    name: grpc
----
-apiVersion: v1
-kind: Service
-metadata:
   name:  peer0-pon
   labels:
     app:  peer0-pon
@@ -66,5 +50,4 @@ spec:
   ports:
   - protocol: TCP
     port: 5984
-    nodePort: 30984
     name: peer0-pon-couchdb

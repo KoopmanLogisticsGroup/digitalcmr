@@ -9,8 +9,8 @@ spec:
   restartPolicy: "Always"
   containers:
   - name: client-pon
-    image: registry.eu-de.bluemix.net/apps/digitalcmr_client
+    image: registry.eu-gb.bluemix.net/apps/digitalcmr_client
     imagePullPolicy: Always
     imagePullSecrets:
     - name: bluemix-uk-registry
-    command: ["sh", "-c", "./node_modules/.bin/ng serve -H 0.0.0.0 -e pon --disable-host-check"]
+    command: ["sh", "-c", "./run 4200 pon server-pon 8080"]

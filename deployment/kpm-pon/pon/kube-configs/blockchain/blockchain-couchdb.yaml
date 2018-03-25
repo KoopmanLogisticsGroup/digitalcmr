@@ -13,12 +13,12 @@ spec:
       containers:
       - name: ca-pon
         image: ibmblockchain/fabric-ca:1.0.6
-        command: ["sh", "-c", "sleep 1 && while [ ! -f /fabric-config/ca/ca.pon-cert.pem ]; do echo Waiting for crypto config to be loaded; sleep 1; done; fabric-ca-server start --ca.certfile /fabric-config/ca/ca.pon-cert.pem --ca.keyfile /fabric-config/ca/b76ef2f0d4df95adec8501a85b09df153dd1d36c9982c98936b1878a28be321c_sk -b admin:adminpw -d"]
+        command: ["sh", "-c", "sleep 1 && while [ ! -f /fabric-config/ca/ca.pon-cert.pem ]; do echo Waiting for crypto config to be loaded; sleep 1; done; fabric-ca-server start --ca.name ca-pon --ca.certfile /fabric-config/ca/ca.pon-cert.pem --ca.keyfile /fabric-config/ca/bf54b768f361e4a2eb0654ec8a8d2b03befaa358581963ce1632263e5f00cf86_sk -b admin:adminpw -d"]
         env:
 #        - name: FABRIC_CA_SERVER_CA_CERTFILE
 #          value: /fabric-config/ca/ca.pon-cert.pem
 #        - name: FABRIC_CA_SERVER_CA_KEYFILE
-#          value: /fabric-config/ca/b76ef2f0d4df95adec8501a85b09df153dd1d36c9982c98936b1878a28be321c_sk
+#          value: /fabric-config/ca/bf54b768f361e4a2eb0654ec8a8d2b03befaa358581963ce1632263e5f00cf86_sk
         - name: FABRIC_CA_SERVER_DEBUG
           value: "true"
         - name: FABRIC_CA_SERVER_TLS_ENABLED
@@ -26,7 +26,7 @@ spec:
 #        - name: FABRIC_CA_SERVER_TLS_CERTFILE
 #          value: /fabric-config/ca/ca.pon-cert.pem
 #        - name: FABRIC_CA_SERVER_TLS_KEYFILE
-#          value: /fabric-config/ca/b76ef2f0d4df95adec8501a85b09df153dd1d36c9982c98936b1878a28be321c_sk
+#          value: /fabric-config/ca/bf54b768f361e4a2eb0654ec8a8d2b03befaa358581963ce1632263e5f00cf86_sk
         - name: GODEBUG
           value: "netdns=go"
         volumeMounts:
@@ -60,7 +60,7 @@ spec:
                 - name: peer0-pon
                   image: ibmblockchain/fabric-peer:1.0.6
                   imagePullPolicy: Always
-                  command: ["sh", "-c", "sleep 1 && while [ ! -f /fabric-config/composer-genesis.block ]; do echo Waiting for crypto config to be loaded...; sleep 1; done; peer node start --peer-defaultchain=false"]
+                  command: ["sh", "-c", "sleep 1 && while [ ! -d /fabric-config/msp ]; do echo Waiting for crypto config to be loaded...; sleep 1; done; peer node start --peer-defaultchain=false"]
                   env:
                   - name: CORE_PEER_ADDRESSAUTODETECT
                     value: "true"
@@ -120,7 +120,7 @@ spec:
                   - name: FABRIC_CFG_PATH
                     value: /etc/hyperledger/fabric/
                   - name: ORDERER_URL
-                    value: orderer-pon:31010
+                    value: 159.122.177.125:31010
                   - name: GODEBUG
                     value: "netdns=go"
                   volumeMounts:
@@ -167,6 +167,7 @@ spec:
                   volumeMounts:
                     - name: bc-peer0-pon-couchdb-pv
                       mountPath: /opt/couchdb/data
+
     volumeClaimTemplates:
         - metadata:
             name: bc-peer0-pon-couchdb-pv

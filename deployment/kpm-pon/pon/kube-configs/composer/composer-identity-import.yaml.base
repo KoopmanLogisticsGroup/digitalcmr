@@ -21,7 +21,7 @@ spec:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: composer-identity-import-kpm-pon
+  name: composer-identity-import-pon
 spec:
   restartPolicy: "Never"
   volumes:
@@ -31,36 +31,36 @@ spec:
   - name: composer-identity-fabric-config
     emptyDir: {}
   containers:
-  - name: composer-identity-import-kpm-pon
+  - name: composer-identity-import-pon
     image: hyperledger/composer-cli:0.13.2
     imagePullPolicy: Always
-    command: ["sh", "-c", "sleep 1 && while [ ! -d /fabric-config/Admin@kpm-pon ]; do echo Waiting for identity data; sleep 1; done; composer identity import -p kpm-pon -u admin -c /fabric-config/Admin@kpm-pon/msp/signcerts/Admin@kpm-pon-cert.pem -k /fabric-config/Admin@kpm-pon/msp/keystore/`ls /fabric-config/Admin@kpm-pon/msp/keystore` && echo 'Done with importing identity'; composer network deploy -a /fabric-config/bna/digital-cmr-network.bna -i admin -s passwd -p kpm-pon && echo 'Done with deploying'"]
+    command: ["sh", "-c", "sleep 1 && while [ ! -d /fabric-config/Admin@pon ]; do echo Waiting for identity data; sleep 1; done; composer identity import -p hlfv1 -u adminPon -c /fabric-config/Admin@pon/msp/signcerts/Admin@pon-cert.pem -k /fabric-config/Admin@pon/msp/keystore/`ls /fabric-config/Admin@pon/msp/keystore` && echo 'Done with importing identity'; composer network deploy -a /fabric-config/bna/digital-cmr-network.bna -i adminPon -s passwd -p hlfv1 && echo 'Done with deploying'"]
     env:
     - name: COMPOSER_CONFIG
       value: >
         {
-          "defaultConnectionProfile": "kpm-pon",
+          "defaultConnectionProfile": "hlfv1",
           "connectionProfiles": {
-            "kpm-pon": {
+            "hlfv1": {
               "type": "hlfv1",
               "orderers": [
                   {
-                      "url": "grpc://orderer-kpm-pon:7050"
+                      "url": "grpc://%ORDERER_ADDRESS%"
                   }
               ],
               "ca": {
-                  "url": "http://ca-kpm-pon:7054",
-                  "name": "ca-kpm-pon"
+                  "url": "http://ca-pon:7054",
+                  "name": "ca-pon"
               },
               "peers": [
                   {
-                      "requestURL": "grpc://peer0-kpm-pon:5010",
-                      "eventURL": "grpc://peer0-kpm-pon:5011"
+                      "requestURL": "grpc://peer0-pon:5010",
+                      "eventURL": "grpc://peer0-pon:5011"
                   }
               ],
               "keyValStore": "/home/composer/.composer-credentials",
               "channel": "composerchannel",
-              "mspID": "kpm-ponMSP",
+              "mspID": "ponMSP",
               "timeout": "300"
             }
           }

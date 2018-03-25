@@ -27,7 +27,7 @@ spec:
     name: orderer-kpm-pon
   ports:
   - protocol: TCP
-    port: 31010
+    port: 7050
     nodePort: 31010
     name: grpc
 ---
@@ -66,5 +66,4 @@ spec:
   ports:
   - protocol: TCP
     port: 5984
-    nodePort: 30984
     name: peer0-kpm-pon-couchdb

@@ -30,17 +30,17 @@ if [ -z "${CHANNEL_NAME}" ]; then
 fi
 CHANNEL_NAME=${CHANNEL_NAME:-composerchannel}
 
-# Default to "orderer-kpm-pon:31010" if not defined
+# Default to "orderer-kpm-pon:7050" if not defined
 if [ -z "${ORDERER_ADDRESS}" ]; then
-	echo "ORDERER_ADDRESS not defined. I will use \"orderer-kpm-pon:31010\"."
+	echo "ORDERER_ADDRESS not defined. I will use \"orderer-kpm-pon:7050\"."
 	echo "I will wait 5 seconds before continuing."
 	sleep 5
 fi
-ORDERER_ADDRESS=${ORDERER_ADDRESS:-orderer-kpm-pon:31010}
+ORDERER_ADDRESS=${ORDERER_ADDRESS:-orderer-kpm-pon:7050}
 
 echo "Deleting old channel pods if exists"
 echo "Running: ${KUBECONFIG_FOLDER}/../scripts/delete/delete_channel-pods.sh"
-${KUBECONFIG_FOLDER}/../scripts/delete/delete_channel-pods.sh
+${KUBECONFIG_FOLDER}/../../scripts/delete/delete_channel-pods.sh
 
 echo "Preparing yaml file for create channel"
 sed -e "s/%CHANNEL_NAME%/${CHANNEL_NAME}/g" -e "s/%PEER_MSPID%/${PEER_MSPID}/g" -e "s/%ORDERER_ADDRESS%/${ORDERER_ADDRESS}/g" ${KUBECONFIG_FOLDER}/create_channel.yaml.base > ${KUBECONFIG_FOLDER}/create_channel.yaml
@@ -49,7 +49,10 @@ echo "Creating createchannel pod"
 echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/create_channel.yaml"
 kubectl create -f ${KUBECONFIG_FOLDER}/create_channel.yaml
 
-sleep 10
+TIMEOUT=15
+echo "Waiting for $TIMEOUT seconds for pod to settle"
+sleep $TIMEOUT
+
 echo ""
 echo "=> CREATE_ALL: Copying crypto config into peer"
 # Copy crypto-config to peer0.kpm-pon container
