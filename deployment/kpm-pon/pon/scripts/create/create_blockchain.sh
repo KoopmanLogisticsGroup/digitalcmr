@@ -30,6 +30,6 @@ while [ "${NUMPENDING}" != "0" ]; do
     NUMPENDING=$(kubectl get pods | grep kpm | awk '{print $5}' | grep 0 | wc -l | awk '{print $1}')
 done
 
-TIMEOUT=15
+TIMEOUT=30
 echo "Waiting for $TIMEOUT seconds for peers to settle, as we are running with couchdb"
 sleep $TIMEOUT

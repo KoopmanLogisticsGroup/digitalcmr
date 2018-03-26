@@ -2,25 +2,6 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: utils
-spec:
-  restartPolicy: "Never"
-  volumes:
-  - name: composer-credentials
-    hostPath:
-      path: /composer
-  containers:
-  - name: bootstrap
-    image: ibmblockchain/fabric-tools:1.0.6
-    imagePullPolicy: Always
-    command: ["sh", "-c", "sleep 1 && mkdir -p /home/composer && chown 100 /home/composer && echo 'Done with bootstrapping'" ]
-    volumeMounts:
-    - mountPath: /home
-      name: composer-credentials
----
-apiVersion: v1
-kind: Pod
-metadata:
   name: composer-identity-import-pon
 spec:
   restartPolicy: "Never"
@@ -34,7 +15,7 @@ spec:
   - name: composer-identity-import-pon
     image: hyperledger/composer-cli:0.13.2
     imagePullPolicy: Always
-    command: ["sh", "-c", "sleep 1 && while [ ! -d /fabric-config/Admin@pon ]; do echo Waiting for identity data; sleep 1; done; composer identity import -p hlfv1 -u adminPon -c /fabric-config/Admin@pon/msp/signcerts/Admin@pon-cert.pem -k /fabric-config/Admin@pon/msp/keystore/b1501930a6fbc081063140d13cc90ecadeed5a2367dc456e53ec1d9880e2ca6b_sk && echo 'Done with importing identity'; composer network deploy -a /fabric-config/bna/digital-cmr-network.bna -i adminPon -s passwd -p hlfv1 && echo 'Done with deploying'"]
+    command: ["sh", "-c", "sleep 1 && while [ ! -d /fabric-config/Admin@pon ]; do echo Waiting for identity data; sleep 1; done; composer identity import -p hlfv1 -u adminPon -c /fabric-config/Admin@pon/msp/signcerts/Admin@pon-cert.pem -k /fabric-config/Admin@pon/msp/keystore/`ls /fabric-config/Admin@pon/msp/keystore` && echo 'Done with importing identity'; composer runtime install -n digital-cmr-network -p hlfv1 -i adminPon -s adminpw; composer network start -a /fabric-config/bna/digital-cmr-network.bna -p hlfv1 -i adminPon -s adminpw && echo 'Done with deploying'"]
     env:
     - name: COMPOSER_CONFIG
       value: >
@@ -58,16 +39,10 @@ spec:
                       "eventURL": "grpc://peer0-pon:5011"
                   }
               ],
-              "keyValStore": "/home/composer/.hfc-key-store",
+              "keyValStore": "/home/composer/.composer-credentials",
               "channel": "composerchannel",
               "mspID": "ponMSP",
               "timeout": "300"
-            }
-          },
-          "credentials": {
-            "hlfv1": {
-              "PeerAdmin": "notneeded",
-              "adminPon": "adminpw"
             }
           }
         }

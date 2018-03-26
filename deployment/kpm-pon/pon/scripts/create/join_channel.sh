@@ -4,7 +4,7 @@ BASE_PATH=$(pwd)../../../../../composer/hlfv1/config/kpm-pon-config
 CRYPTO_PATH=$BASE_PATH/pon
 CONTAINER_BASE_PATH=/fabric-config
 USERS_PARTIAL_PATH=crypto-config/peerOrganizations/pon/users/Admin@pon
-POD_NAME=joinchannel-pon
+POD_NAME=joinchannel
 
 if [ "${PWD##*/}" == "create" ]; then
     KUBECONFIG_FOLDER=${PWD}/../../kube-configs/channels
@@ -74,15 +74,15 @@ echo "=> CREATE_ALL: Copying crypto config into peer"
 # Copy crypto-config to peer0-pon container
 kubectl cp $CRYPTO_PATH/$USERS_PARTIAL_PATH/ $POD_NAME:$CONTAINER_BASE_PATH/
 
-while [ "$(kubectl get pod -a joinchannel | grep joinchannel | awk '{print $3}')" != "Completed" ]; do
+while [ "$(kubectl get pods -a | grep joinchannel | awk '{print $3}')" != "Completed" ]; do
     echo "Waiting for joinchannel container to be Completed"
     sleep 1;
 done
 
-if [ "$(kubectl get pod -a joinchannel | grep joinchannel | awk '{print $3}')" == "Completed" ]; then
+if [ "$(kubectl get pods -a | grep joinchannel | awk '{print $3}')" == "Completed" ]; then
 	echo "Join Channel Completed Successfully"
 fi
 
-if [ "$(kubectl get pod -a joinchannel | grep joinchannel | awk '{print $3}')" != "Completed" ]; then
+if [ "$(kubectl get pods -a | grep joinchannel | awk '{print $3}')" != "Completed" ]; then
 	echo "Join Channel Failed"
 fi

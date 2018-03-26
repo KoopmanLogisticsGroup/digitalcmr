@@ -14,7 +14,7 @@ spec:
   - name: createchannel
     image: ibmblockchain/fabric-peer:1.0.6
     imagePullPolicy: Always
-    command: ["sh", "-c", "sleep 1 && while [ ! -f /fabric-config/composer-channel.tx ]; do echo Waiting for crypto config to be loaded; sleep 2; done; peer channel create -o ${ORDERER_URL} -c ${CHANNEL_NAME} -f /fabric-config/composer-channel.tx"]
+    command: ["sh", "-c", "sleep 1 && while [ ! -f /fabric-config/%CHANNEL_FILE%.tx ]; do echo Waiting for crypto config to be loaded; sleep 2; done; peer channel create -o ${ORDERER_URL} -c ${CHANNEL_NAME} -f /fabric-config/%CHANNEL_FILE%.tx"]
     env:
     - name: CHANNEL_NAME
       value: %CHANNEL_NAME%

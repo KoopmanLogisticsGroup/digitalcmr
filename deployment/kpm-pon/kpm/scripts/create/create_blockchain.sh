@@ -8,6 +8,16 @@ else
     echo "Please run the script from 'scripts' or 'scripts/create' folder"
 fi
 
+# Default to "staging" if not defined
+if [ -z ${GENESIS} ]; then
+	echo "GENESIS not defined. I will use \"staging\"."
+	echo "I will wait 5 seconds before continuing."
+	sleep 5
+fi
+GENESIS=${GENESIS:-staging}
+
+sed -e "s/%GENESIS%/${GENESIS}/g" ${KUBECONFIG_FOLDER}/blockchain-couchdb.yaml.base > ${KUBECONFIG_FOLDER}/blockchain-couchdb.yaml
+
 echo "Creating PersistentVolumes for the blockchain network"
 echo "Running: kubectl apply -f ${KUBECONFIG_FOLDER}/../persistent-volumes/blockchain-pv.yaml"
 kubectl apply -f ${KUBECONFIG_FOLDER}/../persistent-volumes/blockchain-pv.yaml

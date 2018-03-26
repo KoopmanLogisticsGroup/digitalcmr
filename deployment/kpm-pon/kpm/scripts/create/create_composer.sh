@@ -15,6 +15,32 @@ else
     echo "Please run the script from 'scripts' or 'scripts/create' folder"
 fi
 
+echo "Creating utils pod"
+echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/composer-utils.yaml"
+kubectl create -f ${KUBECONFIG_FOLDER}/composer-utils.yaml
+
+while [ "$(kubectl get pods -a | grep composer-utils | awk '{print $3}')" != "Completed" ]; do
+    echo "Waiting for composer-utils container to be Completed"
+    sleep 1;
+done
+
+if [ "$(kubectl get pods -a | grep composer-utils | awk '{print $3}')" == "Completed" ]; then
+	echo "Composer Utils Completed Successfully"
+fi
+
+if [ "$(kubectl get pods -a | grep composer-utils | awk '{print $3}')" != "Completed" ]; then
+	echo "Composer Utils Failed"
+fi
+
+echo "Deleting composer-utils pod"
+echo "Running: kubectl delete -f ${KUBECONFIG_FOLDER}/composer-utils.yaml"
+kubectl delete -f ${KUBECONFIG_FOLDER}/composer-utils.yaml
+
+while [ "$(kubectl get svc | grep composer-utils | wc -l | awk '{print $1}')" != "0" ]; do
+	echo "Waiting for composer-utils pod to be deleted"
+	sleep 1;
+done
+
 # Default to "orderer-kpm-pon:7050" if not defined
 if [ -z "${ORDERER_ADDRESS}" ]; then
 	echo "ORDERER_ADDRESS not defined. I will use \"orderer-kpm-pon:7050\"."

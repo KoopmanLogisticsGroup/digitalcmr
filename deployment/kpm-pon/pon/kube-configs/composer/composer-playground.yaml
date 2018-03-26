@@ -38,11 +38,11 @@ spec:
                   "type": "hlfv1",
                   "orderers": [
                       {
-                          "url": "grpc://159.122.177.125:31010"
+                          "url": "grpc://DoesntMatter"
                       }
                   ],
                   "ca": {
-                      "url": "http://ca-kpm-pon:7054",
+                      "url": "http://ca-pon:7054",
                       "name": "ca-pon"
                   },
                   "peers": [
@@ -51,7 +51,7 @@ spec:
                           "eventURL": "grpc://peer0-pon:5011"
                       }
                   ],
-                  "keyValStore": "/home/composer/.hfc-key-store",
+                  "keyValStore": "/home/composer/.composer-credentials",
                   "channel": "composerchannel",
                   "mspID": "ponMSP",
                   "timeout": 300

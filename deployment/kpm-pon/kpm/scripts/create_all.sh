@@ -10,7 +10,7 @@ fi
 
 echo ""
 echo "=> CREATE_ALL: Creating blockchain"
-create/create_blockchain.sh
+GENESIS="staging" create/create_blockchain.sh
 
 NUMPENDING=$(kubectl get pods | grep kpm | awk '{print $5}' | grep 0 | wc -l | awk '{print $1}')
 while [ "${NUMPENDING}" != "0" ]; do
@@ -20,11 +20,11 @@ done
 
 echo ""
 echo "=> CREATE_ALL: Copying crypto"
-create/create_cryptos.sh
+CHANNEL_FILE="staging" GENESIS="staging" create/create_cryptos.sh
 
 echo ""
 echo "=> CREATE_ALL: Running Create Channel"
-PEER_MSPID="kpm-ponMSP" CHANNEL_NAME="composerchannel" ORDERER_ADDRESS="orderer-kpm-pon:7050" create/create_channel.sh
+CHANNEL_FILE="staging" PEER_MSPID="kpm-ponMSP" CHANNEL_NAME="composerchannel" ORDERER_ADDRESS="orderer-kpm-pon:7050" create/create_channel.sh
 
 echo ""
 echo "=> CREATE_ALL: Running Join Channel on kpm-pon Peer1"
@@ -37,3 +37,8 @@ delete/delete_channel-pods.sh
 echo ""
 echo "=> CREATE_ALL: Creating composer playground"
 create/create_composer.sh
+
+#TIMEOUT=300
+#echo ""
+#echo "=> CREATE_ALL: Wait $TIMEOUT seconds after deploying to allow synchronisation..."
+#sleep $TIMEOUT

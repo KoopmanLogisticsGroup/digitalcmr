@@ -1,39 +1,26 @@
 #!/bin/sh
 
 FABRIC_VERSION=1.0.6
-export FABRIC_CFG_PATH=$(pwd)/network/config
+export FABRIC_CFG_PATH=$(pwd)/config
+GENESIS=staging
+CHANNEL_FILE=staging
+CHANNEL_ID=composerchannel
 
-if [ ! -d "./network/channel-artifacts" ]; then
-  mkdir ./network/channel-artifacts
+if [ ! -d "./channel-artifacts" ]; then
+  mkdir ./channel-artifacts
 fi
 
 echo "Download fabric-binary and extract them in ./bin directory"
 curl -sSL https://goo.gl/kFFqh5 | bash -s $FABRIC_VERSION
 
 echo "Generate certificates using cryptogen tool"
-./bin/cryptogen generate --config=./network/config/crypto-config.yaml
-mv crypto-config ./network/config/
+./bin/cryptogen generate --config=./crypto-config.yaml
 
 echo "Generating Orderer Genesis block"
-./bin/configtxgen -profile SingleOrgOrdererGenesis -outputBlock ./network/channel-artifacts/genesis.block
+./bin/configtxgen -profile TwoOrgsOrdererGenesis -outputBlock ./$GENESIS.block
 
-echo "Generating private configuration transaction"
-./bin/configtxgen -profile SingleOrgChannel -outputCreateChannelTx ./network/channel-artifacts/private.tx -channelID private
-
-echo "Generating trading configuration transaction"
-./bin/configtxgen -profile SingleOrgChannel -outputCreateChannelTx ./network/channel-artifacts/trading.tx -channelID trading
-
-echo "Generating sharing configuration transaction"
-./bin/configtxgen -profile SingleOrgChannel -outputCreateChannelTx ./network/channel-artifacts/sharing.tx -channelID sharing
-
-echo "Generating anchor peer update for Org1 on the channel: private"
-./bin/configtxgen -profile SingleOrgChannel -outputAnchorPeersUpdate ./network/channel-artifacts/Org1MSPanchors-private.tx -channelID private -asOrg Org1MSP
-
-echo "Generating anchor peer update for Org1 on the channel: trading"
-./bin/configtxgen -profile SingleOrgChannel -outputAnchorPeersUpdate ./network/channel-artifacts/Org1MSPanchors-trading.tx -channelID trading -asOrg Org1MSP
-
-echo "Generating anchor peer update for Org1 on the channel: sharing"
-./bin/configtxgen -profile SingleOrgChannel -outputAnchorPeersUpdate ./network/channel-artifacts/Org1MSPanchors-sharing.tx -channelID sharing -asOrg Org1MSP
+echo "Generating channel configuration transaction"
+./bin/configtxgen -profile TwoOrgsChannel -outputCreateChannelTx ./$CHANNEL_FILE.tx -channelID $CHANNEL_ID
 
 # remove the binaries
 rm -rf ./bin

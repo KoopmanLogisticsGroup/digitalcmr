@@ -11,6 +11,15 @@ else
     echo "Please run the script from 'scripts' or 'scripts/delete' folder"
 fi
 
+echo "Deleting composer-utils pod"
+echo "Running: kubectl delete -f ${KUBECONFIG_FOLDER}/composer-utils.yaml"
+kubectl delete -f ${KUBECONFIG_FOLDER}/composer-utils.yaml
+
+while [ "$(kubectl get svc | grep composer-utils | wc -l | awk '{print $1}')" != "0" ]; do
+	echo "Waiting for composer-utils pod to be deleted"
+	sleep 1;
+done
+
 echo "Preparing yaml file for composer identity import"
 sed -e "s/%ORDERER_ADDRESS%/${ORDERER_ADDRESS}/g" ${KUBECONFIG_FOLDER}/composer-identity-import.yaml.base > ${KUBECONFIG_FOLDER}/composer-identity-import.yaml
 

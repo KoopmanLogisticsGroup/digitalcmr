@@ -20,11 +20,26 @@ kubectl cp $KPM_PATH/$CA_PARTIAL_PATH/ $CA_POD_NAME:$CONTAINER_BASE_PATH/ca/
 
 sleep 5
 
+# Default to "staging" if not defined
+if [ -z ${CHANNEL_FILE} ]; then
+	echo "CHANNEL_FILE not defined. I will use \"staging\"."
+	echo "I will wait 5 seconds before continuing."
+	sleep 5
+fi
+CHANNEL_FILE=${CHANNEL_FILE:-staging}
+
+# Default to "staging" if not defined
+if [ -z ${GENESIS} ]; then
+	echo "GENESIS not defined. I will use \"staging\"."
+	echo "I will wait 5 seconds before continuing."
+	sleep 5
+fi
+GENESIS=${GENESIS:-staging}
+
 echo "=> CREATE_ALL: Copying crypto config into orderer"
 # Copy crypto-config to orderer.kpm-pon container
 kubectl cp $KPM_PATH/$KPM_ORDERERS_PARTIAL_PATH/ $ORDERER_POD_NAME:$CONTAINER_BASE_PATH/msp/
-kubectl cp $BASE_PATH/composer-channel.tx $ORDERER_POD_NAME:$CONTAINER_BASE_PATH/composer-channel.tx
-kubectl cp $BASE_PATH/composer-genesis.block $ORDERER_POD_NAME:$CONTAINER_BASE_PATH/composer-genesis.block
+kubectl cp $BASE_PATH/$GENESIS.block $ORDERER_POD_NAME:$CONTAINER_BASE_PATH/$GENESIS.block
 
 sleep 5
 

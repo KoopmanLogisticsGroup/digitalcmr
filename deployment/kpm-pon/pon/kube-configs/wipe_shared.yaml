@@ -18,12 +18,15 @@ spec:
   - name: privatedb-pon-pv
     hostPath:
       path: "/var/privatedb-pon"
+  - name: fabric-config
+    hostPath:
+      path: "/fabric-config"
 
   containers:
   - name: wipeshared
     image: ibmblockchain/fabric-tools:1.0.6
     imagePullPolicy: Always
-    command: ["sh", "-c", "rm -rf /home/* /privatedb-pon/* /peer0-pon/* /peer0-pon-couchdb/*"]
+    command: ["sh", "-c", "rm -rf /home/* /fabric-config/* /privatedb-pon/* /peer0-pon/* /peer0-pon-couchdb/*"]
     volumeMounts:
     - name: composer-credentials
       mountPath: /home
@@ -33,3 +36,5 @@ spec:
       mountPath: /peer0-pon
     - name: bc-peer0-pon-couchdb-pv
       mountPath: /peer0-pon-couchdb
+    - name: fabric-config
+      mountPath: /fabric-config

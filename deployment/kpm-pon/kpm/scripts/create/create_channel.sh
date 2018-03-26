@@ -30,6 +30,14 @@ if [ -z "${CHANNEL_NAME}" ]; then
 fi
 CHANNEL_NAME=${CHANNEL_NAME:-composerchannel}
 
+# Default to "staging" if not defined
+if [ -z ${CHANNEL_FILE} ]; then
+	echo "CHANNEL_FILE not defined. I will use \"staging\"."
+	echo "I will wait 5 seconds before continuing."
+	sleep 5
+fi
+CHANNEL_FILE=${CHANNEL_FILE:-staging}
+
 # Default to "orderer-kpm-pon:7050" if not defined
 if [ -z "${ORDERER_ADDRESS}" ]; then
 	echo "ORDERER_ADDRESS not defined. I will use \"orderer-kpm-pon:7050\"."
@@ -43,7 +51,7 @@ echo "Running: ${KUBECONFIG_FOLDER}/../scripts/delete/delete_channel-pods.sh"
 ${KUBECONFIG_FOLDER}/../../scripts/delete/delete_channel-pods.sh
 
 echo "Preparing yaml file for create channel"
-sed -e "s/%CHANNEL_NAME%/${CHANNEL_NAME}/g" -e "s/%PEER_MSPID%/${PEER_MSPID}/g" -e "s/%ORDERER_ADDRESS%/${ORDERER_ADDRESS}/g" ${KUBECONFIG_FOLDER}/create_channel.yaml.base > ${KUBECONFIG_FOLDER}/create_channel.yaml
+sed -e "s/%CHANNEL_FILE%/${CHANNEL_FILE}/g" -e "s/%CHANNEL_NAME%/${CHANNEL_NAME}/g" -e "s/%PEER_MSPID%/${PEER_MSPID}/g" -e "s/%ORDERER_ADDRESS%/${ORDERER_ADDRESS}/g" ${KUBECONFIG_FOLDER}/create_channel.yaml.base > ${KUBECONFIG_FOLDER}/create_channel.yaml
 
 echo "Creating createchannel pod"
 echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/create_channel.yaml"
@@ -55,10 +63,8 @@ sleep $TIMEOUT
 
 echo ""
 echo "=> CREATE_ALL: Copying crypto config into peer"
-# Copy crypto-config to peer0.kpm-pon container
 kubectl cp $KPM_PATH/$KPM_PEERS_PARTIAL_PATH/ $POD_NAME:$CONTAINER_BASE_PATH/msp/
-kubectl cp $BASE_PATH/composer-channel.tx $POD_NAME:$CONTAINER_BASE_PATH/composer-channel.tx
-kubectl cp $BASE_PATH/composer-genesis.block $POD_NAME:$CONTAINER_BASE_PATH/composer-genesis.block
+kubectl cp $BASE_PATH/$CHANNEL_FILE.tx $POD_NAME:$CONTAINER_BASE_PATH/$CHANNEL_FILE.tx
 
 while [ "$(kubectl get pod -a createchannel | grep createchannel | awk '{print $3}')" != "Completed" ]; do
     echo "Waiting for createchannel container to be Completed"
