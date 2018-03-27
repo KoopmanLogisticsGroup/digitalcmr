@@ -28,11 +28,12 @@
       ],
       "environmentSource": "environments/environment.ts",
       "environments":      {
-        "dev":    "environments/environment.ts",
-        "prod":   "environments/environment.prod.ts",
-        "stag":   "environments/environment.stag.ts",
-        "kpmpon": "environments/environment.kpmpon.ts",
-        "pon":    "environments/environment.pon.ts"
+        "dev":        "environments/environment.ts",
+        "prod":       "environments/environment.prod.ts",
+        "stag":       "environments/environment.stag.ts",
+        "kpmpon":     "environments/environment.kpmpon.ts",
+        "kpmponstag": "environments/environment.kpmpon.stag.ts",
+        "pon":        "environments/environment.pon.ts"
       }
     }
   ],

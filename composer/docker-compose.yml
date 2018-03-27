@@ -6,8 +6,8 @@ services:
     volumes:
       - ./bna:/home/composer/bna
       - ./resources:/home/composer/resources
-      - ./hlfv1/composer/default-profile-config/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp:/admin-crypto
-      - ./hlfv1/composer/default-profile-config/connectionProfiles:/home/composer/.composer-connection-profiles
+      - ./hlfv1/config/default-config/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp:/admin-crypto
+      - ./hlfv1/config/default-config/connectionProfiles:/home/composer/.composer-connection-profiles
     command: >
       sh -c "/home/composer/resources/deploy.sh"
 
@@ -17,5 +17,5 @@ services:
       - "3000:3000"
     env_file: .env
     volumes:
-      - ./hlfv1/composer/default-profile-config/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp:/admin-crypto
-      - ./hlfv1/composer/default-profile-config/resources/connectionProfiles:/home/composer/.composer-connection-profiles
+      - ./hlfv1/config/default-config/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp:/admin-crypto
+      - ./hlfv1/config/default-config/resources/connectionProfiles:/home/composer/.composer-connection-profiles

@@ -1,0 +1,25 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: server-kpm-pon
+  labels:
+    name: server-kpm-pon
+spec:
+  restartPolicy: "Always"
+  containers:
+  - name: server-kpm-pon
+    image: registry.eu-de.bluemix.net/apps/digitalcmr_server
+    imagePullPolicy: Always
+    imagePullSecrets:
+    - name: bluemix-uk-registry
+    command: ["sh", "-c", "npm start"]
+    env:
+    - name: NODE_ENV
+      value: kpm-pon
+    - name: INIT
+      value: "true"
+    - name: HOST
+      value: "0.0.0.0"
+    - name: PORT
+      value: "8080"

@@ -1,0 +1,22 @@
+{
+  "type":        "hlfv1",
+  "orderers":    [
+    {
+      "url": "grpc://orderer-kpm-pon:7050"
+    }
+  ],
+  "ca":          {
+    "url":  "http://ca-kpm-pon:7054",
+    "name": "ca-kpm-pon"
+  },
+  "peers":       [
+    {
+      "requestURL": "grpc://peer0-kpm-pon:7051",
+      "eventURL":   "grpc://peer0-kpm-pon:7053"
+    }
+  ],
+  "keyValStore": "/home/composer/.composer-credentials",
+  "channel":     "composerchannel",
+  "mspID":       "kpm-ponMSP",
+  "timeout":     "300"
+}

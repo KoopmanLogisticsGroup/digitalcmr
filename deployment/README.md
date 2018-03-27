@@ -302,6 +302,16 @@ Error: Error trying to ping. Error: Error trying to query business network. Erro
 
 **S:** You have been too fast and you need to cleanup your environment and restart. Apparently there is a 5 minutes time delay on the certs generated. So if you try using a cert before 5 minutes there is a chance it would be invalid. Apparently this is fixed in fabric v1.0.3.
 
+
+
+If you are on a version >= 1.0.3 then the issue could be related to a bad configuration of your CA. Be sure you are starting the CA server with the right credentials.
+
+
+do not manage to build the chaincode, timeout, etc. check the log of your peer. it is possible it is not able to connect to the orderer.
+
+2018-03-26 11:55:26.293 UTC [ConnProducer] NewConnection -&gt; ERRO 15d5 Failed connecting to orderer-kpm-pon:7050 , error: context deadline exceeded
+
+
 ## References
 [Develop in a cloud sandbox IBM Blockchain Platform](https://ibm-blockchain.github.io/)
 

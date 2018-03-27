@@ -87,7 +87,6 @@ spec:
   ports:
   - protocol: TCP
     port: 5984
-    nodePort: 30984
     name: couchdb1
 ---
 apiVersion: v1
@@ -104,5 +103,4 @@ spec:
   ports:
   - protocol: TCP
     port: 5984
-    nodePort: 31984
     name: couchdb2

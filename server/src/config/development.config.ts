@@ -12,7 +12,7 @@ export class DevelopmentConfig {
       host:         '0.0.0.0',
       serverSecret: 'sUp4hS3cr37kE9c0D3',
       privateDB:    {
-        host: 'private-db',
+        host: 'privatedb',
         port: '5984'
       }
     };

@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: api-kpm-pon
+  labels:
+    name: api-kpm-pon
+spec:
+  restartPolicy: "Always"
+  containers:
+  - name: api-kpm-pon
+    image: registry.eu-de.bluemix.net/apps/digitalcmr_api_doc
+    imagePullPolicy: Always
+    imagePullSecrets:
+    - name: bluemix-uk-registry

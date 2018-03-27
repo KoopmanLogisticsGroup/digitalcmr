@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: client-pon
+  labels:
+    name: client-pon
+spec:
+  restartPolicy: "Always"
+  containers:
+  - name: client-pon
+    image: registry.eu-gb.bluemix.net/apps/digitalcmr_client
+    imagePullPolicy: Always
+    imagePullSecrets:
+    - name: bluemix-uk-registry
+    command: ["sh", "-c", "./run 4200 pon server-pon 8080"]

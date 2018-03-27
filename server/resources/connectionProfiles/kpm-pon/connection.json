@@ -2,17 +2,17 @@
   "type":        "hlfv1",
   "orderers":    [
     {
-      "url": "grpc://orderer.kpm-pon:7050"
+      "url": "grpc://159.122.177.125:31010"
     }
   ],
   "ca":          {
-    "url":  "http://ca.kpm-pon:7054",
-    "name": "ca.kpm-pon"
+    "url":  "http://159.122.177.125:30000",
+    "name": "ca-kpm-pon"
   },
   "peers":       [
     {
-      "requestURL": "grpc://peer0.kpm-pon:7051",
-      "eventURL":   "grpc://peer0.kpm-pon:7053"
+      "requestURL": "grpc://159.122.177.125:30110",
+      "eventURL":   "grpc://159.122.177.125:30111"
     }
   ],
   "keyValStore": "/home/composer/.composer-credentials",
