@@ -1,19 +1,19 @@
 {
-  "name":         "server",
-  "version":      "1.2.2",
-  "private":      true,
-  "engines":      {
+  "name":            "server",
+  "version":         "1.2.2",
+  "private":         true,
+  "engines":         {
     "npm":  "~5.4.2",
     "node": "~6.11.2"
   },
-  "scripts":      {
+  "scripts":         {
     "start":     "node_modules/.bin/nodemon server.js",
     "test":      "npm run test-unit",
     "test-e2e":  "node_modules/.bin/mocha --timeout 15000 -r ts-node/register test/e2e/index.ts",
     "test-unit": "node_modules/.bin/mocha -r ts-node/register test/unit/*.ts",
     "lint":      "node_modules/.bin/tslint --fix -c tslint.json -e 'src/sdk/**' 'src/**/*.ts'"
   },
-  "dependencies": {
+  "dependencies":    {
     "@types/body-parser":   "1.16.5",
     "@types/cookie-parser": "1.4.1",
     "@types/cors":          "2.8.1",
