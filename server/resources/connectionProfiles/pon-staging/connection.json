@@ -6,17 +6,17 @@
     }
   ],
   "ca":          {
-    "url":  "http://159.122.177.125:30000",
-    "name": "ca-kpm-pon"
+    "url":  "http://159.122.179.221:30000",
+    "name": "ca-pon"
   },
   "peers":       [
     {
-      "requestURL": "grpc://159.122.177.125:30110",
-      "eventURL":   "grpc://159.122.177.125:30111"
+      "requestURL": "grpc://159.122.179.221:30110",
+      "eventURL":   "grpc://159.122.179.221:30111"
     }
   ],
   "keyValStore": "/home/composer/.composer-credentials",
   "channel":     "composerchannel",
-  "mspID":       "kpm-ponMSP",
+  "mspID":       "ponMSP",
   "timeout":     "300"
 }
