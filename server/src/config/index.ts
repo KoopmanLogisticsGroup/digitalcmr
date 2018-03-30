@@ -5,8 +5,8 @@ import {ProductionConfig} from './production.config';
 import {Settings} from './settings.interface';
 import {StagingConfig} from './staging.config';
 import {KpmPonStagingConfig} from './kpm-pon-staging.config';
-import {KpmPonConfig} from './kpm-pon-develop.config';
-import {PonConfig} from './pon-develop.config';
+import {KpmPonDevelopConfig} from './kpm-pon-develop.config';
+import {PonDevelopConfig} from './pon-develop.config';
 
 export class Config {
   private static NAMESPACE: string = 'app:config';
@@ -53,13 +53,16 @@ export class Config {
       case 'staging':
         envSettings = StagingConfig.settings;
         break;
-      case 'kpm-pon':
-        envSettings = KpmPonConfig.settings;
+      case 'kpm-pon-develop':
+        envSettings = KpmPonDevelopConfig.settings;
         break;
-      case 'pon':
-        envSettings = PonConfig.settings;
+      case 'pon-develop':
+        envSettings = PonDevelopConfig.settings;
         break;
       case 'kpm-pon-staging':
+        envSettings = KpmPonStagingConfig.settings;
+        break;
+      case 'pon-staging':
         envSettings = KpmPonStagingConfig.settings;
         break;
       default:

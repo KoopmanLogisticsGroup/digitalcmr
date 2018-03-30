@@ -1,10 +1,10 @@
 import {Settings} from './settings.interface';
 
-export class PonConfig {
+export class PonDevelopConfig {
   public static get settings(): Settings {
     return {
       composer:     {
-        profile:   'pon',
+        profile:   'pon-develop',
         network:   'digital-cmr-network',
         channel:   'composerchannel',
         namespace: 'org.digitalcmr'

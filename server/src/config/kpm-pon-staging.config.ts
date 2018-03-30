@@ -6,7 +6,7 @@ export class KpmPonStagingConfig {
       composer:     {
         profile:   'kpm-pon-staging',
         network:   'digital-cmr-network',
-        channel:   'channel1',
+        channel:   'composerchannel',
         namespace: 'org.digitalcmr'
       },
       host:         '0.0.0.0',
