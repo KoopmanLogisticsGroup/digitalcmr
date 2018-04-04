@@ -6,6 +6,7 @@ services:
       context: server
     ports:
       - "8080:8080"
+      - "443:443"
     environment:
       - NODE_ENV=kpm-pon-develop
       - INIT=true
@@ -45,6 +46,7 @@ services:
       context: server
     ports:
       - "8081:8080"
+      - "444:443"
     environment:
       - NODE_ENV=pon-develop
       - HOST=0.0.0.0

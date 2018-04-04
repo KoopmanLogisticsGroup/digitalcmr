@@ -19,6 +19,8 @@ import {IdentityManager} from './blockchain/IdentityManager';
 import {UserInfo} from './interfaces/entity.inferface';
 import * as fs from 'fs';
 import * as https from 'https';
+import * as http from 'http';
+const forceSSL = require('express-force-ssl');
 
 class App {
   private loggerFactory: LoggerFactory = new LoggerFactory(Config.settings.winston, Config.settings.morgan);
@@ -31,6 +33,13 @@ class App {
     app.use(cors());
     app.use(bodyParser.json());
     app.use(this.loggerFactory.requestLogger);
+    app.use(forceSSL);
+    app.set('forceSSLOptions', {
+      enable301Redirects: true,
+      trustXFPHeader: false,
+      httpsPort: 443,
+      sslRequiredMessage: 'SSL Required, Please make sure you are using HTTPS.'
+    });
 
     this.debug('dependency injection');
     useContainer(Container);
@@ -68,16 +77,17 @@ class App {
 
     this.debug('listen');
     let credentials = {
-      key:                fs.readFileSync('./resources/ssl/server-key.pem'),
-      cert:               fs.readFileSync('./resources/ssl/server-crt.pem'),
-      ca:                 fs.readFileSync('./resources/ssl/ca-crt.pem'),
+      key:                fs.readFileSync('./resources/ssl/private/server-key.pem'),
+      cert:               fs.readFileSync('./resources/ssl/certs/server-crt.pem'),
+      ca:                 fs.readFileSync('./resources/ssl/certs/ca-cert.pem'),
+      passphrase:         'C5C9dVXTp8Ka4q',
       requestCert:        true,
       rejectUnauthorized: true
     };
 
-    let httpsServer = https.createServer(credentials, app);
+    http.createServer(app).listen(Config.settings.port as number, Config.settings.host);
+    https.createServer(credentials, app).listen(443, Config.settings.host);
 
-    httpsServer.listen(Config.settings.port as number, Config.settings.host);
     this.logger.info(`Visit API at ${Config.settings.host}:${Config.settings.port}${apiPath}`);
 
     process.on('unhandledRejection', (error: Error, promise: Promise<any>) => {

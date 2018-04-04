@@ -1,0 +1,23 @@
+[req]
+default_bits                = 4096
+distinguished_name          = req_distinguished_name
+req_extensions              = v3_req
+x509_extensions             = v3_req
+
+[req_distinguished_name]
+countryName                 = CountryName
+stateOrProvinceName         = Province
+localityName                = City
+organizationName            = Organisation
+commonName                  = common name (e.g. localhost)
+commonName_max              = 64
+
+#[default settings]
+countryName_default         = NL
+stateOrProvinceName_default = Groningen
+localityName_default        = Groningen
+organizationName_default    = Koopman
+
+[v3_req]
+keyUsage                    = keyEncipherment, dataEncipherment
+extendedKeyUsage            = serverAuth
