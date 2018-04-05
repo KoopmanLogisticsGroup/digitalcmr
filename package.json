@@ -6,6 +6,9 @@
   "scripts":         {
     "install":         "(./composer/hlfv1/downloadFabric.sh) & (cd server && npm install) & (cd composer/bna && npm install) & (cd client && npm install)",
     "start":           "docker-compose up --force-recreate",
+    "startNetwork":    "docker-compose -f kpm-pon-blockchain.yml build && docker-compose -f kpm-pon-blockchain.yml up",
+    "startApp":        "docker-compose -f kpm-pon-app.yml build && docker-compose -f kpm-pon-app.yml up",
+    "stopAll":         "docker-compose -f kpm-pon-app.yml down && docker-compose -f kpm-pon-blockchain.yml down",
     "test-server":     "cd server && npm test",
     "test-composer":   "cd composer/bna && npm test",
     "test":            "npm run test-server && npm run test-composer",
