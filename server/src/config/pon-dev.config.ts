@@ -4,7 +4,7 @@ export class PonDevConfig {
   public static get settings(): Settings {
     return {
       composer:     {
-        profile:   'kpm-pon-dev',
+        profile:   'pon-dev',
         network:   'digital-cmr-network',
         channel:   'composerchannel',
         namespace: 'org.digitalcmr'
