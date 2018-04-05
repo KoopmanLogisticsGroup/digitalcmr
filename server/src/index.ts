@@ -77,9 +77,9 @@ class App {
 
     this.debug('listen');
     let credentials = {
-      key:                fs.readFileSync('./resources/ssl/private/server-key.pem'),
-      cert:               fs.readFileSync('./resources/ssl/certs/server-crt.pem'),
-      ca:                 fs.readFileSync('./resources/ssl/certs/ca-cert.pem'),
+      key:                fs.readFileSync('./resources/tls/kpm-pon-app/server-key.pem'),
+      cert:               fs.readFileSync('./resources/tls/kpm-pon-app/server-crt.pem'),
+      ca:                 fs.readFileSync('./resources/tls/kpm-pon-app/ca-cert.pem'),
       passphrase:         'C5C9dVXTp8Ka4q',
       requestCert:        true,
       rejectUnauthorized: true

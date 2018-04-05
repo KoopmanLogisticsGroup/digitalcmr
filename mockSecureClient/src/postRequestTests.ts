@@ -1,15 +1,13 @@
 import * as fs from 'fs';
 import * as https from 'https';
 import * as http from 'http';
+const sharedData  = require('../../server/resources/testData/sharedData.json');
 
 export class PostRequestTests {
   private postheaders = {
     'Content-Type':   'application/json',
     'Content-Length': Buffer.byteLength(
-      JSON.stringify({
-        username: 'willem@amsterdamcompound.org',
-        password: 'passw0rd'
-      }), 'utf8')
+      JSON.stringify(sharedData.entities[0].userApp))
   };
   private requestOptions: any = {
     hostname: 'localhost',
@@ -22,7 +20,6 @@ export class PostRequestTests {
     ca:       fs.readFileSync('./sslForClient/validCertificates/certs/ca-cert.pem')
   };
   private token: string;
-
 
   public async runTests(): Promise<string> {
     //
@@ -85,8 +82,8 @@ export class PostRequestTests {
     //  Case 4: wrong certificates used
     //
     let requestWithWrongCertificates = Object.assign({}, this.requestOptions);
-    requestWithWrongCertificates.key =      fs.readFileSync('./sslForClient/invalidCertificates/private/client1-key.pem');
-    requestWithWrongCertificates.cert =     fs.readFileSync('./sslForClient/invalidCertificates/certs/client1-wrongcacrt.pem');
+    requestWithWrongCertificates.key = fs.readFileSync('./sslForClient/invalidCertificates/private/client1-key.pem');
+    requestWithWrongCertificates.cert = fs.readFileSync('./sslForClient/invalidCertificates/certs/client1-wrongcacrt.pem');
 
     result = await this.doHTTPSRequest(requestWithWrongCertificates);
 
@@ -103,7 +100,7 @@ export class PostRequestTests {
     //  Case 4: wrong CA used
     //
     let requestWithWrongCA = Object.assign({}, this.requestOptions);
-    requestWithWrongCA.ca =       fs.readFileSync('./sslForClient/invalidCertificates/certs/ca-crt.pem');
+    requestWithWrongCA.ca = fs.readFileSync('./sslForClient/invalidCertificates/certs/ca-crt.pem');
 
     result = await this.doHTTPSRequest(requestWithWrongCA);
 
@@ -136,43 +133,36 @@ export class PostRequestTests {
 
   public async doHTTPSRequest(requestOptions: any): Promise<any> {
     return new Promise<any>((resolve) => {
-      let req = https.request(requestOptions, function (res) {
-        res.on('data', function (data) {
+      let req = https.request(requestOptions, (res) => {
+        res.on('data', (data) => {
           resolve(data.toString() + '\n');
         });
       });
 
-      req.write(JSON.stringify({
-        username: 'willem@amsterdamcompound.org',
-        password: 'passw0rd'
-      }));
+      req.write(JSON.stringify(sharedData.entities[0].userApp));
 
       req.end();
 
-      req.on('error', function (e) {
-        resolve(e);
+      req.on('error', (err) => {
+        resolve(err);
       });
     });
   }
 
-
   public async doHTTPRequest(requestOptions: any): Promise<any> {
     return new Promise<any>((resolve) => {
-      let req = http.request(requestOptions, function (res) {
-        res.on('data', function (data) {
+      let req = http.request(requestOptions, (res) => {
+        res.on('data', (data) => {
           resolve(data.toString() + '\n');
         });
       });
 
-      req.write(JSON.stringify({
-        username: 'willem@amsterdamcompound.org',
-        password: 'passw0rd'
-      }));
+      req.write(JSON.stringify(sharedData.entities[0].userApp));
 
       req.end();
 
-      req.on('error', function (e) {
-        resolve(e);
+      req.on('error', (err) => {
+        resolve(err);
       });
     });
   }

@@ -162,15 +162,15 @@ export class PutRequestsTests {
 
   public async doHTTPSRequest(requestOptions: any): Promise<any> {
     return new Promise<any>((resolve, reject) => {
-      let req = https.request(requestOptions, function (res) {
-        res.on('data', function (data) {
+      let req = https.request(requestOptions, (res) => {
+        res.on('data', (data) => {
           resolve(data.toString() + '\n');
         });
       });
 
       req.end();
 
-      req.on('error', function (err) {
+      req.on('error', (err) => {
         reject(err);
       });
     });
@@ -178,21 +178,16 @@ export class PutRequestsTests {
 
   public async doHTTPRequest(requestOptions: any): Promise<any> {
     return new Promise<any>((resolve) => {
-      let req = http.request(requestOptions, function (res) {
-        res.on('data', function (data) {
+      let req = http.request(requestOptions, (res) => {
+        res.on('data', (data) => {
           resolve(data.toString() + '\n');
         });
       });
 
-      req.write(JSON.stringify({
-        username: 'willem@amsterdamcompound.org',
-        password: 'passw0rd'
-      }));
-
       req.end();
 
-      req.on('error', function (e) {
-        resolve(e);
+      req.on('error', (err) => {
+        resolve(err);
       });
     });
   }
