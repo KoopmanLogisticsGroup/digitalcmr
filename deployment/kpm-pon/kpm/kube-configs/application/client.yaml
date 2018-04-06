@@ -6,6 +6,7 @@ metadata:
   labels:
     name: client-kpm-pon
 spec:
+  replicas: 1
   restartPolicy: "Always"
   containers:
   - name: client-kpm-pon

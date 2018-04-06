@@ -6,6 +6,7 @@ metadata:
   labels:
     name: api-doc
 spec:
+  replicas: 1
   restartPolicy: "Always"
   containers:
   - name: api-doc
@@ -13,3 +14,4 @@ spec:
     imagePullPolicy: Always
     imagePullSecrets:
     - name: bluemix-uk-registry
+    command: ["sh", "-c", "./node_modules/.bin/ng serve -H 0.0.0.0 -e prod --disable-host-check"]

@@ -1,5 +1,4 @@
 ---
-# The service to expose composer playground
 apiVersion: v1
 kind: Service
 metadata:

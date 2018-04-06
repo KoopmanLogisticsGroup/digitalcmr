@@ -7,6 +7,7 @@ import {StagingConfig} from './staging.config';
 import {KpmPonStagingConfig} from './kpm-pon-staging.config';
 import {KpmPonDevConfig} from './kpm-pon-dev.config';
 import {PonDevConfig} from './pon-dev.config';
+import {PonStagingConfig} from './pon-staging.config';
 
 export class Config {
   private static NAMESPACE: string = 'app:config';
@@ -63,7 +64,7 @@ export class Config {
         envSettings = KpmPonStagingConfig.settings;
         break;
       case 'pon-staging':
-        envSettings = KpmPonStagingConfig.settings;
+        envSettings = PonStagingConfig.settings;
         break;
       default:
         debug(this.NAMESPACE)(`WARNING: no environment settings for ${process.env.NODE_ENV}.`);
