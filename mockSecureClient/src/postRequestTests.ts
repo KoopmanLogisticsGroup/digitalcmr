@@ -4,17 +4,23 @@ import * as http from 'http';
 const sharedData  = require('../../server/resources/testData/sharedData.json');
 
 export class PostRequestTests {
+  private httpPort: number = 31001;
+  private httpsPort: number = 31443;
+
   private postheaders = {
     'Content-Type':   'application/json',
     'Content-Length': Buffer.byteLength(
       JSON.stringify(sharedData.entities[0].userApp))
   };
   private requestOptions: any = {
-    hostname: 'localhost',
-    port:     443,
+    hostname: '159.122.177.125',
+    port:     this.httpsPort,
     path:     '/api/v1/login',
     method:   'POST',
     headers:  this.postheaders,
+    checkServerIdentity: (host, cert) => {
+      return undefined;
+    },
     key:      fs.readFileSync('./sslForClient/validCertificates/private/koopman-key.pem'),
     cert:     fs.readFileSync('./sslForClient/validCertificates/certs/koopman-crt.pem'),
     ca:       fs.readFileSync('./sslForClient/validCertificates/certs/ca-cert.pem')
@@ -27,6 +33,7 @@ export class PostRequestTests {
     //
 
     let result = await this.doHTTPSRequest(this.requestOptions);
+    console.log(result);
     this.token = JSON.parse(result).token;
 
     console.log('normal POST request with correct certifiactes');
@@ -42,7 +49,7 @@ export class PostRequestTests {
     //  Case 2: wrong port
     //
     let requestOptionsWithWrongPort = Object.assign({}, this.requestOptions);
-    requestOptionsWithWrongPort.port = 8080;
+    requestOptionsWithWrongPort.port = this.httpPort;
 
     result = await this.doHTTPSRequest(requestOptionsWithWrongPort);
 
@@ -118,7 +125,7 @@ export class PostRequestTests {
     //
     let requestHTTPOptions = {
       hostname: this.requestOptions.hostname,
-      port:     8080,
+      port:     this.httpPort,
       path:     this.requestOptions.path,
       method:   this.requestOptions.method,
       headers:  this.requestOptions.headers,
