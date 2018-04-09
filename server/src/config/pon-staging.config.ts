@@ -1,10 +1,10 @@
 import {Settings} from './settings.interface';
 
-export class KpmPonStagingConfig {
+export class PonStagingConfig {
   public static get settings(): Settings {
     return {
       composer:     {
-        profile:   'kpm-pon-staging',
+        profile:   'pon-staging',
         network:   'digital-cmr-network',
         channel:   'composerchannel',
         namespace: 'org.digitalcmr'

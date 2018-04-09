@@ -1,8 +1,8 @@
 {
-  "name":                 "digital-cmr-network",
-  "version":              "0.13.2",
-  "description":          "Logistic supply chain on blockchain",
-  "scripts":              {
+  "name":            "digital-cmr-network",
+  "version":         "0.13.2",
+  "description":     "Logistic supply chain on blockchain",
+  "scripts":         {
     "prepublish": "mkdirp ./dist && ./node_modules/.bin/composer archive create --sourceType dir --sourceName . -a ./dist/digital-cmr-network.bna",
     "pretest":    "npm run lint",
     "lint":       "./node_modules/.bin/eslint .",
@@ -10,17 +10,17 @@
     "test-cover": "nyc npm run test-inner",
     "test":       "npm run test-inner"
   },
-  "repository":           {
+  "repository":      {
     "type": "git",
     "url":  "https://github.com/hyperledger/composer-sample-networks.git"
   },
-  "keywords":             [
+  "keywords":        [
     "sample",
     "network"
   ],
-  "author":               "Hyperledger Composer",
-  "license":              "Apache-2.0",
-  "devDependencies":      {
+  "author":          "Hyperledger Composer",
+  "license":         "Apache-2.0",
+  "devDependencies": {
     "browserfs":                   "1.4.3",
     "chai":                        "4.1.1",
     "chai-as-promised":            "7.1.1",
@@ -37,7 +37,7 @@
     "moment":                      "2.18.1",
     "nyc":                         "11.1.0"
   },
-  "nyc":                  {
+  "nyc":             {
     "exclude":        [
       "coverage/**",
       "features/**",
