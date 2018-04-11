@@ -3,11 +3,17 @@ import * as https from 'https';
 import * as http from 'http';
 
 export class PutRequestsTests {
+  private httpPort: number = 31001;
+  private httpsPort: number = 31443;
+
   public requestOptions: any = {
-    hostname: 'localhost',
-    port:     443,
+    hostname: '159.122.177.125',
+    port:     this.httpsPort,
     path:     '/api/v1/ECMR/status/LOADED',
     method:   'PUT',
+    checkServerIdentity: (host, cert) => {
+      return undefined;
+    },
     headers:  this.setHeader(this.token),
     key:      fs.readFileSync('./sslForClient/validCertificates/private/koopman-key.pem'),
     cert:     fs.readFileSync('./sslForClient/validCertificates/certs/koopman-crt.pem'),
@@ -40,7 +46,7 @@ export class PutRequestsTests {
 //  Case 7: PUT items from the wrong port
 //
     let requestOptionsWithWrongPort = Object.assign({}, this.requestOptions);
-    requestOptionsWithWrongPort.port = 8080;
+    requestOptionsWithWrongPort.port = this.httpPort;
 
     console.log('testing PUT on the wrong port');
     try {
@@ -140,7 +146,7 @@ export class PutRequestsTests {
 //
     let requestHTTPOptions = {
       hostname: this.requestOptions.hostname,
-      port:     8080,
+      port:     this.httpPort,
       path:     this.requestOptions.path,
       method:   this.requestOptions.method,
       headers:  this.requestOptions.headers,
@@ -153,7 +159,7 @@ export class PutRequestsTests {
 
   private setHeader(token: string): any {
     const headers: any = {
-      'x-access-token': token,
+      'x-access-token': token || 'test',
       'Content-Type':   'application/json'
     };
 
