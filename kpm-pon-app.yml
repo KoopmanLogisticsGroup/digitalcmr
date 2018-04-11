@@ -9,6 +9,7 @@ services:
       - "443:443"
     environment:
       - NODE_ENV=kpm-pon-dev
+      - TLS=false
       - INIT=true
       - HOST=0.0.0.0
       - PORT=8080
@@ -49,6 +50,7 @@ services:
       - "444:443"
     environment:
       - NODE_ENV=pon-dev
+      - TLS=false
       - HOST=0.0.0.0
       - PORT=8080
     volumes:
