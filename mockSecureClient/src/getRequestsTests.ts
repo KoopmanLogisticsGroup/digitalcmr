@@ -3,11 +3,11 @@ import * as https from 'https';
 import * as http from 'http';
 
 export class GetRequestsTests {
-  private httpPort: number = 31001;
-  private httpsPort: number = 31443;
+  private httpPort: number = 8080;
+  private httpsPort: number = 443;
 
   public requestOptions: any = {
-    hostname: '159.122.177.125',
+    hostname: 'localhost',
     port:     this.httpsPort,
     path:     '/api/v1/vehicle',
     method:   'GET',

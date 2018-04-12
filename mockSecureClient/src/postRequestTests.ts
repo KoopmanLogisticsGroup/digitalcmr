@@ -4,8 +4,8 @@ import * as http from 'http';
 const sharedData  = require('../../server/resources/testData/sharedData.json');
 
 export class PostRequestTests {
-  private httpPort: number = 31001;
-  private httpsPort: number = 31443;
+  private httpPort: number = 8080;
+  private httpsPort: number = 443;
 
   private postheaders = {
     'Content-Type':   'application/json',
@@ -13,7 +13,7 @@ export class PostRequestTests {
       JSON.stringify(sharedData.entities[0].userApp))
   };
   private requestOptions: any = {
-    hostname: '159.122.177.125',
+    hostname: 'localhost',
     port:     this.httpsPort,
     path:     '/api/v1/login',
     method:   'POST',

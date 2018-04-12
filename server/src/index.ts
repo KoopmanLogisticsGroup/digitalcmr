@@ -26,6 +26,9 @@ class App {
   private loggerFactory: LoggerFactory = new LoggerFactory(Config.settings.winston, Config.settings.morgan);
   private logger: LoggerInstance = this.loggerFactory.get('App');
   private debug: IDebugger = debug('app:main');
+  private isTLSEnabled: boolean = process.env.TLS === 'true';
+  private isInitRequired: boolean = process.env.INIT === 'true';
+  private routingControllersOptions: RoutingControllersOptions;
 
   public async run(): Promise<void> {
     this.debug('starting express app');
@@ -33,7 +36,6 @@ class App {
     app.use(cors());
     app.use(bodyParser.json());
     app.use(this.loggerFactory.requestLogger);
-    app.use(forceSSL);
     app.set('forceSSLOptions', {
       enable301Redirects: true,
       trustXFPHeader: false,
@@ -49,7 +51,7 @@ class App {
     Container.set(TransactionHandler, new TransactionHandler(Container.get(BusinessNetworkHandler)));
     Container.set(IdentityManager, new IdentityManager(Config.settings.composer.namespace));
 
-    if (process.env.INIT) {
+    if (this.isInitRequired) {
       await this.addTestData();
     }
 
@@ -66,16 +68,33 @@ class App {
     }
 
     const apiPath = Config.settings.apiPath;
-    const routingControllersOptions: RoutingControllersOptions = {
+    this.routingControllersOptions = {
       defaultErrorHandler: false,
       routePrefix:         apiPath,
       controllers:         [`${__dirname}${apiPath}/*.ts`]
     };
 
-    this.debug('routing: %o', routingControllersOptions);
-    useExpressServer(app, routingControllersOptions);
+    this.debug('routing: %o', this.routingControllersOptions);
 
-    this.debug('listen');
+    if (this.isTLSEnabled) {
+      this.setupHTTPSSecureServer(app);
+    } else {
+      this.setupHTTPServer(app);
+    }
+
+    process.on('unhandledRejection', (error: Error, promise: Promise<any>) => {
+      this.logger.error('Unhandled rejection', error.stack);
+    });
+  }
+
+  private setupHTTPServer(app: any): void {
+    useExpressServer(app, this.routingControllersOptions);
+
+    http.createServer(app).listen(Config.settings.port as number, Config.settings.host);
+    this.logger.info(`Visit API at ${Config.settings.host}:${Config.settings.port}${Config.settings.apiPath}`);
+  }
+
+  private setupHTTPSSecureServer(app: any): void {
     let credentials = {
       key:                fs.readFileSync('./resources/tls/kpm-pon-app/server-key.pem'),
       cert:               fs.readFileSync('./resources/tls/kpm-pon-app/server-crt.pem'),
@@ -85,14 +104,12 @@ class App {
       rejectUnauthorized: true
     };
 
+    app.use(forceSSL);
+    useExpressServer(app, this.routingControllersOptions);
+
     http.createServer(app).listen(Config.settings.port as number, Config.settings.host);
     https.createServer(credentials, app).listen(443, Config.settings.host);
-
-    this.logger.info(`Visit API at ${Config.settings.host}:${Config.settings.port}${apiPath}`);
-
-    process.on('unhandledRejection', (error: Error, promise: Promise<any>) => {
-      this.logger.error('Unhandled rejection', error.stack);
-    });
+    this.logger.info(`Visit API at ${Config.settings.host}:443${Config.settings.apiPath}`);
   }
 
   private async addTestData(): Promise<any> {
