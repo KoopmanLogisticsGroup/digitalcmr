@@ -125,14 +125,6 @@ export class TestData {
       identities.push(await this.identityManager.addEntity(TestData.adminIdentity, entity));
     }
 
-    await this.addAdmin(<UserInfo> {
-      username:  'admin',
-      password:  '@dm1nPassw0rd',
-      firstName: 'admin',
-      lastName:  'admin',
-      role:      'admin'
-    });
-
     return identities;
   }
 

@@ -21,12 +21,15 @@ spec:
   - name: fabric-config
     hostPath:
       path: "/fabric-config"
+  - name: credentials-pv
+    hostPath:
+      path: "/var/.composer-credentials"
 
   containers:
   - name: wipeshared
     image: ibmblockchain/fabric-tools:1.0.6
     imagePullPolicy: Always
-    command: ["sh", "-c", "rm -rf /home/* /fabric-config/* /privatedb-pon/* /peer0-pon/* /peer0-pon-couchdb/*"]
+    command: ["sh", "-c", "rm -rf /home/* /fabric-config/* /privatedb-pon/* /peer0-pon/* /peer0-pon-couchdb/* /.composer-credentials/*"]
     volumeMounts:
     - name: composer-credentials
       mountPath: /home
@@ -38,3 +41,5 @@ spec:
       mountPath: /peer0-pon-couchdb
     - name: fabric-config
       mountPath: /fabric-config
+    - name: credentials-pv
+      mountPath: /.composer-credentials

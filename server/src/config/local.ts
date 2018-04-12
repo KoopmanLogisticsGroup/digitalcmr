@@ -1,16 +1,16 @@
 import {Settings} from './settings.interface';
 
-export class PonStagingConfig {
+export class LocalConfig {
   public static get settings(): Settings {
     return {
-      composer:     {
-        profile:   'pon-staging',
+      composer:  {
+        profile:   'defaultProfile',
         network:   'digital-cmr-network',
         channel:   'composerchannel',
         namespace: 'org.digitalcmr'
       },
-      privateDB:    {
-        host: 'privatedb-pon',
+      privateDB: {
+        host: 'privatedb',
         port: '5984'
       }
     };

@@ -23,7 +23,9 @@ spec:
                 - name: NODE_ENV
                   value: kpm-pon-staging
                 - name: INIT
-                  value: "true"
+                  value: "false"
+                - name: TLS
+                  value: "false"
                 - name: HOST
                   value: "0.0.0.0"
                 - name: PORT

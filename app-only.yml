@@ -6,13 +6,14 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=local
       - INIT=true
+      - TLS=false
       - HOST=0.0.0.0
       - PORT=8080
     volumes:
       - ./server/src:/usr/src/app/src
-      - ./server/tsconfig.json:/usr/src/app/tsconfig.json # TS filenames get added automatically to this file on build
+      - ./server/tsconfig.json:/usr/src/app/tsconfig.json
       - ./server/package.json:/usr/src/app/package.json
       - ./server/resources/connectionProfiles:/root/.composer-connection-profiles
       - ./server/resources:/usr/src/app/resources

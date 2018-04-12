@@ -1,0 +1,22 @@
+{
+  "type":        "hlfv1",
+  "orderers":    [
+    {
+      "url": "grpc://koopmankube1.koopman.nl:31010"
+    }
+  ],
+  "ca":          {
+    "url":  "http://ponkube1.koopman.nl:30000",
+    "name": "ca-pon"
+  },
+  "peers":       [
+    {
+      "requestURL": "grpc://ponkube1.koopman.nl:30110",
+      "eventURL":   "grpc://ponkube1.koopman.nl:30111"
+    }
+  ],
+  "keyValStore": "/home/composer/.composer-credentials",
+  "channel":     "composerchannel",
+  "mspID":       "ponMSP",
+  "timeout":     "300"
+}
