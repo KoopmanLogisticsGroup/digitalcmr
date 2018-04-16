@@ -24,6 +24,8 @@ spec:
                   value: production
                 - name: INIT
                   value: "true"
+                - name: TLS
+                  value: "false"
                 - name: HOST
                   value: "0.0.0.0"
                 - name: PORT
