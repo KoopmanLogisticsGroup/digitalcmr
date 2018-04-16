@@ -1,7 +1,8 @@
 #!/bin/sh
 
+# copy and execute this script in the specific config folder which contains the configtx and crypto-config files
 FABRIC_VERSION=1.0.6
-export FABRIC_CFG_PATH=$(pwd)/config
+export FABRIC_CFG_PATH=$(pwd)
 GENESIS=staging
 CHANNEL_FILE=staging
 CHANNEL_ID=composerchannel
@@ -24,3 +25,5 @@ echo "Generating channel configuration transaction"
 
 # remove the binaries
 rm -rf ./bin
+
+# remove this file

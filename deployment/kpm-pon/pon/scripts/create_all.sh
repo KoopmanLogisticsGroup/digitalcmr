@@ -24,7 +24,7 @@ create/create_cryptos.sh
 
 echo ""
 echo "=> CREATE_ALL: Running Join Channel on pon Peer1"
-CHANNEL_NAME="composerchannel" PEER_MSPID="ponMSP" PEER_ADDRESS="peer0-pon:5010" ORDERER_ADDRESS="159.122.177.125:31010" MSP_CONFIGPATH="/fabric-config/Admin@pon/msp" create/join_channel.sh
+CHANNEL_NAME="composerchannel" PEER_MSPID="ponMSP" PEER_ADDRESS="peer0-pon:5010" ORDERER_ADDRESS="159.122.179.221:31010" MSP_CONFIGPATH="/fabric-config/Admin@pon/msp" create/join_channel.sh
 
 echo ""
 echo "=> CREATE_ALL: Deleting create and join channel pods"
@@ -32,7 +32,7 @@ delete/delete_channel-pods.sh
 
 echo ""
 echo "=> CREATE_ALL: Creating composer playground"
-ORDERER_ADDRESS="159.122.177.125:31010" create/create_composer.sh
+ORDERER_ADDRESS="159.122.179.221:31010" create/create_composer.sh
 
 TIMEOUT=300
 echo ""

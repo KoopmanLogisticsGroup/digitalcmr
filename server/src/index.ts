@@ -52,7 +52,7 @@ class App {
     Container.set(TransactionHandler, new TransactionHandler(Container.get(BusinessNetworkHandler)));
     Container.set(IdentityManager, new IdentityManager(Config.settings.composer.namespace));
 
-    if (process.env.NODE_ENV!.indexOf('kpm') === 0 || process.env.NODE_ENV === 'local') {
+    if (process.env.NODE_ENV!.indexOf('kpm') !== -1 || process.env.NODE_ENV === 'local') {
       await new TestData(Container.get(TransactionHandler),
         Container.get(DataService),
         Container.get(IdentityManager)).addAdmin(<UserInfo> {
@@ -62,7 +62,7 @@ class App {
         lastName:  'admin',
         role:      'admin'
       });
-    } else if (process.env.NODE_ENV!.indexOf('pon') === 0) {
+    } else if (process.env.NODE_ENV!.indexOf('pon') !== -1) {
       await new TestData(Container.get(TransactionHandler),
         Container.get(DataService),
         Container.get(IdentityManager)).addAdmin(<UserInfo> {
@@ -102,7 +102,7 @@ class App {
     useExpressServer(app, this.routingControllersOptions);
 
     http.createServer(app).listen(Config.settings.port as number, Config.settings.host);
-    this.logger.info(`TSL disable - API at http://${Config.settings.host}:${Config.settings.port}${Config.settings.apiPath}`);
+    this.logger.info(`TSL disabled - API at http://${Config.settings.host}:${Config.settings.port}${Config.settings.apiPath}`);
   }
 
   private setupHTTPSSecureServer(app: any): void {
