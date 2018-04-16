@@ -2,17 +2,17 @@
   "type":        "hlfv1",
   "orderers":    [
     {
-      "url": "grpc://159.122.178.162:31010"
+      "url": "grpc://159.122.181.82:31010"
     }
   ],
   "ca":          {
-    "url":  "http://159.122.178.162:30000",
+    "url":  "http://159.122.181.82:30000",
     "name": "CA1"
   },
   "peers":       [
     {
-      "requestURL": "grpc://159.122.178.162:30110",
-      "eventURL":   "grpc://159.122.178.162:30111"
+      "requestURL": "grpc://159.122.181.82:30110",
+      "eventURL":   "grpc://159.122.181.82:30111"
     }
   ],
   "keyValStore": "/home/composer/.composer-credentials",
