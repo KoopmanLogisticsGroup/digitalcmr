@@ -6,9 +6,9 @@ export class DefaultConfig {
     return {
       apiPath:      '/api/v1',
       env:          process.env.NODE_ENV,
-      host:         '0.0.0.0',
+      host:         process.env.VCAP_HOST || process.env.HOST || '0.0.0.0',
+      port:         process.env.VCAP_PORT || process.env.PORT || '8080',
       morgan:       {},
-      port:         '8080',
       winston:      {
         transports:  [
           new winston.transports.Console({
@@ -23,14 +23,14 @@ export class DefaultConfig {
       },
       serverSecret: 'sUp4hS3cr37kE9c0D3',
       composer:     {
-        channel:   '',
-        profile:   '',
-        network:   '',
-        namespace: ''
+        channel:   'composerchannel',
+        profile:   'defaultProfile',
+        network:   'digital-cmr-network',
+        namespace: 'org.digitalcmr'
       },
       privateDB:    {
-        host: '',
-        port: ''
+        host: 'privatedb',
+        port: '5984'
       }
     };
   }

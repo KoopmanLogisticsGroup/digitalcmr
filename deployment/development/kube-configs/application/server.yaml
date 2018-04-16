@@ -2,28 +2,28 @@
 kind: StatefulSet
 apiVersion: apps/v1beta1
 metadata:
-    name: server-pon
+    name: app-server
 spec:
     replicas: 1
-    serviceName: server-pon
+    serviceName: app-server
     template:
         metadata:
             labels:
-                tier: server-pon
+                tier: app-server
         spec:
             terminationGracePeriodSeconds: 10
             containers:
-              - name: server-pon
-                image: registry.eu-gb.bluemix.net/apps/digitalcmr_server
+              - name: app-server
+                image: registry.eu-gb.bluemix.net/koopman/digitalcmr_server
                 imagePullPolicy: Always
                 imagePullSecrets:
                 - name: bluemix-uk-registry
                 command: ["sh", "-c", "npm start"]
                 env:
                 - name: NODE_ENV
-                  value: pon-staging
+                  value: development
                 - name: INIT
-                  value: "false"
+                  value: "true"
                 - name: TLS
                   value: "false"
                 - name: HOST
@@ -31,18 +31,18 @@ spec:
                 - name: PORT
                   value: "8080"
                   volumeMounts:
-                    - name: pon-credentials-pv
+                    - name: credentials-pv
                       mountPath: /home/composer/.composer-credentials
     volumeClaimTemplates:
         - metadata:
-            name: pon-credentials-pv
+            name: credentials-pv
           spec:
               accessModes:
                   - ReadWriteOnce
               resources:
                   requests:
-                      storage: 1G
+                      storage: 100M
               selector:
                 matchLabels:
-                  vol: pon-credentials-pv
+                  vol: credentials-pv
               storageClassName: ""

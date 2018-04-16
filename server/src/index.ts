@@ -20,14 +20,15 @@ import {UserInfo} from './interfaces/entity.inferface';
 import * as fs from 'fs';
 import * as https from 'https';
 import * as http from 'http';
+
 const forceSSL = require('express-force-ssl');
 
 class App {
   private loggerFactory: LoggerFactory = new LoggerFactory(Config.settings.winston, Config.settings.morgan);
-  private logger: LoggerInstance = this.loggerFactory.get('App');
-  private debug: IDebugger = debug('app:main');
-  private isTLSEnabled: boolean = process.env.TLS === 'true';
-  private isInitRequired: boolean = process.env.INIT === 'true';
+  private logger: LoggerInstance       = this.loggerFactory.get('App');
+  private debug: IDebugger             = debug('app:main');
+  private isTLSEnabled: boolean        = process.env.TLS === 'true';
+  private isInitRequired: boolean      = process.env.INIT === 'true';
   private routingControllersOptions: RoutingControllersOptions;
 
   public async run(): Promise<void> {
@@ -38,8 +39,8 @@ class App {
     app.use(this.loggerFactory.requestLogger);
     app.set('forceSSLOptions', {
       enable301Redirects: true,
-      trustXFPHeader: false,
-      httpsPort: 443,
+      trustXFPHeader:     false,
+      httpsPort:          443,
       sslRequiredMessage: 'SSL Required, Please make sure you are using HTTPS.'
     });
 
@@ -51,11 +52,17 @@ class App {
     Container.set(TransactionHandler, new TransactionHandler(Container.get(BusinessNetworkHandler)));
     Container.set(IdentityManager, new IdentityManager(Config.settings.composer.namespace));
 
-    if (this.isInitRequired) {
-      await this.addTestData();
-    }
-
-    if (process.env.NODE_ENV === 'pon') {
+    if (process.env.NODE_ENV!.indexOf('kpm') !== -1 || process.env.NODE_ENV === 'local') {
+      await new TestData(Container.get(TransactionHandler),
+        Container.get(DataService),
+        Container.get(IdentityManager)).addAdmin(<UserInfo> {
+        username:  'admin',
+        password:  '@dm1nPassw0rd',
+        firstName: 'admin',
+        lastName:  'admin',
+        role:      'admin'
+      });
+    } else if (process.env.NODE_ENV!.indexOf('pon') !== -1) {
       await new TestData(Container.get(TransactionHandler),
         Container.get(DataService),
         Container.get(IdentityManager)).addAdmin(<UserInfo> {
@@ -67,7 +74,11 @@ class App {
       });
     }
 
-    const apiPath = Config.settings.apiPath;
+    if (this.isInitRequired) {
+      await this.addTestData();
+    }
+
+    const apiPath                  = Config.settings.apiPath;
     this.routingControllersOptions = {
       defaultErrorHandler: false,
       routePrefix:         apiPath,
@@ -91,7 +102,7 @@ class App {
     useExpressServer(app, this.routingControllersOptions);
 
     http.createServer(app).listen(Config.settings.port as number, Config.settings.host);
-    this.logger.info(`Visit API at ${Config.settings.host}:${Config.settings.port}${Config.settings.apiPath}`);
+    this.logger.info(`TSL disabled - API at http://${Config.settings.host}:${Config.settings.port}${Config.settings.apiPath}`);
   }
 
   private setupHTTPSSecureServer(app: any): void {
@@ -109,7 +120,7 @@ class App {
 
     http.createServer(app).listen(Config.settings.port as number, Config.settings.host);
     https.createServer(credentials, app).listen(443, Config.settings.host);
-    this.logger.info(`Visit API at ${Config.settings.host}:443${Config.settings.apiPath}`);
+    this.logger.info(`TLS enabled - API at https://${Config.settings.host}${Config.settings.apiPath}`);
   }
 
   private async addTestData(): Promise<any> {

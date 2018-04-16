@@ -9,10 +9,8 @@ export class KpmPonStagingConfig {
         channel:   'composerchannel',
         namespace: 'org.digitalcmr'
       },
-      host:         '0.0.0.0',
-      serverSecret: 'sUp4hS3cr37kE9c0D3',
       privateDB:    {
-        host: 'privatedb',
+        host: 'privatedb-kpm-pon',
         port: '5984'
       }
     };

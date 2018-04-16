@@ -41,13 +41,13 @@ while [ "$(kubectl get svc | grep composer-utils | wc -l | awk '{print $1}')" !=
 	sleep 1;
 done
 
-# Default to "159.122.177.125:31010" if not defined
+# Default to "159.122.179.221:31010" if not defined
 if [ -z "${ORDERER_ADDRESS}" ]; then
-	echo "ORDERER_ADDRESS not defined. I will use \"159.122.177.125:31010\"."
+	echo "ORDERER_ADDRESS not defined. I will use \"159.122.179.221:31010\"."
 	echo "I will wait 5 seconds before continuing."
 	sleep 5
 fi
-ORDERER_ADDRESS=${ORDERER_ADDRESS:-159.122.177.125:31010}
+ORDERER_ADDRESS=${ORDERER_ADDRESS:-159.122.179.221:31010}
 
 echo "Preparing yaml file for composer identity import"
 sed -e "s/%ORDERER_ADDRESS%/${ORDERER_ADDRESS}/g" ${KUBECONFIG_FOLDER}/composer-identity-import.yaml.base > ${KUBECONFIG_FOLDER}/composer-identity-import.yaml

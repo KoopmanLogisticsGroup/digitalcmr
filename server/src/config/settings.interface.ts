@@ -10,11 +10,11 @@ export interface Settings {
     namespace: string;
   };
   env?: string;
-  host: string;
+  host?: string;
   morgan?: Options;
   port?: number | string;
   winston?: LoggerOptions;
-  serverSecret: string;
+  serverSecret?: string;
   privateDB: {
     host: string,
     port: string
