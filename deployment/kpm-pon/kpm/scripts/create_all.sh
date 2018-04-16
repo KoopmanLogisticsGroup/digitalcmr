@@ -38,7 +38,7 @@ echo ""
 echo "=> CREATE_ALL: Creating composer playground"
 create/create_composer.sh
 
-#TIMEOUT=300
-#echo ""
-#echo "=> CREATE_ALL: Wait $TIMEOUT seconds after deploying to allow synchronisation..."
-#sleep $TIMEOUT
+TIMEOUT=300
+echo ""
+echo "=> CREATE_ALL: Wait $TIMEOUT seconds after deploying to allow the admin user to be enrolled correctly..."
+sleep $TIMEOUT

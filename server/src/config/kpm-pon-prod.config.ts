@@ -1,16 +1,16 @@
 import {Settings} from './settings.interface';
 
-export class PonStagingConfig {
+export class KpmPonProdConfig {
   public static get settings(): Settings {
     return {
-      composer:     {
-        profile:   'pon-staging',
+      composer:  {
+        profile:   'kpm-pon-prod',
         network:   'digital-cmr-network',
         channel:   'composerchannel',
         namespace: 'org.digitalcmr'
       },
-      privateDB:    {
-        host: 'privatedb-pon',
+      privateDB: {
+        host: 'privatedb-kpm-pon',
         port: '5984'
       }
     };

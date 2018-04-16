@@ -15,7 +15,7 @@ services:
       - PORT=8080
     volumes:
       - ./server/src:/usr/src/app/src
-      - ./server/tsconfig.json:/usr/src/app/tsconfig.json # TS filenames get added automatically to this file on build
+      - ./server/tsconfig.json:/usr/src/app/tsconfig.json
       - ./server/package.json:/usr/src/app/package.json
       - ./server/resources/connectionProfiles:/root/.composer-connection-profiles
       - ./server/resources:/usr/src/app/resources
@@ -55,7 +55,7 @@ services:
       - PORT=8080
     volumes:
       - ./server/src:/usr/src/app/src
-      - ./server/tsconfig.json:/usr/src/app/tsconfig.json # TS filenames get added automatically to this file on build
+      - ./server/tsconfig.json:/usr/src/app/tsconfig.json
       - ./server/package.json:/usr/src/app/package.json
       - ./server/resources/connectionProfiles:/root/.composer-connection-profiles
       - ./server/resources:/usr/src/app/resources

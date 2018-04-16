@@ -1,13 +1,14 @@
 import * as debug from 'debug';
 import {DefaultConfig} from './default.config';
-import {DevelopmentConfig} from './development.config';
-import {ProductionConfig} from './production.config';
+import {LocalConfig} from './local';
 import {Settings} from './settings.interface';
-import {StagingConfig} from './staging.config';
-import {KpmPonStagingConfig} from './kpm-pon-staging.config';
 import {KpmPonDevConfig} from './kpm-pon-dev.config';
 import {PonDevConfig} from './pon-dev.config';
 import {PonStagingConfig} from './pon-staging.config';
+import {KpmPonProdConfig} from './kpm-pon-prod.config';
+import {PonProdConfig} from './pon-prod.config';
+import {DevelopmentConfig} from './development.config';
+import {KpmPonStagingConfig} from './kpm-pon-staging.config';
 
 export class Config {
   private static NAMESPACE: string = 'app:config';
@@ -45,26 +46,29 @@ export class Config {
     const defaultSettings = DefaultConfig.settings;
     let envSettings: Settings;
     switch (process.env.NODE_ENV) {
+      case 'local':
+        envSettings = LocalConfig.settings;
+        break;
       case 'development':
         envSettings = DevelopmentConfig.settings;
-        break;
-      case 'production':
-        envSettings = ProductionConfig.settings;
-        break;
-      case 'staging':
-        envSettings = StagingConfig.settings;
         break;
       case 'kpm-pon-dev':
         envSettings = KpmPonDevConfig.settings;
         break;
-      case 'pon-dev':
-        envSettings = PonDevConfig.settings;
-        break;
       case 'kpm-pon-staging':
         envSettings = KpmPonStagingConfig.settings;
         break;
+      case 'kpm-pon-prod':
+        envSettings = KpmPonProdConfig.settings;
+        break;
+      case 'pon-dev':
+        envSettings = PonDevConfig.settings;
+        break;
       case 'pon-staging':
         envSettings = PonStagingConfig.settings;
+        break;
+      case 'pon-prod':
+        envSettings = PonProdConfig.settings;
         break;
       default:
         debug(this.NAMESPACE)(`WARNING: no environment settings for ${process.env.NODE_ENV}.`);

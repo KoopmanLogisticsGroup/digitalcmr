@@ -10,7 +10,7 @@ export class UserAuthenticator {
   }
 
   public generateToken(user: any): string {
-    return jsonwebtoken.sign(user, Config.settings.serverSecret, {
+    return jsonwebtoken.sign(user, Config.settings.serverSecret!, {
       expiresIn: this.TOKEN_LIFETIME_IN_SECONDS
     });
   }

@@ -11,7 +11,7 @@ export class UserAuthenticatorMiddleware {
       return this.failAuthentication(response, 'No token provided.');
     }
 
-    jwt.verify(token, Config.settings.serverSecret, (err: any, decoded: any) => {
+    jwt.verify(token, Config.settings.serverSecret!, (err: any, decoded: any) => {
       if (err) {
         return this.failAuthentication(response, 'Failed to authenticate token.');
       }

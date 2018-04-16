@@ -15,7 +15,7 @@ spec:
   - name: composer-identity-import-pon
     image: hyperledger/composer-cli:0.13.2
     imagePullPolicy: Always
-    command: ["sh", "-c", "sleep 1 && while [ ! -d /fabric-config/Admin@pon ]; do echo Waiting for identity data; sleep 1; done; composer identity import -p hlfv1 -u adminPon -c /fabric-config/Admin@pon/msp/signcerts/Admin@pon-cert.pem -k /fabric-config/Admin@pon/msp/keystore/`ls /fabric-config/Admin@pon/msp/keystore` && echo 'Done with importing identity'; composer runtime install -n digital-cmr-network -p hlfv1 -i adminPon -s adminpw; composer network start -a /fabric-config/bna/digital-cmr-network.bna -p hlfv1 -i adminPon -s adminpw && echo 'Done with deploying'"]
+    command: ["sh", "-c", "sleep 1 && while [ ! -d /fabric-config/Admin@pon ]; do echo Waiting for identity data; sleep 1; done; composer identity import -p hlfv1 -u adminPon -c /fabric-config/Admin@pon/msp/signcerts/Admin@pon-cert.pem -k /fabric-config/Admin@pon/msp/keystore/`ls /fabric-config/Admin@pon/msp/keystore` && echo 'Done with importing identity'; composer runtime install -n digital-cmr-network -p hlfv1 -i adminPon -s adminpw && echo 'Done with installing the chaincode. Keep in mind that the first query/invoke will take some time because of instantiation process.'"]
     env:
     - name: COMPOSER_CONFIG
       value: >
@@ -26,7 +26,7 @@ spec:
               "type": "hlfv1",
               "orderers": [
                   {
-                      "url": "grpc://159.122.177.125:31010"
+                      "url": "grpc://159.122.179.221:31010"
                   }
               ],
               "ca": {
