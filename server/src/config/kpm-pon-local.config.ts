@@ -1,10 +1,10 @@
 import {Settings} from './settings.interface';
 
-export class KpmPonDevConfig {
+export class KpmPonLocalConfig {
   public static get settings(): Settings {
     return {
       composer:     {
-        profile:   'kpm-pon-dev',
+        profile:   'kpm-pon-local',
         network:   'digital-cmr-network',
         channel:   'composerchannel',
         namespace: 'org.digitalcmr'

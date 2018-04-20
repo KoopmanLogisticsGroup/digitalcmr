@@ -8,7 +8,7 @@ services:
       - "8080:8080"
       - "443:443"
     environment:
-      - NODE_ENV=kpm-pon-dev
+      - NODE_ENV=kpm-pon-local
       - TLS=false
       - INIT=true
       - HOST=0.0.0.0
@@ -33,7 +33,7 @@ services:
           - ./client/src:/usr/src/app/src
           - ./client/.angular-cli.json:/usr/src/app/.angular-cli.json
           - ./client/tslint.json:/usr/src/app/tslint.json
-      command: sh -c "node_modules/.bin/ng lint && node_modules/.bin/ng serve --host 0.0.0.0 -e kpmpon"
+      command: sh -c "node_modules/.bin/ng lint && node_modules/.bin/ng serve --host 0.0.0.0 -e kpm-pon-local"
 
   privatedb-kpm-pon:
     container_name: privatedb-kpm-pon
@@ -49,7 +49,7 @@ services:
       - "8081:8080"
       - "444:443"
     environment:
-      - NODE_ENV=pon-dev
+      - NODE_ENV=pon-local
       - TLS=false
       - HOST=0.0.0.0
       - PORT=8080
@@ -73,7 +73,7 @@ services:
           - ./client/src:/usr/src/app/src
           - ./client/.angular-cli.json:/usr/src/app/.angular-cli.json
           - ./client/tslint.json:/usr/src/app/tslint.json
-      command: sh -c "node_modules/.bin/ng lint && node_modules/.bin/ng serve --host 0.0.0.0 -e pon"
+      command: sh -c "node_modules/.bin/ng lint && node_modules/.bin/ng serve --host 0.0.0.0 -e pon-local"
 
   privatedb-pon:
     container_name: privatedb-pon
