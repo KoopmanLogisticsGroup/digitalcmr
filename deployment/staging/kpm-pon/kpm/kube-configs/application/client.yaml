@@ -14,4 +14,4 @@ spec:
     imagePullPolicy: Always
     imagePullSecrets:
     - name: bluemix-uk-registry
-    command: ["sh", "-c", "./run 4200 kpmpon server-kpm-pon 8080"]
+    command: ["sh", "-c", "./run 4200 kpm-pon-stag server-kpm-pon 8080"]
