@@ -1,6 +1,6 @@
 import {Settings} from './settings.interface';
 
-export class KpmPonDevConfig {
+export class KpmPonLocalConfig {
   public static get settings(): Settings {
     return {
       composer:     {

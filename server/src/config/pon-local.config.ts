@@ -1,6 +1,6 @@
 import {Settings} from './settings.interface';
 
-export class PonDevConfig {
+export class PonLocalConfig {
   public static get settings(): Settings {
     return {
       composer:     {
