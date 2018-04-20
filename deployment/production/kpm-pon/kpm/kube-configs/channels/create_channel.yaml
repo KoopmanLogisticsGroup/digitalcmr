@@ -1,0 +1,44 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: createchannel
+spec:
+  restartPolicy: "Never"
+  volumes:
+  - name: shared
+    hostPath:
+      path: /tmp
+
+  containers:
+  - name: createchannel
+    image: ibmblockchain/fabric-peer:1.0.6
+    imagePullPolicy: Always
+    command: ["sh", "-c", "sleep 1 && while [ ! -f /fabric-config/%CHANNEL_FILE%.tx ]; do echo Waiting for crypto config to be loaded; sleep 2; done; peer channel create -o ${ORDERER_URL} -c ${CHANNEL_NAME} -f /fabric-config/%CHANNEL_FILE%.tx"]
+    env:
+    - name: CHANNEL_NAME
+      value: DoesntMatter
+    - name: ORDERER_URL
+      value: DoesntMatter
+    - name: CORE_PEER_ADDRESSAUTODETECT
+      value: "false"
+    - name: CORE_PEER_NETWORKID
+      value: nid1
+    - name: CORE_PEER_LOCALMSPID
+      value: kpm-ponMSP
+    - name: CORE_PEER_MSPCONFIGPATH
+      value: /fabric-config/msp
+    - name: CORE_LOGGING_LEVEL
+      value: debug
+    - name: FABRIC_CFG_PATH
+      value: /etc/hyperledger/fabric
+    - name: GODEBUG
+      value: "netdns=go"
+    volumeMounts:
+    - name: createchannel-fabric-config
+      mountPath: /fabric-config
+  volumes:
+    - name: createchannel-fabric-config
+      emptyDir: {}
+  nodeSelector:
+    environment: kpm-pon

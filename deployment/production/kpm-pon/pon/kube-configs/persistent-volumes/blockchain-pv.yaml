@@ -1,0 +1,30 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+    name: peer0-pon-pv
+    labels:
+      vol: peer0-pon-pv
+spec:
+    capacity:
+        storage: 1G
+    accessModes:
+        - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Recycle
+    hostPath:
+        path: "/var/peer0-pon"
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+    name: bc-peer0-pon-couchdb-pv
+    labels:
+      vol: bc-peer0-pon-couchdb-pv
+spec:
+    capacity:
+        storage: 1G
+    accessModes:
+        - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Recycle
+    hostPath:
+        path: "/var/peer0-pon-couchdb"
