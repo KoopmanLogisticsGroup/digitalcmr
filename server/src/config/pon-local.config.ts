@@ -4,7 +4,7 @@ export class PonLocalConfig {
   public static get settings(): Settings {
     return {
       composer:     {
-        profile:   'pon-dev',
+        profile:   'pon-local',
         network:   'digital-cmr-network',
         channel:   'composerchannel',
         namespace: 'org.digitalcmr'

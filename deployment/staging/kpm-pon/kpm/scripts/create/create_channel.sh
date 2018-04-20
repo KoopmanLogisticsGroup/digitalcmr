@@ -8,7 +8,7 @@ else
     echo "Please run the script from 'scripts' or 'scripts/create' folder"
 fi
 
-BASE_PATH=$(pwd)../../../../../composer/hlfv1/config/kpm-pon-config
+BASE_PATH=$(pwd)../../../../../../composer/hlfv1/config/kpm-pon-config
 KPM_PATH=$BASE_PATH/kpm
 CONTAINER_BASE_PATH=/fabric-config
 KPM_PEERS_PARTIAL_PATH=crypto-config/peerOrganizations/kpm-pon/peers/peer0.kpm-pon/msp
@@ -62,7 +62,7 @@ echo "Waiting for $TIMEOUT seconds for pod to settle"
 sleep $TIMEOUT
 
 echo ""
-echo "=> CREATE_ALL: Copying crypto config into peer"
+echo "=> CREATE_ALL: Copying crypto config into createchannel"
 kubectl cp $KPM_PATH/$KPM_PEERS_PARTIAL_PATH/ $POD_NAME:$CONTAINER_BASE_PATH/msp/
 kubectl cp $BASE_PATH/$CHANNEL_FILE.tx $POD_NAME:$CONTAINER_BASE_PATH/$CHANNEL_FILE.tx
 
