@@ -14,7 +14,7 @@ spec:
             terminationGracePeriodSeconds: 10
             containers:
               - name: server-pon
-                image: registry.eu-gb.bluemix.net/apps/digitalcmr_server
+                image: registry.eu-gb.bluemix.net/digitalcmr/digitalcmr_server
                 imagePullPolicy: Always
                 imagePullSecrets:
                 - name: bluemix-uk-registry

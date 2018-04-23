@@ -52,7 +52,7 @@ class App {
     Container.set(TransactionHandler, new TransactionHandler(Container.get(BusinessNetworkHandler)));
     Container.set(IdentityManager, new IdentityManager(Config.settings.composer.namespace));
 
-    if (process.env.NODE_ENV!.indexOf('kpm') !== -1 || process.env.NODE_ENV === 'local') {
+    if (process.env.NODE_ENV!.indexOf('kpm') !== -1 || process.env.NODE_ENV === 'local' || process.env.NODE_ENV === 'development') {
       await new TestData(Container.get(TransactionHandler),
         Container.get(DataService),
         Container.get(IdentityManager)).addAdmin(<UserInfo> {

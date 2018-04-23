@@ -28,12 +28,13 @@
       ],
       "environmentSource": "environments/environment.ts",
       "environments":      {
-        "dev":        "environments/environment.ts",
-        "prod":       "environments/environment.prod.ts",
-        "stag":       "environments/environment.stag.ts",
-        "kpmpon":     "environments/environment.kpmpon.ts",
-        "kpmponstag": "environments/environment.kpmpon.stag.ts",
-        "pon":        "environments/environment.pon.ts"
+        "dev":           "environments/environment.dev.ts",
+        "kpm-pon-local": "environments/environment.kpm-pon-local.ts",
+        "kpm-pon-stag":  "environments/environment.kpm-pon-stag.ts",
+        "kpm-pon-prod":  "environments/environment.kpm-pon-prod.ts",
+        "pon-local":     "environments/environment.pon-local.ts",
+        "pon-stag":      "environments/environment.pon-stag.ts",
+        "pon-prod":      "environments/environment.pon-prod.ts"
       }
     }
   ],

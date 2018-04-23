@@ -2,13 +2,13 @@ import * as debug from 'debug';
 import {DefaultConfig} from './default.config';
 import {LocalConfig} from './local';
 import {Settings} from './settings.interface';
-import {KpmPonDevConfig} from './kpm-pon-dev.config';
-import {PonDevConfig} from './pon-dev.config';
 import {PonStagingConfig} from './pon-staging.config';
 import {KpmPonProdConfig} from './kpm-pon-prod.config';
 import {PonProdConfig} from './pon-prod.config';
 import {DevelopmentConfig} from './development.config';
 import {KpmPonStagingConfig} from './kpm-pon-staging.config';
+import {PonLocalConfig} from './pon-local.config';
+import {KpmPonLocalConfig} from './kpm-pon-local.config';
 
 export class Config {
   private static NAMESPACE: string = 'app:config';
@@ -52,8 +52,8 @@ export class Config {
       case 'development':
         envSettings = DevelopmentConfig.settings;
         break;
-      case 'kpm-pon-dev':
-        envSettings = KpmPonDevConfig.settings;
+      case 'kpm-pon-local':
+        envSettings = KpmPonLocalConfig.settings;
         break;
       case 'kpm-pon-staging':
         envSettings = KpmPonStagingConfig.settings;
@@ -61,8 +61,8 @@ export class Config {
       case 'kpm-pon-prod':
         envSettings = KpmPonProdConfig.settings;
         break;
-      case 'pon-dev':
-        envSettings = PonDevConfig.settings;
+      case 'pon-local':
+        envSettings = PonLocalConfig.settings;
         break;
       case 'pon-staging':
         envSettings = PonStagingConfig.settings;
