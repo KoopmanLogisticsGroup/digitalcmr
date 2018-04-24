@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: api-all
+  labels:
+    name: api-all
+spec:
+  replicas: 1
+  restartPolicy: "Always"
+  containers:
+  - name: api-all
+    image: registry.eu-gb.bluemix.net/digitalcmr/digitalcmr_api_doc
+    imagePullPolicy: Always
+    imagePullSecrets:
+    - name: bluemix-uk-registry
