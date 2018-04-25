@@ -20,8 +20,8 @@ curl -sSL https://goo.gl/kFFqh5 | bash -s $FABRIC_VERSION
 echo "Generating Orderer Genesis block"
 ./bin/configtxgen -profile TwoOrgsOrdererGenesis -outputBlock ./$GENESIS.block
 
-#echo "Generating channel configuration transaction"
-#./bin/configtxgen -profile TwoOrgsChannel -outputCreateChannelTx ./$CHANNEL_FILE.tx -channelID $CHANNEL_ID
+echo "Generating channel configuration transaction"
+./bin/configtxgen -profile TwoOrgsChannel -outputCreateChannelTx ./$CHANNEL_FILE.tx -channelID $CHANNEL_ID
 
 # remove the binaries
 rm -rf ./bin

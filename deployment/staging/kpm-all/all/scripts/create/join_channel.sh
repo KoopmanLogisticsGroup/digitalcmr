@@ -1,9 +1,9 @@
 #!/bin/bash
 
-BASE_PATH=$(pwd)../../../../../composer/hlfv1/config/kpm-all-config
+BASE_PATH=$(pwd)../../../../../../composer/hlfv1/config/kpm-all-config
 CRYPTO_PATH=$BASE_PATH/all
 CONTAINER_BASE_PATH=/fabric-config
-USERS_PARTIAL_PATH=crypto-config/peerOrganizations/all/users/Admin@all
+USERS_PARTIAL_PATH=crypto-config/peerOrganizations/kpm-all/users/Admin@kpm-all
 POD_NAME=joinchannel
 
 if [ "${PWD##*/}" == "create" ]; then

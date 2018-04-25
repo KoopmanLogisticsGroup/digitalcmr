@@ -1,10 +1,10 @@
 #!/bin/bash
 
-BASE_PATH=$(pwd)../../../../../composer/hlfv1/config/kpm-all-config
+BASE_PATH=$(pwd)../../../../../../composer/hlfv1/config/kpm-all-config
 all_PATH=$BASE_PATH/all
 CONTAINER_BASE_PATH=/fabric-config
 all_USERS_PARTIAL_PATH=crypto-config/peerOrganizations/all/users/Admin@all
-BNA=$(pwd)../../../../../composer/bna/dist
+BNA=$(pwd)../../../../../../composer/bna/dist
 POD_NAME=composer-identity-import-all
 
 if [ "${PWD##*/}" == "create" ]; then

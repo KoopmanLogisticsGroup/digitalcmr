@@ -30,4 +30,4 @@ delete/delete_persistent-volumes.sh
 
 echo ""
 echo "=> DELETE_ALL: Wiping the shared folder empty"
-wipe_shared.sh
+./wipe_shared.sh
