@@ -11,7 +11,7 @@ spec:
         name: composer-playground-pon
     spec:
       volumes:
-      - name: composer-credentials
+      - name: pon-composer-credentials
         hostPath:
           path: /composer
       containers:
@@ -52,7 +52,7 @@ spec:
                       }
                   ],
                   "keyValStore": "/home/composer/.composer-credentials",
-                  "channel": "composerchannel",
+                  "channel": "kpmponchannel",
                   "mspID": "ponMSP",
                   "timeout": 300
                 },
@@ -60,5 +60,5 @@ spec:
               }]
             }
         volumeMounts:
-        - name: composer-credentials
+        - name: pon-composer-credentials
           mountPath: /home

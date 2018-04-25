@@ -21,8 +21,8 @@ echo "Running: kubectl apply -f ${KUBECONFIG_FOLDER}/privatedb-services.yaml"
 kubectl apply -f ${KUBECONFIG_FOLDER}/privatedb-services.yaml
 echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/server-services.yaml"
 kubectl apply -f ${KUBECONFIG_FOLDER}/server-services.yaml
-echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/api-services.yaml"
-kubectl create -f ${KUBECONFIG_FOLDER}/api-services.yaml
+#echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/api-services.yaml"
+#kubectl create -f ${KUBECONFIG_FOLDER}/api-services.yaml
 
 echo "Creating new Deployment"
 echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/client.yaml"

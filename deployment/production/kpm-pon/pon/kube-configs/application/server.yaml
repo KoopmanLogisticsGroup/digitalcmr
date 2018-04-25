@@ -14,14 +14,14 @@ spec:
             terminationGracePeriodSeconds: 10
             containers:
               - name: server-pon
-                image: registry.eu-gb.bluemix.net/digitalcmr/digitalcmr_server
+                image: registry.eu-de.bluemix.net/trial-apps/digitalcmr_server
                 imagePullPolicy: Always
                 imagePullSecrets:
                 - name: bluemix-uk-registry
                 command: ["sh", "-c", "npm start"]
                 env:
                 - name: NODE_ENV
-                  value: pon-production
+                  value: pon-prod
                 - name: INIT
                   value: "false"
                 - name: TLS
@@ -33,6 +33,8 @@ spec:
                   volumeMounts:
                     - name: pon-credentials-pv
                       mountPath: /home/composer/.composer-credentials
+            nodeSelector:
+              environment: pon
     volumeClaimTemplates:
         - metadata:
             name: pon-credentials-pv

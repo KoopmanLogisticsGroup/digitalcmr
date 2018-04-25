@@ -11,7 +11,7 @@ spec:
         name: composer-playground-kpm-pon
     spec:
       volumes:
-      - name: composer-credentials
+      - name: kpm-composer-credentials
         hostPath:
           path: /composer
       containers:
@@ -52,7 +52,7 @@ spec:
                       }
                   ],
                   "keyValStore": "/home/composer/.hfc-key-store",
-                  "channel": "composerchannel",
+                  "channel": "kpmponchannel",
                   "mspID": "kpm-ponMSP",
                   "timeout": 300
                 },
@@ -60,7 +60,7 @@ spec:
               }]
             }
         volumeMounts:
-        - name: composer-credentials
+        - name: kpm-composer-credentials
           mountPath: /home
   nodeSelector:
     environment: kpm-pon

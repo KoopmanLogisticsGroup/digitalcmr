@@ -6,7 +6,7 @@ metadata:
 spec:
   restartPolicy: "Never"
   volumes:
-  - name: composer-credentials
+  - name: kpm-composer-credentials
     hostPath:
       path: /composer
   - name: composer-identity-fabric-config
@@ -40,14 +40,14 @@ spec:
                   }
               ],
               "keyValStore": "/home/composer/.composer-credentials",
-              "channel": "composerchannel",
+              "channel": "kpmponchannel",
               "mspID": "kpm-ponMSP",
               "timeout": "300"
             }
           }
         }
     volumeMounts:
-    - name: composer-credentials
+    - name: kpm-composer-credentials
       mountPath: /home
     - name: composer-identity-fabric-config
       mountPath: /fabric-config

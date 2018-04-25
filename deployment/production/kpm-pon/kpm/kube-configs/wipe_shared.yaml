@@ -6,7 +6,7 @@ metadata:
 spec:
   restartPolicy: "Never"
   volumes:
-  - name: composer-credentials
+  - name: kpm-composer-credentials
     hostPath:
       path: /composer
   - name: peer0-kpm-pon-pv
@@ -18,10 +18,10 @@ spec:
   - name: privatedb-kpm-pon-pv
     hostPath:
       path: "/var/privatedb-kpm-pon"
-  - name: fabric-config
+  - name: kpm-fabric-config
     hostPath:
       path: "/fabric-config"
-  - name: credentials-pv
+  - name: kpm-pon-credentials-pv
     hostPath:
       path: "/var/.composer-credentials"
 
@@ -31,7 +31,7 @@ spec:
     imagePullPolicy: Always
     command: ["sh", "-c", "rm -rf /home/* /fabric-config/* /privatedb-kpm-pon/* /peer0-kpm-pon/* /peer0-kpm-pon-couchdb/* /.composer-credentials/*"]
     volumeMounts:
-    - name: composer-credentials
+    - name: kpm-composer-credentials
       mountPath: /home
     - name: privatedb-kpm-pon-pv
       mountPath: /privatedb-kpm-pon
@@ -39,9 +39,9 @@ spec:
       mountPath: /peer0-kpm-pon
     - name: bc-peer0-kpm-pon-couchdb-pv
       mountPath: /peer0-kpm-pon-couchdb
-    - name: fabric-config
+    - name: kpm-fabric-config
       mountPath: /fabric-config
-    - name: credentials-pv
+    - name: kpm-pon-credentials-pv
       mountPath: /.composer-credentials
   nodeSelector:
     environment: kpm-pon

@@ -22,6 +22,8 @@ spec:
                   volumeMounts:
                     - name: privatedb-pon-pv
                       mountPath: /opt/couchdb/data
+            nodeSelector:
+                environment: pon
     volumeClaimTemplates:
         - metadata:
             name: privatedb-pon-pv

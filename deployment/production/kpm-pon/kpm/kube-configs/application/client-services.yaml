@@ -14,5 +14,3 @@ spec:
     port: 4200
     nodePort: 31000
     name: http
-  nodeSelector:
-    environment: kpm-pon

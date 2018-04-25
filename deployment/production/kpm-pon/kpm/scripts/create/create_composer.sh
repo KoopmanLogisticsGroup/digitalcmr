@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BASE_PATH=$(pwd)../../../../../../composer/hlfv1/config/kpm-pon-config
+BASE_PATH=$(pwd)../../../../../../composer/hlfv1/config/kpm-pon-config-production
 KPM_PATH=$BASE_PATH/kpm
 CONTAINER_BASE_PATH=/fabric-config
 KPM_USERS_PARTIAL_PATH=crypto-config/peerOrganizations/kpm-pon/users/Admin@kpm-pon

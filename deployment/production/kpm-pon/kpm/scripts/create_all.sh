@@ -24,11 +24,11 @@ CHANNEL_FILE="production" GENESIS="production" create/create_cryptos.sh
 
 echo ""
 echo "=> CREATE_ALL: Running Create Channel"
-CHANNEL_FILE="production" PEER_MSPID="kpm-ponMSP" CHANNEL_NAME="composerchannel" ORDERER_ADDRESS="orderer-kpm-pon:7050" create/create_channel.sh
+CHANNEL_FILE="production" PEER_MSPID="kpm-ponMSP" CHANNEL_NAME="kpmponchannel" ORDERER_ADDRESS="orderer-kpm-pon:7050" create/create_channel.sh
 
 echo ""
 echo "=> CREATE_ALL: Running Join Channel on kpm-pon Peer1"
-CHANNEL_NAME="composerchannel" PEER_MSPID="kpm-ponMSP" PEER_ADDRESS="peer0-kpm-pon:5010" ORDERER_ADDRESS="orderer-kpm-pon:7050" MSP_CONFIGPATH="/fabric-config/Admin@kpm-pon/msp" create/join_channel.sh
+CHANNEL_NAME="kpmponchannel" PEER_MSPID="kpm-ponMSP" PEER_ADDRESS="peer0-kpm-pon:5010" ORDERER_ADDRESS="orderer-kpm-pon:7050" MSP_CONFIGPATH="/fabric-config/Admin@kpm-pon/msp" create/join_channel.sh
 
 echo ""
 echo "=> CREATE_ALL: Deleting create and join channel pods"

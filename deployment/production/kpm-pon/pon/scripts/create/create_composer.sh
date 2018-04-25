@@ -1,10 +1,10 @@
 #!/bin/bash
 
-BASE_PATH=$(pwd)../../../../../composer/hlfv1/config/kpm-pon-config
+BASE_PATH=$(pwd)../../../../../../composer/hlfv1/config/kpm-pon-config-production
 PON_PATH=$BASE_PATH/pon
 CONTAINER_BASE_PATH=/fabric-config
 PON_USERS_PARTIAL_PATH=crypto-config/peerOrganizations/pon/users/Admin@pon
-BNA=$(pwd)../../../../../composer/bna/dist
+BNA=$(pwd)../../../../../../composer/bna/dist
 POD_NAME=composer-identity-import-pon
 
 if [ "${PWD##*/}" == "create" ]; then
@@ -41,13 +41,13 @@ while [ "$(kubectl get svc | grep composer-utils | wc -l | awk '{print $1}')" !=
 	sleep 1;
 done
 
-# Default to "159.122.181.123:31010" if not defined
+# Default to "169.51.42.23:31010" if not defined
 if [ -z "${ORDERER_ADDRESS}" ]; then
-	echo "ORDERER_ADDRESS not defined. I will use \"159.122.181.123:31010\"."
+	echo "ORDERER_ADDRESS not defined. I will use \"169.51.42.23:31010\"."
 	echo "I will wait 5 seconds before continuing."
 	sleep 5
 fi
-ORDERER_ADDRESS=${ORDERER_ADDRESS:-159.122.181.123:31010}
+ORDERER_ADDRESS=${ORDERER_ADDRESS:-169.51.42.23:31010}
 
 echo "Preparing yaml file for composer identity import"
 sed -e "s/%ORDERER_ADDRESS%/${ORDERER_ADDRESS}/g" ${KUBECONFIG_FOLDER}/composer-identity-import.yaml.base > ${KUBECONFIG_FOLDER}/composer-identity-import.yaml
@@ -56,7 +56,7 @@ echo "Creating composer-identity-import pod"
 echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/composer-identity-import.yaml"
 kubectl create -f ${KUBECONFIG_FOLDER}/composer-identity-import.yaml
 
-TIMEOUT=15
+TIMEOUT=30
 echo "Waiting for $TIMEOUT seconds for pod to settle"
 sleep $TIMEOUT
 

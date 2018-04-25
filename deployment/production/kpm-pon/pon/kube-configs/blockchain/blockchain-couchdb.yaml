@@ -13,12 +13,12 @@ spec:
       containers:
       - name: ca-pon
         image: ibmblockchain/fabric-ca:1.0.6
-        command: ["sh", "-c", "sleep 1 && while [ ! -f /fabric-config/ca/ca.pon-cert.pem ]; do echo Waiting for crypto config to be loaded; sleep 1; done; fabric-ca-server start --ca.name ca-pon --ca.certfile /fabric-config/ca/ca.pon-cert.pem --ca.keyfile /fabric-config/ca/bf54b768f361e4a2eb0654ec8a8d2b03befaa358581963ce1632263e5f00cf86_sk -b admin:adminpw -d"]
+        command: ["sh", "-c", "sleep 1 && while [ ! -f /fabric-config/ca/ca.pon-cert.pem ]; do echo Waiting for crypto config to be loaded; sleep 1; done; fabric-ca-server start --ca.name ca-pon --ca.certfile /fabric-config/ca/ca.pon-cert.pem --ca.keyfile /fabric-config/ca/892f76d194133551101523d7314925b08916b68701d8d6e43d9c666a190eb7a5_sk -b admin:adminpw -d"]
         env:
 #        - name: FABRIC_CA_SERVER_CA_CERTFILE
 #          value: /fabric-config/ca/ca.pon-cert.pem
 #        - name: FABRIC_CA_SERVER_CA_KEYFILE
-#          value: /fabric-config/ca/bf54b768f361e4a2eb0654ec8a8d2b03befaa358581963ce1632263e5f00cf86_sk
+#          value: /fabric-config/ca/892f76d194133551101523d7314925b08916b68701d8d6e43d9c666a190eb7a5_sk
         - name: FABRIC_CA_SERVER_DEBUG
           value: "true"
         - name: FABRIC_CA_SERVER_TLS_ENABLED
@@ -26,15 +26,17 @@ spec:
 #        - name: FABRIC_CA_SERVER_TLS_CERTFILE
 #          value: /fabric-config/ca/ca.pon-cert.pem
 #        - name: FABRIC_CA_SERVER_TLS_KEYFILE
-#          value: /fabric-config/ca/bf54b768f361e4a2eb0654ec8a8d2b03befaa358581963ce1632263e5f00cf86_sk
+#          value: /fabric-config/ca/892f76d194133551101523d7314925b08916b68701d8d6e43d9c666a190eb7a5_sk
         - name: GODEBUG
           value: "netdns=go"
         volumeMounts:
-          - name: ca-fabric-config
+          - name: ca-pon-fabric-config
             mountPath: /fabric-config
       volumes:
-        - name: ca-fabric-config
+        - name: ca-pon-fabric-config
           emptyDir: {}
+      nodeSelector:
+        environment: pon
 ---
 kind: StatefulSet
 apiVersion: apps/v1beta1
@@ -54,7 +56,7 @@ spec:
             - name: dockersocket
               hostPath:
                 path: /var/run/docker.sock
-            - name: peer-fabric-config
+            - name: peer-pon-fabric-config
               emptyDir: {}
             containers:
                 - name: peer0-pon
@@ -120,7 +122,7 @@ spec:
                   - name: FABRIC_CFG_PATH
                     value: /etc/hyperledger/fabric/
                   - name: ORDERER_URL
-                    value: 159.122.181.123:31010
+                    value: 169.51.42.23:31010
                   - name: GODEBUG
                     value: "netdns=go"
                   volumeMounts:
@@ -128,8 +130,10 @@ spec:
                       mountPath: /host/var/run/docker.sock
                     - name: peer0-pon-pv
                       mountPath: /var/hyperledger/production
-                    - name: peer-fabric-config
+                    - name: peer-pon-fabric-config
                       mountPath: /fabric-config
+            nodeSelector:
+                environment: pon
     volumeClaimTemplates:
         - metadata:
             name: peer0-pon-pv
@@ -167,7 +171,8 @@ spec:
                   volumeMounts:
                     - name: bc-peer0-pon-couchdb-pv
                       mountPath: /opt/couchdb/data
-
+            nodeSelector:
+                environment: pon
     volumeClaimTemplates:
         - metadata:
             name: bc-peer0-pon-couchdb-pv

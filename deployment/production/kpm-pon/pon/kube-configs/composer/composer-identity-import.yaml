@@ -6,10 +6,10 @@ metadata:
 spec:
   restartPolicy: "Never"
   volumes:
-  - name: composer-credentials
+  - name: pon-composer-credentials
     hostPath:
       path: /composer
-  - name: composer-identity-fabric-config
+  - name: composer-identity-pon-fabric-config
     emptyDir: {}
   containers:
   - name: composer-identity-import-pon
@@ -26,7 +26,7 @@ spec:
               "type": "hlfv1",
               "orderers": [
                   {
-                      "url": "grpc://159.122.181.123:31010"
+                      "url": "grpc://169.51.42.23:31010"
                   }
               ],
               "ca": {
@@ -40,14 +40,16 @@ spec:
                   }
               ],
               "keyValStore": "/home/composer/.composer-credentials",
-              "channel": "composerchannel",
+              "channel": "kpmponchannel",
               "mspID": "ponMSP",
               "timeout": "300"
             }
           }
         }
     volumeMounts:
-    - name: composer-credentials
+    - name: pon-composer-credentials
       mountPath: /home
-    - name: composer-identity-fabric-config
+    - name: composer-identity-pon-fabric-config
       mountPath: /fabric-config
+  nodeSelector:
+      environment: pon

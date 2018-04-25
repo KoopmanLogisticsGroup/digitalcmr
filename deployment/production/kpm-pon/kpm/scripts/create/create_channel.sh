@@ -8,7 +8,7 @@ else
     echo "Please run the script from 'scripts' or 'scripts/create' folder"
 fi
 
-BASE_PATH=$(pwd)../../../../../../composer/hlfv1/config/kpm-pon-config
+BASE_PATH=$(pwd)../../../../../../composer/hlfv1/config/kpm-pon-config-production
 KPM_PATH=$BASE_PATH/kpm
 CONTAINER_BASE_PATH=/fabric-config
 KPM_PEERS_PARTIAL_PATH=crypto-config/peerOrganizations/kpm-pon/peers/peer0.kpm-pon/msp
@@ -22,13 +22,13 @@ if [ -z ${PEER_MSPID} ]; then
 fi
 PEER_MSPID=${PEER_MSPID:-kpm-ponMSP}
 
-# Default to "composerchannel" if not defined
+# Default to "kpmponchannel" if not defined
 if [ -z "${CHANNEL_NAME}" ]; then
-	echo "CHANNEL_NAME not defined. I will use \"composerchannel\"."
+	echo "CHANNEL_NAME not defined. I will use \"kpmponchannel\"."
 	echo "I will wait 5 seconds before continuing."
 	sleep 5
 fi
-CHANNEL_NAME=${CHANNEL_NAME:-composerchannel}
+CHANNEL_NAME=${CHANNEL_NAME:-kpmponchannel}
 
 # Default to "production" if not defined
 if [ -z ${CHANNEL_FILE} ]; then
