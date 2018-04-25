@@ -18,7 +18,7 @@ spec:
                 imagePullPolicy: Always
                 imagePullSecrets:
                 - name: bluemix-uk-registry
-                command: ["sh", "-c", "npm start"]
+                command: ["sh", "-c", "node server.js"]
                 env:
                 - name: NODE_ENV
                   value: development
