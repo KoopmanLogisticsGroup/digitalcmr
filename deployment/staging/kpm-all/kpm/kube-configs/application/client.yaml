@@ -1,0 +1,17 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: client-kpm-all
+  labels:
+    name: client-kpm-all
+spec:
+  replicas: 1
+  restartPolicy: "Always"
+  containers:
+  - name: client-kpm-all
+    image: registry.eu-de.bluemix.net/lventi/digitalcmr_client:kmp-all
+    imagePullPolicy: Always
+    imagePullSecrets:
+    - name: bluemix-gb-registry
+    command: ["sh", "-c", "./run 4200 kpm-all-stag server-kpm-all 8080"]

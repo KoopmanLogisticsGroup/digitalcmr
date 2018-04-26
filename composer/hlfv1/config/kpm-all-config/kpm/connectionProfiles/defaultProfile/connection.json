@@ -1,0 +1,22 @@
+{
+  "type":        "hlfv1",
+  "orderers":    [
+    {
+      "url": "grpc://orderer-kpm-all:7050"
+    }
+  ],
+  "ca":          {
+    "url":  "http://ca-kpm-all:7054",
+    "name": "ca-kpm-all"
+  },
+  "peers":       [
+    {
+      "requestURL": "grpc://peer0-kpm-all:7051",
+      "eventURL":   "grpc://peer0-kpm-all:7053"
+    }
+  ],
+  "keyValStore": "/home/composer/.composer-credentials",
+  "channel":     "composerchannel",
+  "mspID":       "kpm-allMSP",
+  "timeout":     "300"
+}
