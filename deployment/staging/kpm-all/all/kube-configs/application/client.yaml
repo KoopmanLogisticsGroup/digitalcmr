@@ -10,7 +10,7 @@ spec:
   restartPolicy: "Always"
   containers:
   - name: client-all
-    image: registry.eu-gb.bluemix.net/lventi/digitalcmr_client
+    image: registry.eu-gb.bluemix.net/lventi/digitalcmr_client:kmp-all
     imagePullPolicy: Always
     imagePullSecrets:
     - name: bluemix-uk-registry
