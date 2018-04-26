@@ -10,8 +10,8 @@ spec:
   restartPolicy: "Always"
   containers:
   - name: client-kpm-all
-    image: registry.eu-de.bluemix.net/apps/digitalcmr_client
+    image: registry.eu-de.bluemix.net/lventi/digitalcmr_client:kmp-all
     imagePullPolicy: Always
     imagePullSecrets:
-    - name: bluemix-uk-registry
+    - name: bluemix-gb-registry
     command: ["sh", "-c", "./run 4200 kpm-all-stag server-kpm-all 8080"]
