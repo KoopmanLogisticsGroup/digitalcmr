@@ -1,0 +1,39 @@
+---
+kind: StatefulSet
+apiVersion: apps/v1beta1
+metadata:
+    name: privatedb-pon
+spec:
+    replicas: 1
+    serviceName: privatedb-pon
+    template:
+        metadata:
+            labels:
+                tier: db
+        spec:
+            terminationGracePeriodSeconds: 10
+            containers:
+                - name: privatedb-pon
+                  image: couchdb:2.1.1
+                  imagePullPolicy: Always
+                  ports:
+                    - containerPort: 5984
+                      name: http
+                  volumeMounts:
+                    - name: privatedb-pon-pv
+                      mountPath: /opt/couchdb/data
+            nodeSelector:
+                environment: pon
+    volumeClaimTemplates:
+        - metadata:
+            name: privatedb-pon-pv
+          spec:
+              accessModes:
+                  - ReadWriteOnce
+              resources:
+                  requests:
+                      storage: 1G
+              selector:
+                matchLabels:
+                  vol: privatedb-pon-pv
+              storageClassName: ""

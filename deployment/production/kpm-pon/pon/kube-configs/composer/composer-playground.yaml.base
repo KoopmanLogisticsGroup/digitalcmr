@@ -1,0 +1,64 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: composer-playground-pon
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: composer-playground-pon
+    spec:
+      volumes:
+      - name: pon-composer-credentials
+        hostPath:
+          path: /composer
+      containers:
+      - name: composer-playground-pon
+        image: hyperledger/composer-playground:0.13.2
+        imagePullPolicy: Always
+        env:
+        - name: COMPOSER_CONFIG
+          value: >
+            {
+              "cards": [{
+                "metadata": {
+                  "version": 1,
+                  "userName": "adminPon",
+                  "enrollmentSecret": "NOTUSED",
+                  "roles": [
+                    "PeerAdmin",
+                    "ChannelAdmin"
+                  ]
+                },
+                "connectionProfile": {
+                  "name": "hlfv1",
+                  "description": "Hyperledger Fabric v1.0",
+                  "type": "hlfv1",
+                  "orderers": [
+                      {
+                          "url": "grpc://%ORDERER_ADDRESS%"
+                      }
+                  ],
+                  "ca": {
+                      "url": "http://ca-pon:7054",
+                      "name": "ca-pon"
+                  },
+                  "peers": [
+                      {
+                          "requestURL": "grpc://peer0-pon:5010",
+                          "eventURL": "grpc://peer0-pon:5011"
+                      }
+                  ],
+                  "keyValStore": "/home/composer/.composer-credentials",
+                  "channel": "kpmponchannel",
+                  "mspID": "ponMSP",
+                  "timeout": 300
+                },
+                "credentials": null
+              }]
+            }
+        volumeMounts:
+        - name: pon-composer-credentials
+          mountPath: /home

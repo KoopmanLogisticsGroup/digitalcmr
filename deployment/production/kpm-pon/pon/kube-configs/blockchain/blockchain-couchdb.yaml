@@ -1,0 +1,188 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: ca-pon
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: ca-pon
+    spec:
+      containers:
+      - name: ca-pon
+        image: ibmblockchain/fabric-ca:1.0.6
+        command: ["sh", "-c", "sleep 1 && while [ ! -f /fabric-config/ca/ca.pon-cert.pem ]; do echo Waiting for crypto config to be loaded; sleep 1; done; fabric-ca-server start --ca.name ca-pon --ca.certfile /fabric-config/ca/ca.pon-cert.pem --ca.keyfile /fabric-config/ca/892f76d194133551101523d7314925b08916b68701d8d6e43d9c666a190eb7a5_sk -b admin:adminpw -d"]
+        env:
+#        - name: FABRIC_CA_SERVER_CA_CERTFILE
+#          value: /fabric-config/ca/ca.pon-cert.pem
+#        - name: FABRIC_CA_SERVER_CA_KEYFILE
+#          value: /fabric-config/ca/892f76d194133551101523d7314925b08916b68701d8d6e43d9c666a190eb7a5_sk
+        - name: FABRIC_CA_SERVER_DEBUG
+          value: "true"
+        - name: FABRIC_CA_SERVER_TLS_ENABLED
+          value: "false"
+#        - name: FABRIC_CA_SERVER_TLS_CERTFILE
+#          value: /fabric-config/ca/ca.pon-cert.pem
+#        - name: FABRIC_CA_SERVER_TLS_KEYFILE
+#          value: /fabric-config/ca/892f76d194133551101523d7314925b08916b68701d8d6e43d9c666a190eb7a5_sk
+        - name: GODEBUG
+          value: "netdns=go"
+        volumeMounts:
+          - name: ca-pon-fabric-config
+            mountPath: /fabric-config
+      volumes:
+        - name: ca-pon-fabric-config
+          emptyDir: {}
+      nodeSelector:
+        environment: pon
+---
+kind: StatefulSet
+apiVersion: apps/v1beta1
+metadata:
+    name: peer0-pon
+spec:
+    serviceName: peer0-pon
+    replicas: 1
+    template:
+        metadata:
+            labels:
+                tier: peer0-pon
+                vol: peer0-pon-pv
+        spec:
+            terminationGracePeriodSeconds: 10
+            volumes:
+            - name: dockersocket
+              hostPath:
+                path: /var/run/docker.sock
+            - name: peer-pon-fabric-config
+              emptyDir: {}
+            containers:
+                - name: peer0-pon
+                  image: ibmblockchain/fabric-peer:1.0.6
+                  imagePullPolicy: Always
+                  command: ["sh", "-c", "sleep 1 && while [ ! -d /fabric-config/msp ]; do echo Waiting for crypto config to be loaded...; sleep 1; done; peer node start --peer-defaultchain=false"]
+                  env:
+                  - name: CORE_PEER_ADDRESSAUTODETECT
+                    value: "true"
+                  - name: CORE_PEER_NETWORKID
+                    value: nid1
+                  - name: CORE_PEER_ADDRESS
+                    value: peer0-pon:5010
+                  - name: CORE_PEER_LISTENADDRESS
+                    value: 0.0.0.0:5010
+                  - name: CORE_PEER_EVENTS_ADDRESS
+                    value: 0.0.0.0:5011
+                  - name: CORE_PEER_GOSSIP_BOOTSTRAP
+                    value: peer0-pon:5010
+                  - name: CORE_PEER_GOSSIP_ORGLEADER
+                    value: "true"
+                  - name: CORE_PEER_GOSSIP_SKIPHANDSHAKE
+                    value: "true"
+                  - name: CORE_PEER_COMMITTER_ENABLED
+                    value: "true"
+                  - name: CORE_PEER_PROFILE_ENABLED
+                    value: "true"
+                  - name: CORE_PEER_DISCOVERY_PERIOD
+                    value: 60s
+                  - name: CORE_PEER_DISCOVERY_TOUCHPERIOD
+                    value: 60s
+                  - name: CORE_VM_ENDPOINT
+                    value: unix:///host/var/run/docker.sock
+                  - name: CORE_PEER_LOCALMSPID
+                    value: ponMSP
+                  - name: CORE_PEER_MSPCONFIGPATH
+                    value: /fabric-config/msp
+                  - name: CORE_LOGGING_LEVEL
+                    value: debug
+                  - name: CORE_LOGGING_PEER
+                    value: debug
+                  - name: CORE_LOGGING_CAUTHDSL
+                    value: debug
+                  - name: CORE_LOGGING_GOSSIP
+                    value: debug
+                  - name: CORE_LOGGING_LEDGER
+                    value: debug
+                  - name: CORE_LOGGING_MSP
+                    value: info
+                  - name: CORE_LOGGING_POLICIES
+                    value: debug
+                  - name: CORE_LOGGING_GRPC
+                    value: debug
+                  - name: CORE_PEER_TLS_ENABLED
+                    value: "false"
+                  - name: CORE_LEDGER_STATE_STATEDATABASE
+                    # value: goleveldb
+                    value: CouchDB
+                  - name: CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS
+                    value: peer0-pon-couchdb:5984
+                  - name: PEER_CFG_PATH
+                    value: peer_config/
+                  - name: FABRIC_CFG_PATH
+                    value: /etc/hyperledger/fabric/
+                  - name: ORDERER_URL
+                    value: 169.51.42.23:31010
+                  - name: GODEBUG
+                    value: "netdns=go"
+                  volumeMounts:
+                    - name: dockersocket
+                      mountPath: /host/var/run/docker.sock
+                    - name: peer0-pon-pv
+                      mountPath: /var/hyperledger/production
+                    - name: peer-pon-fabric-config
+                      mountPath: /fabric-config
+            nodeSelector:
+                environment: pon
+    volumeClaimTemplates:
+        - metadata:
+            name: peer0-pon-pv
+          spec:
+              accessModes:
+                  - ReadWriteOnce
+              resources:
+                  requests:
+                      storage: 1G
+              selector:
+                matchLabels:
+                  vol: peer0-pon-pv
+              storageClassName: ""
+---
+kind: StatefulSet
+apiVersion: apps/v1beta1
+metadata:
+    name: peer0-pon-couchdb
+spec:
+    serviceName: peer0-pon-couchdb
+    replicas: 1
+    template:
+        metadata:
+            labels:
+                tier: peer0-pon-couchdb
+                vol: bc-peer0-pon-couchdb-pv
+        spec:
+            terminationGracePeriodSeconds: 10
+            containers:
+                - name: peer0-pon-couchdb
+                  image: ibmblockchain/fabric-couchdb:1.0.6
+                  env:
+                  - name: DB_URL
+                    value: http://localhost:5984/member_db
+                  volumeMounts:
+                    - name: bc-peer0-pon-couchdb-pv
+                      mountPath: /opt/couchdb/data
+            nodeSelector:
+                environment: pon
+    volumeClaimTemplates:
+        - metadata:
+            name: bc-peer0-pon-couchdb-pv
+          spec:
+              accessModes:
+                  - ReadWriteOnce
+              resources:
+                  requests:
+                      storage: 1G
+              selector:
+                matchLabels:
+                  vol: bc-peer0-pon-couchdb-pv
+              storageClassName: ""
