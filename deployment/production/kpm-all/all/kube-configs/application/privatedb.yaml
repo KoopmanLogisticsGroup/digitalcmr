@@ -1,0 +1,37 @@
+---
+kind: StatefulSet
+apiVersion: apps/v1beta1
+metadata:
+    name: privatedb-all
+spec:
+    replicas: 1
+    serviceName: privatedb-all
+    template:
+        metadata:
+            labels:
+                tier: db
+        spec:
+            terminationGracePeriodSeconds: 10
+            containers:
+                - name: privatedb-all
+                  image: couchdb:2.1.1
+                  imagePullPolicy: Always
+                  ports:
+                    - containerPort: 5984
+                      name: http
+                  volumeMounts:
+                    - name: privatedb-all-pv
+                      mountPath: /opt/couchdb/data
+    volumeClaimTemplates:
+        - metadata:
+            name: privatedb-all-pv
+          spec:
+              accessModes:
+                  - ReadWriteOnce
+              resources:
+                  requests:
+                      storage: 1G
+              selector:
+                matchLabels:
+                  vol: privatedb-all-pv
+              storageClassName: ""
