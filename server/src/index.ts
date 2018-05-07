@@ -72,6 +72,16 @@ class App {
         lastName:  'adminPon',
         role:      'adminPon'
       });
+    } else if (process.env.NODE_ENV!.indexOf('all') !== -1) {
+      await new TestData(Container.get(TransactionHandler),
+        Container.get(DataService),
+        Container.get(IdentityManager)).addAdmin(<UserInfo> {
+        username:  'adminAll',
+        password:  '@dm1nPassw0rd',
+        firstName: 'adminAll',
+        lastName:  'adminAll',
+        role:      'adminAll'
+      });
     }
 
     if (this.isInitRequired) {

@@ -9,6 +9,8 @@ import {DevelopmentConfig} from './development.config';
 import {KpmPonStagingConfig} from './kpm-pon-staging.config';
 import {PonLocalConfig} from './pon-local.config';
 import {KpmPonLocalConfig} from './kpm-pon-local.config';
+import {KpmAllStagingConfig} from './kpm-all-staging.config';
+import {AllStagingConfig} from './all-staging.config';
 
 export class Config {
   private static NAMESPACE: string = 'app:config';
@@ -69,6 +71,12 @@ export class Config {
         break;
       case 'pon-prod':
         envSettings = PonProdConfig.settings;
+        break;
+      case 'kpm-all-staging':
+        envSettings = KpmAllStagingConfig.settings;
+        break;
+      case 'all-staging':
+        envSettings = AllStagingConfig.settings;
         break;
       default:
         debug(this.NAMESPACE)(`WARNING: no environment settings for ${process.env.NODE_ENV}.`);

@@ -10,7 +10,7 @@ spec:
   restartPolicy: "Always"
   containers:
   - name: api-kpm-all
-    image: registry.eu-de.bluemix.net/lventi/digitalcmr_api_doc:kmp-all
+    image: registry.eu-de.bluemix.net/lventi/digitalcmr_api_doc:kpm-all
     imagePullPolicy: Always
     imagePullSecrets:
     - name: bluemix-gb-registry

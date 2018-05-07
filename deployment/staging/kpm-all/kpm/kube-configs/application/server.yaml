@@ -14,7 +14,7 @@ spec:
             terminationGracePeriodSeconds: 10
             containers:
               - name: server-kpm-all
-                image: registry.eu-de.bluemix.net/lventi/digitalcmr_server:kmp-all
+                image: registry.eu-de.bluemix.net/lventi/digitalcmr_server:kpm-all
                 imagePullPolicy: Always
                 imagePullSecrets:
                 - name: bluemix-gb-registry
