@@ -6,7 +6,7 @@ metadata:
 spec:
   restartPolicy: "Never"
   volumes:
-  - name: composer-credentials
+  - name: kpm-all-composer-credentials
     hostPath:
       path: /composer
   - name: peer0-kpm-all-pv
@@ -18,10 +18,10 @@ spec:
   - name: privatedb-kpm-all-pv
     hostPath:
       path: "/var/privatedb-kpm-all"
-  - name: fabric-config
+  - name: kpm-all-fabric-config
     hostPath:
       path: "/fabric-config"
-  - name: credentials-pv
+  - name: kpm-all-credentials-pv
     hostPath:
       path: "/var/.composer-credentials"
 
@@ -31,15 +31,17 @@ spec:
     imagePullPolicy: Always
     command: ["sh", "-c", "rm -rf /home/* /fabric-config/* /privatedb-kpm-all/* /peer0-kpm-all/* /peer0-kpm-all-couchdb/* /.composer-credentials/*"]
     volumeMounts:
-    - name: composer-credentials
+    - name: kpm-all-composer-credentials
       mountPath: /home
     - name: privatedb-kpm-all-pv
       mountPath: /privatedb-kpm-all
     - name: peer0-kpm-all-pv
       mountPath: /peer0-kpm-all
-    - name: bc-peer0-kpm-all-couchdb-pv
+    - name: bc-peer0-kpm-all-couchdb-pvg
       mountPath: /peer0-kpm-all-couchdb
-    - name: fabric-config
+    - name: kpm-all-fabric-config
       mountPath: /fabric-config
-    - name: credentials-pv
+    - name: kpm-all-credentials-pv
       mountPath: /.composer-credentials
+  nodeSelector:
+    environment: kpm-all

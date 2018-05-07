@@ -35,8 +35,10 @@ spec:
     - name: GODEBUG
       value: "netdns=go"
     volumeMounts:
-    - name: createchannel-fabric-config
+    - name: createchannel-kpm-all-fabric-config
       mountPath: /fabric-config
   volumes:
-    - name: createchannel-fabric-config
+    - name: createchannel-kpm-all-fabric-config
       emptyDir: {}
+  nodeSelector:
+    environment: kpm-all

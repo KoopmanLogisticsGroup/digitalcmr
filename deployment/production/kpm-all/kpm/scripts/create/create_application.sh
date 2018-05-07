@@ -21,8 +21,8 @@ echo "Running: kubectl apply -f ${KUBECONFIG_FOLDER}/privatedb-services.yaml"
 kubectl apply -f ${KUBECONFIG_FOLDER}/privatedb-services.yaml
 echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/server-services.yaml"
 kubectl apply -f ${KUBECONFIG_FOLDER}/server-services.yaml
-echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/api-services.yaml"
-kubectl create -f ${KUBECONFIG_FOLDER}/api-services.yaml
+#echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/api-services.yaml"
+#kubectl create -f ${KUBECONFIG_FOLDER}/api-services.yaml
 
 echo "Creating new Deployment"
 echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/client.yaml"
@@ -31,8 +31,8 @@ echo "Running: kubectl apply -f ${KUBECONFIG_FOLDER}/privatedb.yaml"
 kubectl apply -f ${KUBECONFIG_FOLDER}/privatedb.yaml --validate=false
 echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/server.yaml"
 kubectl apply -f ${KUBECONFIG_FOLDER}/server.yaml --validate=false
-echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/api.yaml"
-kubectl create -f ${KUBECONFIG_FOLDER}/api.yaml --validate=false
+#echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/api.yaml"
+#kubectl create -f ${KUBECONFIG_FOLDER}/api.yaml --validate=false
 
 echo "Checking if all deployments are ready"
 

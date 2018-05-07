@@ -11,7 +11,7 @@ spec:
         name: composer-playground-kpm-all
     spec:
       volumes:
-      - name: composer-credentials
+      - name: kpm-all-composer-credentials
         hostPath:
           path: /composer
       containers:
@@ -52,7 +52,7 @@ spec:
                       }
                   ],
                   "keyValStore": "/home/composer/.hfc-key-store",
-                  "channel": "composerchannel",
+                  "channel": "kpmallchannel",
                   "mspID": "kpm-allMSP",
                   "timeout": 300
                 },
@@ -60,5 +60,7 @@ spec:
               }]
             }
         volumeMounts:
-        - name: composer-credentials
+        - name: kpm-all-composer-credentials
           mountPath: /home
+        nodeSelector:
+          environment: kpm-all
