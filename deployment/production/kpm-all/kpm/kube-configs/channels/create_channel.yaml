@@ -38,7 +38,7 @@ spec:
     - name: createchannel-kpm-all-fabric-config
       mountPath: /fabric-config
   volumes:
-    - name: createchannel-kpm-allfabric-config
+    - name: createchannel-kpm-all-fabric-config
       emptyDir: {}
   nodeSelector:
     environment: kpm-all
