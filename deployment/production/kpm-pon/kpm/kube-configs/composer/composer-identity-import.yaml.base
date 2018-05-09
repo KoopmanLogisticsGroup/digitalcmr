@@ -1,0 +1,55 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: composer-identity-import-kpm-pon
+spec:
+  restartPolicy: "Never"
+  containers:
+  - name: composer-identity-import-kpm-pon
+    image: hyperledger/composer-cli:0.13.2
+    imagePullPolicy: Always
+    command: ["sh", "-c", "sleep 1 && while [ ! -d /fabric-config/Admin@kpm-pon ]; do echo Waiting for identity data; sleep 1; done; composer identity import -p kpm-pon -u admin -c /fabric-config/Admin@kpm-pon/msp/signcerts/Admin@kpm-pon-cert.pem -k /fabric-config/Admin@kpm-pon/msp/keystore/`ls /fabric-config/Admin@kpm-pon/msp/keystore` && echo 'Done with importing identity'; composer network deploy -a /fabric-config/bna/digital-cmr-network.bna -i admin -s passwd -p kpm-pon && echo 'Done with deploying'"]
+    env:
+    - name: COMPOSER_CONFIG
+      value: >
+        {
+          "defaultConnectionProfile": "kpm-pon",
+          "connectionProfiles": {
+            "kpm-pon": {
+              "type": "hlfv1",
+              "orderers": [
+                  {
+                      "url": "grpc://%ORDERER_ADDRESS%"
+                  }
+              ],
+              "ca": {
+                  "url": "http://ca-kpm-pon:7054",
+                  "name": "ca-kpm-pon"
+              },
+              "peers": [
+                  {
+                      "requestURL": "grpc://peer0-kpm-pon:5010",
+                      "eventURL": "grpc://peer0-kpm-pon:5011"
+                  }
+              ],
+              "keyValStore": "/home/composer/.composer-credentials",
+              "channel": "kpmponchannel",
+              "mspID": "kpm-ponMSP",
+              "timeout": "300"
+            }
+          }
+        }
+    volumeMounts:
+    - name: kpm-pon-composer-credentials
+      mountPath: /home
+    - name: kpm-pon-composer-identity-fabric-config
+      mountPath: /fabric-config
+  volumes:
+  - name: kpm-pon-composer-credentials
+    hostPath:
+      path: /composer
+  - name: kpm-pon-composer-identity-fabric-config
+    emptyDir: {}
+  nodeSelector:
+    environment: kpm-pon

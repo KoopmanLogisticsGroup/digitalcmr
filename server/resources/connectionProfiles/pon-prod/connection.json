@@ -2,21 +2,21 @@
   "type":        "hlfv1",
   "orderers":    [
     {
-      "url": "grpc://koopmankube1.koopman.nl:31010"
+      "url": "grpc://169.51.42.23:31010"
     }
   ],
   "ca":          {
-    "url":  "http://ponkube1.koopman.nl:30000",
+    "url":  "http://169.51.42.27:32000",
     "name": "ca-pon"
   },
   "peers":       [
     {
-      "requestURL": "grpc://ponkube1.koopman.nl:30110",
-      "eventURL":   "grpc://ponkube1.koopman.nl:30111"
+      "requestURL": "grpc://169.51.42.27:32110",
+      "eventURL":   "grpc://169.51.42.27:32111"
     }
   ],
   "keyValStore": "/home/composer/.composer-credentials",
-  "channel":     "composerchannel",
+  "channel":     "kpmponchannel",
   "mspID":       "ponMSP",
   "timeout":     "300"
 }

@@ -26,7 +26,16 @@ export class AuthController {
     );
 
     try {
-      return clientAuthenticator.authenticate();
+      const authResponse: AuthenticationResponse = await clientAuthenticator.authenticate();
+
+      if (!authResponse.success) {
+        return Promise.reject(<AuthenticationResponse>{
+          success: false,
+          message: authResponse.message
+        });
+      }
+
+      return Promise.resolve(<AuthenticationResponse>authResponse);
     } catch (error) {
       return Promise.reject(<AuthenticationResponse>{
         success: false,

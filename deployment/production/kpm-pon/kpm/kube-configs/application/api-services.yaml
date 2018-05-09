@@ -1,0 +1,18 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-kpm-pon
+  labels:
+    run: api-kpm-pon
+spec:
+  type: NodePort
+  selector:
+    name: api-kpm-pon
+  ports:
+  - protocol: TCP
+    port: 8080
+    nodePort: 31002
+    name: http
+  nodeSelector:
+    environment: kpm-pon
