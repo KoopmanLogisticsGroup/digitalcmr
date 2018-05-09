@@ -6,7 +6,7 @@ export class PonProdConfig {
       composer:     {
         profile:   'pon-prod',
         network:   'digital-cmr-network',
-        channel:   'composerchannel',
+        channel:   'kpmponchannel',
         namespace: 'org.digitalcmr'
       },
       privateDB:    {
