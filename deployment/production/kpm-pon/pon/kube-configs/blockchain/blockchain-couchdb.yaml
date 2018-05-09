@@ -52,12 +52,6 @@ spec:
                 vol: peer0-pon-pv
         spec:
             terminationGracePeriodSeconds: 10
-            volumes:
-            - name: dockersocket
-              hostPath:
-                path: /var/run/docker.sock
-            - name: peer-pon-fabric-config
-              emptyDir: {}
             containers:
                 - name: peer0-pon
                   image: ibmblockchain/fabric-peer:1.0.6
@@ -132,6 +126,12 @@ spec:
                       mountPath: /var/hyperledger/production
                     - name: peer-pon-fabric-config
                       mountPath: /fabric-config
+            volumes:
+            - name: dockersocket
+              hostPath:
+                path: /var/run/docker.sock
+            - name: peer-pon-fabric-config
+              emptyDir: {}
             nodeSelector:
                 environment: pon
     volumeClaimTemplates:

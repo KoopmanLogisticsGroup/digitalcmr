@@ -5,12 +5,6 @@ metadata:
   name: composer-identity-import-pon
 spec:
   restartPolicy: "Never"
-  volumes:
-  - name: pon-composer-credentials
-    hostPath:
-      path: /composer
-  - name: composer-identity-pon-fabric-config
-    emptyDir: {}
   containers:
   - name: composer-identity-import-pon
     image: hyperledger/composer-cli:0.13.2
@@ -49,7 +43,13 @@ spec:
     volumeMounts:
     - name: pon-composer-credentials
       mountPath: /home
-    - name: composer-identity-pon-fabric-config
+    - name: pon-composer-identity-fabric-config
       mountPath: /fabric-config
+  volumes:
+  - name: pon-composer-credentials
+    hostPath:
+      path: /composer
+  - name: pon-composer-identity-fabric-config
+    emptyDir: {}
   nodeSelector:
       environment: pon

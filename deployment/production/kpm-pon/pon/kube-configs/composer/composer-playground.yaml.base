@@ -62,3 +62,7 @@ spec:
         volumeMounts:
         - name: pon-composer-credentials
           mountPath: /home
+      volumes:
+      - name: pon-composer-credentials
+        hostPath:
+          path: /composer
