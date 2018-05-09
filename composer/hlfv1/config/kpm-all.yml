@@ -1,0 +1,119 @@
+version: '2'
+
+services:
+  ca-kpm-all:
+    image: hyperledger/fabric-ca:x86_64-1.0.0
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-kpm-all
+#      - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/kpm-all-cert.pem
+#      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/52da9f2222ce0c6133e0c3ad5565d8af0acea880058c45f372cc2b45334cb52e_sk
+    ports:
+      - "7054:7054"
+    command: sh -c 'fabric-ca-server start --ca.name ca-kpm-all --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.kpm-all-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/52da9f2222ce0c6133e0c3ad5565d8af0acea880058c45f372cc2b45334cb52e_sk -b admin:adminpw -d'
+    volumes:
+      - ./kpm-all-config/kpm/crypto-config/peerOrganizations/kpm-all/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca-kpm-all
+
+  ca-all:
+    image: hyperledger/fabric-ca:x86_64-1.0.0
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-all
+    ports:
+      - "7154:7054"
+    command: sh -c 'fabric-ca-server start --ca.name ca-all --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.all-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/bf54b768f361e4a2eb0654ec8a8d2b03befaa358581963ce1632263e5f00cf86_sk -b admin:adminpw -d'
+    volumes:
+      - ./kpm-all-config/all/crypto-config/peerOrganizations/all/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca-all
+
+  orderer-kpm-all:
+    container_name: orderer-kpm-all
+    image: hyperledger/fabric-orderer:x86_64-1.0.0
+    environment:
+      - ORDERER_GENERAL_LOGLEVEL=debug
+      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+      - ORDERER_GENERAL_GENESISMETHOD=file
+      - ORDERER_GENERAL_GENESISFILE=/etc/hyperledger/configtx/composer-genesis.block
+      - ORDERER_GENERAL_LOCALMSPID=kpmOrdererMSP
+      - ORDERER_GENERAL_LOCALMSPDIR=/etc/hyperledger/msp/orderer/msp
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric
+    command: orderer
+    ports:
+      - 7050:7050
+    volumes:
+        - ./kpm-all-config/:/etc/hyperledger/configtx
+        - ./kpm-all-config/kpm/crypto-config/ordererOrganizations/kpm-all/orderers/orderer.kpm-all/msp:/etc/hyperledger/msp/orderer/msp
+
+  peer0-kpm-all:
+    container_name: peer0-kpm-all
+    image: hyperledger/fabric-peer:x86_64-1.0.0
+    environment:
+      - CORE_LOGGING_PEER=error
+      - CORE_CHAINCODE_LOGGING_LEVEL=INFO
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - CORE_PEER_ID=peer0-kpm-all
+      - CORE_PEER_ADDRESS=peer0-kpm-all:7051
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=composer_default
+      - CORE_PEER_LOCALMSPID=kpm-allMSP
+      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/peer/msp
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb-kpm-all:5984
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric
+    command: peer node start --peer-defaultchain=false
+    ports:
+      - 7051:7051
+      - 7053:7053
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./kpm-all-config/composer-channel.tx:/etc/hyperledger/configtx/composer-channel.tx
+        - ./kpm-all-config/composer-genesis.block:/etc/hyperledger/configtx/composer-genesis.block
+        - ./kpm-all-config/kpm/crypto-config/peerOrganizations/kpm-all/peers/peer0.kpm-all/msp:/etc/hyperledger/peer/msp
+        - ./kpm-all-config/kpm/crypto-config/peerOrganizations/kpm-all/users:/etc/hyperledger/msp/users
+#    depends_on:
+#      - orderer-kpm-all
+#      - couchdb
+
+  peer0-all:
+    container_name: peer0-all
+    image: hyperledger/fabric-peer:x86_64-1.0.0
+    environment:
+      - CORE_LOGGING_PEER=error
+      - CORE_CHAINCODE_LOGGING_LEVEL=INFO
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - CORE_PEER_ID=peer0-all
+      - CORE_PEER_ADDRESS=peer0-all:7051
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=composer_default
+      - CORE_PEER_LOCALMSPID=allMSP
+      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/peer/msp
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb-all:5984
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric
+    command: peer node start --peer-defaultchain=false
+    ports:
+      - 7151:7051
+      - 7153:7053
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./kpm-all-config/composer-channel.tx:/etc/hyperledger/configtx/composer-channel.tx
+        - ./kpm-all-config/composer-genesis.block:/etc/hyperledger/configtx/composer-genesis.block
+        - ./kpm-all-config/all/crypto-config/peerOrganizations/all/peers/peer0.all/msp:/etc/hyperledger/peer/msp
+        - ./kpm-all-config/all/crypto-config/peerOrganizations/all/users:/etc/hyperledger/msp/users
+
+  couchdb-kpm-all:
+    container_name: couchdb-kpm-all
+    image: hyperledger/fabric-couchdb:x86_64-1.0.0
+    ports:
+      - 5984:5984
+    environment:
+      DB_URL: http://localhost:5984/member_db
+
+  couchdb-all:
+     container_name: couchdb-all
+     image: hyperledger/fabric-couchdb:x86_64-1.0.0
+     ports:
+       - 5985:5984
+     environment:
+       DB_URL: http://localhost:5984/member_db
+
+
