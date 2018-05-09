@@ -18,7 +18,7 @@ spec:
   - name: privatedb-kpm-pon-pv
     hostPath:
       path: "/var/privatedb-kpm-pon"
-  - name: kpm-fabric-config
+  - name: kpm-pon-fabric-config
     hostPath:
       path: "/fabric-config"
   - name: kpm-pon-credentials-pv
@@ -39,7 +39,7 @@ spec:
       mountPath: /peer0-kpm-pon
     - name: bc-peer0-kpm-pon-couchdb-pv
       mountPath: /peer0-kpm-pon-couchdb
-    - name: kpm-fabric-config
+    - name: kpm-pon-fabric-config
       mountPath: /fabric-config
     - name: kpm-pon-credentials-pv
       mountPath: /.composer-credentials

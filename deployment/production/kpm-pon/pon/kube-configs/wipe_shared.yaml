@@ -21,6 +21,9 @@ spec:
   - name: pon-fabric-config
     hostPath:
       path: "/fabric-config"
+  - name: joinchannel-pon-fabric-config
+    hostPath:
+      path: "/fabric-config"
   - name: pon-credentials-pv
     hostPath:
       path: "/var/.composer-credentials"
