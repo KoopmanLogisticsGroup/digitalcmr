@@ -10,10 +10,6 @@ spec:
       labels:
         name: composer-playground-kpm-pon
     spec:
-      volumes:
-      - name: kpm-composer-credentials
-        hostPath:
-          path: /composer
       containers:
       - name: composer-playground-kpm-pon
         image: hyperledger/composer-playground:0.13.2
@@ -60,7 +56,11 @@ spec:
               }]
             }
         volumeMounts:
-        - name: kpm-composer-credentials
+        - name: kpm-pon-composer-credentials
           mountPath: /home
+      volumes:
+      - name: kpm-pon-composer-credentials
+        hostPath:
+          path: /composer
   nodeSelector:
     environment: kpm-pon

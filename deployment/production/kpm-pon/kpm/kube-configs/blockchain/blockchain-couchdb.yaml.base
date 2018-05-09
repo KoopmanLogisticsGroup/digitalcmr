@@ -50,10 +50,10 @@ spec:
         - name: GODEBUG
           value: "netdns=go"
         volumeMounts:
-          - name: orderer-kpm-fabric-config
+          - name: orderer-kpm-pon-fabric-config
             mountPath: /fabric-config
       volumes:
-        - name: orderer-kpm-fabric-config
+        - name: orderer-kpm-pon-fabric-config
           emptyDir: {}
       nodeSelector:
         environment: kpm-pon
@@ -89,10 +89,10 @@ spec:
         - name: GODEBUG
           value: "netdns=go"
         volumeMounts:
-          - name: ca-kpm-fabric-config
+          - name: ca-kpm-pon-fabric-config
             mountPath: /fabric-config
       volumes:
-        - name: ca-kpm-fabric-config
+        - name: ca-kpm-pon-fabric-config
           emptyDir: {}
       nodeSelector:
         environment: kpm-pon
@@ -111,12 +111,6 @@ spec:
                 vol: peer0-kpm-pon-pv
         spec:
             terminationGracePeriodSeconds: 10
-            volumes:
-            - name: dockersocket
-              hostPath:
-                path: /var/run/docker.sock
-            - name: peer-kpm-fabric-config
-              emptyDir: {}
             containers:
                 - name: peer0-kpm-pon
                   image: ibmblockchain/fabric-peer:1.0.6
@@ -189,8 +183,14 @@ spec:
                       mountPath: /host/var/run/docker.sock
                     - name: peer0-kpm-pon-pv
                       mountPath: /var/hyperledger/production
-                    - name: peer-kpm-fabric-config
+                    - name: peer-kpm-pon-fabric-config
                       mountPath: /fabric-config
+            volumes:
+            - name: dockersocket
+              hostPath:
+                path: /var/run/docker.sock
+            - name: peer-kpm-pon-fabric-config
+              emptyDir: {}
             nodeSelector:
                 environment: kpm-pon
     volumeClaimTemplates:
