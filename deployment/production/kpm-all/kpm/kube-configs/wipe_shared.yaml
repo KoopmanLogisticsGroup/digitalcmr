@@ -1,0 +1,47 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: wipeshared
+spec:
+  restartPolicy: "Never"
+  volumes:
+  - name: kpm-all-composer-credentials
+    hostPath:
+      path: /composer
+  - name: peer0-kpm-all-pv
+    hostPath:
+      path: "/var/peer0-kpm-all"
+  - name: bc-peer0-kpm-all-couchdb-pv
+    hostPath:
+      path: "/var/peer0-kpm-all-couchdb"
+  - name: privatedb-kpm-all-pv
+    hostPath:
+      path: "/var/privatedb-kpm-all"
+  - name: kpm-all-fabric-config
+    hostPath:
+      path: "/fabric-config"
+  - name: kpm-all-credentials-pv
+    hostPath:
+      path: "/var/.composer-credentials"
+
+  containers:
+  - name: wipeshared
+    image: ibmblockchain/fabric-tools:1.0.6
+    imagePullPolicy: Always
+    command: ["sh", "-c", "rm -rf /home/* /fabric-config/* /privatedb-kpm-all/* /peer0-kpm-all/* /peer0-kpm-all-couchdb/* /.composer-credentials/*"]
+    volumeMounts:
+    - name: kpm-all-composer-credentials
+      mountPath: /home
+    - name: privatedb-kpm-all-pv
+      mountPath: /privatedb-kpm-all
+    - name: peer0-kpm-all-pv
+      mountPath: /peer0-kpm-all
+    - name: bc-peer0-kpm-all-couchdb-pvg
+      mountPath: /peer0-kpm-all-couchdb
+    - name: kpm-all-fabric-config
+      mountPath: /fabric-config
+    - name: kpm-all-credentials-pv
+      mountPath: /.composer-credentials
+  nodeSelector:
+    environment: kpm-all

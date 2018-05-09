@@ -1,0 +1,18 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: composer-playground-kpm-all
+  labels:
+    run: composer-playground-kpm-all
+spec:
+  type: NodePort
+  selector:
+    name: composer-playground-kpm-all
+  ports:
+  - protocol: TCP
+    port: 8080
+    nodePort: 31080
+    name: http
+  nodeSelector:
+    environment: kpm-all

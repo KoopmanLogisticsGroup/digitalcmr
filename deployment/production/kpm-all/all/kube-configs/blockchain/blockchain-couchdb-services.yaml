@@ -1,0 +1,53 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ca-all
+  labels:
+    run: ca-all
+spec:
+  type: NodePort
+  selector:
+    name: ca-all
+  ports:
+  - protocol: TCP
+    port: 7054
+    nodePort: 30000
+    name: grpc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name:  peer0-all
+  labels:
+    app:  peer0-all
+    tier: peer0-all
+spec:
+  type: NodePort
+  selector:
+    tier: peer0-all
+  ports:
+  - protocol: TCP
+    port: 5010
+    nodePort: 30110
+    name: grpc
+  - protocol: TCP
+    port: 5011
+    nodePort: 30111
+    name: events
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name:  peer0-all-couchdb
+  labels:
+    app:  peer0-all-couchdb
+    tier: peer0-all-couchdb
+spec:
+  type: NodePort
+  selector:
+    tier: peer0-all-couchdb
+  ports:
+  - protocol: TCP
+    port: 5984
+    name: peer0-all-couchdb
