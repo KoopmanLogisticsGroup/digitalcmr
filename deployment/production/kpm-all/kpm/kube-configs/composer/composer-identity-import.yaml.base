@@ -9,7 +9,7 @@ spec:
   - name: kpm-all-composer-credentials
     hostPath:
       path: /composer
-  - name: composer-identity-fabric-config
+  - name: kpm-all-composer-identity-fabric-config
     emptyDir: {}
   containers:
   - name: composer-identity-import-kpm-all
@@ -51,5 +51,5 @@ spec:
       mountPath: /home
     - name: kpm-all-composer-identity-fabric-config
       mountPath: /fabric-config
-    nodeSelector:
-      environment: kpm-all
+  nodeSelector:
+    environment: kpm-all

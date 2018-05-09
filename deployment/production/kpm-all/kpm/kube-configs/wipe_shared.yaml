@@ -37,7 +37,7 @@ spec:
       mountPath: /privatedb-kpm-all
     - name: peer0-kpm-all-pv
       mountPath: /peer0-kpm-all
-    - name: bc-peer0-kpm-all-couchdb-pvg
+    - name: bc-peer0-kpm-all-couchdb-pv
       mountPath: /peer0-kpm-all-couchdb
     - name: kpm-all-fabric-config
       mountPath: /fabric-config
