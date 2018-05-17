@@ -16,5 +16,5 @@ spec:
     name: http
   - protocol: TCP
     port: 443
-    nodePort: 31443
+    nodePort: 31473
     name: https
