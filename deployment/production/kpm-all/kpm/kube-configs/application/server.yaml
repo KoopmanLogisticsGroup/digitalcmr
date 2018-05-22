@@ -14,7 +14,7 @@ spec:
             terminationGracePeriodSeconds: 10
             containers:
               - name: server-kpm-all
-                image: registry.eu-de.bluemix.net/kpm-all-trial/digitalcmr_server:kpm-all-trial
+                image: registry.eu-de.bluemix.net/kpm-all-trial/digitalcmr_server
                 imagePullPolicy: Always
                 imagePullSecrets:
                 - name: bluemix-gb-registry
@@ -33,8 +33,8 @@ spec:
                   volumeMounts:
                     - name: kpm-all-credentials-pv
                       mountPath: /home/composer/.composer-credentials
-        nodeSelector:
-          environment: kpm-all
+            nodeSelector:
+              environment: kpm-all
     volumeClaimTemplates:
         - metadata:
             name: kpm-all-credentials-pv

@@ -5,13 +5,12 @@ metadata:
   name: privatedb-pon
   labels:
     app: privatedb-pon
-    tier: db
+    tier: db-pon
 spec:
   type: NodePort
   selector:
-    tier: db
+    tier: db-pon
   ports:
   - protocol: TCP
     port: 5984
-    nodePort: 31003
     name: http

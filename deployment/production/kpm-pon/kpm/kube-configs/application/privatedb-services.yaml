@@ -5,11 +5,11 @@ metadata:
   name: privatedb-kpm-pon
   labels:
     app: privatedb-kpm-pon
-    tier: db
+    tier: db-kpm-pon
 spec:
   type: NodePort
   selector:
-    tier: db
+    tier: db-kpm-pon
   ports:
   - protocol: TCP
     port: 5984

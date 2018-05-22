@@ -5,11 +5,11 @@ metadata:
   name: privatedb-kpm-all
   labels:
     app: privatedb-kpm-all
-    tier: db
+    tier: db-kpm-all
 spec:
   type: NodePort
   selector:
-    tier: db
+    tier: db-kpm-all
   ports:
   - protocol: TCP
     port: 5984

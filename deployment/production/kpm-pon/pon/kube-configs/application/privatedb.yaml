@@ -9,7 +9,7 @@ spec:
     template:
         metadata:
             labels:
-                tier: db
+                tier: db-pon
         spec:
             terminationGracePeriodSeconds: 10
             containers:
