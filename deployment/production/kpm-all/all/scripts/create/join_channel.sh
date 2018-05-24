@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BASE_PATH=$(pwd)../../../../../../composer/hlfv1/config/kpm-all-config
+BASE_PATH=$(pwd)../../../../../../composer/hlfv1/config/kpm-all-config-production
 CRYPTO_PATH=$BASE_PATH/all
 CONTAINER_BASE_PATH=/fabric-config
 USERS_PARTIAL_PATH=crypto-config/peerOrganizations/all/users/Admin@all
@@ -32,11 +32,11 @@ PEER_MSPID=${PEER_MSPID:-allMSP}
 
 # Default to "composerchannel" if not defined
 if [ -z "${CHANNEL_NAME}" ]; then
-	echo "CHANNEL_NAME not defined. I will use \"composerchannel\"."
+	echo "CHANNEL_NAME not defined. I will use \"kpmallchannel\"."
 	echo "I will wait 5 seconds before continuing."
 	sleep 5
 fi
-CHANNEL_NAME=${CHANNEL_NAME:-composerchannel}
+CHANNEL_NAME=${CHANNEL_NAME:-kpmallchannel}
 
 # Default to "admin for peer0" if not defined
 if [ -z "${MSP_CONFIGPATH}" ]; then
@@ -48,11 +48,11 @@ MSP_CONFIGPATH=${MSP_CONFIGPATH:-/fabric-config/Admin@all/msp}
 
 # Default to "orderer-kpm-all:31010" if not defined
 if [ -z "${ORDERER_ADDRESS}" ]; then
-	echo "ORDERER_ADDRESS not defined. I will use \"orderer-kpm-all:31010\"."
+	echo "ORDERER_ADDRESS not defined. I will use \"169.51.42.19:31020\"."
 	echo "I will wait 5 seconds before continuing."
 	sleep 5
 fi
-ORDERER_ADDRESS=${ORDERER_ADDRESS:-orderer-kpm-all:31010}
+ORDERER_ADDRESS=${ORDERER_ADDRESS:-169.51.42.19:31020}
 
 echo "Deleting old channel pods if exists"
 echo "Running: ${KUBECONFIG_FOLDER}/../scripts/delete/delete_channel-pods.sh"
@@ -65,7 +65,7 @@ echo "Creating joinchannel pod"
 echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/join_channel.yaml"
 kubectl create -f ${KUBECONFIG_FOLDER}/join_channel.yaml
 
-TIMEOUT=15
+TIMEOUT=30
 echo "Waiting for $TIMEOUT seconds for pod to settle"
 sleep $TIMEOUT
 
