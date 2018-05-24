@@ -1,0 +1,22 @@
+{
+  "type":        "hlfv1",
+  "orderers":    [
+    {
+      "url": "grpc://169.51.42.19:31020"
+    }
+  ],
+  "ca":          {
+    "url":  "http://169.51.42.20:30040",
+    "name": "ca-all"
+  },
+  "peers":       [
+    {
+      "requestURL": "grpc://169.51.42.20:30140",
+      "eventURL":   "grpc://169.51.42.20:30141"
+    }
+  ],
+  "keyValStore": "/home/composer/.composer-credentials",
+  "channel":     "kpmallchannel",
+  "mspID":       "allMSP",
+  "timeout":     "300"
+}
