@@ -2,14 +2,15 @@ import {
   Body,
   Get,
   JsonController,
+  Param,
   Post,
+  Put,
   Req,
   UseAfter,
-  UseInterceptor,
-  Param,
-  Put, UseBefore
+  UseBefore,
+  UseInterceptor
 } from 'routing-controllers';
-import {ErrorHandlerMiddleware, ComposerInterceptor, UserAuthenticatorMiddleware} from '../../middleware';
+import {ComposerInterceptor, ErrorHandlerMiddleware, UserAuthenticatorMiddleware} from '../../middleware';
 import {JSONWebToken} from '../../utils/authentication/JSONWebToken';
 import {QueryReturnType, TransactionHandler} from '../../blockchain/TransactionHandler';
 import {Config} from '../../config/index';
@@ -70,7 +71,8 @@ export class ECMRController {
   }
 
   @Get('/vehicle/plateNumber/:plateNumber')
-  public async getAllEcmrsFromVehicleByPlateNumber(@Param('plateNumber') plateNumber: string, @Req() request: any): Promise<any> {
+  public async getAllEcmrsFromVehicleByPlateNumber(@Param('plateNumber') plateNumber: string,
+                                                   @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
     return await this.ecmrTransactor.getEcmrsByPlateNumber(this.transactionHandler, identity, Config.settings.composer.profile, plateNumber);
@@ -94,11 +96,11 @@ export class ECMRController {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
     data.signature = <Signature> {
-      timestamp:     new Date().getTime(),
-      ip:            request.ip.toString(),
-      latitude:      Math.random() < 0.5 ? ((1 - Math.random()) * (90 - (-90)) + -90) : (Math.random() * (90 - (-90)) + (-90)),
-      longitude:     Math.random() < 0.5 ? ((1 - Math.random()) * (180 - (-180)) + -180) : (Math.random() * (180 - (-180)) + (-180)),
-      generalRemark: data.signature && data.signature.generalRemark
+      timestamp:     data.signature.timestamp || new Date().getTime(),
+      ip:            data.signature.ip || request.ip.toString(),
+      latitude:      data.signature.latitude || 0,
+      longitude:     data.signature.longitude || 0,
+      generalRemark: data.signature.generalRemark || data.signature && data.signature.generalRemark
     };
 
     return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateEcmrStatusToLoaded, data, new EcmrTransactor());
@@ -109,11 +111,11 @@ export class ECMRController {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
     data.signature = <Signature> {
-      timestamp:     new Date().getTime(),
-      ip:            request.ip.toString(),
-      latitude:      Math.random() < 0.5 ? ((1 - Math.random()) * (90 - (-90)) + -90) : (Math.random() * (90 - (-90)) + (-90)),
-      longitude:     Math.random() < 0.5 ? ((1 - Math.random()) * (180 - (-180)) + -180) : (Math.random() * (180 - (-180)) + (-180)),
-      generalRemark: data.signature && data.signature.generalRemark
+      timestamp:     data.signature.timestamp || new Date().getTime(),
+      ip:            data.signature.ip || request.ip.toString(),
+      latitude:      data.signature.latitude || 0,
+      longitude:     data.signature.longitude || 0,
+      generalRemark: data.signature.generalRemark || data.signature && data.signature.generalRemark
     };
 
     return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateEcmrStatusToInTransit, data, new EcmrTransactor());
@@ -124,11 +126,11 @@ export class ECMRController {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
     data.signature = <Signature> {
-      timestamp:     new Date().getTime(),
-      ip:            request.ip.toString(),
-      latitude:      Math.random() < 0.5 ? ((1 - Math.random()) * (90 - (-90)) + -90) : (Math.random() * (90 - (-90)) + (-90)),
-      longitude:     Math.random() < 0.5 ? ((1 - Math.random()) * (180 - (-180)) + -180) : (Math.random() * (180 - (-180)) + (-180)),
-      generalRemark: data.signature && data.signature.generalRemark
+      timestamp:     data.signature.timestamp || new Date().getTime(),
+      ip:            data.signature.ip || request.ip.toString(),
+      latitude:      data.signature.latitude || 0,
+      longitude:     data.signature.longitude || 0,
+      generalRemark: data.signature.generalRemark || data.signature && data.signature.generalRemark
     };
 
     return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateEcmrStatusToDelivered, data, new EcmrTransactor());
@@ -139,10 +141,10 @@ export class ECMRController {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
     data.signature = <Signature> {
-      timestamp:     new Date().getTime(),
-      ip:            request.ip.toString(),
-      latitude:      Math.random() < 0.5 ? ((1 - Math.random()) * (90 - (-90)) + -90) : (Math.random() * (90 - (-90)) + (-90)),
-      longitude:     Math.random() < 0.5 ? ((1 - Math.random()) * (180 - (-180)) + -180) : (Math.random() * (180 - (-180)) + (-180)),
+      timestamp:     data.signature.timestamp || new Date().getTime(),
+      ip:            data.signature.ip || request.ip.toString(),
+      latitude:      data.signature.latitude || 0,
+      longitude:     data.signature.longitude || 0,
       generalRemark: data.signature && data.signature.generalRemark
     };
 
@@ -153,7 +155,7 @@ export class ECMRController {
   public async updateECMRtoCancelled(@Body() ecmrCancellation: EcmrCancellation, @Req() request: any): Promise<any> {
     const identity: Identity = new JSONWebToken(request).getIdentity();
 
-    ecmrCancellation.cancellation.date = new Date().getTime();
+    ecmrCancellation.cancellation.date = ecmrCancellation.cancellation.date || new Date().getTime();
 
     return await this.transactionHandler.invoke(identity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateEcmrStatusToCancelled, ecmrCancellation, new EcmrTransactor());
   }
