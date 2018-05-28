@@ -1,7 +1,4 @@
 import {Container} from 'typedi';
-
-const privateData = require('../../resources/testData/privateData.json');
-const sharedData  = require('../../resources/testData/sharedData.json');
 import {LoggerInstance} from 'winston';
 import {DataService} from '../datasource/DataService';
 import {LoggerFactory} from './logger/LoggerFactory';
@@ -22,21 +19,34 @@ import {CreateEcmrs} from '../interfaces/createEcmrs.interface';
 import {Ecmr} from '../interfaces/ecmr.interface';
 import {Vehicle} from '../interfaces/vehicle.interface';
 import {Identity, UserInfo} from '../interfaces/entity.inferface';
+import {ConnectionFactory} from '../connections/ConnectionFactory';
+import {ConnectionPoolManager} from '../connections/ConnectionPoolManager';
+import {Connection} from '../connections/entities/Connection';
+
+const privateData = require('../../resources/testData/privateData.json');
+const sharedData = require('../../resources/testData/sharedData.json');
 
 export class TestData {
-  private logger: LoggerInstance         = Container.get(LoggerFactory).get('TestData');
+  private logger: LoggerInstance = Container.get(LoggerFactory).get('TestData');
   private static adminIdentity: Identity = {userID: 'admin', userSecret: 'adminpw'};
-  private businessNetworkHandler: BusinessNetworkHandler;
-  private transportOrderIDs: string[]    = ['A12345ORDER', 'B12345ORDER'];
+  private businessNetworkHandler: BusinessNetworkHandler = Container.get(BusinessNetworkHandler);
+  private transportOrderIDs: string[] = ['A12345ORDER', 'B12345ORDER'];
+  private connectionPoolManager: ConnectionPoolManager = Container.get(ConnectionPoolManager);
+  private connectionFactory: ConnectionFactory = Container.get(ConnectionFactory);
+  private connection: Connection;
 
   public constructor(private transactionHandler: TransactionHandler,
                      private dataService: DataService,
                      private identityManager: IdentityManager) {
-    this.businessNetworkHandler = Container.get(BusinessNetworkHandler);
   }
 
   public async addTestData(): Promise<any> {
     this.logger.info('Adding TestData');
+    if (!this.connectionPoolManager.userHasConnection(TestData.adminIdentity.userID)) {
+      this.connection = await this.connectionFactory.create(TestData.adminIdentity);
+      await this.connectionPoolManager.addConnection(TestData.adminIdentity.userID, this.connection);
+    }
+
     if (privateData) {
       await this.addPrivateDataToDB();
     }
@@ -134,22 +144,22 @@ export class TestData {
       // get all the ecmrs contained in the vehicle
       switch (orgClass) {
         case 'legalOwnerOrg': {
-          promises.push(this.transactionHandler.invoke(TestData.adminIdentity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateLegalOwnerOrg, org, new LegalOwnerTransactor()));
+          promises.push(this.transactionHandler.invoke(TestData.adminIdentity, this.connection, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateLegalOwnerOrg, org, new LegalOwnerTransactor()));
           break;
         }
 
         case 'compoundOrg': {
-          promises.push(this.transactionHandler.invoke(TestData.adminIdentity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateCompoundOrg, org, new CompoundTransactor()));
+          promises.push(this.transactionHandler.invoke(TestData.adminIdentity, this.connection, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateCompoundOrg, org, new CompoundTransactor()));
           break;
         }
 
         case 'carrierOrg': {
-          promises.push(this.transactionHandler.invoke(TestData.adminIdentity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateCarrierOrg, org, new CarrierTransactor()));
+          promises.push(this.transactionHandler.invoke(TestData.adminIdentity, this.connection, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateCarrierOrg, org, new CarrierTransactor()));
           break;
         }
 
         case 'recipientOrg': {
-          promises.push(this.transactionHandler.invoke(TestData.adminIdentity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateRecipientOrg, org, new RecipientTransactor()));
+          promises.push(this.transactionHandler.invoke(TestData.adminIdentity, this.connection, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateRecipientOrg, org, new RecipientTransactor()));
           break;
         }
       }
@@ -160,23 +170,23 @@ export class TestData {
   }
 
   private async addVehicles(vehicles: Vehicle[]): Promise<any> {
-    return this.transactionHandler.invoke(TestData.adminIdentity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateVehicles, vehicles, new VehicleTransactor());
+    return this.transactionHandler.invoke(TestData.adminIdentity, this.connection, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateVehicles, vehicles, new VehicleTransactor());
   }
 
   private async addEcmrs(ecmrs: Ecmr[]): Promise<any> {
-    await this.transactionHandler.invoke(TestData.adminIdentity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateEcmrs, <CreateEcmrs>{
+    await this.transactionHandler.invoke(TestData.adminIdentity, this.connection, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateEcmrs, <CreateEcmrs>{
       'orderID': this.transportOrderIDs[0],
       'ecmrs':   ecmrs.filter(ecmr => ecmr.orderID === this.transportOrderIDs[0])
     }, new EcmrTransactor());
 
-    return this.transactionHandler.invoke(TestData.adminIdentity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateEcmrs, <CreateEcmrs>{
+    return this.transactionHandler.invoke(TestData.adminIdentity, this.connection, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateEcmrs, <CreateEcmrs>{
       'orderID': this.transportOrderIDs[1],
       'ecmrs':   ecmrs.filter(ecmr => ecmr.orderID === this.transportOrderIDs[1])
     }, new EcmrTransactor());
   }
 
   private async addTransportOrders(transportOrders: TransportOrder[]): Promise<any> {
-    return this.transactionHandler.invoke(TestData.adminIdentity, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateTransportOrders, transportOrders, new TransportOrderTransactor());
+    return this.transactionHandler.invoke(TestData.adminIdentity, this.connection, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateTransportOrders, transportOrders, new TransportOrderTransactor());
   }
 
   public async addAdmin(adminUser: UserInfo): Promise<any> {
@@ -187,7 +197,7 @@ export class TestData {
       userSecret: 'adminpw'
     };
 
-    return new IdentityManager('org.hyperledger.composer.system').addAdmin(adminIdentity, adminUser);
+    return await new IdentityManager('org.hyperledger.composer.system').addAdmin(adminIdentity, adminUser);
   }
 
   private async addPrivateDataToDB(): Promise<any> {

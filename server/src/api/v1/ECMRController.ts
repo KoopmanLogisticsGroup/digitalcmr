@@ -78,15 +78,13 @@ export class ECMRController {
 
   @Put('/status/' + EcmrStatus.Loaded)
   public async updateEcmrStatusToLoaded(@Body() data: UpdateEcmrStatus, @Req() request: any): Promise<any> {
-    let tempData = <Signature> {
+    data.signature = <Signature> {
       timestamp:     data.signature.timestamp || new Date().getTime(),
-      ip:            request.ip.toString(),
-      latitude:      Math.random() < 0.5 ? ((1 - Math.random()) * (90 - (-90)) + -90) : (Math.random() * (90 - (-90)) + (-90)),
-      longitude:     Math.random() < 0.5 ? ((1 - Math.random()) * (180 - (-180)) + -180) : (Math.random() * (180 - (-180)) + (-180)),
+      ip:            data.signature.ip || request.ip.toString(),
+      latitude:      data.signature.latitude || 0,
+      longitude:     data.signature.longitude || 0,
       generalRemark: data.signature && data.signature.generalRemark
     };
-
-    data.signature = tempData;
 
     return await this.transactionHandler.invoke(request.identity, request.connection, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateEcmrStatusToLoaded, data, new EcmrTransactor());
   }
@@ -94,10 +92,10 @@ export class ECMRController {
   @Put('/status/' + EcmrStatus.InTransit)
   public async updateEcmrStatusToInTransit(@Body() data: UpdateEcmrStatus, @Req() request: any): Promise<any> {
     data.signature = <Signature> {
-      timestamp:     new Date().getTime(),
-      ip:            request.ip.toString(),
-      latitude:      Math.random() < 0.5 ? ((1 - Math.random()) * (90 - (-90)) + -90) : (Math.random() * (90 - (-90)) + (-90)),
-      longitude:     Math.random() < 0.5 ? ((1 - Math.random()) * (180 - (-180)) + -180) : (Math.random() * (180 - (-180)) + (-180)),
+      timestamp:     data.signature.timestamp || new Date().getTime(),
+      ip:            data.signature.ip || request.ip.toString(),
+      latitude:      data.signature.latitude || 0,
+      longitude:     data.signature.longitude || 0,
       generalRemark: data.signature && data.signature.generalRemark
     };
 
@@ -107,10 +105,10 @@ export class ECMRController {
   @Put('/status/' + EcmrStatus.Delivered)
   public async updateEcmrStatusToDelivered(@Body() data: UpdateEcmrStatus, @Req() request: any): Promise<any> {
     data.signature = <Signature> {
-      timestamp:     new Date().getTime(),
-      ip:            request.ip.toString(),
-      latitude:      Math.random() < 0.5 ? ((1 - Math.random()) * (90 - (-90)) + -90) : (Math.random() * (90 - (-90)) + (-90)),
-      longitude:     Math.random() < 0.5 ? ((1 - Math.random()) * (180 - (-180)) + -180) : (Math.random() * (180 - (-180)) + (-180)),
+      timestamp:     data.signature.timestamp || new Date().getTime(),
+      ip:            data.signature.ip || request.ip.toString(),
+      latitude:      data.signature.latitude || 0,
+      longitude:     data.signature.longitude || 0,
       generalRemark: data.signature && data.signature.generalRemark
     };
 
@@ -120,10 +118,10 @@ export class ECMRController {
   @Put('/status/' + EcmrStatus.ConfirmedDelivered)
   public async updateEcmrStatusToConfirmedDelivered(@Body() data: UpdateEcmrStatus, @Req() request: any): Promise<any> {
     data.signature = <Signature> {
-      timestamp:     new Date().getTime(),
-      ip:            request.ip.toString(),
-      latitude:      Math.random() < 0.5 ? ((1 - Math.random()) * (90 - (-90)) + -90) : (Math.random() * (90 - (-90)) + (-90)),
-      longitude:     Math.random() < 0.5 ? ((1 - Math.random()) * (180 - (-180)) + -180) : (Math.random() * (180 - (-180)) + (-180)),
+      timestamp:     data.signature.timestamp || new Date().getTime(),
+      ip:            data.signature.ip || request.ip.toString(),
+      latitude:      data.signature.latitude || 0,
+      longitude:     data.signature.longitude || 0,
       generalRemark: data.signature && data.signature.generalRemark
     };
 
@@ -132,7 +130,7 @@ export class ECMRController {
 
   @Put('/cancel')
   public async updateECMRtoCancelled(@Body() ecmrCancellation: EcmrCancellation, @Req() request: any): Promise<any> {
-    ecmrCancellation.cancellation.date = new Date().getTime();
+    ecmrCancellation.cancellation.date = ecmrCancellation.cancellation.date  || new Date().getTime();
 
     return await this.transactionHandler.invoke(request.identity, request.connection, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateEcmrStatusToCancelled, ecmrCancellation, new EcmrTransactor());
   }
@@ -147,4 +145,3 @@ export class ECMRController {
     return await this.transactionHandler.invoke(request.identity, request.connection, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateExpectedDeliveryWindow, etaObject, new EcmrTransactor());
   }
 }
-

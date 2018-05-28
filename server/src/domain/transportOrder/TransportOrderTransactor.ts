@@ -5,6 +5,7 @@ import {Transaction} from '../../blockchain/Transactions';
 import {QueryReturnType, TransactionHandler} from '../../blockchain/TransactionHandler';
 import {Query} from '../../blockchain/Queries';
 import {Identity} from '../../interfaces/entity.inferface';
+import {Connection} from '../../connections/entities/Connection';
 
 export class TransportOrderTransactor implements TransactionCreator {
   public async invoke(factory: Factory, namespace: string, transactionName: string, data: any): Promise<any> {
@@ -33,8 +34,8 @@ export class TransportOrderTransactor implements TransactionCreator {
     return transaction;
   }
 
-  public async getAllTransportOrdersByVin(transactionHandler: TransactionHandler, identity: Identity, connectionProfile: string, vin: string): Promise<any> {
-    const transportOrders = await transactionHandler.query(identity, connectionProfile, QueryReturnType.Multiple, Query.GetAllTransportOrders);
+  public async getAllTransportOrdersByVin(transactionHandler: TransactionHandler, identity: Identity, connection: Connection, connectionProfile: string, vin: string): Promise<any> {
+    const transportOrders = await transactionHandler.query(identity, connection, connectionProfile, QueryReturnType.Multiple, Query.GetAllTransportOrders);
 
     let transportOrderArray: any = [];
 
