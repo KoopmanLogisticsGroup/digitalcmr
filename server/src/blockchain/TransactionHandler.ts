@@ -1,7 +1,7 @@
-import {BusinessNetworkHandler} from './BusinessNetworkHandler';
 import {TransactionCreator} from './TransactionCreator';
 import {Factory} from 'composer-common';
 import {Identity} from '../interfaces/entity.inferface';
+import {Connection} from '../connections/entities/Connection';
 
 export enum QueryReturnType {
   Multiple,
@@ -9,33 +9,24 @@ export enum QueryReturnType {
 }
 
 export class TransactionHandler {
-  public constructor(private businessNetworkHandler: BusinessNetworkHandler) {
-  }
-
-  public async invoke(identity: Identity, connectionProfile: string, namespace: string, transactionName: string, data: any, transactionCreator: TransactionCreator): Promise<void> {
-    await this.businessNetworkHandler.connect(identity, connectionProfile);
-    const factory: Factory = await this.businessNetworkHandler.getFactory();
+  public async invoke(identity: Identity, connection: Connection, connectionProfile: string, namespace: string, transactionName: string, data: any, transactionCreator: TransactionCreator): Promise<void> {
+    const factory: Factory = await connection.businessNetworkHandler.getFactory();
 
     const transaction = await transactionCreator.invoke(factory, namespace, transactionName, data, identity);
 
     try {
-      await this.businessNetworkHandler.submitTransaction(transaction);
+      await connection.businessNetworkHandler.submitTransaction(transaction);
     } catch (error) {
       throw error;
     }
 
-    await this.businessNetworkHandler.disconnect();
-
-    return this.businessNetworkHandler.getSerializer(transaction);
+    return connection.businessNetworkHandler.getSerializer(transaction);
   }
 
-  public async query(identity: Identity, connectionProfile: string, queryReturnType: QueryReturnType, queryName: string, parameters?: any): Promise<any> {
-    await this.businessNetworkHandler.connect(identity, connectionProfile);
-    const assets = await this.businessNetworkHandler.query(queryName, parameters);
+  public async query(identity: Identity, connection: Connection, connectionProfile: string, queryReturnType: QueryReturnType, queryName: string, parameters?: any): Promise<any> {
+    const assets = await connection.businessNetworkHandler.query(queryName, parameters);
 
-    let result: any[] = assets.map(asset => this.businessNetworkHandler.getSerializer(asset));
-
-    await this.businessNetworkHandler.disconnect();
+    let result: any[] = assets.map(asset => connection.businessNetworkHandler.getSerializer(asset));
 
     return (queryReturnType === QueryReturnType.Single) ? ((!result.length || typeof result === 'undefined') ? {} : result[0]) : result;
   }

@@ -10,24 +10,24 @@ else
 fi
 
 echo "Deleting application services"
-echo "Running: kubectl delete -f ${KUBECONFIG_FOLDER}/client-services.yaml"
-kubectl delete -f ${KUBECONFIG_FOLDER}/client-services.yaml
+#echo "Running: kubectl delete -f ${KUBECONFIG_FOLDER}/client-services.yaml"
+#kubectl delete -f ${KUBECONFIG_FOLDER}/client-services.yaml
 echo "Running: kubectl delete -f ${KUBECONFIG_FOLDER}/server-services.yaml"
 kubectl delete -f ${KUBECONFIG_FOLDER}/server-services.yaml
 echo "Running: kubectl delete -f ${KUBECONFIG_FOLDER}/privatedb-services.yaml"
 kubectl delete -f ${KUBECONFIG_FOLDER}/privatedb-services.yaml
-echo "Running: kubectl delete -f ${KUBECONFIG_FOLDER}/api-services.yaml"
-kubectl delete -f ${KUBECONFIG_FOLDER}/api-services.yaml
+#echo "Running: kubectl delete -f ${KUBECONFIG_FOLDER}/api-services.yaml"
+#kubectl delete -f ${KUBECONFIG_FOLDER}/api-services.yaml
 
 echo "Deleting application deployments"
-echo "Running: kubectl delete -f ${KUBECONFIG_FOLDER}/client.yaml"
-kubectl delete -f ${KUBECONFIG_FOLDER}/client.yaml
+#echo "Running: kubectl delete -f ${KUBECONFIG_FOLDER}/client.yaml"
+#kubectl delete -f ${KUBECONFIG_FOLDER}/client.yaml
 echo "Running: kubectl delete -f ${KUBECONFIG_FOLDER}/server.yaml"
 kubectl delete -f ${KUBECONFIG_FOLDER}/server.yaml
 echo "Running: kubectl delete -f ${KUBECONFIG_FOLDER}/privatedb.yaml"
 kubectl delete -f ${KUBECONFIG_FOLDER}/privatedb.yaml
-echo "Running: kubectl delete -f ${KUBECONFIG_FOLDER}/api.yaml"
-kubectl delete -f ${KUBECONFIG_FOLDER}/api.yaml
+#echo "Running: kubectl delete -f ${KUBECONFIG_FOLDER}/api.yaml"
+#kubectl delete -f ${KUBECONFIG_FOLDER}/api.yaml
 
 echo "Checking if all deployments are deleted"
 
