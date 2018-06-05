@@ -33,7 +33,6 @@ export class AuthController {
     try {
       const authResponse: AuthenticationResponse = await clientAuthenticator.authenticate();
       const identity: Identity = authResponse.user.identity;
-      this.logger.info('', authResponse);
       if (!authResponse.success) {
         return Promise.reject(<AuthenticationResponse>{
           success: false,
@@ -42,8 +41,8 @@ export class AuthController {
       }
 
       if (!this.connectionPoolManager.userHasConnection(identity.userID)) {
-        const connection = await this.connectionFactory.create(identity);
-        this.connectionPoolManager.addConnection(identity.userID, connection);
+          const connection = await this.connectionFactory.create(identity);
+          this.connectionPoolManager.addConnection(identity.userID, connection);
       }
 
       return Promise.resolve(<AuthenticationResponse>authResponse);

@@ -4,7 +4,7 @@ export class AllProdConfig {
   public static get settings(): Settings {
     return {
       composer:     {
-        profile:   'all-staging',
+        profile:   'all-prod',
         network:   'digital-cmr-network',
         channel:   'kpmallchannel',
         namespace: 'org.digitalcmr'

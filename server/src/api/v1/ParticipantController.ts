@@ -16,8 +16,6 @@ import {Config} from '../../config/index';
 import {Query} from '../../blockchain/Queries';
 import {IdentityManager} from '../../blockchain/IdentityManager';
 import {Identity, User} from '../../interfaces/entity.inferface';
-import {Container} from 'typedi';
-import {ConnectionPoolManager} from '../../connections/ConnectionPoolManager';
 import {ComposerConnectionMiddleware} from '../../middleware/ComposerConnectionMiddleware';
 
 @JsonController('/participant')
@@ -25,7 +23,6 @@ import {ComposerConnectionMiddleware} from '../../middleware/ComposerConnectionM
 @UseInterceptor(ComposerInterceptor)
 @UseAfter(ErrorHandlerMiddleware)
 export class OrganizationController {
-  private connectionPoolManager: ConnectionPoolManager = Container.get(ConnectionPoolManager);
 
   public constructor(private transactionHandler: TransactionHandler,
                      private identityManager: IdentityManager) {

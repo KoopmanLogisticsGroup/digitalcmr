@@ -18,8 +18,6 @@ import {CarrierTransactor} from '../../domain/orgs/carrier/CarrierTransactor';
 import {RecipientTransactor} from '../../domain/orgs/recipient/RecipientTransactor';
 import {Transaction} from '../../blockchain/Transactions';
 import {Query} from '../../blockchain/Queries';
-import {ConnectionPoolManager} from '../../connections/ConnectionPoolManager';
-import {Container} from 'typedi';
 import {ComposerConnectionMiddleware} from '../../middleware/ComposerConnectionMiddleware';
 
 @JsonController('/organization')
@@ -27,7 +25,6 @@ import {ComposerConnectionMiddleware} from '../../middleware/ComposerConnectionM
 @UseInterceptor(ComposerInterceptor)
 @UseAfter(ErrorHandlerMiddleware)
 export class OrganizationController {
-  private connectionPoolManager: ConnectionPoolManager = Container.get(ConnectionPoolManager);
 
   public constructor(private transactionHandler: TransactionHandler) {
   }
