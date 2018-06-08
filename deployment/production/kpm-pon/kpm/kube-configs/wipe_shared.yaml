@@ -18,6 +18,9 @@ spec:
   - name: privatedb-kpm-pon-pv
     hostPath:
       path: "/var/privatedb-kpm-pon"
+  - name: ca-kpm-pon-fabric-config
+    hostPath:
+      path: "/fabric-config"
   - name: kpm-pon-fabric-config
     hostPath:
       path: "/fabric-config"
@@ -29,7 +32,7 @@ spec:
   - name: wipeshared
     image: ibmblockchain/fabric-tools:1.0.6
     imagePullPolicy: Always
-    command: ["sh", "-c", "rm -rf /home/* /fabric-config/* /privatedb-kpm-pon/* /peer0-kpm-pon/* /peer0-kpm-pon-couchdb/* /.composer-credentials/*"]
+    command: ["sh", "-c", "rm -rf /home/* /ca-fabric-config/* /fabric-config/* /privatedb-kpm-pon/* /peer0-kpm-pon/* /peer0-kpm-pon-couchdb/* /.composer-credentials/*"]
     volumeMounts:
     - name: kpm-composer-credentials
       mountPath: /home
@@ -41,6 +44,8 @@ spec:
       mountPath: /peer0-kpm-pon-couchdb
     - name: kpm-pon-fabric-config
       mountPath: /fabric-config
+    - name: ca-kpm-pon-fabric-config
+      mountPath: /ca-fabric-config
     - name: kpm-pon-credentials-pv
       mountPath: /.composer-credentials
   nodeSelector:

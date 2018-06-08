@@ -20,7 +20,7 @@ spec:
               "type": "hlfv1",
               "orderers": [
                   {
-                      "url": "grpc://orderer-kpm-all:7050"
+                      "url": "grpc://DoesntMatter"
                   }
               ],
               "ca": {

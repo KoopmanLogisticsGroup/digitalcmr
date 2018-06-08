@@ -20,7 +20,7 @@ spec:
               "type": "hlfv1",
               "orderers": [
                   {
-                      "url": "grpc://169.51.42.19:31020"
+                      "url": "grpc://DoesntMatter"
                   }
               ],
               "ca": {
