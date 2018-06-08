@@ -12,7 +12,7 @@
   "peers":       [
     {
       "requestURL": "grpc://169.51.42.19:30120",
-      "eventURL":   "grpc:/169.51.42.19:30121"
+      "eventURL":   "grpc://169.51.42.19:30121"
     }
   ],
   "keyValStore": "/home/composer/.composer-credentials",
