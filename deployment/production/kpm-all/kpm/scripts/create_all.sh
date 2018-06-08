@@ -17,6 +17,7 @@ while [ "${NUMPENDING}" != "0" ]; do
     echo "Waiting on pending pods. Pods pending = ${NUMPENDING}"
     NUMPENDING=$(kubectl get pods | grep kpm | awk '{print $5}' | grep 0 | wc -l | awk '{print $1}')
 done
+sleep 30
 
 echo ""
 echo "=> CREATE_ALL: Copying crypto"

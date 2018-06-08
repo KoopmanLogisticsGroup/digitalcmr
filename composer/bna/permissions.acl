@@ -312,7 +312,7 @@ rule CarrierMemberCanReadECMR {
     participant(p): "org.digitalcmr.CarrierMember"
     operation: READ
     resource(ecmr): "org.digitalcmr.ECMR"
-    condition: (ecmr.carrier.getIdentifier() == p.org.getIdentifier() && ecmr.transporter.getIdentifier() == p.getIdentifier())
+    condition: (ecmr.carrier.getIdentifier() == p.org.getIdentifier())
     action: ALLOW
 }
 
