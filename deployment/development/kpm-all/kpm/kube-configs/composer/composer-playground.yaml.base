@@ -1,0 +1,64 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: composer-playground-kpm-all
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: composer-playground-kpm-all
+    spec:
+      containers:
+      - name: composer-playground-kpm-all
+        image: hyperledger/composer-playground:0.13.2
+        imagePullPolicy: Always
+        env:
+        - name: COMPOSER_CONFIG
+          value: >
+            {
+              "cards": [{
+                "metadata": {
+                  "version": 1,
+                  "userName": "PeerAdmin",
+                  "enrollmentSecret": "NOTUSED",
+                  "roles": [
+                    "PeerAdmin",
+                    "ChannelAdmin"
+                  ]
+                },
+                "connectionProfile": {
+                  "name": "hlfv1",
+                  "description": "Hyperledger Fabric v1.0",
+                  "type": "hlfv1",
+                  "orderers": [
+                      {
+                          "url": "grpc://orderer-kpm-all:7050"
+                      }
+                  ],
+                  "ca": {
+                      "url": "http://ca-kpm-all:7054",
+                      "name": "ca-kpm-all"
+                  },
+                  "peers": [
+                      {
+                          "requestURL": "grpc://peer0-kpm-all:5010",
+                          "eventURL": "grpc://peer0-kpm-all:5011"
+                      }
+                  ],
+                  "keyValStore": "/home/composer/.hfc-key-store",
+                  "channel": "kpmallchannel",
+                  "mspID": "kpm-allMSP",
+                  "timeout": 300
+                },
+                "credentials": null
+              }]
+            }
+        volumeMounts:
+        - name: kpm-all-composer-credentials
+          mountPath: /home
+      volumes:
+      - name: kpm-all-composer-credentials
+        hostPath:
+          path: /composer

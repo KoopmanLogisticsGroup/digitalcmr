@@ -30,9 +30,9 @@ spec:
                   value: "0.0.0.0"
                 - name: PORT
                   value: "8080"
-                  volumeMounts:
-                    - name: pon-credentials-pv
-                      mountPath: /home/composer/.composer-credentials
+                volumeMounts:
+                - name: pon-credentials-pv
+                  mountPath: /home/composer/.composer-credentials
             nodeSelector:
               environment: pon
     volumeClaimTemplates:

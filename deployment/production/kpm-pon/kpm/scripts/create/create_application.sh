@@ -14,6 +14,7 @@ kubectl apply -f ${KUBECONFIG_FOLDER}/../persistent-volumes/privatedb-pv.yaml
 echo "Running: kubectl apply -f ${KUBECONFIG_FOLDER}/../persistent-volumes/credentials-pv.yaml"
 kubectl apply -f ${KUBECONFIG_FOLDER}/../persistent-volumes/credentials-pv.yaml
 
+sleep 20
 echo "Creating Services for application"
 #echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/client-services.yaml"
 #kubectl create -f ${KUBECONFIG_FOLDER}/client-services.yaml
@@ -24,6 +25,7 @@ kubectl apply -f ${KUBECONFIG_FOLDER}/server-services.yaml
 #echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/api-services.yaml"
 #kubectl create -f ${KUBECONFIG_FOLDER}/api-services.yaml
 
+sleep 20
 echo "Creating new Deployment"
 #echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/client.yaml"
 #kubectl create -f ${KUBECONFIG_FOLDER}/client.yaml --validate=false
