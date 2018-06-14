@@ -6,7 +6,7 @@ metadata:
 spec:
   restartPolicy: "Never"
   volumes:
-  - name: composer-credentials
+  - name: all-composer-credentials
     hostPath:
       path: /composer
   - name: peer0-all-pv
@@ -18,10 +18,10 @@ spec:
   - name: privatedb-all-pv
     hostPath:
       path: "/var/privatedb-all"
-  - name: fabric-config
+  - name: all-fabric-config
     hostPath:
       path: "/fabric-config"
-  - name: credentials-pv
+  - name: all-credentials-pv
     hostPath:
       path: "/var/.composer-credentials"
 
@@ -31,7 +31,7 @@ spec:
     imagePullPolicy: Always
     command: ["sh", "-c", "rm -rf /home/* /fabric-config/* /privatedb-all/* /peer0-all/* /peer0-all-couchdb/* /.composer-credentials/*"]
     volumeMounts:
-    - name: composer-credentials
+    - name: all-composer-credentials
       mountPath: /home
     - name: privatedb-all-pv
       mountPath: /privatedb-all
@@ -39,7 +39,7 @@ spec:
       mountPath: /peer0-all
     - name: bc-peer0-all-couchdb-pv
       mountPath: /peer0-all-couchdb
-    - name: fabric-config
+    - name: all-fabric-config
       mountPath: /fabric-config
-    - name: credentials-pv
+    - name: all-credentials-pv
       mountPath: /.composer-credentials

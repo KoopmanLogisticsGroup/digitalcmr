@@ -15,5 +15,3 @@ spec:
     imagePullSecrets:
     - name: bluemix-gb-registry
     command: ["sh", "-c", "./run 4200 kpm-all-prod server-kpm-all 8080"]
-  nodeSelector:
-    environment: kpm-all

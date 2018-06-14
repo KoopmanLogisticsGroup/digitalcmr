@@ -43,5 +43,3 @@ spec:
       mountPath: /fabric-config
     - name: kpm-all-credentials-pv
       mountPath: /.composer-credentials
-  nodeSelector:
-    environment: kpm-all

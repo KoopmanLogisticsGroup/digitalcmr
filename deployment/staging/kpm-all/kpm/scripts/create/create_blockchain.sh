@@ -8,13 +8,13 @@ else
     echo "Please run the script from 'scripts' or 'scripts/create' folder"
 fi
 
-# Default to "staging" if not defined
+# Default to "production" if not defined
 if [ -z ${GENESIS} ]; then
-	echo "GENESIS not defined. I will use \"staging\"."
+	echo "GENESIS not defined. I will use \"production\"."
 	echo "I will wait 5 seconds before continuing."
 	sleep 5
 fi
-GENESIS=${GENESIS:-staging}
+GENESIS=${GENESIS:-production}
 
 sed -e "s/%GENESIS%/${GENESIS}/g" ${KUBECONFIG_FOLDER}/blockchain-couchdb.yaml.base > ${KUBECONFIG_FOLDER}/blockchain-couchdb.yaml
 
@@ -34,10 +34,10 @@ kubectl apply -f ${KUBECONFIG_FOLDER}/blockchain-couchdb.yaml --validate=false
 
 echo "Checking if all deployments are ready"
 
-NUMPENDING=$(kubectl get pods | grep kpm | awk '{print $5}' | grep 0 | wc -l | awk '{print $1}')
+NUMPENDING=$(kubectl get pods | grep kpm-all | awk '{print $5}' | grep 0 | wc -l | awk '{print $1}')
 while [ "${NUMPENDING}" != "0" ]; do
     echo "Waiting on pending pods. Pods pending = ${NUMPENDING}"
-    NUMPENDING=$(kubectl get pods | grep kpm | awk '{print $5}' | grep 0 | wc -l | awk '{print $1}')
+    NUMPENDING=$(kubectl get pods | grep kpm-all | awk '{print $5}' | grep 0 | wc -l | awk '{print $1}')
 done
 
 TIMEOUT=30

@@ -17,5 +17,3 @@ spec:
     volumeMounts:
     - mountPath: /home
       name: kpm-all-composer-credentials
-  nodeSelector:
-    environment: kpm-all

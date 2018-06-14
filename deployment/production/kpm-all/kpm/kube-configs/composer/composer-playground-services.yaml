@@ -14,5 +14,3 @@ spec:
     port: 8080
     nodePort: 31080
     name: http
-  nodeSelector:
-    environment: kpm-all

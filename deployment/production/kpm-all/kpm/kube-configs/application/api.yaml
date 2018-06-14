@@ -14,5 +14,3 @@ spec:
     imagePullPolicy: Always
     imagePullSecrets:
     - name: bluemix-gb-registry
-  nodeSelector:
-    environment: kpm-all

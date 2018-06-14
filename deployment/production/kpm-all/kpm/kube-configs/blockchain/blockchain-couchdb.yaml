@@ -38,7 +38,7 @@ spec:
         - name: ORDERER_GENERAL_LOCALMSPDIR
           value: /fabric-config/msp
         - name: ORDERER_GENERAL_LOCALMSPID
-          value: kpmOrdererMSP
+          value: kpmAllOrdererMSP
         - name: ORDERER_GENERAL_GENESISMETHOD
           value: file
         - name: ORDERER_GENERAL_GENESISFILE
@@ -55,8 +55,6 @@ spec:
       volumes:
         - name: orderer-kpm-all-fabric-config
           emptyDir: {}
-      nodeSelector:
-        environment: kpm-all
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -94,8 +92,6 @@ spec:
       volumes:
         - name: ca-kpm-all-fabric-config
           emptyDir: {}
-      nodeSelector:
-        environment: kpm-all
 ---
 kind: StatefulSet
 apiVersion: apps/v1beta1
@@ -111,12 +107,6 @@ spec:
                 vol: peer0-kpm-all-pv
         spec:
             terminationGracePeriodSeconds: 10
-            volumes:
-            - name: dockersocket
-              hostPath:
-                path: /var/run/docker.sock
-            - name: peer-kpm-all-fabric-config
-              emptyDir: {}
             containers:
                 - name: peer0-kpm-all
                   image: ibmblockchain/fabric-peer:1.0.6
@@ -191,8 +181,12 @@ spec:
                       mountPath: /var/hyperledger/production
                     - name: peer-kpm-all-fabric-config
                       mountPath: /fabric-config
-            nodeSelector:
-              environment: kpm-all
+            volumes:
+            - name: dockersocket
+              hostPath:
+                path: /var/run/docker.sock
+            - name: peer-kpm-all-fabric-config
+              emptyDir: {}
     volumeClaimTemplates:
         - metadata:
             name: peer0-kpm-all-pv
@@ -230,8 +224,6 @@ spec:
                   volumeMounts:
                     - name: bc-peer0-kpm-all-couchdb-pv
                       mountPath: /opt/couchdb/data
-            nodeSelector:
-              environment: kpm-all
     volumeClaimTemplates:
         - metadata:
             name: bc-peer0-kpm-all-couchdb-pv

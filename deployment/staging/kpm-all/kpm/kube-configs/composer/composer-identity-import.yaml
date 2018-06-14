@@ -5,12 +5,6 @@ metadata:
   name: composer-identity-import-kpm-all
 spec:
   restartPolicy: "Never"
-  volumes:
-  - name: composer-credentials
-    hostPath:
-      path: /composer
-  - name: composer-identity-fabric-config
-    emptyDir: {}
   containers:
   - name: composer-identity-import-kpm-all
     image: hyperledger/composer-cli:0.13.2
@@ -40,14 +34,20 @@ spec:
                   }
               ],
               "keyValStore": "/home/composer/.composer-credentials",
-              "channel": "composerchannel",
+              "channel": "kpmallchannel",
               "mspID": "kpm-allMSP",
               "timeout": "300"
             }
           }
         }
     volumeMounts:
-    - name: composer-credentials
+    - name: kpm-all-composer-credentials
       mountPath: /home
-    - name: composer-identity-fabric-config
+    - name: kpm-all-composer-identity-fabric-config
       mountPath: /fabric-config
+  volumes:
+  - name: kpm-all-composer-credentials
+    hostPath:
+      path: /composer
+  - name: kpm-all-composer-identity-fabric-config
+    emptyDir: {}

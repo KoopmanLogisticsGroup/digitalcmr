@@ -40,5 +40,3 @@ spec:
   volumes:
     - name: createchannel-kpm-all-fabric-config
       emptyDir: {}
-  nodeSelector:
-    environment: kpm-all
