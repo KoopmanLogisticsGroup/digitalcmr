@@ -12,7 +12,7 @@ spec:
   ports:
   - protocol: TCP
     port: 7054
-    nodePort: 30040
+    nodePort: 30010
     name: grpc
 ---
 apiVersion: v1
@@ -29,11 +29,11 @@ spec:
   ports:
   - protocol: TCP
     port: 5010
-    nodePort: 30140
+    nodePort: 30110
     name: grpc
   - protocol: TCP
     port: 5011
-    nodePort: 30141
+    nodePort: 30111
     name: events
 ---
 apiVersion: v1

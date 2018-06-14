@@ -8,13 +8,13 @@ else
     echo "Please run the script from 'scripts' or 'scripts/create' folder"
 fi
 
-# Default to "production" if not defined
+# Default to "development" if not defined
 if [ -z ${GENESIS} ]; then
-	echo "GENESIS not defined. I will use \"production\"."
+	echo "GENESIS not defined. I will use \"development\"."
 	echo "I will wait 5 seconds before continuing."
 	sleep 5
 fi
-GENESIS=${GENESIS:-production}
+GENESIS=${GENESIS:-development}
 
 sed -e "s/%GENESIS%/${GENESIS}/g" ${KUBECONFIG_FOLDER}/blockchain-couchdb.yaml.base > ${KUBECONFIG_FOLDER}/blockchain-couchdb.yaml
 

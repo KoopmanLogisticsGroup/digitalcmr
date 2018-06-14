@@ -8,7 +8,7 @@ else
     echo "Please run the script from 'scripts' or 'scripts/create' folder"
 fi
 
-BASE_PATH=$(pwd)../../../../../../composer/hlfv1/config/kpm-all-config-production
+BASE_PATH=$(pwd)../../../../../../composer/hlfv1/config/kpm-all-config-development
 KPM_PATH=$BASE_PATH/kpm
 CONTAINER_BASE_PATH=/fabric-config
 KPM_PEERS_PARTIAL_PATH=crypto-config/peerOrganizations/kpm-all/peers/peer0.kpm-all/msp
@@ -22,21 +22,21 @@ if [ -z ${PEER_MSPID} ]; then
 fi
 PEER_MSPID=${PEER_MSPID:-kpm-allMSP}
 
-# Default to "kpmallchannel" if not defined
+# Default to "kpmalldevchannel" if not defined
 if [ -z "${CHANNEL_NAME}" ]; then
-	echo "CHANNEL_NAME not defined. I will use \"kpmallchannel\"."
+	echo "CHANNEL_NAME not defined. I will use \"kpmalldevchannel\"."
 	echo "I will wait 5 seconds before continuing."
 	sleep 5
 fi
-CHANNEL_NAME=${CHANNEL_NAME:-kpmallchannel}
+CHANNEL_NAME=${CHANNEL_NAME:-kpmalldevchannel}
 
-# Default to "production" if not defined
+# Default to "development" if not defined
 if [ -z ${CHANNEL_FILE} ]; then
-	echo "CHANNEL_FILE not defined. I will use \"production\"."
+	echo "CHANNEL_FILE not defined. I will use \"development\"."
 	echo "I will wait 5 seconds before continuing."
 	sleep 5
 fi
-CHANNEL_FILE=${CHANNEL_FILE:-production}
+CHANNEL_FILE=${CHANNEL_FILE:-development}
 
 # Default to "orderer-kpm-all:7050" if not defined
 if [ -z "${ORDERER_ADDRESS}" ]; then

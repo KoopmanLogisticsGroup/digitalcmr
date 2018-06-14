@@ -18,7 +18,7 @@ Profiles:
         Orderer:
             <<: *OrdererDefaults
             Organizations:
-                - *kpmOrderer
+                - *kpmAllOrderer
         Consortiums:
             ComposerConsortium:
                 Organizations:
@@ -44,13 +44,13 @@ Organizations:
 
     # SampleOrg defines an MSP using the sampleconfig.  It should never be used
     # in production but may be used as a template for other definitions
-    - &kpmOrderer
+    - &kpmAllOrderer
         # DefaultOrg defines the organization which is used in the sampleconfig
         # of the fabric.git development environment
-        Name: kpmOrderer
+        Name: kpmAllOrderer
 
         # ID to load the MSP definition as
-        ID: kpmOrdererMSP
+        ID: kpmAllOrdererMSP
 
         # MSPDir is the filesystem path which contains the MSP configuration
         MSPDir: kpm/crypto-config/ordererOrganizations/kpm-all/msp

@@ -13,7 +13,7 @@ spec:
       containers:
       - name: ca-all
         image: ibmblockchain/fabric-ca:1.0.6
-        command: ["sh", "-c", "sleep 1 && while [ ! -f /fabric-config/ca/ca.all-cert.pem ]; do echo Waiting for crypto config to be loaded; sleep 1; done; fabric-ca-server start --ca.name ca-all --ca.certfile /fabric-config/ca/ca.all-cert.pem --ca.keyfile /fabric-config/ca/6a8ce87de53ea63d803f793cc8c688d169e7399d1225b98258d626964848b489_sk -b admin:adminpw -d"]
+        command: ["sh", "-c", "sleep 1 && while [ ! -f /fabric-config/ca/ca.all-cert.pem ]; do echo Waiting for crypto config to be loaded; sleep 1; done; fabric-ca-server start --ca.name ca-all --ca.certfile /fabric-config/ca/ca.all-cert.pem --ca.keyfile /fabric-config/ca/79917cc1931271ed6e9c26180c317a2dcddead7bad7bab48078b119ba2e24249_sk -b admin:adminpw -d"]
         env:
 #        - name: FABRIC_CA_SERVER_CA_CERTFILE
 #          value: /fabric-config/ca/ca.all-cert.pem
@@ -114,14 +114,14 @@ spec:
                   - name: FABRIC_CFG_PATH
                     value: /etc/hyperledger/fabric/
                   - name: ORDERER_URL
-                    value: 159.122.177.80:31020
+                    value: 159.8.124.117:31020
                   - name: GODEBUG
                     value: "netdns=go"
                   volumeMounts:
                     - name: dockersocket
                       mountPath: /host/var/run/docker.sock
                     - name: peer0-all-pv
-                      mountPath: /var/hyperledger/production
+                      mountPath: /var/hyperledger/development
                     - name: peer-all-fabric-config
                       mountPath: /fabric-config
             volumes:

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BASE_PATH=$(pwd)../../../../../../composer/hlfv1/config/kpm-all-config-production
+BASE_PATH=$(pwd)../../../../../../composer/hlfv1/config/kpm-all-config-development
 CRYPTO_PATH=$BASE_PATH/all
 CONTAINER_BASE_PATH=/fabric-config
 CA_PARTIAL_PATH=crypto-config/peerOrganizations/all/ca
