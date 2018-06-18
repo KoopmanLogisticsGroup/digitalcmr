@@ -20,7 +20,7 @@ spec:
               "type": "hlfv1",
               "orderers": [
                   {
-                      "url": "grpc://159.122.177.80:31020"
+                      "url": "grpc://159.8.124.117:31010"
                   }
               ],
               "ca": {
@@ -34,7 +34,7 @@ spec:
                   }
               ],
               "keyValStore": "/home/composer/.composer-credentials",
-              "channel": "kpmallchannel",
+              "channel": "kpmalldevchannel",
               "mspID": "allMSP",
               "timeout": "300"
             }

@@ -13,7 +13,7 @@ spec:
       containers:
       - name: orderer-kpm-all
         image: ibmblockchain/fabric-orderer:1.0.6
-        command: ["sh", "-c", "sleep 5 && while [ ! -f /fabric-config/production.block ]; do echo Waiting for crypto to be loaded; sleep 1; done; orderer"]
+        command: ["sh", "-c", "sleep 5 && while [ ! -f /fabric-config/development.block ]; do echo Waiting for crypto to be loaded; sleep 1; done; orderer"]
         env:
         - name: ORDERER_CFG_PATH
           value: /fabric-config
@@ -42,7 +42,7 @@ spec:
         - name: ORDERER_GENERAL_GENESISMETHOD
           value: file
         - name: ORDERER_GENERAL_GENESISFILE
-          value: /fabric-config/production.block
+          value: /fabric-config/development.block
         - name: ORDERER_GENERAL_GENESISPROFILE
           value: initial
         - name: ORDERER_GENERAL_TLS_ENABLED
@@ -70,12 +70,12 @@ spec:
       containers:
       - name: ca-kpm-all
         image: ibmblockchain/fabric-ca:1.0.6
-        command: ["sh", "-c", "sleep 1 && while [ ! -f /fabric-config/ca/ca.kpm-all-cert.pem ]; do echo Waiting for crypto config to be loaded; sleep 1; done; fabric-ca-server start --ca.name ca-kpm-all --ca.certfile /fabric-config/ca/ca.kpm-all-cert.pem --ca.keyfile /fabric-config/ca/cdf2768427985766a9d02ae42e6540633d9363b34154dffdb4217e49f331a47b_sk -b admin:adminpw -d"]
+        command: ["sh", "-c", "sleep 1 && while [ ! -f /fabric-config/ca/ca.kpm-all-cert.pem ]; do echo Waiting for crypto config to be loaded; sleep 1; done; fabric-ca-server start --ca.name ca-kpm-all --ca.certfile /fabric-config/ca/ca.kpm-all-cert.pem --ca.keyfile /fabric-config/ca/5ec250aa385b80bc43b5a5d2b5617621bd4e6e41c5fab90d9e7782651bd37cc7_sk -b admin:adminpw -d"]
         env:
 #        - name: FABRIC_CA_SERVER_CA_CERTFILE
 #          value: /fabric-config/ca/ca.kpm-all-cert.pem
 #        - name: FABRIC_CA_SERVER_CA_KEYFILE
-#          value: /fabric-config/ca/cdf2768427985766a9d02ae42e6540633d9363b34154dffdb4217e49f331a47b_sk
+#          value: /fabric-config/ca/5ec250aa385b80bc43b5a5d2b5617621bd4e6e41c5fab90d9e7782651bd37cc7_sk
         - name: FABRIC_CA_SERVER_DEBUG
           value: "true"
         - name: FABRIC_CA_SERVER_TLS_ENABLED
@@ -83,7 +83,7 @@ spec:
 #        - name: FABRIC_CA_SERVER_TLS_CERTFILE
 #          value: /fabric-config/ca/ca.kpm-all-cert.pem
 #        - name: FABRIC_CA_SERVER_TLS_KEYFILE
-#          value: /fabric-config/ca/cdf2768427985766a9d02ae42e6540633d9363b34154dffdb4217e49f331a47b_sk
+#          value: /fabric-config/ca/5ec250aa385b80bc43b5a5d2b5617621bd4e6e41c5fab90d9e7782651bd37cc7_sk
         - name: GODEBUG
           value: "netdns=go"
         volumeMounts:
@@ -178,7 +178,7 @@ spec:
                     - name: dockersocket
                       mountPath: /host/var/run/docker.sock
                     - name: peer0-kpm-all-pv
-                      mountPath: /var/hyperledger/production
+                      mountPath: /var/hyperledger/development
                     - name: peer-kpm-all-fabric-config
                       mountPath: /fabric-config
             volumes:

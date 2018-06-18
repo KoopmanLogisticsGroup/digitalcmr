@@ -14,14 +14,14 @@ spec:
             terminationGracePeriodSeconds: 10
             containers:
               - name: server-kpm-all
-                image: registry.eu-de.bluemix.net/kpm-all-dev/digitalcmr_server
+                image: registry.eu-de.bluemix.net/development-2-orgs/digitalcmr_server
                 imagePullPolicy: Always
                 imagePullSecrets:
                 - name: bluemix-uk-registry
                 command: ["sh", "-c", "node server.js"]
                 env:
                 - name: NODE_ENV
-                  value: kpm-all-prod
+                  value: kpm-all-development
                 - name: INIT
                   value: "false"
                 - name: TLS

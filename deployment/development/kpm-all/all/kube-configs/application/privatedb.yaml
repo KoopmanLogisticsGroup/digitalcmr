@@ -22,8 +22,6 @@ spec:
                   volumeMounts:
                     - name: privatedb-all-pv
                       mountPath: /opt/couchdb/data
-            nodeSelector:
-              environment: all
     volumeClaimTemplates:
         - metadata:
             name: privatedb-all-pv

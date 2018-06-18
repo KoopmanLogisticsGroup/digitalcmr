@@ -36,5 +36,3 @@ spec:
   volumes:
     - name: joinchannel-all-fabric-config
       emptyDir: {}
-  nodeSelector:
-    environment: all

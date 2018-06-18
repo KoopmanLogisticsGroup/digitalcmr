@@ -1,5 +1,5 @@
 kpm
-pon
+all
 channel-artifacts
-production.block
-production.tx
+development.block
+development.tx

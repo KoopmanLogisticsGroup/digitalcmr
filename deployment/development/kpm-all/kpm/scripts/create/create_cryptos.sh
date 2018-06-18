@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BASE_PATH=$(pwd)../../../../../../composer/hlfv1/config/kpm-all-config-production
+BASE_PATH=$(pwd)../../../../../../composer/hlfv1/config/kpm-all-config-development
 KPM_PATH=$BASE_PATH/kpm
 all_PATH=$BASE_PATH/all
 CONTAINER_BASE_PATH=/fabric-config
@@ -20,21 +20,21 @@ kubectl cp $KPM_PATH/$CA_PARTIAL_PATH/ $CA_POD_NAME:$CONTAINER_BASE_PATH/ca/
 
 sleep 5
 
-# Default to "production" if not defined
+# Default to "development" if not defined
 if [ -z ${CHANNEL_FILE} ]; then
-	echo "CHANNEL_FILE not defined. I will use \"production\"."
+	echo "CHANNEL_FILE not defined. I will use \"development\"."
 	echo "I will wait 5 seconds before continuing."
 	sleep 5
 fi
-CHANNEL_FILE=${CHANNEL_FILE:-production}
+CHANNEL_FILE=${CHANNEL_FILE:-development}
 
-# Default to "production" if not defined
+# Default to "development" if not defined
 if [ -z ${GENESIS} ]; then
-	echo "GENESIS not defined. I will use \"production\"."
+	echo "GENESIS not defined. I will use \"development\"."
 	echo "I will wait 5 seconds before continuing."
 	sleep 5
 fi
-GENESIS=${GENESIS:-production}
+GENESIS=${GENESIS:-development}
 
 echo "=> CREATE_ALL: Copying crypto config into orderer"
 # Copy crypto-config to orderer.kpm-all container
