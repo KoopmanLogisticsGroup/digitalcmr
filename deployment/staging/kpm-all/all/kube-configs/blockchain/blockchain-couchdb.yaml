@@ -114,14 +114,14 @@ spec:
                   - name: FABRIC_CFG_PATH
                     value: /etc/hyperledger/fabric/
                   - name: ORDERER_URL
-                    value: 159.122.177.80:31020
+                    value: 149.81.124.82:31010
                   - name: GODEBUG
                     value: "netdns=go"
                   volumeMounts:
                     - name: dockersocket
                       mountPath: /host/var/run/docker.sock
                     - name: peer0-all-pv
-                      mountPath: /var/hyperledger/production
+                      mountPath: /var/hyperledger/staging
                     - name: peer-all-fabric-config
                       mountPath: /fabric-config
             volumes:

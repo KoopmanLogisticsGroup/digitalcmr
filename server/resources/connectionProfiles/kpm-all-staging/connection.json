@@ -2,21 +2,21 @@
   "type":        "hlfv1",
   "orderers":    [
     {
-      "url": "grpc://159.122.177.80:31020"
+      "url": "grpc://149.81.124.82:31010"
     }
   ],
   "ca":          {
-    "url":  "http://159.122.177.80:30020",
+    "url":  "http://149.81.124.82:30010",
     "name": "ca-kpm-all"
   },
   "peers":       [
     {
-      "requestURL": "grpc://159.122.177.80:30120",
-      "eventURL":   "grpc://159.122.177.80:30121"
+      "requestURL": "grpc://149.81.124.82:30110",
+      "eventURL":   "grpc://149.81.124.82:30111"
     }
   ],
   "keyValStore": "/home/composer/.composer-credentials",
-  "channel":     "kpmallchannel",
+  "channel":     "kpmallstagchannel",
   "mspID":       "kpm-allMSP",
   "timeout":     "300"
 }

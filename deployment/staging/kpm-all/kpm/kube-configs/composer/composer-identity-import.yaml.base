@@ -34,7 +34,7 @@ spec:
                   }
               ],
               "keyValStore": "/home/composer/.composer-credentials",
-              "channel": "kpmallchannel",
+              "channel": "kpmallstagchannel",
               "mspID": "kpm-allMSP",
               "timeout": "300"
             }

@@ -178,7 +178,7 @@ spec:
                     - name: dockersocket
                       mountPath: /host/var/run/docker.sock
                     - name: peer0-kpm-all-pv
-                      mountPath: /var/hyperledger/production
+                      mountPath: /var/hyperledger/staging
                     - name: peer-kpm-all-fabric-config
                       mountPath: /fabric-config
             volumes:
