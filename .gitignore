@@ -74,3 +74,4 @@ out/
 package-lock.json
 bin/
 certs/
+crypto-config
