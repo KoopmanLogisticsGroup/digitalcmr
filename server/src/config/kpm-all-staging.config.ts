@@ -6,7 +6,7 @@ export class KpmAllStagingConfig {
       composer:     {
         profile:   'kpm-all-staging',
         network:   'digital-cmr-network',
-        channel:   'composerchannel',
+        channel:   'kpmallstagchannel',
         namespace: 'org.digitalcmr'
       },
       privateDB:    {

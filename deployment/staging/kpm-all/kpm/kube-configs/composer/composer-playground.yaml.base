@@ -48,7 +48,7 @@ spec:
                       }
                   ],
                   "keyValStore": "/home/composer/.hfc-key-store",
-                  "channel": "kpmallchannel",
+                  "channel": "kpmallstagchannel",
                   "mspID": "kpm-allMSP",
                   "timeout": 300
                 },

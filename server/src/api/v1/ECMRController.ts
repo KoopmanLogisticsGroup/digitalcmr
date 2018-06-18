@@ -80,7 +80,7 @@ export class ECMRController {
   public async updateEcmrStatusToLoaded(@Body() data: UpdateEcmrStatus, @Req() request: any): Promise<any> {
     data.signature = <Signature> {
       timestamp:     data.signature.timestamp || new Date().getTime(),
-      ip:            data.signature.ip || request.ip.toString(),
+      ip:            data.signature.ip || '0.0.0.0',
       latitude:      data.signature.latitude || 0,
       longitude:     data.signature.longitude || 0,
       generalRemark: data.signature && data.signature.generalRemark
@@ -93,7 +93,7 @@ export class ECMRController {
   public async updateEcmrStatusToInTransit(@Body() data: UpdateEcmrStatus, @Req() request: any): Promise<any> {
     data.signature = <Signature> {
       timestamp:     data.signature.timestamp || new Date().getTime(),
-      ip:            data.signature.ip || request.ip.toString(),
+      ip:            data.signature.ip || '0.0.0.0',
       latitude:      data.signature.latitude || 0,
       longitude:     data.signature.longitude || 0,
       generalRemark: data.signature && data.signature.generalRemark
@@ -106,7 +106,7 @@ export class ECMRController {
   public async updateEcmrStatusToDelivered(@Body() data: UpdateEcmrStatus, @Req() request: any): Promise<any> {
     data.signature = <Signature> {
       timestamp:     data.signature.timestamp || new Date().getTime(),
-      ip:            data.signature.ip || request.ip.toString(),
+      ip:            data.signature.ip || '0.0.0.0',
       latitude:      data.signature.latitude || 0,
       longitude:     data.signature.longitude || 0,
       generalRemark: data.signature && data.signature.generalRemark
@@ -119,7 +119,7 @@ export class ECMRController {
   public async updateEcmrStatusToConfirmedDelivered(@Body() data: UpdateEcmrStatus, @Req() request: any): Promise<any> {
     data.signature = <Signature> {
       timestamp:     data.signature.timestamp || new Date().getTime(),
-      ip:            data.signature.ip || request.ip.toString(),
+      ip:            data.signature.ip || '0.0.0.0',
       latitude:      data.signature.latitude || 0,
       longitude:     data.signature.longitude || 0,
       generalRemark: data.signature && data.signature.generalRemark

@@ -10,7 +10,7 @@ fi
 
 echo ""
 echo "=> CREATE_ALL: Creating blockchain"
-GENESIS="production" create/create_blockchain.sh
+GENESIS="staging" create/create_blockchain.sh
 
 NUMPENDING=$(kubectl get pods | grep kpm | awk '{print $5}' | grep 0 | wc -l | awk '{print $1}')
 while [ "${NUMPENDING}" != "0" ]; do
@@ -21,15 +21,15 @@ sleep 30
 
 echo ""
 echo "=> CREATE_ALL: Copying crypto"
-CHANNEL_FILE="production" GENESIS="production" create/create_cryptos.sh
+CHANNEL_FILE="staging" GENESIS="staging" create/create_cryptos.sh
 
 echo ""
 echo "=> CREATE_ALL: Running Create Channel"
-CHANNEL_FILE="production" PEER_MSPID="kpm-allMSP" CHANNEL_NAME="kpmallchannel" ORDERER_ADDRESS="orderer-kpm-all:7050" create/create_channel.sh
+CHANNEL_FILE="staging" PEER_MSPID="kpm-allMSP" CHANNEL_NAME="kpmallstagchannel" ORDERER_ADDRESS="orderer-kpm-all:7050" create/create_channel.sh
 
 echo ""
 echo "=> CREATE_ALL: Running Join Channel on kpm-all Peer1"
-CHANNEL_NAME="kpmallchannel" PEER_MSPID="kpm-allMSP" PEER_ADDRESS="peer0-kpm-all:5010" ORDERER_ADDRESS="orderer-kpm-all:7050" MSP_CONFIGPATH="/fabric-config/Admin@kpm-all/msp" create/join_channel.sh
+CHANNEL_NAME="kpmallstagchannel" PEER_MSPID="kpm-allMSP" PEER_ADDRESS="peer0-kpm-all:5010" ORDERER_ADDRESS="orderer-kpm-all:7050" MSP_CONFIGPATH="/fabric-config/Admin@kpm-all/msp" create/join_channel.sh
 
 echo ""
 echo "=> CREATE_ALL: Deleting create and join channel pods"
