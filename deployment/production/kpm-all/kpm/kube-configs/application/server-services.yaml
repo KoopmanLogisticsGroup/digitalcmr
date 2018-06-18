@@ -12,9 +12,9 @@ spec:
   ports:
   - protocol: TCP
     port: 8080
-    nodePort: 31031
+    nodePort: 31021
     name: http
   - protocol: TCP
     port: 443
-    nodePort: 31473
+    nodePort: 31463
     name: https

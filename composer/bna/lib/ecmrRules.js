@@ -205,10 +205,6 @@ function updateEcmrStatusToConfirmedDelivered(tx) {
   var factory = getFactory();
   var currentParticipant = getCurrentParticipant() && getCurrentParticipant().getIdentifier();
 
-  if (tx.ecmr.recipientMember.getIdentifier() !== currentParticipant) {
-    throw new Error('[UpdateEcmrStatusToConfirmedDelivered] No permissions to execute this action');
-  }
-
   if (tx.ecmr.status !== EcmrStatus.Delivered) {
     throw new Error('[UpdateEcmrStatusToConfirmedDelivered] Invalid transaction. Trying to set status CONFIRMED_DELIVERED to an ECMR with status: ' + tx.ecmr.status);
   }

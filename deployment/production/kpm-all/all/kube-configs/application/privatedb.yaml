@@ -9,7 +9,7 @@ spec:
     template:
         metadata:
             labels:
-                tier: db
+                tier: db-all
         spec:
             terminationGracePeriodSeconds: 10
             containers:
@@ -22,6 +22,8 @@ spec:
                   volumeMounts:
                     - name: privatedb-all-pv
                       mountPath: /opt/couchdb/data
+            nodeSelector:
+              environment: all
     volumeClaimTemplates:
         - metadata:
             name: privatedb-all-pv

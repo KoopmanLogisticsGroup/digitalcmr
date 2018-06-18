@@ -17,6 +17,7 @@ while [ "${NUMPENDING}" != "0" ]; do
     echo "Waiting on pending pods. Pods pending = ${NUMPENDING}"
     NUMPENDING=$(kubectl get pods | grep all | awk '{print $5}' | grep 0 | wc -l | awk '{print $1}')
 done
+sleep 30
 
 echo ""
 echo "=> CREATE_ALL: Copying crypto"
@@ -24,7 +25,7 @@ create/create_cryptos.sh
 
 echo ""
 echo "=> CREATE_ALL: Running Join Channel on all Peer1"
-CHANNEL_NAME="composerchannel" PEER_MSPID="allMSP" PEER_ADDRESS="peer0-all:5010" ORDERER_ADDRESS="159.122.181.103:31010" MSP_CONFIGPATH="/fabric-config/Admin@all/msp" create/join_channel.sh
+CHANNEL_NAME="kpmallchannel" PEER_MSPID="allMSP" PEER_ADDRESS="peer0-all:5010" ORDERER_ADDRESS="169.51.42.19:31020" MSP_CONFIGPATH="/fabric-config/Admin@all/msp" create/join_channel.sh
 
 echo ""
 echo "=> CREATE_ALL: Deleting create and join channel pods"
@@ -32,7 +33,7 @@ delete/delete_channel-pods.sh
 
 echo ""
 echo "=> CREATE_ALL: Creating composer playground"
-ORDERER_ADDRESS="orderer-kpm-all:7050" create/create_composer.sh
+ORDERER_ADDRESS="169.51.42.19:31020" create/create_composer.sh
 
 TIMEOUT=300
 echo ""

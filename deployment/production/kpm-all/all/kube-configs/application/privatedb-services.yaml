@@ -5,13 +5,12 @@ metadata:
   name: privatedb-all
   labels:
     app: privatedb-all
-    tier: db
+    tier: db-all
 spec:
   type: NodePort
   selector:
-    tier: db
+    tier: db-all
   ports:
   - protocol: TCP
     port: 5984
-    nodePort: 31003
     name: http

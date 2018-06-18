@@ -65,7 +65,7 @@ echo "Creating joinchannel pod"
 echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/join_channel.yaml"
 kubectl create -f ${KUBECONFIG_FOLDER}/join_channel.yaml
 
-TIMEOUT=15
+TIMEOUT=30
 echo "Waiting for $TIMEOUT seconds for pod to settle"
 sleep $TIMEOUT
 

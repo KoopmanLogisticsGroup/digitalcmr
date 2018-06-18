@@ -5,12 +5,6 @@ metadata:
   name: composer-identity-import-kpm-all
 spec:
   restartPolicy: "Never"
-  volumes:
-  - name: kpm-all-composer-credentials
-    hostPath:
-      path: /composer
-  - name: kpm-all-composer-identity-fabric-config
-    emptyDir: {}
   containers:
   - name: composer-identity-import-kpm-all
     image: hyperledger/composer-cli:0.13.2
@@ -26,7 +20,7 @@ spec:
               "type": "hlfv1",
               "orderers": [
                   {
-                      "url": "grpc://orderer-kpm-all:7050"
+                      "url": "grpc://DoesntMatter"
                   }
               ],
               "ca": {
@@ -51,5 +45,11 @@ spec:
       mountPath: /home
     - name: kpm-all-composer-identity-fabric-config
       mountPath: /fabric-config
+  volumes:
+  - name: kpm-all-composer-credentials
+    hostPath:
+      path: /composer
+  - name: kpm-all-composer-identity-fabric-config
+    emptyDir: {}
   nodeSelector:
     environment: kpm-all

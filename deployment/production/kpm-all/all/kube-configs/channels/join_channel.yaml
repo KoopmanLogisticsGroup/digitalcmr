@@ -31,8 +31,10 @@ spec:
     - name: GODEBUG
       value: "netdns=go"
     volumeMounts:
-      - name: joinchannel-fabric-config
+      - name: joinchannel-all-fabric-config
         mountPath: /fabric-config
   volumes:
-    - name: joinchannel-fabric-config
+    - name: joinchannel-all-fabric-config
       emptyDir: {}
+  nodeSelector:
+    environment: all
