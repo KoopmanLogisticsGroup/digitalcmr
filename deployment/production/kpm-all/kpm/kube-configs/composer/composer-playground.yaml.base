@@ -62,5 +62,3 @@ spec:
       - name: kpm-all-composer-credentials
         hostPath:
           path: /composer
-      nodeSelector:
-        environment: kpm-all

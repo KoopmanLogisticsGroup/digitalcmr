@@ -20,6 +20,7 @@ import {UserInfo} from './interfaces/entity.inferface';
 import * as fs from 'fs';
 import * as https from 'https';
 import * as http from 'http';
+import {ConnectionPoolManager} from './connections/ConnectionPoolManager';
 
 const forceSSL = require('express-force-ssl');
 
@@ -49,7 +50,8 @@ class App {
     Container.set(LoggerFactory, this.loggerFactory);
     Container.set(DataService, new DataService());
     Container.set(BusinessNetworkHandler, new BusinessNetworkHandler(new ComposerClient.BusinessNetworkConnection()));
-    Container.set(TransactionHandler, new TransactionHandler(Container.get(BusinessNetworkHandler)));
+    Container.set(TransactionHandler, new TransactionHandler());
+    Container.set(ConnectionPoolManager, new ConnectionPoolManager());
     Container.set(IdentityManager, new IdentityManager(Config.settings.composer.namespace));
 
     if (process.env.NODE_ENV!.indexOf('kpm') !== -1 || process.env.NODE_ENV === 'local' || process.env.NODE_ENV === 'development') {

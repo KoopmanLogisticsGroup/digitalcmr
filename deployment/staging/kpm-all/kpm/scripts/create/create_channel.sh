@@ -8,7 +8,7 @@ else
     echo "Please run the script from 'scripts' or 'scripts/create' folder"
 fi
 
-BASE_PATH=$(pwd)../../../../../../composer/hlfv1/config/kpm-all-config
+BASE_PATH=$(pwd)../../../../../../composer/hlfv1/config/kpm-all-config-staging
 KPM_PATH=$BASE_PATH/kpm
 CONTAINER_BASE_PATH=/fabric-config
 KPM_PEERS_PARTIAL_PATH=crypto-config/peerOrganizations/kpm-all/peers/peer0.kpm-all/msp
@@ -22,13 +22,13 @@ if [ -z ${PEER_MSPID} ]; then
 fi
 PEER_MSPID=${PEER_MSPID:-kpm-allMSP}
 
-# Default to "composerchannel" if not defined
+# Default to "kpmallstagchannel" if not defined
 if [ -z "${CHANNEL_NAME}" ]; then
-	echo "CHANNEL_NAME not defined. I will use \"composerchannel\"."
+	echo "CHANNEL_NAME not defined. I will use \"kpmallstagchannel\"."
 	echo "I will wait 5 seconds before continuing."
 	sleep 5
 fi
-CHANNEL_NAME=${CHANNEL_NAME:-composerchannel}
+CHANNEL_NAME=${CHANNEL_NAME:-kpmallstagchannel}
 
 # Default to "staging" if not defined
 if [ -z ${CHANNEL_FILE} ]; then
@@ -57,7 +57,7 @@ echo "Creating createchannel pod"
 echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/create_channel.yaml"
 kubectl create -f ${KUBECONFIG_FOLDER}/create_channel.yaml
 
-TIMEOUT=15
+TIMEOUT=30
 echo "Waiting for $TIMEOUT seconds for pod to settle"
 sleep $TIMEOUT
 

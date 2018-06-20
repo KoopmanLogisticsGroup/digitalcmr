@@ -1,6 +1,6 @@
 import {Config} from '../config';
 import {BusinessNetworkConnection, ParticipantRegisty} from 'composer-client';
-import {BusinessNetworkDefinition} from 'composer-common';
+import {BusinessNetworkDefinition, Factory} from 'composer-common';
 import {Identity} from '../interfaces/entity.inferface';
 
 export class BusinessNetworkHandler {
@@ -31,7 +31,11 @@ export class BusinessNetworkHandler {
     return this.businessNetworkDefinition.getSerializer().toJSON(rawResource);
   }
 
-  public getFactory(): Promise<any> {
+  public getSerializerWithoutResource(): any {
+    return this.businessNetworkDefinition.getSerializer();
+  }
+
+  public getFactory(): Promise<Factory> {
     return this.businessNetworkConnection.getBusinessNetwork().getFactory();
   }
 

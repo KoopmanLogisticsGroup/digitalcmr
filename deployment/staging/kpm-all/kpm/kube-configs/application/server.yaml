@@ -14,11 +14,11 @@ spec:
             terminationGracePeriodSeconds: 10
             containers:
               - name: server-kpm-all
-                image: registry.eu-de.bluemix.net/lventi/digitalcmr_server:kpm-all
+                image: registry.eu-de.bluemix.net/staging-2-orgs/digitalcmr_server
                 imagePullPolicy: Always
                 imagePullSecrets:
-                - name: bluemix-gb-registry
-                command: ["sh", "-c", "npm start"]
+                - name: bluemix-uk-registry
+                command: ["sh", "-c", "node server.js"]
                 env:
                 - name: NODE_ENV
                   value: kpm-all-staging

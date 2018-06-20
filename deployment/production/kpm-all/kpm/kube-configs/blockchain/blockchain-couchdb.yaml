@@ -55,8 +55,6 @@ spec:
       volumes:
         - name: orderer-kpm-all-fabric-config
           emptyDir: {}
-      nodeSelector:
-        environment: kpm-all
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -94,8 +92,6 @@ spec:
       volumes:
         - name: ca-kpm-all-fabric-config
           emptyDir: {}
-      nodeSelector:
-        environment: kpm-all
 ---
 kind: StatefulSet
 apiVersion: apps/v1beta1
@@ -191,8 +187,6 @@ spec:
                 path: /var/run/docker.sock
             - name: peer-kpm-all-fabric-config
               emptyDir: {}
-            nodeSelector:
-              environment: kpm-all
     volumeClaimTemplates:
         - metadata:
             name: peer0-kpm-all-pv
@@ -230,8 +224,6 @@ spec:
                   volumeMounts:
                     - name: bc-peer0-kpm-all-couchdb-pv
                       mountPath: /opt/couchdb/data
-            nodeSelector:
-              environment: kpm-all
     volumeClaimTemplates:
         - metadata:
             name: bc-peer0-kpm-all-couchdb-pv

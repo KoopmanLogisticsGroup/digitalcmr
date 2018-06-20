@@ -20,7 +20,7 @@ spec:
               "type": "hlfv1",
               "orderers": [
                   {
-                      "url": "grpc://DoesntMatter"
+                      "url": "grpc://orderer-kpm-all:7050"
                   }
               ],
               "ca": {
@@ -51,5 +51,3 @@ spec:
       path: /composer
   - name: kpm-all-composer-identity-fabric-config
     emptyDir: {}
-  nodeSelector:
-    environment: kpm-all

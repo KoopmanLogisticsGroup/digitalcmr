@@ -51,5 +51,3 @@ spec:
       path: /composer
   - name: kpm-all-composer-identity-fabric-config
     emptyDir: {}
-  nodeSelector:
-    environment: kpm-all

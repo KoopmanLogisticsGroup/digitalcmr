@@ -10,10 +10,6 @@ spec:
       labels:
         name: composer-playground-kpm-all
     spec:
-      volumes:
-      - name: composer-credentials
-        hostPath:
-          path: /composer
       containers:
       - name: composer-playground-kpm-all
         image: hyperledger/composer-playground:0.13.2
@@ -52,7 +48,7 @@ spec:
                       }
                   ],
                   "keyValStore": "/home/composer/.hfc-key-store",
-                  "channel": "composerchannel",
+                  "channel": "kpmallstagchannel",
                   "mspID": "kpm-allMSP",
                   "timeout": 300
                 },
@@ -60,5 +56,9 @@ spec:
               }]
             }
         volumeMounts:
-        - name: composer-credentials
+        - name: kpm-all-composer-credentials
           mountPath: /home
+      volumes:
+      - name: kpm-all-composer-credentials
+        hostPath:
+          path: /composer

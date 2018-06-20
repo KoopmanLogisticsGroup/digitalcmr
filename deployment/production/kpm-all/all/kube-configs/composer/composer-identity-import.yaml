@@ -20,7 +20,7 @@ spec:
               "type": "hlfv1",
               "orderers": [
                   {
-                      "url": "grpc://DoesntMatter"
+                      "url": "grpc://159.122.177.80:31020"
                   }
               ],
               "ca": {
@@ -51,5 +51,3 @@ spec:
       path: /composer
   - name: composer-identity-all-fabric-config
     emptyDir: {}
-  nodeSelector:
-    environment: all

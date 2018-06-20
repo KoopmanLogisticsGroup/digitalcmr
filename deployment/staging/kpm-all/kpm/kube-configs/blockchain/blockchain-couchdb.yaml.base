@@ -38,7 +38,7 @@ spec:
         - name: ORDERER_GENERAL_LOCALMSPDIR
           value: /fabric-config/msp
         - name: ORDERER_GENERAL_LOCALMSPID
-          value: kpmOrdererMSP
+          value: kpmAllOrdererMSP
         - name: ORDERER_GENERAL_GENESISMETHOD
           value: file
         - name: ORDERER_GENERAL_GENESISFILE
@@ -50,10 +50,10 @@ spec:
         - name: GODEBUG
           value: "netdns=go"
         volumeMounts:
-          - name: orderer-fabric-config
+          - name: orderer-kpm-all-fabric-config
             mountPath: /fabric-config
       volumes:
-        - name: orderer-fabric-config
+        - name: orderer-kpm-all-fabric-config
           emptyDir: {}
 ---
 apiVersion: extensions/v1beta1
@@ -70,12 +70,12 @@ spec:
       containers:
       - name: ca-kpm-all
         image: ibmblockchain/fabric-ca:1.0.6
-        command: ["sh", "-c", "sleep 1 && while [ ! -f /fabric-config/ca/ca.kpm-all-cert.pem ]; do echo Waiting for crypto config to be loaded; sleep 1; done; fabric-ca-server start --ca.name ca-kpm-all --ca.certfile /fabric-config/ca/ca.kpm-all-cert.pem --ca.keyfile /fabric-config/ca/52da9f2222ce0c6133e0c3ad5565d8af0acea880058c45f372cc2b45334cb52e_sk -b admin:adminpw -d"]
+        command: ["sh", "-c", "sleep 1 && while [ ! -f /fabric-config/ca/ca.kpm-all-cert.pem ]; do echo Waiting for crypto config to be loaded; sleep 1; done; fabric-ca-server start --ca.name ca-kpm-all --ca.certfile /fabric-config/ca/ca.kpm-all-cert.pem --ca.keyfile /fabric-config/ca/cdf2768427985766a9d02ae42e6540633d9363b34154dffdb4217e49f331a47b_sk -b admin:adminpw -d"]
         env:
 #        - name: FABRIC_CA_SERVER_CA_CERTFILE
 #          value: /fabric-config/ca/ca.kpm-all-cert.pem
 #        - name: FABRIC_CA_SERVER_CA_KEYFILE
-#          value: /fabric-config/ca/52da9f2222ce0c6133e0c3ad5565d8af0acea880058c45f372cc2b45334cb52e_sk
+#          value: /fabric-config/ca/cdf2768427985766a9d02ae42e6540633d9363b34154dffdb4217e49f331a47b_sk
         - name: FABRIC_CA_SERVER_DEBUG
           value: "true"
         - name: FABRIC_CA_SERVER_TLS_ENABLED
@@ -83,14 +83,14 @@ spec:
 #        - name: FABRIC_CA_SERVER_TLS_CERTFILE
 #          value: /fabric-config/ca/ca.kpm-all-cert.pem
 #        - name: FABRIC_CA_SERVER_TLS_KEYFILE
-#          value: /fabric-config/ca/52da9f2222ce0c6133e0c3ad5565d8af0acea880058c45f372cc2b45334cb52e_sk
+#          value: /fabric-config/ca/cdf2768427985766a9d02ae42e6540633d9363b34154dffdb4217e49f331a47b_sk
         - name: GODEBUG
           value: "netdns=go"
         volumeMounts:
-          - name: ca-fabric-config
+          - name: ca-kpm-all-fabric-config
             mountPath: /fabric-config
       volumes:
-        - name: ca-fabric-config
+        - name: ca-kpm-all-fabric-config
           emptyDir: {}
 ---
 kind: StatefulSet
@@ -107,12 +107,6 @@ spec:
                 vol: peer0-kpm-all-pv
         spec:
             terminationGracePeriodSeconds: 10
-            volumes:
-            - name: dockersocket
-              hostPath:
-                path: /var/run/docker.sock
-            - name: peer-fabric-config
-              emptyDir: {}
             containers:
                 - name: peer0-kpm-all
                   image: ibmblockchain/fabric-peer:1.0.6
@@ -184,9 +178,15 @@ spec:
                     - name: dockersocket
                       mountPath: /host/var/run/docker.sock
                     - name: peer0-kpm-all-pv
-                      mountPath: /var/hyperledger/production
-                    - name: peer-fabric-config
+                      mountPath: /var/hyperledger/staging
+                    - name: peer-kpm-all-fabric-config
                       mountPath: /fabric-config
+            volumes:
+            - name: dockersocket
+              hostPath:
+                path: /var/run/docker.sock
+            - name: peer-kpm-all-fabric-config
+              emptyDir: {}
     volumeClaimTemplates:
         - metadata:
             name: peer0-kpm-all-pv

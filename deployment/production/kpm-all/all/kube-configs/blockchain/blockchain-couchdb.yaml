@@ -35,8 +35,6 @@ spec:
       volumes:
         - name: ca-all-fabric-config
           emptyDir: {}
-      nodeSelector:
-        environment: all
 ---
 kind: StatefulSet
 apiVersion: apps/v1beta1
@@ -116,7 +114,7 @@ spec:
                   - name: FABRIC_CFG_PATH
                     value: /etc/hyperledger/fabric/
                   - name: ORDERER_URL
-                    value: 169.51.42.19:31020
+                    value: 159.122.177.80:31020
                   - name: GODEBUG
                     value: "netdns=go"
                   volumeMounts:
@@ -132,8 +130,6 @@ spec:
                 path: /var/run/docker.sock
             - name: peer-all-fabric-config
               emptyDir: {}
-            nodeSelector:
-              environment: all
     volumeClaimTemplates:
         - metadata:
             name: peer0-all-pv
@@ -171,8 +167,6 @@ spec:
                   volumeMounts:
                     - name: bc-peer0-all-couchdb-pv
                       mountPath: /opt/couchdb/data
-            nodeSelector:
-              environment: all
     volumeClaimTemplates:
         - metadata:
             name: bc-peer0-all-couchdb-pv

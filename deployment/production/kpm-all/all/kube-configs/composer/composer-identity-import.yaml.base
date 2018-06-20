@@ -51,5 +51,3 @@ spec:
       path: /composer
   - name: composer-identity-all-fabric-config
     emptyDir: {}
-  nodeSelector:
-    environment: all

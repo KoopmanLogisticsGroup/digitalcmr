@@ -62,5 +62,3 @@ spec:
       - name: all-composer-credentials
         hostPath:
           path: /composer
-      nodeSelector:
-        environment: all
