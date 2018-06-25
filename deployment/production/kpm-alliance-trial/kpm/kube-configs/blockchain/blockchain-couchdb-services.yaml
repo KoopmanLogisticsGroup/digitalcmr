@@ -1,0 +1,69 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ca-kpm-all
+  labels:
+    run: ca-kpm-all
+spec:
+  type: NodePort
+  selector:
+    name: ca-kpm-all
+  ports:
+  - protocol: TCP
+    port: 7054
+    nodePort: 30010
+    name: grpc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: orderer-kpm-all
+  labels:
+    run: orderer-kpm-all
+spec:
+  type: NodePort
+  selector:
+    name: orderer-kpm-all
+  ports:
+  - protocol: TCP
+    port: 7050
+    nodePort: 31010
+    name: grpc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name:  peer0-kpm-all
+  labels:
+    app:  peer0-kpm-all
+    tier: peer0-kpm-all
+spec:
+  type: NodePort
+  selector:
+    tier: peer0-kpm-all
+  ports:
+  - protocol: TCP
+    port: 5010
+    nodePort: 30110
+    name: grpc
+  - protocol: TCP
+    port: 5011
+    nodePort: 30111
+    name: events
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name:  peer0-kpm-all-couchdb
+  labels:
+    app:  peer0-kpm-all-couchdb
+    tier: peer0-kpm-all-couchdb
+spec:
+  type: NodePort
+  selector:
+    tier: peer0-kpm-all-couchdb
+  ports:
+  - protocol: TCP
+    port: 5984
+    name: peer0-kpm-all-couchdb
