@@ -14,6 +14,10 @@ import {AllProdConfig} from './all-prod.config';
 import {KpmAllProdConfig} from './kpm-all-prod.config';
 import {AllDevelopmentConfig} from './all-development.config';
 import {KpmAllDevelopmentConfig} from './kpm-all-development.config';
+import {AlliancePreTrialConfig} from './alliance-pre-trial.config';
+import {AllianceTrialConfig} from './alliance-trial.config';
+import {KpmAlliancePreTrialConfig} from './kpm-alliance-pre-trial.config';
+import {KpmAllianceTrialConfig} from './kpm-alliance-trial.config';
 
 export class Config {
   private static NAMESPACE: string = 'app:config';
@@ -89,6 +93,18 @@ export class Config {
         break;
       case 'all-development':
         envSettings = AllDevelopmentConfig.settings;
+        break;
+      case 'kpm-alliance-pre-trial':
+        envSettings = KpmAlliancePreTrialConfig.settings;
+        break;
+      case 'alliance-pre-trial':
+        envSettings = AlliancePreTrialConfig.settings;
+        break;
+      case 'kpm-alliance-trial':
+        envSettings = KpmAllianceTrialConfig.settings;
+        break;
+      case 'alliance-trial':
+        envSettings = AllianceTrialConfig.settings;
         break;
       default:
         debug(this.NAMESPACE)(`WARNING: no environment settings for ${process.env.NODE_ENV}.`);
