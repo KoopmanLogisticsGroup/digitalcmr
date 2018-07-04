@@ -5,8 +5,12 @@ import {LoggerInstance} from 'winston';
 import {LoggerFactory} from '../utils/logger/LoggerFactory';
 import {Container} from 'typedi';
 
-export const connectionMaxAge            = 3600000;
-export const cronPatternCleanConnections = '*/20 * * * *'; //at every 20 minutes
+export const connectionMaxAge            = 3599 * 1000; //connection expires in one hour
+export const cronPatternCleanConnections = '*/20 * * * *'; //remove expired connections at every 20 minutes
+
+export const cleanConnectionsJob = () => {
+  Container.get(ConnectionPoolManager).cleanConnections();
+};
 
 export class ConnectionPoolManager {
   private logger: LoggerInstance;
@@ -17,9 +21,10 @@ export class ConnectionPoolManager {
     this.logger = Container.get(LoggerFactory).get('ConnectionPoolManager');
 
     try {
-      this.cleanConnectionsJob = new CronJob(cronPatternCleanConnections, this.cleanConnections);
+      this.cleanConnectionsJob = new CronJob(cronPatternCleanConnections, cleanConnectionsJob);
+      this.cleanConnectionsJob.start();
     } catch (invalidCronJobPatternError) {
-      this.logger.error(cronPatternCleanConnections + ': invalid cron pattern; Job has not been registered');
+      this.logger.error(cronPatternCleanConnections + ': invalid cron pattern; Clean Connections Job has not been registered');
     }
   }
 
@@ -37,23 +42,27 @@ export class ConnectionPoolManager {
     const connection = this.connectionPool.get(userID);
 
     if (!connection) {
-      throw new Error('No connection defined for this user');
+      throw new Error('No connection defined for the user ' + userID + '. It may be expired. Please start a new session');
     }
 
     if (this.isConnectionExpired(connection)) {
       this.connectionPool.delete(userID);
 
-      throw new Error('Connection for ' + userID + ' has expired');
+      throw new Error('Connection for ' + userID + ' has expired. Please start a new session');
     }
 
     return connection;
   }
 
-  private cleanConnections(): void {
+  public cleanConnections(): void {
+    this.logger.info('Cleaning up connections...');
+
     for (let userID of this.connectionPool.keys()) {
       let connection = this.connectionPool.get(userID);
+
       if (this.isConnectionExpired(connection)) {
         this.connectionPool.delete(userID);
+        this.logger.info('Connection for user ' + userID + ' has expired: deleted');
       }
     }
   }

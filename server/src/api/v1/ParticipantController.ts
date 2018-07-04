@@ -23,7 +23,6 @@ import {ComposerConnectionMiddleware} from '../../middleware/ComposerConnectionM
 @UseInterceptor(ComposerInterceptor)
 @UseAfter(ErrorHandlerMiddleware)
 export class OrganizationController {
-
   public constructor(private transactionHandler: TransactionHandler,
                      private identityManager: IdentityManager) {
   }
