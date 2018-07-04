@@ -9,7 +9,7 @@ spec:
   - name: composer-identity-import-kpm-all
     image: hyperledger/composer-cli:0.13.2
     imagePullPolicy: Always
-    command: ["sh", "-c", "sleep 1 && while [ ! -d /fabric-config/Admin@kpm-all ]; do echo Waiting for identity data; sleep 1; done; composer identity import -p kpm-all -u admin -c /fabric-config/Admin@kpm-all/msp/signcerts/Admin@kpm-all-cert.pem -k /fabric-config/Admin@kpm-all/msp/keystore/`ls /fabric-config/Admin@kpm-all/msp/keystore` && echo 'Done with importing identity'; composer network deploy -a /fabric-config/bna/digital-cmr-network.bna -i admin -s passwd -p kpm-all && echo 'Done with deploying'"]
+    command: ["sh", "-c", "cd fabric-config && rm -rf . && cd ..; sleep 1 && while [ ! -d /fabric-config/Admin@kpm-all ]; do echo Waiting for identity data; sleep 1; done; composer identity import -p kpm-all -u admin -c /fabric-config/Admin@kpm-all/msp/signcerts/Admin@kpm-all-cert.pem -k /fabric-config/Admin@kpm-all/msp/keystore/`ls /fabric-config/Admin@kpm-all/msp/keystore` && echo 'Done with importing identity'; composer network deploy -a /fabric-config/bna/digital-cmr-network.bna -i admin -s passwd -p kpm-all && echo 'Done with deploying'"]
     env:
     - name: COMPOSER_CONFIG
       value: >

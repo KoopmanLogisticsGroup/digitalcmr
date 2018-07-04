@@ -10,7 +10,7 @@ spec:
   - name: joinchannel
     image: ibmblockchain/fabric-peer:1.0.6
     imagePullPolicy: Always
-    command: ["sh", "-c", "sleep 1 && while [ ! -d /fabric-config/Admin@kpm-pon ]; do echo Waiting for crypto config to be loaded; sleep 1; done; peer channel fetch config -o ${ORDERER_URL} -c ${CHANNEL_NAME} && peer channel join -b ${CHANNEL_NAME}_config.block"]
+    command: ["sh", "-c", "cd fabric-config && rm -rf . && cd ..; sleep 1 && while [ ! -d /fabric-config/Admin@kpm-pon ]; do echo Waiting for crypto config to be loaded; sleep 1; done; peer channel fetch config -o ${ORDERER_URL} -c ${CHANNEL_NAME} && peer channel join -b ${CHANNEL_NAME}_config.block"]
     env:
     - name: CHANNEL_NAME
       value: %CHANNEL_NAME%
