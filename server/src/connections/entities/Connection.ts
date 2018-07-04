@@ -2,12 +2,12 @@ import {Factory} from 'composer-common';
 import {BusinessNetworkHandler} from '../../blockchain/BusinessNetworkHandler';
 
 export class Connection {
-  private createdTs: number;
+  private lastUsedTs: number;
 
   public constructor(private _businessNetworkHandler: BusinessNetworkHandler,
                      private _factory: Factory,
                      private _serializer: any) {
-    this.createdTs = new Date().getTime();
+    this.resetInactivityTimer();
   }
 
   public get businessNetworkHandler(): BusinessNetworkHandler {
@@ -22,7 +22,11 @@ export class Connection {
     return this._serializer;
   }
 
-  public getCreatedTs(): number {
-    return this.createdTs;
+  public resetInactivityTimer(): void {
+    this.lastUsedTs = new Date().getTime();
+  }
+
+  public getInactivityTime(): number {
+    return new Date().getTime() - this.lastUsedTs;
   }
 }

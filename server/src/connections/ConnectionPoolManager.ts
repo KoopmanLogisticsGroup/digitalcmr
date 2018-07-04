@@ -5,7 +5,7 @@ import {LoggerInstance} from 'winston';
 import {LoggerFactory} from '../utils/logger/LoggerFactory';
 import {Container} from 'typedi';
 
-export const connectionMaxAge            = 3599 * 1000; //connection expires in one hour
+export const connectionKeepAliveTime            = 3599 * 1000; //connection expires in one hour
 export const cronPatternCleanConnections = '*/20 * * * *'; //remove expired connections at every 20 minutes
 
 export const cleanConnectionsJob = () => {
@@ -51,6 +51,8 @@ export class ConnectionPoolManager {
       throw new Error('Connection for ' + userID + ' has expired. Please start a new session');
     }
 
+    connection.resetInactivityTimer();
+
     return connection;
   }
 
@@ -69,6 +71,6 @@ export class ConnectionPoolManager {
 
   private isConnectionExpired(connection?: Connection): boolean {
     return !isUndefined(connection) &&
-      new Date().getTime() - connection.getCreatedTs() > connectionMaxAge;
+      connection.getInactivityTime() > connectionKeepAliveTime;
   }
 }
