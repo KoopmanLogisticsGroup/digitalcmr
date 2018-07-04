@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # copy and execute this script in the specific config folder which contains the configtx and crypto-config files
-FABRIC_VERSION=1.0.6
+FABRIC_VERSION=1.1.0
 export FABRIC_CFG_PATH=$(pwd)
 GENESIS=pre-trial
 CHANNEL_FILE=pre-trial
