@@ -13,7 +13,7 @@ spec:
       containers:
       - name: ca-all
         image: ibmblockchain/fabric-ca:1.0.6
-        command: ["sh", "-c", "sleep 1 && while [ ! -f /fabric-config/ca/ca.all-cert.pem ]; do echo Waiting for crypto config to be loaded; sleep 1; done; fabric-ca-server start --ca.name ca-all --ca.certfile /fabric-config/ca/ca.all-cert.pem --ca.keyfile /fabric-config/ca/6a8ce87de53ea63d803f793cc8c688d169e7399d1225b98258d626964848b489_sk -b admin:adminpw -d"]
+        command: ["sh", "-c", "cd fabric-config && rm -rf . && cd ..; sleep 1 && while [ ! -f /fabric-config/ca/ca.all-cert.pem ]; do echo Waiting for crypto config to be loaded; sleep 1; done; fabric-ca-server start --ca.name ca-all --ca.certfile /fabric-config/ca/ca.all-cert.pem --ca.keyfile /fabric-config/ca/6a8ce87de53ea63d803f793cc8c688d169e7399d1225b98258d626964848b489_sk -b admin:adminpw -d"]
         env:
 #        - name: FABRIC_CA_SERVER_CA_CERTFILE
 #          value: /fabric-config/ca/ca.all-cert.pem
@@ -54,7 +54,7 @@ spec:
                 - name: peer0-all
                   image: ibmblockchain/fabric-peer:1.0.6
                   imagePullPolicy: Always
-                  command: ["sh", "-c", "sleep 1 && while [ ! -d /fabric-config/msp ]; do echo Waiting for crypto config to be loaded...; sleep 1; done; peer node start --peer-defaultchain=false"]
+                  command: ["sh", "-c", "cd fabric-config && rm -rf . && cd ..; sleep 1 && while [ ! -d /fabric-config/msp ]; do echo Waiting for crypto config to be loaded...; sleep 1; done; peer node start --peer-defaultchain=false"]
                   env:
                   - name: CORE_PEER_ADDRESSAUTODETECT
                     value: "true"

@@ -10,22 +10,22 @@ spec:
   - name: joinchannel
     image: ibmblockchain/fabric-peer:1.0.6
     imagePullPolicy: Always
-    command: ["sh", "-c", "sleep 1 && while [ ! -d /fabric-config/Admin@kpm-all ]; do echo Waiting for crypto config to be loaded; sleep 1; done; peer channel fetch config -o ${ORDERER_URL} -c ${CHANNEL_NAME} && peer channel join -b ${CHANNEL_NAME}_config.block"]
+    command: ["sh", "-c", "cd fabric-config && rm -rf . && cd ..; sleep 1 && while [ ! -d /fabric-config/Admin@kpm-all ]; do echo Waiting for crypto config to be loaded; sleep 1; done; peer channel fetch config -o ${ORDERER_URL} -c ${CHANNEL_NAME} && peer channel join -b ${CHANNEL_NAME}_config.block"]
     env:
     - name: CHANNEL_NAME
-      value: DoesntMatter
+      value: kpmalldevchannel
     - name: CORE_PEER_NETWORKID
       value: nid1
     - name: ORDERER_URL
-      value: DoesntMatter
+      value: orderer-kpm-all:7050
     - name: CORE_PEER_ADDRESS
-      value: DoesntMatter
+      value: peer0-kpm-all:5010
     - name: CORE_PEER_LOCALMSPID
-      value: DoesntMatter
+      value: kpm-allMSP
     - name: CORE_LOGGING_LEVEL
       value: debug
     - name: CORE_PEER_MSPCONFIGPATH
-      value: 
+      value: /fabric-config/Admin@kpm-all/msp
     - name: FABRIC_CFG_PATH
       value: /etc/hyperledger/fabric
     - name: GODEBUG
