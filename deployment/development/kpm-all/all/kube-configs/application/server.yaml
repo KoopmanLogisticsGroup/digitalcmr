@@ -14,12 +14,12 @@ spec:
             terminationGracePeriodSeconds: 10
             containers:
               - name: server-all
-                image: registry.eu-de.bluemix.net/development-2-orgs/digitalcmr_server
+                image: registry.eu-gb.bluemix.net/serverblockchain/serverimage:v1
                 imagePullPolicy: Always
                 imagePullSecrets:
                 - name: bluemix-uk-registry
                 command: ["sh", "-c", "node server.js"]
-                env:
+                env: #this should go into a values.yaml
                 - name: NODE_ENV
                   value: all-development
                 - name: INIT
@@ -30,7 +30,7 @@ spec:
                   value: "0.0.0.0"
                 - name: PORT
                   value: "8080"
-                  volumeMounts:
+                  volumeMounts:  #this should go to secrets (i do not know how this works)
                     - name: all-credentials-pv
                       mountPath: /home/composer/.composer-credentials
     volumeClaimTemplates:

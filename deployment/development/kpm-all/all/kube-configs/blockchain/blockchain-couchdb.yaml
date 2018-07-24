@@ -13,12 +13,12 @@ spec:
       containers:
       - name: ca-all
         image: ibmblockchain/fabric-ca:1.0.6
-        command: ["sh", "-c", "cd fabric-config && rm -rf . && cd ..; sleep 1 && while [ ! -f /fabric-config/ca/ca.all-cert.pem ]; do echo Waiting for crypto config to be loaded; sleep 1; done; fabric-ca-server start --ca.name ca-all --ca.certfile /fabric-config/ca/ca.all-cert.pem --ca.keyfile /fabric-config/ca/8d378bffbf5866918e21e2d6ec15641c4bb1631edd11a92128b12f905a6cdb8f_sk -b admin:adminpw -d"]
+        command: ["sh", "-c", "cd fabric-config && rm -rf . && cd ..; sleep 1 && while [ ! -f /fabric-config/ca/ca.all-cert.pem ]; do echo Waiting for crypto config to be loaded; sleep 1; done; fabric-ca-server start --ca.name ca-all --ca.certfile /fabric-config/ca/ca.all-cert.pem --ca.keyfile /fabric-config/ca/69e6bed7c61c877cebe44de5b19361a18f7c272e411caacbdbac982a975ecd97_sk -b admin:adminpw -d"]
         env:
 #        - name: FABRIC_CA_SERVER_CA_CERTFILE
 #          value: /fabric-config/ca/ca.all-cert.pem
 #        - name: FABRIC_CA_SERVER_CA_KEYFILE
-#          value: /fabric-config/ca/8d378bffbf5866918e21e2d6ec15641c4bb1631edd11a92128b12f905a6cdb8f_sk
+#          value: /fabric-config/ca/69e6bed7c61c877cebe44de5b19361a18f7c272e411caacbdbac982a975ecd97_sk
         - name: FABRIC_CA_SERVER_DEBUG
           value: "true"
         - name: FABRIC_CA_SERVER_TLS_ENABLED
@@ -26,7 +26,7 @@ spec:
 #        - name: FABRIC_CA_SERVER_TLS_CERTFILE
 #          value: /fabric-config/ca/ca.all-cert.pem
 #        - name: FABRIC_CA_SERVER_TLS_KEYFILE
-#          value: /fabric-config/ca/8d378bffbf5866918e21e2d6ec15641c4bb1631edd11a92128b12f905a6cdb8f_sk
+#          value: /fabric-config/ca/69e6bed7c61c877cebe44de5b19361a18f7c272e411caacbdbac982a975ecd97_sk
         - name: GODEBUG
           value: "netdns=go"
         volumeMounts:
@@ -114,7 +114,7 @@ spec:
                   - name: FABRIC_CFG_PATH
                     value: /etc/hyperledger/fabric/
                   - name: ORDERER_URL
-                    value: 159.8.124.117:31020
+                    value: 159.122.179.49:31020
                   - name: GODEBUG
                     value: "netdns=go"
                   volumeMounts:

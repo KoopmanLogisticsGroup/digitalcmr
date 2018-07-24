@@ -70,12 +70,12 @@ spec:
       containers:
       - name: ca-kpm-all
         image: ibmblockchain/fabric-ca:1.0.6
-        command: ["sh", "-c", "cd fabric-config && rm -rf . && cd ..; sleep 1 && while [ ! -f /fabric-config/ca/ca.kpm-all-cert.pem ]; do echo Waiting for crypto config to be loaded; sleep 1; done; fabric-ca-server start --ca.name ca-kpm-all --ca.certfile /fabric-config/ca/ca.kpm-all-cert.pem --ca.keyfile /fabric-config/ca/2c11ddc8b6b047e2eef7cc4b749c742a1d42c2bab178e4b1ff3882119f796179_sk -b admin:adminpw -d"]
+        command: ["sh", "-c", "cd fabric-config && rm -rf . && cd ..; sleep 1 && while [ ! -f /fabric-config/ca/ca.kpm-all-cert.pem ]; do echo Waiting for crypto config to be loaded; sleep 1; done; fabric-ca-server start --ca.name ca-kpm-all --ca.certfile /fabric-config/ca/ca.kpm-all-cert.pem --ca.keyfile /fabric-config/ca/7e0270a7849b0164387f296f5ba29c84e7b00ade814b98c706c4ebb8a75a24a4_sk -b admin:adminpw -d"]
         env:
 #        - name: FABRIC_CA_SERVER_CA_CERTFILE
 #          value: /fabric-config/ca/ca.kpm-all-cert.pem
 #        - name: FABRIC_CA_SERVER_CA_KEYFILE
-#          value: /fabric-config/ca/2c11ddc8b6b047e2eef7cc4b749c742a1d42c2bab178e4b1ff3882119f796179_sk
+#          value: /fabric-config/ca/7e0270a7849b0164387f296f5ba29c84e7b00ade814b98c706c4ebb8a75a24a4_sk
         - name: FABRIC_CA_SERVER_DEBUG
           value: "true"
         - name: FABRIC_CA_SERVER_TLS_ENABLED
@@ -83,7 +83,7 @@ spec:
 #        - name: FABRIC_CA_SERVER_TLS_CERTFILE
 #          value: /fabric-config/ca/ca.kpm-all-cert.pem
 #        - name: FABRIC_CA_SERVER_TLS_KEYFILE
-#          value: /fabric-config/ca/2c11ddc8b6b047e2eef7cc4b749c742a1d42c2bab178e4b1ff3882119f796179_sk
+#          value: /fabric-config/ca/7e0270a7849b0164387f296f5ba29c84e7b00ade814b98c706c4ebb8a75a24a4_sk
         - name: GODEBUG
           value: "netdns=go"
         volumeMounts:
@@ -91,7 +91,7 @@ spec:
             mountPath: /fabric-config
       volumes:
         - name: ca-kpm-all-fabric-config
-          emptyDir: {}
+          emptyDir: {} 
 ---
 kind: StatefulSet
 apiVersion: apps/v1beta1

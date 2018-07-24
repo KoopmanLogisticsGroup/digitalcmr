@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+    name: privatedb-all-pv
+    labels:
+      vol: privatedb-all-pv
+spec:
+    capacity:
+        storage: 1G
+    accessModes:
+        - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Recycle
+    hostPath:
+        path: "/var/privatedb-all"
