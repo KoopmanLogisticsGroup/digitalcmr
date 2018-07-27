@@ -20,11 +20,15 @@ export class ErrorConfig {
           includeStack: true
         },
         queryError: {
-          message:     ErrorMessage.queryError,
+          message:     ErrorMessage.queryErrorMessage,
           includeStack: true
         },
         invokeError: {
-          message:     ErrorMessage.invokeError,
+          message:     ErrorMessage.invokeErrorMessage,
+          includeStack: true
+        },
+        identityAddError: {
+          message:     ErrorMessage.identityAddErrorMessage,
           includeStack: true
         }
       }

@@ -4,4 +4,5 @@ export enum ErrorType {
   loginInvalidCredentialsError = 'loginInvalidCredentialsError',
   queryError                   = 'queryError',
   invokeError                  = 'invokeError',
+  identityAddError             = 'identityAddError'
 }

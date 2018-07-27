@@ -22,6 +22,8 @@ import {Query} from '../../blockchain/Queries';
 import {TransportOrderCancellation} from '../../interfaces/cancellation.interface';
 import * as shortid from 'shortid';
 import {ComposerConnectionMiddleware} from '../../middleware/ComposerConnectionMiddleware';
+import {ErrorFactory} from '../../error/ErrorFactory';
+import {ErrorType} from '../../error/ErrorType';
 
 @JsonController('/transportOrder')
 @UseBefore(UserAuthenticatorMiddleware, ComposerConnectionMiddleware)
@@ -34,42 +36,56 @@ export class TransportOrderController {
 
   @Get('/')
   public async getAllTransportOrders(@Req() request: any): Promise<any> {
-    return await this.transactionHandler.query(request.identity, request.connection, Config.settings.composer.profile, QueryReturnType.Multiple, Query.GetAllTransportOrders);
+    return await this.transactionHandler.query(request.identity, request.connection, Config.settings.composer.profile, QueryReturnType.Multiple, Query.GetAllTransportOrders).catch((error) => {
+      throw(ErrorFactory.translate(ErrorType.queryError, error));
+    });
   }
 
   @Get('/orderID/:orderID')
   public async getTransportOrderByOrderID(@Param('orderID') orderID: string, @Req() request: any): Promise<any> {
-    return await this.transactionHandler.query(request.identity, request.connection, Config.settings.composer.profile, QueryReturnType.Single, Query.GetTransportOrderById, {orderID: orderID});
+    return await this.transactionHandler.query(request.identity, request.connection, Config.settings.composer.profile, QueryReturnType.Single, Query.GetTransportOrderById, {orderID: orderID}).catch((error) => {
+      throw(ErrorFactory.translate(ErrorType.queryError, error));
+    });
   }
 
   @Get('/status/:orderStatus')
   public async getAllTransportOrdersByStatus(@Param('orderStatus') orderStatus: string,
                                              @Req() request: any): Promise<any> {
-    return await this.transactionHandler.query(request.identity, request.connection, Config.settings.composer.profile, QueryReturnType.Multiple, Query.GetTransportOrdersByStatus, {status: orderStatus});
+    return await this.transactionHandler.query(request.identity, request.connection, Config.settings.composer.profile, QueryReturnType.Multiple, Query.GetTransportOrdersByStatus, {status: orderStatus}).catch((error) => {
+      throw(ErrorFactory.translate(ErrorType.queryError, error));
+    });
   }
 
   @Get('/vin/:vin')
   public async getAllTransportOrdersByVin(@Param('vin') vin: string, @Req() request: any): Promise<any> {
-    return await this.transportOrderTransactor.getAllTransportOrdersByVin(this.transactionHandler, request.identity, request.connection, Config.settings.composer.profile, vin);
+    return await this.transportOrderTransactor.getAllTransportOrdersByVin(this.transactionHandler, request.identity, request.connection, Config.settings.composer.profile, vin).catch((error) => {
+      throw(ErrorFactory.translate(ErrorType.queryError, error));
+    });
   }
 
   @Post('/')
   public async create(@Body() transportOrder: TransportOrder, @Req() request: any): Promise<any> {
     transportOrder.orderID = shortid.generate();
 
-    const transaction: any = await this.transactionHandler.invoke(request.identity, request.connection, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateTransportOrder, transportOrder, new TransportOrderTransactor());
+    const transaction: any = await this.transactionHandler.invoke(request.identity, request.connection, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateTransportOrder, transportOrder, new TransportOrderTransactor()).catch((error) => {
+      throw(ErrorFactory.translate(ErrorType.invokeError, error));
+    });
 
     return transaction.transportOrder;
   }
 
   @Put('/updatePickupWindow')
   public async updatePickupWindow(@Body() pickupWindowObject: PickupWindow, @Req() request: any): Promise<any> {
-    return await this.transactionHandler.invoke(request.identity, request.connection, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateTransportOrderPickupWindow, pickupWindowObject, new TransportOrderTransactor());
+    return await this.transactionHandler.invoke(request.identity, request.connection, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateTransportOrderPickupWindow, pickupWindowObject, new TransportOrderTransactor()).catch((error) => {
+      throw(ErrorFactory.translate(ErrorType.invokeError, error));
+    });
   }
 
   @Put('/updateDeliveryWindow')
   public async updateDeliveryWindow(@Body() deliveryWindowObject: DeliveryWindow, @Req() request: any): Promise<any> {
-    return await this.transactionHandler.invoke(request.identity, request.connection, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateTransportOrderDeliveryWindow, deliveryWindowObject, new TransportOrderTransactor());
+    return await this.transactionHandler.invoke(request.identity, request.connection, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateTransportOrderDeliveryWindow, deliveryWindowObject, new TransportOrderTransactor()).catch((error) => {
+      throw(ErrorFactory.translate(ErrorType.invokeError, error));
+    });
   }
 
   @Put('/cancel')
@@ -77,6 +93,8 @@ export class TransportOrderController {
                       @Req() request: any): Promise<any> {
     transportOrderCancellation.cancellation.date = transportOrderCancellation.cancellation.date || new Date().getTime();
 
-    return await this.transactionHandler.invoke(request.identity, request.connection, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateTransportOrderStatusToCancelled, transportOrderCancellation, new TransportOrderTransactor());
+    return await this.transactionHandler.invoke(request.identity, request.connection, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateTransportOrderStatusToCancelled, transportOrderCancellation, new TransportOrderTransactor()).catch((error) => {
+      throw(ErrorFactory.translate(ErrorType.invokeError, error));
+    });
   }
 }
