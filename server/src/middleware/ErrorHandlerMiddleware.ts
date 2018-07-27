@@ -8,19 +8,18 @@ export class ErrorHandlerMiddleware implements ExpressErrorMiddlewareInterface {
   private logger: LoggerInstance = Container.get(LoggerFactory).get('RequestErrorHandler');
 
   public error(error: any, request: any, response: any, next: (err: any) => any): void {
-    if (error.body && error.body.error) {
-      error = error.body.error;
-    }
-    if (typeof error === 'string') {
-      error = new Error(error);
-    }
-    if (!error.statusCode) {
-      error.statusCode = 500;
+    this.logger.error(error);
+    response.statusCode = 500;
+
+    let responseObj: any = {};
+    responseObj.error    = {};
+
+    responseObj.error.message = error.message;
+
+    if (error.stack) {
+      responseObj.error.stack = error.stack;
     }
 
-    this.logger.debug(error);
-    response.status(error.statusCode).send({
-      message: error.message
-    });
+    response.json(responseObj);
   }
 }

@@ -13,12 +13,7 @@ export class TransactionHandler {
     const factory: Factory = await connection.businessNetworkHandler.getFactory();
 
     const transaction = await transactionCreator.invoke(factory, namespace, transactionName, data, identity);
-
-    try {
-      await connection.businessNetworkHandler.submitTransaction(transaction);
-    } catch (error) {
-      throw error;
-    }
+    await connection.businessNetworkHandler.submitTransaction(transaction);
 
     return connection.businessNetworkHandler.getSerializer(transaction);
   }
