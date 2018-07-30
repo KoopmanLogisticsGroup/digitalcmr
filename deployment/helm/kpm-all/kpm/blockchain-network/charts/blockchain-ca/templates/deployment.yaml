@@ -1,0 +1,36 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "blockchain-ca.fullname" . }}
+  labels:
+    app: {{ template "blockchain-ca.name" . }}
+    chart: {{ template "blockchain-ca.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "blockchain-ca.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "blockchain-ca.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: ibmblockchain/fabric-ca:1.0.6
+          command: ["sh", "-c", "fabric-ca-server start --ca.name ca-kpm-pon --ca.certfile /fabric-config/ca/ca.kpm-pon-cert.pem --ca.keyfile /fabric-config/ca/260dc7753aa8cec9275e703771d65a4127675368e98c95463eafa0b9a9bb3992_sk -b admin:adminpw -d"]
+          env:
+          - configMapRef:
+            name: {{ include "blockchain-ca.fullname" . }}-config
+          volumeMounts:
+          - name: ca-config-{{ include "blockchain-ca.fullname" . }}
+            mountPath: /fabric-config/ca
+            readOnly: true
+      volumes:
+        - name: ca-config-{{ include "blockchain-ca.fullname" . }}
+          secret:
+            secretName: ca-config-{{ include "blockchain-ca.fullname" . }}
