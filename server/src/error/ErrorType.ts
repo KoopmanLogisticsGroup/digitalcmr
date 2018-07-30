@@ -3,6 +3,7 @@ export enum ErrorType {
   loginError                   = 'loginError',
   loginInvalidCredentialsError = 'loginInvalidCredentialsError',
   queryError                   = 'queryError',
+  findOneError                 = 'findOneError',
   invokeError                  = 'invokeError',
   identityAddError             = 'identityAddError'
 }

@@ -2,6 +2,7 @@ import {Middleware, ExpressErrorMiddlewareInterface} from 'routing-controllers';
 import {LoggerFactory} from '../utils/logger/LoggerFactory';
 import {Container} from 'typedi';
 import {LoggerInstance} from 'winston';
+import {CustomError} from '../error/CustomError';
 
 @Middleware({type: 'after'})
 export class ErrorHandlerMiddleware implements ExpressErrorMiddlewareInterface {
@@ -9,7 +10,12 @@ export class ErrorHandlerMiddleware implements ExpressErrorMiddlewareInterface {
 
   public error(error: any, request: any, response: any, next: (err: any) => any): void {
     this.logger.error(error);
-    response.statusCode = 500;
+
+    if (error instanceof CustomError && error.statusCode) {
+      response.statusCode = error.statusCode;
+    } else {
+      response.statusCode = 500;
+    }
 
     let responseObj: any = {};
     responseObj.error    = {};

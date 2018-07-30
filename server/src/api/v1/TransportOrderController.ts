@@ -11,7 +11,7 @@ import {
   UseInterceptor
 } from 'routing-controllers';
 import {ComposerInterceptor, ErrorHandlerMiddleware, UserAuthenticatorMiddleware} from '../../middleware';
-import {QueryReturnType, TransactionHandler} from '../../blockchain/TransactionHandler';
+import {TransactionHandler} from '../../blockchain/TransactionHandler';
 import {Config} from '../../config/index';
 import {TransportOrderTransactor} from '../../domain/transportOrder/TransportOrderTransactor';
 import {TransportOrder} from '../../interfaces/transportOrder.interface';
@@ -36,29 +36,29 @@ export class TransportOrderController {
 
   @Get('/')
   public async getAllTransportOrders(@Req() request: any): Promise<any> {
-    return await this.transactionHandler.query(request.identity, request.connection, Config.settings.composer.profile, QueryReturnType.Multiple, Query.GetAllTransportOrders).catch((error) => {
+    return await this.transactionHandler.query(request.identity, request.connection, Query.GetAllTransportOrders).catch((error) => {
       throw(ErrorFactory.translate(ErrorType.queryError, error));
     });
   }
 
   @Get('/orderID/:orderID')
   public async getTransportOrderByOrderID(@Param('orderID') orderID: string, @Req() request: any): Promise<any> {
-    return await this.transactionHandler.query(request.identity, request.connection, Config.settings.composer.profile, QueryReturnType.Single, Query.GetTransportOrderById, {orderID: orderID}).catch((error) => {
-      throw(ErrorFactory.translate(ErrorType.queryError, error));
+    return await this.transactionHandler.findOne(request.identity, request.connection, Query.GetTransportOrderById, {orderID: orderID}).catch((error) => {
+      throw(ErrorFactory.translate(ErrorType.findOneError, error));
     });
   }
 
   @Get('/status/:orderStatus')
   public async getAllTransportOrdersByStatus(@Param('orderStatus') orderStatus: string,
                                              @Req() request: any): Promise<any> {
-    return await this.transactionHandler.query(request.identity, request.connection, Config.settings.composer.profile, QueryReturnType.Multiple, Query.GetTransportOrdersByStatus, {status: orderStatus}).catch((error) => {
+    return await this.transactionHandler.query(request.identity, request.connection, Query.GetTransportOrdersByStatus, {status: orderStatus}).catch((error) => {
       throw(ErrorFactory.translate(ErrorType.queryError, error));
     });
   }
 
   @Get('/vin/:vin')
   public async getAllTransportOrdersByVin(@Param('vin') vin: string, @Req() request: any): Promise<any> {
-    return await this.transportOrderTransactor.getAllTransportOrdersByVin(this.transactionHandler, request.identity, request.connection, Config.settings.composer.profile, vin).catch((error) => {
+    return await this.transportOrderTransactor.getAllTransportOrdersByVin(this.transactionHandler, request.identity, request.connection, vin).catch((error) => {
       throw(ErrorFactory.translate(ErrorType.queryError, error));
     });
   }
@@ -67,7 +67,7 @@ export class TransportOrderController {
   public async create(@Body() transportOrder: TransportOrder, @Req() request: any): Promise<any> {
     transportOrder.orderID = shortid.generate();
 
-    const transaction: any = await this.transactionHandler.invoke(request.identity, request.connection, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateTransportOrder, transportOrder, new TransportOrderTransactor()).catch((error) => {
+    const transaction: any = await this.transactionHandler.invoke(request.identity, request.connection, Config.settings.composer.namespace, Transaction.CreateTransportOrder, transportOrder, new TransportOrderTransactor()).catch((error) => {
       throw(ErrorFactory.translate(ErrorType.invokeError, error));
     });
 
@@ -76,14 +76,14 @@ export class TransportOrderController {
 
   @Put('/updatePickupWindow')
   public async updatePickupWindow(@Body() pickupWindowObject: PickupWindow, @Req() request: any): Promise<any> {
-    return await this.transactionHandler.invoke(request.identity, request.connection, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateTransportOrderPickupWindow, pickupWindowObject, new TransportOrderTransactor()).catch((error) => {
+    return await this.transactionHandler.invoke(request.identity, request.connection, Config.settings.composer.namespace, Transaction.UpdateTransportOrderPickupWindow, pickupWindowObject, new TransportOrderTransactor()).catch((error) => {
       throw(ErrorFactory.translate(ErrorType.invokeError, error));
     });
   }
 
   @Put('/updateDeliveryWindow')
   public async updateDeliveryWindow(@Body() deliveryWindowObject: DeliveryWindow, @Req() request: any): Promise<any> {
-    return await this.transactionHandler.invoke(request.identity, request.connection, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateTransportOrderDeliveryWindow, deliveryWindowObject, new TransportOrderTransactor()).catch((error) => {
+    return await this.transactionHandler.invoke(request.identity, request.connection, Config.settings.composer.namespace, Transaction.UpdateTransportOrderDeliveryWindow, deliveryWindowObject, new TransportOrderTransactor()).catch((error) => {
       throw(ErrorFactory.translate(ErrorType.invokeError, error));
     });
   }
@@ -93,7 +93,7 @@ export class TransportOrderController {
                       @Req() request: any): Promise<any> {
     transportOrderCancellation.cancellation.date = transportOrderCancellation.cancellation.date || new Date().getTime();
 
-    return await this.transactionHandler.invoke(request.identity, request.connection, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.UpdateTransportOrderStatusToCancelled, transportOrderCancellation, new TransportOrderTransactor()).catch((error) => {
+    return await this.transactionHandler.invoke(request.identity, request.connection, Config.settings.composer.namespace, Transaction.UpdateTransportOrderStatusToCancelled, transportOrderCancellation, new TransportOrderTransactor()).catch((error) => {
       throw(ErrorFactory.translate(ErrorType.invokeError, error));
     });
   }

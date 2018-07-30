@@ -1,13 +1,15 @@
 import {ErrorType} from './ErrorType';
 import {ErrorConfig} from './ErrorConfig';
+import {CustomError} from './CustomError';
 
 export class ErrorFactory {
   private static errorConfig: any;
 
-  public static translate(errorType: ErrorType, errorObj?: Error): Error {
+  public static translate(errorType: ErrorType, errorObj?: Error): CustomError {
     const errorDefinition = ErrorConfig.errorConfig.errors[errorType] || this.errorConfig.errors.defaultError;
 
-    let error = new Error(ErrorFactory.formatErrorTypeMessage(errorType, errorDefinition.message));
+    let error: CustomError = new CustomError(ErrorFactory.formatErrorTypeMessage(errorType, errorDefinition.message));
+    error.statusCode = errorDefinition.statusCode;
 
     error.message += errorObj ? errorObj.message : '';
 

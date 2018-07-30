@@ -2,7 +2,7 @@ import {TransactionCreator} from '../../blockchain/TransactionCreator';
 import {Factory} from 'composer-common';
 import {TransportOrderBuilder} from './TransportOrderBuilder';
 import {Transaction} from '../../blockchain/Transactions';
-import {QueryReturnType, TransactionHandler} from '../../blockchain/TransactionHandler';
+import {TransactionHandler} from '../../blockchain/TransactionHandler';
 import {Query} from '../../blockchain/Queries';
 import {Identity} from '../../interfaces/entity.inferface';
 import {Connection} from '../../connections/entities/Connection';
@@ -34,8 +34,8 @@ export class TransportOrderTransactor implements TransactionCreator {
     return transaction;
   }
 
-  public async getAllTransportOrdersByVin(transactionHandler: TransactionHandler, identity: Identity, connection: Connection, connectionProfile: string, vin: string): Promise<any> {
-    const transportOrders = await transactionHandler.query(identity, connection, connectionProfile, QueryReturnType.Multiple, Query.GetAllTransportOrders);
+  public async getAllTransportOrdersByVin(transactionHandler: TransactionHandler, identity: Identity, connection: Connection, vin: string): Promise<any> {
+    const transportOrders = await transactionHandler.query(identity, connection, Query.GetAllTransportOrders);
 
     let transportOrderArray: any = [];
 

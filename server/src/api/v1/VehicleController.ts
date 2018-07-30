@@ -9,7 +9,7 @@ import {
   Param, UseBefore
 } from 'routing-controllers';
 import {ErrorHandlerMiddleware, ComposerInterceptor, UserAuthenticatorMiddleware} from '../../middleware';
-import {QueryReturnType, TransactionHandler} from '../../blockchain/TransactionHandler';
+import {TransactionHandler} from '../../blockchain/TransactionHandler';
 import {Config} from '../../config/index';
 import {VehicleTransactor} from '../../domain/vehicles/VehicleTransactor';
 import {Transaction} from '../../blockchain/Transactions';
@@ -29,29 +29,29 @@ export class ECMRController {
 
   @Get('/')
   public async getAllVehicles(@Req() request: any): Promise<any> {
-    return await this.transactionHandler.query(request.identity, request.connection, Config.settings.composer.profile, QueryReturnType.Multiple, Query.GetAllVehicles).catch((error) => {
+    return await this.transactionHandler.query(request.identity, request.connection, Query.GetAllVehicles).catch((error) => {
       throw(ErrorFactory.translate(ErrorType.queryError, error));
     });
   }
 
   @Get('/vin/:vin/')
   public async getVehicleByVin(@Param('vin') vin: string, @Req() request: any): Promise<any> {
-    return await this.transactionHandler.query(request.identity, request.connection, Config.settings.composer.profile, QueryReturnType.Single, Query.GetVehicleByVin, {vin: vin}).catch((error) => {
-      throw(ErrorFactory.translate(ErrorType.queryError, error));
+    return await this.transactionHandler.findOne(request.identity, request.connection, Query.GetVehicleByVin, {vin: vin}).catch((error) => {
+      throw(ErrorFactory.translate(ErrorType.findOneError, error));
     });
   }
 
   @Get('/plateNumber/:plateNumber/')
   public async getVehicleByPlateNumber(@Param('plateNumber') plateNumber: string, @Req() request: any): Promise<any> {
-    return await this.transactionHandler.query(request.identity, request.connection, Config.settings.composer.profile, QueryReturnType.Single, Query.GetVehicleByPlateNumber,
+    return await this.transactionHandler.findOne(request.identity, request.connection, Query.GetVehicleByPlateNumber,
       {plateNumber: plateNumber}).catch((error) => {
-      throw(ErrorFactory.translate(ErrorType.queryError, error));
+      throw(ErrorFactory.translate(ErrorType.findOneError, error));
     });
   }
 
   @Post('/')
   public async create(@Body() vehicle: Vehicle, @Req() request: any): Promise<any> {
-    return await this.transactionHandler.invoke(request.identity, request.connection, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateVehicles, vehicle, new VehicleTransactor()).catch((error) => {
+    return await this.transactionHandler.invoke(request.identity, request.connection, Config.settings.composer.namespace, Transaction.CreateVehicles, vehicle, new VehicleTransactor()).catch((error) => {
       throw(ErrorFactory.translate(ErrorType.invokeError, error));
     });
   }
