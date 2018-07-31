@@ -46,7 +46,9 @@ export class ConnectionPoolManager {
     }
 
     if (this.isConnectionExpired(connection)) {
-      this.connectionPool.delete(userID);
+      this.disconnect(this.connectionPool.get(userID)).then(() => {
+        this.connectionPool.delete(userID);
+      });
 
       throw new Error('Connection for ' + userID + ' has expired. Please start a new session');
     }
@@ -56,17 +58,26 @@ export class ConnectionPoolManager {
     return connection;
   }
 
-  public cleanConnections(): void {
+  public async cleanConnections(): Promise<void> {
     this.logger.info('Cleaning up connections...');
 
     for (let userID of this.connectionPool.keys()) {
       let connection = this.connectionPool.get(userID);
 
       if (this.isConnectionExpired(connection)) {
+        await this.disconnect(this.connectionPool.get(userID));
         this.connectionPool.delete(userID);
         this.logger.info('Connection for user ' + userID + ' has expired: deleted');
       }
     }
+  }
+
+  private async disconnect(connection?: Connection): Promise<void> {
+    if(!connection) {
+      return;
+    }
+
+    await connection.businessNetworkHandler.disconnect();
   }
 
   private isConnectionExpired(connection?: Connection): boolean {
