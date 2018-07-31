@@ -14,7 +14,7 @@ spec:
             terminationGracePeriodSeconds: 10
             containers:
               - name: server-kpm-all
-                image: registry.eu-de.bluemix.net/trial-versions/digitalcmr_server
+                image: registry.eu-de.bluemix.net/trial-versions/digitalcmr_server:conn-pool-and-error-handling
                 imagePullPolicy: Always
                 imagePullSecrets:
                 - name: bluemix-uk-registry

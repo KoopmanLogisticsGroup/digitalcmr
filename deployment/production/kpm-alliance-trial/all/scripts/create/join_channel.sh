@@ -48,11 +48,11 @@ MSP_CONFIGPATH=${MSP_CONFIGPATH:-/fabric-config/Admin@all/msp}
 
 # Default to "orderer-kpm-all:31010" if not defined
 if [ -z "${ORDERER_ADDRESS}" ]; then
-	echo "ORDERER_ADDRESS not defined. I will use \"149.81.124.86:31010\"."
+	echo "ORDERER_ADDRESS not defined. I will use \"149.81.124.90:31010\"."
 	echo "I will wait 5 seconds before continuing."
 	sleep 5
 fi
-ORDERER_ADDRESS=${ORDERER_ADDRESS:-149.81.124.86:31010}
+ORDERER_ADDRESS=${ORDERER_ADDRESS:-149.81.124.90:31010}
 
 echo "Deleting old channel pods if exists"
 echo "Running: ${KUBECONFIG_FOLDER}/../scripts/delete/delete_channel-pods.sh"
