@@ -21,6 +21,9 @@
 function createECMRs(tx) {
   var totalEcmrsGoods = tx.ecmrs
     .map(function (ecmr) {
+      if (ecmr.status === EcmrStatus.Cancelled) {
+        return 0;
+      }
       return ecmr.goods.length;
     }).reduce(function (prev, curr) {
       return prev + curr;
