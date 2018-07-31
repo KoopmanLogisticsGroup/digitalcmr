@@ -144,22 +144,22 @@ export class TestData {
       // get all the ecmrs contained in the vehicle
       switch (orgClass) {
         case 'legalOwnerOrg': {
-          promises.push(this.transactionHandler.invoke(TestData.adminIdentity, this.connection, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateLegalOwnerOrg, org, new LegalOwnerTransactor()));
+          promises.push(this.transactionHandler.invoke(TestData.adminIdentity, this.connection, Config.settings.composer.namespace, Transaction.CreateLegalOwnerOrg, org, new LegalOwnerTransactor()));
           break;
         }
 
         case 'compoundOrg': {
-          promises.push(this.transactionHandler.invoke(TestData.adminIdentity, this.connection, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateCompoundOrg, org, new CompoundTransactor()));
+          promises.push(this.transactionHandler.invoke(TestData.adminIdentity, this.connection, Config.settings.composer.namespace, Transaction.CreateCompoundOrg, org, new CompoundTransactor()));
           break;
         }
 
         case 'carrierOrg': {
-          promises.push(this.transactionHandler.invoke(TestData.adminIdentity, this.connection, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateCarrierOrg, org, new CarrierTransactor()));
+          promises.push(this.transactionHandler.invoke(TestData.adminIdentity, this.connection, Config.settings.composer.namespace, Transaction.CreateCarrierOrg, org, new CarrierTransactor()));
           break;
         }
 
         case 'recipientOrg': {
-          promises.push(this.transactionHandler.invoke(TestData.adminIdentity, this.connection, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateRecipientOrg, org, new RecipientTransactor()));
+          promises.push(this.transactionHandler.invoke(TestData.adminIdentity, this.connection, Config.settings.composer.namespace, Transaction.CreateRecipientOrg, org, new RecipientTransactor()));
           break;
         }
       }
@@ -170,23 +170,23 @@ export class TestData {
   }
 
   private async addVehicles(vehicles: Vehicle[]): Promise<any> {
-    return this.transactionHandler.invoke(TestData.adminIdentity, this.connection, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateVehicles, vehicles, new VehicleTransactor());
+    return this.transactionHandler.invoke(TestData.adminIdentity, this.connection, Config.settings.composer.namespace, Transaction.CreateVehicles, vehicles, new VehicleTransactor());
   }
 
   private async addEcmrs(ecmrs: Ecmr[]): Promise<any> {
-    await this.transactionHandler.invoke(TestData.adminIdentity, this.connection, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateEcmrs, <CreateEcmrs>{
+    await this.transactionHandler.invoke(TestData.adminIdentity, this.connection, Config.settings.composer.namespace, Transaction.CreateEcmrs, <CreateEcmrs>{
       'orderID': this.transportOrderIDs[0],
       'ecmrs':   ecmrs.filter(ecmr => ecmr.orderID === this.transportOrderIDs[0])
     }, new EcmrTransactor());
 
-    return this.transactionHandler.invoke(TestData.adminIdentity, this.connection, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateEcmrs, <CreateEcmrs>{
+    return this.transactionHandler.invoke(TestData.adminIdentity, this.connection, Config.settings.composer.namespace, Transaction.CreateEcmrs, <CreateEcmrs>{
       'orderID': this.transportOrderIDs[1],
       'ecmrs':   ecmrs.filter(ecmr => ecmr.orderID === this.transportOrderIDs[1])
     }, new EcmrTransactor());
   }
 
   private async addTransportOrders(transportOrders: TransportOrder[]): Promise<any> {
-    return this.transactionHandler.invoke(TestData.adminIdentity, this.connection, Config.settings.composer.profile, Config.settings.composer.namespace, Transaction.CreateTransportOrders, transportOrders, new TransportOrderTransactor());
+    return this.transactionHandler.invoke(TestData.adminIdentity, this.connection, Config.settings.composer.namespace, Transaction.CreateTransportOrders, transportOrders, new TransportOrderTransactor());
   }
 
   public async addAdmin(adminUser: UserInfo): Promise<any> {

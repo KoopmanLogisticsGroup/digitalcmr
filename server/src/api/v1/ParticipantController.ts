@@ -11,12 +11,14 @@ import {
 } from 'routing-controllers';
 import {ErrorHandlerMiddleware, ComposerInterceptor, UserAuthenticatorMiddleware} from '../../middleware';
 import {JSONWebToken} from '../../utils/authentication/JSONWebToken';
-import {QueryReturnType, TransactionHandler} from '../../blockchain/TransactionHandler';
+import {TransactionHandler} from '../../blockchain/TransactionHandler';
 import {Config} from '../../config/index';
 import {Query} from '../../blockchain/Queries';
 import {IdentityManager} from '../../blockchain/IdentityManager';
 import {Identity, User} from '../../interfaces/entity.inferface';
 import {ComposerConnectionMiddleware} from '../../middleware/ComposerConnectionMiddleware';
+import {ErrorFactory} from '../../error/ErrorFactory';
+import {ErrorType} from '../../error/ErrorType';
 
 @JsonController('/participant')
 @UseBefore(UserAuthenticatorMiddleware, ComposerConnectionMiddleware)
@@ -29,98 +31,134 @@ export class OrganizationController {
 
   @Get('/legalowner/admin/')
   public async getAllLegalOwnerAdmins(@Req() request: any): Promise<any> {
-    return await this.transactionHandler.query(request.identity, request.connection, Config.settings.composer.profile, QueryReturnType.Multiple, Query.GetAllLegalOwnerAdmins);
+    return await this.transactionHandler.query(request.identity, request.connection, Query.GetAllLegalOwnerAdmins).catch((error) => {
+      throw(ErrorFactory.translate(ErrorType.queryError, error));
+    });
   }
 
   @Get('/legalowner/admin/userID/:userID')
   public async getLegalOwnerAdminByUserID(@Param('userID') userID: string, @Req() request: any): Promise<any> {
-    return await this.transactionHandler.query(request.identity, request.connection, Config.settings.composer.profile, QueryReturnType.Single, Query.GetLegalOwnerAdminByUserID,
-      {userID: userID});
+    return await this.transactionHandler.findOne(request.identity, request.connection, Query.GetLegalOwnerAdminByUserID,
+      {userID: userID}).catch((error) => {
+      throw(ErrorFactory.translate(ErrorType.findOneError, error));
+    });
   }
 
   @Get('/legalowner/admin/organization/:org')
   public async getLegalOwnerAdminByOrg(@Param('org') org: string, @Req() request: any): Promise<any> {
-    return await this.transactionHandler.query(request.identity, request.connection, Config.settings.composer.profile, QueryReturnType.Multiple, Query.GetLegalOwnerAdminByOrg, {org: org});
+    return await this.transactionHandler.query(request.identity, request.connection, Query.GetLegalOwnerAdminByOrg, {org: org}).catch((error) => {
+      throw(ErrorFactory.translate(ErrorType.queryError, error));
+    });
   }
 
   @Get('/compound/admin/')
   public async getAllCompoundAdmins(@Req() request: any): Promise<any> {
-    return await this.transactionHandler.query(request.identity, request.connection, Config.settings.composer.profile, QueryReturnType.Multiple, Query.GetAllCompoundAdmins);
+    return await this.transactionHandler.query(request.identity, request.connection, Query.GetAllCompoundAdmins).catch((error) => {
+      throw(ErrorFactory.translate(ErrorType.queryError, error));
+    });
   }
 
   @Get('/compound/admin/userID/:userID')
   public async getCompoundAdminByUserID(@Param('userID') userID: string, @Req() request: any): Promise<any> {
-    return await this.transactionHandler.query(request.identity, request.connection, Config.settings.composer.profile, QueryReturnType.Single, Query.GetCompoundAdminByUserID,
-      {userID: userID});
+    return await this.transactionHandler.findOne(request.identity, request.connection, Query.GetCompoundAdminByUserID,
+      {userID: userID}).catch((error) => {
+      throw(ErrorFactory.translate(ErrorType.findOneError, error));
+    });
   }
 
   @Get('/compound/admin/organization/:org')
   public async getCompoundAdminByOrg(@Param('org') org: string, @Req() request: any): Promise<any> {
-    return await this.transactionHandler.query(request.identity, request.connection, Config.settings.composer.profile, QueryReturnType.Multiple, Query.GetCompoundAdminByOrg, {org: org});
+    return await this.transactionHandler.query(request.identity, request.connection, Query.GetCompoundAdminByOrg, {org: org}).catch((error) => {
+      throw(ErrorFactory.translate(ErrorType.queryError, error));
+    });
   }
 
   @Get('/carrier/admin/')
   public async getAllCarrierAdmins(@Req() request: any): Promise<any> {
-    return await this.transactionHandler.query(request.identity, request.connection, Config.settings.composer.profile, QueryReturnType.Multiple, Query.GetAllCarrierAdmins);
+    return await this.transactionHandler.query(request.identity, request.connection, Query.GetAllCarrierAdmins).catch((error) => {
+      throw(ErrorFactory.translate(ErrorType.queryError, error));
+    });
   }
 
   @Get('/carrier/admin/userID/:userID')
   public async getCarrierAdminByUserID(@Param('userID') userID: string, @Req() request: any): Promise<any> {
-    return await this.transactionHandler.query(request.identity, request.connection, Config.settings.composer.profile, QueryReturnType.Single, Query.GetCarrierAdminByUserID,
-      {userID: userID});
+    return await this.transactionHandler.findOne(request.identity, request.connection, Query.GetCarrierAdminByUserID,
+      {userID: userID}).catch((error) => {
+      throw(ErrorFactory.translate(ErrorType.findOneError, error));
+    });
   }
 
   @Get('/carrier/admin/organization/:org')
   public async getCarrierAdminByOrg(@Param('org') org: string, @Req() request: any): Promise<any> {
-    return await this.transactionHandler.query(request.identity, request.connection, Config.settings.composer.profile, QueryReturnType.Multiple, Query.GetCarrierAdminByOrg, {org: org});
+    return await this.transactionHandler.query(request.identity, request.connection, Query.GetCarrierAdminByOrg, {org: org}).catch((error) => {
+      throw(ErrorFactory.translate(ErrorType.queryError, error));
+    });
   }
 
   @Get('/carrier/member/')
   public async getAllCarrierMembers(@Req() request: any): Promise<any> {
-    return await this.transactionHandler.query(request.identity, request.connection, Config.settings.composer.profile, QueryReturnType.Multiple, Query.GetAllCarrierMembers);
+    return await this.transactionHandler.query(request.identity, request.connection, Query.GetAllCarrierMembers).catch((error) => {
+      throw(ErrorFactory.translate(ErrorType.queryError, error));
+    });
   }
 
   @Get('/carrier/member/userID/:userID')
   public async getCarrierMemberByUserID(@Param('userID') userID: string, @Req() request: any): Promise<any> {
-    return await this.transactionHandler.query(request.identity, request.connection, Config.settings.composer.profile, QueryReturnType.Single, Query.GetCarrierMemberByUserID,
-      {userID: userID});
+    return await this.transactionHandler.findOne(request.identity, request.connection, Query.GetCarrierMemberByUserID,
+      {userID: userID}).catch((error) => {
+      throw(ErrorFactory.translate(ErrorType.findOneError, error));
+    });
   }
 
   @Get('/carrier/member/organization/:org')
   public async getCarrierMemberByOrg(@Param('org') org: string, @Req() request: any): Promise<any> {
-    return await this.transactionHandler.query(request.identity, request.connection, Config.settings.composer.profile, QueryReturnType.Multiple, Query.GetCarrierMemberByOrg, {org: org});
+    return await this.transactionHandler.query(request.identity, request.connection, Query.GetCarrierMemberByOrg, {org: org}).catch((error) => {
+      throw(ErrorFactory.translate(ErrorType.queryError, error));
+    });
   }
 
   @Get('/recipient/admin/')
   public async getAllRecipientAdmins(@Req() request: any): Promise<any> {
-    return await this.transactionHandler.query(request.identity, request.connection, Config.settings.composer.profile, QueryReturnType.Multiple, Query.GetAllRecipientAdmins);
+    return await this.transactionHandler.query(request.identity, request.connection, Query.GetAllRecipientAdmins).catch((error) => {
+      throw(ErrorFactory.translate(ErrorType.queryError, error));
+    });
   }
 
   @Get('/recipient/admin/userID/:userID')
   public async getRecipientAdminByUserID(@Param('userID') userID: string, @Req() request: any): Promise<any> {
-    return await this.transactionHandler.query(request.identity, request.connection, Config.settings.composer.profile, QueryReturnType.Single, Query.GetRecipientAdminByUserID,
-      {userID: userID});
+    return await this.transactionHandler.findOne(request.identity, request.connection, Query.GetRecipientAdminByUserID,
+      {userID: userID}).catch((error) => {
+      throw(ErrorFactory.translate(ErrorType.findOneError, error));
+    });
   }
 
   @Get('/recipient/admin/organization/:org')
   public async getRecipientAdminByOrg(@Param('org') org: string, @Req() request: any): Promise<any> {
-    return await this.transactionHandler.query(request.identity, request.connection, Config.settings.composer.profile, QueryReturnType.Multiple, Query.GetRecipientAdminByOrg, {org: org});
+    return await this.transactionHandler.query(request.identity, request.connection, Query.GetRecipientAdminByOrg, {org: org}).catch((error) => {
+      throw(ErrorFactory.translate(ErrorType.queryError, error));
+    });
   }
 
   @Get('/recipient/member/')
   public async getAllRecipientMembers(@Req() request: any): Promise<any> {
-    return await this.transactionHandler.query(request.identity, request.connection, Config.settings.composer.profile, QueryReturnType.Multiple, Query.GetAllRecipientMembers);
+    return await this.transactionHandler.query(request.identity, request.connection, Query.GetAllRecipientMembers).catch((error) => {
+      throw(ErrorFactory.translate(ErrorType.queryError, error));
+    });
   }
 
   @Get('/recipient/member/userID/:userID')
   public async getRecipientMemberByUserID(@Param('userID') userID: string, @Req() request: any): Promise<any> {
-    return await this.transactionHandler.query(request.identity, request.connection, Config.settings.composer.profile, QueryReturnType.Single, Query.GetRecipientMemberByUserID,
-      {userID: userID});
+    return await this.transactionHandler.findOne(request.identity, request.connection, Query.GetRecipientMemberByUserID,
+      {userID: userID}).catch((error) => {
+      throw(ErrorFactory.translate(ErrorType.findOneError, error));
+    });
   }
 
   @Get('/recipient/member/organization/:org')
   public async getRecipientMemberByOrg(@Param('org') org: string, @Req() request: any): Promise<any> {
-    return await this.transactionHandler.query(request.identity, request.connection, Config.settings.composer.profile, QueryReturnType.Multiple, Query.GetRecipientMemberByOrg, {org: org});
+    return await this.transactionHandler.query(request.identity, request.connection, Query.GetRecipientMemberByOrg, {org: org}).catch((error) => {
+      throw(ErrorFactory.translate(ErrorType.queryError, error));
+    });
   }
 
   @Post('/')
@@ -151,6 +189,8 @@ export class OrganizationController {
       }
     };
 
-    return await this.identityManager.addEntity(identity, entity);
+    return await this.identityManager.addEntity(identity, entity).catch((error) => {
+      throw(ErrorFactory.translate(ErrorType.identityAddError, error));
+    });
   }
 }
