@@ -69,10 +69,57 @@ function updateTransportOrderToInProgress(tx) {
     });
 }
 
+function updateTransportOrderStatusFromDeliveredToCompleted(transportOrder) {
+  var deliveredEcmrs = transportOrder.ecmrs
+    .filter(function (ecmr) {
+      return (ecmr.status === EcmrStatus.Delivered)
+    });
+
+  if (deliveredEcmrs.length !== transportOrder.ecmrs.length) {
+    console.log('[updateTransportOrderStatusToCompleted] The number of ECMRs in DELIVERED are not equal to the total in TransportOrder. ' + deliveredEcmrs.length + ' !== ' + transportOrder.ecmrs.length);
+    return '[updateTransportOrderStatusToCompleted] The number of ECMRs in CONFIRMED_DELIVERED are not equal to the total in TransportOrder. ' + deliveredEcmrs.length + ' !== ' + transportOrder.ecmrs.length;
+  }
+
+  // compare transportOrder.goods against ecmrs[i].goods
+  // return in case the number of goods do not match
+  var totalEcmrsGoods = transportOrder.ecmrs
+    .map(function (ecmr) {
+      if (ecmr.status === EcmrStatus.Cancelled) {
+        return 0;
+      }
+
+      return ecmr.goods.length;
+    }).reduce(function (prev, curr) {
+      return prev + curr;
+    });
+
+  if (transportOrder.goods.length !== +totalEcmrsGoods) {
+    throw new Error('[updateTransportOrderStatusToCompleted] The number of goods mismatch between TransportOrder and ECMRs');
+    // return '[updateTransportOrderStatusToCompleted] The number of goods mismatch between TransportOrder and ECMRs';
+  }
+
+  if (!validateVinIds(transportOrder, transportOrder.ecmrs)) {
+    console.log('[updateTransportOrderStatusToCompleted] Goods mismatch or goods delivering is not completed');
+    return '[updateTransportOrderStatusToCompleted] Goods mismatch or goods delivering is not completed';
+  }
+
+  transportOrder.status = TransportOrderStatus.Completed;
+
+  return getAssetRegistry('org.digitalcmr.TransportOrder')
+    .then(function (assetRegistry) {
+      return assetRegistry.update(transportOrder)
+        .catch(function (error) {
+          throw new Error('[UpdateTransportOrderStatusToCompleted] An error occurred while updating the registry asset: ' + error);
+        });
+    }).catch(function (error) {
+      throw new Error('[UpdateTransportOrderStatusToCompleted] An error occurred while updating the TransportOrder asset: ' + error);
+    });
+}
+
 function updateTransportOrderStatusToCompleted(transportOrder) {
   var confirmedEcmrs = transportOrder.ecmrs
     .filter(function (ecmr) {
-      return ecmr.status === EcmrStatus.ConfirmedDelivered
+      return (ecmr.status === EcmrStatus.ConfirmedDelivered)
     });
 
   if (confirmedEcmrs.length !== transportOrder.ecmrs.length) {
@@ -84,6 +131,10 @@ function updateTransportOrderStatusToCompleted(transportOrder) {
   // return in case the number of goods do not match
   var totalEcmrsGoods = transportOrder.ecmrs
     .map(function (ecmr) {
+      if (ecmr.status === EcmrStatus.Cancelled) {
+        return 0;
+      }
+
       return ecmr.goods.length;
     }).reduce(function (prev, curr) {
       return prev + curr;
@@ -192,6 +243,26 @@ function updateTransportOrderDeliveryWindow(tx) {
     });
 }
 
+function updateTransportOrderStatusToOpenAfterECMRCancellation(transportOrderID) {
+  return getAssetRegistry('org.digitalcmr.TransportOrder')
+    .then(function (assetRegistry) {
+      assetRegistry.get(transportOrderID)
+        .then(function (transportOrder) {
+          transportOrder.status = TransportOrderStatus.Open;
+          return assetRegistry.update(transportOrder)
+            .catch(function (error) {
+              throw new Error('[UpdateTransportOrderStatusToCancelled] An error occurred while updating the registry asset: ' + error);
+            });
+        })
+        .catch(function (error) {
+          throw new Error('[UpdateTransportOrderStatusToCancelled] An error occurred while retrieving the item with id ' + transportOrderID + '. reason: ' + error);
+        });
+    }).catch(function (error) {
+      throw new Error('[UpdateTransportOrderStatusToCancelled] An error occurred while retrieving the asset registry: ' + error);
+    });
+}
+
+
 /**
  * UpdateTransportOrderStatusToCancelled transaction processor function.
  * @param {org.digitalcmr.UpdateTransportOrderStatusToCancelled} tx  - UpdateTransportOrderStatusToCancelled transaction
@@ -204,6 +275,13 @@ function updateTransportOrderStatusToCancelled(tx) {
 
   if (typeof currentParticipant === 'undefined' || !currentParticipant) {
     throw new Error('[UpdateTransportOrderStatusToCancelled] Participant is not authenticated');
+  }
+
+  for (var ecmrIndex = 0; ecmrIndex < tx.transportOrder.ecmrs.length; ecmrIndex++) {
+    cancelECMRsDueToTransportOrderCancellation(tx.transportOrder.ecmrs[ecmrIndex], tx.cancellation.date)
+      .catch(function (error) {
+        throw new Error('[UpdateTransportOrderStatusToCancelled] An error occurred while cancelling ECMRs ' + error);
+      });
   }
 
   // Get the asset registry for the asset.
