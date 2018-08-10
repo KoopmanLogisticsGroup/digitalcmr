@@ -268,7 +268,9 @@ function updateEcmrStatusToConfirmedDelivered(tx) {
     });
 }
 
-function cancelECMRsDueToTransportOrderCancellation(ecmr, date) {
+function cancelECMRsDueToTransportOrderCancellation(ecmr, date, currentParticipant) {
+  var factory = getFactory();
+
   ecmr.status = EcmrStatus.Cancelled;
 
   ecmr.cancellation = factory.newConcept('org.digitalcmr', 'Cancellation');

@@ -134,6 +134,15 @@ rule LegalOwnerAdminCanReadECMR {
     action: ALLOW
 }
 
+rule LegalOwnerAdminCanUpdateECMR {
+    description: "Allow LegalOwnerAdmin to UPDATE all ECMRs where he is the owner"
+    participant(p): "org.digitalcmr.LegalOwnerAdmin"
+    operation: UPDATE
+    resource(r): "org.digitalcmr.ECMR"
+    condition: (r.owner.getIdentifier() == p.org.getIdentifier())
+    action: ALLOW
+}
+
 /**
  * Compound permission list
  */

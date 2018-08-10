@@ -3321,6 +3321,330 @@
         "J12345ECMR"
       ],
       "orderRef":  "ref"
+    },
+    {
+      "$class":    "org.digitalcmr.TransportOrder",
+      "orderID":   "C12345ORDER",
+      "owner":     "leaseplan",
+      "carrier":   "koopman",
+      "goods":     [
+        {
+          "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "vehicle":         {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "A12345VIN",
+            "manufacturer":    "Audi",
+            "model":           "A1",
+            "type":            "sportback",
+            "ecmrs":           [
+              "A12345ECMR"
+            ],
+            "odoMeterReading": 0,
+            "plateNumber":     "AV198RX"
+          },
+          "description":     "vehicle",
+          "weight":          1500,
+          "pickupWindow":    {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow":  {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          }
+        },
+        {
+          "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
+          "vehicle":         {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "B12345VIN",
+            "manufacturer":    "Mercedes",
+            "model":           "SLK",
+            "type":            "Station",
+            "ecmrs":           [
+              "B12345ECMR"
+            ],
+            "odoMeterReading": 0,
+            "plateNumber":     "I827YE"
+          },
+          "description":     "vehicle",
+          "weight":          1800,
+          "pickupWindow":    {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow":  {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          }
+        },
+        {
+          "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "vehicle":         {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "C12345VIN",
+            "manufacturer":    "Mercedes",
+            "model":           "SLK",
+            "type":            "Station",
+            "ecmrs":           [
+              "B12345ECMR"
+            ],
+            "odoMeterReading": 0,
+            "plateNumber":     "I827YE"
+          },
+          "description":     "vehicle",
+          "weight":          1800,
+          "pickupWindow":    {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow":  {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          }
+        },
+        {
+          "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "vehicle":         {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "D12345VIN",
+            "manufacturer":    "Audi",
+            "model":           "A1",
+            "type":            "sportback",
+            "ecmrs":           [
+              "C12345ECMR"
+            ],
+            "odoMeterReading": 0,
+            "plateNumber":     "AV198RX"
+          },
+          "description":     "vehicle",
+          "weight":          1500,
+          "pickupWindow":    {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow":  {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          }
+        },
+        {
+          "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "vehicle":         {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "E12345VIN",
+            "manufacturer":    "Audi",
+            "model":           "A1",
+            "type":            "sportback",
+            "ecmrs":           [
+              "D12345ECMR"
+            ],
+            "odoMeterReading": 0,
+            "plateNumber":     "AV198RX"
+          },
+          "description":     "vehicle",
+          "weight":          1500,
+          "pickupWindow":    {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow":  {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          }
+        },
+        {
+          "$class":          "org.digitalcmr.Good",
+          "source":          "amsterdamcompound",
+          "recipient":       "cardealer",
+          "loadingAddress":  {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "loading address",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "deliveryAddress": {
+            "$class":      "org.digitalcmr.Address",
+            "name":        "delivery adress",
+            "street":      "een straat",
+            "houseNumber": "41",
+            "city":        "Groningen",
+            "zipCode":     "7811 HC",
+            "country":     "netherlands",
+            "longitude":   124,
+            "latitude":    123
+          },
+          "vehicle":         {
+            "$class":          "org.digitalcmr.Vehicle",
+            "vin":             "F12345VIN",
+            "manufacturer":    "Audi",
+            "model":           "A1",
+            "type":            "sportback",
+            "ecmrs":           [
+              "E12345ECMR"
+            ],
+            "odoMeterReading": 0,
+            "plateNumber":     "AV198RX"
+          },
+          "description":     "vehicle",
+          "weight":          1500,
+          "pickupWindow":    {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          },
+          "deliveryWindow":  {
+            "$class":    "org.digitalcmr.DateWindow",
+            "startDate": 1502834400000,
+            "endDate":   1502834400000
+          }
+        }
+      ],
+      "status":    "OPEN",
+      "issueDate": 1502834400000,
+      "ecmrs":     [
+        "A12345ECMR",
+        "B12345ECMR",
+        "C12345ECMR",
+        "D12345ECMR",
+        "E12345ECMR"
+      ],
+      "orderRef":  "ref"
     }
   ]
 }

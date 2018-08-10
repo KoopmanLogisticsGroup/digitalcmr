@@ -277,13 +277,6 @@ function updateTransportOrderStatusToCancelled(tx) {
     throw new Error('[UpdateTransportOrderStatusToCancelled] Participant is not authenticated');
   }
 
-  for (var ecmrIndex = 0; ecmrIndex < tx.transportOrder.ecmrs.length; ecmrIndex++) {
-    cancelECMRsDueToTransportOrderCancellation(tx.transportOrder.ecmrs[ecmrIndex], tx.cancellation.date)
-      .catch(function (error) {
-        throw new Error('[UpdateTransportOrderStatusToCancelled] An error occurred while cancelling ECMRs ' + error);
-      });
-  }
-
   // Get the asset registry for the asset.
   // Updates the status of a TransportOrder when it is cancelled
   tx.transportOrder.status = TransportOrderStatus.Cancelled;
@@ -296,11 +289,26 @@ function updateTransportOrderStatusToCancelled(tx) {
 
   return getAssetRegistry('org.digitalcmr.TransportOrder')
     .then(function (assetRegistry) {
-      return assetRegistry.update(tx.transportOrder)
+      return assetRegistry.update(tx.transportOrder).then(function () {
+          return cancelAllEcmrs(tx.transportOrder.ecmrs, tx.cancellation, currentParticipant);
+        })
         .catch(function (error) {
           throw new Error('[UpdateTransportOrderStatusToCancelled] An error occurred while updating the registry asset: ' + error);
         });
     }).catch(function (error) {
       throw new Error('[UpdateTransportOrderStatusToCancelled] An error occurred while retrieving the asset registry: ' + error);
     });
+}
+
+function cancelAllEcmrs(ecmrs, cancellation, currentParticipant) {
+  var promises = [];
+
+  for (var ecmrIndex = 0; ecmrIndex < ecmrs.length; ecmrIndex++) {
+    promises.push(cancelECMRsDueToTransportOrderCancellation(ecmrs[ecmrIndex], cancellation.date, currentParticipant)
+      .catch(function (error) {
+        throw new Error('[UpdateTransportOrderStatusToCancelled] An error occurred while cancelling ECMRs ' + error);
+      }));
+  }
+
+  return Promise.all(promises);
 }
