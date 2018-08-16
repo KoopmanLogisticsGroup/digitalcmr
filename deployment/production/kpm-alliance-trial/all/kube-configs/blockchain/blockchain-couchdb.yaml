@@ -13,12 +13,12 @@ spec:
       containers:
       - name: ca-all
         image: ibmblockchain/fabric-ca:1.0.6
-        command: ["sh", "-c", "cd fabric-config && rm -rf . && cd ..; sleep 1 && while [ ! -f /fabric-config/ca/ca.all-cert.pem ]; do echo Waiting for crypto config to be loaded; sleep 1; done; fabric-ca-server start --ca.name ca-all --ca.certfile /fabric-config/ca/ca.all-cert.pem --ca.keyfile /fabric-config/ca/6a8ce87de53ea63d803f793cc8c688d169e7399d1225b98258d626964848b489_sk -b admin:adminpw -d"]
+        command: ["sh", "-c", "cd fabric-config && rm -rf . && cd ..; sleep 1 && while [ ! -f /fabric-config/ca/ca.all-cert.pem ]; do echo Waiting for crypto config to be loaded; sleep 1; done; fabric-ca-server start --ca.name ca-all --ca.certfile /fabric-config/ca/ca.all-cert.pem --ca.keyfile /fabric-config/ca/5225b3e7fe815cc037764cf67596c7b41f28f4f767e5d227acb26b73805f0661_sk -b admin:adminpw -d"]
         env:
 #        - name: FABRIC_CA_SERVER_CA_CERTFILE
 #          value: /fabric-config/ca/ca.all-cert.pem
 #        - name: FABRIC_CA_SERVER_CA_KEYFILE
-#          value: /fabric-config/ca/6a8ce87de53ea63d803f793cc8c688d169e7399d1225b98258d626964848b489_sk
+#          value: /fabric-config/ca/5225b3e7fe815cc037764cf67596c7b41f28f4f767e5d227acb26b73805f0661_sk
         - name: FABRIC_CA_SERVER_DEBUG
           value: "true"
         - name: FABRIC_CA_SERVER_TLS_ENABLED
@@ -26,7 +26,7 @@ spec:
 #        - name: FABRIC_CA_SERVER_TLS_CERTFILE
 #          value: /fabric-config/ca/ca.all-cert.pem
 #        - name: FABRIC_CA_SERVER_TLS_KEYFILE
-#          value: /fabric-config/ca/6a8ce87de53ea63d803f793cc8c688d169e7399d1225b98258d626964848b489_sk
+#          value: /fabric-config/ca/5225b3e7fe815cc037764cf67596c7b41f28f4f767e5d227acb26b73805f0661_sk
         - name: GODEBUG
           value: "netdns=go"
         volumeMounts:
