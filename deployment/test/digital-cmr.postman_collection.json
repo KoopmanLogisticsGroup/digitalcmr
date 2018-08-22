@@ -16924,7 +16924,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "87207229-e982-42ff-879a-5a75512b8229",
+								"id": "fc6f3564-4a29-4be1-ac55-e159a6f9d43c",
 								"type": "text/javascript",
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
@@ -16941,6 +16941,7 @@
 									"postman.setEnvironmentVariable(\"TestUserLegalOwnerOrg\", \"TestLegalOwnerOrg\" + new Date().getTime());",
 									"postman.setEnvironmentVariable(\"TestCompoundOrg\", \"TestCompoundOrg\" + new Date().getTime());",
 									"postman.setEnvironmentVariable(\"TestCarrierOrg\", \"TestCarrierOrg\" + new Date().getTime());",
+									"postman.setEnvironmentVariable(\"TestRecipientOrg\", \"TestRecipientOrg\" + new Date().getTime());",
 									"postman.setEnvironmentVariable(\"TestCarrierAdminPassword\", \"carrierAdminPass\" + new Date().getTime());",
 									"postman.setEnvironmentVariable(\"TestCarrierAdminUsername\", \"carrierAdmin\" + new Date().getTime());",
 									"postman.setEnvironmentVariable(\"TestCarrierPassword\", \"carrierPass\" + new Date().getTime());",
@@ -16957,7 +16958,7 @@
 									"postman.setEnvironmentVariable(\"newLegalOwnerOrg\", new Date().getTime());",
 									"postman.setEnvironmentVariable(\"newCarrierOrg\", new Date().getTime());",
 									"postman.setEnvironmentVariable(\"newCompoundOrg\", new Date().getTime());",
-									"postman.setEnvironmentVariable(\"newRecipientOrg\", new Date().getTime());"
+									"postman.setEnvironmentVariable(\"newRecipientOrg\", \"balbal\" + new Date().getTime());"
 								]
 							}
 						}
@@ -16994,12 +16995,12 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0f934f2b-f4fb-4fba-a72d-8c03c76db90e",
+								"id": "44e21c3c-b1e7-411d-a674-4e484fb807b6",
 								"type": "text/javascript",
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
 									"",
-									"tests[\"Authentication failed\"] = jsonData.success === false;"
+									"tests[\"Status code is 401, user is unauthorised\"] = responseCode.code === 401;"
 								]
 							}
 						}
@@ -17358,6 +17359,53 @@
 					"response": []
 				},
 				{
+					"name": "ALL System Admin - Add TestRecipientOrg - adminAll",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6c619e8e-316f-498e-80cf-110f6d62490e",
+								"type": "text/javascript",
+								"exec": [
+									"var reqBody = JSON.parse(request.data);",
+									"",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "x-access-token",
+								"value": "{{AllAdminToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"entityID\": \"{{TestRecipientOrg}}\",\n  \"name\": \"testOrg\",\n  \"address\": {\n    \"name\": \"bert\",\n    \"street\": \"berenweg\",\n    \"houseNumber\": \"7\",\n    \"city\": \"Utrecht\",\n    \"zipCode\": \"9879LI\",\n    \"country\": \"Nederland\",\n    \"latitude\": 0,\n    \"longitude\": 0\n  }\n}"
+						},
+						"url": {
+							"raw": "{{alliance-trial}}/api/v1/organization/recipient",
+							"host": [
+								"{{alliance-trial}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"organization",
+								"recipient"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "ALL System Admin - Get RecipientOrg by ID - adminAll",
 					"event": [
 						{
@@ -17444,6 +17492,53 @@
 								"v1",
 								"organization",
 								"recipient"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALL System Admin - Add TestRecipientAdmin - adminKpm",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9ec15c0f-8550-42f8-8842-2431ec86ceb1",
+								"type": "text/javascript",
+								"exec": [
+									"var reqBody = JSON.parse(request.data);",
+									"",
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "x-access-token",
+								"value": "{{AllAdminToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"{{TestRecipientUsername}}\",\n\t\"password\": \"{{TestRecipientPassword}}\",\n\t\"firstName\": \"john\",\n\t\"lastName\": \"doe\",\n\t\"orgType\": \"RecipientOrg\",\n\t\"orgID\": \"{{TestRecipientOrg}}\",\n\t\"role\": \"RecipientAdmin\",\n\t\"address\": {\n    \t\"name\": \"delivery adress\",\n        \"street\": \"een straat\",\n        \"houseNumber\": \"41\",\n        \"city\": \"Groningen\",\n        \"zipCode\": \"7811 HC\",\n        \"country\": \"netherlands\",\n        \"latitude\": 123,\n        \"longitude\": 124\n    }\n}"
+						},
+						"url": {
+							"raw": "{{alliance-trial}}/api/v1/participant/",
+							"host": [
+								"{{alliance-trial}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"participant",
+								""
 							]
 						}
 					},
@@ -17852,7 +17947,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"username\": \"{{TestCarrierUsername}}\",\n\t\"password\": \"{{TestCarrierPassword}}\",\n\t\"firstName\": \"john\",\n\t\"lastName\": \"doe\",\n\t\"orgType\": \"CarrierOrg\",\n\t\"orgID\": \"{{TestCarrierOrg}}\",\n\t\"role\": \"CarrierAdmin\",\n\t\"address\": {\n    \t\"name\": \"delivery adress\",\n        \"street\": \"een straat\",\n        \"houseNumber\": \"41\",\n        \"city\": \"Groningen\",\n        \"zipCode\": \"7811 HC\",\n        \"country\": \"netherlands\",\n        \"latitude\": 123,\n        \"longitude\": 124\n    }\n}"
+							"raw": "{\n\t\"username\": \"{{TestCarrierUsername}}\",\n\t\"password\": \"{{TestCarrierPassword}}\",\n\t\"firstName\": \"john\",\n\t\"lastName\": \"doe\",\n\t\"orgType\": \"CarrierOrg\",\n\t\"orgID\": \"{{TestCarrierOrg}}\",\n\t\"role\": \"CarrierMember\",\n\t\"address\": {\n    \t\"name\": \"delivery adress\",\n        \"street\": \"een straat\",\n        \"houseNumber\": \"41\",\n        \"city\": \"Groningen\",\n        \"zipCode\": \"7811 HC\",\n        \"country\": \"netherlands\",\n        \"latitude\": 123,\n        \"longitude\": 124\n    }\n}"
 						},
 						"url": {
 							"raw": "{{kpm-trial}}/api/v1/participant/",
@@ -17900,53 +17995,6 @@
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"username\": \"{{TestCompoundUsername}}\",\n\t\"password\": \"{{TestCompoundPassword}}\",\n\t\"firstName\": \"john\",\n\t\"lastName\": \"doe\",\n\t\"orgType\": \"CompoundOrg\",\n\t\"orgID\": \"{{TestCompoundOrg}}\",\n\t\"role\": \"CompoundAdmin\",\n\t\"address\": {\n    \t\"name\": \"delivery adress\",\n        \"street\": \"een straat\",\n        \"houseNumber\": \"41\",\n        \"city\": \"Groningen\",\n        \"zipCode\": \"7811 HC\",\n        \"country\": \"netherlands\",\n        \"latitude\": 123,\n        \"longitude\": 124\n    }\n}"
-						},
-						"url": {
-							"raw": "{{kpm-trial}}/api/v1/participant/",
-							"host": [
-								"{{kpm-trial}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"participant",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "KPM System Admin - Add TestRecipientAdmin - adminKpm",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "9ec15c0f-8550-42f8-8842-2431ec86ceb1",
-								"type": "text/javascript",
-								"exec": [
-									"var reqBody = JSON.parse(request.data);",
-									"",
-									"tests[\"Status code is 200\"] = responseCode.code === 200;"
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "x-access-token",
-								"value": "{{KpmAdminToken}}"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"username\": \"{{TestRecipientUsername}}\",\n\t\"password\": \"{{TestRecipientPassword}}\",\n\t\"firstName\": \"john\",\n\t\"lastName\": \"doe\",\n\t\"orgType\": \"RecipientOrg\",\n\t\"orgID\": \"{{TestRecipientOrg}}\",\n\t\"role\": \"RecipientAdmin\",\n\t\"address\": {\n    \t\"name\": \"delivery adress\",\n        \"street\": \"een straat\",\n        \"houseNumber\": \"41\",\n        \"city\": \"Groningen\",\n        \"zipCode\": \"7811 HC\",\n        \"country\": \"netherlands\",\n        \"latitude\": 123,\n        \"longitude\": 124\n    }\n}"
 						},
 						"url": {
 							"raw": "{{kpm-trial}}/api/v1/participant/",
@@ -18196,14 +18244,14 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "63d8f0e7-e150-4b2f-ad29-68c6c7be4092",
+								"id": "337e7c0c-4002-4576-ba3e-06470bd44740",
 								"type": "text/javascript",
 								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"tests[\"Status code is 404\"] = responseCode.code === 404;",
 									"",
 									"var jsonData = JSON.parse(responseBody);",
 									"",
-									"tests[\"Empty object\"] = Object.keys(jsonData).length === 0;"
+									"tests[\"api call returns an error\"] = Object.keys(jsonData)[0] === 'error';"
 								]
 							}
 						}
@@ -18365,7 +18413,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "    {\n      \"carrier\":   \"{{TestCarrierOrg}}\",\n      \"goods\": [\n      \t{\n    \t  \"source\":    \"{{TestCompoundOrg}}\",\n    \t  \"recipient\": \"cardealer\",\n          \"loadingAddress\":  {\n            \"name\":        \"loading address\",\n            \"street\":      \"een straat\",\n            \"houseNumber\": \"41\",\n            \"city\":        \"Groningen\",\n            \"zipCode\":     \"7811 HC\",\n            \"country\":     \"netherlands\",\n            \"longitude\":   124,\n            \"latitude\":    123\n          },\n          \"deliveryAddress\": {\n            \"name\":        \"delivery adress\",\n            \"street\":      \"een straat\",\n            \"houseNumber\": \"41\",\n            \"city\":        \"Groningen\",\n            \"zipCode\":     \"7811 HC\",\n            \"country\":     \"netherlands\",\n            \"longitude\":   124,\n            \"latitude\":    123\n          },\n          \"vehicle\":         {\n            \"vin\":             \"A12345VIN\",\n            \"manufacturer\":    \"Audi\",\n            \"model\":           \"A1\",\n            \"type\":            \"sportback\",\n            \"ecmrs\":           [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\":     \"AV198RX\"\n          },\n          \"description\":     \"vehicle\",\n          \"weight\":          1500,\n          \"pickupWindow\":    {\n            \"startDate\": 1502834400000,\n            \"endDate\":   1502834400000\n          },\n          \"deliveryWindow\":  {\n            \"startDate\": 1502834400000,\n            \"endDate\":   1502834400000\n          }\n      \t},\n        {\n          \"source\":    \"{{TestCompoundOrg}}\",\n    \t  \"recipient\": \"cardealer\",\n          \"vehicle\":         {\n            \"vin\":             \"B12345VIN\",\n            \"manufacturer\":    \"Mercedes\",\n            \"model\":           \"SLK\",\n            \"type\":            \"Station\",\n            \"ecmrs\":           [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\":     \"I827YE\"\n          },\n          \"description\":     \"vehicle\",\n          \"weight\":          1800,\n          \"pickupWindow\":    {\n            \"startDate\": 1502834400000,\n            \"endDate\":   1502834400000\n          },\n          \"deliveryWindow\":  {\n            \"startDate\": 1502834400000,\n            \"endDate\":   1502834400000\n          },\n          \"loadingAddress\":  {\n            \"name\":        \"loading address\",\n            \"street\":      \"een straat\",\n            \"houseNumber\": \"41\",\n            \"city\":        \"Groningen\",\n            \"zipCode\":     \"7811 HC\",\n            \"country\":     \"netherlands\",\n            \"longitude\":   124,\n            \"latitude\":    123\n          },\n          \"deliveryAddress\": {\n            \"name\":        \"delivery adress\",\n            \"street\":      \"een straat\",\n            \"houseNumber\": \"41\",\n            \"city\":        \"Groningen\",\n            \"zipCode\":     \"7811 HC\",\n            \"country\":     \"netherlands\",\n            \"longitude\":   124,\n            \"latitude\":    123\n          }\n        }\n      ],\n      \"status\":    \"OPEN\",\n      \"issueDate\": 1502834400000,\n      \"ecmrs\":     [],\n      \"orderRef\":  \"ref\",\n      \"owner\":     \"{{TestUserLegalOwnerOrg}}\"\n    }"
+							"raw": "    {\n      \"carrier\":   \"{{TestCarrierOrg}}\",\n      \"goods\": [\n      \t{\n    \t  \"source\":    \"{{TestCompoundOrg}}\",\n    \t  \"recipient\": \"{{TestRecipientOrg}}\",\n          \"loadingAddress\":  {\n            \"name\":        \"loading address\",\n            \"street\":      \"een straat\",\n            \"houseNumber\": \"41\",\n            \"city\":        \"Groningen\",\n            \"zipCode\":     \"7811 HC\",\n            \"country\":     \"netherlands\",\n            \"longitude\":   124,\n            \"latitude\":    123\n          },\n          \"deliveryAddress\": {\n            \"name\":        \"delivery adress\",\n            \"street\":      \"een straat\",\n            \"houseNumber\": \"41\",\n            \"city\":        \"Groningen\",\n            \"zipCode\":     \"7811 HC\",\n            \"country\":     \"netherlands\",\n            \"longitude\":   124,\n            \"latitude\":    123\n          },\n          \"vehicle\":         {\n            \"vin\":             \"A12345VIN\",\n            \"manufacturer\":    \"Audi\",\n            \"model\":           \"A1\",\n            \"type\":            \"sportback\",\n            \"ecmrs\":           [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\":     \"AV198RX\"\n          },\n          \"description\":     \"vehicle\",\n          \"weight\":          1500,\n          \"pickupWindow\":    {\n            \"startDate\": 1502834400000,\n            \"endDate\":   1502834400000\n          },\n          \"deliveryWindow\":  {\n            \"startDate\": 1502834400000,\n            \"endDate\":   1502834400000\n          }\n      \t}\n      ],\n      \"status\":    \"OPEN\",\n      \"issueDate\": 1502834400000,\n      \"ecmrs\":     [],\n      \"orderRef\":  \"ref\",\n      \"owner\":     \"{{TestUserLegalOwnerOrg}}\"\n    }"
 						},
 						"url": {
 							"raw": "{{alliance-trial}}/api/v1/TransportOrder/",
@@ -18417,7 +18465,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "    {\n      \"carrier\":   \"{{TestCarrierOrg}}\",\n      \"goods\": [\n      \t{\n      \t  \"source\":    \"{{TestCompoundOrg}}\",\n    \t  \"recipient\": \"cardealer\",\n          \"loadingAddress\":  {\n            \"name\":        \"loading address\",\n            \"street\":      \"een straat\",\n            \"houseNumber\": \"41\",\n            \"city\":        \"Groningen\",\n            \"zipCode\":     \"7811 HC\",\n            \"country\":     \"netherlands\",\n            \"longitude\":   124,\n            \"latitude\":    123\n          },\n          \"deliveryAddress\": {\n            \"name\":        \"delivery adress\",\n            \"street\":      \"een straat\",\n            \"houseNumber\": \"41\",\n            \"city\":        \"Groningen\",\n            \"zipCode\":     \"7811 HC\",\n            \"country\":     \"netherlands\",\n            \"longitude\":   124,\n            \"latitude\":    123\n          },\n          \"vehicle\":         {\n            \"vin\":             \"A12345VIN\",\n            \"manufacturer\":    \"Audi\",\n            \"model\":           \"A1\",\n            \"type\":            \"sportback\",\n            \"ecmrs\":           [\"A12345ECMR\"],\n            \"odoMeterReading\": 0,\n            \"plateNumber\":     \"AV198RX\"\n          },\n          \"description\":     \"vehicle\",\n          \"weight\":          1500,\n          \"pickupWindow\":    {\n            \"startDate\": 1502834400000,\n            \"endDate\":   1502834400000\n          },\n          \"deliveryWindow\":  {\n            \"startDate\": 1502834400000,\n            \"endDate\":   1502834400000\n          }\n      \t},\n        {\n          \"source\":    \"{{TestCompoundOrg}}\",\n    \t  \"recipient\": \"cardealer\",\n          \"vehicle\":         {\n            \"vin\":             \"B12345VIN\",\n            \"manufacturer\":    \"Mercedes\",\n            \"model\":           \"SLK\",\n            \"type\":            \"Station\",\n            \"ecmrs\":           [\"A12345ECMR\"],\n            \"odoMeterReading\": 0,\n            \"plateNumber\":     \"I827YE\"\n          },\n          \"description\":     \"vehicle\",\n          \"weight\":          1800,\n          \"pickupWindow\":    {\n            \"startDate\": 1502834400000,\n            \"endDate\":   1502834400000\n          },\n          \"deliveryWindow\":  {\n            \"startDate\": 1502834400000,\n            \"endDate\":   1502834400000\n          },\n          \"loadingAddress\":  {\n            \"name\":        \"loading address\",\n            \"street\":      \"een straat\",\n            \"houseNumber\": \"41\",\n            \"city\":        \"Groningen\",\n            \"zipCode\":     \"7811 HC\",\n            \"country\":     \"netherlands\",\n            \"longitude\":   124,\n            \"latitude\":    123\n          },\n          \"deliveryAddress\": {\n            \"name\":        \"delivery adress\",\n            \"street\":      \"een straat\",\n            \"houseNumber\": \"41\",\n            \"city\":        \"Groningen\",\n            \"zipCode\":     \"7811 HC\",\n            \"country\":     \"netherlands\",\n            \"longitude\":   124,\n            \"latitude\":    123\n          }\n        }\n      ],\n      \"status\":    \"OPEN\",\n      \"issueDate\": 1502834400000,\n      \"ecmrs\":     [],\n      \"orderRef\":  \"ref\",\n      \"owner\":     \"{{TestUserLegalOwnerOrg}}\"\n    }"
+							"raw": "    {\n      \"carrier\":   \"{{TestCarrierOrg}}\",\n      \"goods\": [\n      \t{\n      \t  \"source\":    \"{{TestCompoundOrg}}\",\n    \t  \"recipient\": \"{{TestRecipientOrg}}\",\n          \"loadingAddress\":  {\n            \"name\":        \"loading address\",\n            \"street\":      \"een straat\",\n            \"houseNumber\": \"41\",\n            \"city\":        \"Groningen\",\n            \"zipCode\":     \"7811 HC\",\n            \"country\":     \"netherlands\",\n            \"longitude\":   124,\n            \"latitude\":    123\n          },\n          \"deliveryAddress\": {\n            \"name\":        \"delivery adress\",\n            \"street\":      \"een straat\",\n            \"houseNumber\": \"41\",\n            \"city\":        \"Groningen\",\n            \"zipCode\":     \"7811 HC\",\n            \"country\":     \"netherlands\",\n            \"longitude\":   124,\n            \"latitude\":    123\n          },\n          \"vehicle\":         {\n            \"vin\":             \"A12345VIN\",\n            \"manufacturer\":    \"Audi\",\n            \"model\":           \"A1\",\n            \"type\":            \"sportback\",\n            \"ecmrs\":           [\"A12345ECMR\"],\n            \"odoMeterReading\": 0,\n            \"plateNumber\":     \"AV198RX\"\n          },\n          \"description\":     \"vehicle\",\n          \"weight\":          1500,\n          \"pickupWindow\":    {\n            \"startDate\": 1502834400000,\n            \"endDate\":   1502834400000\n          },\n          \"deliveryWindow\":  {\n            \"startDate\": 1502834400000,\n            \"endDate\":   1502834400000\n          }\n      \t},\n        {\n          \"source\":    \"{{TestCompoundOrg}}\",\n    \t  \"recipient\": \"{{TestRecipientOrg}}\",\n          \"vehicle\":         {\n            \"vin\":             \"B12345VIN\",\n            \"manufacturer\":    \"Mercedes\",\n            \"model\":           \"SLK\",\n            \"type\":            \"Station\",\n            \"ecmrs\":           [\"A12345ECMR\"],\n            \"odoMeterReading\": 0,\n            \"plateNumber\":     \"I827YE\"\n          },\n          \"description\":     \"vehicle\",\n          \"weight\":          1800,\n          \"pickupWindow\":    {\n            \"startDate\": 1502834400000,\n            \"endDate\":   1502834400000\n          },\n          \"deliveryWindow\":  {\n            \"startDate\": 1502834400000,\n            \"endDate\":   1502834400000\n          },\n          \"loadingAddress\":  {\n            \"name\":        \"loading address\",\n            \"street\":      \"een straat\",\n            \"houseNumber\": \"41\",\n            \"city\":        \"Groningen\",\n            \"zipCode\":     \"7811 HC\",\n            \"country\":     \"netherlands\",\n            \"longitude\":   124,\n            \"latitude\":    123\n          },\n          \"deliveryAddress\": {\n            \"name\":        \"delivery adress\",\n            \"street\":      \"een straat\",\n            \"houseNumber\": \"41\",\n            \"city\":        \"Groningen\",\n            \"zipCode\":     \"7811 HC\",\n            \"country\":     \"netherlands\",\n            \"longitude\":   124,\n            \"latitude\":    123\n          }\n        }\n      ],\n      \"status\":    \"OPEN\",\n      \"issueDate\": 1502834400000,\n      \"ecmrs\":     [],\n      \"orderRef\":  \"ref\",\n      \"owner\":     \"{{TestUserLegalOwnerOrg}}\"\n    }"
 						},
 						"url": {
 							"raw": "{{alliance-trial}}/api/v1/TransportOrder/",
@@ -18596,7 +18644,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "    {\n      \"orderID\":   \"{{orderToCancel}}\",\n      \"cancellation\": {\n      \t\"cancelledBy\": \"lapo\",\n      \t\"date\": \"154324000000\",\n      \t\"reason\": \"I changed my mind\"\n      }\n    }"
+							"raw": "    {\n      \"ecmrID\":   \"{{orderID}}\",\n      \"cancellation\": {\n      \t\"cancelledBy\": \"{{TestUserLegalOwner}}\",\n      \t\"date\": 154324000000,\n      \t\"reason\": \"I changed my mind\"\n      }\n    }"
 						},
 						"url": {
 							"raw": "{{alliance-trial}}/api/v1/transportOrder/cancel",
@@ -19167,7 +19215,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"orderID\": \"{{orderID}}\",\n\t\"ecmrs\": [\n{\n      \"status\": \"CREATED\",\n      \"agreementTerms\" : \"agreement terms\",\n      \"agreementTermsSec\": \"sec agreement terms\",\n      \"legalOwnerRef\" : \"453543\",\n      \"carrierRef\": \"123\",\n      \"recipientRef\": \"321\",\n      \"orderID\": \"\",\n      \"creation\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Assen\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"date\": 1502402400000\n      },\n      \"loading\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Amsterdam Zuid\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"actualDate\": 1502402400000\n      },\n      \"delivery\": {\n        \"address\": {\n          \"name\": \"Rob Carman\",\n          \"street\": \"autostraat\",\n          \"houseNumber\": \"12\",\n          \"city\": \"Rotterdam\",\n          \"zipCode\": \"9442KO\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 51.4443,\n          \"longitude\": 60.3323\n        },\n        \"actualDate\": 1502488800000\n      },\n      \"owner\": \"{{TestUserLegalOwner}}\",\n      \"source\": \"{{TestCompoundOrg}}\",\n      \"transporter\": \"{{TestCarrierUsername}}\",\n      \"carrier\": \"{{TestCarrierOrg}}\",\n      \"recipient\": \"cardealer\",\n      \"recipientMember\": \"rob@cardealer.org\",\n      \"issueDate\": 0,\n      \"issuedBy\": \"{{TestCompoundOrg}}\",\n      \"carrierComments\": \"No comments\",\n      \"documents\": [],\n      \"goods\": [\n      \t{\n      \t  \"source\":    \"{{TestCompoundOrg}}\",\n    \t  \"recipient\": \"cardealer\",\n          \"loadingAddress\":  {\n            \"name\":        \"loading address\",\n            \"street\":      \"een straat\",\n            \"houseNumber\": \"41\",\n            \"city\":        \"Groningen\",\n            \"zipCode\":     \"7811 HC\",\n            \"country\":     \"netherlands\",\n            \"longitude\":   124,\n            \"latitude\":    123\n          },\n          \"deliveryAddress\": {\n            \"name\":        \"delivery adress\",\n            \"street\":      \"een straat\",\n            \"houseNumber\": \"41\",\n            \"city\":        \"Groningen\",\n            \"zipCode\":     \"7811 HC\",\n            \"country\":     \"netherlands\",\n            \"longitude\":   124,\n            \"latitude\":    123\n          },\n          \"vehicle\":         {\n            \"vin\":             \"A12345VIN\",\n            \"manufacturer\":    \"Audi\",\n            \"model\":           \"A1\",\n            \"type\":            \"sportback\",\n            \"ecmrs\":           [\"A12345ECMR\"],\n            \"odoMeterReading\": 0,\n            \"plateNumber\":     \"AV198RX\"\n          },\n          \"description\":     \"vehicle\",\n          \"weight\":          1500,\n          \"pickupWindow\":    {\n            \"startDate\": 1502834400000,\n            \"endDate\":   1502834400000\n          },\n          \"deliveryWindow\":  {\n            \"startDate\": 1502834400000,\n            \"endDate\":   1502834400000\n          }\n      \t}\n      ],\n      \"legalOwnerInstructions\": \"string\",\n      \"paymentInstructions\": \"string\",\n      \"payOnDelivery\": \"string\"\n    },\n    {\n      \"status\": \"CREATED\",\n      \"agreementTerms\" : \"agreement terms\",\n      \"agreementTermsSec\": \"sec agreement terms\",\n      \"legalOwnerRef\" : \"453543\",\n      \"carrierRef\": \"123\",\n      \"recipientRef\": \"321\",\n      \"orderID\": \"\",\n      \"creation\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Assen\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"date\": 1502402400000\n      },\n      \"loading\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Amsterdam Zuid\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"actualDate\": 1502402400000\n      },\n      \"delivery\": {\n        \"address\": {\n          \"name\": \"Rob Carman\",\n          \"street\": \"autostraat\",\n          \"houseNumber\": \"12\",\n          \"city\": \"Rotterdam\",\n          \"zipCode\": \"9442KO\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 51.4443,\n          \"longitude\": 60.3323\n        },\n        \"actualDate\": 1502488800000\n      },\n      \"owner\": \"{{TestUserLegalOwner}}\",\n      \"source\": \"{{TestCompoundOrg}}\",\n      \"transporter\": \"{{TestCarrierUsername}}\",\n      \"carrier\": \"{{TestCarrierOrg}}\",\n      \"recipient\": \"cardealer\",\n      \"recipientMember\": \"rob@cardealer.org\",\n      \"issueDate\": 0,\n      \"issuedBy\": \"{{TestCompoundOrg}}\",\n      \"carrierComments\": \"No comments\",\n      \"documents\": [],\n      \"goods\": [\n      \t{\n      \t  \"source\":    \"{{TestCompoundOrg}}\",\n    \t  \"recipient\": \"cardealer\",\n          \"vehicle\":         {\n            \"vin\":             \"B12345VIN\",\n            \"manufacturer\":    \"Mercedes\",\n            \"model\":           \"SLK\",\n            \"type\":            \"Station\",\n            \"ecmrs\":           [\"A12345ECMR\"],\n            \"odoMeterReading\": 0,\n            \"plateNumber\":     \"I827YE\"\n          },\n          \"description\":     \"vehicle\",\n          \"weight\":          1800,\n          \"pickupWindow\":    {\n            \"startDate\": 1502834400000,\n            \"endDate\":   1502834400000\n          },\n          \"deliveryWindow\":  {\n            \"startDate\": 1502834400000,\n            \"endDate\":   1502834400000\n          },\n          \"loadingAddress\":  {\n            \"name\":        \"loading address\",\n            \"street\":      \"een straat\",\n            \"houseNumber\": \"41\",\n            \"city\":        \"Groningen\",\n            \"zipCode\":     \"7811 HC\",\n            \"country\":     \"netherlands\",\n            \"longitude\":   124,\n            \"latitude\":    123\n          },\n          \"deliveryAddress\": {\n            \"name\":        \"delivery adress\",\n            \"street\":      \"een straat\",\n            \"houseNumber\": \"41\",\n            \"city\":        \"Groningen\",\n            \"zipCode\":     \"7811 HC\",\n            \"country\":     \"netherlands\",\n            \"longitude\":   124,\n            \"latitude\":    123\n          }\n        }\n      ],\n      \"legalOwnerInstructions\": \"string\",\n      \"paymentInstructions\": \"string\",\n      \"payOnDelivery\": \"string\"\n    }\n    ]\n}"
+							"raw": "{\n\t\"orderID\": \"{{orderID}}\",\n\t\"ecmrs\": [\n{\n      \"status\": \"CREATED\",\n      \"agreementTerms\" : \"agreement terms\",\n      \"agreementTermsSec\": \"sec agreement terms\",\n      \"legalOwnerRef\" : \"453543\",\n      \"carrierRef\": \"123\",\n      \"recipientRef\": \"321\",\n      \"orderID\": \"\",\n      \"creation\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Assen\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"date\": 1502402400000\n      },\n      \"loading\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Amsterdam Zuid\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"actualDate\": 1502402400000\n      },\n      \"delivery\": {\n        \"address\": {\n          \"name\": \"Rob Carman\",\n          \"street\": \"autostraat\",\n          \"houseNumber\": \"12\",\n          \"city\": \"Rotterdam\",\n          \"zipCode\": \"9442KO\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 51.4443,\n          \"longitude\": 60.3323\n        },\n        \"actualDate\": 1502488800000\n      },\n      \"owner\": \"{{TestUserLegalOwner}}\",\n      \"source\": \"{{TestCompoundOrg}}\",\n      \"transporter\": \"{{TestCarrierUsername}}\",\n      \"carrier\": \"{{TestCarrierOrg}}\",\n      \"recipient\": \"{{TestRecipientOrg}}\",\n      \"recipientMember\": \"{{TestRecipientAdmin}}\",\n      \"issueDate\": 0,\n      \"issuedBy\": \"{{TestCompoundOrg}}\",\n      \"carrierComments\": \"No comments\",\n      \"documents\": [],\n      \"goods\": [\n      \t{\n      \t  \"source\":    \"{{TestCompoundOrg}}\",\n    \t  \"recipient\": \"{{TestRecipientOrg}}\",\n          \"loadingAddress\":  {\n            \"name\":        \"loading address\",\n            \"street\":      \"een straat\",\n            \"houseNumber\": \"41\",\n            \"city\":        \"Groningen\",\n            \"zipCode\":     \"7811 HC\",\n            \"country\":     \"netherlands\",\n            \"longitude\":   124,\n            \"latitude\":    123\n          },\n          \"deliveryAddress\": {\n            \"name\":        \"delivery adress\",\n            \"street\":      \"een straat\",\n            \"houseNumber\": \"41\",\n            \"city\":        \"Groningen\",\n            \"zipCode\":     \"7811 HC\",\n            \"country\":     \"netherlands\",\n            \"longitude\":   124,\n            \"latitude\":    123\n          },\n          \"vehicle\":         {\n            \"vin\":             \"A12345VIN\",\n            \"manufacturer\":    \"Audi\",\n            \"model\":           \"A1\",\n            \"type\":            \"sportback\",\n            \"ecmrs\":           [\"A12345ECMR\"],\n            \"odoMeterReading\": 0,\n            \"plateNumber\":     \"AV198RX\"\n          },\n          \"description\":     \"vehicle\",\n          \"weight\":          1500,\n          \"pickupWindow\":    {\n            \"startDate\": 1502834400000,\n            \"endDate\":   1502834400000\n          },\n          \"deliveryWindow\":  {\n            \"startDate\": 1502834400000,\n            \"endDate\":   1502834400000\n          }\n      \t}\n      ],\n      \"legalOwnerInstructions\": \"string\",\n      \"paymentInstructions\": \"string\",\n      \"payOnDelivery\": \"string\"\n    }\n    ]\n}"
 						},
 						"url": {
 							"raw": "{{kpm-trial}}/api/v1/ECMR/",
@@ -19224,6 +19272,53 @@
 								"v1",
 								"ECMR",
 								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALL Legal Owner - GET TransportOrder by ID - testUserLegalOwner Copy Copy Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3880d75a-0c44-4bcb-9369-b80da3457426",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"if (jsonData.length > 0) {",
+									"    tests[\"is of type TransportOrder\"] = (jsonData[0].orderID !== null && jsonData[0].orderID !== undefined);",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{legalOwnerToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{alliance-trial}}/api/v1/transportOrder/orderID/{{orderID}}",
+							"host": [
+								"{{alliance-trial}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transportOrder",
+								"orderID",
+								"{{orderID}}"
 							]
 						}
 					},
@@ -19457,52 +19552,6 @@
 								"{{ecmrID}}"
 							]
 						}
-					},
-					"response": []
-				},
-				{
-					"name": "ALL Legal Owner Admin - Cannot cancel Transport Order if not in OPEN status - testUserLegalOwner",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "4416179a-57ae-47dd-b073-c624517ba1db",
-								"type": "text/javascript",
-								"exec": [
-									"tests[\"Status code is 500\"] = responseCode.code === 500;"
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "x-access-token",
-								"value": "{{legalOwnerToken}}"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "    {\n      \"orderID\":   \"{{orderToCancel}}\",\n      \"cancellation\": {\n      \t\"cancelledBy\": \"lapo\",\n      \t\"date\": \"154324000000\",\n      \t\"reason\": \"I changed my mind\"\n      }\n    }"
-						},
-						"url": {
-							"raw": "{{alliance-trial}}/api/v1/transportOrder/cancel",
-							"host": [
-								"{{alliance-trial}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"transportOrder",
-								"cancel"
-							]
-						},
-						"description": "Legal Owner can create Transport Order"
 					},
 					"response": []
 				},
@@ -19880,7 +19929,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "49c604fa-4950-4392-bc36-686bdcb9fcd1",
+								"id": "685867bc-2f15-4bde-81ec-519e6a2e99e3",
 								"type": "text/javascript",
 								"exec": [
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
@@ -19889,8 +19938,7 @@
 									"if (jsonData.length > 0) {",
 									"    tests[\"is of type vehicle\"] = (jsonData[0].vin !== null && jsonData[0].vin !== undefined);",
 									"}",
-									"",
-									"postman.setEnvironmentVariable(\"vinNumber\", jsonData[0].vin);"
+									""
 								]
 							}
 						}
@@ -20520,7 +20568,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n      \"ecmrID\": \"{{ecmrID}}\",\n      \"signature\": {\n      \t\"generalRemark\": {\n      \t\t\"comments\": \"leaving the compound\"\n      \t}\n      },\n      \"goods\": [\n        {\n          \"source\":    \"amsterdamcompound\",\n    \t  \"recipient\": \"cardealer\",\n          \"vehicle\": {\n            \"vin\": \"A12345VIN\",\n            \"manufacturer\": \"Audi\",\n            \"model\": \"A1\",\n            \"type\": \"sportback\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"AV198RX\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1500,\n          \"loadingAddress\": {\n                \"name\": \"loading address\",\n                \"street\": \"een straat\",\n                \"houseNumber\": \"41\",\n                \"city\": \"Groningen\",\n                \"zipCode\": \"7811 HC\",\n                \"country\": \"netherlands\",\n                \"latitude\": 123,\n                \"longitude\": 124\n            },\n            \"deliveryAddress\": {\n                \"name\": \"delivery adress\",\n                \"street\": \"een straat\",\n                \"houseNumber\": \"41\",\n                \"city\": \"Groningen\",\n                \"zipCode\": \"7811 HC\",\n                \"country\": \"netherlands\",\n                \"latitude\": 123,\n                \"longitude\": 124\n            },\n            \"pickupWindow\": {\n                \"startDate\": 1502834400000,\n                \"endDate\": 1502834400000\n            },\n            \"deliveryWindow\": {\n                \"startDate\": 1502834400000,\n                \"endDate\": 1502834400000\n            }\n        }\n      ]\n}"
+							"raw": "{\n      \"ecmrID\": \"{{ecmrID}}\",\n      \"signature\": {\n      \t\"generalRemark\": {\n      \t\t\"comments\": \"leaving the compound\"\n      \t}\n      },\n      \"goods\": [\n        {\n          \"source\":    \"{{TestCompoundOrg}}\",\n    \t  \"recipient\": \"{{TestRecipientOrg}}\",\n          \"vehicle\": {\n            \"vin\": \"A12345VIN\",\n            \"manufacturer\": \"Audi\",\n            \"model\": \"A1\",\n            \"type\": \"sportback\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"AV198RX\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1500,\n          \"loadingAddress\": {\n                \"name\": \"loading address\",\n                \"street\": \"een straat\",\n                \"houseNumber\": \"41\",\n                \"city\": \"Groningen\",\n                \"zipCode\": \"7811 HC\",\n                \"country\": \"netherlands\",\n                \"latitude\": 123,\n                \"longitude\": 124\n            },\n            \"deliveryAddress\": {\n                \"name\": \"delivery adress\",\n                \"street\": \"een straat\",\n                \"houseNumber\": \"41\",\n                \"city\": \"Groningen\",\n                \"zipCode\": \"7811 HC\",\n                \"country\": \"netherlands\",\n                \"latitude\": 123,\n                \"longitude\": 124\n            },\n            \"pickupWindow\": {\n                \"startDate\": 1502834400000,\n                \"endDate\": 1502834400000\n            },\n            \"deliveryWindow\": {\n                \"startDate\": 1502834400000,\n                \"endDate\": 1502834400000\n            }\n        }\n      ]\n}"
 						},
 						"url": {
 							"raw": "{{kpm-trial}}/api/v1/ECMR/status/{{ecmrStatus_IN_TRANSIT}}",
@@ -20613,7 +20661,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t  \"orderID\": \"{{orderID}}\",\n      \"ecmrID\": \"{{ecmrID}}\",\n      \"signature\": {\n      \t\"generalRemark\": {\n      \t\t\"comments\": \"delivered to the recipient\"\n      \t}\n      },\n      \"goods\": [\n        {\n          \"source\":    \"amsterdamcompound\",\n    \t  \"recipient\": \"cardealer\",\n          \"vehicle\": {\n            \"vin\": \"A12345VIN\",\n            \"manufacturer\": \"Audi\",\n            \"model\": \"A1\",\n            \"type\": \"sportback\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"AV198RX\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1500,\n          \"loadingAddress\": {\n                \"name\": \"loading address\",\n                \"street\": \"een straat\",\n                \"houseNumber\": \"41\",\n                \"city\": \"Groningen\",\n                \"zipCode\": \"7811 HC\",\n                \"country\": \"netherlands\",\n                \"latitude\": 123,\n                \"longitude\": 124\n            },\n            \"deliveryAddress\": {\n                \"name\": \"delivery adress\",\n                \"street\": \"een straat\",\n                \"houseNumber\": \"41\",\n                \"city\": \"Groningen\",\n                \"zipCode\": \"7811 HC\",\n                \"country\": \"netherlands\",\n                \"latitude\": 123,\n                \"longitude\": 124\n            },\n            \"pickupWindow\": {\n                \"startDate\": 1502834400000,\n                \"endDate\": 1502834400000\n            },\n            \"deliveryWindow\": {\n                \"startDate\": 1502834400000,\n                \"endDate\": 1502834400000\n            }\n        }\n      ]\n}"
+							"raw": "{\n\t  \"orderID\": \"{{orderID}}\",\n      \"ecmrID\": \"{{ecmrID}}\",\n      \"signature\": {\n      \t\"generalRemark\": {\n      \t\t\"comments\": \"delivered to the recipient\"\n      \t}\n      },\n      \"goods\": [\n        {\n          \"source\":    \"{{TestCompoundOrg}}\",\n    \t  \"recipient\": \"{{TestRecipientOrg}}\",\n          \"vehicle\": {\n            \"vin\": \"A12345VIN\",\n            \"manufacturer\": \"Audi\",\n            \"model\": \"A1\",\n            \"type\": \"sportback\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"AV198RX\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1500,\n          \"loadingAddress\": {\n                \"name\": \"loading address\",\n                \"street\": \"een straat\",\n                \"houseNumber\": \"41\",\n                \"city\": \"Groningen\",\n                \"zipCode\": \"7811 HC\",\n                \"country\": \"netherlands\",\n                \"latitude\": 123,\n                \"longitude\": 124\n            },\n            \"deliveryAddress\": {\n                \"name\": \"delivery adress\",\n                \"street\": \"een straat\",\n                \"houseNumber\": \"41\",\n                \"city\": \"Groningen\",\n                \"zipCode\": \"7811 HC\",\n                \"country\": \"netherlands\",\n                \"latitude\": 123,\n                \"longitude\": 124\n            },\n            \"pickupWindow\": {\n                \"startDate\": 1502834400000,\n                \"endDate\": 1502834400000\n            },\n            \"deliveryWindow\": {\n                \"startDate\": 1502834400000,\n                \"endDate\": 1502834400000\n            }\n        }\n      ]\n}"
 						},
 						"url": {
 							"raw": "{{kpm-trial}}/api/v1/ECMR/status/{{ecmrStatus_DELIVERED}}",
@@ -20626,6 +20674,54 @@
 								"ECMR",
 								"status",
 								"{{ecmrStatus_DELIVERED}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALL Legal Owner - GET TransportOrder by ID - testUserLegalOwner Copy Copy Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "844e131e-8400-4a19-9490-8abeb9281fd7",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"if (jsonData) {",
+									"    tests[\"is of type TransportOrder\"] = (jsonData.orderID !== null && jsonData.orderID !== undefined);",
+									"    tests[\"has the status COMPLETED\"] = (jsonData.status === \"COMPLETED\");",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{legalOwnerToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{alliance-trial}}/api/v1/transportOrder/orderID/{{orderID}}",
+							"host": [
+								"{{alliance-trial}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transportOrder",
+								"orderID",
+								"{{orderID}}"
 							]
 						}
 					},
@@ -20994,6 +21090,53 @@
 					"response": []
 				},
 				{
+					"name": "ALL Legal Owner - GET TransportOrder by ID - testUserLegalOwner Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3880d75a-0c44-4bcb-9369-b80da3457426",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"if (jsonData.length > 0) {",
+									"    tests[\"is of type TransportOrder\"] = (jsonData[0].orderID !== null && jsonData[0].orderID !== undefined);",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{legalOwnerToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{alliance-trial}}/api/v1/transportOrder/orderID/{{orderID}}",
+							"host": [
+								"{{alliance-trial}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transportOrder",
+								"orderID",
+								"{{orderID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "ALL Recipient - Get all Vehicles - testRecipient",
 					"event": [
 						{
@@ -21121,7 +21264,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t  \"orderID\": \"{{orderID}}\",\n      \"ecmrID\": \"{{ecmrID}}\",\n      \"signature\": {\n      \t\"generalRemark\": {\n      \t\t\"comments\": \"loading good\"\n      \t}\n      },\n      \"goods\": [\n        {\n          \"source\":    \"amsterdamcompound\",\n    \t  \"recipient\": \"cardealer\",\n          \"vehicle\": {\n            \"vin\": \"A12345VIN\",\n            \"manufacturer\": \"Audi\",\n            \"model\": \"A1\",\n            \"type\": \"sportback\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"AV198RX\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1500,\n          \"loadingAddress\": {\n                \"name\": \"loading address\",\n                \"street\": \"een straat\",\n                \"houseNumber\": \"41\",\n                \"city\": \"Groningen\",\n                \"zipCode\": \"7811 HC\",\n                \"country\": \"netherlands\",\n                \"latitude\": 123,\n                \"longitude\": 124\n            },\n            \"deliveryAddress\": {\n                \"name\": \"delivery adress\",\n                \"street\": \"een straat\",\n                \"houseNumber\": \"41\",\n                \"city\": \"Groningen\",\n                \"zipCode\": \"7811 HC\",\n                \"country\": \"netherlands\",\n                \"latitude\": 123,\n                \"longitude\": 124\n            },\n            \"pickupWindow\": {\n                \"startDate\": 1502834400000,\n                \"endDate\": 1502834400000\n            },\n            \"deliveryWindow\": {\n                \"startDate\": 1502834400000,\n                \"endDate\": 1502834400000\n            }\n        }\n      ]\n}"
+							"raw": "{\n\t  \"orderID\": \"{{orderID}}\",\n      \"ecmrID\": \"{{ecmrID}}\",\n      \"signature\": {\n      \t\"generalRemark\": {\n      \t\t\"comments\": \"loading good\"\n      \t}\n      },\n      \"goods\": [\n        {\n          \"source\":    \"{{TestCompoundOrg}}\",\n    \t  \"recipient\": \"{{TestRecipientOrg}}\",\n          \"vehicle\": {\n            \"vin\": \"A12345VIN\",\n            \"manufacturer\": \"Audi\",\n            \"model\": \"A1\",\n            \"type\": \"sportback\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"AV198RX\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1500,\n          \"loadingAddress\": {\n                \"name\": \"loading address\",\n                \"street\": \"een straat\",\n                \"houseNumber\": \"41\",\n                \"city\": \"Groningen\",\n                \"zipCode\": \"7811 HC\",\n                \"country\": \"netherlands\",\n                \"latitude\": 123,\n                \"longitude\": 124\n            },\n            \"deliveryAddress\": {\n                \"name\": \"delivery adress\",\n                \"street\": \"een straat\",\n                \"houseNumber\": \"41\",\n                \"city\": \"Groningen\",\n                \"zipCode\": \"7811 HC\",\n                \"country\": \"netherlands\",\n                \"latitude\": 123,\n                \"longitude\": 124\n            },\n            \"pickupWindow\": {\n                \"startDate\": 1502834400000,\n                \"endDate\": 1502834400000\n            },\n            \"deliveryWindow\": {\n                \"startDate\": 1502834400000,\n                \"endDate\": 1502834400000\n            }\n        }\n      ]\n}"
 						},
 						"url": {
 							"raw": "{{alliance-trial}}/api/v1/ECMR/status/{{ecmrStatus_CONFIRMED_DELIVERED}}",
@@ -21134,6 +21277,1229 @@
 								"ECMR",
 								"status",
 								"{{ecmrStatus_CONFIRMED_DELIVERED}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALL Legal Owner - GET TransportOrder by ID - testUserLegalOwner Copy Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6e6cb489-5dee-49a9-91bd-4a937c2f0feb",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"if (jsonData) {",
+									"    tests[\"is of type TransportOrder\"] = (jsonData.orderID !== null && jsonData.orderID !== undefined);",
+									"    tests[\"has the status COMPLETED after cancellation\"] = (jsonData.status === \"COMPLETED\");",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{legalOwnerToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{alliance-trial}}/api/v1/transportOrder/orderID/{{orderID}}",
+							"host": [
+								"{{alliance-trial}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transportOrder",
+								"orderID",
+								"{{orderID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALL Recipient - Cancel Confirmed_Delivered ECMR as recipient - testRecipient",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5ab56579-5ebf-4e20-9fef-7a97973050c8",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Cancelled ecmr succesfully. Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "x-access-token",
+								"value": "{{recipientToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"orderID\": \"{orderID}\",\n\t\"ecmrID\": \"{{ecmrID}}\",\n\t\"cancellation\": {\n\t\t\"cancelledBy\": \"{{TestRecipientUsername}}\",\n\t\t\"date\": 1502488800000,\n    \t\"reason\": \"I changed my mind\"\n    }\n}"
+						},
+						"url": {
+							"raw": "{{alliance-trial}}/api/v1/ECMR/cancel",
+							"host": [
+								"{{alliance-trial}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"ECMR",
+								"cancel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALL Legal Owner - GET TransportOrder by ID - testUserLegalOwner Copy Copy Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3c59641f-ca54-4541-adee-a2cc16e79e35",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"if (jsonData) {",
+									"    tests[\"is of type TransportOrder\"] = (jsonData.orderID !== null && jsonData.orderID !== undefined);",
+									"    tests[\"has the status OPEN after cancellation\"] = (jsonData.status === \"OPEN\");",
+									"}",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{legalOwnerToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{alliance-trial}}/api/v1/transportOrder/orderID/{{orderID}}",
+							"host": [
+								"{{alliance-trial}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transportOrder",
+								"orderID",
+								"{{orderID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "KPM Carrier Admin - Create ECMR(s) from TransportOrder - testCarrierAdmin Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0ca2a353-2872-4285-978d-32b9a8cb2df3",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"if (jsonData.length > 0) {",
+									"    tests[\"is of type ECMR\"] = (jsonData[0].ecmrID !== null && jsonData[0].ecmrID !== undefined);",
+									"}",
+									"postman.setEnvironmentVariable(\"ecmrID\", jsonData[0].ecmrID);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{carrierAdminToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"orderID\": \"{{orderID}}\",\n\t\"ecmrs\": [\n{\n      \"status\": \"CREATED\",\n      \"agreementTerms\" : \"agreement terms\",\n      \"agreementTermsSec\": \"sec agreement terms\",\n      \"legalOwnerRef\" : \"453543\",\n      \"carrierRef\": \"123\",\n      \"recipientRef\": \"321\",\n      \"orderID\": \"\",\n      \"creation\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Assen\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"date\": 1502402400000\n      },\n      \"loading\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Amsterdam Zuid\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"actualDate\": 1502402400000\n      },\n      \"delivery\": {\n        \"address\": {\n          \"name\": \"Rob Carman\",\n          \"street\": \"autostraat\",\n          \"houseNumber\": \"12\",\n          \"city\": \"Rotterdam\",\n          \"zipCode\": \"9442KO\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 51.4443,\n          \"longitude\": 60.3323\n        },\n        \"actualDate\": 1502488800000\n      },\n      \"owner\": \"{{TestUserLegalOwner}}\",\n      \"source\": \"{{TestCompoundOrg}}\",\n      \"transporter\": \"{{TestCarrierUsername}}\",\n      \"carrier\": \"{{TestCarrierOrg}}\",\n      \"recipient\": \"{{TestRecipientOrg}}\",\n      \"recipientMember\": \"{{TestRecipientAdmin}}\",\n      \"issueDate\": 0,\n      \"issuedBy\": \"{{TestCompoundOrg}}\",\n      \"carrierComments\": \"No comments\",\n      \"documents\": [],\n      \"goods\": [\n      \t{\n      \t  \"source\":    \"{{TestCompoundOrg}}\",\n    \t  \"recipient\": \"{{TestRecipientOrg}}\",\n          \"loadingAddress\":  {\n            \"name\":        \"loading address\",\n            \"street\":      \"een straat\",\n            \"houseNumber\": \"41\",\n            \"city\":        \"Groningen\",\n            \"zipCode\":     \"7811 HC\",\n            \"country\":     \"netherlands\",\n            \"longitude\":   124,\n            \"latitude\":    123\n          },\n          \"deliveryAddress\": {\n            \"name\":        \"delivery adress\",\n            \"street\":      \"een straat\",\n            \"houseNumber\": \"41\",\n            \"city\":        \"Groningen\",\n            \"zipCode\":     \"7811 HC\",\n            \"country\":     \"netherlands\",\n            \"longitude\":   124,\n            \"latitude\":    123\n          },\n          \"vehicle\":         {\n            \"vin\":             \"A12345VIN\",\n            \"manufacturer\":    \"Audi\",\n            \"model\":           \"A1\",\n            \"type\":            \"sportback\",\n            \"ecmrs\":           [\"A12345ECMR\"],\n            \"odoMeterReading\": 0,\n            \"plateNumber\":     \"AV198RX\"\n          },\n          \"description\":     \"vehicle\",\n          \"weight\":          1500,\n          \"pickupWindow\":    {\n            \"startDate\": 1502834400000,\n            \"endDate\":   1502834400000\n          },\n          \"deliveryWindow\":  {\n            \"startDate\": 1502834400000,\n            \"endDate\":   1502834400000\n          }\n      \t}\n      ],\n      \"legalOwnerInstructions\": \"string\",\n      \"paymentInstructions\": \"string\",\n      \"payOnDelivery\": \"string\"\n    }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{kpm-trial}}/api/v1/ECMR/",
+							"host": [
+								"{{kpm-trial}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"ECMR",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "KPM Compound Admin - Update ECMR status to LOADED - testCompound Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "x-access-token",
+								"value": "{{compoundToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n      \"ecmrID\": \"{{ecmrID}}\",\n      \"signature\": {\n      \t\"generalRemark\": {\n      \t\t\"comments\": \"loading good\"\n      \t}\n      },\n      \"goods\": [\n        {\n          \"source\":    \"{{TestCompoundOrg}}\",\n    \t  \"recipient\": \"cardealer\",\n          \"vehicle\": {\n            \"vin\": \"A12345VIN\",\n            \"manufacturer\": \"Audi\",\n            \"model\": \"A1\",\n            \"type\": \"sportback\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"AV198RX\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1500,\n          \"loadingAddress\": {\n                \"name\": \"loading address\",\n                \"street\": \"een straat\",\n                \"houseNumber\": \"41\",\n                \"city\": \"Groningen\",\n                \"zipCode\": \"7811 HC\",\n                \"country\": \"netherlands\",\n                \"latitude\": 123,\n                \"longitude\": 124\n            },\n            \"deliveryAddress\": {\n                \"name\": \"delivery adress\",\n                \"street\": \"een straat\",\n                \"houseNumber\": \"41\",\n                \"city\": \"Groningen\",\n                \"zipCode\": \"7811 HC\",\n                \"country\": \"netherlands\",\n                \"latitude\": 123,\n                \"longitude\": 124\n            },\n            \"pickupWindow\": {\n                \"startDate\": 1502834400000,\n                \"endDate\": 1502834400000\n            },\n            \"deliveryWindow\": {\n                \"startDate\": 1502834400000,\n                \"endDate\": 1502834400000\n            },\n            \"compoundRemark\":{\n            \"comments\":\"Cremark1\",\n            \"isDamaged\":true\n        \t}\n        }\n      ]\n}"
+						},
+						"url": {
+							"raw": "{{kpm-trial}}/api/v1/ECMR/status/{{ecmrStatus_LOADED}}",
+							"host": [
+								"{{kpm-trial}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"ECMR",
+								"status",
+								"{{ecmrStatus_LOADED}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "KPM Carrier Member - Update ECMR status to IN_TRANSIT - testCarrier Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "x-access-token",
+								"value": "{{carrierMemberToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n      \"ecmrID\": \"{{ecmrID}}\",\n      \"signature\": {\n      \t\"generalRemark\": {\n      \t\t\"comments\": \"leaving the compound\"\n      \t}\n      },\n      \"goods\": [\n        {\n          \"source\":    \"{{TestCompoundOrg}}\",\n    \t  \"recipient\": \"{{TestRecipientOrg}}\",\n          \"vehicle\": {\n            \"vin\": \"A12345VIN\",\n            \"manufacturer\": \"Audi\",\n            \"model\": \"A1\",\n            \"type\": \"sportback\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"AV198RX\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1500,\n          \"loadingAddress\": {\n                \"name\": \"loading address\",\n                \"street\": \"een straat\",\n                \"houseNumber\": \"41\",\n                \"city\": \"Groningen\",\n                \"zipCode\": \"7811 HC\",\n                \"country\": \"netherlands\",\n                \"latitude\": 123,\n                \"longitude\": 124\n            },\n            \"deliveryAddress\": {\n                \"name\": \"delivery adress\",\n                \"street\": \"een straat\",\n                \"houseNumber\": \"41\",\n                \"city\": \"Groningen\",\n                \"zipCode\": \"7811 HC\",\n                \"country\": \"netherlands\",\n                \"latitude\": 123,\n                \"longitude\": 124\n            },\n            \"pickupWindow\": {\n                \"startDate\": 1502834400000,\n                \"endDate\": 1502834400000\n            },\n            \"deliveryWindow\": {\n                \"startDate\": 1502834400000,\n                \"endDate\": 1502834400000\n            }\n        }\n      ]\n}"
+						},
+						"url": {
+							"raw": "{{kpm-trial}}/api/v1/ECMR/status/{{ecmrStatus_IN_TRANSIT}}",
+							"host": [
+								"{{kpm-trial}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"ECMR",
+								"status",
+								"{{ecmrStatus_IN_TRANSIT}}"
+							]
+						},
+						"description": "Updates selected ecmr status to IN_TRANSIT"
+					},
+					"response": []
+				},
+				{
+					"name": "KPM Carrier Member - Update ECMR status to Delivered - testCarrier Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "x-access-token",
+								"value": "{{carrierMemberToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t  \"orderID\": \"{{orderID}}\",\n      \"ecmrID\": \"{{ecmrID}}\",\n      \"signature\": {\n      \t\"generalRemark\": {\n      \t\t\"comments\": \"delivered to the recipient\"\n      \t}\n      },\n      \"goods\": [\n        {\n          \"source\":    \"{{TestCompoundOrg}}\",\n    \t  \"recipient\": \"{{TestRecipientOrg}}\",\n          \"vehicle\": {\n            \"vin\": \"A12345VIN\",\n            \"manufacturer\": \"Audi\",\n            \"model\": \"A1\",\n            \"type\": \"sportback\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"AV198RX\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1500,\n          \"loadingAddress\": {\n                \"name\": \"loading address\",\n                \"street\": \"een straat\",\n                \"houseNumber\": \"41\",\n                \"city\": \"Groningen\",\n                \"zipCode\": \"7811 HC\",\n                \"country\": \"netherlands\",\n                \"latitude\": 123,\n                \"longitude\": 124\n            },\n            \"deliveryAddress\": {\n                \"name\": \"delivery adress\",\n                \"street\": \"een straat\",\n                \"houseNumber\": \"41\",\n                \"city\": \"Groningen\",\n                \"zipCode\": \"7811 HC\",\n                \"country\": \"netherlands\",\n                \"latitude\": 123,\n                \"longitude\": 124\n            },\n            \"pickupWindow\": {\n                \"startDate\": 1502834400000,\n                \"endDate\": 1502834400000\n            },\n            \"deliveryWindow\": {\n                \"startDate\": 1502834400000,\n                \"endDate\": 1502834400000\n            }\n        }\n      ]\n}"
+						},
+						"url": {
+							"raw": "{{kpm-trial}}/api/v1/ECMR/status/{{ecmrStatus_DELIVERED}}",
+							"host": [
+								"{{kpm-trial}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"ECMR",
+								"status",
+								"{{ecmrStatus_DELIVERED}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALL Recipient - Cancel Delivered ECMR as recipient - testRecipient",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5ab56579-5ebf-4e20-9fef-7a97973050c8",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Cancelled ecmr succesfully. Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "x-access-token",
+								"value": "{{recipientToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\n      \"ecmrID\":   \"{{ecmrID}}\",\n      \"cancellation\": {\n      \t\"cancelledBy\": \"{{TestRecipientUsername}}\",\n      \t\"date\": 1502488800000,\n      \t\"reason\": \"I changed my mind\"\n      }\n    }"
+						},
+						"url": {
+							"raw": "{{alliance-trial}}/api/v1/ECMR/cancel",
+							"host": [
+								"{{alliance-trial}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"ECMR",
+								"cancel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALL Legal Owner - GET TransportOrder by ID - testUserLegalOwner Copy Copy Copy Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3c59641f-ca54-4541-adee-a2cc16e79e35",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"if (jsonData) {",
+									"    tests[\"is of type TransportOrder\"] = (jsonData.orderID !== null && jsonData.orderID !== undefined);",
+									"    tests[\"has the status OPEN after cancellation\"] = (jsonData.status === \"OPEN\");",
+									"}",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{legalOwnerToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{alliance-trial}}/api/v1/transportOrder/orderID/{{orderID}}",
+							"host": [
+								"{{alliance-trial}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transportOrder",
+								"orderID",
+								"{{orderID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "KPM Carrier Admin - Create ECMR(s) from TransportOrder - testCarrierAdmin Copy Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0ca2a353-2872-4285-978d-32b9a8cb2df3",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"if (jsonData.length > 0) {",
+									"    tests[\"is of type ECMR\"] = (jsonData[0].ecmrID !== null && jsonData[0].ecmrID !== undefined);",
+									"}",
+									"postman.setEnvironmentVariable(\"ecmrID\", jsonData[0].ecmrID);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{carrierAdminToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"orderID\": \"{{orderID}}\",\n\t\"ecmrs\": [\n{\n      \"status\": \"CREATED\",\n      \"agreementTerms\" : \"agreement terms\",\n      \"agreementTermsSec\": \"sec agreement terms\",\n      \"legalOwnerRef\" : \"453543\",\n      \"carrierRef\": \"123\",\n      \"recipientRef\": \"321\",\n      \"orderID\": \"\",\n      \"creation\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Assen\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"date\": 1502402400000\n      },\n      \"loading\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Amsterdam Zuid\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"actualDate\": 1502402400000\n      },\n      \"delivery\": {\n        \"address\": {\n          \"name\": \"Rob Carman\",\n          \"street\": \"autostraat\",\n          \"houseNumber\": \"12\",\n          \"city\": \"Rotterdam\",\n          \"zipCode\": \"9442KO\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 51.4443,\n          \"longitude\": 60.3323\n        },\n        \"actualDate\": 1502488800000\n      },\n      \"owner\": \"{{TestUserLegalOwner}}\",\n      \"source\": \"{{TestCompoundOrg}}\",\n      \"transporter\": \"{{TestCarrierUsername}}\",\n      \"carrier\": \"{{TestCarrierOrg}}\",\n      \"recipient\": \"{{TestRecipientOrg}}\",\n      \"recipientMember\": \"{{TestRecipientAdmin}}\",\n      \"issueDate\": 0,\n      \"issuedBy\": \"{{TestCompoundOrg}}\",\n      \"carrierComments\": \"No comments\",\n      \"documents\": [],\n      \"goods\": [\n      \t{\n      \t  \"source\":    \"{{TestCompoundOrg}}\",\n    \t  \"recipient\": \"{{TestRecipientOrg}}\",\n          \"loadingAddress\":  {\n            \"name\":        \"loading address\",\n            \"street\":      \"een straat\",\n            \"houseNumber\": \"41\",\n            \"city\":        \"Groningen\",\n            \"zipCode\":     \"7811 HC\",\n            \"country\":     \"netherlands\",\n            \"longitude\":   124,\n            \"latitude\":    123\n          },\n          \"deliveryAddress\": {\n            \"name\":        \"delivery adress\",\n            \"street\":      \"een straat\",\n            \"houseNumber\": \"41\",\n            \"city\":        \"Groningen\",\n            \"zipCode\":     \"7811 HC\",\n            \"country\":     \"netherlands\",\n            \"longitude\":   124,\n            \"latitude\":    123\n          },\n          \"vehicle\":         {\n            \"vin\":             \"A12345VIN\",\n            \"manufacturer\":    \"Audi\",\n            \"model\":           \"A1\",\n            \"type\":            \"sportback\",\n            \"ecmrs\":           [\"A12345ECMR\"],\n            \"odoMeterReading\": 0,\n            \"plateNumber\":     \"AV198RX\"\n          },\n          \"description\":     \"vehicle\",\n          \"weight\":          1500,\n          \"pickupWindow\":    {\n            \"startDate\": 1502834400000,\n            \"endDate\":   1502834400000\n          },\n          \"deliveryWindow\":  {\n            \"startDate\": 1502834400000,\n            \"endDate\":   1502834400000\n          }\n      \t}\n      ],\n      \"legalOwnerInstructions\": \"string\",\n      \"paymentInstructions\": \"string\",\n      \"payOnDelivery\": \"string\"\n    }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{kpm-trial}}/api/v1/ECMR/",
+							"host": [
+								"{{kpm-trial}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"ECMR",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "KPM Compound Admin - Update ECMR status to LOADED - testCompound Copy Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "x-access-token",
+								"value": "{{compoundToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n      \"ecmrID\": \"{{ecmrID}}\",\n      \"signature\": {\n      \t\"generalRemark\": {\n      \t\t\"comments\": \"loading good\"\n      \t}\n      },\n      \"goods\": [\n        {\n          \"source\":    \"{{TestCompoundOrg}}\",\n    \t  \"recipient\": \"cardealer\",\n          \"vehicle\": {\n            \"vin\": \"A12345VIN\",\n            \"manufacturer\": \"Audi\",\n            \"model\": \"A1\",\n            \"type\": \"sportback\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"AV198RX\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1500,\n          \"loadingAddress\": {\n                \"name\": \"loading address\",\n                \"street\": \"een straat\",\n                \"houseNumber\": \"41\",\n                \"city\": \"Groningen\",\n                \"zipCode\": \"7811 HC\",\n                \"country\": \"netherlands\",\n                \"latitude\": 123,\n                \"longitude\": 124\n            },\n            \"deliveryAddress\": {\n                \"name\": \"delivery adress\",\n                \"street\": \"een straat\",\n                \"houseNumber\": \"41\",\n                \"city\": \"Groningen\",\n                \"zipCode\": \"7811 HC\",\n                \"country\": \"netherlands\",\n                \"latitude\": 123,\n                \"longitude\": 124\n            },\n            \"pickupWindow\": {\n                \"startDate\": 1502834400000,\n                \"endDate\": 1502834400000\n            },\n            \"deliveryWindow\": {\n                \"startDate\": 1502834400000,\n                \"endDate\": 1502834400000\n            },\n            \"compoundRemark\":{\n            \"comments\":\"Cremark1\",\n            \"isDamaged\":true\n        \t}\n        }\n      ]\n}"
+						},
+						"url": {
+							"raw": "{{kpm-trial}}/api/v1/ECMR/status/{{ecmrStatus_LOADED}}",
+							"host": [
+								"{{kpm-trial}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"ECMR",
+								"status",
+								"{{ecmrStatus_LOADED}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "KPM Carrier Member - Update ECMR status to IN_TRANSIT - testCarrier Copy Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "x-access-token",
+								"value": "{{carrierMemberToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n      \"ecmrID\": \"{{ecmrID}}\",\n      \"signature\": {\n      \t\"generalRemark\": {\n      \t\t\"comments\": \"leaving the compound\"\n      \t}\n      },\n      \"goods\": [\n        {\n          \"source\":    \"{{TestCompoundOrg}}\",\n    \t  \"recipient\": \"{{TestRecipientOrg}}\",\n          \"vehicle\": {\n            \"vin\": \"A12345VIN\",\n            \"manufacturer\": \"Audi\",\n            \"model\": \"A1\",\n            \"type\": \"sportback\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"AV198RX\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1500,\n          \"loadingAddress\": {\n                \"name\": \"loading address\",\n                \"street\": \"een straat\",\n                \"houseNumber\": \"41\",\n                \"city\": \"Groningen\",\n                \"zipCode\": \"7811 HC\",\n                \"country\": \"netherlands\",\n                \"latitude\": 123,\n                \"longitude\": 124\n            },\n            \"deliveryAddress\": {\n                \"name\": \"delivery adress\",\n                \"street\": \"een straat\",\n                \"houseNumber\": \"41\",\n                \"city\": \"Groningen\",\n                \"zipCode\": \"7811 HC\",\n                \"country\": \"netherlands\",\n                \"latitude\": 123,\n                \"longitude\": 124\n            },\n            \"pickupWindow\": {\n                \"startDate\": 1502834400000,\n                \"endDate\": 1502834400000\n            },\n            \"deliveryWindow\": {\n                \"startDate\": 1502834400000,\n                \"endDate\": 1502834400000\n            }\n        }\n      ]\n}"
+						},
+						"url": {
+							"raw": "{{kpm-trial}}/api/v1/ECMR/status/{{ecmrStatus_IN_TRANSIT}}",
+							"host": [
+								"{{kpm-trial}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"ECMR",
+								"status",
+								"{{ecmrStatus_IN_TRANSIT}}"
+							]
+						},
+						"description": "Updates selected ecmr status to IN_TRANSIT"
+					},
+					"response": []
+				},
+				{
+					"name": "KPM Carrier Member - Update ECMR status to Delivered - testCarrier Copy Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "x-access-token",
+								"value": "{{carrierMemberToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t  \"orderID\": \"{{orderID}}\",\n      \"ecmrID\": \"{{ecmrID}}\",\n      \"signature\": {\n      \t\"generalRemark\": {\n      \t\t\"comments\": \"delivered to the recipient\"\n      \t}\n      },\n      \"goods\": [\n        {\n          \"source\":    \"{{TestCompoundOrg}}\",\n    \t  \"recipient\": \"{{TestRecipientOrg}}\",\n          \"vehicle\": {\n            \"vin\": \"A12345VIN\",\n            \"manufacturer\": \"Audi\",\n            \"model\": \"A1\",\n            \"type\": \"sportback\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"AV198RX\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1500,\n          \"loadingAddress\": {\n                \"name\": \"loading address\",\n                \"street\": \"een straat\",\n                \"houseNumber\": \"41\",\n                \"city\": \"Groningen\",\n                \"zipCode\": \"7811 HC\",\n                \"country\": \"netherlands\",\n                \"latitude\": 123,\n                \"longitude\": 124\n            },\n            \"deliveryAddress\": {\n                \"name\": \"delivery adress\",\n                \"street\": \"een straat\",\n                \"houseNumber\": \"41\",\n                \"city\": \"Groningen\",\n                \"zipCode\": \"7811 HC\",\n                \"country\": \"netherlands\",\n                \"latitude\": 123,\n                \"longitude\": 124\n            },\n            \"pickupWindow\": {\n                \"startDate\": 1502834400000,\n                \"endDate\": 1502834400000\n            },\n            \"deliveryWindow\": {\n                \"startDate\": 1502834400000,\n                \"endDate\": 1502834400000\n            }\n        }\n      ]\n}"
+						},
+						"url": {
+							"raw": "{{kpm-trial}}/api/v1/ECMR/status/{{ecmrStatus_DELIVERED}}",
+							"host": [
+								"{{kpm-trial}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"ECMR",
+								"status",
+								"{{ecmrStatus_DELIVERED}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "KPM Carrier Member - Cancel delivered ECMR as carrier - carrierMember",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c03de236-8267-49ec-8ad9-75255fb69a9c",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Cancelled ecmr succesfully. Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "x-access-token",
+								"value": "{{carrierMemberToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\n      \"ecmrID\":   \"{{ecmrID}}\",\n      \"cancellation\": {\n      \t\"cancelledBy\": \"{{TestCarrierUsername}}\",\n      \t\"date\": 1502488800000,\n      \t\"reason\": \"I changed my mind\"\n      }\n    }"
+						},
+						"url": {
+							"raw": "{{kpm-trial}}/api/v1/ECMR/cancel",
+							"host": [
+								"{{kpm-trial}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"ECMR",
+								"cancel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALL Legal Owner - GET TransportOrder by ID - testUserLegalOwner Copy Copy Copy Copy Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3c59641f-ca54-4541-adee-a2cc16e79e35",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"if (jsonData) {",
+									"    tests[\"is of type TransportOrder\"] = (jsonData.orderID !== null && jsonData.orderID !== undefined);",
+									"    tests[\"has the status OPEN after cancellation\"] = (jsonData.status === \"OPEN\");",
+									"}",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{legalOwnerToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{alliance-trial}}/api/v1/transportOrder/orderID/{{orderID}}",
+							"host": [
+								"{{alliance-trial}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transportOrder",
+								"orderID",
+								"{{orderID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "KPM Carrier Admin - Create ECMR(s) from TransportOrder - testCarrierAdmin Copy Copy Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0ca2a353-2872-4285-978d-32b9a8cb2df3",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"if (jsonData.length > 0) {",
+									"    tests[\"is of type ECMR\"] = (jsonData[0].ecmrID !== null && jsonData[0].ecmrID !== undefined);",
+									"}",
+									"postman.setEnvironmentVariable(\"ecmrID\", jsonData[0].ecmrID);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{carrierAdminToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"orderID\": \"{{orderID}}\",\n\t\"ecmrs\": [\n{\n      \"status\": \"CREATED\",\n      \"agreementTerms\" : \"agreement terms\",\n      \"agreementTermsSec\": \"sec agreement terms\",\n      \"legalOwnerRef\" : \"453543\",\n      \"carrierRef\": \"123\",\n      \"recipientRef\": \"321\",\n      \"orderID\": \"\",\n      \"creation\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Assen\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"date\": 1502402400000\n      },\n      \"loading\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Amsterdam Zuid\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"actualDate\": 1502402400000\n      },\n      \"delivery\": {\n        \"address\": {\n          \"name\": \"Rob Carman\",\n          \"street\": \"autostraat\",\n          \"houseNumber\": \"12\",\n          \"city\": \"Rotterdam\",\n          \"zipCode\": \"9442KO\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 51.4443,\n          \"longitude\": 60.3323\n        },\n        \"actualDate\": 1502488800000\n      },\n      \"owner\": \"{{TestUserLegalOwner}}\",\n      \"source\": \"{{TestCompoundOrg}}\",\n      \"transporter\": \"{{TestCarrierUsername}}\",\n      \"carrier\": \"{{TestCarrierOrg}}\",\n      \"recipient\": \"{{TestRecipientOrg}}\",\n      \"recipientMember\": \"{{TestRecipientAdmin}}\",\n      \"issueDate\": 0,\n      \"issuedBy\": \"{{TestCompoundOrg}}\",\n      \"carrierComments\": \"No comments\",\n      \"documents\": [],\n      \"goods\": [\n      \t{\n      \t  \"source\":    \"{{TestCompoundOrg}}\",\n    \t  \"recipient\": \"{{TestRecipientOrg}}\",\n          \"loadingAddress\":  {\n            \"name\":        \"loading address\",\n            \"street\":      \"een straat\",\n            \"houseNumber\": \"41\",\n            \"city\":        \"Groningen\",\n            \"zipCode\":     \"7811 HC\",\n            \"country\":     \"netherlands\",\n            \"longitude\":   124,\n            \"latitude\":    123\n          },\n          \"deliveryAddress\": {\n            \"name\":        \"delivery adress\",\n            \"street\":      \"een straat\",\n            \"houseNumber\": \"41\",\n            \"city\":        \"Groningen\",\n            \"zipCode\":     \"7811 HC\",\n            \"country\":     \"netherlands\",\n            \"longitude\":   124,\n            \"latitude\":    123\n          },\n          \"vehicle\":         {\n            \"vin\":             \"A12345VIN\",\n            \"manufacturer\":    \"Audi\",\n            \"model\":           \"A1\",\n            \"type\":            \"sportback\",\n            \"ecmrs\":           [\"A12345ECMR\"],\n            \"odoMeterReading\": 0,\n            \"plateNumber\":     \"AV198RX\"\n          },\n          \"description\":     \"vehicle\",\n          \"weight\":          1500,\n          \"pickupWindow\":    {\n            \"startDate\": 1502834400000,\n            \"endDate\":   1502834400000\n          },\n          \"deliveryWindow\":  {\n            \"startDate\": 1502834400000,\n            \"endDate\":   1502834400000\n          }\n      \t}\n      ],\n      \"legalOwnerInstructions\": \"string\",\n      \"paymentInstructions\": \"string\",\n      \"payOnDelivery\": \"string\"\n    }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{kpm-trial}}/api/v1/ECMR/",
+							"host": [
+								"{{kpm-trial}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"ECMR",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "KPM Compound Admin - Update ECMR status to LOADED - testCompound Copy Copy Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "x-access-token",
+								"value": "{{compoundToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n      \"ecmrID\": \"{{ecmrID}}\",\n      \"signature\": {\n      \t\"generalRemark\": {\n      \t\t\"comments\": \"loading good\"\n      \t}\n      },\n      \"goods\": [\n        {\n          \"source\":    \"{{TestCompoundOrg}}\",\n    \t  \"recipient\": \"cardealer\",\n          \"vehicle\": {\n            \"vin\": \"A12345VIN\",\n            \"manufacturer\": \"Audi\",\n            \"model\": \"A1\",\n            \"type\": \"sportback\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"AV198RX\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1500,\n          \"loadingAddress\": {\n                \"name\": \"loading address\",\n                \"street\": \"een straat\",\n                \"houseNumber\": \"41\",\n                \"city\": \"Groningen\",\n                \"zipCode\": \"7811 HC\",\n                \"country\": \"netherlands\",\n                \"latitude\": 123,\n                \"longitude\": 124\n            },\n            \"deliveryAddress\": {\n                \"name\": \"delivery adress\",\n                \"street\": \"een straat\",\n                \"houseNumber\": \"41\",\n                \"city\": \"Groningen\",\n                \"zipCode\": \"7811 HC\",\n                \"country\": \"netherlands\",\n                \"latitude\": 123,\n                \"longitude\": 124\n            },\n            \"pickupWindow\": {\n                \"startDate\": 1502834400000,\n                \"endDate\": 1502834400000\n            },\n            \"deliveryWindow\": {\n                \"startDate\": 1502834400000,\n                \"endDate\": 1502834400000\n            },\n            \"compoundRemark\":{\n            \"comments\":\"Cremark1\",\n            \"isDamaged\":true\n        \t}\n        }\n      ]\n}"
+						},
+						"url": {
+							"raw": "{{kpm-trial}}/api/v1/ECMR/status/{{ecmrStatus_LOADED}}",
+							"host": [
+								"{{kpm-trial}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"ECMR",
+								"status",
+								"{{ecmrStatus_LOADED}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "KPM Carrier Member - Update ECMR status to IN_TRANSIT - testCarrier",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "x-access-token",
+								"value": "{{carrierMemberToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n      \"ecmrID\": \"{{ecmrID}}\",\n      \"signature\": {\n      \t\"generalRemark\": {\n      \t\t\"comments\": \"leaving the compound\"\n      \t}\n      },\n      \"goods\": [\n        {\n          \"source\":    \"{{TestCompoundOrg}}\",\n    \t  \"recipient\": \"{{TestRecipientOrg}}\",\n          \"vehicle\": {\n            \"vin\": \"A12345VIN\",\n            \"manufacturer\": \"Audi\",\n            \"model\": \"A1\",\n            \"type\": \"sportback\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"AV198RX\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1500,\n          \"loadingAddress\": {\n                \"name\": \"loading address\",\n                \"street\": \"een straat\",\n                \"houseNumber\": \"41\",\n                \"city\": \"Groningen\",\n                \"zipCode\": \"7811 HC\",\n                \"country\": \"netherlands\",\n                \"latitude\": 123,\n                \"longitude\": 124\n            },\n            \"deliveryAddress\": {\n                \"name\": \"delivery adress\",\n                \"street\": \"een straat\",\n                \"houseNumber\": \"41\",\n                \"city\": \"Groningen\",\n                \"zipCode\": \"7811 HC\",\n                \"country\": \"netherlands\",\n                \"latitude\": 123,\n                \"longitude\": 124\n            },\n            \"pickupWindow\": {\n                \"startDate\": 1502834400000,\n                \"endDate\": 1502834400000\n            },\n            \"deliveryWindow\": {\n                \"startDate\": 1502834400000,\n                \"endDate\": 1502834400000\n            }\n        }\n      ]\n}"
+						},
+						"url": {
+							"raw": "{{kpm-trial}}/api/v1/ECMR/status/{{ecmrStatus_IN_TRANSIT}}",
+							"host": [
+								"{{kpm-trial}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"ECMR",
+								"status",
+								"{{ecmrStatus_IN_TRANSIT}}"
+							]
+						},
+						"description": "Updates selected ecmr status to IN_TRANSIT"
+					},
+					"response": []
+				},
+				{
+					"name": "KPM Carrier Member - Cancel IN_Transit ECMR as recipient - carrierMember",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Updated ECMR status to confirmed_delivered. Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "x-access-token",
+								"value": "{{carrierMemberToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\n      \"ecmrID\":   \"{{ecmrID}}\",\n      \"cancellation\": {\n      \t\"cancelledBy\": \"{{TestCarrierUsername}}\",\n      \t\"date\": 1502488800000,\n      \t\"reason\": \"I changed my mind\"\n      }\n    }"
+						},
+						"url": {
+							"raw": "{{kpm-trial}}/api/v1/ECMR/cancel",
+							"host": [
+								"{{kpm-trial}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"ECMR",
+								"cancel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "KPM Carrier Admin - Create ECMR(s) from TransportOrder - testCarrierAdmin Copy Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0ca2a353-2872-4285-978d-32b9a8cb2df3",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"if (jsonData.length > 0) {",
+									"    tests[\"is of type ECMR\"] = (jsonData[0].ecmrID !== null && jsonData[0].ecmrID !== undefined);",
+									"}",
+									"postman.setEnvironmentVariable(\"ecmrID\", jsonData[0].ecmrID);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{carrierAdminToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"orderID\": \"{{orderID}}\",\n\t\"ecmrs\": [\n{\n      \"status\": \"CREATED\",\n      \"agreementTerms\" : \"agreement terms\",\n      \"agreementTermsSec\": \"sec agreement terms\",\n      \"legalOwnerRef\" : \"453543\",\n      \"carrierRef\": \"123\",\n      \"recipientRef\": \"321\",\n      \"orderID\": \"\",\n      \"creation\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Assen\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"date\": 1502402400000\n      },\n      \"loading\": {\n        \"address\": {\n          \"name\": \"Amsterdam Compound\",\n          \"street\": \"compenstraat\",\n          \"houseNumber\": \"21\",\n          \"city\": \"Amsterdam Zuid\",\n          \"zipCode\": \"9976ZH\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 43.1927,\n          \"longitude\": 23.3249\n        },\n        \"actualDate\": 1502402400000\n      },\n      \"delivery\": {\n        \"address\": {\n          \"name\": \"Rob Carman\",\n          \"street\": \"autostraat\",\n          \"houseNumber\": \"12\",\n          \"city\": \"Rotterdam\",\n          \"zipCode\": \"9442KO\",\n          \"country\": \"Netherlands\",\n          \"latitude\": 51.4443,\n          \"longitude\": 60.3323\n        },\n        \"actualDate\": 1502488800000\n      },\n      \"owner\": \"{{TestUserLegalOwner}}\",\n      \"source\": \"{{TestCompoundOrg}}\",\n      \"transporter\": \"{{TestCarrierUsername}}\",\n      \"carrier\": \"{{TestCarrierOrg}}\",\n      \"recipient\": \"{{TestRecipientOrg}}\",\n      \"recipientMember\": \"{{TestRecipientAdmin}}\",\n      \"issueDate\": 0,\n      \"issuedBy\": \"{{TestCompoundOrg}}\",\n      \"carrierComments\": \"No comments\",\n      \"documents\": [],\n      \"goods\": [\n      \t{\n      \t  \"source\":    \"{{TestCompoundOrg}}\",\n    \t  \"recipient\": \"{{TestRecipientOrg}}\",\n          \"loadingAddress\":  {\n            \"name\":        \"loading address\",\n            \"street\":      \"een straat\",\n            \"houseNumber\": \"41\",\n            \"city\":        \"Groningen\",\n            \"zipCode\":     \"7811 HC\",\n            \"country\":     \"netherlands\",\n            \"longitude\":   124,\n            \"latitude\":    123\n          },\n          \"deliveryAddress\": {\n            \"name\":        \"delivery adress\",\n            \"street\":      \"een straat\",\n            \"houseNumber\": \"41\",\n            \"city\":        \"Groningen\",\n            \"zipCode\":     \"7811 HC\",\n            \"country\":     \"netherlands\",\n            \"longitude\":   124,\n            \"latitude\":    123\n          },\n          \"vehicle\":         {\n            \"vin\":             \"A12345VIN\",\n            \"manufacturer\":    \"Audi\",\n            \"model\":           \"A1\",\n            \"type\":            \"sportback\",\n            \"ecmrs\":           [\"A12345ECMR\"],\n            \"odoMeterReading\": 0,\n            \"plateNumber\":     \"AV198RX\"\n          },\n          \"description\":     \"vehicle\",\n          \"weight\":          1500,\n          \"pickupWindow\":    {\n            \"startDate\": 1502834400000,\n            \"endDate\":   1502834400000\n          },\n          \"deliveryWindow\":  {\n            \"startDate\": 1502834400000,\n            \"endDate\":   1502834400000\n          }\n      \t}\n      ],\n      \"legalOwnerInstructions\": \"string\",\n      \"paymentInstructions\": \"string\",\n      \"payOnDelivery\": \"string\"\n    }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{kpm-trial}}/api/v1/ECMR/",
+							"host": [
+								"{{kpm-trial}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"ECMR",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "KPM Compound Admin - Update ECMR status to LOADED - testCompound Copy Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "x-access-token",
+								"value": "{{compoundToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n      \"ecmrID\": \"{{ecmrID}}\",\n      \"signature\": {\n      \t\"generalRemark\": {\n      \t\t\"comments\": \"loading good\"\n      \t}\n      },\n      \"goods\": [\n        {\n          \"source\":    \"{{TestCompoundOrg}}\",\n    \t  \"recipient\": \"cardealer\",\n          \"vehicle\": {\n            \"vin\": \"A12345VIN\",\n            \"manufacturer\": \"Audi\",\n            \"model\": \"A1\",\n            \"type\": \"sportback\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"AV198RX\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1500,\n          \"loadingAddress\": {\n                \"name\": \"loading address\",\n                \"street\": \"een straat\",\n                \"houseNumber\": \"41\",\n                \"city\": \"Groningen\",\n                \"zipCode\": \"7811 HC\",\n                \"country\": \"netherlands\",\n                \"latitude\": 123,\n                \"longitude\": 124\n            },\n            \"deliveryAddress\": {\n                \"name\": \"delivery adress\",\n                \"street\": \"een straat\",\n                \"houseNumber\": \"41\",\n                \"city\": \"Groningen\",\n                \"zipCode\": \"7811 HC\",\n                \"country\": \"netherlands\",\n                \"latitude\": 123,\n                \"longitude\": 124\n            },\n            \"pickupWindow\": {\n                \"startDate\": 1502834400000,\n                \"endDate\": 1502834400000\n            },\n            \"deliveryWindow\": {\n                \"startDate\": 1502834400000,\n                \"endDate\": 1502834400000\n            },\n            \"compoundRemark\":{\n            \"comments\":\"Cremark1\",\n            \"isDamaged\":true\n        \t}\n        }\n      ]\n}"
+						},
+						"url": {
+							"raw": "{{kpm-trial}}/api/v1/ECMR/status/{{ecmrStatus_LOADED}}",
+							"host": [
+								"{{kpm-trial}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"ECMR",
+								"status",
+								"{{ecmrStatus_LOADED}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "KPM Carrier Member - Update ECMR status to IN_TRANSIT - testCarrier Copy Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "x-access-token",
+								"value": "{{carrierMemberToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n      \"ecmrID\": \"{{ecmrID}}\",\n      \"signature\": {\n      \t\"generalRemark\": {\n      \t\t\"comments\": \"leaving the compound\"\n      \t}\n      },\n      \"goods\": [\n        {\n          \"source\":    \"{{TestCompoundOrg}}\",\n    \t  \"recipient\": \"{{TestRecipientOrg}}\",\n          \"vehicle\": {\n            \"vin\": \"A12345VIN\",\n            \"manufacturer\": \"Audi\",\n            \"model\": \"A1\",\n            \"type\": \"sportback\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"AV198RX\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1500,\n          \"loadingAddress\": {\n                \"name\": \"loading address\",\n                \"street\": \"een straat\",\n                \"houseNumber\": \"41\",\n                \"city\": \"Groningen\",\n                \"zipCode\": \"7811 HC\",\n                \"country\": \"netherlands\",\n                \"latitude\": 123,\n                \"longitude\": 124\n            },\n            \"deliveryAddress\": {\n                \"name\": \"delivery adress\",\n                \"street\": \"een straat\",\n                \"houseNumber\": \"41\",\n                \"city\": \"Groningen\",\n                \"zipCode\": \"7811 HC\",\n                \"country\": \"netherlands\",\n                \"latitude\": 123,\n                \"longitude\": 124\n            },\n            \"pickupWindow\": {\n                \"startDate\": 1502834400000,\n                \"endDate\": 1502834400000\n            },\n            \"deliveryWindow\": {\n                \"startDate\": 1502834400000,\n                \"endDate\": 1502834400000\n            }\n        }\n      ]\n}"
+						},
+						"url": {
+							"raw": "{{kpm-trial}}/api/v1/ECMR/status/{{ecmrStatus_IN_TRANSIT}}",
+							"host": [
+								"{{kpm-trial}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"ECMR",
+								"status",
+								"{{ecmrStatus_IN_TRANSIT}}"
+							]
+						},
+						"description": "Updates selected ecmr status to IN_TRANSIT"
+					},
+					"response": []
+				},
+				{
+					"name": "KPM Carrier Member - Update ECMR status to Delivered - testCarrier Copy Copy Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "x-access-token",
+								"value": "{{carrierMemberToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t  \"orderID\": \"{{orderID}}\",\n      \"ecmrID\": \"{{ecmrID}}\",\n      \"signature\": {\n      \t\"generalRemark\": {\n      \t\t\"comments\": \"delivered to the recipient\"\n      \t}\n      },\n      \"goods\": [\n        {\n          \"source\":    \"{{TestCompoundOrg}}\",\n    \t  \"recipient\": \"{{TestRecipientOrg}}\",\n          \"vehicle\": {\n            \"vin\": \"A12345VIN\",\n            \"manufacturer\": \"Audi\",\n            \"model\": \"A1\",\n            \"type\": \"sportback\",\n            \"ecmrs\": [],\n            \"odoMeterReading\": 0,\n            \"plateNumber\": \"AV198RX\"\n          },\n          \"description\": \"vehicle\",\n          \"weight\": 1500,\n          \"loadingAddress\": {\n                \"name\": \"loading address\",\n                \"street\": \"een straat\",\n                \"houseNumber\": \"41\",\n                \"city\": \"Groningen\",\n                \"zipCode\": \"7811 HC\",\n                \"country\": \"netherlands\",\n                \"latitude\": 123,\n                \"longitude\": 124\n            },\n            \"deliveryAddress\": {\n                \"name\": \"delivery adress\",\n                \"street\": \"een straat\",\n                \"houseNumber\": \"41\",\n                \"city\": \"Groningen\",\n                \"zipCode\": \"7811 HC\",\n                \"country\": \"netherlands\",\n                \"latitude\": 123,\n                \"longitude\": 124\n            },\n            \"pickupWindow\": {\n                \"startDate\": 1502834400000,\n                \"endDate\": 1502834400000\n            },\n            \"deliveryWindow\": {\n                \"startDate\": 1502834400000,\n                \"endDate\": 1502834400000\n            }\n        }\n      ]\n}"
+						},
+						"url": {
+							"raw": "{{kpm-trial}}/api/v1/ECMR/status/{{ecmrStatus_DELIVERED}}",
+							"host": [
+								"{{kpm-trial}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"ECMR",
+								"status",
+								"{{ecmrStatus_DELIVERED}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALL Recipient - cancel Transport Order in COMPLETED status - testRecipientUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "189f5acf-c65a-4a72-8ab4-310151ead59e",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 500\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{recipientToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\n      \"orderID\":   \"{{orderID}}\",\n      \"cancellation\": {\n      \t\"cancelledBy\": \"lapo\",\n      \t\"date\": 154324000000,\n      \t\"reason\": \"I changed my mind\"\n      }\n    }"
+						},
+						"url": {
+							"raw": "{{alliance-trial}}/api/v1/transportOrder/cancel",
+							"host": [
+								"{{alliance-trial}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transportOrder",
+								"cancel"
+							]
+						},
+						"description": "Legal Owner can create Transport Order"
+					},
+					"response": []
+				},
+				{
+					"name": "ALL Recipient - GET ECMR by ID after cancelation - testRecipient Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8cad5af2-ec00-4d32-b625-0efa652bcf5c",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"console.log(jsonData);",
+									"if (jsonData) {",
+									"    tests[\"is of type ecmr\"] = (jsonData.ecmrID !== null && jsonData.ecmrID !== undefined);",
+									"}",
+									"tests[\"status should be cancelled because the transport order is cancelled\"] = (jsonData.status === \"CANCELLED\");"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{recipientToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{alliance-trial}}/api/v1/ECMR/ecmrID/{{ecmrID}}",
+							"host": [
+								"{{alliance-trial}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"ECMR",
+								"ecmrID",
+								"{{ecmrID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALL Legal Owner - GET TransportOrder by ID - testUserLegalOwner Copy Copy Copy Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "844e131e-8400-4a19-9490-8abeb9281fd7",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"if (jsonData) {",
+									"    tests[\"is of type TransportOrder\"] = (jsonData.orderID !== null && jsonData.orderID !== undefined);",
+									"    tests[\"has the status COMPLETED\"] = (jsonData.status === \"COMPLETED\");",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{legalOwnerToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{alliance-trial}}/api/v1/transportOrder/orderID/{{orderID}}",
+							"host": [
+								"{{alliance-trial}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transportOrder",
+								"orderID",
+								"{{orderID}}"
 							]
 						}
 					},

@@ -73,7 +73,7 @@ export class ConnectionPoolManager {
   }
 
   private async disconnect(connection?: Connection): Promise<void> {
-    if(!connection) {
+    if (!connection) {
       return;
     }
 

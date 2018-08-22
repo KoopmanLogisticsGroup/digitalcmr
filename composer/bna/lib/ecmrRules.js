@@ -21,6 +21,9 @@
 function createECMRs(tx) {
   var totalEcmrsGoods = tx.ecmrs
     .map(function (ecmr) {
+      if (ecmr.status === EcmrStatus.Cancelled) {
+        return 0;
+      }
       return ecmr.goods.length;
     }).reduce(function (prev, curr) {
       return prev + curr;
@@ -28,6 +31,12 @@ function createECMRs(tx) {
 
   if (tx.transportOrder.goods.length < +totalEcmrsGoods) {
     throw new Error('[CreateECMRs] The total amount of goods of the ECMRs exceeds the total listed in the TransportOrder ' + tx.transportOrder.orderID + '.' + tx.transportOrder.goods.length + ' !== ' + +totalEcmrsGoods);
+  }
+
+  if (tx.transportOrder.status === TransportOrderStatus.Cancelled ||
+    tx.transportOrder.status === TransportOrderStatus.Completed) {
+    throw new Error('[CreateECMRs] Transport order with orderID: ' + tx.transportOrder.orderID + ' ' +
+      'is Completed or cancelled. No ECMRs can be added to this transport order');
   }
 
   if (!validateVinIds(tx.transportOrder, tx.ecmrs)) {
@@ -189,6 +198,12 @@ function updateEcmrStatusToDelivered(tx) {
       return assetRegistry.update(tx.ecmr)
         .catch(function (error) {
           throw new Error('[UpdateEcmrStatusToDelivered] An error occurred while updating the registry asset: ' + error);
+        })
+        .then(function () {
+          updateTransportOrderStatusFromDeliveredToCompleted(tx.transportOrder)
+            .catch(function (error) {
+              throw new Error('[UpdateEcmrStatusToDelivered] An error occurred while updating the registry asset: ' + error);
+            });
         });
     }).catch(function (error) {
       throw new Error('[UpdateEcmrStatusToDelivered] An error occurred while getting the asset Registry: ' + error);
@@ -253,6 +268,27 @@ function updateEcmrStatusToConfirmedDelivered(tx) {
     });
 }
 
+function cancelECMRsDueToTransportOrderCancellation(ecmr, date, currentParticipant) {
+  var factory = getFactory();
+
+  ecmr.status = EcmrStatus.Cancelled;
+
+  ecmr.cancellation = factory.newConcept('org.digitalcmr', 'Cancellation');
+  ecmr.cancellation.cancelledBy = factory.newRelationship('org.digitalcmr', 'Entity', currentParticipant);
+  ecmr.cancellation.date = date;
+  ecmr.cancellation.reason = 'ECMR was cancelled because the transportOrder was cancelled';
+
+  return getAssetRegistry('org.digitalcmr.ECMR')
+    .then(function (assetRegistry) {
+      return assetRegistry.update(ecmr)
+        .catch(function (error) {
+          throw new Error('[UpdateECMRStatusToCancelled] An error occurred while updating the registry asset: ' + error);
+        })
+    }).catch(function (error) {
+      throw new Error('[UpdateECMRStatusToCancelled] An error occurred while retrieving the asset registry: ' + error);
+    });
+}
+
 /**
  * UpdateECMRStatusToCancelled transaction processor function.
  * @param {org.digitalcmr.UpdateECMRStatusToCancelled} tx  - UpdateECMRStatusToCancelled transaction
@@ -282,6 +318,9 @@ function updateECMRStatusToCancelled(tx) {
       return assetRegistry.update(tx.ecmr)
         .catch(function (error) {
           throw new Error('[UpdateECMRStatusToCancelled] An error occurred while updating the registry asset: ' + error);
+        })
+        .then(function () {
+          updateTransportOrderStatusToOpenAfterECMRCancellation(tx.ecmr.orderID)
         });
     }).catch(function (error) {
       throw new Error('[UpdateECMRStatusToCancelled] An error occurred while retrieving the asset registry: ' + error);
