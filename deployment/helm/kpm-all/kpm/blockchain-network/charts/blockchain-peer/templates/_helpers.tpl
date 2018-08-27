@@ -1,0 +1,55 @@
+{{/* vim: set filetype=mustache: */}}
+{{/*
+Expand the name of the chart.
+*/}}
+{{- define "blockchain-peer.name" -}}
+{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{/*
+Create a default fully qualified app name.
+We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
+If release name contains chart name it will be used as a full name.
+*/}}
+{{- define "blockchain-peer.fullname" -}}
+{{- if .Values.fullnameOverride -}}
+{{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- $name := default .Chart.Name .Values.nameOverride -}}
+{{- if contains $name .Release.Name -}}
+{{- .Release.Name | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Create chart name and version as used by the chart label.
+*/}}
+{{- define "blockchain-peer.chart" -}}
+{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{/*
+Create labels for the chart to identify the pod.
+*/}}
+{{- define "labels.standard" -}}
+app: {{ include "blockchain-peer.name" . }}
+heritage: {{ .Release.Service | quote }}
+release: {{ .Release.Name | quote }}
+chart: {{ include "blockchain-peer.chart" . }}
+{{- end -}}
+
+
+{{/*
+Create ports for the service.
+*/}}
+{{- define "service.ports" -}}
+{{- range $key, $value := .Values.service.ports }}
+- protocol: {{ $value.protocol }}
+  port: {{ $value.port }}
+  nodePort: {{ $value.nodePort }}
+  name: {{ $value.name }}
+{{- end -}}
+{{- end -}}

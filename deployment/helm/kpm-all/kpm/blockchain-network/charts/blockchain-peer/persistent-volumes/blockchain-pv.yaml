@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+    name: peer0-test-pv
+    labels:
+      vol: peer0-test-pv
+spec:
+    capacity:
+        storage: 1G
+    accessModes:
+        - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Recycle
+    hostPath:
+        path: "/var/peer0-kpm-all"

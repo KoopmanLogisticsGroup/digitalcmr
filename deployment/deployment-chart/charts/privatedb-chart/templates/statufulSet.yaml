@@ -1,0 +1,47 @@
+kind: StatefulSet
+apiVersion: apps/v1beta1
+metadata:
+  name: {{ template "privatedb-chart.fullname" . }}
+  # labels:
+  #   app: {{ template "privatedb-chart.name" . }}
+  #   chart: {{ template "privatedb-chart.chart" . }}
+  #   release: {{ .Release.Name }}
+  #   heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  serviceName: {{ template "privatedb-chart.name" . }}
+  # selector:
+  #   matchLabels:
+  #     app: {{ template "privatedb-chart.name" . }}
+  #     release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        # app: {{ template "privatedb-chart.name" . }}
+        # release: {{ .Release.Name }}
+        tier: {{.Values.tier}}
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 5984
+              name: http
+          volumeMounts:
+            - name: {{ .Values.volume.name }}
+              mountPath: {{ .Values.volume.mountPath }}
+  volumeClaimTemplates:
+    - metadata:
+        name: {{ .Values.volume.name }}
+      spec:
+        acessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1G
+        selector:
+          matchLabels:
+            vol: {{ .Values.volume.name }}
+        storageClassName: ""

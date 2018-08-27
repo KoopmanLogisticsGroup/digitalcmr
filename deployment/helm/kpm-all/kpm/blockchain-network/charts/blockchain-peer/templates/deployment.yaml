@@ -1,0 +1,65 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "blockchain-peer.fullname" . }}
+  labels:
+    app: {{ template "blockchain-peer.name" . }}
+    chart: {{ template "blockchain-peer.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "blockchain-peer.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "blockchain-peer.name" . }}
+        release: {{ .Release.Name }}
+        tier: {{ template "blockchain-peer.fullname" . }}
+        vol:  {{ template "blockchain-peer.fullname" . }}
+    spec:
+      containers:
+        - name: {{ template "blockchain-peer.fullname" . }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["sh", "-c", "ls /fabric-config/msp/admincerts/ sleep 500; peer node start --peer-defaultchain=false"]
+          env:
+          - configMapRef:
+            name: {{ include "blockchain-peer.fullname" . }}-config
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+                - cat
+                - /fabric-config/msp/admincerts/Admin@kpm-pon-cert.pem
+          initialDelaySeconds: 30
+          periodSeconds: 5
+
+          volumeMounts:
+          - name: {{ template "blockchain-peer.fullname" . }}-pvc
+            mountPath: /var/hyperledger/development
+          - name: msp-config-{{ include "blockchain-peer.fullname" . }}
+            mountPath: /fabric-config/msp
+            readOnly: true
+      volumes:
+      - name: {{ template "blockchain-peer.fullname" . }}-pvc
+        persistentVolumeClaim:
+          claimName: {{ template "blockchain-peer.fullname" . }}-pvc
+      - name: msp-config-{{ include "blockchain-peer.fullname" . }}
+        secret:
+          secretName: msp-config-{{ include "blockchain-peer.fullname" . }}
+          items:
+          - key: admin-kpm-pon-cert.pem
+            path: admincerts/Admin@kpm-pon-cert.pem
+            mode: 511
+          - key: ca.kpm-pon-cert.pem
+            path: cacerts/ca.kpm-pon-cert.pem
+          - key: tlsca.kpm-pon-cert.pem
+            path: tlscacerts/tlsca.kpm-pon-cert.pem
+

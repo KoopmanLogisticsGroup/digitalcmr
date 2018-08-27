@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "blockchain-peer.fullname" . }}-config
+  labels:
+{{ include "labels.standard" . | indent 4 }}
+data:
+  CORE_PEER_ADDRESSAUTODETECT: "true"
+  CORE_PEER_NETWORKID: nid1
+  CORE_PEER_ADDRESS: "peer0-kpm-all:5010"
+  CORE_PEER_LISTENADDRESS: "0.0.0.0:5010"
+  CORE_PEER_EVENTS_ADDRESS: "0.0.0.0:5011"
+  CORE_PEER_GOSSIP_BOOTSTRAP: "peer0-kpm-all:5010"
+  CORE_PEER_GOSSIP_ORGLEADER: "true"
+  CORE_PEER_GOSSIP_SKIPHANDSHAKE: "true"
+  CORE_PEER_COMMITTER_ENABLED: "true"
+  CORE_PEER_PROFILE_ENABLED: "true"
+  CORE_PEER_DISCOVERY_PERIOD: 60s
+  CORE_PEER_DISCOVERY_TOUCHPERIOD: 60s
+  CORE_VM_ENDPOINT: "unix:///host/var/run/docker.sock"
+  CORE_PEER_LOCALMSPID: kpm-allMSP
+  CORE_PEER_MSPCONFIGPATH: /fabric-config/msp
+  CORE_LOGGING_LEVEL: debug
+  CORE_LOGGING_PEER: debug
+  CORE_LOGGING_CAUTHDSL: debug
+  CORE_LOGGING_GOSSIP: debug
+  CORE_LOGGING_LEDGER: debug
+  CORE_LOGGING_MSP: info
+  CORE_LOGGING_POLICIES: debug
+  CORE_LOGGING_GRPC: debug
+  CORE_PEER_TLS_ENABLED: "false"
+  CORE_LEDGER_STATE_STATEDATABASE: CouchDB # : goleveldb
+  CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS: "peer0-kpm-all-couchdb:5984"
+  PEER_CFG_PATH: peer_config/
+  FABRIC_CFG_PATH: /etc/hyperledger/fabric/
+  ORDERER_URL: "orderer-kpm-all:7050"
+  GODEBUG: "netdns=go"

@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "blockchain-orderer.fullname" . }}-config
+  labels:
+{{ include "labels.standard" . | indent 4 }}
+data:
+  ORDERER_CFG_PATH: /fabric-config
+  ORDERER_GENERAL_LEDGERTYPE: file
+  ORDERER_FILELEDGER_LOCATION: /mnt/ledger/orderer1
+  ORDERER_GENERAL_BATCHTIMEOUT: 1s
+  ORDERER_GENERAL_BATCHSIZE_MAXMESSAGECOUNT: "10"
+  ORDERER_GENERAL_MAXWINDOWSIZE: "1000"
+  ORDERER_GENERAL_ORDERERTYPE: solo
+  ORDERER_GENERAL_LISTENADDRESS: 0.0.0.0
+  ORDERER_GENERAL_LISTENPORT: "7050"
+  ORDERER_GENERAL_LOGLEVEL: debug
+  ORDERER_GENERAL_LOCALMSPDIR: /fabric-config/msp
+  ORDERER_GENERAL_LOCALMSPID: kpmOrdererMSP
+  ORDERER_GENERAL_GENESISMETHOD: file
+  ORDERER_GENERAL_GENESISFILE: /fabric-config/production.block
+  ORDERER_GENERAL_GENESISPROFILE: initial
+  ORDERER_GENERAL_TLS_ENABLED: "false"
+  GODEBUG: "netdns=go"
