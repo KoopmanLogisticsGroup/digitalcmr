@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: connection
+  name: composer-connection-profile
 data:
 #  composer:
 #    profile:  "alliance-trial"

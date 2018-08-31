@@ -56,6 +56,9 @@ spec:
             value: {{ default "local" .Values.environment }}
           - name: PORT
             value: {{ default "'8080'" .Values.global.server.port }}
+        envFrom:
+          - configMapRef:
+              name: composer-connection-profile
         image: {{ .Values.global.registry_basepath }}/{{ .Values.global.registry_space }}/{{ default "digitalcmr-server" .Values.server.docker.image }}:{{ default "latest" .Values.server.docker.tag }}
         name: {{ .Values.global.server.name }}
         ports:
