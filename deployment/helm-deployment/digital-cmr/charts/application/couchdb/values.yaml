@@ -1,0 +1,8 @@
+couchdb:
+  volume_claim: couchdb-pvc
+  volume_mount_name: couchdb-data
+  volume_name: couchdb-pv
+
+persistence:
+  accessMode: ReadWriteOnce
+  size: 1G

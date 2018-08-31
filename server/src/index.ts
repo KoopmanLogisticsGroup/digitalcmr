@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import {RoutingControllersOptions, useContainer, useExpressServer} from 'routing-controllers';
+import {RoutingControllersOptions, useContainer} from 'routing-controllers';
 import {Container} from 'typedi';
 import * as express from 'express';
 import {Application} from 'express';
@@ -17,18 +17,12 @@ import * as ComposerClient from 'composer-client';
 import {DataService} from './datasource/DataService';
 import {IdentityManager} from './blockchain/IdentityManager';
 import {UserInfo} from './interfaces/entity.inferface';
-import * as fs from 'fs';
-import * as https from 'https';
-import * as http from 'http';
 import {ConnectionPoolManager} from './connections/ConnectionPoolManager';
-
-const forceSSL = require('express-force-ssl');
 
 class App {
   private loggerFactory: LoggerFactory = new LoggerFactory(Config.settings.winston, Config.settings.morgan);
   private logger: LoggerInstance       = this.loggerFactory.get('App');
   private debug: IDebugger             = debug('app:main');
-  private isTLSEnabled: boolean        = process.env.TLS === 'true';
   private isInitRequired: boolean      = process.env.INIT === 'true';
   private routingControllersOptions: RoutingControllersOptions;
 
@@ -38,12 +32,6 @@ class App {
     app.use(cors());
     app.use(bodyParser.json());
     app.use(this.loggerFactory.requestLogger);
-    app.set('forceSSLOptions', {
-      enable301Redirects: true,
-      trustXFPHeader:     false,
-      httpsPort:          443,
-      sslRequiredMessage: 'SSL Required, Please make sure you are using HTTPS.'
-    });
 
     this.debug('dependency injection');
     useContainer(Container);
@@ -99,40 +87,9 @@ class App {
 
     this.debug('routing: %o', this.routingControllersOptions);
 
-    if (this.isTLSEnabled) {
-      this.setupHTTPSSecureServer(app);
-    } else {
-      this.setupHTTPServer(app);
-    }
-
     process.on('unhandledRejection', (error: Error, promise: Promise<any>) => {
       this.logger.error('Unhandled rejection', error.stack);
     });
-  }
-
-  private setupHTTPServer(app: any): void {
-    useExpressServer(app, this.routingControllersOptions);
-
-    http.createServer(app).listen(Config.settings.port as number, Config.settings.host);
-    this.logger.info(`TSL disabled - API at http://${Config.settings.host}:${Config.settings.port}${Config.settings.apiPath}`);
-  }
-
-  private setupHTTPSSecureServer(app: any): void {
-    let credentials = {
-      key:                fs.readFileSync('./resources/tls/kpm-pon-app/server-key.pem'),
-      cert:               fs.readFileSync('./resources/tls/kpm-pon-app/server-crt.pem'),
-      ca:                 fs.readFileSync('./resources/tls/kpm-pon-app/ca-cert.pem'),
-      passphrase:         'C5C9dVXTp8Ka4q',
-      requestCert:        true,
-      rejectUnauthorized: true
-    };
-
-    app.use(forceSSL);
-    useExpressServer(app, this.routingControllersOptions);
-
-    http.createServer(app).listen(Config.settings.port as number, Config.settings.host);
-    https.createServer(credentials, app).listen(443, Config.settings.host);
-    this.logger.info(`TLS enabled - API at https://${Config.settings.host}${Config.settings.apiPath}`);
   }
 
   private async addTestData(): Promise<any> {

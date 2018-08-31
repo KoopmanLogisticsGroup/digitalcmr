@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: connection
+data:
+#  composer:
+#    profile:  "alliance-trial"
+#    network:  "digital-cmr-network"
+#    channel:  "kpmalliancetrialchannel"
+#    namespace:  "org.digitalcmr"
+  connection.json: |-
+    test: {{  .Values.server.docker.image }}
+    type: "hlfv1"
+    orderers:
+    - url:  "grpc://149.81.124.90:31010"
+    ca:
+      url:  "http://149.81.124.94:30010"
+      name: "ca-all"
+    peers:
+    - requestURL: "grpc://149.81.124.94:30110"
+      eventURL: "grpc://149.81.124.94:30111"
+    keyValStore:  "/home/composer/.composer-credentials"
+    channel:  "kpmalliancetrialchannel"
+    mspID:  "allMSP"
+    timeout:  "300"
