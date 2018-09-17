@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: deploy-bna-config
+  annotations:
+    "helm.sh/hook": "pre-install"
+    "helm.sh/hook-weight": "1"
+    "helm.sh/hook-delete-policy": "before-hook-creation"
+  labels:
+{{ include "labels.standard" . | indent 4 }}
+data:
+  COMPOSER_CONFIG: |-
+    {
+      "defaultConnectionProfile": "{{ .Values.global.org.name }}",
+      "connectionProfiles": {
+        "{{ .Values.global.org.name }}": {
+          "type": "hlfv1",
+          "orderers": [
+          {{- if .Values.global.orderer.deployorderer }}
+          {
+            "url": "grpc://{{ .Values.global.orderer.name }}:{{ .Values.global.orderer.port }}"
+          }
+          {{- else }}
+          {
+            "url": "grpc://{{ .Values.global.orderer.ip }}:{{ .Values.global.orderer.externalport }}"
+          }
+          {{- end }}
+          ],
+          "ca": {
+            "url": "http://{{ .Values.global.ca.name }}:{{ .Values.global.ca.port }}",
+            "name": "{{ .Values.global.ca.name }}"
+          },
+          "peers": [
+          {
+            "requestURL": "grpc://{{ .Values.global.peer.name }}:{{ .Values.global.peer.requestport }}",
+            "eventURL": "grpc://{{ .Values.global.peer.name }}:{{ .Values.global.peer.eventport }}"
+          }
+          ],
+          "keyValStore": "/home/composer/.composer-credentials",
+          "channel": "{{ .Values.global.channelname }}",
+          "mspID": "{{ .Values.global.org.name }}MSP",
+          "timeout": "300"
+        }
+      }
+    }

@@ -1,0 +1,41 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{.Release.Name}}-composer-utils"
+  labels:
+    app: "composer-utils"
+    chart: "composer-utils-job"
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    app.kubernetes.io/managed-by: {{.Release.Service | quote }}
+    app.kubernetes.io/instance: {{.Release.Name | quote }}
+    helm.sh/chart: "{{.Chart.Name}}-{{.Chart.Version}}"
+  annotations:
+    "helm.sh/hook": "post-install"
+    "helm.sh/hook-weight": "0"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  template:
+    metadata:
+      name: "{{.Release.Name}}"
+      labels:
+        app: "composer-utils"
+        release: {{ .Release.Name }}
+        heritage: {{ .Release.Service }}
+        app.kubernetes.io/managed-by: {{.Release.Service | quote }}
+        app.kubernetes.io/instance: {{.Release.Name | quote }}
+        helm.sh/chart: "{{.Chart.Name}}-{{.Chart.Version}}"
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: composer-utils
+        image: "{{ .Values.composerutilsimage.repository }}:{{ .Values.composerutilsimage.tag }}"
+        command: ["sh", "-c", "sleep 1 && mkdir -p /home/composer && chown 100 /home/composer" ]
+        volumeMounts:
+          - name: {{ .Values.global.org.name }}-composer-credentials
+            mountPath: /home
+      volumes:
+      - name: {{ .Values.global.org.name }}-composer-credentials
+        hostPath:
+          path: /composer
+

@@ -1,13 +1,13 @@
 {{- if .Values.ingress.enabled -}}
-{{- $fullName := include "blockchain-ca.fullname" . -}}
+{{- $fullName := include "blockchain-peer-couchdb.fullname" . -}}
 {{- $ingressPath := .Values.ingress.path -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: {{ $fullName }}
   labels:
-    app: {{ .Values.global.ca.name }}
-    chart: {{ template "blockchain-ca.chart" . }}
+    app: {{ .Values.global.peer.couchdb.name }}
+    chart: {{ template "blockchain-peer-couchdb.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 {{- with .Values.ingress.annotations }}

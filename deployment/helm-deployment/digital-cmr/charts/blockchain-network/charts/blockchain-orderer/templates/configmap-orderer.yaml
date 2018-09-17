@@ -1,11 +1,16 @@
+{{ if .Values.global.orderer.deployorderer }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "blockchain-orderer.fullname" . }}-config
+  name: {{ .Values.global.orderer.name }}-config
+  annotations:
+    "helm.sh/hook": "pre-install"
+    "helm.sh/hook-weight": "1"
+    "helm.sh/hook-delete-policy": "before-hook-creation"
   labels:
 {{ include "labels.standard" . | indent 4 }}
 data:
-  ORDERER_CFG_PATH: /fabric-config
+  ORDERER_CFG_PATH: /fabric-config/
   ORDERER_GENERAL_LEDGERTYPE: file
   ORDERER_FILELEDGER_LOCATION: /mnt/ledger/orderer1
   ORDERER_GENERAL_BATCHTIMEOUT: 1s
@@ -13,12 +18,13 @@ data:
   ORDERER_GENERAL_MAXWINDOWSIZE: "1000"
   ORDERER_GENERAL_ORDERERTYPE: solo
   ORDERER_GENERAL_LISTENADDRESS: 0.0.0.0
-  ORDERER_GENERAL_LISTENPORT: "7050"
+  ORDERER_GENERAL_LISTENPORT: "{{ .Values.global.orderer.port }}"
   ORDERER_GENERAL_LOGLEVEL: debug
   ORDERER_GENERAL_LOCALMSPDIR: /fabric-config/msp
-  ORDERER_GENERAL_LOCALMSPID: kpmOrdererMSP
+  ORDERER_GENERAL_LOCALMSPID: {{ .Values.global.org.name }}OrdererMSP
   ORDERER_GENERAL_GENESISMETHOD: file
-  ORDERER_GENERAL_GENESISFILE: /fabric-config/production.block
+  ORDERER_GENERAL_GENESISFILE: /fabric-config/genericgenesis.block
   ORDERER_GENERAL_GENESISPROFILE: initial
   ORDERER_GENERAL_TLS_ENABLED: "false"
   GODEBUG: "netdns=go"
+{{ end }}

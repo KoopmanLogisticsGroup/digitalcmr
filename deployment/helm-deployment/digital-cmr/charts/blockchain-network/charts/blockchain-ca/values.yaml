@@ -11,7 +11,7 @@ image:
 service:
   type: NodePort
   selector:
-    tier: ca-kpm-all
+    tier: ca
   ports:
   - protocol: TCP
     port: 7054

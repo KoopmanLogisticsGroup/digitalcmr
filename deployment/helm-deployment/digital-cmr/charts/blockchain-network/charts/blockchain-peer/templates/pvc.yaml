@@ -1,9 +1,9 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: {{ template "blockchain-peer.fullname" . }}-pvc
+  name: {{ .Values.global.peer.name }}-pvc
   labels:
-    app: {{ template "blockchain-peer.name" . }}
+    app: {{ .Values.global.peer.name }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
@@ -15,4 +15,4 @@ spec:
       storage: {{ .Values.persistence.size }}
   selector:
     matchLabels:
-      vol: peer0-test-pv
+      vol: peer0-pv

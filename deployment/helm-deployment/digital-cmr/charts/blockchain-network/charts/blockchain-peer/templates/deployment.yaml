@@ -1,9 +1,9 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: {{ template "blockchain-peer.fullname" . }}
+  name: {{ .Values.global.peer.name }}
   labels:
-    app: {{ template "blockchain-peer.name" . }}
+    app: {{ .Values.global.peer.name }}
     chart: {{ template "blockchain-peer.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -11,55 +11,58 @@ spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ template "blockchain-peer.name" . }}
+      app: {{ .Values.global.peer.name }}
       release: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: {{ template "blockchain-peer.name" . }}
+        app: {{ .Values.global.peer.name }}
         release: {{ .Release.Name }}
-        tier: {{ template "blockchain-peer.fullname" . }}
-        vol:  {{ template "blockchain-peer.fullname" . }}
+        tier: {{ .Values.global.peer.name }}
+        vol:  {{ .Values.global.peer.name }}
     spec:
       containers:
-        - name: {{ template "blockchain-peer.fullname" . }}
+        - name: {{ .Values.global.peer.name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: ["sh", "-c", "ls /fabric-config/msp/admincerts/ sleep 500; peer node start --peer-defaultchain=false"]
-          env:
+          command: ["sh", "-c", "peer node start --peer-defaultchain=false"]
+          envFrom:
           - configMapRef:
-            name: {{ include "blockchain-peer.fullname" . }}-config
-          ports:
-            - name: http
-              containerPort: 80
-              protocol: TCP
+              name: {{ .Values.global.peer.name }}-config
           readinessProbe:
             exec:
               command:
                 - cat
-                - /fabric-config/msp/admincerts/Admin@kpm-pon-cert.pem
+                - /fabric-config/msp/admincerts/Admin@org1-cert.pem
           initialDelaySeconds: 30
           periodSeconds: 5
-
           volumeMounts:
-          - name: {{ template "blockchain-peer.fullname" . }}-pvc
+          - name: dockersocket
+            mountPath: /host/var/run/docker.sock
+          - name: {{ .Values.global.peer.name }}-pvc
             mountPath: /var/hyperledger/development
-          - name: msp-config-{{ include "blockchain-peer.fullname" . }}
+          - name: msp-config-{{ .Values.global.peer.name }}
             mountPath: /fabric-config/msp
             readOnly: true
       volumes:
-      - name: {{ template "blockchain-peer.fullname" . }}-pvc
+      - name: dockersocket
+        hostPath:
+          path: /var/run/docker.sock
+      - name: {{ .Values.global.peer.name }}-pvc
         persistentVolumeClaim:
-          claimName: {{ template "blockchain-peer.fullname" . }}-pvc
-      - name: msp-config-{{ include "blockchain-peer.fullname" . }}
+          claimName: {{ .Values.global.peer.name }}-pvc
+      - name: msp-config-{{ .Values.global.peer.name }}
         secret:
-          secretName: msp-config-{{ include "blockchain-peer.fullname" . }}
+          secretName: msp-config-{{ .Values.global.peer.name }}
           items:
-          - key: admin-kpm-pon-cert.pem
-            path: admincerts/Admin@kpm-pon-cert.pem
-            mode: 511
-          - key: ca.kpm-pon-cert.pem
-            path: cacerts/ca.kpm-pon-cert.pem
-          - key: tlsca.kpm-pon-cert.pem
-            path: tlscacerts/tlsca.kpm-pon-cert.pem
+          - key: admin-org1-cert.pem
+            path: admincerts/Admin@org1-cert.pem
+          - key: ca.org1-cert.pem
+            path: cacerts/ca.org1-cert.pem
+          - key: ae2cbdd5ed5a1960096ff0430d981bc86a91f7a09b84acbe6261602039b04334_sk
+            path: keystore/ae2cbdd5ed5a1960096ff0430d981bc86a91f7a09b84acbe6261602039b04334_sk
+          - key: peer0.org1-cert.pem
+            path: signcerts/peer0.org1-cert.pem
+          - key: tlsca.org1-cert.pem
+            path: tlscacerts/tlsca.org1-cert.pem
 
