@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: channels-config
+  annotations:
+    "helm.sh/hook": "pre-install"
+    "helm.sh/hook-weight": "1"
+    "helm.sh/hook-delete-policy": "before-hook-creation"
+  labels:
+{{ include "labels.standard" . | indent 4 }}
+data:
+  CORE_PEER_ADDRESSAUTODETECT: "false"
+  CORE_PEER_ADDRESS: {{ .Values.global.peer.name }}:{{ .Values.global.peer.requestport }}
+  CORE_PEER_NETWORKID: nid1
+  CORE_PEER_LOCALMSPID: {{ .Values.global.org.name }}MSP
+  CORE_PEER_MSPCONFIGPATH: /fabric-config/msp
+  CORE_LOGGING_LEVEL: debug
+  FABRIC_CFG_PATH: /etc/hyperledger/fabric/
+  GODEBUG: "netdns=go"

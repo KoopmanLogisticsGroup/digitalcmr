@@ -1,0 +1,58 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{.Release.Name}}-createchannel"
+  labels:
+    app: "create-channel"
+    chart: "create-channel-job"
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    app.kubernetes.io/managed-by: {{.Release.Service | quote }}
+    app.kubernetes.io/instance: {{.Release.Name | quote }}
+    helm.sh/chart: "{{.Chart.Name}}-{{.Chart.Version}}"
+  annotations:
+    "helm.sh/hook": "post-install"
+    "helm.sh/hook-weight": "0"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  template:
+    metadata:
+      name: "{{.Release.Name}}"
+      labels:
+        app: "create-channel"
+        release: {{ .Release.Name }}
+        heritage: {{ .Release.Service }}
+        app.kubernetes.io/managed-by: {{.Release.Service | quote }}
+        app.kubernetes.io/instance: {{.Release.Name | quote }}
+        helm.sh/chart: "{{.Chart.Name}}-{{.Chart.Version}}"
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: create-channel
+        image: "{{ .Values.peerimage.repository }}:{{ .Values.peerimage.tag }}"
+        command: ["sh", "-c"," sleep 30; peer channel create -o {{ .Values.global.orderer.name }}:{{ .Values.global.orderer.port }} -c {{ .Values.global.channelname }} -f /fabric-config/{{ .Values.global.networkfilename }}"]
+        envFrom:
+          - configMapRef:
+              name: channels-config
+        volumeMounts:
+        - name: create-channel-config
+          mountPath: /fabric-config/
+      volumes:
+      - name: create-channel-config
+        secret:
+          secretName: create-channel-config
+          items:
+          - key: admin-org1-cert.pem
+            path: msp/admincerts/Admin@org1-cert.pem
+          - key: ca.org1-cert.pem
+            path: msp/cacerts/ca.org1-cert.pem
+          - key: ae2cbdd5ed5a1960096ff0430d981bc86a91f7a09b84acbe6261602039b04334_sk
+            path: msp/keystore/ae2cbdd5ed5a1960096ff0430d981bc86a91f7a09b84acbe6261602039b04334_sk
+          - key: peer0.org1-cert.pem
+            path: msp/signcerts/peer0.org1-cert.pem
+          - key: tlsca.org1-cert.pem
+            path: msp/tlscacerts/tlsca.org1-cert.pem
+          - key: genericnetwork.tx
+            path: ./genericnetwork.tx
+
+

@@ -1,0 +1,68 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: {{ .Values.global.peer.name }}
+  labels:
+    app: {{ .Values.global.peer.name }}
+    chart: {{ template "blockchain-peer.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.global.peer.name }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.global.peer.name }}
+        release: {{ .Release.Name }}
+        tier: {{ .Values.global.peer.name }}
+        vol:  {{ .Values.global.peer.name }}
+    spec:
+      containers:
+        - name: {{ .Values.global.peer.name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["sh", "-c", "peer node start --peer-defaultchain=false"]
+          envFrom:
+          - configMapRef:
+              name: {{ .Values.global.peer.name }}-config
+          readinessProbe:
+            exec:
+              command:
+                - cat
+                - /fabric-config/msp/admincerts/Admin@org1-cert.pem
+          initialDelaySeconds: 30
+          periodSeconds: 5
+          volumeMounts:
+          - name: dockersocket
+            mountPath: /host/var/run/docker.sock
+          - name: {{ .Values.global.peer.name }}-pvc
+            mountPath: /var/hyperledger/development
+          - name: msp-config-{{ .Values.global.peer.name }}
+            mountPath: /fabric-config/msp
+            readOnly: true
+      volumes:
+      - name: dockersocket
+        hostPath:
+          path: /var/run/docker.sock
+      - name: {{ .Values.global.peer.name }}-pvc
+        persistentVolumeClaim:
+          claimName: {{ .Values.global.peer.name }}-pvc
+      - name: msp-config-{{ .Values.global.peer.name }}
+        secret:
+          secretName: msp-config-{{ .Values.global.peer.name }}
+          items:
+          - key: admin-org1-cert.pem
+            path: admincerts/Admin@org1-cert.pem
+          - key: ca.org1-cert.pem
+            path: cacerts/ca.org1-cert.pem
+          - key: ae2cbdd5ed5a1960096ff0430d981bc86a91f7a09b84acbe6261602039b04334_sk
+            path: keystore/ae2cbdd5ed5a1960096ff0430d981bc86a91f7a09b84acbe6261602039b04334_sk
+          - key: peer0.org1-cert.pem
+            path: signcerts/peer0.org1-cert.pem
+          - key: tlsca.org1-cert.pem
+            path: tlscacerts/tlsca.org1-cert.pem
+

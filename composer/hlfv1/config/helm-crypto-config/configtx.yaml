@@ -18,19 +18,19 @@ Profiles:
         Orderer:
             <<: *OrdererDefaults
             Organizations:
-                - *kpmAllOrderer
+                - *org1Orderer
         Consortiums:
             ComposerConsortium:
                 Organizations:
-                    - *kpm-all
-                    - *all
+                    - *org1
+                    - *org2
     TwoOrgsChannel:
         Consortium: ComposerConsortium
         Application:
             <<: *ApplicationDefaults
             Organizations:
-                - *kpm-all
-                - *all
+                - *org1
+                - *org2
 
 ################################################################################
 #
@@ -44,29 +44,29 @@ Organizations:
 
     # SampleOrg defines an MSP using the sampleconfig.  It should never be used
     # in production but may be used as a template for other definitions
-    - &kpmAllOrderer
+    - &org1Orderer
         # DefaultOrg defines the organization which is used in the sampleconfig
         # of the fabric.git development environment
-        Name: kpmAllOrderer
+        Name: org1Orderer
 
         # ID to load the MSP definition as
-        ID: kpmAllOrdererMSP
+        ID: org1OrdererMSP
 
         # MSPDir is the filesystem path which contains the MSP configuration
-        MSPDir: kpm/crypto-config/ordererOrganizations/kpm-all/msp
+        MSPDir: org1/crypto-config/ordererOrganizations/org1/msp
 
         # turn off security for the channel
         AdminPrincipal: Role.MEMBER
 
-    - &kpm-all
+    - &org1
         # DefaultOrg defines the organization which is used in the sampleconfig
         # of the fabric.git development environment
-        Name: kpm-all
+        Name: org1
 
         # ID to load the MSP definition as
-        ID: kpm-allMSP
+        ID: org1MSP
 
-        MSPDir: kpm/crypto-config/peerOrganizations/kpm-all/msp
+        MSPDir: org1/crypto-config/peerOrganizations/org1/msp
 
         # turn off security for the peer
         AdminPrincipal: Role.MEMBER
@@ -75,18 +75,18 @@ Organizations:
             # AnchorPeers defines the location of peers which can be used
             # for cross org gossip communication.  Note, this value is only
             # encoded in the genesis block in the Application section context
-            - Host: peer0-kpm-all
+            - Host: org1-peer
               Port: 7051
 
-    - &all
+    - &org2
         # DefaultOrg defines the organization which is used in the sampleconfig
         # of the fabric.git development environment
-        Name: all
+        Name: org2
 
         # ID to load the MSP definition as
-        ID: allMSP
+        ID: org2MSP
 
-        MSPDir: all/crypto-config/peerOrganizations/all/msp
+        MSPDir: org2/crypto-config/peerOrganizations/org2/msp
 
         # turn off security for the peer
         AdminPrincipal: Role.MEMBER
@@ -95,7 +95,7 @@ Organizations:
             # AnchorPeers defines the location of peers which can be used
             # for cross org gossip communication.  Note, this value is only
             # encoded in the genesis block in the Application section context
-            - Host: peer0-all
+            - Host: org2-peer
               Port: 7051
 
 ################################################################################
@@ -113,10 +113,10 @@ Orderer: &OrdererDefaults
     OrdererType: solo
 
     Addresses:
-        - 159.122.179.49:31010
+        - 159.122.187.53:7050
 
     # Batch Timeout: The amount of time to wait before creating a batch
-    BatchTimeout: 1s
+    BatchTimeout: 2s
 
     # Batch Size: Controls the number of messages batched into a block
     BatchSize:

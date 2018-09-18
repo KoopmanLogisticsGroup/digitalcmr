@@ -1,0 +1,12 @@
+global:
+  secrets_name: "digitalcmr-secrets"
+  registry_basepath: "registry.eu-de.bluemix.net"
+  registry_space: "lventi"
+  server:
+    name: "digitalcmr-server"
+#    port: "8080"
+  couchdb:
+    name: "digitalcmr-db"
+    host: "digitalcmr-db"
+#    port: "\'5984\'"
+
