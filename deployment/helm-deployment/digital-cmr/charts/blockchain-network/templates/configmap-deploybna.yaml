@@ -18,7 +18,7 @@ data:
           "orderers": [
           {{- if .Values.global.orderer.deployorderer }}
           {
-            "url": "grpc://{{ .Values.global.orderer.name }}:{{ .Values.global.orderer.port }}"
+            "url": "grpc://{{ .Values.global.org.name }}-{{ .Values.global.orderer.name }}:{{ .Values.global.orderer.port }}"
           }
           {{- else }}
           {
@@ -27,13 +27,13 @@ data:
           {{- end }}
           ],
           "ca": {
-            "url": "http://{{ .Values.global.ca.name }}:{{ .Values.global.ca.port }}",
-            "name": "{{ .Values.global.ca.name }}"
+            "url": "http://{{ .Values.global.org.name }}-{{ .Values.global.ca.name }}:{{ .Values.global.ca.port }}",
+            "name": "{{ .Values.global.org.name }}-{{ .Values.global.ca.name }}"
           },
           "peers": [
           {
-            "requestURL": "grpc://{{ .Values.global.peer.name }}:{{ .Values.global.peer.requestport }}",
-            "eventURL": "grpc://{{ .Values.global.peer.name }}:{{ .Values.global.peer.eventport }}"
+            "requestURL": "grpc://{{ .Values.global.org.name }}-{{ .Values.global.peer.name }}:{{ .Values.global.peer.requestport }}",
+            "eventURL": "grpc://{{ .Values.global.org.name }}-{{ .Values.global.peer.name }}:{{ .Values.global.peer.eventport }}"
           }
           ],
           "keyValStore": "/home/composer/.composer-credentials",

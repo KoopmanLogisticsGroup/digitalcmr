@@ -113,7 +113,7 @@ Orderer: &OrdererDefaults
     OrdererType: solo
 
     Addresses:
-        - 159.122.187.53:7050
+        - 159.122.187.53:31010
 
     # Batch Timeout: The amount of time to wait before creating a batch
     BatchTimeout: 2s

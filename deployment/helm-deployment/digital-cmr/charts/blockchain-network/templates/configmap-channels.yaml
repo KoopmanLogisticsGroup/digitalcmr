@@ -10,7 +10,7 @@ metadata:
 {{ include "labels.standard" . | indent 4 }}
 data:
   CORE_PEER_ADDRESSAUTODETECT: "false"
-  CORE_PEER_ADDRESS: {{ .Values.global.peer.name }}:{{ .Values.global.peer.requestport }}
+  CORE_PEER_ADDRESS: {{ .Values.global.org.name }}-{{ .Values.global.peer.name }}:{{ .Values.global.peer.requestport }}
   CORE_PEER_NETWORKID: nid1
   CORE_PEER_LOCALMSPID: {{ .Values.global.org.name }}MSP
   CORE_PEER_MSPCONFIGPATH: /fabric-config/msp

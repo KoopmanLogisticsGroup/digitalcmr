@@ -6,7 +6,7 @@ kind: Ingress
 metadata:
   name: {{ $fullName }}
   labels:
-    app: {{ .Values.global.peer.couchdb.name }}
+    app: {{ .Values.global.org.name }}-{{ .Values.global.peer.couchdb.name }}
     chart: {{ template "blockchain-peer-couchdb.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}

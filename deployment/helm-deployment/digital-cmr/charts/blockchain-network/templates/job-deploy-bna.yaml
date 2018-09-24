@@ -30,7 +30,7 @@ spec:
       containers:
       - name: deploy-bna
         image: "{{ .Values.composerimage.repository }}:{{ .Values.composerimage.tag }}"
-        command: ["sh", "-c","composer identity import -p {{ .Values.global.org.name }} -u admin -c /fabric-config/msp/signcerts/Admin@org1-cert.pem -k /fabric-config/msp/keystore/`ls /fabric-config/msp/keystore` && echo 'Done with importing identity'; composer network deploy -a /fabric-config/bna/digital-cmr-network.bna -i admin -s passwd -p {{ .Values.global.org.name }} && echo 'Done with deploying'"]
+        command: ["sh", "-c","composer identity import -p {{ .Values.global.org.name }} -u admin -c /fabric-config/msp/signcerts/Admin@{{ .Values.global.org.name }}-cert.pem -k /fabric-config/msp/keystore/`ls /fabric-config/msp/keystore` && echo 'Done with importing identity'; composer network deploy -a /fabric-config/digital-cmr-network.bna -i admin -s passwd -p {{ .Values.global.org.name }} && echo 'Done with deploying'"]
         envFrom:
           - configMapRef:
               name: deploy-bna-config
@@ -47,15 +47,6 @@ spec:
         secret:
           secretName: deploy-bna-config
           items:
-          - key: admin-org1-cert.pem
-            path: msp/admincerts/Admin@org1-cert.pem
-          - key: ca.org1-cert.pem
-            path: msp/cacerts/ca.org1-cert.pem
-          - key: 65ff48b19f516811fc5c64f658773a1b0ea5c9198b947e34c5ef6ab45bae0fc8_sk
-            path: msp/keystore/65ff48b19f516811fc5c64f658773a1b0ea5c9198b947e34c5ef6ab45bae0fc8_sk
-          - key: admin-signcert
-            path: msp/signcerts/Admin@org1-cert.pem
-          - key: tlsca.org1-cert.pem
-            path: msp/tlscacerts/tlsca.org1-cert.pem
-          - key: digital-cmr-network.bna
-            path: ./bna/digital-cmr-network.bna
+{{- include "secret.users.index" . | indent 10}}
+
+
