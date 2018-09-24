@@ -1,12 +1,47 @@
 global:
-  secrets_name: "digitalcmr-secrets"
-  registry_basepath: "registry.eu-de.bluemix.net"
-  registry_space: "lventi"
-  server:
-    name: "digitalcmr-server"
-#    port: "8080"
-  couchdb:
-    name: "digitalcmr-db"
-    host: "digitalcmr-db"
-#    port: "\'5984\'"
+  organization:
+    name: "Org1"
+  network:
+    actual_cluster_IP: "1.1.1.1"
+    orderer_cluster_IP: "2.2.2.2"
+    orderer_port: "30010"
+    ca_name: "ca-digitalcmr"
+    ca_port: "30010"
+    peer_port: "30110"
+    peer_event_port: "30110"
+
+  blockchain:
+    channel: "digitalCmrDefaultChannel"
+    composer_profile: "composerDefaultProfile"
+    composer_network: "composerDefaultNetwork"
+    composer_namespace: "org.digitalcmr"
+    mspID: "digitalcmrMSP"
+
+  application:
+    secrets_name: "digitalcmr-secrets"
+    registry_basepath: "registry.eu-de.bluemix.net"
+    registry_space: "lventi"
+    server:
+      name: "digitalcmr-server"
+      host: "digitalcmr-server"
+      port: "8080"
+      env:  "noenv"
+      docker:
+        image: "digitalcmr_server"
+        tag: "digitalcmr_default"
+        name: "digitalcmr-server"
+      users:
+        admin:
+          username: "admin"
+          password: "@dm1nPassw0rd"
+          firstName: "admin"
+          lastName: "admin"
+          role: "admin"
+    couchdb:
+      name: "digitalcmr-couchdb"
+      host: "digitalcmr-couchdb"
+      port: "5984"
+
+
+
 

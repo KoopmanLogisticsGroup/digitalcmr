@@ -42,37 +42,15 @@ class App {
     Container.set(ConnectionPoolManager, new ConnectionPoolManager());
     Container.set(IdentityManager, new IdentityManager(Config.settings.composer.namespace));
 
-    if (process.env.NODE_ENV!.indexOf('kpm') !== -1 || process.env.NODE_ENV === 'local' || process.env.NODE_ENV === 'development') {
-      await new TestData(Container.get(TransactionHandler),
-        Container.get(DataService),
-        Container.get(IdentityManager)).addAdmin(<UserInfo> {
-        username:  'admin',
-        password:  '@dm1nPassw0rd',
-        firstName: 'admin',
-        lastName:  'admin',
-        role:      'admin'
-      });
-    } else if (process.env.NODE_ENV!.indexOf('pon') !== -1) {
-      await new TestData(Container.get(TransactionHandler),
-        Container.get(DataService),
-        Container.get(IdentityManager)).addAdmin(<UserInfo> {
-        username:  'adminPon',
-        password:  '@dm1nPassw0rd',
-        firstName: 'adminPon',
-        lastName:  'adminPon',
-        role:      'adminPon'
-      });
-    } else if (process.env.NODE_ENV!.indexOf('all') !== -1) {
-      await new TestData(Container.get(TransactionHandler),
-        Container.get(DataService),
-        Container.get(IdentityManager)).addAdmin(<UserInfo> {
-        username:  'adminAll',
-        password:  '@dm1nPassw0rd',
-        firstName: 'adminAll',
-        lastName:  'adminAll',
-        role:      'adminAll'
-      });
-    }
+    await new TestData(Container.get(TransactionHandler),
+      Container.get(DataService),
+      Container.get(IdentityManager)).addAdmin(<UserInfo> {
+      username:  process.env.ADMIN_USERNAME,
+      password:  process.env.ADMIN_PASSWORD,
+      firstName: process.env.ADMIN_FIRSTNAME,
+      lastName:  process.env.ADMIN_LASTNAME,
+      role:      process.env.ADMIN_ROLE
+    });
 
     if (this.isInitRequired) {
       await this.addTestData();

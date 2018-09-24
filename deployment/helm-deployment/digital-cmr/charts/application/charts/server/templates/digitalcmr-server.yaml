@@ -1,66 +1,51 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.global.server.name }}
+  name: {{ .Values.global.application.server.name }}
 spec:
   type: LoadBalancer
   ports:
   - name: http
-    port: {{ default "8080" .Values.server_port }}
-    targetPort: {{ default "8080" .Values.global.server.port }}
+    port: {{ default "8080" .Values.global.application.server.port }}
+    targetPort: {{ default "8080" .Values.global.application.server.port }}
   selector:
-   app: {{ .Values.global.server.name }}
+   app: {{ .Values.global.application.server.name }}
 ---
 
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: {{ .Values.global.server.name }}
-  name: {{ .Values.global.server.name }}
+    app: {{ .Values.global.application.server.name }}
+  name: {{ .Values.global.application.server.name }}
 spec:
   selector:
     matchLabels:
-      app: {{ .Values.global.server.name }}
+      app: {{ .Values.global.application.server.name }}
   template:
     metadata:
       labels:
-        app: {{ .Values.global.server.name }}
+        app: {{ .Values.global.application.server.name }}
     spec:
       containers:
       - args:
         - sh
         - -c
-        - while [ ! -f /root/.composer/cards/networkadmin@hlfv1.card ]; do echo Waiting
-          for Admin Card; sleep 5; done; sleep 10; npm start
-        env:
-          - name: COUCHDB_DATABASE
-            value: {{ default "loopback-db" .Values.couchdb_database }}
-          - name: COUCHDB_HOST
-            value: {{ default "private-db" .Values.couchdb_host }}
-        #        - name: COUCHDB_USER
-        #          valueFrom:
-        #            secretKeyRef:
-        #              name: {{ .Values.global.secrets_name }}
-        #              key: privatedb-user
-        #        - name: COUCHDB_PASSWORD
-        #          valueFrom:
-        #            secretKeyRef:
-        #              name: {{ .Values.global.secrets_name }}
-        #              key: privatedb-password
-#          - name: COUCHDB_PORT
-#            value: {{ default "'5984'" .Values.global.couchdb.port }}
-          - name: HOST
-            value: {{ default "0.0.0.0" .Values.couchdb_host_url }}
-          - name: NODE_ENV
-            value: {{ default "local" .Values.environment }}
-          - name: PORT
-            value: {{ default "'8080'" .Values.global.server.port }}
+        - npm start
         envFrom:
-          - configMapRef:
-              name: composer-connection-profile
-        image: {{ .Values.global.registry_basepath }}/{{ .Values.global.registry_space }}/{{ default "digitalcmr-server" .Values.server.docker.image }}:{{ default "latest" .Values.server.docker.tag }}
-        name: {{ .Values.global.server.name }}
+        - configMapRef:
+            name: configmap-env-digitalcmr-server
+        volumeMounts:
+        - name: composer-connection-profile-volume
+          mountPath: /root/config/.composer-connection-profiles/defaultProfile
+        image: {{ .Values.global.application.registry_basepath }}/{{ .Values.global.application.registry_space }}/{{ default "digitalcmr-server" .Values.global.application.server.docker.image }}:{{ default "latest" .Values.global.application.server.docker.tag }}
+        name: {{ .Values.global.application.server.name }}
         ports:
-        - containerPort: {{ default "8080" .Values.global.server.port }}
+        - containerPort: {{ default "8080" .Values.global.application.server.port }}
+      volumes:
+      - name: composer-connection-profile-volume
+        configMap:
+          # Provide the name of the ConfigMap containing the files you want
+          # to add to the container
+          name: configmap-composer-connection-profile
       restartPolicy: {{ default "Always" .Values.restart_policy }}

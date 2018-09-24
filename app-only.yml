@@ -21,17 +21,6 @@ services:
       - privatedb
     command: sh -c "npm start"
 
-  client:
-      build: client
-      ports:
-          - "4200:4200"
-          - "49153:49153"
-      volumes:
-          - ./client/src:/usr/src/app/src
-          - ./client/.angular-cli.json:/usr/src/app/.angular-cli.json
-          - ./client/tslint.json:/usr/src/app/tslint.json
-      command: sh -c "node_modules/.bin/ng lint && node_modules/.bin/ng serve --host 0.0.0.0"
-
   privatedb:
     container_name: privatedb
     image: couchdb:2.1.1
