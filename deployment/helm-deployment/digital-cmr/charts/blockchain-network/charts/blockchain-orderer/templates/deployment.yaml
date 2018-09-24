@@ -38,8 +38,8 @@ spec:
           secretName: orderer-config-{{ .Values.global.org.name }}-{{ .Values.global.orderer.name }}
           items:
 {{- include "secret.orderers.index" . | indent 10}}
-          - key: genericgenesis.block
-            path: genericgenesis.block
-          - key: genericnetwork.tx
-            path: genericnetwork.tx
+          - key: {{ .Values.global.genesisfilename }}
+            path: {{ .Values.global.genesisfilename }}
+          - key: {{ .Values.global.networkfilename }}
+            path: {{ .Values.global.networkfilename }}
 {{ end }}

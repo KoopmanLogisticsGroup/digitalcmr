@@ -23,7 +23,7 @@ data:
   ORDERER_GENERAL_LOCALMSPDIR: /fabric-config/msp
   ORDERER_GENERAL_LOCALMSPID: {{ .Values.global.org.name }}OrdererMSP
   ORDERER_GENERAL_GENESISMETHOD: file
-  ORDERER_GENERAL_GENESISFILE: /fabric-config/genericgenesis.block
+  ORDERER_GENERAL_GENESISFILE: /fabric-config/{{ .Values.global.genesisfilename }}
   ORDERER_GENERAL_GENESISPROFILE: initial
   ORDERER_GENERAL_TLS_ENABLED: "false"
   GODEBUG: "netdns=go"
