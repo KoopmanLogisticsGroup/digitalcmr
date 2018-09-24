@@ -37,7 +37,7 @@ spec:
             name: configmap-env-digitalcmr-server
         volumeMounts:
         - name: composer-connection-profile-volume
-          mountPath: /root/config/.composer-connection-profiles/defaultProfile
+          mountPath: /root/config/.composer-connection-profiles/{{ .Values.global.blockchain.composer_profile }}
         image: {{ .Values.global.application.registry_basepath }}/{{ .Values.global.application.registry_space }}/{{ default "digitalcmr-server" .Values.global.application.server.docker.image }}:{{ default "latest" .Values.global.application.server.docker.tag }}
         name: {{ .Values.global.application.server.name }}
         ports:
