@@ -16,6 +16,6 @@ data:
       eventURL: "grpc://{{ .Values.global.network.actual_cluster_IP }}:{{ .Values.global.network.peer_event_port }}"
     keyValStore:  "/home/composer/.composer-credentials"
     channel:  {{quote .Values.global.blockchain.channel }}
-    mspID:  {{quote .Values.global.blockchain.mspID }}
+    mspID:  "{{ .Values.global.organization.name }}MSP"
     timeout:  "300"
     }

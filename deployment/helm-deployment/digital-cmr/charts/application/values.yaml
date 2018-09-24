@@ -15,7 +15,6 @@ global:
     composer_profile: "composerDefaultProfile"
     composer_network: "composerDefaultNetwork"
     composer_namespace: "org.digitalcmr"
-    mspID: "digitalcmrMSP"
 
   application:
     secrets_name: "digitalcmr-secrets"
