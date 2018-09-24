@@ -14,7 +14,7 @@ service:
   port: 5984
 
 persistence:
-  accessMode: ReadWriteOnce
+  accessMode: ReadWriteMany
   size: 1G
 
 ingress:

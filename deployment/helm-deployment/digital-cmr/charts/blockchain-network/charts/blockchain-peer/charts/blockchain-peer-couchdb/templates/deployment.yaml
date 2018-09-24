@@ -1,9 +1,9 @@
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
-  name: {{ .Values.global.peer.couchdb.name }}
+  name: {{ .Values.global.org.name }}-{{ .Values.global.peer.couchdb.name }}
   labels:
-    app: {{ .Values.global.peer.couchdb.name }}
+    app: {{ .Values.global.org.name }}-{{ .Values.global.peer.couchdb.name }}
     chart: {{ template "blockchain-peer-couchdb.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -11,12 +11,12 @@ spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ .Values.global.peer.couchdb.name }}
+      app: {{ .Values.global.org.name }}-{{ .Values.global.peer.couchdb.name }}
       release: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: {{ .Values.global.peer.couchdb.name }}
+        app: {{ .Values.global.org.name }}-{{ .Values.global.peer.couchdb.name }}
         release: {{ .Release.Name }}
     spec:
       containers:
@@ -27,9 +27,9 @@ spec:
           - name: DB_URL
             value: http://localhost:{{ .Values.global.peer.couchdb.port }}/member_db
           volumeMounts:
-          - name: {{ .Values.global.peer.couchdb.name }}-pvc
+          - name: {{ .Values.global.org.name }}-{{ .Values.global.peer.couchdb.name }}-pvc
             mountPath: /opt/couchdb/data
       volumes:
-      - name: {{ .Values.global.peer.couchdb.name }}-pvc
+      - name: {{ .Values.global.org.name }}-{{ .Values.global.peer.couchdb.name }}-pvc
         persistentVolumeClaim:
-          claimName: {{ .Values.global.peer.couchdb.name }}-pvc
+          claimName: peer0-couchdb-pvc

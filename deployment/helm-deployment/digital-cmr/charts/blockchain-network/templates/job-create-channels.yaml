@@ -1,3 +1,4 @@
+{{ if .Values.global.orderer.deployorderer }}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -30,7 +31,7 @@ spec:
       containers:
       - name: create-channel
         image: "{{ .Values.peerimage.repository }}:{{ .Values.peerimage.tag }}"
-        command: ["sh", "-c"," sleep 30; peer channel create -o {{ .Values.global.orderer.name }}:{{ .Values.global.orderer.port }} -c {{ .Values.global.channelname }} -f /fabric-config/{{ .Values.global.networkfilename }}"]
+        command: ["sh", "-c"," sleep 30; peer channel create -o {{ .Values.global.org.name }}-{{ .Values.global.orderer.name }}:{{ .Values.global.orderer.port }} -c {{ .Values.global.channelname }} -f /fabric-config/{{ .Values.global.networkfilename }}"]
         envFrom:
           - configMapRef:
               name: channels-config
@@ -42,17 +43,5 @@ spec:
         secret:
           secretName: create-channel-config
           items:
-          - key: admin-org1-cert.pem
-            path: msp/admincerts/Admin@org1-cert.pem
-          - key: ca.org1-cert.pem
-            path: msp/cacerts/ca.org1-cert.pem
-          - key: ae2cbdd5ed5a1960096ff0430d981bc86a91f7a09b84acbe6261602039b04334_sk
-            path: msp/keystore/ae2cbdd5ed5a1960096ff0430d981bc86a91f7a09b84acbe6261602039b04334_sk
-          - key: peer0.org1-cert.pem
-            path: msp/signcerts/peer0.org1-cert.pem
-          - key: tlsca.org1-cert.pem
-            path: msp/tlscacerts/tlsca.org1-cert.pem
-          - key: genericnetwork.tx
-            path: ./genericnetwork.tx
-
-
+{{- include "secret.peers.index" . | indent 10}}
+{{- end }}

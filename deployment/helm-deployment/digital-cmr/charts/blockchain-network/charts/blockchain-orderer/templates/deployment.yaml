@@ -2,9 +2,9 @@
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
-  name: {{ .Values.global.orderer.name }}
+  name: {{ .Values.global.org.name }}-{{ .Values.global.orderer.name }}
   labels:
-    app: {{ .Values.global.orderer.name }}
+    app: {{ .Values.global.org.name }}-{{ .Values.global.orderer.name }}
     chart: {{ template "blockchain-orderer.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -12,12 +12,12 @@ spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ .Values.global.orderer.name }}
+      app: {{ .Values.global.org.name }}-{{ .Values.global.orderer.name }}
       release: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: {{ .Values.global.orderer.name }}
+        app: {{ .Values.global.org.name }}-{{ .Values.global.orderer.name }}
         release: {{ .Release.Name }}
     spec:
       containers:
@@ -25,30 +25,21 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           command: ["sh", "-c", "orderer"]
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          volumeMounts:
-          - name: orderer-config-{{ .Values.global.orderer.name }}
-            mountPath: /fabric-config/
-            readOnly: true
           envFrom:
           - configMapRef:
-              name: {{ .Values.global.orderer.name }}-config
+              name: {{ .Values.global.org.name }}-{{ .Values.global.orderer.name }}-config
+          volumeMounts:
+          - name: orderer-config-{{ .Values.global.org.name }}-{{ .Values.global.orderer.name }}
+            mountPath: /fabric-config/
+            readOnly: true
       volumes:
-      - name: orderer-config-{{ .Values.global.orderer.name }}
+      - name: orderer-config-{{ .Values.global.org.name }}-{{ .Values.global.orderer.name }}
         secret:
-          secretName: orderer-config-{{ .Values.global.orderer.name }}
+          secretName: orderer-config-{{ .Values.global.org.name }}-{{ .Values.global.orderer.name }}
           items:
+{{- include "secret.orderers.index" . | indent 10}}
           - key: genericgenesis.block
             path: genericgenesis.block
           - key: genericnetwork.tx
             path: genericnetwork.tx
-          - key: admin-org1-cert.pem
-            path: msp/admincerts/Admin@org1-cert.pem
-          - key: ca.org1-cert.pem
-            path: msp/cacerts/ca.org1-cert.pem
-          - key: 820a98d689c4da604d60c28e7e6bf0e40bbe3716bacf3a50aec1008888c88387_sk
-            path: msp/keystore/820a98d689c4da604d60c28e7e6bf0e40bbe3716bacf3a50aec1008888c88387_sk
-          - key: orderer.org1-cert.pem
-            path: msp/signcerts/orderer.org1-cert.pem
-          - key: tlsca.org1-cert.pem
-            path: msp/tlscacerts/tlsca.org1-cert.pem
 {{ end }}

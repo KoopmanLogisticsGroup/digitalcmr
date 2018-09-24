@@ -32,6 +32,20 @@ Create chart name and version as used by the chart label.
 {{- end -}}
 
 {{/*
+Create index for the secrets of orderers
+*/}}
+{{- define "secret.orderers.index" -}}
+{{- $baseRoot := printf "certs/orderers/%s/" .Values.global.org.name }}
+{{- $root := printf "%s**" $baseRoot}}
+{{- $adminCertificate := printf "Admin@%s-cert.pem" .Values.global.org.name }}
+{{- $adminTempCert := printf "admin-%s-cert.pem" .Values.global.org.name }}
+{{- range $path, $bytes := .Files.Glob $root}}
+- key: {{base $path }}
+  path: {{$path | trimPrefix $baseRoot | replace $adminTempCert $adminCertificate}}
+{{- end }}
+{{- end -}}
+
+{{/*
 Create ports for the service.
 */}}
 {{- define "service.ports" -}}

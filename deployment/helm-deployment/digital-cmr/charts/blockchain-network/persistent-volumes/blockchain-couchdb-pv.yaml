@@ -7,10 +7,10 @@ metadata:
     vol: peer0-couchdb-pv
 spec:
   capacity:
-    storage: 1G
+    storage: 1Gi
   accessModes:
   - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Recycle
+  persistentVolumeReclaimPolicy: Retain
   hostPath:
     path: "/var/peer0-kpm-all-couchdb"
 ---
@@ -22,9 +22,9 @@ metadata:
     vol: peer0-pv
 spec:
   capacity:
-    storage: 1G
+    storage: 1Gi
   accessModes:
   - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Recycle
+  persistentVolumeReclaimPolicy: Retain
   hostPath:
     path: "/var/peer0-kpm-all"

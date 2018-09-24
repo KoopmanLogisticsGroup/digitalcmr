@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Values.global.orderer.name }}-config
+  name: {{ .Values.global.org.name }}-{{ .Values.global.orderer.name }}-config
   annotations:
     "helm.sh/hook": "pre-install"
     "helm.sh/hook-weight": "1"

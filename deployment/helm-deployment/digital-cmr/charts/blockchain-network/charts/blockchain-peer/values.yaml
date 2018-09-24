@@ -11,8 +11,6 @@ image:
 
 service:
   type: NodePort
-  selector:
-    tier: peer0-org1
   ports:
     - protocol: TCP
       port: 5010
@@ -24,7 +22,7 @@ service:
       name: events
 
 persistence:
-  accessMode: ReadWriteOnce
+  accessMode: ReadWriteMany
   size: 1G
 
 ingress:
