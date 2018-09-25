@@ -3,10 +3,11 @@ kind: Service
 metadata:
   name: {{ .Values.global.application.server.name }}
 spec:
-  type: LoadBalancer
+  type: NodePort
   ports:
-  - name: http
+  - protocol: TCP
+    name: http
     port: {{ default "8080" .Values.global.application.server.port }}
-    targetPort: {{ default "8080" .Values.global.application.server.port }}
+    nodePort: {{ default "31001" .Values.global.application.server.public_port }}
   selector:
    app: {{ .Values.global.application.server.name }}

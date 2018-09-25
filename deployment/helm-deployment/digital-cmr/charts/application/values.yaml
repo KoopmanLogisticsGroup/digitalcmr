@@ -2,18 +2,18 @@ global:
   organization:
     name: "Org1"
   network:
-    actual_cluster_IP: "1.1.1.1"
-    orderer_cluster_IP: "2.2.2.2"
-    orderer_port: "30010"
-    ca_name: "ca-digitalcmr"
+    actual_cluster_IP: "159.122.186.12"
+    orderer_cluster_IP: "159.122.187.53"
+    orderer_port: "31010"
+    ca_name: "org1-ca"
     ca_port: "30010"
     peer_port: "30110"
-    peer_event_port: "30110"
+    peer_event_port: "30111"
 
   blockchain:
-    channel: "digitalCmrDefaultChannel"
+    channel: "genericchannel"
     composer_profile: "composerDefaultProfile"
-    composer_network: "composerDefaultNetwork"
+    composer_network: "genericnetwork"
     composer_namespace: "org.digitalcmr"
 
   application:
@@ -23,6 +23,7 @@ global:
       name: "digitalcmr-server"
       host: "digitalcmr-server"
       port: "8080"
+      public_port: "31001"
       env:  "noenv"
       docker:
         image: "digitalcmr_server"

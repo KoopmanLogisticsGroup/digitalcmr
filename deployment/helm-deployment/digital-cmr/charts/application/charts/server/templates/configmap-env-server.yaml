@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: configmap-env-server
 data:
-  VCAP_HOST:          {{ quote .Values.global.application.server.host }}
+#  VCAP_HOST:          {{ quote .Values.global.application.server.host }}
   VCAP_PORT:          {{ quote .Values.global.application.server.port }}
   NODE_ENV:           {{ quote .Values.global.application.server.env }}
   COMPOSER_PROFILE:   {{ quote .Values.global.blockchain.composer_profile }}
