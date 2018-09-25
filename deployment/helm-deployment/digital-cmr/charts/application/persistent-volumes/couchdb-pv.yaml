@@ -6,9 +6,9 @@ metadata:
       vol: couchdb-pv
 spec:
     capacity:
-        storage: 1G
+        storage: 1Gi
     accessModes:
         - ReadWriteOnce
-    persistentVolumeReclaimPolicy: Recycle
+    persistentVolumeReclaimPolicy: Retain
     hostPath:
         path: "/var/couchdb-pv"
