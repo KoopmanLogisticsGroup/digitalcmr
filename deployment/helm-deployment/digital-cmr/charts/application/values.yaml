@@ -17,7 +17,6 @@ global:
     composer_namespace: "org.digitalcmr"
 
   application:
-    secrets_name: "digitalcmr-secrets"
     registry_basepath: "registry.eu-de.bluemix.net"
     registry_space: "lventi"
     server:
