@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: configmap-env-digitalcmr-server
+  name: configmap-env-server
 data:
   VCAP_HOST:          {{ quote .Values.global.application.server.host }}
   VCAP_PORT:          {{ quote .Values.global.application.server.port }}
