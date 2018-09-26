@@ -13,7 +13,7 @@ data:
     ],
     "ca":          {
       "url":  "http://{{ .Values.global.network.actual_cluster_IP }}:{{ .Values.global.network.ca_port }}",
-      "name": {{ quote .Values.global.network.ca_port }}
+      "name": {{ quote .Values.global.network.ca_name }}
     },
     "peers":       [
     {
