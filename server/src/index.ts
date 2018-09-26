@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import {RoutingControllersOptions, useContainer} from 'routing-controllers';
+import {RoutingControllersOptions, useContainer, useExpressServer} from 'routing-controllers';
 import {Container} from 'typedi';
 import * as express from 'express';
 import {Application} from 'express';
@@ -18,6 +18,7 @@ import {DataService} from './datasource/DataService';
 import {IdentityManager} from './blockchain/IdentityManager';
 import {UserInfo} from './interfaces/entity.inferface';
 import {ConnectionPoolManager} from './connections/ConnectionPoolManager';
+import * as http from 'http';
 
 class App {
   private loggerFactory: LoggerFactory = new LoggerFactory(Config.settings.winston, Config.settings.morgan);
@@ -68,6 +69,15 @@ class App {
     process.on('unhandledRejection', (error: Error, promise: Promise<any>) => {
       this.logger.error('Unhandled rejection', error.stack);
     });
+
+    this.setupHTTPServer(app);
+  }
+
+  private setupHTTPServer(app: any): void {
+    useExpressServer(app, this.routingControllersOptions);
+
+    http.createServer(app).listen(Config.settings.port as number, Config.settings.host);
+    this.logger.info(`TSL disabled - API at http://${Config.settings.host}:${Config.settings.port}${Config.settings.apiPath}`);
   }
 
   private async addTestData(): Promise<any> {

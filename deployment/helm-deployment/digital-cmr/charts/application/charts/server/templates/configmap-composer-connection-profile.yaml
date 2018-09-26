@@ -5,17 +5,24 @@ metadata:
 data:
   connection.json: |-
     {
-    type: "hlfv1"
-    orderers:
-    - url:  "grpc://{{ .Values.global.network.orderer_cluster_IP }}:{{ .Values.global.network.orderer_port }}"
-    ca:
-      url:  "http://{{ .Values.global.network.actual_cluster_IP }}:{{ .Values.global.network.ca_port }}"
-      name: {{ quote .Values.global.network.ca_port }}
-    peers:
-    - requestURL: "grpc://{{ .Values.global.network.actual_cluster_IP }}:{{ .Values.global.network.peer_port }}"
-      eventURL: "grpc://{{ .Values.global.network.actual_cluster_IP }}:{{ .Values.global.network.peer_event_port }}"
-    keyValStore:  "/home/composer/.composer-credentials"
-    channel:  {{quote .Values.global.blockchain.channel }}
-    mspID:  "{{ .Values.global.organization.name }}MSP"
-    timeout:  "300"
+    "type":        "hlfv1",
+    "orderers":    [
+    {
+      "url": "grpc://{{ .Values.global.network.orderer_cluster_IP }}:{{ .Values.global.network.orderer_port }}"
+    }
+    ],
+    "ca":          {
+      "url":  "http://{{ .Values.global.network.actual_cluster_IP }}:{{ .Values.global.network.ca_port }}",
+      "name": {{ quote .Values.global.network.ca_port }}
+    },
+    "peers":       [
+    {
+      "requestURL": "grpc://{{ .Values.global.network.actual_cluster_IP }}:{{ .Values.global.network.peer_port }}",
+      "eventURL":   "grpc://{{ .Values.global.network.actual_cluster_IP }}:{{ .Values.global.network.peer_event_port }}"
+    }
+    ],
+    "keyValStore": "/home/composer/.composer-credentials",
+    "channel":     {{quote .Values.global.blockchain.channel }},
+    "mspID":       "{{ .Values.global.organization.name }}MSP",
+    "timeout":     "300"
     }

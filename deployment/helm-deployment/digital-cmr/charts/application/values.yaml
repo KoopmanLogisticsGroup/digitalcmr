@@ -26,9 +26,9 @@ global:
       public_port: "31001"
       env:  "noenv"
       docker:
-        image: "digitalcmr_server"
-        tag: "digitalcmr_default"
-        name: "digitalcmr-server"
+        image: "digital-cmr_server"
+        tag: "digital-cmr_default"
+        name: "digital-cmr_server"
       users:
         admin:
           username: "admin"
