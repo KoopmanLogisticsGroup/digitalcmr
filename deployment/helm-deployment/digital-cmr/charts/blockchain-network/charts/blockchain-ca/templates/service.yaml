@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.global.ca.name }}
+  name: {{ .Values.global.org.name }}-{{ .Values.global.ca.name }}
   labels:
-    app: {{ .Values.global.ca.name }}
+    app: {{ .Values.global.org.name }}-{{ .Values.global.ca.name }}
     chart: {{ template "blockchain-ca.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -11,5 +11,5 @@ spec:
   type: {{ .Values.service.type }}
   ports: {{ include "service.ports" . | indent 2}}
   selector:
-    app: {{ .Values.global.ca.name }}
+    app: {{ .Values.global.org.name }}-{{ .Values.global.ca.name }}
     release: {{ .Release.Name }}

@@ -42,47 +42,43 @@ chart: {{ include "blockchain-ca.chart" . }}
 {{- end -}}
 
 {{/*
-Create index for the secrets of ca
+Create index for the secrets of users
 */}}
-{{- define "secret.ca.index" -}}
-{{- $baseRoot := printf "certs/ca/%s/" .Values.global.org.name }}
+{{- define "secret.users.index" -}}
+{{- $baseRoot := printf "certs/users/%s/" .Values.global.org.name }}
 {{- $root := printf "%s**" $baseRoot}}
+{{- $adminCertificate := printf "Admin@%s-cert.pem" .Values.global.org.name }}
+{{- $adminTempCert := printf "admin-%s-cert.pem" .Values.global.org.name }}
 {{- range $path, $bytes := .Files.Glob $root}}
 - key: {{base $path }}
-  path: {{$path | trimPrefix $baseRoot }}
+  path: {{$path | trimPrefix $baseRoot | replace $adminTempCert $adminCertificate}}
 {{- end }}
 {{- end -}}
 
 {{/*
-Create index for the keystore of ca
+Create index for the secrets of peers
 */}}
-{{- define "ca.keystore" -}}
-{{- $baseRoot := printf "certs/ca/%s/" .Values.global.org.name }}
-{{- $root := printf "%s**_sk" $baseRoot}}
+{{- define "secret.peers.index" -}}
+{{- $baseRoot := printf "certs/peers/%s/" .Values.global.org.name }}
+{{- $root := printf "%s**" $baseRoot}}
+{{- $adminCertificate := printf "Admin@%s-cert.pem" .Values.global.org.name }}
+{{- $adminTempCert := printf "admin-%s-cert.pem" .Values.global.org.name }}
 {{- range $path, $bytes := .Files.Glob $root}}
-{{- base $path }}
+- key: {{base $path }}
+  path: {{$path | trimPrefix $baseRoot | replace $adminTempCert $adminCertificate}}
 {{- end }}
 {{- end -}}
 
-{{/*
-Create index for the keystore of ca
-*/}}
-{{- define "ca.certificate" -}}
-{{- $baseRoot := printf "certs/ca/%s/" .Values.global.org.name }}
-{{- $root := printf "%s**.pem" $baseRoot}}
-{{- range $path, $bytes := .Files.Glob $root}}
-{{- base $path }}
-{{- end }}
-{{- end -}}
 
 {{/*
 Create ports for the service.
 */}}
-{{- define "service.ports" -}}
-{{- range $key, $value := .Values.service.ports }}
-- protocol: {{ $value.protocol }}
-  port: {{ $value.port }}
-  nodePort: {{ $value.nodePort }}
-  name: {{ $value.name }}
+{{- define "cryptoconfig" -}}
+{{ if .Values }}
+cryptoconfig: {{ .Values.cryptoconfigorg1 }}
+{{- else if .Values.global.org.name and eq .Values.global.org.name "org2" }}
+cryptoconfig: {{ .Values.cryptoconfigorg2 }}
 {{- end -}}
 {{- end -}}
+
+

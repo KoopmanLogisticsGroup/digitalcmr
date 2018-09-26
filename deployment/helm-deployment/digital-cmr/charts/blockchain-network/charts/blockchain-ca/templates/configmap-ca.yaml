@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Values.global.ca.name }}-config
+  name: {{ .Values.global.org.name }}-{{ .Values.global.ca.name }}-config
   annotations:
     "helm.sh/hook": "pre-install"
     "helm.sh/hook-weight": "1"
@@ -11,6 +11,6 @@ metadata:
 data:
   FABRIC_CA_SERVER_DEBUG: "true"
   FABRIC_CA_SERVER_TLS_ENABLED: "false"
-  FABRIC_CA_SERVER_TLS_CERTFILE: /fabric-config/ca/ca.org1-cert.pem
-  FABRIC_CA_SERVER_TLS_KEYFILE: /fabric-config/ca/893310e916a6534671a65c141b6661611330f9c261ee7106f238c5ce7861191b_sk
+  FABRIC_CA_SERVER_CA_CERTFILE: /fabric-config/ca/{{- include "ca.certificate" . }}
+  FABRIC_CA_SERVER_CA_KEYFILE: /fabric-config/ca/{{ include "ca.keystore" . }}
   GODEBUG: "netdns=go"

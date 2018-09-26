@@ -6,7 +6,7 @@ kind: Ingress
 metadata:
   name: {{ $fullName }}
   labels:
-    app: {{ .Values.global.peer.name }}
+    app: {{ .Values.global.org.name }}-{{ .Values.global.peer.name }}
     chart: {{ template "blockchain-peer.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}

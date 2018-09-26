@@ -30,7 +30,10 @@ spec:
       containers:
       - name: join-channel
         image: "{{ .Values.peerimage.repository }}:{{ .Values.peerimage.tag }}"
-        command: ["sh", "-c"," sleep 30; peer channel fetch config -o {{ .Values.global.orderer.name }}:{{ .Values.global.orderer.port }} -c {{ .Values.global.channelname }} && peer channel join -b {{ .Values.global.channelname }}_config.block"]
+        command: ["sh", "-c"," sleep 30; peer channel fetch config -o
+          {{- if .Values.global.orderer.deployorderer }} {{ .Values.global.org.name }}-{{ .Values.global.orderer.name }}:{{ .Values.global.orderer.port }}
+          {{- else }} {{ .Values.global.orderer.ip }}:{{ .Values.global.orderer.externalport }}
+          {{- end }} -c {{ .Values.global.channelname }} && peer channel join -b {{ .Values.global.channelname }}_config.block"]
         envFrom:
           - configMapRef:
               name: channels-config
@@ -42,15 +45,5 @@ spec:
         secret:
           secretName: join-channel-config
           items:
-          - key: admin-org1-cert.pem
-            path: msp/admincerts/Admin@org1-cert.pem
-          - key: ca.org1-cert.pem
-            path: msp/cacerts/ca.org1-cert.pem
-          - key: 65ff48b19f516811fc5c64f658773a1b0ea5c9198b947e34c5ef6ab45bae0fc8_sk
-            path: msp/keystore/65ff48b19f516811fc5c64f658773a1b0ea5c9198b947e34c5ef6ab45bae0fc8_sk
-          - key: admin-signcert
-            path: msp/signcerts/Admin@org1-cert.pem
-          - key: tlsca.org1-cert.pem
-            path: msp/tlscacerts/tlsca.org1-cert.pem
-          - key: genericnetwork.tx
-            path: ./genericnetwork.tx
+{{- include "secret.users.index" . | indent 10}}
+

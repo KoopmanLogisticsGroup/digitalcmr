@@ -11,7 +11,7 @@ metadata:
     "helm.sh/hook-weight": "1"
     "helm.sh/hook-delete-policy": "before-hook-creation"
 data:
-  VCAP_HOST:          {{ quote .Values.global.application.server.host }}
+#  VCAP_HOST:          {{ quote .Values.global.application.server.host }}
   VCAP_PORT:          {{ quote .Values.global.application.server.port }}
   NODE_ENV:           {{ quote .Values.global.application.server.env }}
   COMPOSER_PROFILE:   {{ quote .Values.global.blockchain.composer_profile }}
