@@ -3,6 +3,9 @@ kind: Deployment
 metadata:
   labels:
     app: {{ .Values.global.application.server.name }}
+    chart: {{ .Chart.Name }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
   name: {{ .Values.global.application.server.name }}
 spec:
   selector:
@@ -26,6 +29,7 @@ spec:
           mountPath: /root/config/.composer-connection-profiles/{{ .Values.global.blockchain.composer_profile }}
         image: {{ .Values.global.application.registry_basepath }}/{{ .Values.global.application.registry_space }}/{{ default "digitalcmr-server" .Values.global.application.server.docker.image }}:{{ default "latest" .Values.global.application.server.docker.tag }}
         name: {{ .Values.global.application.server.name }}
+        imagePullPolicy: Always
         ports:
         - containerPort: {{ default "8080" .Values.global.application.server.port }}
       volumes:

@@ -21,8 +21,6 @@ peerimage:
 
 service:
   type: NodePort
-  selector:
-    tier: peer0-org1
   ports:
   - protocol: TCP
     port: 5010
@@ -53,23 +51,23 @@ createchannel:
 global:
   channelname: "genericchannel"
   networkfilename: "genericnetwork.tx"
+  genesisfilename: "genericgenesis.block"
   loglevel: "debug"
   org:
-    name: "org2"
-    ip: "159.122.187.53"
+    name: "org1"
   orderer:
-    deployorderer: false
-    name: "org1-orderer"
+    deployorderer: true
+    name: "orderer"
     port: "7050"
     ip: "159.122.187.53"
     externalport: "31010"
   ca:
-    name: "org2-ca"
+    name: "ca"
     port: "7054"
   peer:
-    name: "org2-peer"
+    name: "peer"
     requestport: "5010"
     eventport: "5011"
     couchdb:
-      name: "org2-peer-couchdb"
+      name: "peer-couchdb"
       port: "5984"
