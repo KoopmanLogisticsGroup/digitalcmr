@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ .Values.global.application.server.name }}
+  name: {{ .Values.global.application.server.name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.global.application.server.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.global.application.server.name }}
+    spec:
+      containers:
+      - args:
+        - sh
+        - -c
+        - npm start
+        envFrom:
+        - configMapRef:
+            name: configmap-env-server
+        volumeMounts:
+        - name: composer-connection-profile-volume
+          mountPath: /root/.composer-connection-profiles/{{ .Values.global.blockchain.composer_profile }}
+        image: {{ .Values.global.application.registry_basepath }}/{{ .Values.global.application.registry_space }}/{{ default "digitalcmr-server" .Values.global.application.server.docker.image }}:{{ default "latest" .Values.global.application.server.docker.tag }}
+        name: {{ .Values.global.application.server.name }}
+        ports:
+        - containerPort: {{ default "8080" .Values.global.application.server.port }}
+      volumes:
+      - name: composer-connection-profile-volume
+        configMap:
+          # Provide the name of the ConfigMap containing the files you want
+          # to add to the container
+          name: configmap-composer-connection-profile
+      restartPolicy: {{ default "Always" .Values.restart_policy }}

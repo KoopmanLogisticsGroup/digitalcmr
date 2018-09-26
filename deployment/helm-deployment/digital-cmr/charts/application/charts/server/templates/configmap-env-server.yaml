@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap-env-server
+data:
+#  VCAP_HOST:          {{ quote .Values.global.application.server.host }}
+  VCAP_PORT:          {{ quote .Values.global.application.server.port }}
+  NODE_ENV:           {{ quote .Values.global.application.server.env }}
+  COMPOSER_PROFILE:   {{ quote .Values.global.blockchain.composer_profile }}
+  COMPOSER_NETWORK:   {{ quote .Values.global.blockchain.composer_network }}
+  COMPOSER_CHANNEL:   {{ quote .Values.global.blockchain.channel }}
+  COMPOSER_NAMESPACE: {{ quote .Values.global.blockchain.composer_namespace }}
+  COUCHDB_HOST:       {{ quote .Values.global.application.couchdb.host }}
+  COUCHDB_PORT:       {{ quote .Values.global.application.couchdb.port }}
+  ADMIN_USERNAME:     {{ quote .Values.global.application.server.users.admin.username }}
+  ADMIN_PASSWORD:     {{ quote .Values.global.application.server.users.admin.password }}
+  ADMIN_FIRSTNAME:    {{ quote .Values.global.application.server.users.admin.firstName }}
+  ADMIN_LASTNAME:     {{ quote .Values.global.application.server.users.admin.lastName }}
+  ADMIN_ROLE:         {{ quote .Values.global.application.server.users.admin.role }}

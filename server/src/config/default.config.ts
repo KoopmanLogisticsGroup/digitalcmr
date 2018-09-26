@@ -5,7 +5,7 @@ export class DefaultConfig {
   public static get settings(): Settings {
     return {
       apiPath:      '/api/v1',
-      env:          process.env.NODE_ENV,
+      env:          process.env.NODE_ENV || '',
       host:         process.env.VCAP_HOST || process.env.HOST || '0.0.0.0',
       port:         process.env.VCAP_PORT || process.env.PORT || '8080',
       morgan:       {},
@@ -23,14 +23,14 @@ export class DefaultConfig {
       },
       serverSecret: 'sUp4hS3cr37kE9c0D3',
       composer:     {
-        channel:   'composerchannel',
-        profile:   'defaultProfile',
-        network:   'digital-cmr-network',
-        namespace: 'org.digitalcmr'
+        channel:    process.env.COMPOSER_CHANNEL || '',
+        profile:    process.env.COMPOSER_PROFILE || '',
+        network:    process.env.COMPOSER_NETWORK || '',
+        namespace:  process.env.COMPOSER_NAMESPACE || ''
       },
       privateDB:    {
-        host: 'privatedb',
-        port: '5984'
+        host: process.env.COUCHDB_HOST || '',
+        port: process.env.COUCHDB_PORT || ''
       }
     };
   }
