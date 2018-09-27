@@ -1,6 +1,6 @@
 global:
   organization:
-    name: "Org1"
+    name: "org1"
   network:
     actual_cluster_IP: "159.122.186.207"
     orderer_cluster_IP: "159.122.186.207"
@@ -13,7 +13,7 @@ global:
   blockchain:
     channel: "genericchannel"
     composer_profile: "org1"
-    composer_network: "genericnetwork"
+    composer_network: "digital-cmr-network"
     composer_namespace: "org.digitalcmr"
 
   application:
