@@ -1,23 +1,11 @@
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    app: {{ .Values.global.application.couchdb.name }}
-  name: {{ .Values.global.application.couchdb.name }}
-spec:
-  ports:
-  - name: http
-    port: {{ default "5984" .Values.global.application.couchdb.port }}
-    targetPort: {{ default "5984" .Values.global.application.couchdb.port }}
-  selector:
-    app: {{ .Values.global.application.couchdb.name }}
----
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
     app: {{ .Values.global.application.couchdb.name }}
+    chart: {{ .Chart.Name }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
   name: {{ .Values.global.application.couchdb.name }}
 spec:
   selector:
@@ -32,12 +20,12 @@ spec:
       - image: couchdb:{{ default "2.1.1" .Values.tag_couch }}
         name: {{ .Values.global.application.couchdb.name }}
         volumeMounts:
-          - mountPath: {{ default "/opt/couchdb/data" .Values.mount_path }}
-            name: {{ .Values.couchdb.volume_mount_name }}
+        - mountPath: {{ default "/opt/couchdb/data" .Values.mount_path }}
+          name: {{ .Values.couchdb.volume_mount_name }}
         ports:
         - containerPort: {{ default "5984" .Values.global.application.couchdb.port }}
       restartPolicy:  {{ default "Always" .Values.restart_policy }}
       volumes:
-        - name: {{ .Values.couchdb.volume_mount_name }}
-          persistentVolumeClaim:
-            claimName: {{ .Values.couchdb.volume_claim }}
+      - name: {{ .Values.couchdb.volume_mount_name }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.couchdb.volume_claim }}

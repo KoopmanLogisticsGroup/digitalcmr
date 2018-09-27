@@ -1,9 +1,9 @@
 global:
   organization:
-    name: "Org1"
+    name: "org1"
   network:
-    actual_cluster_IP: "159.122.186.12"
-    orderer_cluster_IP: "159.122.187.53"
+    actual_cluster_IP: "159.122.186.207"
+    orderer_cluster_IP: "159.122.186.207"
     orderer_port: "31010"
     ca_name: "org1-ca"
     ca_port: "30010"
@@ -12,13 +12,13 @@ global:
 
   blockchain:
     channel: "genericchannel"
-    composer_profile: "composerDefaultProfile"
-    composer_network: "genericnetwork"
+    composer_profile: "org1"
+    composer_network: "digital-cmr-network"
     composer_namespace: "org.digitalcmr"
 
   application:
-    registry_basepath: "registry.eu-de.bluemix.net"
-    registry_space: "lventi"
+    registry_basepath: "registry.eu-gb.bluemix.net"
+    registry_space: "koopman-gb"
     server:
       name: "digitalcmr-server"
       host: "digitalcmr-server"
@@ -26,9 +26,9 @@ global:
       public_port: "31001"
       env:  "noenv"
       docker:
-        image: "digital-cmr_server"
-        tag: "digital-cmr_default"
-        name: "digital-cmr_server"
+        image: "digitalcmr_server"
+        tag: "helm-test"
+        name: "digitalcmr_server"
       users:
         admin:
           username: "admin"
