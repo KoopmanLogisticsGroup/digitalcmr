@@ -45,7 +45,7 @@ chart: {{ include "blockchain-ca.chart" . }}
 Create index for the secrets of users
 */}}
 {{- define "secret.users.index" -}}
-{{- $baseRoot := printf "certs/users/%s/" .Values.global.org.name }}
+{{- $baseRoot := printf "environment/crypto-config/peerOrganizations/%s/users/admin-%s/" .Values.global.org.name .Values.global.org.name }}
 {{- $root := printf "%s**" $baseRoot}}
 {{- $adminCertificate := printf "Admin@%s-cert.pem" .Values.global.org.name }}
 {{- $adminTempCert := printf "admin-%s-cert.pem" .Values.global.org.name }}
@@ -59,7 +59,7 @@ Create index for the secrets of users
 Create index for the secrets of peers
 */}}
 {{- define "secret.peers.index" -}}
-{{- $baseRoot := printf "certs/peers/%s/" .Values.global.org.name }}
+{{- $baseRoot := printf "environment/crypto-config/peerOrganizations/%s/peers/peer0.%s/" .Values.global.org.name .Values.global.org.name }}
 {{- $root := printf "%s**" $baseRoot}}
 {{- $adminCertificate := printf "Admin@%s-cert.pem" .Values.global.org.name }}
 {{- $adminTempCert := printf "admin-%s-cert.pem" .Values.global.org.name }}
@@ -69,16 +69,16 @@ Create index for the secrets of peers
 {{- end }}
 {{- end -}}
 
-
 {{/*
-Create ports for the service.
+Create index for the secrets of orderers
 */}}
-{{- define "cryptoconfig" -}}
-{{ if .Values }}
-cryptoconfig: {{ .Values.cryptoconfigorg1 }}
-{{- else if .Values.global.org.name and eq .Values.global.org.name "org2" }}
-cryptoconfig: {{ .Values.cryptoconfigorg2 }}
+{{- define "secret.orderers.index" -}}
+{{- $baseRoot := printf "environment/crypto-config/ordererOrganizations/%s/orderers/orderer.%s/" .Values.global.org.name .Values.global.org.name }}
+{{- $root := printf "%s**" $baseRoot}}
+{{- $adminCertificate := printf "Admin@%s-cert.pem" .Values.global.org.name }}
+{{- $adminTempCert := printf "admin-%s-cert.pem" .Values.global.org.name }}
+{{- range $path, $bytes := .Files.Glob $root}}
+- key: {{base $path }}
+  path: {{$path | trimPrefix $baseRoot | replace $adminTempCert $adminCertificate}}
+{{- end }}
 {{- end -}}
-{{- end -}}
-
-

@@ -42,18 +42,6 @@ chart: {{ include "blockchain-ca.chart" . }}
 {{- end -}}
 
 {{/*
-Create index for the secrets of ca
-*/}}
-{{- define "secret.ca.index" -}}
-{{- $baseRoot := printf "certs/ca/%s/" .Values.global.org.name }}
-{{- $root := printf "%s**" $baseRoot}}
-{{- range $path, $bytes := .Files.Glob $root}}
-- key: {{base $path }}
-  path: {{$path | trimPrefix $baseRoot }}
-{{- end }}
-{{- end -}}
-
-{{/*
 Create index for the keystore of ca
 */}}
 {{- define "ca.keystore" -}}

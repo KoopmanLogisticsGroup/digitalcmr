@@ -59,7 +59,7 @@ global:
     deployorderer: true
     name: "orderer"
     port: "7050"
-    ip: "159.122.186.207"
+    ip: "159.122.186.63"
     externalport: "31010"
   ca:
     name: "ca"
