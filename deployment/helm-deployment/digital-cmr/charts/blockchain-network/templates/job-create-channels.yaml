@@ -44,4 +44,6 @@ spec:
           secretName: create-channel-config
           items:
 {{- include "secret.peers.index" . | indent 10}}
+          - key: {{ .Values.global.networkfilename }}
+            path: {{ .Values.global.networkfilename }}
 {{- end }}

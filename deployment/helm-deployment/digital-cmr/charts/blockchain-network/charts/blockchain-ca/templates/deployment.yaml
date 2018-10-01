@@ -24,7 +24,7 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           image: ibmblockchain/fabric-ca:1.0.6
-          command: ["sh", "-c", "cp /fabric-config-temp/* /fabric-config/ca; fabric-ca-server start --ca.name {{ .Values.global.org.name }}-{{ .Values.global.ca.name }} --ca.certfile /fabric-config/ca/{{ $caCertificate }} --ca.keyfile /fabric-config/ca/{{$caKeystore}} -b admin:adminpw -d"]
+          command: ["sh", "-c", "cp /fabric-config-temp/** /fabric-config/ca/; fabric-ca-server start --ca.name {{ .Values.global.org.name }}-{{ .Values.global.ca.name }} --ca.certfile /fabric-config/ca/{{ $caCertificate }} --ca.keyfile /fabric-config/ca/{{$caKeystore}} -b admin:adminpw -d"]
           envFrom:
           - configMapRef:
               name: {{ .Values.global.org.name }}-{{ .Values.global.ca.name }}-config

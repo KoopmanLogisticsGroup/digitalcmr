@@ -18,4 +18,4 @@ spec:
   selector:
     app: {{ .Values.global.org.name }}-{{ .Values.global.orderer.name }}
     release: {{ .Release.Name }}
-{{ end }}
+  {{ end }}

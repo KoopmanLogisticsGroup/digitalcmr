@@ -2,8 +2,8 @@ global:
   organization:
     name: "org1"
   network:
-    actual_cluster_IP: "159.122.186.207"
-    orderer_cluster_IP: "159.122.186.207"
+    actual_cluster_IP: "159.122.186.63"
+    orderer_cluster_IP: "159.122.186.63"
     orderer_port: "31010"
     ca_name: "org1-ca"
     ca_port: "30010"
@@ -17,8 +17,8 @@ global:
     composer_namespace: "org.digitalcmr"
 
   application:
-    registry_basepath: "registry.eu-gb.bluemix.net"
-    registry_space: "koopman-gb"
+    registry_basepath: "registry.eu-de.bluemix.net"
+    registry_space: "koopman"
     server:
       name: "digitalcmr-server"
       host: "digitalcmr-server"

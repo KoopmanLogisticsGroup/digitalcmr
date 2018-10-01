@@ -69,16 +69,16 @@ Create index for the secrets of peers
 {{- end }}
 {{- end -}}
 
+
 {{/*
-Create index for the secrets of orderers
+Create ports for the service.
 */}}
-{{- define "secret.orderers.index" -}}
-{{- $baseRoot := printf "environment/crypto-config/ordererOrganizations/%s/orderers/orderer.%s/" .Values.global.org.name .Values.global.org.name }}
-{{- $root := printf "%s**" $baseRoot}}
-{{- $adminCertificate := printf "Admin@%s-cert.pem" .Values.global.org.name }}
-{{- $adminTempCert := printf "admin-%s-cert.pem" .Values.global.org.name }}
-{{- range $path, $bytes := .Files.Glob $root}}
-- key: {{base $path }}
-  path: {{$path | trimPrefix $baseRoot | replace $adminTempCert $adminCertificate}}
-{{- end }}
+{{- define "cryptoconfig" -}}
+{{ if .Values }}
+cryptoconfig: {{ .Values.cryptoconfigorg1 }}
+{{- else if .Values.global.org.name and eq .Values.global.org.name "org2" }}
+cryptoconfig: {{ .Values.cryptoconfigorg2 }}
 {{- end -}}
+{{- end -}}
+
+

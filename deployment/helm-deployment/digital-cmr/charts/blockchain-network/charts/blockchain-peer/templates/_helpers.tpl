@@ -52,3 +52,17 @@ Create ports for the service.
   name: {{ $value.name }}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Create index for the secrets of peers
+*/}}
+{{- define "secret.peers.index" -}}
+{{- $baseRoot := printf "environment/crypto-config/peerOrganizations/%s/peers/peer0.%s/" .Values.global.org.name .Values.global.org.name }}
+{{- $root := printf "%s**" $baseRoot}}
+{{- $adminCertificate := printf "Admin@%s-cert.pem" .Values.global.org.name }}
+{{- $adminTempCert := printf "admin-%s-cert.pem" .Values.global.org.name }}
+{{- range $path, $bytes := .Files.Glob $root}}
+- key: {{base $path }}
+  path: {{$path | trimPrefix $baseRoot | replace $adminTempCert $adminCertificate}}
+{{- end }}
+{{- end -}}

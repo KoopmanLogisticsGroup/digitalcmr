@@ -45,7 +45,7 @@ chart: {{ include "blockchain-ca.chart" . }}
 Create index for the keystore of ca
 */}}
 {{- define "ca.keystore" -}}
-{{- $baseRoot := printf "certs/ca/%s/" .Values.global.org.name }}
+{{- $baseRoot := printf "environment/crypto-config/peerOrganizations/%s/ca/" .Values.global.org.name }}
 {{- $root := printf "%s**_sk" $baseRoot}}
 {{- range $path, $bytes := .Files.Glob $root}}
 {{- base $path }}
@@ -56,7 +56,7 @@ Create index for the keystore of ca
 Create index for the keystore of ca
 */}}
 {{- define "ca.certificate" -}}
-{{- $baseRoot := printf "certs/ca/%s/" .Values.global.org.name }}
+{{- $baseRoot := printf "environment/crypto-config/peerOrganizations/%s/ca/" .Values.global.org.name }}
 {{- $root := printf "%s**.pem" $baseRoot}}
 {{- range $path, $bytes := .Files.Glob $root}}
 {{- base $path }}

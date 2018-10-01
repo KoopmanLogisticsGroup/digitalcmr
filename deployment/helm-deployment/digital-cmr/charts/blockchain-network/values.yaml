@@ -49,6 +49,7 @@ createchannel:
   name: "create-channel"
 
 global:
+  bnafile: "digital-cmr-network.bna"
   channelname: "genericchannel"
   networkfilename: "genericnetwork.tx"
   genesisfilename: "genericgenesis.block"

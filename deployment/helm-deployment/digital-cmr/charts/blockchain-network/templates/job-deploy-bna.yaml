@@ -30,7 +30,7 @@ spec:
       containers:
       - name: deploy-bna
         image: "{{ .Values.composerimage.repository }}:{{ .Values.composerimage.tag }}"
-        command: ["sh", "-c","composer identity import -p {{ .Values.global.org.name }} -u admin -c /fabric-config/msp/signcerts/Admin@{{ .Values.global.org.name }}-cert.pem -k /fabric-config/msp/keystore/`ls /fabric-config/msp/keystore` && echo 'Done with importing identity'; ls /fabric-config; cat /fabric-config/digital-cmr-network.bna; composer network deploy -a /fabric-config/digital-cmr-network.bna -i admin -s passwd -p {{ .Values.global.org.name }} && echo 'Done with deploying'"]
+        command: ["sh", "-c","composer identity import -p {{ .Values.global.org.name }} -u admin -c /fabric-config/msp/signcerts/Admin@{{ .Values.global.org.name }}-cert.pem -k /fabric-config/msp/keystore/`ls /fabric-config/msp/keystore` && echo 'Done with importing identity'; composer network deploy -a /fabric-config/digital-cmr-network.bna -i admin -s passwd -p {{ .Values.global.org.name }} && echo 'Done with deploying'"]
         envFrom:
           - configMapRef:
               name: deploy-bna-config
@@ -47,6 +47,8 @@ spec:
         secret:
           secretName: deploy-bna-config
           items:
+          - key: {{ .Values.global.bnafile }}
+            path: {{ .Values.global.bnafile }}
 {{- include "secret.users.index" . | indent 10}}
 
 
