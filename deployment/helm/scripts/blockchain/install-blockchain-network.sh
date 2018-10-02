@@ -19,11 +19,6 @@ if [ $2 = '--import-network' ]
     echo import
 fi
 
-#check environment directory
-
-#generate configuration based on configtx.yaml
-
-#run generate network script
 
 #copy environment folder into charts
 

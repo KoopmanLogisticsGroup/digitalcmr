@@ -3,7 +3,6 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
----
 ################################################################################
 #
 #   Profile
@@ -53,7 +52,7 @@ Organizations:
         ID: {{ .Values.global.orderer.name }}MSP
 
         # MSPDir is the filesystem path which contains the MSP configuration
-        MSPDir: crypto-config/ordererOrganizations/{{ .Values.global.orderer.name }}/msp
+        MSPDir: crypto-config/ordererOrganizations/{{ .Values.global.org.name }}/msp
 
         # turn off security for the channel
         AdminPrincipal: Role.MEMBER
@@ -75,7 +74,7 @@ Organizations:
             # AnchorPeers defines the location of peers which can be used
             # for cross org gossip communication.  Note, this value is only
             # encoded in the genesis block in the Application section context
-            - Host: peer0-{{ .Values.global.org.name }}
+            - Host: {{ .Values.global.org.name }}-peer
               Port: 7051
 
     - &{{ .Values.global.org2_for_cryptos.name }}
@@ -95,7 +94,7 @@ Organizations:
             # AnchorPeers defines the location of peers which can be used
             # for cross org gossip communication.  Note, this value is only
             # encoded in the genesis block in the Application section context
-            - Host: peer0-{{ .Values.global.org2_for_cryptos.name }}
+            - Host: {{ .Values.global.org2_for_cryptos.name }}-peer
               Port: 7051
 
 ################################################################################
