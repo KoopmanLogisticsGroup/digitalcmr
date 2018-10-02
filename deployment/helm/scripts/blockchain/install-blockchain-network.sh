@@ -9,15 +9,17 @@
 
 if [ $2 = '--generate-network' ]
   then
-    source ./network/generate-configtx.sh template-environment
-    source ./network/generate-crypto-config.sh template-environment
-    source ./network/generate-network.sh template-environment
+    source ./network/generate-configtx.sh $1
+    source ./network/generate-crypto-config.sh $1
+    source ./network/generate-network.sh $1
 fi
 
 if [ $2 = '--import-network' ]
   then
-    echo import
+    echo "importing network"
 fi
+
+source ./network/copy-environment-into-charts.sh $1
 
 
 #copy environment folder into charts

@@ -50,9 +50,9 @@ createchannel:
 
 global:
   bnafile: "digital-cmr-network.bna"
-  channelname: "genericchannel" #do not edit it!
-  networkfilename: "genericnetwork.tx" #do not edit it!
-  genesisfilename: "genericgenesis.block" #do not edit it!
+  channelname: "genericchannel"
+  networkfilename: "genericnetwork.tx"
+  genesisfilename: "genericgenesis.block"
   loglevel: "debug"
   org:
     name: "org1"
