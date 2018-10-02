@@ -16,6 +16,8 @@ cd $SCRIPT_DIR"/"$DIGITALCMR_BLOCKCHAIN_CHART_RELATIVE_PATH
 mv $SCRIPT_DIR"/"$DIGITALCMR_BLOCKCHAIN_CHART_RELATIVE_PATH"/templates/configtx.yaml" $SCRIPT_DIR"/"$DIGITALCMR_BLOCKCHAIN_CHART_RELATIVE_PATH"/templates/configtx.yaml.tmpcfg"
 mv $SCRIPT_DIR"/"$DIGITALCMR_BLOCKCHAIN_CHART_RELATIVE_PATH"/templates/crypto-config.yaml" $SCRIPT_DIR"/"$DIGITALCMR_BLOCKCHAIN_CHART_RELATIVE_PATH"/templates/crypto-config.yaml.tmpcfg"
 
+echo "Running helm install"
+
 helm install . -n blockchain-network
 
 #mark back confitgtx.yaml and crypto-config.yaml
