@@ -56,6 +56,8 @@ global:
   loglevel: "debug"
   org:
     name: "org1"
+  org2_for_cryptos:
+    name: "org2"
   orderer:
     deployorderer: true
     name: "orderer"
