@@ -30,15 +30,19 @@ cp $SCRIPT_DIR$BNA_RELATIVE_PATH/digital-cmr-network.bna $SCRIPT_DIR$ENV_RELATIV
 
 
 #copy environment dir into blockchain CA
+rm -rf $SCRIPT_DIR$BLOCKCHAIN_CA_RELATIVE_PATH/environment/
 cp -R $SCRIPT_DIR$ENV_RELATIVE_PATH/network/environment-package/ $SCRIPT_DIR$BLOCKCHAIN_CA_RELATIVE_PATH/environment/
 
 #copy environment dir into blockchain ORDERER
+rm -rf $SCRIPT_DIR$BLOCKCHAIN_ORDERER_RELATIVE_PATH/environment/
 cp -R $SCRIPT_DIR$ENV_RELATIVE_PATH/network/environment-package/ $SCRIPT_DIR$BLOCKCHAIN_ORDERER_RELATIVE_PATH/environment/
 
 #copy environment dir into blockchain PEER
+rm -rf $SCRIPT_DIR$BLOCKCHAIN_PEER_RELATIVE_PATH/environment/
 cp -R $SCRIPT_DIR$ENV_RELATIVE_PATH/network/environment-package/ $SCRIPT_DIR$BLOCKCHAIN_PEER_RELATIVE_PATH/environment/
 
 #copy environment dir into blockchain PEER
+rm -rf $SCRIPT_DIR$BLOCKCHAIN_CHART_RELATIVE_PATH/environment/
 cp -R $SCRIPT_DIR$ENV_RELATIVE_PATH/network/environment-package/ $SCRIPT_DIR$BLOCKCHAIN_CHART_RELATIVE_PATH/environment/
 
 #remove environment-package dir

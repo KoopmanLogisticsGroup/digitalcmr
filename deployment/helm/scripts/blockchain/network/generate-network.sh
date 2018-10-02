@@ -11,6 +11,8 @@ CHANNEL_ID=genericchannel
 
 cd $SCRIPT_DIR$ENV_RELATIVE_PATH
 
+rm -rf $SCRIPT_DIR$ENV_RELATIVE_PATH"/crypto-config"
+
 export FABRIC_CFG_PATH=$(pwd)
 
 if [ ! -d "./channel-artifacts" ]; then
