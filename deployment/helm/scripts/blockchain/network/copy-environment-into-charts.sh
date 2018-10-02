@@ -9,7 +9,7 @@ BLOCKCHAIN_ORDERER_RELATIVE_PATH="/../../digital-cmr/charts/blockchain-network/c
 BLOCKCHAIN_PEER_RELATIVE_PATH="/../../digital-cmr/charts/blockchain-network/charts/blockchain-peer"
 DIGITALCMR_CHARTS_RELATIVE_PATH="/../../digital-cmr/charts"
 
-echo "Generating config for environment $1"
+echo "Copy environment $1 into charts"
 
 
 #make environment package dir

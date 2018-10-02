@@ -21,6 +21,7 @@ fi
 
 source ./network/copy-environment-into-charts.sh $1
 
+source ./network/helm-install-network.sh $1
 
 #copy environment folder into charts
 
