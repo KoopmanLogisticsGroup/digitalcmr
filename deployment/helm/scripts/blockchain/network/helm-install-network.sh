@@ -11,6 +11,17 @@ DIGITALCMR_BLOCKCHAIN_CHART_RELATIVE_PATH="/../../digital-cmr/charts/blockchain-
 
 cd $SCRIPT_DIR"/"$DIGITALCMR_BLOCKCHAIN_CHART_RELATIVE_PATH
 
+#mark confitgtx.yaml and crypto-config.yaml as .tmpcfg to helm ignore them
+
+mv $SCRIPT_DIR"/"$DIGITALCMR_BLOCKCHAIN_CHART_RELATIVE_PATH"/templates/configtx.yaml" $SCRIPT_DIR"/"$DIGITALCMR_BLOCKCHAIN_CHART_RELATIVE_PATH"/templates/configtx.yaml.tmpcfg"
+mv $SCRIPT_DIR"/"$DIGITALCMR_BLOCKCHAIN_CHART_RELATIVE_PATH"/templates/crypto-config.yaml" $SCRIPT_DIR"/"$DIGITALCMR_BLOCKCHAIN_CHART_RELATIVE_PATH"/templates/crypto-config.yaml.tmpcfg"
+
 helm install . -n blockchain-network
+
+#mark back confitgtx.yaml and crypto-config.yaml
+
+mv $SCRIPT_DIR"/"$DIGITALCMR_BLOCKCHAIN_CHART_RELATIVE_PATH"/templates/configtx.yaml.tmpcfg" $SCRIPT_DIR"/"$DIGITALCMR_BLOCKCHAIN_CHART_RELATIVE_PATH"/templates/configtx.yaml"
+mv $SCRIPT_DIR"/"$DIGITALCMR_BLOCKCHAIN_CHART_RELATIVE_PATH"/templates/crypto-config.yaml.tmpcfg" $SCRIPT_DIR"/"$DIGITALCMR_BLOCKCHAIN_CHART_RELATIVE_PATH"/templates/crypto-config.yaml"
+
 
 cd $SCRIPT_DIR
