@@ -1,0 +1,21 @@
+{{ if .Values.global.orderer.deployorderer }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.global.org.name }}-{{ .Values.global.orderer.name }}
+  labels:
+    app: {{ .Values.global.org.name }}-{{ .Values.global.orderer.name }}
+    chart: {{ template "blockchain-orderer.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+  - protocol: TCP
+    port: {{ .Values.global.orderer.port }}
+    nodePort: {{ .Values.global.orderer.externalport }}
+    name: grpc
+  selector:
+    app: {{ .Values.global.org.name }}-{{ .Values.global.orderer.name }}
+    release: {{ .Release.Name }}
+  {{ end }}

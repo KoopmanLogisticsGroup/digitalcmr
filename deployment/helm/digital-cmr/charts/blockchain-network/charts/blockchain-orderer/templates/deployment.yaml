@@ -1,0 +1,45 @@
+{{ if .Values.global.orderer.deployorderer }}
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ .Values.global.org.name }}-{{ .Values.global.orderer.name }}
+  labels:
+    app: {{ .Values.global.org.name }}-{{ .Values.global.orderer.name }}
+    chart: {{ template "blockchain-orderer.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.global.org.name }}-{{ .Values.global.orderer.name }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.global.org.name }}-{{ .Values.global.orderer.name }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          command: ["sh", "-c", "orderer"]
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          envFrom:
+          - configMapRef:
+              name: {{ .Values.global.org.name }}-{{ .Values.global.orderer.name }}-config
+          volumeMounts:
+          - name: orderer-config-{{ .Values.global.org.name }}-{{ .Values.global.orderer.name }}
+            mountPath: /fabric-config/
+            readOnly: true
+      volumes:
+      - name: orderer-config-{{ .Values.global.org.name }}-{{ .Values.global.orderer.name }}
+        secret:
+          secretName: orderer-config-{{ .Values.global.org.name }}-{{ .Values.global.orderer.name }}
+          items:
+{{- include "secret.orderer.index" . | indent 10}}
+          - key: {{ .Values.global.genesisfilename }}
+            path: {{ .Values.global.genesisfilename }}
+          - key: {{ .Values.global.networkfilename }}
+            path: {{ .Values.global.networkfilename }}
+{{ end }}

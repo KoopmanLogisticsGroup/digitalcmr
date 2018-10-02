@@ -1,0 +1,84 @@
+{{/* vim: set filetype=mustache: */}}
+{{/*
+Expand the name of the chart.
+*/}}
+{{- define "blockchain-ca.name" -}}
+{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{/*
+Create a default fully qualified app name.
+We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
+If release name contains chart name it will be used as a full name.
+*/}}
+{{- define "blockchain-ca.fullname" -}}
+{{- if .Values.fullnameOverride -}}
+{{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- $name := default .Chart.Name .Values.nameOverride -}}
+{{- if contains $name .Release.Name -}}
+{{- .Release.Name | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Create chart name and version as used by the chart label.
+*/}}
+{{- define "blockchain-ca.chart" -}}
+{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{/*
+Create labels for the chart to identify the pod.
+*/}}
+{{- define "labels.standard" -}}
+app: {{ include "blockchain-ca.name" . }}
+heritage: {{ .Release.Service | quote }}
+release: {{ .Release.Name | quote }}
+chart: {{ include "blockchain-ca.chart" . }}
+{{- end -}}
+
+{{/*
+Create index for the secrets of users
+*/}}
+{{- define "secret.users.index" -}}
+{{- $baseRoot := printf "environment/crypto-config/peerOrganizations/%s/users/admin-%s/" .Values.global.org.name .Values.global.org.name }}
+{{- $root := printf "%s**" $baseRoot}}
+{{- $adminCertificate := printf "Admin@%s-cert.pem" .Values.global.org.name }}
+{{- $adminTempCert := printf "admin-%s-cert.pem" .Values.global.org.name }}
+{{- range $path, $bytes := .Files.Glob $root}}
+- key: {{base $path }}
+  path: {{$path | trimPrefix $baseRoot | replace $adminTempCert $adminCertificate}}
+{{- end }}
+{{- end -}}
+
+{{/*
+Create index for the secrets of peers
+*/}}
+{{- define "secret.peers.index" -}}
+{{- $baseRoot := printf "environment/crypto-config/peerOrganizations/%s/peers/peer0.%s/" .Values.global.org.name .Values.global.org.name }}
+{{- $root := printf "%s**" $baseRoot}}
+{{- $adminCertificate := printf "Admin@%s-cert.pem" .Values.global.org.name }}
+{{- $adminTempCert := printf "admin-%s-cert.pem" .Values.global.org.name }}
+{{- range $path, $bytes := .Files.Glob $root}}
+- key: {{base $path }}
+  path: {{$path | trimPrefix $baseRoot | replace $adminTempCert $adminCertificate}}
+{{- end }}
+{{- end -}}
+
+
+{{/*
+Create ports for the service.
+*/}}
+{{- define "cryptoconfig" -}}
+{{ if .Values }}
+cryptoconfig: {{ .Values.cryptoconfigorg1 }}
+{{- else if .Values.global.org.name and eq .Values.global.org.name "org2" }}
+cryptoconfig: {{ .Values.cryptoconfigorg2 }}
+{{- end -}}
+{{- end -}}
+
+

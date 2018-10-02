@@ -1,0 +1,42 @@
+{{ $caKeystore := include "ca.keystore" . }}
+{{ $caCertificate := include "ca.certificate" . }}
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ .Values.global.org.name }}-{{ .Values.global.ca.name }}
+  labels:
+    app: {{ .Values.global.org.name }}-{{ .Values.global.ca.name }}
+    chart: {{ template "blockchain-ca.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.global.org.name }}-{{ .Values.global.ca.name }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.global.org.name }}-{{ .Values.global.ca.name }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: ibmblockchain/fabric-ca:1.0.6
+          command: ["sh", "-c", "cp /fabric-config-temp/** /fabric-config/ca/; fabric-ca-server start --ca.name {{ .Values.global.org.name }}-{{ .Values.global.ca.name }} --ca.certfile /fabric-config/ca/{{ $caCertificate }} --ca.keyfile /fabric-config/ca/{{$caKeystore}} -b admin:adminpw -d"]
+          envFrom:
+          - configMapRef:
+              name: {{ .Values.global.org.name }}-{{ .Values.global.ca.name }}-config
+          volumeMounts:
+          - name: ca-config-{{ .Values.global.org.name }}-{{ .Values.global.ca.name }}
+            mountPath: /fabric-config-temp/
+          - name: ca-internal-certificates
+            mountPath: /fabric-config/ca
+            readOnly: false
+      volumes:
+        - name: ca-internal-certificates
+          emptydir: {}
+        - name: ca-config-{{ .Values.global.org.name }}-{{ .Values.global.ca.name }}
+          secret:
+            secretName: ca-config-{{ .Values.global.org.name }}-{{ .Values.global.ca.name }}
