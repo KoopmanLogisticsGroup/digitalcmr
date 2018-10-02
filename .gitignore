@@ -66,9 +66,9 @@ typings/
 *.block
 *.tx
 .tscache/
-*.bna
+
 dist/
-composer/bna/*.bna
+composer/**/*.bna
 config/credentials
 out/
 package-lock.json
