@@ -16,7 +16,7 @@ Profiles:
 
     TwoOrgsOrdererGenesis:
         Orderer:
-            <<: *{{ .Values.global.org.name }}
+            <<: *OrdererDefaults
             Organizations:
                 - *{{ .Values.global.orderer.name }}
         Consortiums:
@@ -25,7 +25,7 @@ Profiles:
                     - *{{ .Values.global.org.name }}
                     - *{{ .Values.global.org2_for_cryptos.name }}
     TwoOrgsChannel:
-        Consortium: KpmAllConsortium
+        Consortium: DigitalCmrConsortium
         Application:
             <<: *ApplicationDefaults
             Organizations:
@@ -47,13 +47,13 @@ Organizations:
     - &{{ .Values.global.orderer.name }}
         # DefaultOrg defines the organization which is used in the sampleconfig
         # of the fabric.git development environment
-        Name: kpmAllOrderer
+        Name: {{ .Values.global.orderer.name }}
 
         # ID to load the MSP definition as
-        ID: kpmAllOrdererMSP
+        ID: {{ .Values.global.orderer.name }}MSP
 
         # MSPDir is the filesystem path which contains the MSP configuration
-        MSPDir: kpm/crypto-config/ordererOrganizations/kpm-all/msp
+        MSPDir: crypto-config/ordererOrganizations/{{ .Values.global.orderer.name }}/msp
 
         # turn off security for the channel
         AdminPrincipal: Role.MEMBER
@@ -66,7 +66,7 @@ Organizations:
         # ID to load the MSP definition as
         ID: {{ .Values.global.org.name }}MSP
 
-        MSPDir: {{ .Values.global.org.name }}/crypto-config/peerOrganizations/{{ .Values.global.org.name }}/msp
+        MSPDir: crypto-config/peerOrganizations/{{ .Values.global.org.name }}/msp
 
         # turn off security for the peer
         AdminPrincipal: Role.MEMBER
@@ -86,7 +86,7 @@ Organizations:
         # ID to load the MSP definition as
         ID: {{ .Values.global.org2_for_cryptos.name }}MSP
 
-        MSPDir: {{ .Values.global.org2_for_cryptos.name }}/crypto-config/peerOrganizations/{{ .Values.global.org2_for_cryptos.name }}/msp
+        MSPDir: crypto-config/peerOrganizations/{{ .Values.global.org2_for_cryptos.name }}/msp
 
         # turn off security for the peer
         AdminPrincipal: Role.MEMBER

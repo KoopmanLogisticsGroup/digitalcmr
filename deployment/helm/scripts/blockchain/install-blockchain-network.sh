@@ -10,6 +10,8 @@
 if [ $2 = '--generate-network' ]
   then
     source ./network/generate-configtx.sh template-environment
+    source ./network/generate-crypto-config.sh template-environment
+    source ./network/generate-network.sh template-environment
 fi
 
 if [ $2 = '--import-network' ]

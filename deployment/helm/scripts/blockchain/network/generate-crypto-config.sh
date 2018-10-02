@@ -13,6 +13,6 @@ cp $SCRIPT_DIR$ENV_RELATIVE_PATH/values/blockchain/values.yaml $SCRIPT_DIR$BLOCK
 
 cd ${SCRIPT_DIR}${DIGITALCMR_CHARTS_RELATIVE_PATH}
 
-helm template blockchain-network/ -x templates/configtx.yaml > ${SCRIPT_DIR}${ENV_RELATIVE_PATH}/network/configtx.yaml
+helm template blockchain-network/ -x templates/crypto-config.yaml > ${SCRIPT_DIR}${ENV_RELATIVE_PATH}/network/crypto-config.yaml
 
 cd $SCRIPT_DIR

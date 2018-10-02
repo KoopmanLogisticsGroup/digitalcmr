@@ -18,7 +18,7 @@ Profiles:
 
     TwoOrgsOrdererGenesis:
         Orderer:
-            <<: *org1
+            <<: *OrdererDefaults
             Organizations:
                 - *orderer
         Consortiums:
@@ -27,7 +27,7 @@ Profiles:
                     - *org1
                     - *org2
     TwoOrgsChannel:
-        Consortium: KpmAllConsortium
+        Consortium: DigitalCmrConsortium
         Application:
             <<: *ApplicationDefaults
             Organizations:
@@ -49,13 +49,13 @@ Organizations:
     - &orderer
         # DefaultOrg defines the organization which is used in the sampleconfig
         # of the fabric.git development environment
-        Name: kpmAllOrderer
+        Name: orderer
 
         # ID to load the MSP definition as
-        ID: kpmAllOrdererMSP
+        ID: ordererMSP
 
         # MSPDir is the filesystem path which contains the MSP configuration
-        MSPDir: kpm/crypto-config/ordererOrganizations/kpm-all/msp
+        MSPDir: crypto-config/ordererOrganizations/orderer/msp
 
         # turn off security for the channel
         AdminPrincipal: Role.MEMBER
@@ -68,7 +68,7 @@ Organizations:
         # ID to load the MSP definition as
         ID: org1MSP
 
-        MSPDir: org1/crypto-config/peerOrganizations/org1/msp
+        MSPDir: crypto-config/peerOrganizations/org1/msp
 
         # turn off security for the peer
         AdminPrincipal: Role.MEMBER
@@ -88,7 +88,7 @@ Organizations:
         # ID to load the MSP definition as
         ID: org2MSP
 
-        MSPDir: org2/crypto-config/peerOrganizations/org2/msp
+        MSPDir: crypto-config/peerOrganizations/org2/msp
 
         # turn off security for the peer
         AdminPrincipal: Role.MEMBER
