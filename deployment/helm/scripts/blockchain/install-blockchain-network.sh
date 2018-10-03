@@ -16,6 +16,7 @@ fi
 
 if [ $2 = '--import-network' ]
   then
+    source ./network/copy-values-into-charts.sh $1
     echo "importing network"
 fi
 
